@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/preparers/index.js",
+  "types": "../dist/preparers/index.d.ts"
+}

@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/enums/index.js",
+  "types": "../dist/enums/index.d.ts"
+}

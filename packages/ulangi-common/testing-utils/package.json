@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/testing-utils/index.js",
+  "types": "../dist/testing-utils/index.d.ts"
+}

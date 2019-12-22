@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

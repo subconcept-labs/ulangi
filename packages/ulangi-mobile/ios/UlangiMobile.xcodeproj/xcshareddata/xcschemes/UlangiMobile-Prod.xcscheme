@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "0920"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "NO"
+      buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "env=${PROJECT_DIR}/${ENV_FILE_PATH}&#10;echo &quot;$env&quot; &gt; /tmp/envfile">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "14C37CCF20C5B124009CE387"
+                     BuildableName = "UlangiDev.app"
+                     BlueprintName = "UlangiMobile"
+                     ReferencedContainer = "container:UlangiMobile.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "83CBBA2D1A601D0E00E9B192"
+               BuildableName = "libReact.a"
+               BlueprintName = "React"
+               ReferencedContainer = "container:../node_modules/react-native/React/React.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "14C37CCF20C5B124009CE387"
+               BuildableName = "UlangiDev.app"
+               BlueprintName = "UlangiMobile"
+               ReferencedContainer = "container:UlangiMobile.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Production.Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+      </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "14C37CCF20C5B124009CE387"
+            BuildableName = "UlangiDev.app"
+            BlueprintName = "UlangiMobile"
+            ReferencedContainer = "container:UlangiMobile.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Production.Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "14C37CCF20C5B124009CE387"
+            BuildableName = "UlangiDev.app"
+            BlueprintName = "UlangiMobile"
+            ReferencedContainer = "container:UlangiMobile.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Production.Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "14C37CCF20C5B124009CE387"
+            BuildableName = "UlangiDev.app"
+            BlueprintName = "UlangiMobile"
+            ReferencedContainer = "container:UlangiMobile.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Production.Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Production.Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

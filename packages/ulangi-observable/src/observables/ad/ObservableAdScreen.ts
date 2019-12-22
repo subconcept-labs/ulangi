@@ -1,0 +1,21 @@
+/*
+ * Copyright (c) Minh Loi.
+ *
+ * This file is part of Ulangi which is released under GPL v3.0.
+ * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { observable } from 'mobx';
+
+import { ObservableScreen } from '../screen/ObservableScreen';
+
+export class ObservableAdScreen extends ObservableScreen {
+  @observable
+  public closable: boolean;
+
+  public constructor(closable: boolean, screenName: ScreenName) {
+    super(screenName);
+    this.closable = closable;
+  }
+}

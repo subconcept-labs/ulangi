@@ -1,0 +1,65 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.ulangi">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.BILLING" />
+
+    <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme">
+      <activity
+        android:name=".MainActivity"
+        android:launchMode="singleTop"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+        android:windowSoftInputMode="adjustPan">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+      <!-- FBSDK -->
+      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+      <!-- AdMob -->
+      <meta-data
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-1363672124516644~3363203395" />
+      <!-- Delay app measurement until MobileAds.initialize() is called. -->
+      <meta-data
+        android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+        android:value="true"/>
+      <!-- Add this line to avoid crashes on Android 9 until AdMob SDK update -->
+      <uses-library android:name="org.apache.http.legacy" android:required="false"/> 
+
+      <!-- Local notifications -->
+      <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>
+      <receiver android:enabled="true" android:exported="true"  android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver">
+        <intent-filter>
+          <action android:name="android.intent.action.BOOT_COMPLETED"/>
+          <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+          <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+          <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+      </receiver>
+
+      <!-- Messaging -->
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+        <intent-filter>
+          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+        </intent-filter>
+      </service>
+
+      <!-- Background message -->
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
+    </application>
+
+</manifest>

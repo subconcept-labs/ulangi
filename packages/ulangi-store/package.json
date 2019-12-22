@@ -1,0 +1,57 @@
+{
+  "private": true,
+  "name": "@ulangi/ulangi-store",
+  "version": "2.18.1",
+  "description": "Ulangi Store",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext .ts src/",
+    "lint-fix": "eslint --fix --ext .ts src/",
+    "pretest": "tsc -p ./tests/tsconfig.json",
+    "test": "npx jest",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc -noUnusedLocals -noUnusedParameters -p ./",
+    "build": "npm run prettify && npm run lint-fix && npm run clean && npm run compile",
+    "prettify": "prettier --write \"src/**/*.ts\""
+  },
+  "files": [
+    "dist/"
+  ],
+  "author": "Minh Loi",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@ulangi/assert": "^1.0.0",
+    "@ulangi/resolver": "^2.0.0",
+    "@ulangi/ulangi-action": "^2.18.1",
+    "@ulangi/ulangi-common": "^2.18.1",
+    "@ulangi/ulangi-observable": "^2.18.1",
+    "autobind-decorator": "^2.4.0",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.4",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/joi": "^13.0.7",
+    "@types/lodash": "^4.14.118",
+    "@types/redux-logger": "^3.0.6",
+    "@types/uuid": "^3.4.4",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-simple-import-sort": "^3.1.0",
+    "jest": "^24.6.0",
+    "mobx": "^5.9.4",
+    "prettier": "1.17.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^3.5.2"
+  },
+  "peerDependencies": {
+    "mobx": "5.x"
+  }
+}

@@ -1,0 +1,415 @@
+{
+  "general": {
+    "guestEmailDomain": "@gu.est",
+    "guestPassword": "12345678",
+    "animationDuration": 200,
+    "checkDatabaseTimeout": 3000
+  },
+
+  "app": {
+    "showInAppRatingInMoreScreen": true
+  },
+
+  "ad": {
+    "showAdTimeout": 5000,
+    "autoSetUpAfterAuth": true,
+    "autoInitializeAfterAuth": true
+  },
+
+  "links": {
+    "reddit": "https://www.reddit.com/r/Ulangi/",
+    "twitter": "https://twitter.com/UlangiApp",
+    "instagram": "https://www.instagram.com/ulangi.app/",
+    "facebookPage": "fb://page?id=393649531152390",
+    "facebookPageFallback": "https://www.facebook.com/ulangi.flashcards/",
+    "installUlangiSheetsAddOnTutorial": "https://medium.com/ulangi-app/tutorial-how-to-install-and-set-up-google-sheets-add-on-for-ulangi-4b855bbee6fd",
+    "useUlangiSheetsAddOnTutorial": "https://medium.com/ulangi-app/tutorial-how-to-use-google-sheets-add-on-for-ulangi-a13a50dc86aa"
+  },
+
+  "styles": {
+    "primaryColor": "#009dd6",
+    "lightPrimaryColor": "#58d3f9",
+    "darkPrimaryColor": "#0092C7",
+    "blueColor": "#007aff",
+    "greenColor": "#4EBA6F",
+    "regularMembershipColor": "#009dd6",
+    "premiumMembershipColor": "#30C692",
+    "iosMainFont": "HelveticaNeue",
+    "iosMainFontBold": "HelveticaNeue-Bold",
+    "androidMainFont": "Roboto",
+    "androidMainFontBold": "Roboto-Bold",
+    "light": {
+      "primaryBackgroundColor": "#fff",
+      "secondaryBackgroundColor": "#e3e3e3",
+      "primaryTextColor": "#444",
+      "secondaryTextColor": "#999",
+      "primaryBorderColor": "#b9b9b9",
+      "secondaryBorderColor": "#d3d3d3"
+    },
+    "dark": {
+      "primaryBackgroundColor": "#414141",
+      "secondaryBackgroundColor": "#292929",
+      "primaryTextColor": "#e3e3e3",
+      "secondaryTextColor": "#888",
+      "primaryBorderColor": "#212121",
+      "secondaryBorderColor": "#313131"
+    }
+  },
+
+  "lightBox": {
+    "animationDuration": 200
+  },
+
+  "remoteConfig": {
+    "autoUpdateAfterAuth": true
+  },
+
+  "user": {
+    "passwordMinLength": 8,
+    "defaultGlobalAutoArchive": {
+      "autoArchiveEnabled": true,
+      "spacedRepetitionLevelThreshold": 10,
+      "writingLevelThreshold": 10
+    },
+    "defaultGlobalReminder": {
+      "reminderEnabled": false,
+      "hours": 11,
+      "minutes": 0
+    },
+    "defaultDarkModeSettings": {
+      "trigger": "System"
+    },
+    "autoCheckUserSessionAfterAuth": true,
+    "autoFetchOnDownloadSucceededAfterAuth": true
+  },
+
+  "set": {
+    "statusMap": {
+      "ACTIVE": {
+        "name": "active"
+      },
+      "ARCHIVED": {
+        "name": "archived"
+      },
+      "DELETED": {
+        "name": "deleted"
+      }
+    },
+    "autoFetchAllOnDownloadSucceededAfterAuth": true
+  },
+
+  "vocabulary": {
+    "fetchLimit": 6,
+    "filterMap": {
+      "ACTIVE": {
+        "name": "Active",
+        "shortName": "Active",
+        "textColor": "#009dd6",
+        "borderColor": "#009dd6"
+      },
+      "DUE_BY_SPACED_REPETITION": {
+        "name": "Due (Spaced Repetition)",
+        "shortName": "Due (SR)",
+        "textColor": "#F56173",
+        "borderColor": "#F56173"
+      },
+      "DUE_BY_WRITING": {
+        "name": "Due (Writing)",
+        "shortName": "Due (WR)",
+        "textColor": "#FA8258",
+        "borderColor": "#FA8258"
+      },
+      "ARCHIVED": {
+        "name": "Archived",
+        "shortName": "Archived",
+        "textColor": "mediumseagreen",
+        "borderColor": "mediumseagreen"
+      },
+      "DELETED": {
+        "name": "Deleted",
+        "shortName": "Deleted",
+        "textColor": "orangered",
+        "borderColor": "orangered"
+      }
+    },
+    "statusMap": {
+      "ACTIVE": {
+        "name": "active"
+      },
+      "ARCHIVED": {
+        "name": "archived"
+      },
+      "DELETED": {
+        "name": "deleted"
+      }
+    }
+  },
+
+  "level": {
+    "colorMap": [
+      "#88888850",
+      "#A5D6A7",
+      "#66BB6A",
+      "#43A047",
+      "#37474F"
+    ]
+  },
+
+  "category": {
+    "fetchSuggestionsLimit": 6
+  },
+
+  "builtInWordClass": {
+    "map": {
+      "NOUN": {
+        "name": "noun",
+        "abbr": "n",
+        "textColor": "#435e31",
+        "backgroundColor": "#b9e59a",
+        "borderColor": "#7eb25d"
+      },
+      "VERB": {
+        "name": "verb",
+        "abbr": "v",
+        "textColor": "#20538c",
+        "backgroundColor": "#b9ddf6",
+        "borderColor": "#3292db"
+      },
+      "ADJECTIVE": {
+        "name": "adjective",
+        "abbr": "adj",
+        "textColor": "#b32b2b",
+        "backgroundColor": "#ffcaca",
+        "borderColor": "#ff7474"
+      },
+      "ADVERB": {
+        "name": "adverb",
+        "abbr": "adv",
+        "textColor": "brown",
+        "backgroundColor": "peachpuff",
+        "borderColor": "coral"
+      },
+      "PREPOSITION": {
+        "name": "preposition",
+        "abbr": "prep",
+        "textColor": "#666600",
+        "backgroundColor": "#f3eba5",
+        "borderColor": "#b3b300"
+      },
+      "PHRASAL_VERB": {
+        "name": "phrasal verb",
+        "abbr": "phrv",
+        "textColor": "#246175",
+        "backgroundColor": "#c4e3ed",
+        "borderColor": "#76bdd5"
+      },
+      "IDIOM": {
+        "name": "idiom",
+        "abbr": "idm",
+        "textColor": "purple",
+        "backgroundColor": "#f1daf1",
+        "borderColor": "#d68fd6"
+      },
+      "PRONOUN": {
+        "name": "pronoun",
+        "abbr": "pron",
+        "textColor": "#333",
+        "backgroundColor": "#c9d7e8",
+        "borderColor": "lightslategrey"
+      }
+    }
+  },
+
+  "customWordClass": {
+    "map": {
+      "n": {
+        "textColor": "#435e31",
+        "backgroundColor": "#b9e59a",
+        "borderColor": "#7eb25d"
+      },
+      "v": {
+        "textColor": "#20538c",
+        "backgroundColor": "#b9ddf6",
+        "borderColor": "#3292db"
+      },
+      "adj": {
+        "textColor": "#b32b2b",
+        "backgroundColor": "#ffcaca",
+        "borderColor": "#ff7474"
+      },
+      "adv": {
+        "textColor": "brown",
+        "backgroundColor": "peachpuff",
+        "borderColor": "coral"
+      },
+      "prep": {
+        "textColor": "#666600",
+        "backgroundColor": "#f3eba5",
+        "borderColor": "#b3b300"
+      },
+      "phrv": {
+        "textColor": "#246175",
+        "backgroundColor": "#c4e3ed",
+        "borderColor": "#76bdd5"
+      },
+      "idm": {
+        "textColor": "purple",
+        "backgroundColor": "#f1daf1",
+        "borderColor": "#d68fd6"
+      },
+      "pron": {
+        "textColor": "#333",
+        "backgroundColor": "#c9d7e8",
+        "borderColor": "lightslategrey"
+      },
+      "other": {
+        "textColor": "#333",
+        "backgroundColor": "#c9d7e8",
+        "borderColor": "lightslategrey"
+      }
+    }
+  },
+
+  "manage": {
+    "fetchVocabularyLimit": 6,
+    "fetchCategoryLimit": 6
+  },
+
+  "search": {
+    "searchLimit": 6
+  },
+
+  "library": {
+    "fetchPublicSetLimit": 10,
+    "searchPublicSetLimit": 10,
+    "searchPublicVocabularyLimit": 10
+  },
+
+  "reviewFeedback": {
+    "feedbackMap": {
+      "Poor": {
+        "color": "#DA5A5A"
+      },
+      "Fair": {
+        "color": "#EB744E"
+      },
+      "Good": {
+        "color": "#43A047"
+      },
+      "Great": {
+        "color": "#009688"
+      },
+      "Superb": {
+        "color": "#0097A7"
+      }
+    }
+  },
+
+  "spacedRepetition": {
+    "maxLevel": 10,
+    "minPerLesson": 1,
+    "maxPerLesson": 10,
+    "selectableLimits": [ 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    "defaultInitialInterval": 12,
+    "defaultShowDefinitionSideEffectState": true,
+    "selectableInitialIntervals": [ 6, 12, 18, 24, 36, 48 ],
+    "gradeScale": { 
+      "A+": [ 98, 100 ],
+      "A": [ 94, 97 ],
+      "A-": [ 90, 93 ],
+      "B+": [ 87, 89 ],
+      "B": [ 84, 86 ],
+      "B-": [ 80, 83 ],
+      "C": [ 70, 79 ],
+      "F": [ 0, 69 ]
+    }
+  },
+
+  "writing": {
+    "maxLevel": 10,
+    "minPerLesson": 1,
+    "maxPerLesson": 5,
+    "defaultInitialInterval": 12,
+    "selectableLimits": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "selectableInitialIntervals": [ 6, 12, 18, 24, 36, 48 ],
+    "gradeScale": { 
+      "A+": [ 98, 100 ],
+      "A": [ 94, 97 ],
+      "A-": [ 90, 93 ],
+      "B+": [ 87, 89 ],
+      "B": [ 84, 86 ],
+      "B-": [ 80, 83 ],
+      "C": [ 70, 79 ],
+      "F": [ 0, 69 ]
+    }
+  },
+
+  "quiz": {
+    "minPerWritingQuiz": 1,
+    "maxPerWritingQuiz": 5,
+    "minPerMultipleChoiceQuiz": 3,
+    "maxPerMultipleChoiceQuiz": 10,
+    "selectableWritingQuizLimits": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "selectableMultipleChoiceQuizLimits": [ 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    "gradeScale": { 
+      "A": [ 90, 100 ],
+      "B": [ 80, 89 ],
+      "C": [ 70, 79 ],
+      "D": [ 60, 69 ],
+      "F": [ 0, 59 ]
+    },
+    "selectableVocabularyPool": [ "learned", "active" ],
+    "defaultVocabularyPool": "learned"
+  },
+
+  "reflex": {
+    "minToPlay": 2,
+    "fetchLimit": 8,
+    "fetchTriggerThreshold": 4,
+    "backgroundColor": "#00b8a9",
+    "timePerQuestion": 5000
+  },
+
+  "atom": {
+    "minToPlay": 1,
+    "fetchLimit": 8,
+    "fetchTriggerThreshold": 4,
+    "minCharacters": 5,
+    "maxCharacters": 10,
+    "initialMoveCount": 10,
+    "backgroundColor": "#046380",
+    "primaryColor": "#00b8a9",
+    "secondaryColor": "#f38181",
+    "textColor": "#efecca",
+    "particleSize": 40,
+    "innerShellDiameter": 130,
+    "outerShellDiameter": 250,
+    "originSize": 50,
+    "bottomOffset": 50
+  },
+
+  "flashcardPlayer": {
+    "minToPlay": 1,
+    "uploadLimit": 500,
+    "backgroundColor": "#282c34",
+    "primaryColor": "#009dd6",
+    "secondaryColor": "#009dd6",
+    "textColor": "#fff"
+  },
+
+  "audio": {
+    "cacheFolderName": "SpeechCache",
+    "autoClearCacheAfterAuth": true
+  },
+
+  "sync": {
+    "transactionChunkSize": 5,
+    "delayBetweenChunks": 500,
+    "autoObserveLocalUpdatesAfterAuth": true,
+    "autoObserveRemoteUpdatesAfterAuth": true
+  },
+
+  "reminder": {
+    "autoCheckPermissionAndSetUpReminder": true
+  }
+}

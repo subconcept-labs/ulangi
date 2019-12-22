@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <script>
+      // Prevent forms from submitting.
+      function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+          });
+        }
+      }
+      window.addEventListener('load', preventFormSubmit);
+      window.addEventListener('load', downloadAllSets);
+
+      function downloadAllSets(){
+        google.script.run
+          .withSuccessHandler(updateSelections)
+          .withFailureHandler(downloadSetsFailed)
+          .downloadSets();
+      }
+
+      function handleFormSubmit(formObject) {
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').value = "Setting up...";
+        google.script.run.withSuccessHandler(close).createNewSheetForSyncing(formObject);
+      }
+
+      function updateSelections(sets) {
+        document.getElementById('downloading').style.display = "none";
+        document.getElementById('setForm').style.display = "block";
+        document.getElementById('setSelection').innerHTML = sets.map((set) => {
+          var setNameWithId = set.setName + " [" + set.setId + "]";
+          return '<option value="' + setNameWithId + '">' + setNameWithId + '</option>';
+        }).join()
+      }
+
+      function downloadSetsFailed() {
+        document.getElementById("downloading").innerHTML = "Failed to download set information. Please make sure you set the API key correctly."
+      }
+
+      function close() {
+        google.script.host.close();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="message">
+      Tip: One document can only sync one set. Create a new document if you want to sync another set.
+    </div>
+    <div id="downloading" style="margin-top: 10px">
+      Downloading set information. Please wait...
+    </div>
+    <form style="display:none;margin-top: 10px" id="setForm" onsubmit="handleFormSubmit(this)">
+      <div class="block form-group">
+        <label for="setSelection">Select a set you want to sync:</label>
+        <select id="setSelection" name="setNameWithId" style="width: 300px">
+        </select>
+      </div>
+      <div style="margin-top: 10px">
+        <input id="submitBtn" class="action" type="submit" value="Set up" />
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017"],
+    "target": "es2017",
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "declaration": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@ulangi/ulangi-common/@types"]
+  },
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ]
+}

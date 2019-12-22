@@ -1,0 +1,16 @@
+/*
+ * Copyright (c) Minh Loi.
+ *
+ * This file is part of Ulangi which is released under GPL v3.0.
+ * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+export const VocabularyBulkActionMenuIds = {
+  ACTION_MENU: 'VOCABULARY_BULK_ACTION_MENU',
+  SELECT_ALL_FETCHED_TERMS_BTN: 'SELECT_ALL_FETCHED_TERMS_BTN',
+  CATEGORIZE_SELECTED_BTN: 'CATEGORIZE_SELECTED_BTN',
+  MOVE_SELECTED_BTN: 'MOVE_SELECTED_BTN',
+  RESTORE_SELECTED_BTN: 'RESTORE_SELECTED_BTN',
+  ARCHIVE_SELECTED_BTN: 'ARCHIVE_SELECTED_BTN',
+  DELETE_SELECTED_BTN: 'DELETE_SELECTED_BTN',
+};

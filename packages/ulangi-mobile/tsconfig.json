@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "rootDir": "src",
+    "strictNullChecks": true,
+    "strict": true,
+    "outDir": "./artifacts",
+    "noEmitOnError": true,
+    "noImplicitThis": true,
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@ulangi/ulangi-common/@types"],
+    "experimentalDecorators": true,
+    "incremental": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

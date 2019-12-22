@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+      margin-top {
+        margin-top: 10px
+      }
+    </style>
+    <script>
+      function renderHighlightEditedCellsButton(enabled){
+        var button = document.getElementById("highlightEditedCells")
+
+        button.value = (enabled === true) ? "ON": "OFF";
+        button.style.display = "block";
+        button.disabled = false;
+      }
+
+      function toggleHighlightEditedCells(){
+        var button = document.getElementById("highlightEditedCells")
+        button.disabled = true
+
+        google.script.run.withSuccessHandler(renderHighlightEditedCellsButton).toggleHighlightEditedCells()
+      }
+
+      function renderProtectUneditableColumnsButton(enabled){
+        var button = document.getElementById("protectUneditableColumns")
+
+        button.value = (enabled === true) ? "ON": "OFF";
+        button.style.display = "block";
+        button.disabled = false;
+      }
+
+      function toggleProtectUneditableColumns(){
+        var button = document.getElementById("protectUneditableColumns")
+        button.disabled = true
+
+        google.script.run.withSuccessHandler(renderProtectUneditableColumnsButton).toggleProtectUneditableColumns()
+      }
+
+      google.script.run.withSuccessHandler(renderHighlightEditedCellsButton).isHighlightEditedCellsEnabled();
+
+      google.script.run.withSuccessHandler(renderProtectUneditableColumnsButton).areAllUneditableColumnsProtected();
+    </script>
+  </head>
+  <body>
+    <div class="margin-top block form-group">
+      <label for="highlightEditedCells">Highlight edited cells:</label>
+      <input value="LOADING" disabled type="button" id="highlightEditedCells" onclick="toggleHighlightEditedCells()" />
+    </div>
+    <div class="margin-top block form-group">
+      <label for="protectUneditableColumns">Show warning when modifying cells that should not be changed:</label>
+      <input value="LOADING" disabled type="button" id="protectUneditableColumns" onclick="toggleProtectUneditableColumns()" />
+    </div>
+  </body>
+</html>

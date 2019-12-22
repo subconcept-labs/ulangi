@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/constants/index.js",
+  "types": "../dist/constants/index.d.ts"
+}
