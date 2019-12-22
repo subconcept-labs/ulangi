@@ -1,0 +1,22 @@
+{
+ "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "noImplicitAny": true,
+    "declaration": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "sourceRoot": "src",
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@minhloi/ul-common/@types", "./@types"]
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
+

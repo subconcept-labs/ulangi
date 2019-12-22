@@ -1,0 +1,17 @@
+/*
+ * Copyright (c) Minh Loi.
+ *
+ * This file is part of Ulangi which is released under GPL v3.0.
+ * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+export enum SyncTask {
+  UPLOAD_USER = 'UPLOAD_USER',
+  DOWNLOAD_USER = 'DOWNLOAD_USER',
+  UPLOAD_SETS = 'UPLOAD_SETS',
+  DOWNLOAD_SETS = 'DOWNLOAD_SETS',
+  DOWNLOAD_INCOMPATIBLE_SETS = 'DOWNLOAD_INCOMPATIBLE_SETS',
+  UPLOAD_VOCABULARY = 'UPLOAD_VOCABULARY',
+  DOWNLOAD_VOCABULARY = 'DOWNLOAD_VOCABULARY',
+  DOWNLOAD_INCOMPATIBLE_VOCABULARY = 'DOWNLOAD_INCOMPATIBLE_VOCABULARY',
+}

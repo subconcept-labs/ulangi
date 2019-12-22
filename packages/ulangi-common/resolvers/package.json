@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/resolvers/index.js",
+  "types": "../dist/resolvers/index.d.ts"
+}

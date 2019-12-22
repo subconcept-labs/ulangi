@@ -1,0 +1,20 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "2.18.1",
+  "scripts": {
+    "prebootstrap": "echo \"test\""
+  },
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "allowBranch": "master",
+      "message": "chore(release): publish %s"
+    }
+  },
+  "ignoreChanges": [
+    "*.md",
+    "packages/ulangi-data"
+  ]
+}

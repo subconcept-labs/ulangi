@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+    .section {
+      padding: 12px 16px;
+      border-bottom: 1px solid #ccc;
+    }
+    .disabled.section {
+      background-color: #f1f3f4;
+    }
+    .disabled.section a, .disabled.section span {
+      color: #ccc
+    }
+    </style>
+    <script>
+      function showAlert(text){
+        google.script.run.showAlert(text);
+      }
+
+      function showApiKeyPrompt(){
+        google.script.run
+          .showApiKeyPrompt();
+      }
+
+      function showSetUpForSyncingDialog(){
+        google.script.run
+          .showSetUpForSyncingDialog();
+      }
+
+      function togglePull(){
+        if (document.getElementById("pullBtn").value === "Pull") {
+          pull();
+        }
+        else if (document.getElementById("pullBtn").value === "Stop") {
+          stopPulling();
+        }
+      }
+
+      function pull(){
+        onPullStarted();
+        google.script.run
+          .withSuccessHandler(onPullSucceeded)
+          .withFailureHandler(onPullFailed)
+          .downloadVocabulary();
+      }
+
+      function stopPulling(){
+        google.script.run.unsetSyncingAction();
+        document.getElementById("pushBtn").disabled = true;
+        document.getElementById("pullBtn").disabled = true;
+        document.getElementById("pullBtn").value = "Stop";
+        document.getElementById("pullMessage").innerHTML = "Preparing to stop...";
+      }
+
+      function onPullStarted(){
+        document.getElementById("pushBtn").disabled = true;
+        document.getElementById("pullBtn").disabled = false;
+        document.getElementById("pullBtn").value = "Stop";
+        document.getElementById("pullMessage").innerHTML = "Pulling updates...";
+      }
+
+      function onPullSucceeded(){
+        onPullEnded()
+      }
+
+      function onPullFailed(error){
+        stopPulling(); // Make sure pull has been stopped if failure occured
+        onPullEnded();
+        showAlert("Failed to pull. Please check error below.\n" + error)
+      }
+  
+
+      function onPullEnded(){
+        document.getElementById("pullBtn").disabled = false;
+        document.getElementById("pushBtn").disabled = false;
+        document.getElementById("pullBtn").value = "Pull";
+        document.getElementById("pullMessage").innerHTML = "Pull updates.";
+      }
+
+      function togglePush(){
+        if (document.getElementById("pushBtn").value === "Push"){
+          push();
+        }
+        else if (document.getElementById("pushBtn").value === "Stop"){
+          stopPushing();
+        }
+      }
+
+      function push(){
+        onPushStarted();
+        google.script.run
+          .withSuccessHandler(onPushSucceeded)
+          .withFailureHandler(onPushFailed)
+          .uploadVocabulary();
+      }
+
+      function stopPushing(){
+        google.script.run.unsetSyncingAction();
+        document.getElementById("pullBtn").disabled = true;
+        document.getElementById("pushBtn").disabled = true;
+        document.getElementById("pushBtn").value = "Stop";
+        document.getElementById("pushMessage").innerHTML = "Preparing to stop...";
+      }
+
+      function onPushStarted(){
+        document.getElementById("pullBtn").disabled = true;
+        document.getElementById("pushBtn").disabled = false;
+        document.getElementById("pushBtn").value = "Stop";
+        document.getElementById("pushMessage").innerHTML = "Pushing edits...";
+      }
+
+      function onPushSucceeded(){
+        onPushEnded()
+      }
+
+      function onPushFailed(error){
+        stopPushing(); // Make sure push has been stopped if failure occured
+        onPushEnded();
+        showAlert("Failed to push. Please check error below.\n" + error)
+      }
+
+      function onPushEnded(){
+        document.getElementById("pullBtn").disabled = false;
+        document.getElementById("pushBtn").disabled = false;
+        document.getElementById("pushBtn").value = "Push";
+        document.getElementById("pushMessage").innerHTML = "Push edits.";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="section">
+      <div class="block">
+        <div class="inline">
+          <input type="button" onclick="showApiKeyPrompt()" value="Set API key" />
+        </div>
+      </div>
+      <div class="block">
+        <span>The API key is used to connect with your Ulangi account. It can be retrieved from Ulangi App.</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="block">
+        <div class="inline">
+          <input type="button" onclick="showSetUpForSyncingDialog()" value="Set up for syncing" />
+        </div>
+      </div>
+      <div class="block">
+        <span>Create and set up a sheet for syncing.</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="block">
+        <div class="inline">
+          <input type="button" id="pullBtn" class="action" onclick="togglePull()" value="Pull" />
+        </div>
+        <div id="pullMessage" class="inline">
+          <span>Pull updates.</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="inline">
+          <input type="button" id="pushBtn" class="action" onclick="togglePush()" value="Push" />
+        </div>
+        <div id="pushMessage" class="inline">
+          <span>Push edits.</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

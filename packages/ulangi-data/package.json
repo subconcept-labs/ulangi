@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "@ulangi/ulangi-data",
+  "version": "2.18.1",
+  "description": "Ulangi Data",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Minh Loi",
+  "dependencies": {
+    "tmp": "0.0.33"
+  },
+  "devDependencies": {
+    "@types/tmp": "0.0.33"
+  }
+}

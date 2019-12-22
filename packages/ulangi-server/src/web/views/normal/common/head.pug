@@ -1,0 +1,29 @@
+head
+  title #{title}
+  meta(charset="utf-8")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  meta(name="description" content=description)
+  meta(name="google-site-verification" content="xNM2cmowZqY_pR7UmDrVtOw7g-piSOvB-rsexFBxHa0")
+  meta(name="msvalidate.01" content="F14328BD700627E322D87E74796C01D5")
+
+  block canonical
+    if canonicalUrl
+      link(rel="canonical" href=canonicalUrl)
+
+  block amphtml
+    if amphtmlUrl
+      link(rel="amphtml" href=amphtmlUrl)
+
+  link(rel="shortcut icon" type="image/x-icon" href="/img/favicon.png?v6")
+  link(rel="stylesheet" href="/bundles/bundle.min.css")
+  
+  // Google Tag Manager
+  script.
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KW7GSC6');
+
+  script.
+    var pageData = !{JSON.stringify(pageData || {})}

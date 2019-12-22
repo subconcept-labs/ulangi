@@ -1,0 +1,145 @@
+/*
+    Theme Responsive Design
+*/
+
+@media (max-width: 1024px) {
+	
+}
+
+/* ---- Start of max-width 992px CSS ---- */
+@media (max-width: 992px) {
+    .sm-padding{ padding: 15px; }
+    .feature_list,
+    .about_content {
+        padding: 0;
+    } 
+    .hero_mockup{
+        background-position: 120% center;
+    }
+    ul.nav > li > a {
+        padding: 0 5px;
+        font-size: 12px;
+    }
+    .feature_list .circle{
+        display: none;
+    }
+    .feature_list li:last-child{
+        margin-bottom: 0;
+    }
+    .download_mockup{
+        right: -260px;
+    }
+
+}
+/* ---- End of max-width 992px CSS ---- */
+
+
+/* ---- Start of min-width 480px and max-width 768px CSS ---- */
+@media all and (min-width: 480px) and (max-width: 768px) {
+	
+}
+/* ---- End of min-width 480px and max-width 768px CSS ---- */
+
+
+/* ---- Start of max-width 767px CSS ---- */
+@media all and (max-width: 767px) {
+    body, p{
+        font-size: 15px;
+        line-height: 22px;
+    }
+    h1{
+        font-size: 28px!important;
+    }
+    h2{
+        font-size: 20px!important;
+    }
+    h3{
+        font-size: 17px;
+    }
+    .mock-hide,
+    p br{
+        display: none;
+    }
+    .padding{
+        padding: 60px 0;
+    }
+    .xs-padding{
+        padding: 15px;
+    }
+    .navbar-brand{
+    }
+    .menu-btn,
+    .menu-wrap ul.nav{
+    }
+    .slicknav_menu {
+        display:block;
+    }
+    .hero_section{
+        padding-top: 130px;
+        padding-bottom: 80px;
+    }
+    .download_btn {
+        text-align: center;
+    }
+    .download_btn a{
+        margin: 5px 10px;
+    }
+    .add_on_btn {
+        text-align: center;
+    }
+    .add_on_btn a{
+        margin: 5px 10px;
+    }
+    .testimonial_items .owl-nav div{
+        left: 0;
+    }
+    .testimonial_items .owl-nav div.owl-next{
+        right: 0;
+    }
+    .iphone_moc{
+        display: none;
+    }
+    .social_link li{ margin-bottom: 5px; }
+    #scroll-to-top{
+        right: 20px;
+        bottom: 20px;
+    }
+    .feature_left  {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+    .feature_wrap{
+        padding: 0;
+    }
+    .feature_content li{
+        margin-bottom: 20px;
+    }
+    .download_content h3{
+        font-size: 25px;
+    }
+    .download_content p{
+        font-size: 15px;
+    }
+}
+/* ---- End of max-width 767px CSS ---- */
+
+
+/* ---- Start of max-width 520px CSS ---- */
+@media all and (max-width: 520px) {
+    .subscribe_form{ width: 100%; }
+}
+/* ---- End of max-width 520px CSS ---- */
+
+
+/* ---- Start of max-width 420px CSS ---- */
+@media all and (max-width: 420px) {
+    
+}
+/* ---- End of max-width 420px CSS ---- */
+
+
+/* ---- Start of max-width 380px CSS ---- */
+@media all and (max-width: 380px) {
+	
+}
+/* ---- End of max-width 380px CSS ---- */

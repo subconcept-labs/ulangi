@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "main": "../dist/converters/index.js",
+  "types": "../dist/converters/index.d.ts"
+}

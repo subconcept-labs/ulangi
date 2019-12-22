@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "typeRoots": ["../node_modules/@types", "../node_modules/@minhloi/ul-common/@types"]
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

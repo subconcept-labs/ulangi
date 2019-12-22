@@ -1,0 +1,38 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "prebootstrap": "./scripts/run_prebootstrap_all_packages.sh",
+    "postbootstrap": "./scripts/run_postbootstrap_all_packages.sh",
+    "bootstrap": "npx lerna bootstrap",
+    "rebootstrap": "npx lerna clean --yes && npm run bootstrap",
+    "copy-env-files": "./scripts/copy_env_files.sh",
+    "compile": "./scripts/run_compile_all_packages.sh",
+    "build": "./scripts/run_build_all_packages.sh"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^2.2.0",
+    "lerna": "^3.13.4"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@types/google-apps-script": "0.0.54"
+  }
+}

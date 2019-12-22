@@ -1,0 +1,61 @@
+shardDb:
+  shardDatabaseNamePrefix: ulangi_shard_
+
+library:
+  defaultLanguageCodePairs: [
+    "ar-en",
+    "cs-en",
+    "zh-en",
+    "da-en",
+    "nl-en",
+    "en-en",
+    "fr-en",
+    "de-en",
+    "el-en",
+    "hi-en",
+    "hu-en",
+    "id-en",
+    "it-en",
+    "ja-en",
+    "ko-en",
+    "nb-en",
+    "pl-en",
+    "pt-en",
+    "ru-en",
+    "sk-en",
+    "es-en",
+    "sv-en",
+    "tr-en",
+    "uk-en",
+    "vi-en"
+  ]
+  maxPerSet: 50
+
+dictionary:
+  defaultLanguageCodePairs: [
+    "ar-en",
+    "cs-en",
+    "zh-en",
+    "da-en",
+    "nl-en",
+    "en-en",
+    "fr-en",
+    "de-en",
+    "el-en",
+    "hi-en",
+    "hu-en",
+    "id-en",
+    "it-en",
+    "ja-en",
+    "ko-en",
+    "nb-en",
+    "pl-en",
+    "pt-en",
+    "ru-en",
+    "sk-en",
+    "es-en",
+    "sv-en",
+    "tr-en",
+    "uk-en",
+    "vi-en"
+  ]

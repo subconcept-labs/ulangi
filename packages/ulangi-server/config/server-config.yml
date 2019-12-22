@@ -1,0 +1,212 @@
+user:
+  passwordMinLength: 6
+  passwordEncryptionSaltRounds: 10
+  resetPasswordRequestExpirationHours: 1
+
+library:
+  fetchPublicSetMaxOffset: 300
+  fetchPublicVocabularyMaxOffset: 300
+
+pixabay:
+  apiUrl: "https://pixabay.com/api"
+  developerKey: "14120690-c844966705b4a492a4c9cdf8d"
+  bucketName: "ulangi-images"
+  folderName: "pixabay"
+  imageUrl: "https://images.ulangi.com"
+
+# Language code standard is ISO-639-1
+languageMap:
+  ar: "Arabic"
+  cs: "Czech"
+  zh: "Chinese"
+  da: "Danish"
+  nl: "Dutch"
+  en: "English"
+  fr: "French"
+  de: "German"
+  el: "Greek"
+  hi: "Hindi"
+  hu: "Hungarian"
+  id: "Indonesian"
+  it: "Italian"
+  ja: "Japanese"
+  ko: "Korean"
+  nb: "Norwegian"
+  pl: "Polish"
+  pt: "Portuguese"
+  ru: "Russian"
+  sk: "Slovak"
+  es: "Spanish"
+  sv: "Swedish"
+  tr: "Turkish"
+  uk: "Ukrainian"
+  vi: "Vietnamese"
+  any: "Any Language"
+
+googleTextToSpeech:
+  defaultVoices:
+    ar:
+      voiceName: "ar-XA-Standard-A"
+      languageCode: "ar-XA"
+
+    cs:
+      voiceName: "cs-CZ-Standard-A"
+      languageCode: "cs-CZ"
+
+    zh: 
+      voiceName: "cmn-CN-Standard-A"
+      languageCode: "cmn-CN"
+
+    da: 
+      voiceName: "da-DK-Standard-A"
+      languageCode: "da-DK"
+
+    nl:
+      voiceName: "nl-NL-Standard-A"
+      languageCode: "nl-NL"
+
+    en: 
+      voiceName: "en-US-Standard-E"
+      languageCode: "en-US"
+
+    fr: 
+      voiceName: "fr-FR-Standard-A"
+      languageCode: "fr-FR"
+
+    de: 
+      voiceName: "de-DE-Standard-A"
+      languageCode: "de-DE"
+
+    el:
+      voiceName: "el-GR-Standard-A"
+      languageCode: "el-GR"
+
+    hi: 
+      voiceName: "hi-IN-Standard-A"
+      languageCode: "hi-IN"
+
+    hu:
+      voiceName: "hu-HU-Standard-A"
+      languageCode: "hu-HU"
+
+    id:
+      voiceName: "id-ID-Standard-A"
+      languageCode: "id-ID"
+
+    it: 
+      voiceName: "it-IT-Standard-A"
+      languageCode: "it-IT"
+
+    ja: 
+      voiceName: "ja-JP-Standard-A"
+      languageCode: "ja-JP"
+
+    ko: 
+      voiceName: "ko-KR-Standard-A"
+      languageCode: "ko-KR"
+
+    nb:
+      voiceName: "nb-NO-Standard-A"
+      languageCode: "nb-NO"
+
+    pl: 
+      voiceName: "pl-PL-Standard-A"
+      languageCode: "pl-PL"
+
+    pt: 
+      voiceName: "pt-BR-Standard-A"
+      languageCode: "pt-BR"
+
+    ru: 
+      voiceName: "ru-RU-Standard-A"
+      languageCode: "ru-RU"
+
+    sk:
+      voiceName: "sk-SK-Standard-A"
+      languageCode: "sk-SK"
+
+    es: 
+      voiceName: "es-ES-Standard-A"
+      languageCode: "es-ES"
+
+    sv: 
+      voiceName: "sv-SE-Standard-A"
+      languageCode: "sv-SE"
+
+    tr: 
+      voiceName: "tr-TR-Standard-A"
+      languageCode: "tr-TR"
+
+    uk: 
+      voiceName: "uk-UA-Standard-A"
+      languageCode: "uk-UA"
+
+    vi: 
+      voiceName: "vi-VN-Standard-A"
+      languageCode: "vi-VN"
+
+polly:
+  defaultVoices:
+    zh: 
+      voiceId: "Zhiyu"
+      languageCode: "cmn-CN"
+
+    da: 
+      voiceId: "Naja"
+      languageCode: "da-DK"
+
+    nl:
+      voiceId: "Lotte"
+      languageCode: "nl-NL"
+
+    en: 
+      voiceId: "Ivy"
+      languageCode: "en-US"
+
+    fr: 
+      voiceId: "Mathieu"
+      languageCode: "fr-FR"
+
+    de: 
+      voiceId: "Marlene"
+      languageCode: "de-DE"
+
+    hi: 
+      voiceId: "Aditi"
+      languageCode: "hi-IN"
+
+    it: 
+      voiceId: "Carla"
+      languageCode: "it-IT"
+
+    ja: 
+      voiceId: "Mizuki"
+      languageCode: "ja-JP"
+
+    ko: 
+      voiceId: "Seoyeon"
+      languageCode: "ko-KR"
+
+    pl: 
+      voiceId: "Ewa"
+      languageCode: "pl-PL"
+
+    pt: 
+      voiceId: "Vitoria"
+      languageCode: "pt-BR"
+
+    ru: 
+      voiceId: "Tatyana"
+      languageCode: "ru-RU"
+
+    es: 
+      voiceId: "Miguel"
+      languageCode: "es-US"
+
+    sv: 
+      voiceId: "Astrid"
+      languageCode: "sv-SE"
+
+    tr: 
+      voiceId: "Filiz"
+      languageCode: "tr-TR"

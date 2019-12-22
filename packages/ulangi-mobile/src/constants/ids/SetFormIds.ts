@@ -1,0 +1,19 @@
+/*
+ * Copyright (c) Minh Loi.
+ *
+ * This file is part of Ulangi which is released under GPL v3.0.
+ * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+export const SetFormIds = {
+  SET_NAME_INPUT: 'SET_NAME_INPUT',
+  LANGUAGE_PICKER_TITLE: 'LANGUAGE_PICKER_TITLE',
+  LANGUAGE_LIST: 'LANGUAGE_LIST',
+  SELECT_LANGUAGE_BTN_BY_LANGUAGE_NAME: (languageName: string): string =>
+    'SELECT_LANGUAGE_BTN_BY_LANGUAGE_NAME_' + languageName,
+  SHOW_LEARNING_LANGUAGE_PICKER_BTN: 'SHOW_LEARNING_LANGUAGE_PICKER_BTN',
+  SHOW_TRANSLATED_TO_LANGUAGE_PICKER_BTN:
+    'SHOW_TRANSLATED_TO_LANGUAGE_PICKER_BTN',
+  CLOSE_PICKER_BTN: 'CLOSE_PICKER_BTN',
+  SUBMIT_BTN: 'SUBMIT_BTN',
+};

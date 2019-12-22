@@ -1,0 +1,44 @@
+{
+  "name": "@ulangi/ulangi-dictionary",
+  "version": "2.18.1",
+  "description": "Ulangi Dictionary",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint --ext .ts src/",
+    "lint-fix": "eslint --fix --ext .ts src/",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc -noUnusedLocals -noUnusedParameters -p ./",
+    "build": "npm run prettify && npm run lint-fix && npm run clean && npm run compile",
+    "prettify": "prettier --write \"src/**/*.ts\""
+  },
+  "author": "Minh Loi",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
+    "@ulangi/assert": "^1.0.6",
+    "@ulangi/resolver": "^1.0.0",
+    "@ulangi/ulangi-common": "^2.18.1",
+    "@ulangi/wiktionary-core": "^1.1.0",
+    "aws-es-connection": "^1.0.0",
+    "aws-sdk": "^2.254.1",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.10",
+    "@types/lodash": "^4.14.117",
+    "@types/uuid": "^3.4.4",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.4.1",
+    "eslint-plugin-simple-import-sort": "^3.1.0",
+    "jest": "^23.6.0",
+    "jest-extended": "^0.11.0",
+    "prettier": "1.17.1",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.5.2"
+  }
+}

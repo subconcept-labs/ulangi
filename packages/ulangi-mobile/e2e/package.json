@@ -1,0 +1,82 @@
+{
+  "name": "e2e",
+  "private": true,
+  "license": "SEE LICENSE IN ../LICENSE.md",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/detox": "^12.8.4",
+    "@types/jasmine": "^3.3.0",
+    "@types/jest": "^23.3.5",
+    "@types/lodash": "^4.14.118",
+    "@types/rimraf": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "acorn": "^6.1.1",
+    "axios": "^0.18.0",
+    "detox": "^14.0.3",
+    "eslint": "^5.16.0",
+    "eslint-plugin-jest": "^22.4.1",
+    "eslint-plugin-simple-import-sort": "^3.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "jest": "^23.6.0",
+    "jest-html-reporter": "^2.4.2",
+    "lodash": "^4.17.11",
+    "prettier": "1.17.1",
+    "rimraf": "^2.6.2",
+    "slugid": "^2.0.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "lint": "eslint --ext .ts src/",
+    "lint-fix": "eslint --fix --ext .ts src/",
+    "compile": "tsc --noEmit",
+    "pretest": "npm run compile",
+    "clean-up": "npm run prettify && npm run lint-fix && npm run compile",
+    "test:ios.sim.release": "npm run pretest && detox test -c ios.sim.release -l error --record-logs failing",
+    "test:android.emu.release": "npm run pretest && detox test -c android.emu.release -l error --record-logs failing",
+    "test:android.real.release": "npm run pretest && detox test -c android.real.release -l error --record-logs failing",
+    "build:ios.sim.release": "detox build -c ios.sim.release",
+    "build:ios.sim.release.ip7": "detox build -c ios.sim.release.ip7",
+    "build:android.emu.release": "detox build -c android.emu.release",
+    "build:android.real.debug": "detox build -c android.real.debug",
+    "screenshot:ios.sim.release": "detox test -c ios.sim.release -o screenshot.config.js -l error --record-logs failing",
+    "screenshot:ios.sim.release.ip7": "detox test -c ios.sim.release.ip7 -o screenshot.config.js -l error --record-logs failing",
+    "screenshot:android.emu.release": "detox test -c android.emu.release -o screenshot.config.js -l error --record-logs failing",
+    "screenshot:android.real.release": "detox test -c android.real.release -o screenshot.config.js -l verbose  --record-logs failing",
+    "prettify": "prettier --write \"src/**/*.ts\""
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.release": {
+        "binaryPath": "../ios/build/Build/Products/Release-iphonesimulator/UlangiDev.app",
+        "build": "xcodebuild -workspace ../ios/UlangiMobile.xcworkspace -scheme UlangiMobile-Dev -configuration Release -destination 'platform=iOS Simulator,name=iPhone X' -derivedDataPath ../ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "ios.sim.release.ip7": {
+        "binaryPath": "../ios/build/Build/Products/Release-iphonesimulator/UlangiDev.app",
+        "build": "xcodebuild -workspace ../ios/UlangiMobile.xcworkspace -scheme UlangiMobile-Dev -configuration Release -destination 'platform=iOS Simulator,name=iPhone 7' -derivedDataPath ../ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 7"
+      },
+      "android.emu.release": {
+        "binaryPath": "../android/app/build/outputs/apk/dev/release/app-dev-x86-release.apk",
+        "testBinaryPath": "../android/app/build/outputs/apk/androidTest/dev/release/app-dev-release-androidTest.apk",
+        "build": "../android/gradlew assembleDevRelease assembleDevReleaseAndroidTest -DtestBuildType=release -p ../android",
+        "type": "android.emulator",
+        "name": "Pixel_3_API_26"
+      },
+      "android.real.release": {
+        "binaryPath": "../android/app/build/outputs/apk/dev/release/app-dev-arm64-v8a-release.apk",
+        "testBinaryPath": "../android/app/build/outputs/apk/androidTest/dev/release/app-dev-release-androidTest.apk",
+        "build": "../android/gradlew assembleDevRelease assembleDevReleaseAndroidTest -DtestBuildType=release -p ../android",
+        "type": "android.attached",
+        "name": "9887a83431304e3147"
+      }
+    },
+    "test-runner": "jest",
+    "runner-config": "./jest.config.js"
+  }
+}

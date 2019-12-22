@@ -1,0 +1,9 @@
+div(id="contact_us_container" class="contact_us_container gradiant padding-top-80 padding-bottom-80")
+  h1(class="title") Contact Us
+  form(id="contact_us_form" class="contact_us_form")
+    div(class="message_container")
+      span(class="message") You can send an email to us at #{pageData.adminEmail} or use the form below.
+    input(type="text" class="input" id="email_input" name="email" placeholder="Enter your email")
+    textarea(type="text" class="textarea" id="message_input" name="message" placeholder="Enter message")
+    button(type="submit" class="submit_btn") Send
+
