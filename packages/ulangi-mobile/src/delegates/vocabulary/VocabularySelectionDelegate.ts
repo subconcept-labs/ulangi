@@ -20,7 +20,7 @@ export class VocabularySelectionDelegate {
     if (this.vocabularyListState.vocabularyList !== null) {
       if (this.vocabularyListState.vocabularyList.has(vocabularyId)) {
         const vocabulary = assertExists(
-          this.vocabularyListState.vocabularyList.get(vocabularyId)
+          this.vocabularyListState.vocabularyList.get(vocabularyId),
         );
         vocabulary.isSelected.set(!vocabulary.isSelected.get());
       }
@@ -38,14 +38,14 @@ export class VocabularySelectionDelegate {
       (): void => {
         if (this.vocabularyListState.vocabularyList !== null) {
           return Array.from(
-            this.vocabularyListState.vocabularyList.values()
+            this.vocabularyListState.vocabularyList.values(),
           ).forEach(
             (vocabulary): void => {
               vocabulary.isSelected.set(false);
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 }

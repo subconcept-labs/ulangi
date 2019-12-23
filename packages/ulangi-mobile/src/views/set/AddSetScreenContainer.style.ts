@@ -23,7 +23,7 @@ export class AddSetScreenStyle {
           text: 'Add Set',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class AddSetScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class AddSetScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     AddSetScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AddSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    AddSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     AddSetScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AddSetScreenStyle.SCREEN_DARK_STYLES_ONLY
+    AddSetScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

@@ -16,17 +16,17 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class SpacedRepetitionScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableSpacedRepetitionScreen
+    observableScreen: ObservableSpacedRepetitionScreen,
   ): SpacedRepetitionScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
@@ -42,7 +42,7 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
       navigatorDelegate,
       categoryMessageDelegate,
       linkingDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

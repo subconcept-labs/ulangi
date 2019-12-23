@@ -23,7 +23,7 @@ export class QuizMultipleChoiceScreenStyle {
           text: 'Multiple Choice',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -41,7 +41,7 @@ export class QuizMultipleChoiceScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -59,18 +59,18 @@ export class QuizMultipleChoiceScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     QuizMultipleChoiceScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    QuizMultipleChoiceScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    QuizMultipleChoiceScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     QuizMultipleChoiceScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    QuizMultipleChoiceScreenStyle.SCREEN_DARK_STYLES_ONLY
+    QuizMultipleChoiceScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

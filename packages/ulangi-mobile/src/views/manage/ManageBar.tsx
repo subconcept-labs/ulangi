@@ -53,13 +53,11 @@ export class ManageBar extends React.Component<ManageBarProps> {
             testID={ManageScreenIds.SHOW_MANAGE_LIST_SELECTION_MENU_BTN}
             onPress={this.props.showManageListSelectionMenu}
             hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
-            style={this.styles.button}
-          >
+            style={this.styles.button}>
             <DefaultText
               ellipsizeMode="tail"
               numberOfLines={1}
-              style={this.styles.button_text}
-            >
+              style={this.styles.button_text}>
               {this.getTitle()}
             </DefaultText>
           </TouchableOpacity>
@@ -67,12 +65,12 @@ export class ManageBar extends React.Component<ManageBarProps> {
             testID={ManageScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
             text={_.upperFirst(
               config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-                .shortName
+                .shortName,
             )}
             onPress={this.props.showVocabularyFilterMenu}
             styles={FullRoundedButtonStyle.getOutlineStyles(
               ButtonSize.SMALL,
-              this.getColorByStatus(this.props.selectedFilterType.get())
+              this.getColorByStatus(this.props.selectedFilterType.get()),
             )}
           />
         </View>

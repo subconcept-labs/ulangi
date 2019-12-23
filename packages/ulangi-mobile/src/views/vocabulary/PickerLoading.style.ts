@@ -43,7 +43,7 @@ export const lightStyles = StyleSheet.create(
     spinner_text: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -55,5 +55,5 @@ export const darkStyles = StyleSheet.create(
     spinner_text: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

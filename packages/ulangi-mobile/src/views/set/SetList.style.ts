@@ -46,7 +46,7 @@ export const lightStyles = StyleSheet.create(
     list: {
       borderTopColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -58,5 +58,5 @@ export const darkStyles = StyleSheet.create(
     list: {
       borderTopColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

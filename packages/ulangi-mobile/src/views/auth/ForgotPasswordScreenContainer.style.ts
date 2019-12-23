@@ -13,30 +13,30 @@ export class ForgotPasswordScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    {}
+    {},
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
-    {}
+    {},
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_DARK_STYLES_ONLY,
-    {}
+    {},
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     ForgotPasswordScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ForgotPasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    ForgotPasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     ForgotPasswordScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY
+    ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

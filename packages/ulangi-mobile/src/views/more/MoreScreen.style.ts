@@ -47,7 +47,7 @@ export const lightStyles = StyleSheet.create(
     description_text: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -55,7 +55,7 @@ export const darkStyles = StyleSheet.create(
     description_text: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const regularMembershipSectionRowLightStyles = StyleSheet.create(
@@ -64,7 +64,7 @@ export const regularMembershipSectionRowLightStyles = StyleSheet.create(
       color: config.styles.regularMembershipColor,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const regularMembershipSectionRowDarkStyles = StyleSheet.create(
@@ -73,7 +73,7 @@ export const regularMembershipSectionRowDarkStyles = StyleSheet.create(
       color: config.styles.regularMembershipColor,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const premiumMembershipSectionRowLightStyles = StyleSheet.create(
@@ -82,7 +82,7 @@ export const premiumMembershipSectionRowLightStyles = StyleSheet.create(
       color: config.styles.premiumMembershipColor,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const premiumMembershipSectionRowDarkStyles = StyleSheet.create(
@@ -91,7 +91,7 @@ export const premiumMembershipSectionRowDarkStyles = StyleSheet.create(
       color: config.styles.premiumMembershipColor,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const logOutSectionRowLightStyles = StyleSheet.create(
@@ -99,7 +99,7 @@ export const logOutSectionRowLightStyles = StyleSheet.create(
     left_text: {
       color: 'red',
     },
-  })
+  }),
 );
 
 export const logOutSectionRowDarkStyles = StyleSheet.create(
@@ -107,5 +107,5 @@ export const logOutSectionRowDarkStyles = StyleSheet.create(
     left_text: {
       color: 'red',
     },
-  })
+  }),
 );

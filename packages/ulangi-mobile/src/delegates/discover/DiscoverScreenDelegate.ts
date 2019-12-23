@@ -60,7 +60,7 @@ export class DiscoverScreenDelegate {
     translationListDelegate: TranslationListDelegate,
     translationActionMenuDelegate: TranslationActionMenuDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -129,7 +129,7 @@ export class DiscoverScreenDelegate {
       (): void => {
         this.clearAndSearch('');
         this.observableScreen.searchInputAutoFocus.set(true);
-      }
+      },
     );
   }
 
@@ -151,24 +151,24 @@ export class DiscoverScreenDelegate {
       DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST
     ) {
       this.publicVocabularyListDelegate.refresh(
-        this.observableScreen.searchInput.get()
+        this.observableScreen.searchInput.get(),
       );
       if (this.translationListDelegate.canTranslate() === false) {
         this.translationListDelegate.clearTranslations;
       } else {
         this.translationListDelegate.refreshBidirectionalTranslations(
-          this.observableScreen.searchInput.get()
+          this.observableScreen.searchInput.get(),
         );
       }
     } else {
       this.publicSetListDelegate.refresh(
-        this.observableScreen.searchInput.get()
+        this.observableScreen.searchInput.get(),
       );
     }
   }
 
   public addVocabularyFromPublicVocabulary(
-    publicVocabulary: PublicVocabulary
+    publicVocabulary: PublicVocabulary,
   ): void {
     this.addVocabularyDelegate.addVocabularyFromPublicVocabulary(
       publicVocabulary,
@@ -177,12 +177,12 @@ export class DiscoverScreenDelegate {
         onAdding: this.showAddingDialog,
         onAddSucceeded: this.showAddSucceededDialog,
         onAddFailed: this.showAddFailedDialog,
-      }
+      },
     );
   }
 
   public addVocabularyFromTranslation(
-    translation: TranslationWithLanguages
+    translation: TranslationWithLanguages,
   ): void {
     this.addVocabularyDelegate.addVocabularyFromTranslation(translation, {
       onAdding: this.showAddingDialog,
@@ -201,7 +201,7 @@ export class DiscoverScreenDelegate {
               ...vocabulary,
               definitions: vocabulary.definitions.slice(),
             };
-          }
+          },
         ),
       },
     });
@@ -213,14 +213,14 @@ export class DiscoverScreenDelegate {
         ActionType.SET__SELECT,
         (): void => {
           this.clearAndSearch();
-        }
-      )
+        },
+      ),
     );
   }
 
   public openLink(link: string): void {
     Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err)
+      (err): void => console.error('An error occurred', err),
     );
   }
 
@@ -234,7 +234,7 @@ export class DiscoverScreenDelegate {
         closeOnTouchOutside: true,
         showCloseButton: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -243,7 +243,7 @@ export class DiscoverScreenDelegate {
   }
 
   public showTranslationActionMenu(
-    translation: TranslationWithLanguages
+    translation: TranslationWithLanguages,
   ): void {
     this.translationActionMenuDelegate.show(translation);
   }
@@ -253,7 +253,7 @@ export class DiscoverScreenDelegate {
       {
         message: 'Adding. Please wait...',
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -265,7 +265,7 @@ export class DiscoverScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -278,7 +278,7 @@ export class DiscoverScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

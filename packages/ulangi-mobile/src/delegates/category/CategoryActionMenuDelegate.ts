@@ -35,7 +35,7 @@ export class CategoryActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.observableLightBox = observableLightBox;
     this.categorySelectionDelegate = categorySelectionDelegate;
@@ -46,7 +46,7 @@ export class CategoryActionMenuDelegate {
   public show(
     category: ObservableCategory,
     filterType: VocabularyFilterType,
-    hideViewDetailButton: boolean
+    hideViewDetailButton: boolean,
   ): void {
     const items: SelectionItem[] = [];
 
@@ -64,7 +64,7 @@ export class CategoryActionMenuDelegate {
       this.getLearnWithWritingBtn(category.categoryName),
       this.getQuizBtn(category.categoryName),
       this.getPlayWithReflexBtn(category.categoryName),
-      this.getPlayWithAtomBtn(category.categoryName)
+      this.getPlayWithAtomBtn(category.categoryName),
     );
 
     this.observableLightBox.actionMenu = {
@@ -76,14 +76,14 @@ export class CategoryActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
   private getToggleSelectButton(categoryName: string): SelectionItem {
     const categorySelectionDelegate = assertExists(
       this.categorySelectionDelegate,
-      'categorySelectionDelegate is required to render toggle select button'
+      'categorySelectionDelegate is required to render toggle select button',
     );
     return {
       testID: CategoryActionMenuIds.TOGGLE_SELECT_BTN,
@@ -97,7 +97,7 @@ export class CategoryActionMenuDelegate {
 
   private getViewDetailButton(
     category: ObservableCategory,
-    selectedFilterType: VocabularyFilterType
+    selectedFilterType: VocabularyFilterType,
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.VIEW_DETAIL_BTN,
@@ -178,7 +178,7 @@ export class CategoryActionMenuDelegate {
             this.navigatorDelegate.push(ScreenName.REFLEX_SCREEN, {
               selectedCategoryNames: [categoryName],
             });
-          }
+          },
         );
       },
     };
@@ -197,7 +197,7 @@ export class CategoryActionMenuDelegate {
             this.navigatorDelegate.push(ScreenName.ATOM_SCREEN, {
               selectedCategoryNames: [categoryName],
             });
-          }
+          },
         );
       },
     };

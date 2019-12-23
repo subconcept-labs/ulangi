@@ -46,7 +46,7 @@ export class MembershipScreenDelegate {
     purchaseStore: ObservablePurchaseStore,
     observableScreen: ObservableMembershipScreen,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -74,7 +74,7 @@ export class MembershipScreenDelegate {
             if (products.length === 0) {
               this.observableScreen.premiumLifetimeProduct = null;
               this.observableScreen.upgradeButtonState.reset(
-                'Product not found'
+                'Product not found',
               );
             } else {
               this.observableScreen.premiumLifetimeProduct = products[0];
@@ -82,21 +82,21 @@ export class MembershipScreenDelegate {
                 'Upgrade to Premium (Lifetime)',
                 this.observableScreen.premiumLifetimeProduct.localizedPrice,
                 this.observableScreen.premiumLifetimeProduct.currency,
-                this.upgradeToPremium
+                this.upgradeToPremium,
               );
             }
-          }
+          },
         ),
         once(
           ActionType.IAP__GET_PRODUCTS_FAILED,
           (): void => {
             this.observableScreen.premiumLifetimeProduct = null;
             this.observableScreen.upgradeButtonState.reset(
-              'Failed to fetch product'
+              'Failed to fetch product',
             );
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -111,21 +111,21 @@ export class MembershipScreenDelegate {
             ActionType.IAP__RESTORING_PURCHASES,
             (): void => {
               this.showRestoringPurchasesDialog();
-            }
+            },
           ),
           once(
             ActionType.IAP__RESTORE_PURCHASES_SUCCEEDED,
             (): void => {
               this.dialogDelegate.dismiss();
-            }
+            },
           ),
           once(
             ActionType.IAP__RESTORE_PURCHASES_FAILED,
             ({ errorCode }): void => {
               this.showFailedToRestorePurchases(errorCode);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     } else {
       this.showPurchasesAlreadyAppliedDialog();
@@ -140,7 +140,7 @@ export class MembershipScreenDelegate {
           ActivityState.ACTIVE
         ) {
           this.observableScreen.upgradeButtonState.reset(
-            'Processing purchase...'
+            'Processing purchase...',
           );
         } else if (this.purchaseStore.premiumLifetimeProcessResult !== null) {
           const {
@@ -150,10 +150,10 @@ export class MembershipScreenDelegate {
           this.observableScreen.upgradeButtonState.reset(
             success === true
               ? 'Processed purchase successfully'
-              : this.errorConverter.convertToMessage(errorCode || '')
+              : this.errorConverter.convertToMessage(errorCode || ''),
           );
         }
-      }
+      },
     );
   }
 
@@ -189,21 +189,21 @@ export class MembershipScreenDelegate {
             if (Platform.OS !== 'android') {
               this.showRequestingPurchaseDialog();
             }
-          }
+          },
         ),
         once(
           ActionType.IAP__REQUEST_PURCHASE_SUCCEEDED,
           (): void => {
             this.dialogDelegate.dismiss();
-          }
+          },
         ),
         once(
           ActionType.IAP__REQUEST_PURCHASE_FAILED,
           ({ errorCode }): void => {
             this.showFailedToRequestPurchase(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 

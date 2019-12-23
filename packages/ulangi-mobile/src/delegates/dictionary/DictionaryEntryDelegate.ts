@@ -24,7 +24,7 @@ export class DictionaryEntryDelegate {
     eventBus: EventBus,
     setStore: ObservableSetStore,
     observableConverter: ObservableConverter,
-    dictionaryEntryState: ObservableDictionaryEntryState
+    dictionaryEntryState: ObservableDictionaryEntryState,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -39,12 +39,12 @@ export class DictionaryEntryDelegate {
     ) {
       this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
       this.dictionaryEntryState.fetchError.set(
-        ErrorCode.DICTIONARY__SPECIFIC_LANAGUAGE_REQUIRED
+        ErrorCode.DICTIONARY__SPECIFIC_LANAGUAGE_REQUIRED,
       );
     } else if (this.setStore.existingCurrentSet.dictionaryAvailable === false) {
       this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
       this.dictionaryEntryState.fetchError.set(
-        ErrorCode.DICTIONARY__UNSUPPORTED
+        ErrorCode.DICTIONARY__UNSUPPORTED,
       );
     } else {
       this.eventBus.pubsub(
@@ -60,7 +60,7 @@ export class DictionaryEntryDelegate {
             ActionType.DICTIONARY__GETTING_ENTRY,
             (): void => {
               this.dictionaryEntryState.fetchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.DICTIONARY__GET_ENTRY_SUCCEEDED,
@@ -68,26 +68,26 @@ export class DictionaryEntryDelegate {
               if (dictionaryEntry.definitions.length === 0) {
                 this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
                 this.dictionaryEntryState.fetchError.set(
-                  ErrorCode.DICTIONARY__NO_RESULTS
+                  ErrorCode.DICTIONARY__NO_RESULTS,
                 );
               } else {
                 this.dictionaryEntryState.fetchState.set(
-                  ActivityState.INACTIVE
+                  ActivityState.INACTIVE,
                 );
               }
               this.dictionaryEntryState.dictionaryEntry = this.observableConverter.convertToObservableDictionaryEntry(
-                dictionaryEntry
+                dictionaryEntry,
               );
-            }
+            },
           ),
           once(
             ActionType.DICTIONARY__GET_ENTRY_FAILED,
             ({ errorCode }): void => {
               this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
               this.dictionaryEntryState.fetchError.set(errorCode);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -96,7 +96,7 @@ export class DictionaryEntryDelegate {
     this.dictionaryEntryState.fetchState.set(ActivityState.INACTIVE);
     this.dictionaryEntryState.dictionaryEntry = null;
     this.eventBus.publish(
-      createAction(ActionType.DICTIONARY__CLEAR_ENTRY, null)
+      createAction(ActionType.DICTIONARY__CLEAR_ENTRY, null),
     );
   }
 }

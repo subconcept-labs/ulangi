@@ -12,7 +12,7 @@ export class ContactUsScreenFactory extends ScreenFactory {
   public createScreenDelegate(): ContactUsScreenDelegate {
     return new ContactUsScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate()
+      this.createNavigatorDelegate(),
     );
   }
 }

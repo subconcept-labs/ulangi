@@ -43,7 +43,7 @@ export class AtomPlayScreenContainer extends Container<
   private atomPlayScreenFactory = new AtomPlayScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new AtomQuestionIterator(
@@ -52,9 +52,9 @@ export class AtomPlayScreenContainer extends Container<
         (vocabulary): [string, Vocabulary] => [
           vocabulary.vocabularyId,
           vocabulary,
-        ]
-      )
-    )
+        ],
+      ),
+    ),
   );
 
   private atomSettingsDelegate = this.atomPlayScreenFactory.createAtomSettingsDelegate();
@@ -68,13 +68,13 @@ export class AtomPlayScreenContainer extends Container<
     [],
     [],
     [],
-    ScreenName.ATOM_PLAY_SCREEN
+    ScreenName.ATOM_PLAY_SCREEN,
   );
 
   private screenDelegate = this.atomPlayScreenFactory.createScreenDelegate(
     this.observableScreen,
     this.questionIterator,
-    this.props.passedProps.startGame
+    this.props.passedProps.startGame,
   );
 
   public componentWillUnmount(): void {

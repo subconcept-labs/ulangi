@@ -45,8 +45,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
     return (
       <View
         testID={QuizMultipleChoiceScreenIds.SCREEN}
-        style={this.styles.screen}
-      >
+        style={this.styles.screen}>
         <ScrollView>
           {this.props.observableScreen.shouldShowResult.get() === true ? (
             <QuizMultipleChoiceResult

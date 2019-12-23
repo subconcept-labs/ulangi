@@ -27,25 +27,25 @@ export class ForgotPasswordScreenContainer extends Container {
   private screenFactory = new ForgotPasswordScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableForgotPasswordScreen(
     '',
-    ScreenName.FORGOT_PASSWORD_SCREEN
+    ScreenName.FORGOT_PASSWORD_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ForgotPasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

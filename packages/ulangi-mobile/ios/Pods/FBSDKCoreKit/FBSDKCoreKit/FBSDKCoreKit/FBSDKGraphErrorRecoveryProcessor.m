@@ -17,7 +17,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #import "FBSDKGraphErrorRecoveryProcessor.h"
 
-#import "FBSDKCoreKit+Internal.h"
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+
 #import "FBSDKErrorRecoveryAttempter.h"
 
 @interface FBSDKGraphErrorRecoveryProcessor()
@@ -31,11 +32,6 @@
 @end
 
 @implementation FBSDKGraphErrorRecoveryProcessor
-
-- (void)dealloc
-{
-
-}
 
 - (BOOL)processError:(NSError *)error request:(FBSDKGraphRequest *)request delegate:(id<FBSDKGraphErrorRecoveryProcessorDelegate>)delegate
 {

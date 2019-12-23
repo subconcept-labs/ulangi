@@ -38,7 +38,7 @@ export class TranslationActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.observableLightBox = observableLightBox;
     this.setStore = setStore;
@@ -61,12 +61,12 @@ export class TranslationActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
   private getEditBeforeAddingButton(
-    translationWithLanguages: TranslationWithLanguages
+    translationWithLanguages: TranslationWithLanguages,
   ): SelectionItem {
     return {
       testID: TranslationActionMenuIds.EDIT_BEFORE_ADDING_BTN,
@@ -75,11 +75,11 @@ export class TranslationActionMenuDelegate {
         const translation = this.translationConverter.convertToTranslation(
           translationWithLanguages,
           this.setStore.existingCurrentSet.learningLanguageCode,
-          this.setStore.existingCurrentSet.translatedToLanguageCode
+          this.setStore.existingCurrentSet.translatedToLanguageCode,
         );
 
         const vocabulary = this.translationConverter.convertToVocabulary(
-          translation
+          translation,
         );
 
         this.navigatorDelegate.push(ScreenName.ADD_VOCABULARY_SCREEN, {
@@ -92,12 +92,12 @@ export class TranslationActionMenuDelegate {
   }
 
   private getReportAnErrorButton(
-    translationWithLanguages: TranslationWithLanguages
+    translationWithLanguages: TranslationWithLanguages,
   ): SelectionItem {
     const translation = this.translationConverter.convertToTranslation(
       translationWithLanguages,
       this.setStore.existingCurrentSet.learningLanguageCode,
-      this.setStore.existingCurrentSet.translatedToLanguageCode
+      this.setStore.existingCurrentSet.translatedToLanguageCode,
     );
 
     const message = [

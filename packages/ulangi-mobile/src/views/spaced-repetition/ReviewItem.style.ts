@@ -93,7 +93,7 @@ export const lightStyles = StyleSheet.create(
     message_text: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -117,7 +117,7 @@ export const darkStyles = StyleSheet.create(
     message_text: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const definitionItemLightStyles = _.merge(
@@ -128,7 +128,7 @@ export const definitionItemLightStyles = _.merge(
       borderTopWidth: 1,
       borderTopColor: config.styles.light.primaryBackgroundColor,
     },
-  }
+  },
 );
 
 export const definitionItemDarkStyles = _.merge(
@@ -139,5 +139,5 @@ export const definitionItemDarkStyles = _.merge(
       borderTopWidth: 1,
       borderTopColor: config.styles.dark.secondaryBackgroundColor,
     },
-  }
+  },
 );

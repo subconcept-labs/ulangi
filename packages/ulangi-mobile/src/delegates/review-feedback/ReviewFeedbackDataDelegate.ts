@@ -33,7 +33,7 @@ export class ReviewFeedbackDataDelegate {
     settingsDelegate:
       | WritingSettingsDelegate
       | SpacedRepetitionSettingsDelegate,
-    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate
+    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
   ) {
     this.maxLevel = maxLevel;
     this.scheduler = scheduler;
@@ -43,7 +43,7 @@ export class ReviewFeedbackDataDelegate {
 
   public createAllNextReviewData(
     vocabularyList: ReadonlyMap<string, Vocabulary>,
-    feedbackList: ReadonlyMap<string, Feedback>
+    feedbackList: ReadonlyMap<string, Feedback>,
   ): ObservableMap<string, NextReviewData> {
     return new ObservableMap(
       Array.from(feedbackList.entries()).map(
@@ -52,11 +52,11 @@ export class ReviewFeedbackDataDelegate {
             vocabularyId,
             this.calculateNextReviewData(
               assertExists(vocabularyList.get(vocabularyId)),
-              feedback
+              feedback,
             ),
           ];
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -64,7 +64,7 @@ export class ReviewFeedbackDataDelegate {
     vocabulary: Vocabulary,
     feedback: Feedback,
     shortForm?: boolean,
-    withoutSuffix?: boolean
+    withoutSuffix?: boolean,
   ): NextReviewData {
     const autoArchiveSettings = this.autoArchiveSettingsDelegate.getCurrentSettings();
     const { initialInterval } = this.settingsDelegate.getCurrentSettings();
@@ -72,7 +72,7 @@ export class ReviewFeedbackDataDelegate {
     const nextLevel = this.scheduler.getNextLevel(
       vocabulary,
       feedback,
-      this.maxLevel
+      this.maxLevel,
     );
 
     const nextReviewTimeFromNow = _.upperFirst(
@@ -83,14 +83,14 @@ export class ReviewFeedbackDataDelegate {
         this.maxLevel,
         autoArchiveSettings,
         shortForm,
-        withoutSuffix
-      )
+        withoutSuffix,
+      ),
     );
 
     const netLevelChange = this.scheduler.getNetLevelChange(
       vocabulary,
       feedback,
-      this.maxLevel
+      this.maxLevel,
     );
 
     return {

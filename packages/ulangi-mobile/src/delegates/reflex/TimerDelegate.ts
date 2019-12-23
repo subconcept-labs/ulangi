@@ -21,7 +21,7 @@ export class TimerDelegate {
 
   public constructor(
     observer: Observer,
-    observableScreen: ObservableReflexScreen
+    observableScreen: ObservableReflexScreen,
   ) {
     this.observer = observer;
     this.observableScreen = observableScreen;
@@ -30,21 +30,21 @@ export class TimerDelegate {
   public startTimer(callback: { onTimeUp: () => void }): void {
     const timerCommand = new ObservableScaleXCommand(
       0,
-      this.observableScreen.gameState.remainingTime
+      this.observableScreen.gameState.remainingTime,
     );
     this.observableScreen.gameState.timerCommandList.commands.push(
-      timerCommand
+      timerCommand,
     );
 
     this.observer.when(
       (): boolean => timerCommand.state === 'completed',
-      callback.onTimeUp
+      callback.onTimeUp,
     );
   }
 
   public stopTimer(): void {
     this.observableScreen.gameState.timerCommandList.commands.push(
-      new ObservableStopCommand()
+      new ObservableStopCommand(),
     );
   }
 
@@ -52,7 +52,7 @@ export class TimerDelegate {
     this.observableScreen.gameState.remainingTime =
       config.reflex.timePerQuestion;
     this.observableScreen.gameState.timerCommandList.commands.push(
-      new ObservableStopAndResetCommand()
+      new ObservableStopAndResetCommand(),
     );
   }
 }

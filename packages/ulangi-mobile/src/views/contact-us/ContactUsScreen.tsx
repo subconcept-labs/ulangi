@@ -35,8 +35,7 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
     return (
       <DismissKeyboardView
         style={styles.screen}
-        testID={ContactUsScreenIds.SCREEN}
-      >
+        testID={ContactUsScreenIds.SCREEN}>
         {this.renderForm()}
       </DismissKeyboardView>
     );
@@ -60,7 +59,7 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
           theme={this.props.darkModeStore.theme}
           observableScreen={this.props.observableScreen}
           isGuestEmail={this.props.userStore.existingCurrentUser.email.endsWith(
-            config.general.guestEmailDomain
+            config.general.guestEmailDomain,
           )}
           replyToEmail={this.props.userStore.existingCurrentUser.email}
         />
@@ -80,7 +79,7 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
           theme={this.props.darkModeStore.theme}
           observableScreen={this.props.observableScreen}
           isGuestEmail={this.props.userStore.existingCurrentUser.email.endsWith(
-            config.general.guestEmailDomain
+            config.general.guestEmailDomain,
           )}
           replyToEmail={this.props.userStore.existingCurrentUser.email}
         />

@@ -26,7 +26,7 @@ export class WritingSaveResultDelegate {
     setStore: ObservableSetStore,
     vocabularyList: ObservableMap<string, Vocabulary>,
     feedbackList: ObservableMap<string, Feedback>,
-    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate
+    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -41,7 +41,7 @@ export class WritingSaveResultDelegate {
       onSaving: () => void;
       onSaveSucceeded: () => void;
       onSaveFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     const autoArchiveSettings = this.autoArchiveSettingsDelegate.getCurrentSettings();
 
@@ -57,13 +57,13 @@ export class WritingSaveResultDelegate {
         on(ActionType.WRITING__SAVING_RESULT, callback.onSaving),
         once(
           ActionType.WRITING__SAVE_RESULT_SUCCEEDED,
-          callback.onSaveSucceeded
+          callback.onSaveSucceeded,
         ),
         once(
           ActionType.WRITING__SAVE_RESULT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+        ),
+      ),
     );
   }
 }

@@ -38,8 +38,7 @@ export class LightBoxActionMenu extends React.Component<
       <View
         testID={this.props.actionMenu.testID}
         style={this.styles.action_menu_container}
-        onStartShouldSetResponder={(): boolean => true}
-      >
+        onStartShouldSetResponder={(): boolean => true}>
         <View style={this.styles.title_container}>
           <DefaultText style={this.styles.title_text}>
             {this.props.actionMenu.title}
@@ -57,7 +56,7 @@ export class LightBoxActionMenu extends React.Component<
                   item={item}
                 />
               );
-            }
+            },
           )}
         </ScrollView>
       </View>

@@ -15,7 +15,7 @@ import { config } from '../../constants/config';
 export class ParticleFactory {
   public make(
     characterPool: string[],
-    centerOrigin: { x: number; y: number }
+    centerOrigin: { x: number; y: number },
   ): ObservableParticle[] {
     const particles: ObservableParticle[] = [];
 
@@ -46,10 +46,10 @@ export class ParticleFactory {
             },
             randomShellType,
             index,
-            'normal'
-          )
+            'normal',
+          ),
         );
-      }
+      },
     );
 
     return particles;

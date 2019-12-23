@@ -40,8 +40,7 @@ export class SelectableImage extends React.Component<SelectableImageProps> {
     return (
       <TouchableOpacity
         style={this.styles.image_container}
-        onPress={this.props.toggleSelect}
-      >
+        onPress={this.props.toggleSelect}>
         <FastImage
           style={[
             this.styles.image,

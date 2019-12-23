@@ -53,16 +53,16 @@ export class ReviewFeedbackList extends React.Component<
                 key={vocabularyId}
                 theme={this.props.theme}
                 vocabulary={assertExists(
-                  this.props.vocabularyList.get(vocabularyId)
+                  this.props.vocabularyList.get(vocabularyId),
                 )}
                 feedback={feedback}
                 nextReviewData={assertExists(
-                  this.props.allNextReviewData.get(vocabularyId)
+                  this.props.allNextReviewData.get(vocabularyId),
                 )}
                 showFeedbackSelectionMenu={this.props.showFeedbackSelectionMenu}
               />
             );
-          }
+          },
         )}
       </ScrollView>
     );

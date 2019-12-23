@@ -35,21 +35,21 @@ export class VocabularyDetailScreenContainer extends Container<
   private screenFactory = new VocabularyDetailScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableVocabularyDetailScreen(
     this.props.observableConverter.convertToObservableVocabulary(
-      this.props.passedProps.vocabulary
+      this.props.passedProps.vocabulary,
     ),
     ActivityState.INACTIVE,
-    ScreenName.VOCABULARY_DETAIL_SCREEN
+    ScreenName.VOCABULARY_DETAIL_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -57,7 +57,7 @@ export class VocabularyDetailScreenContainer extends Container<
       this.navigatorDelegate.pop();
     } else if (buttonId === VocabularyDetailScreenIds.ACTION_BTN) {
       this.screenDelegate.showVocabularyActionMenu(
-        this.observableScreen.vocabulary
+        this.observableScreen.vocabulary,
       );
     }
   }
@@ -66,7 +66,7 @@ export class VocabularyDetailScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? VocabularyDetailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : VocabularyDetailScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : VocabularyDetailScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

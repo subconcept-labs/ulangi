@@ -71,7 +71,7 @@ export const lightStyles = StyleSheet.create(
     horizontal_line: {
       backgroundColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -83,5 +83,5 @@ export const darkStyles = StyleSheet.create(
     horizontal_line: {
       backgroundColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

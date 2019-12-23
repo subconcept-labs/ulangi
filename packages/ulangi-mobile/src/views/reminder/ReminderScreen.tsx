@@ -68,7 +68,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
               testID={ReminderScreenIds.REMINDER_TOGGLE_BTN}
               text={reminderActive ? 'On' : 'Off'}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={this.props.screenDelegate.toggle}
             />
@@ -87,7 +87,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
                 .format('hh:mm a')
                 .toUpperCase()}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={this.props.screenDelegate.showTimePicker}
             />

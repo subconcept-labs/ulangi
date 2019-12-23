@@ -63,7 +63,7 @@ export class DictionaryDefinition extends React.Component<
           <AddDefinitionButton
             theme={this.props.theme}
             testID={VocabularyFormIds.ADD_DEFINITION_FROM_DICTIONARY_BY_INDEX(
-              this.props.index
+              this.props.index,
             )}
             onPress={(): void =>
               this.props.onPick({

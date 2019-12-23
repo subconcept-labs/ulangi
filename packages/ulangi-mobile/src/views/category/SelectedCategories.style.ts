@@ -53,7 +53,7 @@ export const lightStyles = StyleSheet.create(
     category_name: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -65,5 +65,5 @@ export const darkStyles = StyleSheet.create(
     category_name: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

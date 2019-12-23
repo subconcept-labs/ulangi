@@ -26,15 +26,13 @@ export class PlayList extends React.Component<PlayListProps> {
         <TouchableOpacity
           testID={PlayScreenIds.REFLEX_BTN}
           style={[styles.game_item, styles.reflex_title_container]}
-          onPress={this.props.navigateToReflexScreen}
-        >
+          onPress={this.props.navigateToReflexScreen}>
           <ReflexTitle />
         </TouchableOpacity>
         <TouchableOpacity
           testID={PlayScreenIds.ATOM_BTN}
           style={[styles.game_item, styles.atom_title_container]}
-          onPress={this.props.navigateToAtomScreen}
-        >
+          onPress={this.props.navigateToAtomScreen}>
           <AtomTitle />
         </TouchableOpacity>
       </ScrollView>

@@ -23,10 +23,10 @@ export class AddVocabularyScreenStyle {
         testID: AddVocabularyScreenIds.TOP_BAR,
         title: touchableTitle(
           ScreenName.ADD_VOCABULARY_SCREEN,
-          SecondaryScreenStyle.TOUCHABLE_TITLE_STYLES
+          SecondaryScreenStyle.TOUCHABLE_TITLE_STYLES,
         ),
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -53,7 +53,7 @@ export class AddVocabularyScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -80,18 +80,18 @@ export class AddVocabularyScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_FULL_STYLES = _.merge(
     {},
     AddVocabularyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AddVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    AddVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_DARK_FULL_STYLES = _.merge(
     {},
     AddVocabularyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AddVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY
+    AddVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

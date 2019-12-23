@@ -23,8 +23,7 @@ export class SearchFloatingButton extends React.Component<
       <TouchableOpacity
         style={styles.button}
         hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-        onPress={this.props.focusSearchInput}
-      >
+        onPress={this.props.focusSearchInput}>
         <Image source={Images.SEARCH_WHITE_22X22} />
       </TouchableOpacity>
     );

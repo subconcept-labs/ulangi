@@ -16,18 +16,18 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class AtomScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableAtomScreen
+    observableScreen: ObservableAtomScreen,
   ): AtomScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const prepareFetchVocabularyDelegate = new PrepareFetchVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      observableScreen
+      observableScreen,
     );
 
     const fetchVocabularyDelegate = new FetchVocabularyDelegate(this.eventBus);
@@ -39,7 +39,7 @@ export class AtomScreenFactory extends ScreenFactory {
       fetchVocabularyDelegate,
       navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

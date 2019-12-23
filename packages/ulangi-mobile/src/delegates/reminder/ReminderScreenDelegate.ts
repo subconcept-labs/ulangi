@@ -34,7 +34,7 @@ export class ReminderScreenDelegate {
     observableScreen: ObservableReminderScreen,
     reminderDelegate: ReminderDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.notificationStore = notificationStore;
@@ -93,21 +93,21 @@ export class ReminderScreenDelegate {
           ActionType.USER__EDITING,
           (): void => {
             this.showSavingDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
             this.showSaveSucceededDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           ({ errorCode }): void => {
             this.showSaveFailedDialog(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -148,7 +148,7 @@ export class ReminderScreenDelegate {
         : errorCode,
       {
         title: 'REQUEST PERMISSION FAILED',
-      }
+      },
     );
   }
 

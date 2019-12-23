@@ -23,7 +23,7 @@ export class ContactUsScreenStyle {
         testID: ContactUsScreenIds.TOP_BAR,
         title: customTitle(ScreenName.CONTACT_US_SCREEN),
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class ContactUsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class ContactUsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     ContactUsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ContactUsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    ContactUsScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     ContactUsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY
+    ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

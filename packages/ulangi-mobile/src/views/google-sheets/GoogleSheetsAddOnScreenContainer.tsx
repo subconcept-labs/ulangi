@@ -29,19 +29,19 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
     '',
     undefined,
     undefined,
-    ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN
+    ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN,
   );
 
   private screenFactory = new GoogleSheetsAddOnScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -54,7 +54,7 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? GoogleSheetsAddOnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : GoogleSheetsAddOnScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : GoogleSheetsAddOnScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

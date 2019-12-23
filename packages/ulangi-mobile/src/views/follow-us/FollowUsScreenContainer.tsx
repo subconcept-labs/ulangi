@@ -28,11 +28,11 @@ export class FollowUsScreenContainer extends Container {
   private screenFactory = new FollowUsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.FOLLOW_US_SCREEN
+    ScreenName.FOLLOW_US_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -49,7 +49,7 @@ export class FollowUsScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? FollowUsScreenStyle.SCREEN_LIGHT_STYlES_ONLY
-        : FollowUsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : FollowUsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -48,7 +48,7 @@ export class VocabularyActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -73,7 +73,7 @@ export class VocabularyActionMenuDelegate {
           this.getCategorizeButton(vocabulary),
           this.getMoveButton(vocabulary),
           this.getArchiveButton(vocabulary),
-          this.getDeleteButton(vocabulary)
+          this.getDeleteButton(vocabulary),
         );
         break;
 
@@ -83,7 +83,7 @@ export class VocabularyActionMenuDelegate {
           this.getCategorizeButton(vocabulary),
           this.getMoveButton(vocabulary),
           this.getRestoreButton(vocabulary),
-          this.getDeleteButton(vocabulary)
+          this.getDeleteButton(vocabulary),
         );
         break;
 
@@ -93,7 +93,7 @@ export class VocabularyActionMenuDelegate {
           this.getCategorizeButton(vocabulary),
           this.getMoveButton(vocabulary),
           this.getRestoreButton(vocabulary),
-          this.getArchiveButton(vocabulary)
+          this.getArchiveButton(vocabulary),
         );
         break;
 
@@ -110,14 +110,14 @@ export class VocabularyActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
   private getToggleSelectButton(vocabularyId: string): SelectionItem {
     const vocabularySelectionDelegate = assertExists(
       this.vocabularySelectionDelegate,
-      'vocabularySelectionDelegate is required to render toggle select button'
+      'vocabularySelectionDelegate is required to render toggle select button',
     );
     return {
       testID: VocabularyActionMenuIds.TOGGLE_SELECT_BTN,
@@ -170,7 +170,7 @@ export class VocabularyActionMenuDelegate {
           createAction(ActionType.VOCABULARY__EDIT, {
             vocabulary: editedVocabulary,
             setId: undefined,
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -195,16 +195,16 @@ export class VocabularyActionMenuDelegate {
                       vocabularyId: vocabulary.vocabularyId,
                     },
                     setId: selectedSetId,
-                  })
+                  }),
                 );
               },
               {
                 title: 'Move to...',
                 hideLeftButton: true,
                 hideRightButton: true,
-              }
+              },
             );
-          }
+          },
         );
       },
     };
@@ -223,7 +223,7 @@ export class VocabularyActionMenuDelegate {
           createAction(ActionType.VOCABULARY__EDIT, {
             vocabulary: editedVocabulary,
             setId: undefined,
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -244,7 +244,7 @@ export class VocabularyActionMenuDelegate {
           createAction(ActionType.VOCABULARY__EDIT, {
             vocabulary: editedVocabulary,
             setId: undefined,
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },

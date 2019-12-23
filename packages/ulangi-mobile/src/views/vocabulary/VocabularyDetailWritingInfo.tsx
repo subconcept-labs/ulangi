@@ -45,7 +45,7 @@ export class VocabularyDetailWritingInfo extends React.Component<
             this.props.vocabulary.writing.lastWrittenAt === null
               ? 'N/A'
               : _.upperFirst(
-                  moment(this.props.vocabulary.writing.lastWrittenAt).fromNow()
+                  moment(this.props.vocabulary.writing.lastWrittenAt).fromNow(),
                 )
           }
         />

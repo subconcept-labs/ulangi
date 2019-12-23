@@ -56,8 +56,7 @@ export class PublicVocabularyListHeader extends React.Component<
       <TouchableOpacity
         testID={PublicSetDetailScreenIds.ADD_ALL_BTN}
         style={this.styles.add_all_btn}
-        onPress={this.props.addAllVocabulary}
-      >
+        onPress={this.props.addAllVocabulary}>
         <Image
           style={this.styles.add_all_plus}
           source={

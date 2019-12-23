@@ -47,8 +47,7 @@ export class CategoryDetailScreen extends React.Component<
     return (
       <SafeAreaView
         style={this.styles.screen}
-        testID={CategoryDetailScreenIds.SCREEN}
-      >
+        testID={CategoryDetailScreenIds.SCREEN}>
         <CategoryDetailHeader
           theme={this.props.darkModeStore.theme}
           category={this.props.observableScreen.category}

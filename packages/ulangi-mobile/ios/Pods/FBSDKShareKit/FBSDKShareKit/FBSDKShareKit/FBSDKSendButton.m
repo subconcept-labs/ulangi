@@ -18,14 +18,21 @@
 
 #import "FBSDKSendButton.h"
 
+#ifdef COCOAPODS
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
 #import "FBSDKCoreKit+Internal.h"
+#endif
 #import "FBSDKMessageDialog.h"
 #import "FBSDKMessengerIcon.h"
 
 @interface FBSDKSendButton () <FBSDKButtonImpressionTracking>
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKSendButton
+#pragma clang diagnostic pop
 {
   FBSDKMessageDialog *_dialog;
 }

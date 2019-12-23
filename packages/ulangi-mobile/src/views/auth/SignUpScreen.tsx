@@ -28,8 +28,7 @@ export class SignUpScreen extends React.Component<SignUpScreenProps> {
     return (
       <DismissKeyboardView
         style={styles.screen}
-        testID={SignUpScreenIds.SCREEN}
-      >
+        testID={SignUpScreenIds.SCREEN}>
         <View style={styles.container}>
           <View style={styles.logo_container}>
             <Logo />
@@ -37,8 +36,7 @@ export class SignUpScreen extends React.Component<SignUpScreenProps> {
           <SmartScrollView
             style={styles.form_container}
             keyboardAware={true}
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             <SignUpForm
               email={this.props.observableScreen.email}
               password={this.props.observableScreen.password}

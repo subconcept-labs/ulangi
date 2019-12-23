@@ -58,7 +58,7 @@ export class SignInScreenDelegate {
     fetchSetDelegate: FetchSetDelegate,
     rootScreenDelegate: RootScreenDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -98,7 +98,7 @@ export class SignInScreenDelegate {
                           this.showSyncingInProgressDialog({
                             onClose: (): void => {
                               this.setListDelegate.selectFirstActiveSet(
-                                setList
+                                setList,
                               );
                               this.rootScreenDelegate.setRootToTabBasedScreen();
                             },
@@ -107,7 +107,7 @@ export class SignInScreenDelegate {
                           this.navigatorDelegate.dismissLightBox();
                           this.navigatorDelegate.resetTo(
                             ScreenName.CREATE_FIRST_SET_SCREEN,
-                            {}
+                            {},
                           );
                         }
                       },
@@ -119,7 +119,7 @@ export class SignInScreenDelegate {
             onFetchAllFailed: this.showFetchDataFailedDialog,
           }),
         onSignInFailed: this.showSignInFailedDialog,
-      }
+      },
     );
   }
 
@@ -145,7 +145,7 @@ export class SignInScreenDelegate {
     Keyboard.dismiss();
     this.observer.when(
       (): boolean => this.observableKeyboard.state === 'hidden',
-      (): void => this.navigatorDelegate.push(ScreenName.SIGN_UP_SCREEN, {})
+      (): void => this.navigatorDelegate.push(ScreenName.SIGN_UP_SCREEN, {}),
     );
   }
 
@@ -154,7 +154,7 @@ export class SignInScreenDelegate {
     this.observer.when(
       (): boolean => this.observableKeyboard.state === 'hidden',
       (): void =>
-        this.navigatorDelegate.push(ScreenName.FORGOT_PASSWORD_SCREEN, {})
+        this.navigatorDelegate.push(ScreenName.FORGOT_PASSWORD_SCREEN, {}),
     );
   }
 
@@ -163,7 +163,7 @@ export class SignInScreenDelegate {
       createAction(ActionType.SYNC__ADD_SYNC_TASK, {
         syncTask: SyncTask.DOWNLOAD_SETS,
       }),
-      once(ActionType.SYNC__SYNC_COMPLETED, callback.onDownloadCompleted)
+      once(ActionType.SYNC__SYNC_COMPLETED, callback.onDownloadCompleted),
     );
   }
 
@@ -172,7 +172,7 @@ export class SignInScreenDelegate {
       {
         message: 'Signing in. Please wait...',
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -185,7 +185,7 @@ export class SignInScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -194,7 +194,7 @@ export class SignInScreenDelegate {
       {
         message: 'Fetching data. Please wait...',
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -207,7 +207,7 @@ export class SignInScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -228,12 +228,12 @@ export class SignInScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -242,7 +242,7 @@ export class SignInScreenDelegate {
       {
         message: 'Creating an account. Please wait...',
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -255,7 +255,7 @@ export class SignInScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

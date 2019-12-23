@@ -26,7 +26,7 @@ export class CategoryFormDelegate {
     eventBus: EventBus,
     observer: Observer,
     setStore: ObservableSetStore,
-    categoryFormState: ObservableCategoryFormState
+    categoryFormState: ObservableCategoryFormState,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -43,7 +43,7 @@ export class CategoryFormDelegate {
     this.categoryFormState.suggestions = null;
     this.categoryFormState.noMoreSuggestions = false;
     this.eventBus.publish(
-      createAction(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, null)
+      createAction(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, null),
     );
   }
 
@@ -63,29 +63,29 @@ export class CategoryFormDelegate {
           ActionType.CATEGORY__PREPARING_FETCH_SUGGESTIONS,
           (): void => {
             this.categoryFormState.fetchSuggestionsState.set(
-              ActivityState.ACTIVE
+              ActivityState.ACTIVE,
             );
-          }
+          },
         ),
         once(
           ActionType.CATEGORY__PREPARE_FETCH_SUGGESTIONS_SUCCEEDED,
           (): void => {
             this.categoryFormState.fetchSuggestionsState.set(
-              ActivityState.INACTIVE
+              ActivityState.INACTIVE,
             );
             this.fetchSuggestions();
-          }
+          },
         ),
         once(
           ActionType.CATEGORY__PREPARE_FETCH_SUGGESTIONS_FAILED,
           (): void => {
             this.categoryFormState.fetchSuggestionsState.set(
-              ActivityState.INACTIVE
+              ActivityState.INACTIVE,
             );
-          }
+          },
         ),
-        once(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, _.noop)
-      )
+        once(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, _.noop),
+      ),
     );
   }
 
@@ -105,7 +105,7 @@ export class CategoryFormDelegate {
               runInAction(
                 (): void => {
                   this.categoryFormState.fetchSuggestionsState.set(
-                    ActivityState.INACTIVE
+                    ActivityState.INACTIVE,
                   );
                   this.categoryFormState.noMoreSuggestions = noMore;
                   if (this.categoryFormState.suggestions === null) {
@@ -113,28 +113,28 @@ export class CategoryFormDelegate {
                   }
 
                   this.categoryFormState.suggestions.push(
-                    ...categoryNames.slice()
+                    ...categoryNames.slice(),
                   );
-                }
+                },
               );
-            }
+            },
           ),
           once(
             ActionType.CATEGORY__FETCH_SUGGESTIONS_FAILED,
             (): void => {
               this.categoryFormState.fetchSuggestionsState.set(
-                ActivityState.INACTIVE
+                ActivityState.INACTIVE,
               );
-            }
+            },
           ),
-          once(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, _.noop)
-        )
+          once(ActionType.CATEGORY__CLEAR_FETCH_SUGGESTIONS, _.noop),
+        ),
       );
     }
   }
 
   public autoRefreshCategorySuggestionsOnNameChange(
-    debounceTime: number
+    debounceTime: number,
   ): void {
     const debouncedPrepareAndFetchCategorySuggestions = _.debounce((): void => {
       this.prepareAndFetchSuggestions(this.categoryFormState.categoryName);
@@ -145,7 +145,7 @@ export class CategoryFormDelegate {
       (): void => {
         this.clearFetchSuggestions();
         debouncedPrepareAndFetchCategorySuggestions();
-      }
+      },
     );
   }
 }

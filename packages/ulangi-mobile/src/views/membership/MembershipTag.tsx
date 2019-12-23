@@ -23,8 +23,7 @@ export class MembershipTag extends React.Component<MembershipTagProps> {
       <View style={styles.tag_container}>
         <DefaultText
           allowFontScaling={false}
-          style={[styles.tag_text, { color: this.props.textColor }]}
-        >
+          style={[styles.tag_text, { color: this.props.textColor }]}>
           {this.props.text}
         </DefaultText>
       </View>

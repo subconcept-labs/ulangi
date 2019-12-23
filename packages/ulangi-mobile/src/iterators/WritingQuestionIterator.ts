@@ -25,7 +25,7 @@ export class WritingQuestionIterator {
 
   public constructor(vocabularyList?: Map<string, ObservableVocabulary>) {
     this.randomVocabularyIterator = new RandomVocabularyIterator(
-      vocabularyList ? OrderedMap(vocabularyList) : undefined
+      vocabularyList ? OrderedMap(vocabularyList) : undefined,
     );
 
     this.numberOfQuestions = this.randomVocabularyIterator.getQueueSize();
@@ -53,11 +53,11 @@ export class WritingQuestionIterator {
   }
 
   private makeQuestion(
-    vocabulary: ObservableVocabulary
+    vocabulary: ObservableVocabulary,
   ): ObservableWritingQuestion {
     const definition = assertExists(
       _.sample(vocabulary.definitions.slice()),
-      'definition should not be null or undefined'
+      'definition should not be null or undefined',
     );
 
     return {

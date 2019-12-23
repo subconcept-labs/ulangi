@@ -34,7 +34,7 @@ export class FlashcardPlayerScreenDelegate {
     observableScreen: ObservableFlashcardPlayerScreen,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate
+    categoryMessageDelegate: CategoryMessageDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -64,21 +64,21 @@ export class FlashcardPlayerScreenDelegate {
             this.dialogDelegate.show({
               message: 'Uploading to flashcardplayer.com...',
             });
-          }
+          },
         ),
         once(
           ActionType.FLASHCARD_PLAYER__UPLOAD_SUCCEEDED,
           ({ playlistId }): void => {
             this.navigateToFlashcardPlayer(playlistId);
-          }
+          },
         ),
         once(
           ActionType.FLASHCARD_PLAYER__UPLOAD_FAILED,
           ({ errorCode }): void => {
             this.dialogDelegate.showFailedDialog(errorCode, {});
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -94,7 +94,7 @@ export class FlashcardPlayerScreenDelegate {
           message:
             'Cannot open link flashcardplayer.com. Please check internet connection',
         });
-      }
+      },
     );
   }
 
@@ -111,7 +111,7 @@ export class FlashcardPlayerScreenDelegate {
           message:
             'Cannot open link flashcardplayer.com. Please check internet connection',
         });
-      }
+      },
     );
   }
 }

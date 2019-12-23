@@ -45,14 +45,13 @@ export class DefinitionItem extends React.Component<DefinitionItemProps> {
     return (
       <View
         style={this.styles.item_container}
-        testID={VocabularyItemIds.DEFINITION_BY_INDEX(this.props.index)}
-      >
+        testID={VocabularyItemIds.DEFINITION_BY_INDEX(this.props.index)}>
         <View style={this.styles.meaning_container}>
           <WordClassList
             wordClasses={
               this.props.definition.extraFields.wordClass.length > 0
                 ? this.props.definition.extraFields.wordClass.map(
-                    (values): string => values[0]
+                    (values): string => values[0],
                   )
                 : this.props.definition.wordClasses
             }

@@ -27,7 +27,7 @@ export class AtomShellDelegate {
   }): ObservableShell | undefined {
     const { x, y } = BaseTransformer.transformBase(
       this.observableScreen.origin.position,
-      position
+      position,
     );
     const centerX = x + config.atom.particleSize / 2;
     const centerY = y - config.atom.particleSize / 2;
@@ -40,22 +40,22 @@ export class AtomShellDelegate {
         return _.inRange(
           Math.pow(centerX, 2) + Math.pow(centerY, 2),
           radius_sq_range[0],
-          radius_sq_range[1]
+          radius_sq_range[1],
         );
-      }
+      },
     );
   }
 
   public highlightShell(
     shellType: 'OUTER' | 'INNER',
-    color: 'green' | 'red'
+    color: 'green' | 'red',
   ): void {
     this.observableScreen.shells.forEach(
       (shell): void => {
         if (shell.shellType === shellType) {
           shell.highlightColor = color;
         }
-      }
+      },
     );
   }
 
@@ -63,7 +63,7 @@ export class AtomShellDelegate {
     this.observableScreen.shells.forEach(
       (shell): void => {
         shell.highlightColor = null;
-      }
+      },
     );
   }
 }

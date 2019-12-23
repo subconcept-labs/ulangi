@@ -29,7 +29,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
   public constructor(
     observableScreen: ObservableSpacedRepetitionSettingsScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
@@ -46,14 +46,14 @@ export class SpacedRepetitionSettingsScreenDelegate {
         onSaving: this.showSavingDialog,
         onSaveSucceeded: this.showSaveSucceededDialog,
         onSaveFailed: this.showSaveFailedDialog,
-      }
+      },
     );
   }
 
   public showLimitMenu(
     valuePairs: readonly [number, string][],
     selectedLimit: number,
-    onSelect: (limit: number) => void
+    onSelect: (limit: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -64,7 +64,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
                 limit,
                 {
                   testID: SpacedRepetitionSettingsScreenIds.SELECT_LIMIT_BTN_BY_LIMIT(
-                    limit
+                    limit,
                   ),
                   text: limitText,
                   onPress: (): void => {
@@ -73,20 +73,20 @@ export class SpacedRepetitionSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLimit],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public showInitialIntervalMenu(
     valuePairs: readonly [number, string][],
     selectedLevel: number,
-    onSelect: (initialInterval: number) => void
+    onSelect: (initialInterval: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -100,7 +100,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
                 initialInterval,
                 {
                   testID: SpacedRepetitionSettingsScreenIds.SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL(
-                    initialInterval
+                    initialInterval,
                   ),
                   text: initialIntervalText,
                   onPress: (): void => {
@@ -109,13 +109,13 @@ export class SpacedRepetitionSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLevel],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -126,7 +126,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
         initialInterval: this.observableScreen.selectedInitialInterval,
         range: [1, config.spacedRepetition.maxLevel - 1],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -135,7 +135,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
       {
         message: 'Saving. Please wait...',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -150,7 +150,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -163,7 +163,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

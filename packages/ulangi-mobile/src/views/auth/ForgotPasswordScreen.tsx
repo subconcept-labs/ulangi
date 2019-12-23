@@ -29,8 +29,7 @@ export class ForgotPasswordScreen extends React.Component<
     return (
       <DismissKeyboardView
         style={styles.screen}
-        testID={ForgotPasswordScreenIds.SCREEN}
-      >
+        testID={ForgotPasswordScreenIds.SCREEN}>
         <View style={styles.container}>
           <View style={styles.logo_container}>
             <Logo />

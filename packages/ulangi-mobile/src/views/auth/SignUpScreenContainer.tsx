@@ -27,7 +27,7 @@ export class SignUpScreenContainer extends Container {
   private screenFactory = new SignUpScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSignUpScreen(
@@ -36,20 +36,20 @@ export class SignUpScreenContainer extends Container {
     '',
     false,
     false,
-    ScreenName.SIGN_UP_SCREEN
+    ScreenName.SIGN_UP_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SignUpScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SignUpScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SignUpScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -73,7 +73,7 @@ export class ManageScreenDelegate {
     vocabularySelectionDelegate: VocabularySelectionDelegate,
     manageListSelectionMenuDelegate: ManageListSelectionMenuDelegate,
     autorunDelegate: AutorunDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -148,11 +148,11 @@ export class ManageScreenDelegate {
       ManageListType.CATEGORY_LIST
     ) {
       this.categoryListDelegate.refreshIfEmpty(
-        this.observableScreen.selectedFilterType.get()
+        this.observableScreen.selectedFilterType.get(),
       );
     } else {
       this.vocabularyListDelegate.refreshIfEmpty(
-        this.observableScreen.selectedFilterType.get()
+        this.observableScreen.selectedFilterType.get(),
       );
     }
   }
@@ -172,7 +172,7 @@ export class ManageScreenDelegate {
 
   public showCategoryActionMenu(
     category: ObservableCategory,
-    filterType: VocabularyFilterType
+    filterType: VocabularyFilterType,
   ): void {
     this.categoryActionMenuDelegate.show(category, filterType, false);
   }
@@ -195,7 +195,7 @@ export class ManageScreenDelegate {
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
         this.refresh(filterType);
-      }
+      },
     );
   }
 
@@ -205,7 +205,7 @@ export class ManageScreenDelegate {
       (listType): void => {
         this.observableScreen.manageListType.set(listType);
         this.refresh(this.observableScreen.selectedFilterType.get());
-      }
+      },
     );
   }
 
@@ -213,7 +213,7 @@ export class ManageScreenDelegate {
     this.vocabularyEventDelegate.onVocabularyChange(
       (): void => {
         this.refreshCurrentListIfEmpty();
-      }
+      },
     );
   }
 
@@ -226,8 +226,8 @@ export class ManageScreenDelegate {
         ],
         (): void => {
           this.refreshCurrentList();
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -239,14 +239,14 @@ export class ManageScreenDelegate {
           ManageListType.CATEGORY_LIST
         ) {
           this.observableScreen.categoryListState.shouldShowSyncCompletedNotice.set(
-            true
+            true,
           );
         } else {
           this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
-            true
+            true,
           );
         }
-      }
+      },
     );
   }
 
@@ -257,25 +257,25 @@ export class ManageScreenDelegate {
           [ActionType.SYNC__STOP, ActionType.SYNC__SYNC_COMPLETED],
           (): void => {
             this.observableScreen.categoryListState.shouldShowSyncingNotice.set(
-              false
+              false,
             );
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              false
+              false,
             );
-          }
+          },
         ),
         on(
           ActionType.SYNC__SYNCING,
           (): void => {
             this.observableScreen.categoryListState.shouldShowSyncingNotice.set(
-              true
+              true,
             );
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              true
+              true,
             );
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -285,8 +285,8 @@ export class ManageScreenDelegate {
         ActionType.SET__SELECT,
         (): void => {
           this.refreshCurrentList();
-        }
-      )
+        },
+      ),
     );
   }
 

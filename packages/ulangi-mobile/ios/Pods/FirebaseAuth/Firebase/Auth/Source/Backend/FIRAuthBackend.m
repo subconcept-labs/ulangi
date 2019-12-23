@@ -342,6 +342,11 @@ static NSString *const kInvalidSessionInfoErrorMessage = @"INVALID_SESSION_INFO"
  */
 static NSString *const kSessionExpiredErrorMessage = @"SESSION_EXPIRED";
 
+/** @var kMissingOrInvalidNonceErrorMessage
+    @brief This is the error message the server will respond with if the nonce is missing or invalid.
+ */
+static NSString *const kMissingOrInvalidNonceErrorMessage = @"MISSING_OR_INVALID_NONCE";
+
 /** @var kMissingAppTokenErrorMessage
     @brief This is the error message the server will respond with if the APNS token is missing in a
         verifyClient request.
@@ -1169,14 +1174,15 @@ static id<FIRAuthBackendImplementation> gBackendImplementation;
   }
 
   if ([shortErrorMessage isEqualToString:kMissingClientIdentifier]) {
-    return [FIRAuthErrorUtils appNotVerifiedErrorWithMessage:@"Missing app verification via"
-        " reCAPTCHA or APNS token. Please verify that appVerificationDisabledForTesting is not"
-        " enabled when testing with a phone number that is not marked as a test Phone number in the"
-        " app console."];
+    return [FIRAuthErrorUtils missingClientIdentifierErrorWithMessage:serverErrorMessage];
   }
 
   if ([shortErrorMessage isEqualToString:kCaptchaCheckFailedErrorMessage]) {
     return [FIRAuthErrorUtils captchaCheckFailedErrorWithMessage:serverErrorMessage];
+  }
+
+  if ([shortErrorMessage isEqualToString:kMissingOrInvalidNonceErrorMessage]) {
+    return [FIRAuthErrorUtils missingOrInvalidNonceErrorWithMessage:serverDetailErrorMessage];
   }
 
   // In this case we handle an error that might be specified in the underlying errors dictionary,

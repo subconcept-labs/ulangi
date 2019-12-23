@@ -33,7 +33,7 @@ export const definitionItemLightStyles = _.merge(
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
-  }
+  },
 );
 
 export const definitionItemDarkStyles = _.merge(
@@ -46,5 +46,5 @@ export const definitionItemDarkStyles = _.merge(
       borderBottomWidth: StyleSheet.hairlineWidth,
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
-  }
+  },
 );

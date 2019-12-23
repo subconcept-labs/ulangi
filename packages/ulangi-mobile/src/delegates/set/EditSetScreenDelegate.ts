@@ -27,7 +27,7 @@ export class EditSetScreenDelegate extends AddEditSetScreenDelegate {
     pickerDelegate: PickerDelegate,
     editSetDelegate: EditSetDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     super(setFormDelegate, pickerDelegate, dialogDelegate, navigatorDelegate);
     this.setFormState = setFormState;
@@ -40,7 +40,7 @@ export class EditSetScreenDelegate extends AddEditSetScreenDelegate {
       onSaving: () => void;
       onSaveSucceeded: (set: Set) => void;
       onSaveFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     if (this.setFormState.learningLanguageCode === null) {
       this.showLanguageNotSelectedDialog('learningLanguage');

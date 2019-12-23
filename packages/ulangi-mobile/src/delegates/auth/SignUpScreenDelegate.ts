@@ -28,7 +28,7 @@ export class SignUpScreenDelegate {
   public constructor(
     eventBus: EventBus,
     observableScreen: ObservableSignUpScreen,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -51,15 +51,15 @@ export class SignUpScreenDelegate {
             this.navigatorDelegate.dismissLightBox();
             this.navigatorDelegate.resetTo(
               ScreenName.CREATE_FIRST_SET_SCREEN,
-              {}
+              {},
             );
-          }
+          },
         ),
         once(
           ActionType.USER__SIGN_UP_FAILED,
-          ({ errorCode }): void => this.showSignUpFailedDialog(errorCode)
-        )
-      )
+          ({ errorCode }): void => this.showSignUpFailedDialog(errorCode),
+        ),
+      ),
     );
   }
 
@@ -68,7 +68,7 @@ export class SignUpScreenDelegate {
       {
         message: 'Creating account. Please wait...',
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -81,7 +81,7 @@ export class SignUpScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

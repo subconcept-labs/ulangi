@@ -15,13 +15,13 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class SetManagementScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableSetManagementScreen
+    observableScreen: ObservableSetManagementScreen,
   ): SetManagementScreenDelegate {
     const setActionMenuDelegate = new SetActionMenuDelegate(
       this.eventBus,
       this.props.observableLightBox,
       this.createNavigatorDelegate(),
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const fetchSetDelegate = new FetchSetDelegate(this.eventBus);
@@ -31,7 +31,7 @@ export class SetManagementScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen,
       fetchSetDelegate,
-      setActionMenuDelegate
+      setActionMenuDelegate,
     );
   }
 }

@@ -88,7 +88,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
                   }}
                 />
               );
-            }
+            },
           )}
         </React.Fragment>
       );
@@ -121,7 +121,9 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
         <PickerError
           theme={this.props.theme}
           testID={VocabularyFormIds.DICTIONARY_SPECIFIC_LANGUAGE_REQUIRED}
-          errorMessage={`Dictionary is not available because either the source or the target language is selected as "Any Language"`}
+          errorMessage={
+            'Dictionary is not available because either the source or the target language is selected as "Any Language"'
+          }
         />
       );
     } else if (
@@ -134,7 +136,9 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
             theme={this.props.theme}
             errorMessage={
               <DefaultText>
-                <DefaultText>{`We couldn't find any dictionary entries for `}</DefaultText>
+                <DefaultText>
+                  {"We couldn't find any dictionary entries for "}
+                </DefaultText>
                 <DefaultText style={this.styles.bold}>
                   {
                     this.props.dictionaryEntryState.dictionaryEntry
@@ -152,7 +156,9 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
             theme={this.props.theme}
             errorMessage={
               <DefaultText>
-                <DefaultText>{`We couldn't find any related dictionary entries.`}</DefaultText>
+                <DefaultText>
+                  {"We couldn't find any related dictionary entries."}
+                </DefaultText>
               </DefaultText>
             }
           />
@@ -167,8 +173,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
               <DefaultText>Oops! Something went wrong.</DefaultText>
               <DefaultText
                 onPress={this.props.getDictionaryEntry}
-                style={this.styles.highlighted_text}
-              >
+                style={this.styles.highlighted_text}>
                 {' '}
                 Please try again.
               </DefaultText>

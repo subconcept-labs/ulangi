@@ -41,7 +41,7 @@ export const lightStyles = StyleSheet.create(
     title_text: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -53,5 +53,5 @@ export const darkStyles = StyleSheet.create(
     title_text: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

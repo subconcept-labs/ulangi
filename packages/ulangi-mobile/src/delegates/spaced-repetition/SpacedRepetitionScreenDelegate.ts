@@ -51,7 +51,7 @@ export class SpacedRepetitionScreenDelegate {
     navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
     linkingDelegate: LinkingDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -77,14 +77,14 @@ export class SpacedRepetitionScreenDelegate {
         initialInterval,
         limit,
         selectedCategoryNames: toJS(
-          this.observableScreen.selectedCategoryNames
+          this.observableScreen.selectedCategoryNames,
         ),
         includeFromOtherCategories,
       }),
       group(
         on(
           ActionType.SPACED_REPETITION__FETCHING_VOCABULARY,
-          this.showPreparingDialog
+          this.showPreparingDialog,
         ),
         once(
           ActionType.SPACED_REPETITION__FETCH_VOCABULARY_SUCCEEDED,
@@ -99,16 +99,16 @@ export class SpacedRepetitionScreenDelegate {
                       return [
                         vocabulary.vocabularyId,
                         this.observableConverter.convertToObservableVocabulary(
-                          vocabulary
+                          vocabulary,
                         ),
                       ];
-                    }
-                  )
+                    },
+                  ),
                 ),
                 startLesson: (): void => this.startLesson(false),
-              }
+              },
             );
-          }
+          },
         ),
         once(
           ActionType.SPACED_REPETITION__FETCH_VOCABULARY_FAILED,
@@ -128,16 +128,16 @@ export class SpacedRepetitionScreenDelegate {
             } else {
               this.showPrepareFailedDialog(errorCode);
             }
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
   public showSettings(): void {
     this.navigatorDelegate.push(
       ScreenName.SPACED_REPETITION_SETTINGS_SCREEN,
-      {}
+      {},
     );
   }
 
@@ -151,7 +151,7 @@ export class SpacedRepetitionScreenDelegate {
 
   public showSpacedRepetitionExplanationVideo(): void {
     this.linkingDelegate.openLink(
-      'https://www.youtube.com/watch?v=cVf38y07cfk'
+      'https://www.youtube.com/watch?v=cVf38y07cfk',
     );
   }
 
@@ -160,7 +160,7 @@ export class SpacedRepetitionScreenDelegate {
       {
         message: 'Preparing. Please wait...',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -180,7 +180,7 @@ export class SpacedRepetitionScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -190,12 +190,12 @@ export class SpacedRepetitionScreenDelegate {
               this.startLesson(true);
             },
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -210,7 +210,7 @@ export class SpacedRepetitionScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -223,7 +223,7 @@ export class SpacedRepetitionScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

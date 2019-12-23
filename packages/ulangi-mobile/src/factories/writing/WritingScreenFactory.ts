@@ -15,17 +15,17 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class WritingScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableWritingScreen
+    observableScreen: ObservableWritingScreen,
   ): WritingScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
@@ -38,7 +38,7 @@ export class WritingScreenFactory extends ScreenFactory {
       writingSettingsDelegate,
       navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

@@ -29,14 +29,14 @@ export class ChangePasswordScreenContainer extends Container {
   private screenFactory = new ChangePasswordScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableChangePasswordScreen(
     '',
     '',
     '',
-    ScreenName.CHANGE_PASSWORD_SCREEN
+    ScreenName.CHANGE_PASSWORD_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -58,7 +58,7 @@ export class ChangePasswordScreenContainer extends Container {
             .showChangePasswordSucceededDialog,
           onChangePasswordFailed: this.screenDelegate
             .showChangePasswordFailedDialog,
-        }
+        },
       );
     }
   }
@@ -67,7 +67,7 @@ export class ChangePasswordScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ChangePasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ChangePasswordScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ChangePasswordScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -23,8 +23,7 @@ export class UpgradeButton extends React.Component<UpgradeButtonProps> {
       <TouchableOpacity
         onPress={this.props.upgradeButtonState.onPress}
         style={styles.button_container}
-        disabled={typeof this.props.upgradeButtonState.onPress === 'undefined'}
-      >
+        disabled={typeof this.props.upgradeButtonState.onPress === 'undefined'}>
         <View style={styles.text_container}>
           <DefaultText style={styles.text}>
             {this.props.upgradeButtonState.text}

@@ -24,7 +24,7 @@ export class WelcomeScreenDelegate {
     authDelegate: AuthDelegate,
     navigatorDelegate: NavigatorDelegate,
     dialogDelegate: DialogDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.authDelegate = authDelegate;
     this.navigatorDelegate = navigatorDelegate;

@@ -35,7 +35,7 @@ export class LevelBar extends React.Component<LevelBarProps> {
                   ]}
                 />
               );
-            }
+            },
           )
           .reverse()}
       </View>

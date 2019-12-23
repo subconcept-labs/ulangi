@@ -40,7 +40,7 @@ export class EditSetScreenContainer extends Container<
   private screenFactory = new EditSetScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -53,13 +53,13 @@ export class EditSetScreenContainer extends Container<
       this.props.passedProps.originalSet.translatedToLanguageCode,
       true,
       new ObservableSetPickerState(null, false, false),
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     ),
-    ScreenName.EDIT_SET_SCREEN
+    ScreenName.EDIT_SET_SCREEN,
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -79,7 +79,7 @@ export class EditSetScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? EditSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : EditSetScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : EditSetScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

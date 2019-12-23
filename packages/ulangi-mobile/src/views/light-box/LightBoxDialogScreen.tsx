@@ -51,11 +51,9 @@ export class LightBoxDialogScreen extends React.Component<
           style={styles.light_box_container}
           enabled={this.isBackgroundTouchable()}
           onPress={(): void => this.onBackgroundPress()}
-          activeOpacity={0.2}
-        >
+          activeOpacity={0.2}>
           <LightBoxAnimatableView
-            observableLightBox={this.props.observableLightBox}
-          >
+            observableLightBox={this.props.observableLightBox}>
             <LightBoxDialog
               theme={this.props.darkModeStore.theme}
               dialog={this.props.observableLightBox.dialog}

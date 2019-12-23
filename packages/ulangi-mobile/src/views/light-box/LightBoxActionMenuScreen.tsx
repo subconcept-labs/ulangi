@@ -51,12 +51,10 @@ export class LightBoxActionMenuScreen extends React.Component<
           style={styles.light_box_container}
           enabled={true}
           activeOpacity={0.2}
-          onPress={(): void => this.close()}
-        >
+          onPress={(): void => this.close()}>
           <LightBoxAnimatableView
             observableLightBox={this.props.observableLightBox}
-            style={styles.inner_container}
-          >
+            style={styles.inner_container}>
             <LightBoxActionMenu
               theme={this.props.darkModeStore.theme}
               actionMenu={this.props.observableLightBox.actionMenu}

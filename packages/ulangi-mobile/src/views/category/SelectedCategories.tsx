@@ -61,8 +61,7 @@ export class SelectedCategories extends React.Component<
         <TouchableOpacity
           onPress={this.props.showSelectSpecificCategoryMessage}
           style={this.styles.title_container}
-          hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-        >
+          hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
           <DefaultText style={this.styles.title}>ALL CATEGORIES</DefaultText>
         </TouchableOpacity>
       );

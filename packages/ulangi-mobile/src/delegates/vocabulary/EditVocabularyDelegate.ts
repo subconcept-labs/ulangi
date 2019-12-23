@@ -27,7 +27,7 @@ export class EditVocabularyDelegate {
     eventBus: EventBus,
     observableConverter: ObservableConverter,
     originalEditingVocabulary: Vocabulary,
-    vocabularyFormState: ObservableVocabularyFormState
+    vocabularyFormState: ObservableVocabularyFormState,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -58,9 +58,9 @@ export class EditVocabularyDelegate {
           once(ActionType.VOCABULARY__EDIT_SUCCEEDED, callback.onSaveSucceeded),
           once(
             ActionType.VOCABULARY__EDIT_FAILED,
-            ({ errorCode }): void => callback.onSaveFailed(errorCode)
-          )
-        )
+            ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          ),
+        ),
       );
     }
   }
@@ -73,7 +73,7 @@ export class EditVocabularyDelegate {
       definitions: vocabulary.definitions.filter(
         (definition): boolean => {
           return definition.definitionStatus !== DefinitionStatus.DELETED;
-        }
+        },
       ),
     });
   }
@@ -89,17 +89,17 @@ export class EditVocabularyDelegate {
           const merged = _.merge(
             {},
             _.keyBy(original, 'definitionId'),
-            _.keyBy(edited, 'definitionId')
+            _.keyBy(edited, 'definitionId'),
           );
           return _.values(merged);
         }
-      }
+      },
     );
   }
 
   private getChanges(): DeepPartial<Vocabulary> {
     const removedDefinitions = this.getRemovedDefinitions(
-      this.originalEditingVocabulary
+      this.originalEditingVocabulary,
     );
 
     const editedVocabulary: DeepPartial<Vocabulary> = {
@@ -111,11 +111,11 @@ export class EditVocabularyDelegate {
               definitionId: definition.definitionId,
               definitionStatus: DefinitionStatus.DELETED,
             };
-          }
+          },
         ),
         this.vocabularyFormState.definitions
           .filter((definition): boolean => definition.meaning !== '')
-          .map((definition): Definition => definition.toRaw())
+          .map((definition): Definition => definition.toRaw()),
       ),
       category: {
         categoryName:
@@ -127,12 +127,12 @@ export class EditVocabularyDelegate {
 
     return this.getVocabularyDiff(
       this.originalEditingVocabulary,
-      editedVocabulary
+      editedVocabulary,
     );
   }
 
   private getRemovedDefinitions(
-    originalEditingVocabulary: Vocabulary
+    originalEditingVocabulary: Vocabulary,
   ): readonly Definition[] {
     const originalDefinitions = originalEditingVocabulary.definitions;
 
@@ -143,21 +143,21 @@ export class EditVocabularyDelegate {
       (originDefinition): boolean => {
         const currentDefinition = currentDefinitions.find(
           (currentDefinition): boolean =>
-            currentDefinition.definitionId === originDefinition.definitionId
+            currentDefinition.definitionId === originDefinition.definitionId,
         );
 
         return (
           typeof currentDefinition === 'undefined' ||
           currentDefinition.meaning === ''
         );
-      }
+      },
     );
   }
 
   // Get the diff of the vocabulary including new diffitions
   private getVocabularyDiff(
     originalVocabulary: Vocabulary,
-    editedVocabulary: DeepPartial<Vocabulary>
+    editedVocabulary: DeepPartial<Vocabulary>,
   ): DeepPartial<Vocabulary> {
     const diff: DeepMutable<DeepPartial<Vocabulary>> = {};
 
@@ -170,7 +170,7 @@ export class EditVocabularyDelegate {
               (editedDefinition): DeepPartial<Definition> => {
                 const originalDefinition = originalVocabulary.definitions.find(
                   (definition): boolean =>
-                    definition.definitionId === editedDefinition.definitionId
+                    definition.definitionId === editedDefinition.definitionId,
                 );
 
                 if (typeof originalDefinition !== 'undefined') {
@@ -178,13 +178,13 @@ export class EditVocabularyDelegate {
                     definitionId: originalDefinition.definitionId,
                     ...this.getDefinitionDiff(
                       originalDefinition,
-                      editedDefinition
+                      editedDefinition,
                     ),
                   };
                 } else {
                   return editedDefinition;
                 }
-              }
+              },
             );
           }
         } else if (key === 'category') {
@@ -224,7 +224,7 @@ export class EditVocabularyDelegate {
 
   private getDefinitionDiff(
     originalDefinition: Definition,
-    editedDefinition: DeepPartial<Definition>
+    editedDefinition: DeepPartial<Definition>,
   ): DeepPartial<Definition> {
     const diff: DeepMutable<DeepPartial<Definition>> = {};
 

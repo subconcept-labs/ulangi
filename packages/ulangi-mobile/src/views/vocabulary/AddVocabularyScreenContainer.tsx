@@ -47,7 +47,7 @@ export class AddVocabularyScreenContainer extends Container<
   private screenFactory = new AddVocabularyScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableAddEditVocabularyScreen(
@@ -64,15 +64,15 @@ export class AddVocabularyScreenContainer extends Container<
           ? this.props.passedProps.vocabulary.definitions.map(
               (definition): ObservableDefinition => {
                 return this.props.observableConverter.convertToObservableDefinition(
-                  definition
+                  definition,
                 );
-              }
+              },
             )
           : [
               this.props.observableConverter.convertToObservableDefinition(
-                new DefinitionBuilder().build({ source: 'N/A' })
+                new DefinitionBuilder().build({ source: 'N/A' }),
               ),
-            ]
+            ],
       ),
       false,
       null,
@@ -83,7 +83,7 @@ export class AddVocabularyScreenContainer extends Container<
         : typeof this.props.passedProps.vocabulary !== 'undefined' &&
           typeof this.props.passedProps.vocabulary.category !== 'undefined'
         ? this.props.passedProps.vocabulary.category.categoryName
-        : 'Uncategorized'
+        : 'Uncategorized',
     ),
     ScreenName.ADD_VOCABULARY_SCREEN,
     {
@@ -92,18 +92,18 @@ export class AddVocabularyScreenContainer extends Container<
       testID: AddVocabularyScreenIds.SHOW_SET_SELECTION_MENU_BTN,
       icon: _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
         ? _.get(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
             this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode
+              .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
       onTitlePress: (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    }
+    },
   );
 
   private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
@@ -111,7 +111,7 @@ export class AddVocabularyScreenContainer extends Container<
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -125,7 +125,7 @@ export class AddVocabularyScreenContainer extends Container<
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
   }
 
@@ -137,7 +137,7 @@ export class AddVocabularyScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? AddVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : AddVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : AddVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -37,19 +37,19 @@ export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
   private atomScreenFactory = new AtomScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableAtomScreen(
     typeof this.props.passedProps.selectedCategoryNames !== 'undefined'
       ? observable.array(this.props.passedProps.selectedCategoryNames.slice())
       : undefined,
-    ScreenName.ATOM_SCREEN
+    ScreenName.ATOM_SCREEN,
   );
 
   private navigatorDelegate = this.atomScreenFactory.createNavigatorDelegate();
   private screenDelegate = this.atomScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidAppear(): void {

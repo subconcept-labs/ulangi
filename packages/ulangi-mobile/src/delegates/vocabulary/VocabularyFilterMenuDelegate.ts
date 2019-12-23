@@ -26,7 +26,7 @@ export class VocabularyFilterMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -34,7 +34,7 @@ export class VocabularyFilterMenuDelegate {
 
   public show(
     selectedFilterType: VocabularyFilterType,
-    onSelect: (filterType: VocabularyFilterType) => void
+    onSelect: (filterType: VocabularyFilterType) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -46,7 +46,7 @@ export class VocabularyFilterMenuDelegate {
                 filterType as VocabularyFilterType,
                 {
                   testID: VocabularyFilterMenuIds.FILTER_BTN_BY_FILTER_TYPE(
-                    filterType as VocabularyFilterType
+                    filterType as VocabularyFilterType,
                   ),
                   text: _.upperFirst(name),
                   onPress: (): void => {
@@ -55,13 +55,13 @@ export class VocabularyFilterMenuDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedFilterType],
         title: 'Filter',
       },
-      this.styles
+      this.styles,
     );
   }
 }

@@ -27,7 +27,7 @@ export const lightStyles = StyleSheet.create(
     screen: {
       borderTopColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -35,5 +35,5 @@ export const darkStyles = StyleSheet.create(
     screen: {
       borderTopColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

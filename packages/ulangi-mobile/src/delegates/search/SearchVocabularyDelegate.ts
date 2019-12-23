@@ -29,7 +29,7 @@ export class SearchVocabularyDelegate {
     setStore: ObservableSetStore,
     observableConverter: ObservableConverter,
     vocabularyListState: ObservableVocabularyListState,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -50,22 +50,22 @@ export class SearchVocabularyDelegate {
           ActionType.SEARCH__PREPARE_SEARCH,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.ACTIVE);
-          }
+          },
         ),
         once(
           ActionType.SEARCH__PREPARE_SEARCH_SUCCEEDED,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.INACTIVE);
             this.search();
-          }
+          },
         ),
         once(
           ActionType.SEARCH__PREPARE_SEARCH_FAILED,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.INACTIVE);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -91,22 +91,22 @@ export class SearchVocabularyDelegate {
                     return [
                       vocabulary.vocabularyId,
                       this.observableConverter.convertToObservableVocabulary(
-                        vocabulary
+                        vocabulary,
                       ),
                     ];
-                  }
-                )
+                  },
+                ),
               );
-            }
+            },
           ),
           once(
             ActionType.SEARCH__SEARCH_FAILED,
             (): void => {
               this.vocabularyListState.isRefreshing.set(false);
               this.vocabularyListState.fetchState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }

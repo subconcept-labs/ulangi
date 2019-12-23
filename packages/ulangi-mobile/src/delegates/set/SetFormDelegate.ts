@@ -16,7 +16,7 @@ export class SetFormDelegate {
 
   public constructor(
     setFormState: ObservableSetFormState,
-    pickerDelegate: PickerDelegate
+    pickerDelegate: PickerDelegate,
   ) {
     this.setFormState = setFormState;
     this.pickerDelegate = pickerDelegate;
@@ -34,7 +34,7 @@ export class SetFormDelegate {
       this.setFormState.learningLanguageCode = languageCode;
     } else {
       throw new Error(
-        'currentPicker should be either translatedToLanguage or learningLanguage'
+        'currentPicker should be either translatedToLanguage or learningLanguage',
       );
     }
     this.pickerDelegate.hidePicker();

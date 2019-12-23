@@ -12,14 +12,14 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class SignUpScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableSignUpScreen
+    observableScreen: ObservableSignUpScreen,
   ): SignUpScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     return new SignUpScreenDelegate(
       this.eventBus,
       observableScreen,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

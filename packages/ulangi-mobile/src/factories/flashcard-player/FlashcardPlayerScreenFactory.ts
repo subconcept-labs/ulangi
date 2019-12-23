@@ -14,12 +14,12 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class FlashcardPlayerScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableFlashcardPlayerScreen
+    observableScreen: ObservableFlashcardPlayerScreen,
   ): FlashcardPlayerScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      FlashcardPlayerStyle.LIGHT_BOX_SCREEN_STYLES
+      FlashcardPlayerStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
@@ -30,7 +30,7 @@ export class FlashcardPlayerScreenFactory extends ScreenFactory {
       observableScreen,
       dialogDelegate,
       navigatorDelegate,
-      categoryMessageDelegate
+      categoryMessageDelegate,
     );
   }
 }

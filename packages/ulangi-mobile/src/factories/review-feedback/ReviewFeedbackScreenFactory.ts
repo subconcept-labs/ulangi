@@ -25,10 +25,10 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class ReviewFeedbackScreenFactory extends ScreenFactory {
   public createReviewFeedbackDataDelegate(
-    lessonType: 'spaced-repetition' | 'writing'
+    lessonType: 'spaced-repetition' | 'writing',
   ): ReviewFeedbackDataDelegate {
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     const scheduler =
@@ -40,11 +40,11 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
       lessonType === 'spaced-repetition'
         ? new SpacedRepetitionSettingsDelegate(
             this.eventBus,
-            this.props.rootStore.setStore
+            this.props.rootStore.setStore,
           )
         : new WritingSettingsDelegate(
             this.eventBus,
-            this.props.rootStore.setStore
+            this.props.rootStore.setStore,
           );
 
     const maxLevel =
@@ -56,27 +56,27 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
       maxLevel,
       scheduler,
       settingsDelegate,
-      autoArchiveSettingsDelegate
+      autoArchiveSettingsDelegate,
     );
   }
 
   public createScreenDelegate(
     lessonType: 'spaced-repetition' | 'writing',
-    observableScreen: ObservableReviewFeedbackScreen
+    observableScreen: ObservableReviewFeedbackScreen,
   ): ReviewFeedbackScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const feedbackSelectionMenuDelegate = new FeedbackSelectionMenuDelegate(
       navigatorDelegate,
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     const saveResultDelegate =
@@ -86,18 +86,18 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
             this.props.rootStore.setStore,
             observableScreen.vocabularyList,
             observableScreen.feedbackListState.feedbackList,
-            autoArchiveSettingsDelegate
+            autoArchiveSettingsDelegate,
           )
         : new WritingSaveResultDelegate(
             this.eventBus,
             this.props.rootStore.setStore,
             observableScreen.vocabularyList,
             observableScreen.feedbackListState.feedbackList,
-            autoArchiveSettingsDelegate
+            autoArchiveSettingsDelegate,
           );
 
     const reviewFeedbackDataDelegate = this.createReviewFeedbackDataDelegate(
-      lessonType
+      lessonType,
     );
 
     return new ReviewFeedbackScreenDelegate(
@@ -106,7 +106,7 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
       feedbackSelectionMenuDelegate,
       reviewFeedbackDataDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

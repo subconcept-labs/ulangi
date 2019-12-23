@@ -29,7 +29,7 @@ export class PublicVocabularyListDelegate {
     observableConverter: ObservableConverter,
     setStore: ObservableSetStore,
     vocabularyListState: ObservablePublicVocabularyListState,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -54,23 +54,23 @@ export class PublicVocabularyListDelegate {
             ActionType.LIBRARY__PREPARING_SEARCH_PUBLIC_VOCABULARY,
             (): void => {
               this.vocabularyListState.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_VOCABULARY_SUCCEEDED,
             (): void => {
               this.vocabularyListState.searchState.set(ActivityState.INACTIVE);
               this.search();
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_SETS_FAILED,
             (): void => {
               this.vocabularyListState.isRefreshing.set(false);
               this.vocabularyListState.searchState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -87,7 +87,7 @@ export class PublicVocabularyListDelegate {
             ActionType.LIBRARY__SEARCHING_PUBLIC_VOCABULARY,
             (): void => {
               this.vocabularyListState.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__SEARCH_PUBLIC_VOCABULARY_SUCCEEDED,
@@ -102,22 +102,22 @@ export class PublicVocabularyListDelegate {
                     return [
                       vocabulary.publicVocabularyId,
                       this.observableConverter.convertToObservablePublicVocabulary(
-                        vocabulary
+                        vocabulary,
                       ),
                     ];
-                  }
-                )
+                  },
+                ),
               );
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__SEARCH_PUBLIC_VOCABULARY_FAILED,
             (): void => {
               this.vocabularyListState.isRefreshing.set(false);
               this.vocabularyListState.searchState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -128,7 +128,7 @@ export class PublicVocabularyListDelegate {
     this.vocabularyListState.searchState.set(ActivityState.INACTIVE);
     this.vocabularyListState.isRefreshing.set(false);
     this.eventBus.publish(
-      createAction(ActionType.LIBRARY__CLEAR_SEARCH_PUBLIC_VOCABULARY, null)
+      createAction(ActionType.LIBRARY__CLEAR_SEARCH_PUBLIC_VOCABULARY, null),
     );
   }
 

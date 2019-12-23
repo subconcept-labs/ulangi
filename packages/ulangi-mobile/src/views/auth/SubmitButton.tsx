@@ -29,8 +29,7 @@ export class SubmitButton extends React.Component<SubmitButtonProps> {
       <TouchableOpacity
         testID={this.props.testID}
         style={[styles.button_touchable, this.props.style]}
-        onPress={this.props.onSubmit}
-      >
+        onPress={this.props.onSubmit}>
         <DefaultText style={[styles.button_text, this.props.textStyle]}>
           {this.props.buttonText}
         </DefaultText>

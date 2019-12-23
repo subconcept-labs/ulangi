@@ -60,18 +60,18 @@ export class CategorySuggestionList extends React.Component<
           renderItem={({ item: categoryName }): React.ReactElement<any> => {
             return (
               <FixedTouchableWithoutFeedback
-                style={this.styles.suggestion_item}
-              >
+                style={this.styles.suggestion_item}>
                 <DefaultText style={this.styles.category_name}>
                   {categoryName}
                 </DefaultText>
                 <TouchableOpacity
                   testID={CategoryFormIds.USE_BTN_BY_CATEGORY_NAME(
-                    categoryName
+                    categoryName,
                   )}
                   style={this.styles.use_btn}
-                  onPress={(): void => this.props.setCategoryName(categoryName)}
-                >
+                  onPress={(): void =>
+                    this.props.setCategoryName(categoryName)
+                  }>
                   <DefaultText style={this.styles.use_text}>
                     Use this
                   </DefaultText>
@@ -115,8 +115,7 @@ export class CategorySuggestionList extends React.Component<
         <TouchableOpacity
           testID={CategoryFormIds.SHOW_ALL_BTN}
           onPress={this.props.showAll}
-          style={this.styles.show_all_suggestions_btn}
-        >
+          style={this.styles.show_all_suggestions_btn}>
           <DefaultText style={this.styles.show_all_suggestions_text}>
             Show all
           </DefaultText>

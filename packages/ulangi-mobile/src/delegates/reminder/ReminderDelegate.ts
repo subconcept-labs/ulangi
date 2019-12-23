@@ -21,13 +21,13 @@ export class ReminderDelegate {
       createAction(ActionType.REMINDER__SET_UP_REMINDER, {
         hours,
         minutes,
-      })
+      }),
     );
   }
 
   public deleteReminder(): void {
     this.eventBus.publish(
-      createAction(ActionType.REMINDER__DELETE_REMINDER, null)
+      createAction(ActionType.REMINDER__DELETE_REMINDER, null),
     );
   }
 
@@ -42,13 +42,13 @@ export class ReminderDelegate {
         on(ActionType.REMINDER__REQUESTING_PERMISSION, callback.onRequesting),
         once(
           ActionType.REMINDER__REQUEST_PERMISSION_SUCCEEDED,
-          callback.onRequestSucceeded
+          callback.onRequestSucceeded,
         ),
         once(
           ActionType.REMINDER__REQUEST_PERMISSION_FAILED,
-          ({ errorCode }): void => callback.onRequestFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onRequestFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -65,14 +65,14 @@ export class ReminderDelegate {
             once(
               ActionType.REMINDER__CHECK_PERMISSION_SUCCEEDED,
               ({ hasPermission }): void =>
-                callback.onCheckSucceeded(hasPermission)
+                callback.onCheckSucceeded(hasPermission),
             ),
             once(
               ActionType.REMINDER__CHECK_PERMISSION_FAILED,
-              ({ errorCode }): void => callback.onCheckFailed(errorCode)
-            )
+              ({ errorCode }): void => callback.onCheckFailed(errorCode),
+            ),
           )
-        : _.noop
+        : _.noop,
     );
   }
 }

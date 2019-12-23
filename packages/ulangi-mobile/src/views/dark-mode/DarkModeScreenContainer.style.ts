@@ -23,7 +23,7 @@ export class DarkModeScreenStyle {
           text: 'Dark Mode',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class DarkModeScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class DarkModeScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     DarkModeScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    DarkModeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    DarkModeScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     DarkModeScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    DarkModeScreenStyle.SCREEN_DARK_STYLES_ONLY
+    DarkModeScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

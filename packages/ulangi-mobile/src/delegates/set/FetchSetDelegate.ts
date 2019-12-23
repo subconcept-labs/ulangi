@@ -23,7 +23,7 @@ export class FetchSetDelegate {
       onFetching: () => void;
       onFetchSucceeded: (setList: readonly Set[]) => void;
       onFetchFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.SET__FETCH, { setStatus }),
@@ -31,13 +31,13 @@ export class FetchSetDelegate {
         on(ActionType.SET__FETCHING, callback.onFetching),
         once(
           ActionType.SET__FETCH_SUCCEEDED,
-          ({ setList }): void => callback.onFetchSucceeded(setList)
+          ({ setList }): void => callback.onFetchSucceeded(setList),
         ),
         once(
           ActionType.SET__FETCH_FAILED,
-          ({ errorCode }): void => callback.onFetchFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onFetchFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -52,13 +52,13 @@ export class FetchSetDelegate {
         on(ActionType.SET__FETCHING_ALL, callback.onFetchingAll),
         once(
           ActionType.SET__FETCH_ALL_SUCCEEDED,
-          ({ setList }): void => callback.onFetchAllSucceeded(setList)
+          ({ setList }): void => callback.onFetchAllSucceeded(setList),
         ),
         once(
           ActionType.SET__FETCH_ALL_FAILED,
-          ({ errorCode }): void => callback.onFetchAllFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onFetchAllFailed(errorCode),
+        ),
+      ),
     );
   }
 }

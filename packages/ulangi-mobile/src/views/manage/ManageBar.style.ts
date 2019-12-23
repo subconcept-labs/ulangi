@@ -43,7 +43,7 @@ export const lightStyles = StyleSheet.create(
     button_text: {
       color: '#888',
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -51,5 +51,5 @@ export const darkStyles = StyleSheet.create(
     button_text: {
       color: '#aaa',
     },
-  })
+  }),
 );

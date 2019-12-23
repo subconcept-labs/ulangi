@@ -48,16 +48,14 @@ export class DefaultButton extends React.Component<DefaultButtonProps> {
           disabledButtonStyle,
         ]}
         onPress={this.props.onPress}
-        hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-      >
+        hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
         <DefaultText
           style={[
             this.props.styles && this.props.styles.textStyle,
             disabledTextStyle,
           ]}
           numberOfLines={1}
-          ellipsizeMode="tail"
-        >
+          ellipsizeMode="tail">
           {this.props.text}
         </DefaultText>
         {typeof this.props.icon !== 'undefined' ? this.props.icon : null}

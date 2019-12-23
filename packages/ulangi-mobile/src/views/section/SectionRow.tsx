@@ -52,8 +52,7 @@ export class SectionRow extends React.Component<SectionRowProps> {
           testID={this.props.testID}
           style={this.styles.outer_container}
           disabled={this.props.disabled}
-          onPress={this.props.onPress}
-        >
+          onPress={this.props.onPress}>
           {this.renderInner()}
         </TouchableOpacity>
       );
@@ -143,8 +142,7 @@ export class SectionRow extends React.Component<SectionRowProps> {
         <DefaultText
           style={[this.styles.right_text, shrink_right_text]}
           numberOfLines={1}
-          ellipsizeMode="tail"
-        >
+          ellipsizeMode="tail">
           {this.props.rightText}
         </DefaultText>
         {typeof this.props.rightIcon !== 'undefined'

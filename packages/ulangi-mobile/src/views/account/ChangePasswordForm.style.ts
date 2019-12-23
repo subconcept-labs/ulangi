@@ -54,7 +54,7 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.primaryTextColor,
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -72,5 +72,5 @@ export const darkStyles = StyleSheet.create(
       color: config.styles.dark.primaryTextColor,
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

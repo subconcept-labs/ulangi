@@ -61,8 +61,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <View testID={MoreScreenIds.SCREEN} style={this.styles.screen}>
         <ScrollView
           testID={MoreScreenIds.MORE_SCROLL_VIEW}
-          style={this.styles.scroll_view_container}
-        >
+          style={this.styles.scroll_view_container}>
           <MessageCarousel
             theme={this.props.darkModeStore.theme}
             messages={this.props.observableScreen.messages}
@@ -92,10 +91,9 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="account"
-        header="ACCOUNT"
-      >
+        header="ACCOUNT">
         {this.props.userStore.existingCurrentUser.email.endsWith(
-          config.general.guestEmailDomain
+          config.general.guestEmailDomain,
         ) ? (
           <SectionRow
             testID={MoreScreenIds.SET_UP_ACCOUNT_BTN}
@@ -151,8 +149,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="tools-and-settings"
-        header="TOOLS AND SETTINGS"
-      >
+        header="TOOLS AND SETTINGS">
         <SectionRow
           testID={MoreScreenIds.SET_MANAGEMENT_BTN}
           theme={this.props.darkModeStore.theme}
@@ -226,8 +223,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="contact-us"
-        header="CONTACT US"
-      >
+        header="CONTACT US">
         <SectionRow
           testID={MoreScreenIds.FEATURE_REQUEST_BTN}
           theme={this.props.darkModeStore.theme}
@@ -261,8 +257,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="about"
-        header="ABOUT"
-      >
+        header="ABOUT">
         <SectionRow
           testID={MoreScreenIds.VERSION_BTN}
           theme={this.props.darkModeStore.theme}
@@ -306,8 +301,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="general"
-        header="GENERAL"
-      >
+        header="GENERAL">
         <SectionRow
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
           theme={this.props.darkModeStore.theme}

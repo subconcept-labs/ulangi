@@ -51,7 +51,7 @@ export class VocabularyBulkActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -82,7 +82,7 @@ export class VocabularyBulkActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
@@ -95,14 +95,14 @@ export class VocabularyBulkActionMenuDelegate {
           (): void => {
             if (this.vocabularyListState.vocabularyList !== null) {
               Array.from(
-                this.vocabularyListState.vocabularyList.values()
+                this.vocabularyListState.vocabularyList.values(),
               ).forEach(
                 (vocabulary): void => {
                   vocabulary.isSelected.set(true);
-                }
+                },
               );
             }
-          }
+          },
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -138,13 +138,13 @@ export class VocabularyBulkActionMenuDelegate {
                 const editedVocabularyList = this.vocabularyListState.selectedVocabularyIds.map(
                   (vocabularyId): DeepPartial<Vocabulary> => {
                     return { vocabularyId };
-                  }
+                  },
                 );
 
                 const vocabularyIdSetIdPairs = this.vocabularyListState.selectedVocabularyIds.map(
                   (vocabularyId): [string, string] => {
                     return [vocabularyId, selectedSetId];
-                  }
+                  },
                 );
 
                 this.navigatorDelegate.dismissLightBox();
@@ -154,18 +154,18 @@ export class VocabularyBulkActionMenuDelegate {
                   (): void => {
                     this.saveMultipleEdit(
                       editedVocabularyList,
-                      vocabularyIdSetIdPairs
+                      vocabularyIdSetIdPairs,
                     );
-                  }
+                  },
                 );
               },
               {
                 title: 'Move to...',
                 hideLeftButton: true,
                 hideRightButton: true,
-              }
+              },
             );
-          }
+          },
         );
       },
     };
@@ -182,7 +182,7 @@ export class VocabularyBulkActionMenuDelegate {
               vocabularyId,
               vocabularyStatus: VocabularyStatus.ARCHIVED,
             };
-          }
+          },
         );
 
         this.navigatorDelegate.dismissLightBox();
@@ -191,7 +191,7 @@ export class VocabularyBulkActionMenuDelegate {
             this.observableLightBox.state === LightBoxState.UNMOUNTED,
           (): void => {
             this.saveMultipleEdit(editedVocabularyList, []);
-          }
+          },
         );
       },
     };
@@ -208,7 +208,7 @@ export class VocabularyBulkActionMenuDelegate {
               vocabularyId,
               vocabularyStatus: VocabularyStatus.ACTIVE,
             };
-          }
+          },
         );
 
         this.navigatorDelegate.dismissLightBox();
@@ -217,7 +217,7 @@ export class VocabularyBulkActionMenuDelegate {
             this.observableLightBox.state === LightBoxState.UNMOUNTED,
           (): void => {
             this.saveMultipleEdit(editedVocabularyList, []);
-          }
+          },
         );
       },
     };
@@ -235,14 +235,14 @@ export class VocabularyBulkActionMenuDelegate {
               vocabularyId,
               vocabularyStatus: VocabularyStatus.DELETED,
             };
-          }
+          },
         );
         this.navigatorDelegate.dismissLightBox();
         this.observer.when(
           (): boolean => this.observableLightBox.state === 'unmounted',
           (): void => {
             this.saveMultipleEdit(editedVocabularyList, []);
-          }
+          },
         );
       },
     };
@@ -250,7 +250,7 @@ export class VocabularyBulkActionMenuDelegate {
 
   private saveMultipleEdit(
     vocabularyList: DeepPartial<Vocabulary>[],
-    vocabularyIdSetIdPairs: readonly [string, string][]
+    vocabularyIdSetIdPairs: readonly [string, string][],
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.VOCABULARY__EDIT_MULTIPLE, {
@@ -260,17 +260,17 @@ export class VocabularyBulkActionMenuDelegate {
       group(
         on(
           ActionType.VOCABULARY__EDITING_MULTIPLE,
-          (): void => this.showPerformingBulkActionDialog()
+          (): void => this.showPerformingBulkActionDialog(),
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
-          (): void => this.showPerformedBulkActionSuccessfully()
+          (): void => this.showPerformedBulkActionSuccessfully(),
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_FAILED,
-          ({ errorCode }): void => this.showFailedDialog(errorCode)
-        )
-      )
+          ({ errorCode }): void => this.showFailedDialog(errorCode),
+        ),
+      ),
     );
   }
 

@@ -63,8 +63,7 @@ export class VocabularyDetailPronunciation extends React.Component<
         <TouchableOpacity
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           style={this.styles.speak_touchable}
-          onPress={this.props.speak}
-        >
+          onPress={this.props.speak}>
           <Image
             style={this.styles.speaker_icon}
             source={

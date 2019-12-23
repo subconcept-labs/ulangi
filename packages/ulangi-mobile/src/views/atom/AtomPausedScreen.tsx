@@ -41,12 +41,10 @@ export class AtomPausedScreen extends React.Component<AtomPausedScreenProps> {
         style={styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
-        onPress={(): void => this.close()}
-      >
+        onPress={(): void => this.close()}>
         <LightBoxAnimatableView
           testID={AtomPausedScreenIds.CONTAINER}
-          observableLightBox={this.props.observableLightBox}
-        >
+          observableLightBox={this.props.observableLightBox}>
           <View style={styles.inner_container}>
             <View style={styles.title_container}>
               <DefaultText style={styles.title_text}>PAUSED</DefaultText>
@@ -55,16 +53,14 @@ export class AtomPausedScreen extends React.Component<AtomPausedScreenProps> {
               <TouchableOpacity
                 testID={AtomPausedScreenIds.QUIT_BTN}
                 style={styles.button_touchable}
-                onPress={this.props.quit}
-              >
+                onPress={this.props.quit}>
                 <Image source={Images.CROSS_GREY_40X40} />
                 <DefaultText style={styles.button_text}>Quit</DefaultText>
               </TouchableOpacity>
               <TouchableOpacity
                 testID={AtomPausedScreenIds.RESTART_BTN}
                 style={styles.button_touchable}
-                onPress={this.props.restart}
-              >
+                onPress={this.props.restart}>
                 <Image source={Images.REFRESH_GREY_40X40} />
                 <DefaultText style={styles.button_text}>Restart</DefaultText>
               </TouchableOpacity>

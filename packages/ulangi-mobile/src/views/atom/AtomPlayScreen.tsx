@@ -33,7 +33,7 @@ export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
               return <AtomShell key={shell.shellType} shell={shell} />;
-            }
+            },
           )}
           <AtomArcs arcs={this.props.observableScreen.arcs} />
           <AtomParticles

@@ -38,13 +38,11 @@ export class ReflexGameOverScreen extends React.Component<
         style={styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
-        onPress={(): void => this.props.quit()}
-      >
+        onPress={(): void => this.props.quit()}>
         <LightBoxAnimatableView
           testID={ReflexGameOverScreenIds.CONTAINER}
           observableLightBox={this.props.observableLightBox}
-          style={styles.inner_container}
-        >
+          style={styles.inner_container}>
           <View style={styles.title_container}>
             <DefaultText style={styles.title}>{this.props.title}</DefaultText>
           </View>

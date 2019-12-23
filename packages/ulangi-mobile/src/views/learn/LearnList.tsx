@@ -37,13 +37,11 @@ export class LearnList extends React.Component<LearnListProps> {
     return (
       <ScrollView
         testID={LearnScreenIds.LEARN_LIST}
-        contentContainerStyle={this.styles.scroll_view_container}
-      >
+        contentContainerStyle={this.styles.scroll_view_container}>
         <TouchableOpacity
           testID={LearnScreenIds.SPACED_REPETITION_BTN}
           style={this.styles.learn_item}
-          onPress={this.props.navigateToSpacedRepetitionScreen}
-        >
+          onPress={this.props.navigateToSpacedRepetitionScreen}>
           <View style={this.styles.spaced_repetition_title_container}>
             <SpacedRepetitionTitle theme={this.props.theme} />
           </View>
@@ -51,8 +49,7 @@ export class LearnList extends React.Component<LearnListProps> {
         <TouchableOpacity
           testID={LearnScreenIds.WRITING_BTN}
           style={this.styles.learn_item}
-          onPress={this.props.navigateToWritingScreen}
-        >
+          onPress={this.props.navigateToWritingScreen}>
           <View style={this.styles.writing_title_container}>
             <WritingTitle theme={this.props.theme} />
           </View>
@@ -60,8 +57,7 @@ export class LearnList extends React.Component<LearnListProps> {
         <TouchableOpacity
           testID={LearnScreenIds.QUIZ_BTN}
           style={this.styles.learn_item}
-          onPress={this.props.navigateToQuizScreen}
-        >
+          onPress={this.props.navigateToQuizScreen}>
           <View style={this.styles.quiz_title_container}>
             <QuizTitle theme={this.props.theme} />
           </View>

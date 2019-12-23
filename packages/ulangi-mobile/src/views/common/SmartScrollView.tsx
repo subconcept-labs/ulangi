@@ -33,12 +33,11 @@ class DecorateScrollView extends React.Component<
               (child, index): React.ReactElement<any> => {
                 return (
                   <FixedTouchableWithoutFeedback
-                    key={_.get(child, 'key') || index}
-                  >
+                    key={_.get(child, 'key') || index}>
                     {child}
                   </FixedTouchableWithoutFeedback>
                 );
-              }
+              },
             )}
           </React.Fragment>
         );
@@ -63,8 +62,7 @@ class DecorateScrollView extends React.Component<
         <KeyboardAwareScrollView
           enableOnAndroid={true}
           ref={forwardedRef}
-          {...rest}
-        >
+          {...rest}>
           {children}
         </KeyboardAwareScrollView>
       );
@@ -85,7 +83,7 @@ export const SmartScrollView = React.forwardRef(function decorateScrollView(
     keyboardAware?: boolean;
     fixScrollingInsideTouchable?: boolean;
   },
-  ref: any
+  ref: any,
 ): React.ReactElement<any> {
   return (
     <DecorateScrollView forwardedRef={ref} {...props}>

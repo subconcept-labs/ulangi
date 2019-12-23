@@ -32,8 +32,7 @@ export class MembershipScreen extends React.Component<MembershipScreenProps> {
       <ScrollView
         style={styles.screen}
         testID={MembershipScreenIds.SCREEN}
-        contentContainerStyle={styles.content_container}
-      >
+        contentContainerStyle={styles.content_container}>
         {isPremium === false ? (
           <RegularMembership
             showAdsDialog={this.props.screenDelegate.showAdsDialog}

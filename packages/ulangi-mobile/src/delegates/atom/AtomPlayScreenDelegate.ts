@@ -65,7 +65,7 @@ export class AtomPlayScreenDelegate {
     arcDelegate: AtomArcDelegate,
     answerDelegate: AtomAnswerDelegate,
     navigatorDelegate: NavigatorDelegate,
-    startGame: () => void
+    startGame: () => void,
   ) {
     this.observer = observer;
     this.observableLightBox = observableLightBox;
@@ -85,7 +85,7 @@ export class AtomPlayScreenDelegate {
     this.observableScreen.shells = observable.array(this.makeShells());
     this.observableScreen.particles = observable.array(this.makeParticles());
     this.particleDelegate.spreadParticlesByIndices(
-      (): void => this.checkAnswer(false)
+      (): void => this.checkAnswer(false),
     );
   }
 
@@ -98,7 +98,7 @@ export class AtomPlayScreenDelegate {
       (): void => this.onAnswerCorrect(isUserMove),
       (subsetsOfEachShell): void => {
         this.onAnswerIncorrect(isUserMove, subsetsOfEachShell);
-      }
+      },
     );
   }
 
@@ -109,12 +109,12 @@ export class AtomPlayScreenDelegate {
         nextQuestion.textWithUnderscores,
         nextQuestion.answer,
         nextQuestion.hint,
-        nextQuestion.characterPool
+        nextQuestion.characterPool,
       );
       this.observableScreen.particles.replace(this.makeParticles().slice());
 
       this.particleDelegate.spreadParticlesByIndices(
-        (): void => this.checkAnswer(false)
+        (): void => this.checkAnswer(false),
       );
     } else if (this.observableScreen.noMoreVocabulary === true) {
       this.gameOver('NO MORE VOCABULARY!');
@@ -134,7 +134,7 @@ export class AtomPlayScreenDelegate {
               this.dismissWaitingLightBoxAndNext();
             }
           },
-        }
+        },
       );
     }
   }
@@ -159,25 +159,25 @@ export class AtomPlayScreenDelegate {
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
     newShell: AtomShellType,
-    isUserMove: boolean
+    isUserMove: boolean,
   ): void {
     return this.particleDelegate.transferParticleToAnotherShell(
       particle,
       newPosition,
       newShell,
-      (): void => this.checkAnswer(isUserMove)
+      (): void => this.checkAnswer(isUserMove),
     );
   }
 
   public transferParticleToSameShell(
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
-    isUserMove: boolean
+    isUserMove: boolean,
   ): void {
     return this.particleDelegate.transferParticleToSameShell(
       particle,
       newPosition,
-      (): void => this.checkAnswer(isUserMove)
+      (): void => this.checkAnswer(isUserMove),
     );
   }
 
@@ -192,7 +192,7 @@ export class AtomPlayScreenDelegate {
     do {
       particles = this.particleFactory.make(
         this.observableScreen.question.characterPool,
-        this.observableScreen.origin.position
+        this.observableScreen.origin.position,
       );
     } while (this.answerDelegate.hasCorrectAnswer(particles));
 
@@ -213,7 +213,7 @@ export class AtomPlayScreenDelegate {
     this.showGameOverLightBox(
       title,
       this.observableScreen.gameStats.score,
-      this.observableScreen.gameStats.correctCount
+      this.observableScreen.gameStats.correctCount,
     );
   }
 
@@ -222,7 +222,7 @@ export class AtomPlayScreenDelegate {
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startGame()
+      (): void => this.startGame(),
     );
   }
 
@@ -231,7 +231,7 @@ export class AtomPlayScreenDelegate {
     this.navigatorDelegate.dismissLightBox();
     this.observer.when(
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
-      (): void => this.navigatorDelegate.pop()
+      (): void => this.navigatorDelegate.pop(),
     );
   }
 
@@ -241,7 +241,7 @@ export class AtomPlayScreenDelegate {
         title: 'FETCHING VOCABULARY',
         message: 'Fetching more vocabulary. Please wait...',
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -252,7 +252,7 @@ export class AtomPlayScreenDelegate {
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
       (): void => {
         this.next();
-      }
+      },
     );
   }
 
@@ -263,14 +263,14 @@ export class AtomPlayScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   private showGameOverLightBox(
     title: string,
     score: number,
-    correctCount: number
+    correctCount: number,
   ): void {
     this.navigatorDelegate.showLightBox(
       ScreenName.ATOM_GAME_OVER_SCREEN,
@@ -281,7 +281,7 @@ export class AtomPlayScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -300,7 +300,7 @@ export class AtomPlayScreenDelegate {
         }
 
         this.next();
-      }
+      },
     );
 
     this.originDelegate.bounceOrigin();
@@ -312,7 +312,7 @@ export class AtomPlayScreenDelegate {
     correctSubsetsOfEachShell: {
       shellType: AtomShellType;
       correctSubsets: ObservableParticle[][];
-    }[]
+    }[],
   ): void {
     this.arcDelegate.unhighlightArcs();
 
@@ -320,13 +320,13 @@ export class AtomPlayScreenDelegate {
       ({ shellType, correctSubsets }): void => {
         const shell = assertExists(
           this.observableScreen.shells.find(
-            (shell): boolean => shell.shellType === shellType
+            (shell): boolean => shell.shellType === shellType,
           ),
-          'shell should not be null or undefined'
+          'shell should not be null or undefined',
         );
 
         this.arcDelegate.highlightArcs(correctSubsets, shell.diameter / 2);
-      }
+      },
     );
 
     // Only decrement move when user moves
@@ -350,9 +350,9 @@ export class AtomPlayScreenDelegate {
           (vocabulary): [string, Vocabulary] => [
             vocabulary.vocabularyId,
             vocabulary,
-          ]
-        )
-      )
+          ],
+        ),
+      ),
     );
     this.questionIterator.shuffleQueue();
   }

@@ -19,7 +19,7 @@ export class AdAfterLessonDelegate {
   public constructor(
     observer: Observer,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
     this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
@@ -39,7 +39,7 @@ export class AdAfterLessonDelegate {
       this.showAdOrGoogleConsentForm(
         (): void => {
           this.navigatorDelegate.pop();
-        }
+        },
       );
     }
 
@@ -54,7 +54,7 @@ export class AdAfterLessonDelegate {
             popGesture: false,
           });
         }
-      }
+      },
     );
   }
 }

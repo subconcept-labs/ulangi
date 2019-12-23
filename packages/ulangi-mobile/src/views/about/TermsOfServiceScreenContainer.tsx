@@ -26,13 +26,13 @@ export class TermsOfServiceScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.TERMS_OF_SERVICE_SCREEN
+    ScreenName.TERMS_OF_SERVICE_SCREEN,
   );
 
   private screenFactory = new TermsOfServiceScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,7 +47,7 @@ export class TermsOfServiceScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? TermsOfServiceScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : TermsOfServiceScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : TermsOfServiceScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

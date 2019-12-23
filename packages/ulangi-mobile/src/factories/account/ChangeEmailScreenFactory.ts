@@ -12,7 +12,7 @@ export class ChangeEmailScreenFactory extends ScreenFactory {
   public createScreenDelegate(): ChangeEmailScreenDelegate {
     return new ChangeEmailScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate()
+      this.createNavigatorDelegate(),
     );
   }
 }

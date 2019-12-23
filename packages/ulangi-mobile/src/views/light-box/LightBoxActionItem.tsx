@@ -36,21 +36,18 @@ export class LightBoxActionItem extends React.Component<
         style={[
           this.styles.item_container,
           this.props.isLast ? this.styles.last_item_style : null,
-        ]}
-      >
+        ]}>
         <TouchableOpacity
           testID={this.props.item.testID}
           style={this.styles.item_button}
-          onPress={this.props.item.onPress}
-        >
+          onPress={this.props.item.onPress}>
           <DefaultText
             style={[
               this.styles.item_text,
               this.props.item.textColor
                 ? { color: this.props.item.textColor }
                 : null,
-            ]}
-          >
+            ]}>
             {this.props.item.text}
           </DefaultText>
         </TouchableOpacity>

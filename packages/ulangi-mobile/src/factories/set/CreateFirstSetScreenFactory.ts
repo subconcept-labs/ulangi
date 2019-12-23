@@ -16,29 +16,29 @@ import { SingleScreenStyle } from '../../styles/SingleScreenStyle';
 
 export class CreateFirstSetScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableAddEditSetScreen
+    observableScreen: ObservableAddEditSetScreen,
   ): CreateFirstSetScreenDelegate {
     const rootScreenDelegate = this.createRootScreenDelegate();
 
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const pickerDelegate = new PickerDelegate(
       this.observer,
-      observableScreen.setFormState.pickerState
+      observableScreen.setFormState.pickerState,
     );
 
     const setFormDelegate = new SetFormDelegate(
       observableScreen.setFormState,
-      pickerDelegate
+      pickerDelegate,
     );
 
     const addSetDelegate = new AddSetDelegate(
       this.eventBus,
-      observableScreen.setFormState
+      observableScreen.setFormState,
     );
 
     return new CreateFirstSetScreenDelegate(
@@ -51,7 +51,7 @@ export class CreateFirstSetScreenFactory extends ScreenFactory {
       addSetDelegate,
       rootScreenDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

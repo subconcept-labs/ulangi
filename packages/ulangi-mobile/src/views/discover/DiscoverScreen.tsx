@@ -48,8 +48,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     return (
       <DismissKeyboardView
         style={styles.screen}
-        testID={DiscoverScreenIds.SCREEN}
-      >
+        testID={DiscoverScreenIds.SCREEN}>
         {this.isSupported() ? (
           <React.Fragment>
             {this.renderTopBar()}
@@ -177,10 +176,11 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     return (
       <View
         testID={DiscoverScreenIds.UNSUPPORTED_SECTION}
-        style={styles.message_container}
-      >
+        style={styles.message_container}>
         <DefaultText style={styles.message}>
-          {`This section is not supported because you select "Any Language". You can go to Set Management and change it to a specific language.`}
+          {
+            'This section is not supported because you select "Any Language". You can go to Set Management and change it to a specific language.'
+          }
         </DefaultText>
       </View>
     );

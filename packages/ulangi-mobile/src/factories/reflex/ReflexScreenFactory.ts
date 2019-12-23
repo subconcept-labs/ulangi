@@ -18,19 +18,19 @@ import { ScreenFactory } from '../ScreenFactory';
 export class ReflexScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableReflexScreen,
-    questionIterator: ReflexQuestionIterator
+    questionIterator: ReflexQuestionIterator,
   ): ReflexScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const fetchVocabularyDelegate = new FetchVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       observableScreen,
-      questionIterator
+      questionIterator,
     );
 
     const timerDelegate = new TimerDelegate(this.observer, observableScreen);
@@ -46,7 +46,7 @@ export class ReflexScreenFactory extends ScreenFactory {
       timerDelegate,
       navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

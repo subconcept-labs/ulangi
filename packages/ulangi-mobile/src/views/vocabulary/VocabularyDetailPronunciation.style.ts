@@ -29,7 +29,7 @@ export const baseStyles: VocabularyDetailPronunciationStyles = StyleSheet.create
     speaker_icon: {},
 
     activity_indicator: {},
-  }
+  },
 );
 
 export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));

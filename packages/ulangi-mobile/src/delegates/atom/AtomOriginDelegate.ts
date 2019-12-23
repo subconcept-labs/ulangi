@@ -24,8 +24,8 @@ export class AtomOriginDelegate {
     this.observableScreen.origin.commandList.commands.push(
       new ObservableElasticScaleCommand(
         { scaleX: 1.5, scaleY: 1.5 },
-        { scaleX: 1, scaleY: 1 }
-      )
+        { scaleX: 1, scaleY: 1 },
+      ),
     );
   }
 

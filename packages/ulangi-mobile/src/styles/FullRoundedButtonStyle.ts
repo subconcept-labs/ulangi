@@ -32,13 +32,13 @@ export class FullRoundedButtonStyle {
   public static getFullBackgroundStyles(
     size: ButtonSize,
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return RoundedCornerButtonStyle.getFullBackgroundStyles(
       size,
       FullRoundedButtonStyle.getBorderRadiusBySize(size),
       backgroundColor,
-      textColor
+      textColor,
     );
   }
 
@@ -46,7 +46,7 @@ export class FullRoundedButtonStyle {
     return FullRoundedButtonStyle.getFullBackgroundStyles(
       size,
       config.styles.primaryColor,
-      'white'
+      'white',
     );
   }
 
@@ -54,7 +54,7 @@ export class FullRoundedButtonStyle {
     return FullRoundedButtonStyle.getFullBackgroundStyles(
       size,
       config.styles.greenColor,
-      'white'
+      'white',
     );
   }
 
@@ -64,12 +64,12 @@ export class FullRoundedButtonStyle {
 
   public static getOutlineStyles(
     size: ButtonSize,
-    color: string
+    color: string,
   ): ButtonStyles {
     return RoundedCornerButtonStyle.getOutlineStyles(
       size,
       FullRoundedButtonStyle.getBorderRadiusBySize(size),
-      color
+      color,
     );
   }
 
@@ -80,14 +80,14 @@ export class FullRoundedButtonStyle {
   public static getPrimaryOutlineStyles(size: ButtonSize): ButtonStyles {
     return FullRoundedButtonStyle.getOutlineStyles(
       size,
-      config.styles.primaryColor
+      config.styles.primaryColor,
     );
   }
 
   public static getGreenOutlineStyles(size: ButtonSize): ButtonStyles {
     return FullRoundedButtonStyle.getOutlineStyles(
       size,
-      config.styles.greenColor
+      config.styles.greenColor,
     );
   }
 

@@ -27,27 +27,27 @@ export class SignInScreenContainer extends Container {
   private screenFactory = new SignInScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSignInScreen(
     '',
     '',
     false,
-    ScreenName.SIGN_IN_SCREEN
+    ScreenName.SIGN_IN_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createSignInScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SignInScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SignInScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SignInScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

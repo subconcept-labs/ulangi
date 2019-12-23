@@ -19,30 +19,30 @@ export class WelcomeScreenStyle {
           text: '',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
-    {}
+    {},
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_DARK_STYLES_ONLY,
-    {}
+    {},
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     WelcomeScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    WelcomeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    WelcomeScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     WelcomeScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    WelcomeScreenStyle.SCREEN_DARK_STYLES_ONLY
+    WelcomeScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

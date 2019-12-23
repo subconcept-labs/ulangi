@@ -15,12 +15,12 @@ export class QuizSettingsScreenFactory extends ScreenFactory {
   public createQuizSettingsDelegate(): QuizSettingsDelegate {
     return new QuizSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableQuizSettingsScreen
+    observableScreen: ObservableQuizSettingsScreen,
   ): QuizSettingsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -29,7 +29,7 @@ export class QuizSettingsScreenFactory extends ScreenFactory {
     return new QuizSettingsScreenDelegate(
       observableScreen,
       quizSettingsDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

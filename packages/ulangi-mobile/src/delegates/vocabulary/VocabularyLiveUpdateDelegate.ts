@@ -24,7 +24,7 @@ export class VocabularyLiveUpdateDelegate {
     eventBus: EventBus,
     setStore: ObservableSetStore,
     observableConverter: ObservableConverter,
-    vocabularyListState: ObservableVocabularyListState
+    vocabularyListState: ObservableVocabularyListState,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -34,7 +34,7 @@ export class VocabularyLiveUpdateDelegate {
 
   public autoUpdateEditedVocabulary(
     removeWhenVocabularyStatusChange: boolean,
-    removeWhenCategoryChange: boolean
+    removeWhenCategoryChange: boolean,
   ): void {
     this.eventBus.subscribe(
       on(
@@ -42,7 +42,7 @@ export class VocabularyLiveUpdateDelegate {
         ({ vocabulary, setId }): void => {
           if (this.vocabularyListState.vocabularyList !== null) {
             const oldVocabulary = this.vocabularyListState.vocabularyList.get(
-              vocabulary.vocabularyId
+              vocabulary.vocabularyId,
             );
 
             if (typeof oldVocabulary !== 'undefined') {
@@ -56,30 +56,30 @@ export class VocabularyLiveUpdateDelegate {
                 (removeWhenCategoryChange === true &&
                   this.isCategoryChanged(
                     vocabulary.category,
-                    oldVocabulary.category
+                    oldVocabulary.category,
                   ))
               ) {
                 this.vocabularyListState.vocabularyList.delete(
-                  vocabulary.vocabularyId
+                  vocabulary.vocabularyId,
                 );
               } else {
                 this.vocabularyListState.vocabularyList.set(
                   vocabulary.vocabularyId,
                   this.observableConverter.convertToObservableVocabulary(
-                    vocabulary
-                  )
+                    vocabulary,
+                  ),
                 );
               }
             }
           }
-        }
-      )
+        },
+      ),
     );
   }
 
   private isCategoryChanged(
     newCategory: undefined | VocabularyCategory,
-    oldCategory: undefined | VocabularyCategory
+    oldCategory: undefined | VocabularyCategory,
   ): boolean {
     if (
       (typeof newCategory === 'undefined' ||

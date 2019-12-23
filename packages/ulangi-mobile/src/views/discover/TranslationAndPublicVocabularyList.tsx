@@ -24,7 +24,7 @@ import {
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SectionList, StyleSheet, View } from 'react-native';
+import { SectionList, SectionListData, StyleSheet, View } from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -54,12 +54,12 @@ export class TranslationAndPublicVocabularyList extends React.Component<
   TranslationAndPublicVocabularyListProps
 > {
   private keyExtractorForTranslation = (
-    item: ObservableTranslationWithLanguages
+    item: ObservableTranslationWithLanguages,
   ): string =>
     [item.sourceText, item.translatedText, item.translatedBy].join('-');
 
   private keyExtractorForPublicVocabulary = (
-    item: [string, ObservablePublicVocabulary]
+    item: [string, ObservablePublicVocabulary],
   ): string => item[0];
 
   public render(): React.ReactElement<any> {
@@ -77,7 +77,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
           <View style={styles.button_container}>
             <DefaultButton
               styles={FullRoundedButtonStyle.getGreyOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               text="Retry"
               onPress={this.props.refresh}
@@ -94,8 +94,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
       return (
         <View
           testID={DiscoverScreenIds.NO_RESULTS}
-          style={styles.center_container}
-        >
+          style={styles.center_container}>
           <DefaultText style={styles.message}>No vocabulary found.</DefaultText>
         </View>
       );
@@ -104,26 +103,30 @@ export class TranslationAndPublicVocabularyList extends React.Component<
         <SectionList
           testID={DiscoverScreenIds.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST}
           contentContainerStyle={styles.list_container}
-          sections={[
-            {
-              type: DiscoverSectionType.TRANSLATIONS,
-              data: this.props.translationListState.translations
-                ? this.props.translationListState.translations.slice()
-                : [],
-              renderItem: this.renderTranslationItem,
-              keyExtractor: this.keyExtractorForTranslation,
-            },
-            {
-              type: DiscoverSectionType.PUBLIC_VOCABULARY_LIST,
-              data: this.props.publicVocabularyListState.publicVocabularyList
-                ? Array.from(
-                    this.props.publicVocabularyListState.publicVocabularyList
-                  )
-                : [],
-              renderItem: this.renderPublicVocabularyItem,
-              keyExtractor: this.keyExtractorForPublicVocabulary,
-            },
-          ]}
+          sections={
+            [
+              {
+                type: DiscoverSectionType.TRANSLATIONS,
+                data: this.props.translationListState.translationsWithLanguages
+                  ? this.props.translationListState.translationsWithLanguages.slice()
+                  : [],
+                renderItem: this.renderTranslationItem,
+                keyExtractor: this.keyExtractorForTranslation,
+              },
+              {
+                type: DiscoverSectionType.PUBLIC_VOCABULARY_LIST,
+                data: this.props.publicVocabularyListState.publicVocabularyList
+                  ? Array.from(
+                      this.props.publicVocabularyListState.publicVocabularyList,
+                    )
+                  : [],
+                renderItem: this.renderPublicVocabularyItem,
+                keyExtractor: this.keyExtractorForPublicVocabulary,
+              },
+            ] as readonly SectionListData<
+              ObservableTranslationWithLanguages | ObservablePublicVocabulary
+            >[]
+          }
           onEndReachedThreshold={0.5}
           onEndReached={this.props.onEndReached}
           onRefresh={this.props.refresh}

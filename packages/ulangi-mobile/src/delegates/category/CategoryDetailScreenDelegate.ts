@@ -49,7 +49,7 @@ export class CategoryDetailScreenDelegate {
     vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate,
     vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate,
     vocabularySelectionDelegate: VocabularySelectionDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -67,7 +67,7 @@ export class CategoryDetailScreenDelegate {
   public prepareAndFetch(filterType: VocabularyFilterType): void {
     this.vocabularyListDelegate.prepareAndFetch(
       filterType,
-      this.observableScreen.category.categoryName
+      this.observableScreen.category.categoryName,
     );
   }
 
@@ -82,7 +82,7 @@ export class CategoryDetailScreenDelegate {
   public refresh(filterType: VocabularyFilterType): void {
     this.vocabularyListDelegate.refresh(
       filterType,
-      this.observableScreen.category.categoryName
+      this.observableScreen.category.categoryName,
     );
   }
 
@@ -103,8 +103,8 @@ export class CategoryDetailScreenDelegate {
         ],
         (): void => {
           this.refreshCurrentList();
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -112,9 +112,9 @@ export class CategoryDetailScreenDelegate {
     this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
       (): void => {
         this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
-          true
+          true,
         );
-      }
+      },
     );
   }
 
@@ -125,19 +125,19 @@ export class CategoryDetailScreenDelegate {
           [ActionType.SYNC__STOP, ActionType.SYNC__SYNC_COMPLETED],
           (): void => {
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              false
+              false,
             );
-          }
+          },
         ),
         on(
           ActionType.SYNC__SYNCING,
           (): void => {
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              true
+              true,
             );
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -159,7 +159,7 @@ export class CategoryDetailScreenDelegate {
     this.categoryActionMenuDelegate.show(
       this.observableScreen.category,
       this.observableScreen.selectedFilterType.get(),
-      true
+      true,
     );
   }
 
@@ -169,7 +169,7 @@ export class CategoryDetailScreenDelegate {
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
         this.refresh(filterType);
-      }
+      },
     );
   }
 

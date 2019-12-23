@@ -169,7 +169,7 @@ export const lightStyles = StyleSheet.create(
     content: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -217,5 +217,5 @@ export const darkStyles = StyleSheet.create(
     content: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

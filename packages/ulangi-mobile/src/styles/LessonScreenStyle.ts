@@ -86,9 +86,9 @@ export class LessonScreenStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.X_LARGE,
         config.styles.primaryColor,
-        'white'
+        'white',
       ),
-      { buttonStyle: { marginHorizontal: 5, marginVertical: 6 } }
+      { buttonStyle: { marginHorizontal: 5, marginVertical: 6 } },
     );
   }
 
@@ -98,27 +98,27 @@ export class LessonScreenStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         '#ddd',
-        '#444'
+        '#444',
       ),
-      { buttonStyle: { marginHorizontal: 22, marginVertical: 6 } }
+      { buttonStyle: { marginHorizontal: 22, marginVertical: 6 } },
     );
   }
 
   public static getNormalButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return RoundedCornerButtonStyle.getFullBackgroundStyles(
       ButtonSize.NORMAL,
       3,
       backgroundColor,
-      textColor
+      textColor,
     );
   }
 
   public static getLargeButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return _.merge(
       {},
@@ -126,14 +126,14 @@ export class LessonScreenStyle {
         ButtonSize.LARGE,
         3,
         backgroundColor,
-        textColor
+        textColor,
       ),
       {
         buttonStyle: {
           marginHorizontal: 16,
           marginVertical: 4,
         },
-      }
+      },
     );
   }
 }

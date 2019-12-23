@@ -49,8 +49,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
     return (
       <View
         style={this.styles.screen}
-        testID={GoogleSheetsAddOnScreenIds.SCREEN}
-      >
+        testID={GoogleSheetsAddOnScreenIds.SCREEN}>
         <View style={this.styles.intro_container}>
           <DefaultText style={this.styles.intro_text}>
             With this add-on, you can easily manage terms through Google Sheets.
@@ -66,15 +65,14 @@ export class GoogleSheetsAddOnScreen extends React.Component<
           </SectionGroup>
           <SectionGroup
             theme={this.props.darkModeStore.theme}
-            header="TUTORIALS"
-          >
+            header="TUTORIALS">
             <SectionRow
               theme={this.props.darkModeStore.theme}
               leftText="How to install add-on"
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
-                  config.links.installUlangiSheetsAddOnTutorial
+                  config.links.installUlangiSheetsAddOnTutorial,
                 )
               }
             />
@@ -84,7 +82,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
-                  config.links.useUlangiSheetsAddOnTutorial
+                  config.links.useUlangiSheetsAddOnTutorial,
                 )
               }
             />
@@ -97,7 +95,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
   private renderPasswordInput(): React.ReactElement<any> {
     if (
       this.props.userStore.existingCurrentUser.email.endsWith(
-        config.general.guestEmailDomain
+        config.general.guestEmailDomain,
       )
     ) {
       return (
@@ -153,29 +151,28 @@ export class GoogleSheetsAddOnScreen extends React.Component<
         this.props.observableScreen.expiredAt !== null ? (
           <DefaultText style={this.styles.expired_text}>
             {`Expired at ${moment(this.props.observableScreen.expiredAt).format(
-              'MMM Do YYYY'
+              'MMM Do YYYY',
             )}`}
           </DefaultText>
         ) : null}
         <View style={this.styles.action_container}>
           <DefaultText
             style={this.styles.primary_text}
-            onPress={this.props.screenDelegate.copyApiKeyToClipboard}
-          >
+            onPress={this.props.screenDelegate.copyApiKeyToClipboard}>
             Copy
           </DefaultText>
           <DefaultText style={this.styles.dot}>{'\u00B7'}</DefaultText>
           <DefaultText
             style={this.styles.primary_text}
-            onPress={this.props.screenDelegate.sendToEmail}
-          >
+            onPress={this.props.screenDelegate.sendToEmail}>
             Send to email
           </DefaultText>
           <DefaultText style={this.styles.dot}>{'\u00B7'}</DefaultText>
           <DefaultText
             style={this.styles.invalidate_text}
-            onPress={this.props.screenDelegate.showInvalidateApiKeyConfirmation}
-          >
+            onPress={
+              this.props.screenDelegate.showInvalidateApiKeyConfirmation
+            }>
             Invalidate
           </DefaultText>
         </View>

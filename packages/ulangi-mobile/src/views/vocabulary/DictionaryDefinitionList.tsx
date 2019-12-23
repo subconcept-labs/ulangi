@@ -54,8 +54,7 @@ export class DictionaryDefinitionList extends React.Component<
             <TouchableOpacity
               style={this.styles.link_container}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={this.props.openSourceLink}
-            >
+              onPress={this.props.openSourceLink}>
               <DefaultText style={this.styles.source_text}>
                 {this.props.formattedSource}
               </DefaultText>
@@ -80,7 +79,7 @@ export class DictionaryDefinitionList extends React.Component<
                 onPick={this.props.onPick}
               />
             );
-          }
+          },
         )}
       </React.Fragment>
     );

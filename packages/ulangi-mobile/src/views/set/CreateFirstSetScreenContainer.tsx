@@ -37,7 +37,7 @@ export class CreateFirstSetScreenContainer extends Container {
   private screenFactory = new CreateFirstSetScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableAddEditSetScreen(
@@ -48,15 +48,15 @@ export class CreateFirstSetScreenContainer extends Container {
       'en',
       false,
       new ObservableSetPickerState(SetFormPickerType.LEARN, false, false),
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     ),
-    ScreenName.CREATE_FIRST_SET_SCREEN
+    ScreenName.CREATE_FIRST_SET_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -69,7 +69,7 @@ export class CreateFirstSetScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CreateFirstSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CreateFirstSetScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CreateFirstSetScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

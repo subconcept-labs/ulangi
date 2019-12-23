@@ -44,14 +44,12 @@ export class DiscoverNavButton extends React.Component<DiscoverNavButtonProps> {
           this.styles.touchable,
           this.props.isSelected ? this.styles.selected_touchable : null,
         ]}
-        onPress={this.props.onPress}
-      >
+        onPress={this.props.onPress}>
         <DefaultText
           style={[
             this.styles.text,
             this.props.isSelected ? this.styles.selected_text : null,
-          ]}
-        >
+          ]}>
           {this.props.text}
         </DefaultText>
       </TouchableOpacity>

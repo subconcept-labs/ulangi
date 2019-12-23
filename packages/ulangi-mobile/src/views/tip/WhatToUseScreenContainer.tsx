@@ -26,13 +26,13 @@ export class WhatToUseScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.WHAT_TO_USE_SCREEN
+    ScreenName.WHAT_TO_USE_SCREEN,
   );
 
   private screenFactory = new WhatToUseScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -49,7 +49,7 @@ export class WhatToUseScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WhatToUseScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WhatToUseScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WhatToUseScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -29,7 +29,7 @@ export class WelcomeScreenContainer extends Container {
   private screenFactory = new WelcomeScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -39,7 +39,7 @@ export class WelcomeScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WelcomeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WelcomeScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WelcomeScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

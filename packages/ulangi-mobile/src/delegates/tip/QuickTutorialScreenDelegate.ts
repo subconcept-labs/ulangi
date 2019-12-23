@@ -20,7 +20,7 @@ export class QuickTutorialScreenDelegate {
   public constructor(
     observableScreen: ObservableQuickTutorialScreen,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.observableScreen = observableScreen;
     this.navigatorDelegate = navigatorDelegate;

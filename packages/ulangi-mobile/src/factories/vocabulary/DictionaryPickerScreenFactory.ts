@@ -14,7 +14,7 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class DictionaryPickerScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableDictionaryPickerScreen
+    observableScreen: ObservableDictionaryPickerScreen,
   ): DictionaryPickerScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -22,20 +22,20 @@ export class DictionaryPickerScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
-      observableScreen.dictionaryEntryState
+      observableScreen.dictionaryEntryState,
     );
 
     const translationListDelegate = new TranslationListDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      observableScreen.translationListState
+      observableScreen.translationListState,
     );
 
     return new DictionaryPickerScreenDelegate(
       observableScreen,
       dictionaryEntryDelegate,
       translationListDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

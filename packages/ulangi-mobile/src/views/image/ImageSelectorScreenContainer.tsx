@@ -39,19 +39,19 @@ export class ImageSelectorScreenContainer extends Container<
     null,
     observable.box(false),
     observable.box(false),
-    ScreenName.IMAGE_SELECTOR_SCREEN
+    ScreenName.IMAGE_SELECTOR_SCREEN,
   );
 
   private screenFactory = new ImageSelectorScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -67,7 +67,7 @@ export class ImageSelectorScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ImageSelectorScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ImageSelectorScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ImageSelectorScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

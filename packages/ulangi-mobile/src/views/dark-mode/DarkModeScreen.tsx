@@ -59,7 +59,7 @@ export class DarkModeScreen extends React.Component<DarkModeScreenProps> {
               testID={DarkModeScreenIds.SHOW_DARK_MODE_SELECTION_MENU_BTN}
               text={this.props.observableScreen.settings.trigger}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={this.props.screenDelegate.showDarkModeSelectionMenu}
             />

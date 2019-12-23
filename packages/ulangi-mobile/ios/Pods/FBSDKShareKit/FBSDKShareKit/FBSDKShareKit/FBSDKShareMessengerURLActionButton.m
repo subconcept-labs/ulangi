@@ -18,7 +18,11 @@
 
 #import "FBSDKShareMessengerURLActionButton.h"
 
+#ifdef COCOAPODS
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
 #import "FBSDKCoreKit+Internal.h"
+#endif
 #import "FBSDKShareUtility.h"
 
 static NSString *const kURLActionButtonTitleKey = @"title";
@@ -28,7 +32,10 @@ static NSString *const kURLActionButtonMessengerExtensionsKey = @"messengerExten
 static NSString *const kURLActionButtonFallbackURLKey = @"fallbackURL";
 static NSString *const kURLActionButtonShouldHideWebviewShareButtonKey = @"shouldHideWebviewShareButton";
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKShareMessengerURLActionButton
+#pragma clang diagnostic pop
 
 #pragma mark - Properties
 

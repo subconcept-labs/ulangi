@@ -35,8 +35,7 @@ export class TipBar extends React.Component<TipBarProps> {
           <TouchableOpacity
             onPress={this.props.navigateToWhatToUseScreen}
             hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-            style={this.styles.button}
-          >
+            style={this.styles.button}>
             <DefaultText style={this.styles.button_text}>
               Tips on what to use
             </DefaultText>

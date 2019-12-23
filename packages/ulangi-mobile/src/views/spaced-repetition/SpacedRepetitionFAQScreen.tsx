@@ -50,8 +50,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
             </DefaultText>
             <DefaultText
               style={this.styles.highlighted}
-              onPress={this.props.screenDelegate.showSpacedRepetitionWiki}
-            >
+              onPress={this.props.screenDelegate.showSpacedRepetitionWiki}>
               {' '}
               Read more about Spaced repetition on Wikipedia.
             </DefaultText>
@@ -70,8 +69,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
             We are using the{' '}
             <DefaultText
               style={this.styles.highlighted}
-              onPress={this.props.screenDelegate.showLeitnerSystemWiki}
-            >
+              onPress={this.props.screenDelegate.showLeitnerSystemWiki}>
               Leitner system algorithm
             </DefaultText>{' '}
             for scheduling. Each of your vocabulary term has a SR level. The
@@ -87,8 +85,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
     return (
       <View
         style={this.styles.screen}
-        testID={SpacedRepetitionFAQScreenIds.SCREEN}
-      >
+        testID={SpacedRepetitionFAQScreenIds.SCREEN}>
         <FAQList
           theme={this.props.darkModeStore.theme}
           sections={this.data.sections}

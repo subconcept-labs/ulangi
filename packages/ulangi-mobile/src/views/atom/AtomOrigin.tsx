@@ -77,7 +77,7 @@ export class AtomOrigin extends React.Component<
           ]).start(
             (): void => {
               command.state = 'completed';
-            }
+            },
           );
           break;
       }
@@ -93,7 +93,7 @@ export class AtomOrigin extends React.Component<
 
   public componentDidMount(): void {
     this.unsubscribeHandleCommand = autorun(
-      (): void => this.handleCommand(this.props.origin.commandList)
+      (): void => this.handleCommand(this.props.origin.commandList),
     );
   }
 
@@ -108,8 +108,7 @@ export class AtomOrigin extends React.Component<
           styles.container,
           this.getContainerStyle(),
           this.getTransformStyle(),
-        ]}
-      >
+        ]}>
         <DefaultText style={styles.move_count}>
           {this.props.gameStats.remainingMoves}
         </DefaultText>

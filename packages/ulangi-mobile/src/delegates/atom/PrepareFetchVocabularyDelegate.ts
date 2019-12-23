@@ -20,7 +20,7 @@ export class PrepareFetchVocabularyDelegate {
   public constructor(
     eventBus: EventBus,
     setStore: ObservableSetStore,
-    observableScreen: ObservableAtomScreen
+    observableScreen: ObservableAtomScreen,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -44,13 +44,13 @@ export class PrepareFetchVocabularyDelegate {
         on(ActionType.ATOM__PREPARING_FETCH_VOCABULARY, callback.onPreparing),
         once(
           ActionType.ATOM__PREPARE_FETCH_VOCABULARY_SUCCEEDED,
-          callback.onPrepareSucceeded
+          callback.onPrepareSucceeded,
         ),
         once(
           ActionType.ATOM__PREPARE_FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onPrepareFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onPrepareFailed(errorCode),
+        ),
+      ),
     );
   }
 }

@@ -19,12 +19,12 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class MoreScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableMoreScreen
+    observableScreen: ObservableMoreScreen,
   ): MoreScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const rootScreenDelegate = this.createRootScreenDelegate();
@@ -34,29 +34,29 @@ export class MoreScreenFactory extends ScreenFactory {
       this.props.rootStore.userStore,
       this.props.rootStore.remoteConfigStore,
       dialogDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const adDelegate = new AdDelegate(
       this.eventBus,
       this.props.rootStore.adStore,
       this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     );
 
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     const reminderSettingsDelegate = new ReminderSettingsDelegate(
       this.props.rootStore.userStore,
-      this.props.rootStore.notificationStore
+      this.props.rootStore.notificationStore,
     );
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
     const darkModeSettingsDelegate = new DarkModeSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     return new MoreScreenDelegate(
@@ -72,7 +72,7 @@ export class MoreScreenFactory extends ScreenFactory {
       reminderSettingsDelegate,
       darkModeSettingsDelegate,
       linkingDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

@@ -22,7 +22,7 @@ export class EditVocabularyScreenDelegate extends AddEditVocabularyScreenDelegat
     eventBus: EventBus,
     vocabularyFormDelegate: VocabularyFormDelegate,
     editVocabularyDelegate: EditVocabularyDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     super(eventBus, vocabularyFormDelegate, navigatorDelegate);
 

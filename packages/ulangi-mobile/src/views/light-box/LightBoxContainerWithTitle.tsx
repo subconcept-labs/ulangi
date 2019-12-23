@@ -50,12 +50,10 @@ export class LightBoxContainerWithTitle extends React.Component<
         enabled={true}
         style={this.styles.light_box_container}
         onPress={this.props.dismissLightBox}
-        activeOpacity={0.2}
-      >
+        activeOpacity={0.2}>
         <LightBoxAnimatableView
           observableLightBox={this.props.observableLightBox}
-          style={this.styles.inner_container}
-        >
+          style={this.styles.inner_container}>
           <View style={this.styles.title_container}>
             <DefaultText style={this.styles.title}>
               {this.props.title}

@@ -55,9 +55,8 @@ export class PublicVocabularyItem extends React.Component<
     return (
       <FixedTouchableWithoutFeedback
         testID={PublicVocabularyItemIds.PUBLIC_VOCABULARY_CONTAINER_BY_VOCABULARY_TEXT(
-          this.props.vocabulary.vocabularyText
-        )}
-      >
+          this.props.vocabulary.vocabularyText,
+        )}>
         <View style={this.styles.container}>
           <View style={this.styles.vocabulary_text_container}>
             <View style={this.styles.left}>
@@ -79,7 +78,7 @@ export class PublicVocabularyItem extends React.Component<
             {_.map(
               this.props.vocabulary.definitions,
               (definition, index): React.ReactElement<any> =>
-                this.renderDefintion(definition, index)
+                this.renderDefintion(definition, index),
             )}
           </View>
         </View>
@@ -107,13 +106,12 @@ export class PublicVocabularyItem extends React.Component<
                     if (typeof link !== 'undefined') {
                       this.props.openLink(link);
                     }
-                  }}
-                >
+                  }}>
                   {'By ' + formattedSource}
                 </DefaultText>
               </View>
             );
-          }
+          },
         )}
       </View>
     );
@@ -121,7 +119,7 @@ export class PublicVocabularyItem extends React.Component<
 
   private renderDefintion(
     definition: ObservablePublicDefinition,
-    index: number
+    index: number,
   ): React.ReactElement<any> {
     return (
       <View key={index} style={this.styles.definition_container}>
@@ -130,7 +128,7 @@ export class PublicVocabularyItem extends React.Component<
             wordClasses={
               definition.extraFields.wordClass.length > 0
                 ? definition.extraFields.wordClass.map(
-                    (values): string => values[0]
+                    (values): string => values[0],
                   )
                 : definition.wordClasses
             }
@@ -157,13 +155,12 @@ export class PublicVocabularyItem extends React.Component<
     return (
       <TouchableOpacity
         testID={PublicVocabularyItemIds.SHOW_PUBLIC_VOCABULARY_ACTION_MENU_BTN_BY_VOCABULARY_TEXT(
-          this.props.vocabulary.vocabularyText
+          this.props.vocabulary.vocabularyText,
         )}
         style={this.styles.button}
         onPress={(): void => {
           this.props.addVocabulary(this.props.vocabulary);
-        }}
-      >
+        }}>
         <Image
           source={
             this.props.theme === Theme.LIGHT
@@ -179,13 +176,12 @@ export class PublicVocabularyItem extends React.Component<
     return (
       <TouchableOpacity
         testID={PublicVocabularyItemIds.ADD_VOCABULARY_BTN_BY_VOCABULARY_TEXT(
-          this.props.vocabulary.vocabularyText
+          this.props.vocabulary.vocabularyText,
         )}
         style={this.styles.button}
         onPress={(): void => {
           this.props.showPublicVocabularyActionMenu(this.props.vocabulary);
-        }}
-      >
+        }}>
         <Image
           source={
             this.props.theme === Theme.LIGHT

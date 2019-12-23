@@ -20,7 +20,7 @@ export class ReminderSettingsDelegate {
 
   public constructor(
     userStore: ObservableUserStore,
-    notificationStore: ObservableNotificationStore
+    notificationStore: ObservableNotificationStore,
   ) {
     this.userStore = userStore;
     this.notificationStore = notificationStore;

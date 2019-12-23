@@ -65,7 +65,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                   : 'Off'
               }
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.observableScreen.autoArchiveSettings.autoArchiveEnabled = !this
@@ -85,8 +85,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="conditions"
-        header="CONDITIONS"
-      >
+        header="CONDITIONS">
         <SectionRow
           theme={this.props.darkModeStore.theme}
           leftText="When Spaced Repetition Level (SR) is at or above"
@@ -99,7 +98,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                   .spacedRepetitionLevelThreshold
               }
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLevelMenuForSpacedRepetition();
@@ -123,7 +122,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                   .writingLevelThreshold
               }
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLevelMenuForWriting();

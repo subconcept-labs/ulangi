@@ -28,7 +28,7 @@ export class QuizSettingsScreenContainer extends Container {
   private quizSettingsScreenFactory = new QuizSettingsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private quizSettingsDelegate = this.quizSettingsScreenFactory.createQuizSettingsDelegate();
@@ -39,13 +39,13 @@ export class QuizSettingsScreenContainer extends Container {
     this.originalSettings.vocabularyPool,
     this.originalSettings.multipleChoiceQuizLimit,
     this.originalSettings.writingQuizLimit,
-    ScreenName.QUIZ_SETTINGS_SCREEN
+    ScreenName.QUIZ_SETTINGS_SCREEN,
   );
 
   private navigatorDelegate = this.quizSettingsScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.quizSettingsScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -60,7 +60,7 @@ export class QuizSettingsScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuizSettingsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuizSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuizSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

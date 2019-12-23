@@ -56,10 +56,10 @@ export class LanguagePicker extends React.Component<LanguagePickerProps> {
             .then(
               (): void => {
                 this.props.pickerState.languagePickerShouldRunCloseAnimation = false;
-              }
+              },
             );
         }
-      }
+      },
     );
   }
 
@@ -86,14 +86,12 @@ export class LanguagePicker extends React.Component<LanguagePickerProps> {
           ref={(ref: any): void => {
             this.animationContainerRef = ref;
           }}
-          style={this.styles.picker_container}
-        >
+          style={this.styles.picker_container}>
           <View style={this.styles.top_bar_container}>
             <View style={this.styles.top_bar_text_container}>
               <DefaultText
                 testID={SetFormIds.LANGUAGE_PICKER_TITLE}
-                style={this.styles.top_bar_text}
-              >
+                style={this.styles.top_bar_text}>
                 {this.props.pickerState.currentPicker ===
                 SetFormPickerType.LEARN
                   ? 'Learn:'
@@ -103,8 +101,7 @@ export class LanguagePicker extends React.Component<LanguagePickerProps> {
             <TouchableOpacity
               testID={SetFormIds.CLOSE_PICKER_BTN}
               onPress={this.props.hidePicker}
-              style={this.styles.close_button}
-            >
+              style={this.styles.close_button}>
               <DefaultText style={this.styles.close_text}>Close</DefaultText>
             </TouchableOpacity>
           </View>

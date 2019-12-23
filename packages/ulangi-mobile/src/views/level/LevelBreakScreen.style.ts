@@ -19,7 +19,7 @@ export const lightBoxContainerWithTitleLightStyles = _.merge(
     light_box_container: {
       paddingVertical: 120,
     },
-  }
+  },
 );
 
 export const lightBoxContainerWithTitleDarkStyles = _.merge(
@@ -29,5 +29,5 @@ export const lightBoxContainerWithTitleDarkStyles = _.merge(
     light_box_container: {
       paddingVertical: 120,
     },
-  }
+  },
 );

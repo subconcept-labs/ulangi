@@ -32,7 +32,7 @@ export class PublicSetListDelegate {
     setStore: ObservableSetStore,
     publicSetCount: IObservableValue<null | number>,
     publicSetList: ObservablePublicSetListState,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -56,21 +56,21 @@ export class PublicSetListDelegate {
             ActionType.LIBRARY__GETTING_PUBLIC_SET_COUNT,
             (): void => {
               this.publicSetCount.set(null);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__GET_PUBLIC_SET_COUNT_SUCCEEDED,
             ({ count }): void => {
               this.publicSetCount.set(count);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__GET_PUBLIC_SET_COUNT_FAILED,
             (): void => {
               this.publicSetCount.set(null);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -91,23 +91,23 @@ export class PublicSetListDelegate {
             ActionType.LIBRARY__PREPARING_SEARCH_PUBLIC_SETS,
             (): void => {
               this.publicSetList.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_SETS_SUCCEEDED,
             (): void => {
               this.publicSetList.searchState.set(ActivityState.INACTIVE);
               this.search();
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_SETS_FAILED,
             (): void => {
               this.publicSetList.isRefreshing.set(false);
               this.publicSetList.searchState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -124,7 +124,7 @@ export class PublicSetListDelegate {
             ActionType.LIBRARY__SEARCHING_PUBLIC_SETS,
             (): void => {
               this.publicSetList.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__SEARCH_PUBLIC_SETS_SUCCEEDED,
@@ -139,22 +139,22 @@ export class PublicSetListDelegate {
                     return [
                       set.publicSetId,
                       this.observableConverter.convertToObservablePublicSet(
-                        set
+                        set,
                       ),
                     ];
-                  }
-                )
+                  },
+                ),
               );
-            }
+            },
           ),
           once(
             ActionType.LIBRARY__SEARCH_PUBLIC_SETS_FAILED,
             (): void => {
               this.publicSetList.isRefreshing.set(false);
               this.publicSetList.searchState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -165,7 +165,7 @@ export class PublicSetListDelegate {
     this.publicSetList.searchState.set(ActivityState.INACTIVE);
     this.publicSetList.isRefreshing.set(false);
     this.eventBus.publish(
-      createAction(ActionType.LIBRARY__CLEAR_SEARCH_PUBLIC_SETS, null)
+      createAction(ActionType.LIBRARY__CLEAR_SEARCH_PUBLIC_SETS, null),
     );
   }
 

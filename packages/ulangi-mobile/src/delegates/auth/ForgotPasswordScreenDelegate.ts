@@ -27,7 +27,7 @@ export class ForgotPasswordScreenDelegate {
   public constructor(
     eventBus: EventBus,
     observableScreen: ObservableForgotPasswordScreen,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -43,17 +43,17 @@ export class ForgotPasswordScreenDelegate {
       group(
         on(
           ActionType.USER__REQUESTING_PASSWORD_RESET_EMAIL,
-          this.showRequestingDialog
+          this.showRequestingDialog,
         ),
         once(
           ActionType.USER__REQUEST_PASSWORD_RESET_EMAIL_SUCCEEDED,
-          this.showRequestSucceededDialog
+          this.showRequestSucceededDialog,
         ),
         once(
           ActionType.USER__REQUEST_PASSWORD_RESET_EMAIL_FAILED,
-          ({ errorCode }): void => this.showRequestFailedDialog(errorCode)
-        )
-      )
+          ({ errorCode }): void => this.showRequestFailedDialog(errorCode),
+        ),
+      ),
     );
   }
 
@@ -66,7 +66,7 @@ export class ForgotPasswordScreenDelegate {
       {
         message: 'Requesting reset password link. Please wait...',
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -78,7 +78,7 @@ export class ForgotPasswordScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -91,7 +91,7 @@ export class ForgotPasswordScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

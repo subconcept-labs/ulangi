@@ -30,7 +30,7 @@ export class LearnScreenContainer extends Container {
   private screenFactory = new LearnScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableScreen(ScreenName.LEARN_SCREEN, {
@@ -39,11 +39,11 @@ export class LearnScreenContainer extends Container {
     testID: LearnScreenIds.SHOW_SET_SELECTION_MENU_BTN,
     icon: _.has(
       Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-      this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+      this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
     )
       ? _.get(
           Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-          this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+          this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
         )
       : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
     onTitlePress: (): void => {
@@ -59,7 +59,7 @@ export class LearnScreenContainer extends Container {
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
   }
 
@@ -67,7 +67,7 @@ export class LearnScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : LearnScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : LearnScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

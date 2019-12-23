@@ -65,7 +65,7 @@ export const lightStyles: TouchableTitleStyles = StyleSheet.create(
     content_container: {
       backgroundColor: '#eee',
     },
-  })
+  }),
 );
 
 export const darkStyles: TouchableTitleStyles = StyleSheet.create(
@@ -76,5 +76,5 @@ export const darkStyles: TouchableTitleStyles = StyleSheet.create(
     content_container: {
       backgroundColor: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

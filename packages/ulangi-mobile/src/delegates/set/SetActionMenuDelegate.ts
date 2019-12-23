@@ -31,7 +31,7 @@ export class SetActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.eventBus = eventBus;
     this.observableLightBox = observableLightBox;
@@ -83,7 +83,7 @@ export class SetActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
@@ -96,7 +96,7 @@ export class SetActionMenuDelegate {
         this.eventBus.publish(
           createAction(ActionType.SET__SELECT, {
             setId: set.setId,
-          })
+          }),
         );
       },
     };
@@ -126,7 +126,7 @@ export class SetActionMenuDelegate {
               setId: set.setId,
               setStatus: SetStatus.ACTIVE,
             },
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -144,7 +144,7 @@ export class SetActionMenuDelegate {
               setId: set.setId,
               setStatus: SetStatus.ARCHIVED,
             },
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -163,7 +163,7 @@ export class SetActionMenuDelegate {
               setId: set.setId,
               setStatus: SetStatus.DELETED,
             },
-          })
+          }),
         );
         this.navigatorDelegate.dismissLightBox();
       },

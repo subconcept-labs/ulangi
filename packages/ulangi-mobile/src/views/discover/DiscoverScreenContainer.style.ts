@@ -22,7 +22,7 @@ export class DiscoverScreenStyle {
         testID: DiscoverScreenIds.TOP_BAR,
         title: touchableTitle(ScreenName.DISCOVER_SCREEN),
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -39,7 +39,7 @@ export class DiscoverScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -56,18 +56,18 @@ export class DiscoverScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     DiscoverScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    DiscoverScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    DiscoverScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     DiscoverScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    DiscoverScreenStyle.SCREEN_DARK_STYLES_ONLY
+    DiscoverScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

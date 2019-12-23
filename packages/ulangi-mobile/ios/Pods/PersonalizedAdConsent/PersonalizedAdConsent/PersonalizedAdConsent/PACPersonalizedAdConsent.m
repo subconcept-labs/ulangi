@@ -29,7 +29,7 @@
 - (nullable instancetype)initWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionary;
 @end
 
-NSString *const PACVersionString = @"1.0.3";
+NSString *const PACVersionString = @"1.0.4";
 NSString *const PACUserDefaultsRootKey = @"personalized_ad_status";
 
 static NSString *const PACInfoUpdateURLFormat =
@@ -80,8 +80,8 @@ static PACConsentStatus PACConsentStatusForStatusString(NSString *_Nullable stat
 }
 
 /// Returns an array of ad provider dictionary representations for the provided ad providers.
-static NSArray<NSDictionary *> *_Nonnull
-PACSerializeAdProviders(NSOrderedSet<PACAdProvider *> *_Nullable providers) {
+static NSArray<NSDictionary *> *_Nonnull PACSerializeAdProviders(
+    NSOrderedSet<PACAdProvider *> *_Nullable providers) {
   NSMutableArray<NSDictionary *> *serializedProviders = [[NSMutableArray alloc] init];
   for (PACAdProvider *provider in providers) {
     [serializedProviders addObject:provider.dictionaryRepresentation];
@@ -91,8 +91,8 @@ PACSerializeAdProviders(NSOrderedSet<PACAdProvider *> *_Nullable providers) {
 
 /// Returns an ordered set of ad providers for the provided array of ad provider dictionary
 /// representations.
-static NSOrderedSet<PACAdProvider *> *_Nonnull
-PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders) {
+static NSOrderedSet<PACAdProvider *> *_Nonnull PACDeserializeAdProviders(
+    NSArray<NSDictionary *> *_Nullable serializedProviders) {
   NSMutableOrderedSet *adProviders = [[NSMutableOrderedSet alloc] init];
   for (NSDictionary<NSString *, id> *providerInfo in serializedProviders) {
     PACAdProvider *provider = [[PACAdProvider alloc] initWithDictionary:providerInfo];
@@ -122,7 +122,7 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
 }
 
 - (NSUInteger)hash {
-  return _dictionaryRepresentation.hash;
+  return _identifier.hash;
 }
 
 - (BOOL)isEqual:(nullable id)object {
@@ -130,7 +130,7 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
     return NO;
   }
   PACAdProvider *other = object;
-  return [_dictionaryRepresentation isEqual:other.dictionaryRepresentation];
+  return [self.identifier isEqual:other.identifier];
 }
 
 @end
@@ -244,7 +244,7 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
     PACStoreKeyTaggedForUnderAgeOfConsent : _tagForUnderAgeOfConsent ? @1 : @0,
     PACStoreKeyIsRequestInEEAOrUnknown : _isRequestInEEAOrUnknown ? @1 : @0,
     PACStoreKeyHasAnyNonPersonalizedPublisherIdentifier :
-        _hasAnyNonPersonalizedPublisherIdentifier ? @1 : @0,
+            _hasAnyNonPersonalizedPublisherIdentifier ? @1 : @0,
     PACStoreKeyConsentStatus : PACConsentStatusStringForStatus(_status),
     PACStoreKeyPublisherIdentifiers : _publisherIdentifiers.allObjects ?: @[],
     PACStoreKeyProviders : PACSerializeAdProviders(_adProviders),
@@ -330,8 +330,9 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
                  return;
                }
 
-               NSDictionary<NSString *, id> *info =
-                   [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+               NSDictionary<NSString *, id> *info = [NSJSONSerialization JSONObjectWithData:data
+                                                                                    options:0
+                                                                                      error:&error];
                if (error || ![info isKindOfClass:[NSDictionary class]]) {
                  if (!error) {
                    error = PACErrorWithDescription(@"Invalid response.");
@@ -340,8 +341,8 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
                  return;
                }
 
-               NSString *responseString =
-                   [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+               NSString *responseString = [[NSString alloc] initWithData:data
+                                                                encoding:NSUTF8StringEncoding];
 
                dispatch_async(dispatch_get_main_queue(), ^{
                  [self handleInfoUpdateResponse:publisherIdentifiers
@@ -464,9 +465,10 @@ PACDeserializeAdProviders(NSArray<NSDictionary *> *_Nullable serializedProviders
 
   BOOL nonPersonalizedOnlyValueChanged =
       _hasAnyNonPersonalizedPublisherIdentifier != previousHasAnyNonPersonalizedPublisherIdentifier;
-  BOOL providersMatchesConsentedProviders = [_consentedProviders.set isEqual:_adProviders.set];
+  BOOL consentedProvidersContainsProviders =
+      [_adProviders.set isSubsetOfSet:_consentedProviders.set];
   if (_isRequestInEEAOrUnknown &&
-      (!providersMatchesConsentedProviders || nonPersonalizedOnlyValueChanged)) {
+      (!consentedProvidersContainsProviders || nonPersonalizedOnlyValueChanged)) {
     _consentedProviders = nil;
     _status = PACConsentStatusUnknown;
   }

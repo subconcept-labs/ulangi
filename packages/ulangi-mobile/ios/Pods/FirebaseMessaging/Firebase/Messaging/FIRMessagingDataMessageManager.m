@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-#import "FIRMessagingDataMessageManager.h"
+#import "Firebase/Messaging/FIRMessagingDataMessageManager.h"
 
-#import "Protos/GtalkCore.pbobjc.h"
+#import "Firebase/Messaging/Protos/GtalkCore.pbobjc.h"
 
-#import "FIRMessagingClient.h"
-#import "FIRMessagingConnection.h"
-#import "FIRMessagingConstants.h"
-#import "FIRMessagingDefines.h"
-#import "FIRMessagingDelayedMessageQueue.h"
-#import "FIRMessagingLogger.h"
-#import "FIRMessagingReceiver.h"
-#import "FIRMessagingRmqManager.h"
-#import "FIRMessaging_Private.h"
-#import "FIRMessagingSyncMessageManager.h"
-#import "FIRMessagingUtilities.h"
-#import "NSError+FIRMessaging.h"
+#import "Firebase/Messaging/FIRMessagingClient.h"
+#import "Firebase/Messaging/FIRMessagingConnection.h"
+#import "Firebase/Messaging/FIRMessagingConstants.h"
+#import "Firebase/Messaging/FIRMessagingDefines.h"
+#import "Firebase/Messaging/FIRMessagingDelayedMessageQueue.h"
+#import "Firebase/Messaging/FIRMessagingLogger.h"
+#import "Firebase/Messaging/FIRMessagingReceiver.h"
+#import "Firebase/Messaging/FIRMessagingRmqManager.h"
+#import "Firebase/Messaging/FIRMessaging_Private.h"
+#import "Firebase/Messaging/FIRMessagingSyncMessageManager.h"
+#import "Firebase/Messaging/FIRMessagingUtilities.h"
+#import "Firebase/Messaging/NSError+FIRMessaging.h"
 
 static const int kMaxAppDataSizeDefault = 4 * 1024; // 4k
 static const int kMinDelaySeconds = 1; // 1 second
@@ -96,8 +96,9 @@ typedef NS_ENUM(int8_t, UpstreamForceReconnect) {
 }
 
 - (void)setDeviceAuthID:(NSString *)deviceAuthID secretToken:(NSString *)secretToken {
-  _FIRMessagingDevAssert([deviceAuthID length] && [secretToken length],
-                @"Invalid credentials for FIRMessaging");
+  if (deviceAuthID.length == 0 || secretToken.length == 0) {
+      FIRMessagingLoggerWarn(kFIRMessagingMessageCodeDataMessageManager013, @"Invalid credentials: deviceAuthID: %@, secrectToken: %@", deviceAuthID, secretToken);
+  }
   self.deviceAuthID = deviceAuthID;
   self.secretToken = secretToken;
 }
@@ -135,31 +136,29 @@ typedef NS_ENUM(int8_t, UpstreamForceReconnect) {
 - (NSDictionary *)parseDataMessage:(GtalkDataMessageStanza *)dataMessage {
   NSMutableDictionary *message = [NSMutableDictionary dictionary];
   NSString *from = [dataMessage from];
-  if ([from length]) {
+  if (from.length) {
     message[kFIRMessagingFromKey] = from;
   }
 
   // raw data
   NSData *rawData = [dataMessage rawData];
-  if ([rawData length]) {
+  if (rawData.length) {
     message[kFIRMessagingRawDataKey] = rawData;
   }
 
   NSString *token = [dataMessage token];
-  if ([token length]) {
+  if (token.length) {
     message[kFIRMessagingCollapseKey] = token;
   }
 
   // Add the persistent_id. This would be removed later before sending the message to the device.
   NSString *persistentID = [dataMessage persistentId];
-  _FIRMessagingDevAssert([persistentID length], @"Invalid MCS message without persistentID");
-  if ([persistentID length]) {
+  if (persistentID.length) {
     message[kFIRMessagingMessageIDKey] = persistentID;
   }
 
   // third-party data
   for (GtalkAppData *item in dataMessage.appDataArray) {
-    _FIRMessagingDevAssert(item.hasKey && item.hasValue, @"Invalid AppData");
 
     // do not process the "from" key -- is not useful
     if ([kFIRMessagingFromKey isEqualToString:item.key]) {
@@ -175,7 +174,6 @@ typedef NS_ENUM(int8_t, UpstreamForceReconnect) {
         }
         message[kDataMessageNotificationKey][key] = item.value;
       } else {
-        _FIRMessagingDevAssert([key length], @"Invalid key in MCS message: %@", key);
         FIRMessagingLoggerError(kFIRMessagingMessageCodeDataMessageManager001,
                                 @"Invalid key in MCS message: %@", key);
       }
@@ -296,18 +294,13 @@ typedef NS_ENUM(int8_t, UpstreamForceReconnect) {
 
   BOOL useRmq = (ttl != 0) && (msgId != nil);
   if (useRmq) {
-    if (!self.client.isConnected) {
-      // do nothing assuming rmq save is enabled
-    }
-
-    NSError *error;
-    if (![self.rmq2Manager saveRmqMessage:stanza error:&error]) {
-      FIRMessagingLoggerDebug(kFIRMessagingMessageCodeDataMessageManager005, @"%@", error);
-      [self willSendDataMessageFail:stanza withMessageId:msgId error:kFIRMessagingErrorSave];
-      return;
-    }
-
-    [self willSendDataMessageSuccess:stanza withMessageId:msgId];
+    [self.rmq2Manager saveRmqMessage:stanza withCompletionHandler:^(BOOL success) {
+      if (!success) {
+        [self willSendDataMessageFail:stanza withMessageId:msgId error:kFIRMessagingErrorSave];
+        return;
+      }
+      [self willSendDataMessageSuccess:stanza withMessageId:msgId];
+    }];
   }
 
   // if delay > 0 we don't really care about sending the message right now
@@ -424,35 +417,31 @@ typedef NS_ENUM(int8_t, UpstreamForceReconnect) {
   NSMutableArray *toRemoveRmqIds = [NSMutableArray array];
   FIRMessaging_WEAKIFY(self);
   FIRMessaging_WEAKIFY(connection);
-  FIRMessagingRmqMessageHandler messageHandler = ^(int64_t rmqId, int8_t tag, NSData *data) {
+
+  [self.rmq2Manager scanWithRmqMessageHandler:^(NSDictionary *messages) {
     FIRMessaging_STRONGIFY(self);
     FIRMessaging_STRONGIFY(connection);
-    GPBMessage *proto =
-        [FIRMessagingGetClassForTag((FIRMessagingProtoTag)tag) parseFromData:data error:NULL];
-    if ([proto isKindOfClass:GtalkDataMessageStanza.class]) {
+    for (NSString *rmqID in messages) {
+      GPBMessage *proto = messages[rmqID];
+      if ([proto isKindOfClass:GtalkDataMessageStanza.class]) {
       GtalkDataMessageStanza *stanza = (GtalkDataMessageStanza *)proto;
-
-      if (![self handleExpirationForDataMessage:stanza]) {
-        // time expired let's delete from RMQ
-        [toRemoveRmqIds addObject:stanza.persistentId];
-        return;
+        if (![self handleExpirationForDataMessage:stanza]) {
+          // time expired let's delete from RMQ
+          [toRemoveRmqIds addObject:stanza.persistentId];
+          continue;
+        }
+        [rmqIdsResent appendString:[NSString stringWithFormat:@"%@,", stanza.id_p]];
       }
-      [rmqIdsResent appendString:[NSString stringWithFormat:@"%@,", stanza.id_p]];
+      [connection sendProto:proto];
     }
-
-    [connection sendProto:proto];
-  };
-  [self.rmq2Manager scanWithRmqMessageHandler:messageHandler
-                           dataMessageHandler:nil];
-
-  if ([rmqIdsResent length]) {
-    FIRMessagingLoggerDebug(kFIRMessagingMessageCodeDataMessageManager012, @"Resent: %@",
-                            rmqIdsResent);
-  }
-
-  if ([toRemoveRmqIds count]) {
-    [self.rmq2Manager removeRmqMessagesWithRmqIds:toRemoveRmqIds];
-  }
+    if ([rmqIdsResent length]) {
+      FIRMessagingLoggerDebug(kFIRMessagingMessageCodeDataMessageManager012, @"Resent: %@",
+                             rmqIdsResent);
+    }
+    if ([toRemoveRmqIds count]) {
+      [self.rmq2Manager removeRmqMessagesWithRmqIds:[toRemoveRmqIds copy]];
+    }
+  }];
 }
 
 /**

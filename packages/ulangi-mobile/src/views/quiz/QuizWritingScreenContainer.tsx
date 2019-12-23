@@ -43,11 +43,11 @@ export class QuizWritingScreenContainer extends Container<
   private screenFactory = new QuizWritingScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new WritingQuestionIterator(
-    this.props.passedProps.vocabularyList
+    this.props.passedProps.vocabularyList,
   );
 
   protected observableScreen = new ObservableQuizWritingScreen(
@@ -60,17 +60,17 @@ export class QuizWritingScreenContainer extends Container<
       0,
       this.questionIterator.getNumberOfQuestions(),
       0,
-      false
+      false,
     ),
     new ObservableWritingResult(
       config.writing.gradeScale,
       observable.array([]),
       observable.array([]),
       observable.array([]),
-      observable.array([])
+      observable.array([]),
     ),
     observable.box(false),
-    ScreenName.QUIZ_WRITING_SCREEN
+    ScreenName.QUIZ_WRITING_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -78,7 +78,7 @@ export class QuizWritingScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.questionIterator,
     this.observableScreen,
-    this.props.passedProps.startWritingQuiz
+    this.props.passedProps.startWritingQuiz,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -91,7 +91,7 @@ export class QuizWritingScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuizWritingScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuizWritingScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuizWritingScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

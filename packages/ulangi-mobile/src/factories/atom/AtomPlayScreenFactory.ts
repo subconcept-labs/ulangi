@@ -26,7 +26,7 @@ export class AtomPlayScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableAtomPlayScreen,
     questionIterator: AtomQuestionIterator,
-    startGame: () => void
+    startGame: () => void,
   ): AtomPlayScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -36,12 +36,12 @@ export class AtomPlayScreenFactory extends ScreenFactory {
     const shellDelegate = new AtomShellDelegate(observableScreen);
     const particleDelegate = new AtomParticleDelegate(
       this.observer,
-      observableScreen
+      observableScreen,
     );
     const arcDelegate = new AtomArcDelegate(observableScreen);
     const answerDelegate = new AtomAnswerDelegate(
       observableScreen,
-      particleDelegate
+      particleDelegate,
     );
 
     return new AtomPlayScreenDelegate(
@@ -56,7 +56,7 @@ export class AtomPlayScreenFactory extends ScreenFactory {
       arcDelegate,
       answerDelegate,
       navigatorDelegate,
-      startGame
+      startGame,
     );
   }
 }

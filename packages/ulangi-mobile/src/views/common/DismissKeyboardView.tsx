@@ -38,8 +38,7 @@ export class DismissKeyboardView extends React.Component<ViewProperties> {
       <View
         onStartShouldSetResponder={this.onStartShouldSetResponder}
         onResponderGrant={this.onResponderGrant}
-        {...rest}
-      >
+        {...rest}>
         {this.props.children}
       </View>
     );

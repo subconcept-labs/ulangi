@@ -33,8 +33,7 @@ export class SynchronizableListHeader extends React.Component<
         <Animatable.View
           style={styles.container}
           animation="slideInDown"
-          useNativeDriver={true}
-        >
+          useNativeDriver={true}>
           {this.renderContent()}
         </Animatable.View>
       );

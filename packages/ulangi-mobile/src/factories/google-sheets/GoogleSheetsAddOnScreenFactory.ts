@@ -14,10 +14,10 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class GoogleSheetsAddOnScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableGoogleSheetsAddOnScreen
+    observableScreen: ObservableGoogleSheetsAddOnScreen,
   ): GoogleSheetsAddOnScreenDelegate {
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
@@ -26,7 +26,7 @@ export class GoogleSheetsAddOnScreenFactory extends ScreenFactory {
       this.eventBus,
       observableScreen,
       dialogDelegate,
-      linkingDelegate
+      linkingDelegate,
     );
   }
 }

@@ -29,18 +29,18 @@ export class AtomQuestion extends React.Component<AtomQuestionProps> {
   private parseVocabularyTextWithUnderscores(): React.ReactElement<any> {
     const underscores = _.fill(
       Array(this.props.question.answer.length),
-      '_'
+      '_',
     ).join('');
     const indexOfUnderscores = this.props.question.textWithUnderscores.indexOf(
-      underscores
+      underscores,
     );
     const beginSubstring = this.unescapeUnderscore(
-      this.props.question.textWithUnderscores.slice(0, indexOfUnderscores)
+      this.props.question.textWithUnderscores.slice(0, indexOfUnderscores),
     );
     const endSubstring = this.unescapeUnderscore(
       this.props.question.textWithUnderscores.slice(
-        indexOfUnderscores + underscores.length
-      )
+        indexOfUnderscores + underscores.length,
+      ),
     );
 
     return (

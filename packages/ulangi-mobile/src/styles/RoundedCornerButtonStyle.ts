@@ -26,7 +26,7 @@ export class RoundedCornerButtonStyle {
     size: ButtonSize,
     borderRadius: number,
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     const buttonStyle = {
       borderRadius,
@@ -51,7 +51,7 @@ export class RoundedCornerButtonStyle {
   public static getOutlineStyles(
     size: ButtonSize,
     borderRadius: number,
-    color: string
+    color: string,
   ): ButtonStyles {
     const buttonStyle = {
       borderWidth: RoundedCornerButtonStyle.getBorderWidthBySize(size),

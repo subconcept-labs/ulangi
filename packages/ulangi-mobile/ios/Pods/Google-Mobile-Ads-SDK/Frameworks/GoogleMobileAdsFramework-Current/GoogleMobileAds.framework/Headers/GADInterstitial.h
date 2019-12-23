@@ -5,10 +5,12 @@
 //  Copyright 2011 Google LLC. All rights reserved.
 //
 
+#import <GoogleMobileAds/GADAdValue.h>
 #import <GoogleMobileAds/GADInAppPurchaseDelegate.h>
 #import <GoogleMobileAds/GADInterstitialDelegate.h>
 #import <GoogleMobileAds/GADRequest.h>
 #import <GoogleMobileAds/GADRequestError.h>
+#import <GoogleMobileAds/GADResponseInfo.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 #import <UIKit/UIKit.h>
 
@@ -51,11 +53,12 @@
 /// once even with different requests.
 @property(nonatomic, readonly) BOOL hasBeenUsed;
 
-/// Returns the ad network class name that fetched the current ad. Returns nil while the latest ad
-/// request is in progress or if the latest ad request failed. For both standard and mediated Google
-/// AdMob ads, this property returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation
-/// custom events, this property returns @"GADMAdapterCustomEvents".
-@property(nonatomic, readonly, nullable) NSString *adNetworkClassName;
+/// Information about the ad response that returned the current ad. Nil while an ad
+/// request is in progress or if the latest ad request failed.
+@property(nonatomic, readonly, nullable) GADResponseInfo *responseInfo;
+
+/// Called when the ad is estimated to have earned money. Available for whitelisted accounts only.
+@property(nonatomic, nullable, copy) GADPaidEventHandler paidEventHandler;
 
 /// Presents the interstitial ad which takes over the entire screen until the user dismisses it.
 /// This has no effect unless isReady returns YES and/or the delegate's interstitialDidReceiveAd:
@@ -66,6 +69,12 @@
 /// window to show the interstitial and restored when done. After the interstitial has been removed,
 /// the delegate's interstitialDidDismissScreen: will be called.
 - (void)presentFromRootViewController:(nonnull UIViewController *)rootViewController;
+
+/// Returns whether the interstitial can be presented from the provided root view controller. Sets
+/// the error out parameter if the interstitial can't be presented. Must be called on the main
+/// thread.
+- (BOOL)canPresentFromRootViewController:(nonnull UIViewController *)rootViewController
+                                   error:(NSError *_Nullable __autoreleasing *_Nullable)error;
 
 #pragma mark Deprecated
 
@@ -79,5 +88,9 @@
 /// Deprecated setter, use initWithAdUnitID: instead.
 - (void)setAdUnitID:(nullable NSString *)adUnitID
     GAD_DEPRECATED_MSG_ATTRIBUTE("Use initWithAdUnitID: instead of setting the ad unit ID.");
+
+/// Deprecated. Use responseInfo.adNetworkClassName instead.
+@property(nonatomic, readonly, nullable) NSString *adNetworkClassName GAD_DEPRECATED_MSG_ATTRIBUTE(
+    "Use responseInfo.adNetworkClassName.");
 
 @end

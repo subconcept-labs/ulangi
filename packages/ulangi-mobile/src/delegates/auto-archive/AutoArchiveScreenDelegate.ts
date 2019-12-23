@@ -29,7 +29,7 @@ export class AutoArchiveScreenDelegate {
     autoArchiveSettings: ObservableAutoArchiveSettings,
     levelSelectionMenuDelegate: LevelSelectionMenuDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.autoArchiveSettings = autoArchiveSettings;
@@ -61,21 +61,21 @@ export class AutoArchiveScreenDelegate {
           ActionType.USER__EDITING,
           (): void => {
             this.showSavingDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
             this.showSaveSucceededDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           ({ errorCode }): void => {
             this.showSavaFailedDialog(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -85,7 +85,7 @@ export class AutoArchiveScreenDelegate {
       this.autoArchiveSettings.spacedRepetitionLevelThreshold,
       (level): void => {
         this.autoArchiveSettings.spacedRepetitionLevelThreshold = level;
-      }
+      },
     );
   }
 
@@ -95,7 +95,7 @@ export class AutoArchiveScreenDelegate {
       this.autoArchiveSettings.writingLevelThreshold,
       (level): void => {
         this.autoArchiveSettings.writingLevelThreshold = level;
-      }
+      },
     );
   }
 

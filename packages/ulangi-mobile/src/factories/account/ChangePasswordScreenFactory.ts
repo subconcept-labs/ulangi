@@ -12,7 +12,7 @@ export class ChangePasswordScreenFactory extends ScreenFactory {
   public createScreenDelegate(): ChangePasswordScreenDelegate {
     return new ChangePasswordScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate()
+      this.createNavigatorDelegate(),
     );
   }
 }

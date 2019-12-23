@@ -26,13 +26,13 @@ export class WritingFAQScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.WRITING_FAQ_SCREEN
+    ScreenName.WRITING_FAQ_SCREEN,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,7 +47,7 @@ export class WritingFAQScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WritingFAQScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WritingFAQScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WritingFAQScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -63,7 +63,7 @@ export const lightStyles = StyleSheet.create(
     search_input: {
       color: '#545454',
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -80,5 +80,5 @@ export const darkStyles = StyleSheet.create(
     search_input: {
       color: '#ddd',
     },
-  })
+  }),
 );

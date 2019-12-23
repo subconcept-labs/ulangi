@@ -38,13 +38,13 @@ export class AtomArcDelegate {
                     x: nextParticle.position.x + config.atom.particleSize / 2,
                     y: nextParticle.position.y + config.atom.particleSize / 2,
                   },
-                  radius
-                )
+                  radius,
+                ),
               );
             }
-          }
+          },
         );
-      }
+      },
     );
 
     this.observableScreen.arcs.push(...newArcs);

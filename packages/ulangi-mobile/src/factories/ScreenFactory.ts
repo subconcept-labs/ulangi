@@ -22,7 +22,7 @@ export class ScreenFactory {
   public constructor(
     props: ContainerProps,
     eventBus: EventBus,
-    observer: Observer
+    observer: Observer,
   ) {
     this.props = props;
     this.eventBus = eventBus;
@@ -38,7 +38,7 @@ export class ScreenFactory {
       this.observer,
       this.props.componentId,
       this.props.observableLightBox,
-      this.props.rootStore.darkModeStore
+      this.props.rootStore.darkModeStore,
     );
   }
 

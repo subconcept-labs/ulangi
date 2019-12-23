@@ -44,12 +44,11 @@ export class PublicSetItem extends React.Component<PublicSetItemProps> {
       // thus fix scrolling problem
       <TouchableOpacity
         testID={PublicSetItemIds.VIEW_DETAIL_BTN_BY_SET_TITLE(
-          this.props.set.title
+          this.props.set.title,
         )}
         onPress={(): void => this.props.showSetDetailModal(this.props.set)}
         hitSlop={{ top: 8, bottom: 8 }}
-        style={this.styles.item_container}
-      >
+        style={this.styles.item_container}>
         <View style={this.styles.top_container}>
           <View style={this.styles.left}>
             <DefaultText style={this.styles.title}>

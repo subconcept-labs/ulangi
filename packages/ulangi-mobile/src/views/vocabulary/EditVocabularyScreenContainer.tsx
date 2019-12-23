@@ -42,7 +42,7 @@ export class EditVocabularyScreenContainer extends Container<
   private screenFactory = new EditVocabularyScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private definitionDelegate = this.screenFactory.createDefinitionDelegate();
@@ -61,14 +61,14 @@ export class EditVocabularyScreenContainer extends Container<
                 ...definition,
                 meaning: this.definitionDelegate.prependBuiltInWordClassesToMeaning(
                   definition.meaning,
-                  definition.wordClasses
+                  definition.wordClasses,
                 ),
                 // Remove all built-in wordClasses
                 wordClasses: [],
-              }
+              },
             );
-          }
-        )
+          },
+        ),
       ),
       false,
       null,
@@ -76,16 +76,16 @@ export class EditVocabularyScreenContainer extends Container<
       observable.box(null),
       _.get(
         this.props.passedProps.originalVocabulary.category,
-        'categoryName'
-      ) || 'Uncategorized'
+        'categoryName',
+      ) || 'Uncategorized',
     ),
-    ScreenName.EDIT_VOCABULARY_SCREEN
+    ScreenName.EDIT_VOCABULARY_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -101,7 +101,7 @@ export class EditVocabularyScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? EditVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : EditVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : EditVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

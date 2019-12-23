@@ -45,7 +45,7 @@ export class InputField extends React.Component<InputFieldProps> {
   private autoFocus(): void {
     const shouldFocus = assertExists(
       this.props.shouldFocus,
-      'shouldFocus should not be null or undefined'
+      'shouldFocus should not be null or undefined',
     );
     if (shouldFocus.get() === true) {
       shouldFocus.set(false);

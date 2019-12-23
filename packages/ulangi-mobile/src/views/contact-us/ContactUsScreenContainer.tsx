@@ -40,7 +40,7 @@ export class ContactUsScreenContainer extends Container<
   private screenFactory = new ContactUsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableContactUsScreen(
@@ -49,7 +49,7 @@ export class ContactUsScreenContainer extends Container<
     ScreenName.CONTACT_US_SCREEN,
     {
       title: this.props.passedProps.initialFormType,
-    }
+    },
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -65,25 +65,25 @@ export class ContactUsScreenContainer extends Container<
         case ContactUsFormType.FEATURE_REQUEST:
           this.screenDelegate.sendFeatureRequest(
             this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
+            this.observableScreen.text,
           );
           break;
         case ContactUsFormType.REPORT_A_BUG:
           this.screenDelegate.sendBugReport(
             this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
+            this.observableScreen.text,
           );
           break;
         case ContactUsFormType.REPORT_AN_ERROR:
           this.screenDelegate.sendAnErrorReport(
             this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
+            this.observableScreen.text,
           );
           break;
         default:
           this.screenDelegate.sendSupportMessage(
             this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
+            this.observableScreen.text,
           );
       }
     }
@@ -93,7 +93,7 @@ export class ContactUsScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ContactUsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

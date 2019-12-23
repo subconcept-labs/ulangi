@@ -47,13 +47,12 @@ export class LanguagePickerItem extends React.Component<
       <View style={this.styles.item_container}>
         <TouchableOpacity
           testID={SetFormIds.SELECT_LANGUAGE_BTN_BY_LANGUAGE_NAME(
-            this.props.language.fullName
+            this.props.language.fullName,
           )}
           onPress={(): void =>
             this.props.onSelect(this.props.language.languageCode)
           }
-          style={this.styles.touchable}
-        >
+          style={this.styles.touchable}>
           {this.props.isSelected === true ? (
             <Image
               source={Images.CHECK_BLUE_22X22}
@@ -67,13 +66,13 @@ export class LanguagePickerItem extends React.Component<
           )}
           {_.has(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            this.props.language.languageCode
+            this.props.language.languageCode,
           ) ? (
             <Image
               style={this.styles.flag_icon}
               source={_.get(
                 Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-                this.props.language.languageCode
+                this.props.language.languageCode,
               )}
             />
           ) : (

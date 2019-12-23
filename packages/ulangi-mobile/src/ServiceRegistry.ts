@@ -14,7 +14,7 @@ export class ServiceRegistry {
 
   public static register<K extends keyof Services>(
     name: K,
-    prop: Services[K]
+    prop: Services[K],
   ): void {
     ServiceRegistry.registry[name] = prop;
   }

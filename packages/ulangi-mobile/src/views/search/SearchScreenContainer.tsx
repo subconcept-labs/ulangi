@@ -34,7 +34,7 @@ export class SearchScreenContainer extends Container {
   private searchFactory = new SearchScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSearchScreen(
@@ -46,7 +46,7 @@ export class SearchScreenContainer extends Container {
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
     ScreenName.SEARCH_SCREEN,
     {
@@ -55,18 +55,18 @@ export class SearchScreenContainer extends Container {
       testID: SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,
       icon: _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
         ? _.get(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
             this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode
+              .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
       onTitlePress: (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    }
+    },
   );
 
   private navigatorDelegate = this.searchFactory.createNavigatorDelegate();
@@ -74,7 +74,7 @@ export class SearchScreenContainer extends Container {
   private setSelectionMenuDelegate = this.searchFactory.createSetSelectionMenuDelegate();
 
   private screenDelegate = this.searchFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -85,7 +85,7 @@ export class SearchScreenContainer extends Container {
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
     this.screenDelegate.autoRefreshOnSetChange();
     this.screenDelegate.autoRefreshOnMultipleEdit();
@@ -101,7 +101,7 @@ export class SearchScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SearchScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SearchScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SearchScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

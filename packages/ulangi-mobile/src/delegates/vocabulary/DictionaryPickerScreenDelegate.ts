@@ -24,7 +24,7 @@ export class DictionaryPickerScreenDelegate {
     observableScreen: ObservableDictionaryPickerScreen,
     dictionaryEntryDelegate: DictionaryEntryDelegate,
     translationListDelegate: TranslationListDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.dictionaryEntryDelegate = dictionaryEntryDelegate;
@@ -34,7 +34,7 @@ export class DictionaryPickerScreenDelegate {
 
   public getDictionaryEntry(): void {
     this.dictionaryEntryDelegate.getDictionaryEntry(
-      this.observableScreen.currentTerm
+      this.observableScreen.currentTerm,
     );
   }
 
@@ -45,7 +45,7 @@ export class DictionaryPickerScreenDelegate {
   public translate(): void {
     this.translationListDelegate.translate(
       this.observableScreen.currentTerm,
-      'google'
+      'google',
     );
   }
 
@@ -55,7 +55,7 @@ export class DictionaryPickerScreenDelegate {
 
   public openLink(link: string): void {
     Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err)
+      (err): void => console.error('An error occurred', err),
     );
   }
 

@@ -62,7 +62,7 @@ export class QuizMultipleChoiceResult extends React.Component<
             text="Take another quiz"
             styles={LessonScreenStyle.getLargeButtonStyles(
               config.styles.primaryColor,
-              'white'
+              'white',
             )}
             onPress={this.props.takeAnotherQuiz}
           />

@@ -7,7 +7,7 @@
 
 export const PublicVocabularyItemIds = {
   PUBLIC_VOCABULARY_CONTAINER_BY_VOCABULARY_TEXT: (
-    vocabularyText: string
+    vocabularyText: string,
   ): string =>
     'PUBLIC_VOCABULARY_CONTAINER_BY_VOCABULARY_TEXT_' + vocabularyText,
 
@@ -15,7 +15,7 @@ export const PublicVocabularyItemIds = {
     'ADD_VOCABULARY_BTN_BY_VOCABULARY_TEXT_' + vocabularyText,
 
   SHOW_PUBLIC_VOCABULARY_ACTION_MENU_BTN_BY_VOCABULARY_TEXT: (
-    vocabularyText: string
+    vocabularyText: string,
   ): string =>
     'SHOW_PUBLIC_VOCABULARY_ACTION_MENU_BTN_BY_VOCABULARY_TEXT_' +
     vocabularyText,

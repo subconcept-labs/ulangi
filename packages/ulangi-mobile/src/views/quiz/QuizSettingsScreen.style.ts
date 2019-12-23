@@ -38,7 +38,7 @@ export const sectionRowLightStyles = StyleSheet.create(
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const sectionRowDarkStyles = StyleSheet.create(
@@ -47,5 +47,5 @@ export const sectionRowDarkStyles = StyleSheet.create(
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 );

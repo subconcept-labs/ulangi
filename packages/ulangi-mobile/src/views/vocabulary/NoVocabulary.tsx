@@ -34,19 +34,16 @@ export class NoVocabulary extends React.Component<NoVocabularyProps> {
         contentContainerStyle={styles.scroll_view_container}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={this.props.refresh} />
-        }
-      >
+        }>
         <Animatable.View
           style={styles.animation_container}
           animation="fadeIn"
-          useNativeDriver
-        >
+          useNativeDriver>
           {this.renderText()}
           {typeof this.props.showQuickTutorial !== 'undefined' ? (
             <TouchableOpacity
               style={styles.button_container}
-              onPress={this.props.showQuickTutorial}
-            >
+              onPress={this.props.showQuickTutorial}>
               <DefaultText style={styles.quick_tutorial}>
                 View quick tutorial
               </DefaultText>

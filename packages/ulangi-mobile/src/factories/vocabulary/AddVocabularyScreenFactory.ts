@@ -21,17 +21,17 @@ export class AddVocabularyScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableAddEditVocabularyScreen
+    observableScreen: ObservableAddEditVocabularyScreen,
   ): AddVocabularyScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const definitionDelegate = new DefinitionDelegate();
@@ -43,14 +43,14 @@ export class AddVocabularyScreenFactory extends ScreenFactory {
       observableScreen.vocabularyFormState,
       definitionDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
 
     const addVocabularyDelegate = new AddVocabularyDelegate(
       this.eventBus,
       this.props.observableConverter,
       this.props.rootStore.setStore,
-      observableScreen.vocabularyFormState
+      observableScreen.vocabularyFormState,
     );
 
     return new AddVocabularyScreenDelegate(
@@ -60,7 +60,7 @@ export class AddVocabularyScreenFactory extends ScreenFactory {
       vocabularyFormDelegate,
       addVocabularyDelegate,
       navigatorDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

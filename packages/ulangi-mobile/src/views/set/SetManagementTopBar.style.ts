@@ -65,7 +65,7 @@ export const lightStyles = StyleSheet.create(
     selectedTextStyle: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -85,5 +85,5 @@ export const darkStyles = StyleSheet.create(
     selectedTextStyle: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );
