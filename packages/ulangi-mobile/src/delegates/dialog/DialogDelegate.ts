@@ -27,7 +27,7 @@ export class DialogDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -46,9 +46,9 @@ export class DialogDelegate {
           showCloseButton: true,
           closeOnTouchOutside: true,
         },
-        dialog
+        dialog,
       ),
-      this.styles
+      this.styles,
     );
   }
 
@@ -61,9 +61,9 @@ export class DialogDelegate {
           showCloseButton: true,
           closeOnTouchOutside: true,
         },
-        dialog
+        dialog,
       ),
-      this.styles
+      this.styles,
     );
   }
 

@@ -22,7 +22,7 @@ export class AuthDelegate {
       onSigningIn: () => void;
       onSignInSucceeded: () => void;
       onSignInFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__SIGN_IN, {
@@ -34,9 +34,9 @@ export class AuthDelegate {
         once(ActionType.USER__SIGN_IN_SUCCEEDED, callback.onSignInSucceeded),
         once(
           ActionType.USER__SIGN_IN_FAILED,
-          ({ errorCode }): void => callback.onSignInFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSignInFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -51,13 +51,13 @@ export class AuthDelegate {
         on(ActionType.USER__SIGNING_IN_AS_GUEST, callback.onSigningInAsGuest),
         once(
           ActionType.USER__SIGN_IN_AS_GUEST_SUCCEEDED,
-          callback.onSignInAsGuestSucceeded
+          callback.onSignInAsGuestSucceeded,
         ),
         once(
           ActionType.USER__SIGN_IN_AS_GUEST_FAILED,
-          ({ errorCode }): void => callback.onSignInAsGuestFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSignInAsGuestFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -69,7 +69,7 @@ export class AuthDelegate {
       onSigningUp: () => void;
       onSignUpSucceeded: () => void;
       onSignUpFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__SIGN_UP, {
@@ -82,9 +82,9 @@ export class AuthDelegate {
         once(ActionType.USER__SIGN_UP_SUCCEEDED, callback.onSignUpSucceeded),
         once(
           ActionType.USER__SIGN_UP_FAILED,
-          ({ errorCode }): void => callback.onSignUpFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSignUpFailed(errorCode),
+        ),
+      ),
     );
   }
 }

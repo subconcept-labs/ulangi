@@ -43,12 +43,12 @@ export class LightBoxAnimatableView extends React.Component<
           fadeOutAnimation.then(
             (): void => {
               this.props.observableLightBox.removePendingAnimation(
-                'fading view'
+                'fading view',
               );
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 
@@ -68,8 +68,7 @@ export class LightBoxAnimatableView extends React.Component<
         animation="fadeInUp"
         duration={config.lightBox.animationDuration}
         useNativeDriver
-        style={this.props.style}
-      >
+        style={this.props.style}>
         {this.props.children}
       </Animatable.View>
     );

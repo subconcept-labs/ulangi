@@ -67,8 +67,7 @@ export class FlashcardPlayerScreen extends React.Component<
             autoplayed in{' '}
             <DefaultText
               style={styles.flashcard_player_link}
-              onPress={this.props.screenDelegate.openFlashcardPlayerHomePage}
-            >
+              onPress={this.props.screenDelegate.openFlashcardPlayerHomePage}>
               flashcardplayer.com
             </DefaultText>
             .

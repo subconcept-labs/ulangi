@@ -51,7 +51,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
     return (
       <TouchableOpacity
         testID={VocabularyItemIds.VIEW_DETAIL_BTN_BY_VOCABULARY_TERM(
-          this.props.vocabulary.vocabularyTerm
+          this.props.vocabulary.vocabularyTerm,
         )}
         accessible={false}
         style={this.styles.item_container}
@@ -60,8 +60,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
           if (typeof this.props.showVocabularyDetail !== 'undefined') {
             this.props.showVocabularyDetail(this.props.vocabulary);
           }
-        }}
-      >
+        }}>
         <View style={this.styles.vocabulary_container}>
           {this.renderVocabularyTerm(this.props.vocabulary.vocabularyTerm)}
           {this.renderRightButton()}
@@ -87,7 +86,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
               {_.upperFirst(
                 config.vocabulary.statusMap[
                   this.props.vocabulary.vocabularyStatus
-                ].name
+                ].name,
               )}
             </DefaultText>
           </View>
@@ -141,10 +140,10 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
           testID={
             this.props.vocabulary.isSelected.get() === false
               ? VocabularyItemIds.SELECT_BTN_BY_VOCABULARY_TERM(
-                  this.props.vocabulary.vocabularyText
+                  this.props.vocabulary.vocabularyText,
                 )
               : VocabularyItemIds.UNSELECT_BTN_BY_VOCABULARY_TERM(
-                  this.props.vocabulary.vocabularyText
+                  this.props.vocabulary.vocabularyText,
                 )
           }
           hitSlop={{ top: 18, bottom: 18, right: 18, left: 18 }}
@@ -153,8 +152,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
               this.props.toggleSelection(this.props.vocabulary.vocabularyId);
             }
           }}
-          style={this.styles.option_btn}
-        >
+          style={this.styles.option_btn}>
           {this.props.vocabulary.isSelected.get() === true ? (
             <Image source={Images.CHECK_BLUE_22X22} />
           ) : (
@@ -166,7 +164,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
       return (
         <TouchableOpacity
           testID={VocabularyItemIds.SHOW_ACTION_MENU_BTN_BY_VOCABULARY_TERM(
-            this.props.vocabulary.vocabularyText
+            this.props.vocabulary.vocabularyText,
           )}
           hitSlop={{ top: 20, bottom: 20, right: 12, left: 12 }}
           onPress={(): void => {
@@ -174,8 +172,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
               this.props.showVocabularyActionMenu(this.props.vocabulary);
             }
           }}
-          style={this.styles.option_btn}
-        >
+          style={this.styles.option_btn}>
           <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
         </TouchableOpacity>
       );

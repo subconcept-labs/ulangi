@@ -32,7 +32,7 @@ export class SpeakDelegate {
       onSynthesizing: () => void;
       onSynthesizeSucceeded: (filePath: string) => void;
       onSynthesizeFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.AUDIO__SYNTHESIZE_SPEECH, {
@@ -44,13 +44,13 @@ export class SpeakDelegate {
         on(ActionType.AUDIO__SYNTHESIZING_SPEECH, callback.onSynthesizing),
         once(
           ActionType.AUDIO__SYNTHESIZE_SPEECH_SUCCEEDED,
-          ({ filePath }): void => callback.onSynthesizeSucceeded(filePath)
+          ({ filePath }): void => callback.onSynthesizeSucceeded(filePath),
         ),
         once(
           ActionType.AUDIO__SYNTHESIZE_SPEECH_FAILED,
-          ({ errorCode }): void => callback.onSynthesizeFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSynthesizeFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -59,7 +59,7 @@ export class SpeakDelegate {
     callback: {
       onSpeakSucceeded: () => void;
       onSpeakFailed: () => void;
-    }
+    },
   ): void {
     const fileName = path.basename(filePath);
     const baseDir = path.dirname(filePath);
@@ -76,10 +76,10 @@ export class SpeakDelegate {
           sound.play(
             (): void => {
               callback.onSpeakSucceeded();
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 }

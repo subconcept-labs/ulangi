@@ -26,7 +26,7 @@ export class SetUpAccountScreenDelegate {
     eventBus: EventBus,
     observableScreen: ObservableSetUpAccountScreen,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -46,21 +46,21 @@ export class SetUpAccountScreenDelegate {
       group(
         on(
           ActionType.USER__CHANGING_EMAIL_AND_PASSWORD,
-          this.showSettingUpAccountDialog
+          this.showSettingUpAccountDialog,
         ),
         once(
           ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_SUCCEEDED,
           (): void => {
             this.showSetUpAccountSucceededDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED,
           ({ errorCode }): void => {
             this.showSetUpAccountFailedDialog(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 

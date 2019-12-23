@@ -44,11 +44,11 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   private screenFactory = new SpacedRepetitionLessonScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private reviewIterator = new ReviewIterator(
-    this.props.passedProps.vocabularyList
+    this.props.passedProps.vocabularyList,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -60,7 +60,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
       false,
       0,
       this.reviewIterator.getSize(),
-      false
+      false,
     ),
     new ObservableReviewActionBarState(observable.array([])),
     new ObservableReviewFeedbackBarState(observable.map(), false, false),
@@ -69,20 +69,20 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     observable.box(ActivityState.INACTIVE),
     observable.box(false),
     observable.box(false),
-    ScreenName.SPACED_REPETITION_LESSON_SCREEN
+    ScreenName.SPACED_REPETITION_LESSON_SCREEN,
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
     this.reviewIterator,
-    this.props.passedProps.startLesson
+    this.props.passedProps.startLesson,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
     if (buttonId === SpacedRepetitionLessonScreenIds.BACK_BTN) {
       if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
         this.screenDelegate.showAdOrGoogleConsentForm(
-          (): void => this.navigatorDelegate.pop()
+          (): void => this.navigatorDelegate.pop(),
         );
       } else if (
         this.observableScreen.saveState.get() === ActivityState.ACTIVE
@@ -101,7 +101,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.screenDelegate.autoUpdateButtons();
     this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
     this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
 
     if (this.screenDelegate.shouldLoadAd()) {
@@ -111,7 +111,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
 
   public componentWillUnmount(): void {
     this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
   }
 
@@ -119,7 +119,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SpacedRepetitionLessonScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SpacedRepetitionLessonScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SpacedRepetitionLessonScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

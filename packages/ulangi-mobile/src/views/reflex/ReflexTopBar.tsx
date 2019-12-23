@@ -31,8 +31,7 @@ export class ReflexTopBar extends React.Component<ReflexTopBarProps> {
           }
           hitSlop={{ top: 10, bottom: 10, left: 25, right: 25 }}
           style={styles.button}
-          onPress={this.props.onIconPressed}
-        >
+          onPress={this.props.onIconPressed}>
           {this.props.gameState.started === true ? (
             <Image source={Images.PAUSE_WHITE_22X22} />
           ) : (

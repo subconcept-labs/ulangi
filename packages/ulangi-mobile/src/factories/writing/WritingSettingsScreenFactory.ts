@@ -16,17 +16,17 @@ export class WritingSettingsScreenFactory extends ScreenFactory {
   public createWritingSettingsDelegate(): WritingSettingsDelegate {
     return new WritingSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableWritingSettingsScreen
+    observableScreen: ObservableWritingSettingsScreen,
   ): WritingSettingsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const writingSettingsDelegate = this.createWritingSettingsDelegate();
@@ -35,7 +35,7 @@ export class WritingSettingsScreenFactory extends ScreenFactory {
       observableScreen,
       writingSettingsDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

@@ -58,7 +58,7 @@ export class WritingFormTop extends React.Component<WritingFormTopProps> {
                 testID={WritingFormIds.SKIP_BTN}
                 text="Skip"
                 styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-                  ButtonSize.SMALL
+                  ButtonSize.SMALL,
                 )}
                 onPress={this.props.skip}
               />

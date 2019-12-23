@@ -54,7 +54,7 @@ export class VocabularyExtraFieldList extends React.Component<
           .filter(
             ([, valueList]): boolean => {
               return valueList.length > 0;
-            }
+            },
           )
           .map(
             ([key, valueList]): React.ReactElement<any> => {
@@ -66,17 +66,17 @@ export class VocabularyExtraFieldList extends React.Component<
                   VocabularyExtraFieldDetails[
                     key as keyof VocabularyExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               } else {
                 return this.renderFieldsByText(
                   VocabularyExtraFieldDetails[
                     key as keyof VocabularyExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               }
-            }
+            },
           )}
       </View>
     );
@@ -84,7 +84,7 @@ export class VocabularyExtraFieldList extends React.Component<
 
   private renderFieldsByImage(
     detail: ExtraFieldDetail,
-    valueList: readonly string[][]
+    valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
       <React.Fragment key={detail.name}>
@@ -96,9 +96,8 @@ export class VocabularyExtraFieldList extends React.Component<
                 style={this.styles.item_container}
                 testID={VocabularyItemIds.VOCABULARY_EXTRA_FIELD_BY_NAME_VALUE(
                   detail.name,
-                  values[0]
-                )}
-              >
+                  values[0],
+                )}>
                 <View style={this.styles.left}>
                   <DefaultText style={this.styles.name}>{`${
                     detail.name
@@ -113,7 +112,7 @@ export class VocabularyExtraFieldList extends React.Component<
                 </View>
               </View>
             );
-          }
+          },
         )}
       </React.Fragment>
     );
@@ -121,7 +120,7 @@ export class VocabularyExtraFieldList extends React.Component<
 
   private renderFieldsByText(
     detail: ExtraFieldDetail,
-    valueList: readonly string[][]
+    valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
       <React.Fragment key={detail.name}>
@@ -133,9 +132,8 @@ export class VocabularyExtraFieldList extends React.Component<
                 style={this.styles.item_container}
                 testID={VocabularyItemIds.VOCABULARY_EXTRA_FIELD_BY_NAME_VALUE(
                   detail.name,
-                  values[0]
-                )}
-              >
+                  values[0],
+                )}>
                 <View style={this.styles.left}>
                   <DefaultText>
                     <DefaultText style={this.styles.name}>{`${
@@ -154,7 +152,7 @@ export class VocabularyExtraFieldList extends React.Component<
                 ) : null}
               </View>
             );
-          }
+          },
         )}
       </React.Fragment>
     );
@@ -178,8 +176,7 @@ export class VocabularyExtraFieldList extends React.Component<
         <TouchableOpacity
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           style={this.styles.speak_touchable}
-          onPress={(): void => speak(value)}
-        >
+          onPress={(): void => speak(value)}>
           <Image
             style={this.styles.speaker_icon}
             source={Images.SPEAKER_BLACK_17X17}

@@ -68,15 +68,14 @@ export class PublicSetDetailHeader extends React.Component<
                   key={formattedName}
                   onPress={(): void => {
                     this.props.openLink(link);
-                  }}
-                >
+                  }}>
                   {this.renderAuthor(formattedName, link)}
                 </TouchableOpacity>
               );
             } else {
               return this.renderAuthor(formattedName, link);
             }
-          }
+          },
         )}
       </React.Fragment>
     );
@@ -84,7 +83,7 @@ export class PublicSetDetailHeader extends React.Component<
 
   private renderAuthor(
     formattedName: string,
-    link?: string
+    link?: string,
   ): React.ReactElement<any> {
     return (
       <View key={formattedName} style={this.styles.author_container}>

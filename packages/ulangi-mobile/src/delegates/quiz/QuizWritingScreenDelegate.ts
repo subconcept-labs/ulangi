@@ -32,7 +32,7 @@ export class QuizWritingScreenDelegate {
     observableScreen: ObservableQuizWritingScreen,
     writingFormDelegate: WritingFormDelegate,
     navigatorDelegate: NavigatorDelegate,
-    startWritingQuiz: () => void
+    startWritingQuiz: () => void,
   ) {
     this.observer = observer;
     this.questionIterator = questionIterator;
@@ -75,9 +75,9 @@ export class QuizWritingScreenDelegate {
       this.writingFormDelegate.fadeOut(
         (): void => {
           this.observableScreen.writingFormState.setUpNextQuestion(
-            this.questionIterator.next()
+            this.questionIterator.next(),
           );
-        }
+        },
       );
     } else {
       this.observableScreen.shouldShowResult.set(true);
@@ -89,7 +89,7 @@ export class QuizWritingScreenDelegate {
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startWritingQuiz()
+      (): void => this.startWritingQuiz(),
     );
   }
 

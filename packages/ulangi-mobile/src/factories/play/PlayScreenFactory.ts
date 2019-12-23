@@ -16,7 +16,7 @@ export class PlayScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

@@ -90,7 +90,7 @@ export const lightStyles = StyleSheet.create(
     action_subtitle: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -112,5 +112,5 @@ export const darkStyles = StyleSheet.create(
     action_subtitle: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

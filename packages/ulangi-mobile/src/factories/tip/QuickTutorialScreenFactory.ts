@@ -12,14 +12,14 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class QuickTutorialScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableQuickTutorialScreen
+    observableScreen: ObservableQuickTutorialScreen,
   ): QuickTutorialScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     return new QuickTutorialScreenDelegate(
       observableScreen,
       navigatorDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

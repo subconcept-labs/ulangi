@@ -44,8 +44,7 @@ export class SearchList extends React.Component<SearchListProps> {
       return (
         <ScrollView
           testID={SearchScreenIds.NO_RESULTS}
-          contentContainerStyle={styles.no_results_container}
-        >
+          contentContainerStyle={styles.no_results_container}>
           <DefaultText style={styles.no_results_text}>
             Oops! No results found in this set.
           </DefaultText>

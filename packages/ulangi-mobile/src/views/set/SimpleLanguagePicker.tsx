@@ -30,7 +30,7 @@ export class SimpleLanguagePicker extends React.Component<
         {this.props.languages.map(
           (language): React.ReactElement<any> => {
             return this.renderItem(language);
-          }
+          },
         )}
       </ScrollView>
     );
@@ -42,14 +42,13 @@ export class SimpleLanguagePicker extends React.Component<
         key={language.languageCode}
         style={styles.item_touchable}
         onPress={(): void => this.props.onSelect(language.languageCode)}
-        disabled={this.props.disabled}
-      >
+        disabled={this.props.disabled}>
         {_.has(Images.FLAG_ICONS_BY_LANGUAGE_CODE, language.languageCode) ? (
           <Image
             style={styles.flag_icon}
             source={_.get(
               Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-              language.languageCode
+              language.languageCode,
             )}
           />
         ) : (

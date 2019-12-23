@@ -46,28 +46,28 @@ export class DictionaryPickerScreenContainer extends Container<
     new ObservableDictionaryEntryState(
       null,
       observable.box(ActivityState.INACTIVE),
-      observable.box(undefined)
+      observable.box(undefined),
     ),
     new ObservableTranslationListState(
       null,
       null,
       observable.box(ActivityState.INACTIVE),
       observable.box(undefined),
-      observable.box(false)
+      observable.box(false),
     ),
-    ScreenName.DICTIONARY_PICKER_SCREEN
+    ScreenName.DICTIONARY_PICKER_SCREEN,
   );
 
   private screenFactory = new DictionaryPickerScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -87,7 +87,7 @@ export class DictionaryPickerScreenContainer extends Container<
           : {}
         : this.props.styles
         ? this.props.styles.dark
-        : {}
+        : {},
     );
   }
 

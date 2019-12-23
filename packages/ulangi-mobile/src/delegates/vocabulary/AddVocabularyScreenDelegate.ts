@@ -40,7 +40,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
     vocabularyInputDelegate: VocabularyFormDelegate,
     addVocabularyDelegate: AddVocabularyDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     super(eventBus, vocabularyInputDelegate, navigatorDelegate);
 
@@ -83,7 +83,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
               this.navigatorDelegate.pop();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -94,12 +94,12 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -109,10 +109,10 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
         this.vocabularyFormState.reset();
         this.vocabularyFormState.definitions.push(
           this.observableConverter.convertToObservableDefinition(
-            new DefinitionBuilder().build({ source: 'N/A' })
-          )
+            new DefinitionBuilder().build({ source: 'N/A' }),
+          ),
         );
-      }
+      },
     );
   }
 }

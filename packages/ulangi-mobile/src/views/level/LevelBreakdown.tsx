@@ -59,7 +59,7 @@ export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
                 <DefaultText style={this.styles.count}>{count}</DefaultText>
               </View>
             );
-          }
+          },
         )}
       </View>
     );

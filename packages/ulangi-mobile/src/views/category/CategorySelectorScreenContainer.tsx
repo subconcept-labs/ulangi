@@ -40,7 +40,7 @@ export class CategorySelectorScreenContainer extends Container<
   private categorySelectorScreenFactory = new CategorySelectorScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableCategorySelectorScreen(
@@ -48,15 +48,15 @@ export class CategorySelectorScreenContainer extends Container<
       this.props.passedProps.initialCategoryName || '',
       null,
       false,
-      observable.box(ActivityState.INACTIVE)
+      observable.box(ActivityState.INACTIVE),
     ),
-    ScreenName.CATEGORY_SELECTOR_SCREEN
+    ScreenName.CATEGORY_SELECTOR_SCREEN,
   );
 
   private navigatorDelegate = this.categorySelectorScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.categorySelectorScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -76,7 +76,7 @@ export class CategorySelectorScreenContainer extends Container<
       this.props.passedProps.onSelect(
         this.observableScreen.categoryFormState.categoryName === ''
           ? 'Uncategorized'
-          : this.observableScreen.categoryFormState.categoryName
+          : this.observableScreen.categoryFormState.categoryName,
       );
       this.navigatorDelegate.pop();
     }
@@ -86,7 +86,7 @@ export class CategorySelectorScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CategorySelectorScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CategorySelectorScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CategorySelectorScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

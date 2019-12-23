@@ -32,7 +32,7 @@ export class WritingSettingsScreenDelegate {
     observableScreen: ObservableWritingSettingsScreen,
     writingSettingsDelegate: WritingSettingsDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.writingSettingsDelegate = writingSettingsDelegate;
@@ -50,14 +50,14 @@ export class WritingSettingsScreenDelegate {
         onSaving: this.showSavingDialog,
         onSaveSucceeded: this.showSaveSucceededDialog,
         onSaveFailed: this.showSaveFailedDialog,
-      }
+      },
     );
   }
 
   public showLimitMenu(
     valuePairs: readonly [number, string][],
     selectedLimit: number,
-    onSelect: (limit: number) => void
+    onSelect: (limit: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -68,7 +68,7 @@ export class WritingSettingsScreenDelegate {
                 limit,
                 {
                   testID: WritingSettingsScreenIds.SELECT_LIMIT_BTN_BY_LIMIT(
-                    limit
+                    limit,
                   ),
                   text: limitText,
                   onPress: (): void => {
@@ -77,20 +77,20 @@ export class WritingSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLimit],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public showInitialIntervalMenu(
     valuePairs: readonly [number, string][],
     selectedLevel: number,
-    onSelect: (initialInterval: number) => void
+    onSelect: (initialInterval: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -104,7 +104,7 @@ export class WritingSettingsScreenDelegate {
                 initialInterval,
                 {
                   testID: WritingSettingsScreenIds.SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL(
-                    initialInterval
+                    initialInterval,
                   ),
                   text: initialIntervalText,
                   onPress: (): void => {
@@ -113,13 +113,13 @@ export class WritingSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLevel],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -130,7 +130,7 @@ export class WritingSettingsScreenDelegate {
         initialInterval: this.observableScreen.selectedInitialInterval,
         range: [1, config.writing.maxLevel - 1],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

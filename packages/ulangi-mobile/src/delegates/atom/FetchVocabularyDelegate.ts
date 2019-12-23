@@ -23,7 +23,7 @@ export class FetchVocabularyDelegate {
     onFetching: () => void;
     onFetchSucceeded: (
       vocabularyList: readonly Vocabulary[],
-      noMore: boolean
+      noMore: boolean,
     ) => void;
     onFetchFailed: (errorCode: string) => void;
   }): void {
@@ -34,13 +34,13 @@ export class FetchVocabularyDelegate {
         once(
           ActionType.ATOM__FETCH_VOCABULARY_SUCCEEDED,
           ({ vocabularyList, noMore }): void =>
-            callback.onFetchSucceeded(vocabularyList, noMore)
+            callback.onFetchSucceeded(vocabularyList, noMore),
         ),
         once(
           ActionType.ATOM__FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onFetchFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onFetchFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -49,9 +49,9 @@ export class FetchVocabularyDelegate {
     callback: {
       onFetchSucceeded: (
         vocabularyList: readonly Vocabulary[],
-        noMore: boolean
+        noMore: boolean,
       ) => void;
-    }
+    },
   ): void {
     if (currentNumberOfQuestionLeft < config.atom.fetchTriggerThreshold) {
       this.fetch({
@@ -64,7 +64,7 @@ export class FetchVocabularyDelegate {
 
   public clearFetch(): void {
     this.eventBus.publish(
-      createAction(ActionType.ATOM__CLEAR_FETCH_VOCABULARY, null)
+      createAction(ActionType.ATOM__CLEAR_FETCH_VOCABULARY, null),
     );
   }
 }

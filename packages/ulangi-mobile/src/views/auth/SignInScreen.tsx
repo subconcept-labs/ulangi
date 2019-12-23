@@ -31,8 +31,7 @@ export class SignInScreen extends React.Component<SignInScreenProps> {
     return (
       <DismissKeyboardView
         style={styles.screen}
-        testID={SignInScreenIds.SCREEN}
-      >
+        testID={SignInScreenIds.SCREEN}>
         <View style={styles.container}>
           <View style={styles.logo_container}>
             <Logo />
@@ -40,8 +39,7 @@ export class SignInScreen extends React.Component<SignInScreenProps> {
           <SmartScrollView
             style={styles.form_container}
             keyboardAware={true}
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             <SignInForm
               email={this.props.observableScreen.email}
               password={this.props.observableScreen.password}

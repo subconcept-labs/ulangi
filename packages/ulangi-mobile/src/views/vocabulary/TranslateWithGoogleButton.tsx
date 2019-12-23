@@ -24,8 +24,7 @@ export class TranslateWithGoogleButton extends React.Component<
         <TouchableOpacity
           testID={VocabularyFormIds.TRANSLATE_WITH_GOOGLE_BTN}
           style={styles.translate_btn}
-          onPress={this.props.translate}
-        >
+          onPress={this.props.translate}>
           <DefaultText style={styles.translate_btn_text}>
             TRANSLATE WITH GOOGLE
           </DefaultText>

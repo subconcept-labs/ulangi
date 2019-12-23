@@ -27,7 +27,7 @@ export class AdDelegate {
     eventBus: EventBus,
     adStore: ObservableAdStore,
     userStore: ObservableUserStore,
-    remoteConfigStore: ObservableRemoteConfigStore
+    remoteConfigStore: ObservableRemoteConfigStore,
   ) {
     this.eventBus = eventBus;
     this.adStore = adStore;
@@ -53,7 +53,7 @@ export class AdDelegate {
           ios: env.IOS_CONSENT_FORM_DEBUG_DEVICE_ID,
           android: env.ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID,
         }),
-      })
+      }),
     );
   }
 
@@ -74,7 +74,7 @@ export class AdDelegate {
           ios: env.IOS_AD_APP_ID,
           android: env.ANDROID_AD_APP_ID,
         }),
-      })
+      }),
     );
   }
 
@@ -102,7 +102,7 @@ export class AdDelegate {
           ios: env.IOS_AD_TEST_DEVICE_ID,
           android: env.ANDROID_AD_TEST_DEVICE_ID,
         }),
-      })
+      }),
     );
   }
 
@@ -145,7 +145,7 @@ export class AdDelegate {
       createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM, {
         privacyPolicyUrl: env.PRIVACY_POLICY_URL,
         shouldOfferAdFree: env.CONSENT_FORM_SHOULD_OFFER_AD_FREE,
-      })
+      }),
     );
   }
 

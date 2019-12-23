@@ -102,11 +102,4 @@ typedef void (^GADMediationAdapterSetUpCompletionBlock)(NSError *_Nullable error
                        completionHandler:
                            (nonnull GADMediationRewardedLoadCompletionHandler)completionHandler;
 
-/// Deprecated. To be removed before launch. Use setUpWithConfiguration:completionHandler:.
-+ (void)setUp;
-
-/// Deprecated. To be removed before launch. Use setUpWithConfiguration:completionHandler:.
-+ (void)updateConfiguration:(nonnull GADMediationServerConfiguration *)configuration
-    GAD_DEPRECATED_MSG_ATTRIBUTE("Use setUpWithConfiguration:completionHandler:.");
-
 @end

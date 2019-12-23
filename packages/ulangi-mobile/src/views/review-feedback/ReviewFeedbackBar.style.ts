@@ -95,7 +95,7 @@ export const lightStyles = StyleSheet.create(
     subtitle: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -113,5 +113,5 @@ export const darkStyles = StyleSheet.create(
     subtitle: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

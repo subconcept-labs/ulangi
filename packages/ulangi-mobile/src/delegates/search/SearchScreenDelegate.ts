@@ -40,7 +40,7 @@ export class SearchScreenDelegate {
     vocabularyActionMenuDelegate: VocabularyActionMenuDelegate,
     vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate,
     vocabularySelectionDelegate: VocabularySelectionDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -78,7 +78,7 @@ export class SearchScreenDelegate {
 
   public autoRefreshOnSetChange(): void {
     this.eventBus.subscribe(
-      on(ActionType.SET__SELECT, (): void => this.refreshCurrentList())
+      on(ActionType.SET__SELECT, (): void => this.refreshCurrentList()),
     );
   }
 
@@ -88,8 +88,8 @@ export class SearchScreenDelegate {
         ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
         (): void => {
           this.refreshCurrentList();
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -97,9 +97,9 @@ export class SearchScreenDelegate {
     this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
       (): void => {
         this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
-          true
+          true,
         );
-      }
+      },
     );
   }
 
@@ -110,19 +110,19 @@ export class SearchScreenDelegate {
           [ActionType.SYNC__STOP, ActionType.SYNC__SYNC_COMPLETED],
           (): void => {
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              false
+              false,
             );
-          }
+          },
         ),
         on(
           ActionType.SYNC__SYNCING,
           (): void => {
             this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              true
+              true,
             );
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 

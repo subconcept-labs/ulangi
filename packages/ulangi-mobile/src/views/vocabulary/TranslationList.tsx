@@ -56,7 +56,7 @@ export class TranslationList extends React.Component<TranslationListProps> {
                 onPick={this.props.onPick}
               />
             );
-          }
+          },
         )}
       </React.Fragment>
     );

@@ -40,6 +40,9 @@ import com.android.build.OutputFile
  *   // the entry file for bundle generation
  *   entryFile: "index.android.js",
  *
+ *   // https://facebook.github.io/react-native/docs/performance#enable-the-ram-format
+ *   bundleCommand: "ram-bundle",
+ *
  *   // whether to bundle JS and assets in debug mode
  *   bundleInDebug: false,
  *
@@ -96,6 +99,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
+    enableHermes: false,  // clean and rebuild if changing
     bundleInDetox: true,
     devDisabledInDetox: true,
     jsBundleDirDetox: "$buildDir/intermediates/assets/detox",
@@ -109,6 +113,28 @@ apply from: "../../node_modules/react-native/react.gradle"
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
+
 def keyStorePassword = getKeystorePassword("minhloi","ulangi_keystore")
 
 android {
@@ -119,7 +145,7 @@ android {
         applicationId "com.ulangi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
         //multiDexEnabled true
         versionCode 65
         versionName "2.18.1"
@@ -144,6 +170,12 @@ android {
         }
     }
     signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
         release {
             storeFile file(ULANGI_RELEASE_STORE_FILE)
             storePassword keyStorePassword
@@ -152,6 +184,9 @@ android {
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         detox {
             signingConfig signingConfigs.debug
             matchingFallbacks = ["release"]
@@ -181,8 +216,8 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
-            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
+            // https://developer.android.com/studio/build/configure-apk-splits.html
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -198,29 +233,16 @@ android {
 }
 
 dependencies {
-    implementation "org.webkit:android-jsc:r245459"
-
-    implementation project(':react-native-appsflyer')
-    implementation project(':react-native-fbsdk')
-    implementation project(':react-native-iap')
-    implementation project(':react-native-webview')
-    implementation project(':react-native-firebase')
-    implementation project(':react-native-fs')
-    implementation project(':react-native-version-info')
-    implementation project(':react-native-config')
-    implementation project(':react-native-sound')
-    implementation project(':react-native-svg')
-    implementation project(':react-native-sqlite-storage')
-    implementation project(':react-native-splash-screen')
-    implementation project(':react-native-navigation')
-    implementation project(':react-native-ad-consent')
-    implementation project(':react-native-community-netinfo')
-    implementation project(':react-native-fast-image')
-    implementation project(':react-native-dark-mode')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
-    implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
+
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermes-engine/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
+
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     // Firebase dependencies
@@ -234,6 +256,9 @@ dependencies {
       transitive = true
     }
 
+    // Manually linked
+    implementation project(':react-native-navigation')
+
     // Detox dependencies
     androidTestImplementation(project(path: ":detox"))
     androidTestImplementation 'junit:junit:4.12'
@@ -246,5 +271,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-// Required by react-native-firebase
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// Required by Firebase
 apply plugin: 'com.google.gms.google-services'

@@ -9,13 +9,13 @@
 #import <GoogleMobileAds/GADBannerView.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /// A view that displays search ads.
 /// To show search ads:
 ///   1) Create a GADSearchBannerView and add it to your view controller's view hierarchy.
-///   2) Create a GADSearchRequest ad request object to hold the search query and other search data.
-///   3) Call GADSearchBannerView's -loadRequest: method with the GADSearchRequest object.
+///   2) Create a GADDynamicHeightSearchRequest object to hold the search query and other search
+///   data.
+///   3) Call GADSearchBannerView's -loadRequest: method with the
+///   GADDynamicHeightSearchRequest object.
 @interface GADSearchBannerView : GADBannerView
 
 /// If the banner view is initialized with kGADAdSizeFluid and the corresponding request is created
@@ -23,5 +23,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak, nullable) IBOutlet id<GADAdSizeDelegate> adSizeDelegate;
 
 @end
-
-NS_ASSUME_NONNULL_END

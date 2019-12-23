@@ -136,7 +136,7 @@ export const lightStyles = StyleSheet.create(
     use_text: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -175,5 +175,5 @@ export const darkStyles = StyleSheet.create(
     use_text: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

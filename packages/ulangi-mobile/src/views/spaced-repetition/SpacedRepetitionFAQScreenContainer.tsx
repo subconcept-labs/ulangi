@@ -26,13 +26,13 @@ export class SpacedRepetitionFAQScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.SPACED_REPETITION_FAQ_SCREEN
+    ScreenName.SPACED_REPETITION_FAQ_SCREEN,
   );
 
   private screenFactory = new SpacedRepetitionFAQScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -49,7 +49,7 @@ export class SpacedRepetitionFAQScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SpacedRepetitionFAQScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SpacedRepetitionFAQScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SpacedRepetitionFAQScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -24,19 +24,19 @@ export class DiscoverScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableDiscoverScreen
+    observableScreen: ObservableDiscoverScreen,
   ): DiscoverScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const addVocabularyDelegate = new AddVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const publicSetListDelegate = new PublicSetListDelegate(
@@ -45,7 +45,7 @@ export class DiscoverScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       observableScreen.publicSetCount,
       observableScreen.publicSetListState,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const publicVocabularyListDelegate = new PublicVocabularyListDelegate(
@@ -53,27 +53,27 @@ export class DiscoverScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       this.props.rootStore.setStore,
       observableScreen.publicVocabularyListState,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const translationListDelegate = new TranslationListDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      observableScreen.translationListState
+      observableScreen.translationListState,
     );
 
     const publicVocabularyActionMenuDelegate = new PublicVocabularyActionMenuDelegate(
       this.props.observableLightBox,
       this.props.rootStore.setStore,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const translationActionMenuDelegate = new TranslationActionMenuDelegate(
       this.props.observableLightBox,
       this.props.rootStore.setStore,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new DiscoverScreenDelegate(
@@ -87,7 +87,7 @@ export class DiscoverScreenFactory extends ScreenFactory {
       translationListDelegate,
       translationActionMenuDelegate,
       navigatorDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

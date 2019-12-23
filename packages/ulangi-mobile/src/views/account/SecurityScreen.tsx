@@ -43,8 +43,7 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="ulangi-account"
-        header="ULANGI ACCOUNT"
-      >
+        header="ULANGI ACCOUNT">
         <SectionRow
           testID={SecurityScreenIds.CHANGE_EMAIL_BTN}
           theme={this.props.darkModeStore.theme}

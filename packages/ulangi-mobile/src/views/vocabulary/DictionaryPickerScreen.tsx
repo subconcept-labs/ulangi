@@ -57,12 +57,10 @@ export class DictionaryPickerScreen extends React.Component<
         style={this.styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
-        onPress={this.props.screenDelegate.close}
-      >
+        onPress={this.props.screenDelegate.close}>
         <LightBoxAnimatableView
           testID={DictionaryPickerScreenIds.CONTAINER}
-          observableLightBox={this.props.observableLightBox}
-        >
+          observableLightBox={this.props.observableLightBox}>
           <View style={this.styles.inner_container}>
             {this.renderPickerHeader()}
             <View style={this.styles.picker_content_container}>
@@ -86,8 +84,7 @@ export class DictionaryPickerScreen extends React.Component<
           style={this.styles.header_item_right}
           testID={VocabularyFormIds.CLOSE_PICKER_BTN}
           onPress={this.props.screenDelegate.close}
-          hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
-        >
+          hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}>
           <DefaultText style={this.styles.header_text_right}>Close</DefaultText>
         </TouchableOpacity>
       </View>

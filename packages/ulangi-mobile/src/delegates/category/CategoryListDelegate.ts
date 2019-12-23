@@ -42,7 +42,7 @@ export class CategoryListDelegate {
     observableConverter: ObservableConverter,
     categoryListState: ObservableCategoryListState,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    writingSettingsDelegate: WritingSettingsDelegate
+    writingSettingsDelegate: WritingSettingsDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -56,29 +56,29 @@ export class CategoryListDelegate {
     this.eventBus.pubsub(
       createAction(
         ActionType.MANAGE__PREPARE_FETCH_CATEGORY,
-        this.createPrepareFetchPayload(filterType)
+        this.createPrepareFetchPayload(filterType),
       ),
       group(
         on(
           ActionType.MANAGE__PREPARING_FETCH_CATEGORY,
           (): void => {
             this.categoryListState.fetchState.set(ActivityState.ACTIVE);
-          }
+          },
         ),
         once(
           ActionType.MANAGE__PREPARE_FETCH_CATEGORY_SUCCEEDED,
           (): void => {
             this.categoryListState.fetchState.set(ActivityState.INACTIVE);
             this.fetch();
-          }
+          },
         ),
         once(
           ActionType.MANAGE__PREPARE_FETCH_CATEGORY_FAILED,
           (): void => {
             this.categoryListState.fetchState.set(ActivityState.INACTIVE);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -111,22 +111,22 @@ export class CategoryListDelegate {
                     return [
                       category.categoryName,
                       this.observableConverter.convertToObservableCategory(
-                        category
+                        category,
                       ),
                     ];
-                  }
-                )
+                  },
+                ),
               );
-            }
+            },
           ),
           once(
             ActionType.MANAGE__FETCH_CATEGORY_FAILED,
             (): void => {
               this.categoryListState.fetchState.set(ActivityState.ERROR);
               this.categoryListState.isRefreshing.set(false);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -136,7 +136,7 @@ export class CategoryListDelegate {
     this.categoryListState.categoryList = null;
     this.categoryListState.noMore = false;
     this.eventBus.publish(
-      createAction(ActionType.MANAGE__CLEAR_FETCH_CATEGORY, null)
+      createAction(ActionType.MANAGE__CLEAR_FETCH_CATEGORY, null),
     );
   }
 
@@ -150,7 +150,7 @@ export class CategoryListDelegate {
   }
 
   private createPrepareFetchPayload(
-    filterType: VocabularyFilterType
+    filterType: VocabularyFilterType,
   ):
     | {
         filterBy: 'VocabularyStatus';

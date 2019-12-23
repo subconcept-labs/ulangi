@@ -52,13 +52,13 @@ static NSString *const kURLResponseErrorCodeInvalidClientID = @"auth/invalid-oau
 
 /** @var kURLResponseErrorCodeNetworkRequestFailed
     @brief Error code that indicates that a network request within the SFSafariViewController or
-        UIWebView failed.
+        WKWebView failed.
  */
 static NSString *const kURLResponseErrorCodeNetworkRequestFailed = @"auth/network-request-failed";
 
 /** @var kURLResponseErrorCodeInternalError
     @brief Error code that indicates that an internal error occurred within the
-        SFSafariViewController or UIWebView failed.
+        SFSafariViewController or WKWebView failed.
  */
 static NSString *const kURLResponseErrorCodeInternalError = @"auth/internal-error";
 
@@ -156,6 +156,12 @@ static NSString *const kFIRAuthErrorMessageNetworkError = @"Network error (such 
 static NSString *const kFIRAuthErrorMessageKeychainError = @"An error occurred when accessing the "
     "keychain. The @c NSLocalizedFailureReasonErrorKey field in the @c NSError.userInfo dictionary "
     "will contain more information about the error encountered";
+
+/** @var kFIRAuthErrorMessageMissingClientIdentifier
+    @brief Message for @c FIRAuthErrorCodeMissingClientIdentifier error code.
+ */
+static NSString *const kFIRAuthErrorMessageMissingClientIdentifier = @"The request does not contain "
+    "any client identifier.";
 
 /** @var kFIRAuthErrorMessageUserTokenExpired
     @brief Message for @c FIRAuthErrorCodeTokenExpired error code.
@@ -406,7 +412,7 @@ static NSString *const kFIRAuthErrorMessageWebRequestFailed = @"A network error 
     @brief Message for @c FIRAuthErrorCodeWebInternalError error code.
  */
 static NSString *const kFIRAuthErrorMessageWebInternalError = @"An internal error has occurred "
-    "within the SFSafariViewController or UIWebView.";
+    "within the SFSafariViewController or WKWebView.";
 
 /** @var kFIRAuthErrorMessageAppVerificationUserInteractionFailure
     @brief Message for @c FIRAuthErrorCodeInvalidClientID error code.
@@ -445,6 +451,24 @@ static NSString *const kFIRAuthErrorMessageInternalError = @"An internal error h
 static NSString *const kFIRAuthErrorMessageMalformedJWT =
     @"Failed to parse JWT. Check the userInfo dictionary for the full token.";
 
+/** @var kFIRAuthErrorMessageDynamicLinkNotActivated
+    @brief Error message constant describing @c FIRAuthErrorCodeDynamicLinkNotActivated errors.
+ */
+static NSString *const kFIRAuthErrorMessageDynamicLinkNotActivated =
+    @"Please activate Dynamic Links in the Firebase Console and agree to the terms and conditions.";
+
+/** @var kFIRAuthErrorMessageRejectedCredential
+    @brief Error message constant describing @c FIRAuthErrorCodeRejectedCredential errors.
+ */
+static NSString *const kFIRAuthErrorMessageRejectedCredential =
+    @"The request contains malformed or mismatching credentials.";
+
+/** @var kFIRAuthErrorMessageMissingOrInvalidNonce
+    @brief Error message constant describing @c FIRAuthErrorCodeMissingOrInvalidNonce errors.
+ */
+static NSString *const kFIRAuthErrorMessageMissingOrInvalidNonce =
+    @"The request contains malformed or mismatched credentials.";
+
 /** @var FIRAuthErrorDescription
     @brief The error descrioption, based on the error code.
     @remarks No default case so that we get a compiler warning if a new value was added to the enum.
@@ -481,6 +505,8 @@ static NSString *FIRAuthErrorDescription(FIRAuthErrorCode code) {
       return kFIRAuthErrorMessageNetworkError;
     case FIRAuthErrorCodeKeychainError:
       return kFIRAuthErrorMessageKeychainError;
+    case FIRAuthErrorCodeMissingClientIdentifier:
+      return kFIRAuthErrorMessageMissingClientIdentifier;
     case FIRAuthErrorCodeUserTokenExpired:
       return kFIRAuthErrorMessageUserTokenExpired;
     case FIRAuthErrorCodeUserNotFound:
@@ -575,6 +601,12 @@ static NSString *FIRAuthErrorDescription(FIRAuthErrorCode code) {
       return kFIRAuthErrorMessageLocalPlayerNotAuthenticated;
     case FIRAuthErrorCodeGameKitNotLinked:
       return kFIRAuthErrorMessageGameKitNotLinked;
+    case FIRAuthErrorCodeDynamicLinkNotActivated:
+      return kFIRAuthErrorMessageDynamicLinkNotActivated;
+    case FIRAuthErrorCodeRejectedCredential:
+      return kFIRAuthErrorMessageRejectedCredential;
+    case FIRAuthErrorCodeMissingOrInvalidNonce:
+      return kFIRAuthErrorMessageMissingOrInvalidNonce;
   }
 }
 
@@ -614,6 +646,8 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
       return @"ERROR_NETWORK_REQUEST_FAILED";
     case FIRAuthErrorCodeKeychainError:
       return @"ERROR_KEYCHAIN_ERROR";
+    case FIRAuthErrorCodeMissingClientIdentifier:
+      return @"ERROR_MISSING_CLIENT_IDENTIFIER";
     case FIRAuthErrorCodeUserTokenExpired:
       return @"ERROR_USER_TOKEN_EXPIRED";
     case FIRAuthErrorCodeUserNotFound:
@@ -708,6 +742,12 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
       return @"ERROR_LOCAL_PLAYER_NOT_AUTHENTICATED";
     case FIRAuthErrorCodeGameKitNotLinked:
       return @"ERROR_GAME_KIT_NOT_LINKED";
+    case FIRAuthErrorCodeDynamicLinkNotActivated:
+      return @"ERROR_DYNAMIC_LINK_NOT_ACTIVATED";
+    case FIRAuthErrorCodeRejectedCredential:
+      return @"ERROR_REJECTED_CREDENTIAL";
+    case FIRAuthErrorCodeMissingOrInvalidNonce:
+      return @"ERROR_MISSING_OR_INVALID_NONCE";
   }
 }
 
@@ -1086,6 +1126,10 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
   return [self errorWithCode:FIRAuthInternalErrorCodeAppNotVerified message:message];
 }
 
++ (NSError *)missingClientIdentifierErrorWithMessage:(nullable NSString *)message {
+  return [self errorWithCode:FIRAuthInternalErrorCodeMissingClientIdentifier message:message];
+}
+
 + (NSError *)captchaCheckFailedErrorWithMessage:(nullable NSString *)message {
   return [self errorWithCode:FIRAuthInternalErrorCodeCaptchaCheckFailed message:message];
 }
@@ -1143,6 +1187,10 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
 
 + (NSError *)invalidDynamicLinkDomainErrorWithMessage:(nullable NSString *)message {
   return [self errorWithCode:FIRAuthInternalErrorCodeInvalidDynamicLinkDomain message:message];
+}
+
++ (NSError *)missingOrInvalidNonceErrorWithMessage:(nullable NSString *)message {
+  return [self errorWithCode:FIRAuthInternalErrorCodeMissingOrInvalidNonce message:message];
 }
 
 + (NSError *)keychainErrorWithFunction:(NSString *)keychainFunction status:(OSStatus)status {

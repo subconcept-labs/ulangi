@@ -18,7 +18,11 @@
 
 #import "FBSDKMessageDialog.h"
 
+#ifdef COCOAPODS
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
 #import "FBSDKCoreKit+Internal.h"
+#endif
 #import "FBSDKShareCameraEffectContent.h"
 #import "FBSDKShareConstants.h"
 #import "FBSDKShareDefines.h"
@@ -31,7 +35,10 @@
 
 #define FBSDK_MESSAGE_DIALOG_APP_SCHEME @"fb-messenger-share-api"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKMessageDialog
+#pragma clang diagnostic pop
 
 #pragma mark - Class Methods
 

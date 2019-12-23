@@ -45,7 +45,7 @@ export class ManageScreenContainer extends Container {
   private screenFactory = new ManageScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
@@ -61,7 +61,7 @@ export class ManageScreenContainer extends Container {
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
     new ObservableCategoryListState(
       null,
@@ -70,7 +70,7 @@ export class ManageScreenContainer extends Container {
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
     ScreenName.MANAGE_SCREEN,
     {
@@ -79,22 +79,22 @@ export class ManageScreenContainer extends Container {
       testID: ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
       icon: _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
         ? _.get(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
             this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode
+              .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
       onTitlePress: (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    }
+    },
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -107,7 +107,7 @@ export class ManageScreenContainer extends Container {
 
   public componentDidAppear(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
     this.screenDelegate.autoShowSyncingInProgress();
     this.screenDelegate.autoShowSyncCompleted();
@@ -129,7 +129,7 @@ export class ManageScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ManageScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ManageScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ManageScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 
@@ -141,7 +141,7 @@ export class ManageScreenContainer extends Container {
         if (selectedTabIndex === 0) {
           this.screenDelegate.refreshCurrentListIfEmpty();
         }
-      }
+      },
     );
   }
 

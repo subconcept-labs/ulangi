@@ -41,7 +41,7 @@ export const lightStyles = StyleSheet.create(
     add_icon: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -54,5 +54,5 @@ export const darkStyles = StyleSheet.create(
     add_icon: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

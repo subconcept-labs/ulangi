@@ -99,7 +99,7 @@ export const lightStyles = StyleSheet.create(
     index: {
       color: config.styles.light.primaryBackgroundColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -123,5 +123,5 @@ export const darkStyles = StyleSheet.create(
     index: {
       color: config.styles.dark.primaryBackgroundColor,
     },
-  })
+  }),
 );

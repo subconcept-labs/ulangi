@@ -54,7 +54,7 @@ export class SpacedRepetitionSettingsDelegate {
       onSaving: () => void;
       onSaveSucceeded: () => void;
       onSaveFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     const currentSet = this.setStore.existingCurrentSet;
 
@@ -88,9 +88,9 @@ export class SpacedRepetitionSettingsDelegate {
         once(ActionType.SET__EDIT_SUCCEEDED, callback.onSaveSucceeded),
         once(
           ActionType.SET__EDIT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+        ),
+      ),
     );
   }
 }

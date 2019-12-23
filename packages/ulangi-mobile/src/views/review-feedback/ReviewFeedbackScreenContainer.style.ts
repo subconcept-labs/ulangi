@@ -23,7 +23,7 @@ export class ReviewFeedbackScreenStyle {
           text: 'Review Feedback',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class ReviewFeedbackScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class ReviewFeedbackScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     ReviewFeedbackScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ReviewFeedbackScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    ReviewFeedbackScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     ReviewFeedbackScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY
+    ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

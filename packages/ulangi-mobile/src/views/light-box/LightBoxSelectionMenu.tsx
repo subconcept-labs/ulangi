@@ -41,8 +41,7 @@ export class LightBoxSelectionMenu extends React.Component<
       <View
         testID={this.props.selectionMenu.testID}
         style={this.styles.selection_menu_container}
-        onStartShouldSetResponder={(): boolean => true}
-      >
+        onStartShouldSetResponder={(): boolean => true}>
         {this.renderTopBar()}
         {this.renderContent()}
       </View>
@@ -79,8 +78,7 @@ export class LightBoxSelectionMenu extends React.Component<
     return (
       <ScrollView
         testID={LightBoxSelectionMenuIds.SELECTION_LIST}
-        style={this.styles.list_container}
-      >
+        style={this.styles.list_container}>
         {Array.from(this.props.selectionMenu.items).map(
           ([id, selectionItem], index): React.ReactElement<any> => {
             const isLast = index === this.props.selectionMenu.items.size - 1;
@@ -91,12 +89,12 @@ export class LightBoxSelectionMenu extends React.Component<
                 item={selectionItem}
                 isSelected={_.includes(
                   this.props.selectionMenu.selectedIds,
-                  id
+                  id,
                 )}
                 isLast={isLast}
               />
             );
-          }
+          },
         )}
       </ScrollView>
     );

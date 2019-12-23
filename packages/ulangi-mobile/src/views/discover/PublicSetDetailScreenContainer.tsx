@@ -35,20 +35,20 @@ export class PublicSetDetailScreenContainer extends Container<
   private screenFactory = new PublicSetDetailScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservablePublicSetDetailScreen(
     this.props.observableConverter.convertToObservablePublicSet(
-      this.props.passedProps.publicSet
+      this.props.passedProps.publicSet,
     ),
-    ScreenName.PUBLIC_SET_DETAIL_SCREEN
+    ScreenName.PUBLIC_SET_DETAIL_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -61,7 +61,7 @@ export class PublicSetDetailScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? PublicSetDetailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : PublicSetDetailScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : PublicSetDetailScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -28,20 +28,20 @@ export class AutoArchiveScreenContainer extends Container {
   private screenFactory = new AutoArchiveScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private autoArchiveSettingsDelegate = this.screenFactory.createAutoArchiveSettingsDelegate();
 
   protected observableScreen = new ObservableAutoArchiveScreen(
     this.autoArchiveSettingsDelegate.getCurrentSettings(),
-    ScreenName.AUTO_ARCHIVE_SCREEN
+    ScreenName.AUTO_ARCHIVE_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -56,7 +56,7 @@ export class AutoArchiveScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? AutoArchiveScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : AutoArchiveScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : AutoArchiveScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

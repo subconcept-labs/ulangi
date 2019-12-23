@@ -13,7 +13,7 @@ export const WritingSettingsScreenIds = {
   SELECT_LIMIT_BTN_BY_LIMIT: (limit: number): string =>
     'SELECT_LIMIT_BTN_BY_LIMIT_' + limit,
   SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL: (
-    initialInterval: number
+    initialInterval: number,
   ): string =>
     'SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL_' + initialInterval,
   USE_HINT_SIDE_EFFECT_BTN: 'USE_HINT_SIDE_EFFECT_BTN',

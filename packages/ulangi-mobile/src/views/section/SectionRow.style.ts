@@ -107,7 +107,7 @@ export const lightStyles = StyleSheet.create(
     disabled_left_text: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -136,5 +136,5 @@ export const darkStyles = StyleSheet.create(
     disabled_left_text: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

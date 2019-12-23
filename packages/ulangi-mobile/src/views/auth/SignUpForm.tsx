@@ -79,8 +79,7 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
             testID={SignUpScreenIds.BACK_BTN}
             style={styles.touchable_text}
             onPress={this.props.back}
-            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-          >
+            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
             <DefaultText style={styles.other_text}>Back to Sign In</DefaultText>
           </TouchableOpacity>
         </View>

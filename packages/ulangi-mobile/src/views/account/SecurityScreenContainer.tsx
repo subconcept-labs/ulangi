@@ -28,7 +28,7 @@ export class SecurityScreenContainer extends Container {
   private screenFactory = new SecurityScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableScreen(ScreenName.SECURITY_SCREEN);
@@ -47,7 +47,7 @@ export class SecurityScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SecurityScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SecurityScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SecurityScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

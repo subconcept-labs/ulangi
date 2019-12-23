@@ -39,7 +39,7 @@ export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
   private screenFactory = new ReflexScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new ReflexQuestionIterator();
@@ -51,14 +51,14 @@ export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
     new ObservableReflexGameState(false, config.reflex.timePerQuestion, false),
     new ObservableReflexGameStats(0),
     false,
-    ScreenName.REFLEX_SCREEN
+    ScreenName.REFLEX_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
-    this.questionIterator
+    this.questionIterator,
   );
 
   public componentDidAppear(): void {

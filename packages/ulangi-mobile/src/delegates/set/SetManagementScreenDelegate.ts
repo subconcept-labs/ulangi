@@ -32,7 +32,7 @@ export class SetManagementScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableSetManagementScreen,
     fetchSetDelegate: FetchSetDelegate,
-    setActionMenuDelegate: SetActionMenuDelegate
+    setActionMenuDelegate: SetActionMenuDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -65,8 +65,8 @@ export class SetManagementScreenDelegate {
         ],
         (): void => {
           this.refresh();
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -83,8 +83,8 @@ export class SetManagementScreenDelegate {
                 set.setId,
                 this.observableConverter.convertToObservableSet(set),
               ];
-            }
-          )
+            },
+          ),
         );
         this.observableScreen.fetchState = ActivityState.INACTIVE;
         this.observableScreen.refreshing = false;

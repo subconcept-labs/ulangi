@@ -23,7 +23,7 @@ export class ChangeEmailScreenStyle {
           text: 'Change Email',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class ChangeEmailScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class ChangeEmailScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     ChangeEmailScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ChangeEmailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    ChangeEmailScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     ChangeEmailScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ChangeEmailScreenStyle.SCREEN_DARK_STYLES_ONLY
+    ChangeEmailScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

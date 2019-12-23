@@ -28,7 +28,7 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
   private screenFactory = new SpacedRepetitionSettingsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private spacedRepetitionSettingsDelegate = this.screenFactory.createSpacedRepetitionSettingsDelegate();
@@ -38,13 +38,13 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
   protected observableScreen = new ObservableSpacedRepetitionSettingsScreen(
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
-    ScreenName.SPACED_REPETITION_SETTINGS_SCREEN
+    ScreenName.SPACED_REPETITION_SETTINGS_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -59,7 +59,7 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SpacedRepetitionSettingsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SpacedRepetitionSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SpacedRepetitionSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

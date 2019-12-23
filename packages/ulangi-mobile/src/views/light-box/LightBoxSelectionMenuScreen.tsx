@@ -51,12 +51,10 @@ export class LightBoxSelectionMenuScreen extends React.Component<
           style={styles.light_box_container}
           enabled={true}
           activeOpacity={0.2}
-          onPress={(): void => this.close()}
-        >
+          onPress={(): void => this.close()}>
           <LightBoxAnimatableView
             style={styles.inner_container}
-            observableLightBox={this.props.observableLightBox}
-          >
+            observableLightBox={this.props.observableLightBox}>
             <LightBoxSelectionMenu
               theme={this.props.darkModeStore.theme}
               selectionMenu={this.props.observableLightBox.selectionMenu}

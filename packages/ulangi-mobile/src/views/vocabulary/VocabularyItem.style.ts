@@ -110,7 +110,7 @@ export const lightStyles = StyleSheet.create(
     missing_term: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -134,5 +134,5 @@ export const darkStyles = StyleSheet.create(
     missing_term: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );

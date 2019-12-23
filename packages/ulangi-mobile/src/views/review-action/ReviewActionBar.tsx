@@ -54,8 +54,7 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           snapToAlignment="start"
-          snapToInterval={Dimensions.get('window').width}
-        >
+          snapToInterval={Dimensions.get('window').width}>
           {chunks.map(
             (chunk, index): React.ReactElement<any> => {
               return (
@@ -71,8 +70,7 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
                           testID={button.testID}
                           onPress={(): void => button.onPress(button)}
                           style={[this.styles.action_btn, disabledStyle]}
-                          disabled={button.disabled}
-                        >
+                          disabled={button.disabled}>
                           <View style={this.styles.icon_container}>
                             <Image
                               source={
@@ -88,17 +86,16 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
                           <DefaultText
                             style={this.styles.action_subtitle}
                             numberOfLines={1}
-                            ellipsizeMode="middle"
-                          >
+                            ellipsizeMode="middle">
                             {button.subtitle}
                           </DefaultText>
                         </TouchableOpacity>
                       );
-                    }
+                    },
                   )}
                 </View>
               );
-            }
+            },
           )}
         </SmartScrollView>
       </View>

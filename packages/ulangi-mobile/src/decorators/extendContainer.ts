@@ -12,7 +12,7 @@ import { LightBoxState, ScreenState, Theme } from '@ulangi/ulangi-common/enums';
 import { Container } from '../Container';
 
 export function extendContainer<T extends Constructor<Container>>(
-  constructor: T
+  constructor: T,
 ): T {
   return class extends constructor {
     public constructor(...args: any[]) {
@@ -25,7 +25,7 @@ export function extendContainer<T extends Constructor<Container>>(
       if (containerOptions.autoUpdateObservableScreen === true) {
         if (typeof this.observableScreen !== 'undefined') {
           this.props.observableScreenRegistry.screenList.push(
-            this.observableScreen
+            this.observableScreen,
           );
         }
       }
@@ -60,7 +60,7 @@ export function extendContainer<T extends Constructor<Container>>(
         (): Theme => this.props.rootStore.darkModeStore.theme,
         (theme): void => {
           this.onThemeChanged(theme);
-        }
+        },
       );
     }
 
@@ -75,7 +75,7 @@ export function extendContainer<T extends Constructor<Container>>(
         if (typeof this.observableScreen !== 'undefined') {
           this.observableScreen.screenState = ScreenState.UNMOUNTED;
           this.props.observableScreenRegistry.removeByScreenName(
-            this.observableScreen.screenName
+            this.observableScreen.screenName,
           );
         }
       }

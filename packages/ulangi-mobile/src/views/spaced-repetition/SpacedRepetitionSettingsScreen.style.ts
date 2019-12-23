@@ -45,7 +45,7 @@ export const lightStyles = StyleSheet.create(
     description: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -53,7 +53,7 @@ export const darkStyles = StyleSheet.create(
     description: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const sectionRowLightStyles = StyleSheet.create(
@@ -62,7 +62,7 @@ export const sectionRowLightStyles = StyleSheet.create(
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 );
 
 export const sectionRowDarkStyles = StyleSheet.create(
@@ -71,5 +71,5 @@ export const sectionRowDarkStyles = StyleSheet.create(
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 );

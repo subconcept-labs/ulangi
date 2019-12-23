@@ -58,14 +58,13 @@ export class VocabularyFormTopBar extends React.Component<
                 onPress={(): void => {
                   Keyboard.dismiss();
                   this.props.currentTab.set(tab);
-                }}
-              >
+                }}>
                 <DefaultText style={[this.styles.text, selectedTextStyle]}>
                   {tab}
                 </DefaultText>
               </TouchableOpacity>
             );
-          }
+          },
         )}
       </View>
     );

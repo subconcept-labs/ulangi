@@ -48,8 +48,7 @@ export class WritingLessonScreen extends React.Component<
     return (
       <SafeAreaView
         testID={WritingLessonScreenIds.SCREEN}
-        style={this.styles.screen}
-      >
+        style={this.styles.screen}>
         {this.renderContent()}
       </SafeAreaView>
     );
@@ -77,8 +76,7 @@ export class WritingLessonScreen extends React.Component<
         <React.Fragment>
           <SmartScrollView
             keyboardAware={true}
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             <WritingFormTop
               theme={this.props.darkModeStore.theme}
               writingFormState={this.props.observableScreen.writingFormState}

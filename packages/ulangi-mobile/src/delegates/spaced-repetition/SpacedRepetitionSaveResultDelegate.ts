@@ -28,7 +28,7 @@ export class SpacedRepetitionSaveResultDelegate {
     setStore: ObservableSetStore,
     vocabularyList: ObservableMap<string, ObservableVocabulary>,
     feedbackList: ObservableMap<string, Feedback>,
-    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate
+    autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -43,7 +43,7 @@ export class SpacedRepetitionSaveResultDelegate {
       onSaving: () => void;
       onSaveSucceeded: () => void;
       onSaveFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     const autoArchiveSettings = this.autoArchiveSettingsDelegate.getCurrentSettings();
 
@@ -59,13 +59,13 @@ export class SpacedRepetitionSaveResultDelegate {
         on(ActionType.SPACED_REPETITION__SAVING_RESULT, callback.onSaving),
         once(
           ActionType.SPACED_REPETITION__SAVE_RESULT_SUCCEEDED,
-          callback.onSaveSucceeded
+          callback.onSaveSucceeded,
         ),
         once(
           ActionType.SPACED_REPETITION__SAVE_RESULT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+        ),
+      ),
     );
   }
 }

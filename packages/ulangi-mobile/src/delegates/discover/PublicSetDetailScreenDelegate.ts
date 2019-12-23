@@ -34,7 +34,7 @@ export class PublicSetDetailScreenDelegate {
     publicSet: ObservablePublicSet,
     addVocabularyDelegate: AddVocabularyDelegate,
     publicVocabularyActionMenuDelegate: PublicVocabularyActionMenuDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.publicSet = publicSet;
     this.addVocabularyDelegate = addVocabularyDelegate;
@@ -50,7 +50,7 @@ export class PublicSetDetailScreenDelegate {
         onAdding: this.showAddingDialog,
         onAddSucceeded: this.showAddSucceededDialog,
         onAddFailed: this.showAddFailedDialog,
-      }
+      },
     );
   }
 
@@ -70,7 +70,7 @@ export class PublicSetDetailScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -88,23 +88,23 @@ export class PublicSetDetailScreenDelegate {
                     onAddingAll: this.showAddingDialog,
                     onAddAllSucceeded: this.showAddSucceededDialog,
                     onAddAllFailed: this.showAddFailedDialog,
-                  }
+                  },
                 );
               }, 500);
             },
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public openLink(link: string): void {
     Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err)
+      (err): void => console.error('An error occurred', err),
     );
   }
 
@@ -117,7 +117,7 @@ export class PublicSetDetailScreenDelegate {
       {
         message: 'Adding vocabulary. Please wait...',
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -129,7 +129,7 @@ export class PublicSetDetailScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -142,7 +142,7 @@ export class PublicSetDetailScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

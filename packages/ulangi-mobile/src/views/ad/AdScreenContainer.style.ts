@@ -20,28 +20,28 @@ export class AdScreenStyle {
         },
       },
       popGesture: false,
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
-    SecondaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    SecondaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
-    SecondaryScreenStyle.SCREEN_DARK_STYLES_ONLY
+    SecondaryScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     AdScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AdScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    AdScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     AdScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    AdScreenStyle.SCREEN_DARK_STYLES_ONLY
+    AdScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

@@ -64,7 +64,7 @@ export class Translation extends React.Component<TranslationProps> {
         <View style={this.styles.add_button_container}>
           <AddDefinitionButton
             testID={VocabularyFormIds.ADD_DEFINITION_FROM_TRANSLATION_BY_INDEX(
-              this.props.index
+              this.props.index,
             )}
             theme={this.props.theme}
             onPress={(): void =>

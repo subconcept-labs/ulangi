@@ -30,8 +30,7 @@ export class AtomShell extends React.Component<AtomShellProps> {
       <Svg
         style={styles.container}
         width={dimensions.width}
-        height={dimensions.height}
-      >
+        height={dimensions.height}>
         <Ellipse
           cx={this.props.shell.position.x}
           cy={this.props.shell.position.y}

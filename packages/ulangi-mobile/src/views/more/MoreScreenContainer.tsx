@@ -29,19 +29,19 @@ export class MoreScreenContainer extends Container {
   protected observableScreen = new ObservableMoreScreen(
     observable.array(),
     observable.box(0),
-    ScreenName.MORE_SCREEN
+    ScreenName.MORE_SCREEN,
   );
 
   private screenFactory = new MoreScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -60,7 +60,7 @@ export class MoreScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? MoreScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : MoreScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : MoreScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

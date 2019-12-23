@@ -48,7 +48,7 @@ export class QuizScreenDelegate {
     quizSettingsDelegate: QuizSettingsDelegate,
     navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -73,18 +73,18 @@ export class QuizScreenDelegate {
         vocabularyPool,
         limit: writingQuizLimit,
         selectedCategoryNames: toJS(
-          this.observableScreen.selectedCategoryNames
+          this.observableScreen.selectedCategoryNames,
         ),
       }),
       group(
         on(
           ActionType.QUIZ__FETCHING_VOCABULARY_FOR_WRITING,
-          this.showPreparingDialog
+          this.showPreparingDialog,
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_WRITING_SUCCEEDED,
           ({ vocabularyList }): void =>
-            this.showPrepareSucceededDialog(vocabularyList, 'writing-quiz')
+            this.showPrepareSucceededDialog(vocabularyList, 'writing-quiz'),
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_WRITING_FAILED,
@@ -94,9 +94,9 @@ export class QuizScreenDelegate {
             } else {
               this.showPrepareFailedDialog(errorCode);
             }
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -113,21 +113,21 @@ export class QuizScreenDelegate {
         vocabularyPool,
         limit: multipleChoiceQuizLimit,
         selectedCategoryNames: toJS(
-          this.observableScreen.selectedCategoryNames
+          this.observableScreen.selectedCategoryNames,
         ),
       }),
       group(
         on(
           ActionType.QUIZ__FETCHING_VOCABULARY_FOR_MULTIPLE_CHOICE,
-          this.showPreparingDialog
+          this.showPreparingDialog,
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_MULTIPLE_CHOICE_SUCCEEDED,
           ({ vocabularyList }): void =>
             this.showPrepareSucceededDialog(
               vocabularyList,
-              'multiple-choice-quiz'
-            )
+              'multiple-choice-quiz',
+            ),
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_MULTIPLE_CHOICE_FAILED,
@@ -135,14 +135,14 @@ export class QuizScreenDelegate {
             if (errorCode === ErrorCode.QUIZ__INSUFFICIENT_VOCABULARY) {
               this.showNotEnoughTermsDialog(
                 'multiple-choice-quiz',
-                vocabularyPool
+                vocabularyPool,
               );
             } else {
               this.showPrepareFailedDialog(errorCode);
             }
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -159,13 +159,13 @@ export class QuizScreenDelegate {
       {
         message: 'Preparing. Please wait...',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   private showPrepareSucceededDialog(
     vocabularyList: readonly Vocabulary[],
-    quizType: 'writing-quiz' | 'multiple-choice-quiz'
+    quizType: 'writing-quiz' | 'multiple-choice-quiz',
   ): void {
     this.navigatorDelegate.dismissLightBox();
 
@@ -176,8 +176,8 @@ export class QuizScreenDelegate {
             vocabulary.vocabularyId,
             this.observableConverter.convertToObservableVocabulary(vocabulary),
           ];
-        }
-      )
+        },
+      ),
     );
 
     if (quizType === 'writing-quiz') {
@@ -195,7 +195,7 @@ export class QuizScreenDelegate {
 
   private showNotEnoughTermsDialog(
     quizType: 'writing-quiz' | 'multiple-choice-quiz',
-    vocabularyPool: 'learned' | 'active'
+    vocabularyPool: 'learned' | 'active',
   ): void {
     const minRequired =
       quizType === 'writing-quiz'
@@ -215,7 +215,7 @@ export class QuizScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -228,7 +228,7 @@ export class QuizScreenDelegate {
         closeOnTouchOutside: true,
         message: this.errorConverter.convertToMessage(errorCode),
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

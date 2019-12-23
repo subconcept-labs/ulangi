@@ -100,7 +100,7 @@ export const lightStyles = StyleSheet.create(
     button_text_disabled: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -132,5 +132,5 @@ export const darkStyles = StyleSheet.create(
     button_text_disabled: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

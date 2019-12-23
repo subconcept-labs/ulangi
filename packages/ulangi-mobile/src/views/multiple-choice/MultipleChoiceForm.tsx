@@ -50,7 +50,7 @@ export class MultipleChoiceForm extends React.Component<
   private getIcon(answer: string): ImageSourcePropType {
     const isSelected = _.includes(
       this.props.multipleChoiceFormState.selectedAnswers,
-      answer
+      answer,
     );
     if (isSelected === true) {
       if (this.props.multipleChoiceFormState.isAnswerCorrect(answer)) {
@@ -77,7 +77,7 @@ export class MultipleChoiceForm extends React.Component<
           this.animationContainerRef.fadeOutDown(300).then(
             (): void => {
               this.props.multipleChoiceFormState.containerAnimation = null;
-            }
+            },
           );
         } else if (
           this.props.multipleChoiceFormState.containerAnimation === 'shake' &&
@@ -86,10 +86,10 @@ export class MultipleChoiceForm extends React.Component<
           this.animationContainerRef.shake(500).then(
             (): void => {
               this.props.multipleChoiceFormState.containerAnimation = null;
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 
@@ -115,15 +115,14 @@ export class MultipleChoiceForm extends React.Component<
         }}
         animation="fadeInUp"
         duration={config.general.animationDuration}
-        useNativeDriver={true}
-      >
+        useNativeDriver={true}>
         <View style={this.styles.vocabulary_text_container}>
           <DefaultText style={this.styles.vocabulary_text}>
             <DefaultText style={this.styles.accessory}>What is </DefaultText>
             <DefaultText>
               {
                 this.vocabularyExtraFieldParser.parse(
-                  currentQuestion.testingVocabulary.vocabularyText
+                  currentQuestion.testingVocabulary.vocabularyText,
                 ).vocabularyTerm
               }
             </DefaultText>
@@ -135,12 +134,11 @@ export class MultipleChoiceForm extends React.Component<
             return (
               <View
                 key={definition.definitionId}
-                style={this.styles.answer_container}
-              >
+                style={this.styles.answer_container}>
                 <TouchableOpacity
                   testID={
                     this.props.multipleChoiceFormState.isAnswerCorrect(
-                      definition.meaning
+                      definition.meaning,
                     )
                       ? MultipleChoiceFormIds.CORRECT_BTN
                       : MultipleChoiceFormIds.INCORRECT_BTN
@@ -148,8 +146,7 @@ export class MultipleChoiceForm extends React.Component<
                   style={this.styles.answer_touchable}
                   onPress={(): void =>
                     this.props.selectAnswer(definition.meaning)
-                  }
-                >
+                  }>
                   <Image
                     source={this.getIcon(definition.meaning)}
                     style={this.styles.uncheck}
@@ -158,7 +155,7 @@ export class MultipleChoiceForm extends React.Component<
                     wordClasses={
                       definition.extraFields.wordClass.length > 0
                         ? definition.extraFields.wordClass.map(
-                            (values): string => values[0]
+                            (values): string => values[0],
                           )
                         : definition.wordClasses
                     }
@@ -175,7 +172,7 @@ export class MultipleChoiceForm extends React.Component<
                 </TouchableOpacity>
               </View>
             );
-          }
+          },
         )}
       </Animatable.View>
     );

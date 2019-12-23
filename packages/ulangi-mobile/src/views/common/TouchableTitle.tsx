@@ -51,7 +51,7 @@ export class TouchableTitle extends Container<TouchableTitlePassedProps> {
 
   public render(): null | React.ReactElement<any> {
     const observableScreen = this.props.observableScreenRegistry.getByScreenName(
-      this.props.passedProps.screenName
+      this.props.passedProps.screenName,
     );
 
     if (
@@ -69,12 +69,11 @@ export class TouchableTitle extends Container<TouchableTitlePassedProps> {
               if (typeof screenTitle.onTitlePress !== 'undefined') {
                 screenTitle.onTitlePress();
               }
-            }}
-          >
+            }}>
             {this.renderTitleContent(
               screenTitle.title,
               screenTitle.subtitle,
-              screenTitle.icon
+              screenTitle.icon,
             )}
           </TouchableOpacity>
         );
@@ -84,7 +83,7 @@ export class TouchableTitle extends Container<TouchableTitlePassedProps> {
             {this.renderTitleContent(
               screenTitle.title,
               screenTitle.subtitle,
-              screenTitle.icon
+              screenTitle.icon,
             )}
           </View>
         );
@@ -97,7 +96,7 @@ export class TouchableTitle extends Container<TouchableTitlePassedProps> {
   private renderTitleContent(
     title: undefined | string,
     subtitle: undefined | string,
-    icon: undefined | any
+    icon: undefined | any,
   ): null | React.ReactElement<any> {
     if (typeof title !== 'undefined') {
       return (
@@ -108,8 +107,7 @@ export class TouchableTitle extends Container<TouchableTitlePassedProps> {
           <DefaultText
             style={this.styles.title}
             allowFontScaling={false}
-            numberOfLines={1}
-          >
+            numberOfLines={1}>
             {typeof subtitle !== 'undefined' ? subtitle : title}
           </DefaultText>
           <Image
@@ -129,7 +127,7 @@ export function touchableTitle(
   styles?: {
     light: TouchableTitleStyles;
     dark: TouchableTitleStyles;
-  }
+  },
 ): OptionsTopBarTitle {
   return {
     component: {

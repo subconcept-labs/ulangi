@@ -55,7 +55,7 @@ export class VocabularyDetailDefinitions extends React.Component<
                 }}
               />
             );
-          }
+          },
         )}
       </SectionGroup>
     );

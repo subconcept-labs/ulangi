@@ -22,7 +22,7 @@ export class FollowUsScreenStyle {
           text: 'Follow Us',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYlES_ONLY = _.merge(
@@ -40,7 +40,7 @@ export class FollowUsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -58,18 +58,18 @@ export class FollowUsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     FollowUsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    FollowUsScreenStyle.SCREEN_LIGHT_STYlES_ONLY
+    FollowUsScreenStyle.SCREEN_LIGHT_STYlES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     FollowUsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    FollowUsScreenStyle.SCREEN_DARK_STYLES_ONLY
+    FollowUsScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

@@ -50,7 +50,7 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
     addSetDelegate: AddSetDelegate,
     rootScreenDelegate: RootScreenDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     super(setFormDelegate, pickerDelegate, dialogDelegate, navigatorDelegate);
     this.eventBus = eventBus;
@@ -78,7 +78,7 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
               this.observableLightBox.state === LightBoxState.UNMOUNTED,
             (): void => {
               this.navigateToTabBasedScreen();
-            }
+            },
           );
         }, 1000);
       },
@@ -100,7 +100,7 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
             this.navigatorDelegate.dismissLightBox();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
         {
@@ -112,13 +112,13 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
               (): boolean => this.observableLightBox.state === 'unmounted',
               (): void => {
                 this.rootScreenDelegate.setRootToSingleScreen(
-                  ScreenName.SIGN_OUT_SCREEN
+                  ScreenName.SIGN_OUT_SCREEN,
                 );
-              }
+              },
             );
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
       ],

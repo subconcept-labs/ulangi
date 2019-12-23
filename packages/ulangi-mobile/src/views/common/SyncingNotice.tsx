@@ -30,8 +30,7 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
             animation="rotate"
             easing="linear"
             iterationCount="infinite"
-            useNativeDriver={true}
-          >
+            useNativeDriver={true}>
             <Image style={styles.icon} source={Images.SYNC_WHITE_20X20} />
           </Animatable.View>
           <DefaultText style={styles.text}>

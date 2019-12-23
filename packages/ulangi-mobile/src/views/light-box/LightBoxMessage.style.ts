@@ -32,7 +32,7 @@ export const lightStyles = StyleSheet.create(
     message: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -40,5 +40,5 @@ export const darkStyles = StyleSheet.create(
     message: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

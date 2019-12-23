@@ -64,7 +64,7 @@ export const lightStyles = StyleSheet.create(
       borderTopColor: config.styles.light.primaryBorderColor,
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -79,5 +79,5 @@ export const darkStyles = StyleSheet.create(
       borderTopColor: config.styles.dark.primaryBorderColor,
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

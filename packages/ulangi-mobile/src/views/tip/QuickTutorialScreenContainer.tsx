@@ -31,19 +31,19 @@ export class QuickTutorialScreenContainer extends Container {
       ? Images.QUICK_TUTORIAL_SCREENS.light
       : Images.QUICK_TUTORIAL_SCREENS.dark,
     0,
-    ScreenName.QUICK_TUTORIAL_SCREEN
+    ScreenName.QUICK_TUTORIAL_SCREEN,
   );
 
   private screenFactory = new QuickTutorialScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -56,7 +56,7 @@ export class QuickTutorialScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuickTutorialScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuickTutorialScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuickTutorialScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
 
     this.observableScreen.images =

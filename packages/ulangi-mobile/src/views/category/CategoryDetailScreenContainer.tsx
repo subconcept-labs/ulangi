@@ -45,12 +45,12 @@ export class CategoryDetailScreenContainer extends Container<
   private screenFactory = new CategoryDetailScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableCategoryDetailScreen(
     this.props.observableConverter.convertToObservableCategory(
-      this.props.passedProps.category
+      this.props.passedProps.category,
     ),
     observable.box(this.props.passedProps.selectedFilterType),
     new ObservableVocabularyListState(
@@ -60,15 +60,15 @@ export class CategoryDetailScreenContainer extends Container<
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
-    ScreenName.CATEGORY_DETAIL_SCREEN
+    ScreenName.CATEGORY_DETAIL_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -83,7 +83,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.screenDelegate.autoShowSyncCompleted();
     this.screenDelegate.autoShowSyncingInProgress();
     this.screenDelegate.prepareAndFetch(
-      this.observableScreen.selectedFilterType.get()
+      this.observableScreen.selectedFilterType.get(),
     );
   }
 
@@ -95,7 +95,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CategoryDetailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CategoryDetailScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CategoryDetailScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

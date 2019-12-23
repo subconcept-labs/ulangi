@@ -39,7 +39,7 @@ export class AdScreen extends React.Component<AdScreenProps> {
         <DefaultButton
           text="Close"
           styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.LARGE
+            ButtonSize.LARGE,
           )}
           onPress={this.props.screenDelegate.back}
         />

@@ -28,20 +28,20 @@ export class SetUpAccountScreenContainer extends Container {
   private screenFactory = new SetUpAccountScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSetUpAccountScreen(
     '',
     '',
     '',
-    ScreenName.SET_UP_ACCOUNT_SCREEN
+    ScreenName.SET_UP_ACCOUNT_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -54,7 +54,7 @@ export class SetUpAccountScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SetUpAccountScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SetUpAccountScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SetUpAccountScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

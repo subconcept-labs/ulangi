@@ -57,18 +57,17 @@ export class SetManagementTopBar extends React.Component<
             return (
               <TouchableOpacity
                 testID={SetManagementScreenIds.SELECT_TAB_BTN_BY_SET_STATUS(
-                  name
+                  name,
                 )}
                 key={setStatus}
                 onPress={(): void => this.props.selectSetStatus(setStatus)}
-                style={[this.styles.text_container, selectedContainerStyle]}
-              >
+                style={[this.styles.text_container, selectedContainerStyle]}>
                 <DefaultText style={[this.styles.text, selectedTextStyle]}>
                   {_.upperFirst(name)}
                 </DefaultText>
               </TouchableOpacity>
             );
-          }
+          },
         )}
       </View>
     );

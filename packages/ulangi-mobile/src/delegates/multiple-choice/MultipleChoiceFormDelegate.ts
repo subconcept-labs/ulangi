@@ -19,7 +19,7 @@ export class MultipleChoiceFormDelegate {
   public constructor(
     observer: Observer,
     multipleChoiceFormState: ObservableMultipleChoiceFormState,
-    multipleChoiceResult: ObservableMultipleChoiceResult
+    multipleChoiceResult: ObservableMultipleChoiceResult,
   ) {
     this.observer = observer;
     this.multipleChoiceFormState = multipleChoiceFormState;
@@ -31,7 +31,7 @@ export class MultipleChoiceFormDelegate {
     callback: {
       onAnswerCorrect: () => void;
       onAnswerIncorrect: () => void;
-    }
+    },
   ): void {
     this.multipleChoiceFormState.selectedAnswers.push(answer);
 
@@ -42,7 +42,7 @@ export class MultipleChoiceFormDelegate {
         (): boolean => this.multipleChoiceFormState.containerAnimation === null,
         (): void => {
           callback.onAnswerCorrect();
-        }
+        },
       );
     } else {
       this.multipleChoiceResult.incorrectAttempts++;

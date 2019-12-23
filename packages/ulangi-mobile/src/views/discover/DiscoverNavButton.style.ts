@@ -69,7 +69,7 @@ export const lightStyles = StyleSheet.create(
     selected_count: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -90,5 +90,5 @@ export const darkStyles = StyleSheet.create(
     selected_count: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

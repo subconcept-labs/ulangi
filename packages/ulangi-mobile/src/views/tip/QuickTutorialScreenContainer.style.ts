@@ -22,7 +22,7 @@ export class QuickTutorialScreenStyle {
           text: 'Quick Tutorial',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -40,7 +40,7 @@ export class QuickTutorialScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -58,18 +58,18 @@ export class QuickTutorialScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     QuickTutorialScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    QuickTutorialScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    QuickTutorialScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     QuickTutorialScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    QuickTutorialScreenStyle.SCREEN_DARK_STYLES_ONLY
+    QuickTutorialScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

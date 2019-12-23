@@ -48,7 +48,7 @@ export class CustomTitle extends Container<CustomTitlePassedProps> {
 
   public render(): null | React.ReactElement<any> {
     const observableScreen = this.props.observableScreenRegistry.getByScreenName(
-      this.props.passedProps.screenName
+      this.props.passedProps.screenName,
     );
 
     if (
@@ -66,8 +66,7 @@ export class CustomTitle extends Container<CustomTitlePassedProps> {
               if (typeof screenTitle.onTitlePress !== 'undefined') {
                 screenTitle.onTitlePress();
               }
-            }}
-          >
+            }}>
             {this.renderTitleContent(screenTitle.title, screenTitle.subtitle)}
           </TouchableOpacity>
         );
@@ -85,7 +84,7 @@ export class CustomTitle extends Container<CustomTitlePassedProps> {
 
   private renderTitleContent(
     title: undefined | string,
-    subtitle: undefined | string
+    subtitle: undefined | string,
   ): null | React.ReactElement<any> {
     if (typeof title !== 'undefined') {
       return (
@@ -93,8 +92,7 @@ export class CustomTitle extends Container<CustomTitlePassedProps> {
           <DefaultText
             style={this.styles.title}
             allowFontScaling={false}
-            numberOfLines={1}
-          >
+            numberOfLines={1}>
             {title}
           </DefaultText>
           {typeof subtitle !== 'undefined' ? (
@@ -102,8 +100,7 @@ export class CustomTitle extends Container<CustomTitlePassedProps> {
               <DefaultText
                 style={this.styles.subtitle}
                 allowFontScaling={false}
-                numberOfLines={1}
-              >
+                numberOfLines={1}>
                 {subtitle}
               </DefaultText>
             </View>
@@ -121,7 +118,7 @@ export function customTitle(
   styles?: {
     light: CustomTitleStyles;
     dark: CustomTitleStyles;
-  }
+  },
 ): OptionsTopBarTitle {
   return {
     component: {

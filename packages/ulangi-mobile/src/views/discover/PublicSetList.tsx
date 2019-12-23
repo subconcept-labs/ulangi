@@ -57,15 +57,14 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
       return (
         <View
           testID={DiscoverScreenIds.ERROR}
-          style={this.styles.center_container}
-        >
+          style={this.styles.center_container}>
           <DefaultText style={this.styles.message}>
             An error occurred. Please check internet connection.
           </DefaultText>
           <View style={this.styles.button_container}>
             <DefaultButton
               styles={FullRoundedButtonStyle.getGreyOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               text="Retry"
               onPress={this.props.refresh}
@@ -80,8 +79,7 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
       return (
         <View
           testID={DiscoverScreenIds.NO_RESULTS}
-          style={this.styles.center_container}
-        >
+          style={this.styles.center_container}>
           <DefaultText style={this.styles.message}>
             No categories found.
           </DefaultText>

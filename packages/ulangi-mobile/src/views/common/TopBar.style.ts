@@ -32,7 +32,7 @@ export const lightStyles = StyleSheet.create(
       //shadowOpacity: 0.05,
       //elevation: 0.75,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -47,5 +47,5 @@ export const darkStyles = StyleSheet.create(
       //shadowOpacity: 0.4,
       //elevation: 3,
     },
-  })
+  }),
 );

@@ -23,17 +23,17 @@ export class SearchScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableSearchScreen
+    observableScreen: ObservableSearchScreen,
   ): SearchScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const setSelectionMenuDelegate = this.createSetSelectionMenuDelegate();
@@ -43,13 +43,13 @@ export class SearchScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen.vocabularyListState,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
 
     const vocabularySelectionDelegate = new VocabularySelectionDelegate(
-      observableScreen.vocabularyListState
+      observableScreen.vocabularyListState,
     );
 
     const vocabularyActionMenuDelegate = new VocabularyActionMenuDelegate(
@@ -59,7 +59,7 @@ export class SearchScreenFactory extends ScreenFactory {
       setSelectionMenuDelegate,
       vocabularySelectionDelegate,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const vocabularyBulkActionMenuDelegate = new VocabularyBulkActionMenuDelegate(
@@ -70,7 +70,7 @@ export class SearchScreenFactory extends ScreenFactory {
       setSelectionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new SearchScreenDelegate(
@@ -81,7 +81,7 @@ export class SearchScreenFactory extends ScreenFactory {
       vocabularyActionMenuDelegate,
       vocabularyBulkActionMenuDelegate,
       vocabularySelectionDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

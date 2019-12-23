@@ -37,7 +37,7 @@ export class AtomGameOverScreenContainer extends Container<
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();

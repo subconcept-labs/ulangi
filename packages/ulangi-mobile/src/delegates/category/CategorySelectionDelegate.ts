@@ -25,7 +25,7 @@ export class CategorySelectionDelegate {
     if (this.observableScreen.categoryList !== null) {
       if (this.observableScreen.categoryList.has(categoryName)) {
         const category = assertExists(
-          this.observableScreen.categoryList.get(categoryName)
+          this.observableScreen.categoryList.get(categoryName),
         );
         category.isSelected.set(!category.isSelected.get());
       }
@@ -43,14 +43,14 @@ export class CategorySelectionDelegate {
       (): void => {
         if (this.observableScreen.categoryList !== null) {
           return Array.from(
-            this.observableScreen.categoryList.values()
+            this.observableScreen.categoryList.values(),
           ).forEach(
             (category): void => {
               category.isSelected.set(false);
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 }

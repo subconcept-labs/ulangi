@@ -29,13 +29,13 @@ export class ChangeEmailScreenContainer extends Container {
   private screenFactory = new ChangeEmailScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableChangeEmailScreen(
     '',
     '',
-    ScreenName.CHANGE_EMAIL_SCREEN
+    ScreenName.CHANGE_EMAIL_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -55,7 +55,7 @@ export class ChangeEmailScreenContainer extends Container {
           onChangeEmailSucceeded: this.screenDelegate
             .showChangeEmailSucceededDialog,
           onChangeEmailFailed: this.screenDelegate.showChangeEmailFailedDialog,
-        }
+        },
       );
     }
   }
@@ -64,7 +64,7 @@ export class ChangeEmailScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ChangeEmailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ChangeEmailScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ChangeEmailScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

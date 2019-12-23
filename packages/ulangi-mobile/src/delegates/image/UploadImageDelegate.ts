@@ -22,7 +22,7 @@ export class UploadImageDelegate {
       onUploading: () => void;
       onUploadSucceeded: (urls: string[]) => void;
       onUploadFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.IMAGE__UPLOAD_IMAGES, {
@@ -32,13 +32,13 @@ export class UploadImageDelegate {
         on(ActionType.IMAGE__UPLOADING_IMAGES, callback.onUploading),
         once(
           ActionType.IMAGE__UPLOAD_IMAGES_SUCCEEDED,
-          ({ urls }): void => callback.onUploadSucceeded(urls)
+          ({ urls }): void => callback.onUploadSucceeded(urls),
         ),
         once(
           ActionType.IMAGE__UPLOAD_IMAGES_FAILED,
-          ({ errorCode }): void => callback.onUploadFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onUploadFailed(errorCode),
+        ),
+      ),
     );
   }
 }

@@ -56,8 +56,7 @@ export class DictionaryPickerContent extends React.Component<
       <SmartScrollView
         testID={VocabularyFormIds.DICTIONARY_LIST}
         showsVerticalScrollIndicator={true}
-        style={this.styles.picker_content}
-      >
+        style={this.styles.picker_content}>
         <DictionarySection
           theme={this.props.theme}
           learningLanguageName={this.props.learningLanguageName}

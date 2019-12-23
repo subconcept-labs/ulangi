@@ -31,7 +31,7 @@ export class ReminderScreenContainer extends Container {
   private screenFactory = new ReminderScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private reminderSettingsDelegate = this.screenFactory.createReminderSettingsDelegate();
@@ -42,16 +42,16 @@ export class ReminderScreenContainer extends Container {
     new ObservableReminderSettings(
       this.currentSettings.reminderEnabled,
       this.currentSettings.hours,
-      this.currentSettings.minutes
+      this.currentSettings.minutes,
     ),
     false,
-    ScreenName.REMINDER_SCREEN
+    ScreenName.REMINDER_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -66,7 +66,7 @@ export class ReminderScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ReminderScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ReminderScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ReminderScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

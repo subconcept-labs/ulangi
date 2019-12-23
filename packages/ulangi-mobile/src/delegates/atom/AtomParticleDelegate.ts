@@ -25,7 +25,7 @@ export class AtomParticleDelegate {
 
   public constructor(
     observer: Observer,
-    observableScreen: ObservableAtomPlayScreen
+    observableScreen: ObservableAtomPlayScreen,
   ) {
     this.observer = observer;
     this.observableScreen = observableScreen;
@@ -37,16 +37,16 @@ export class AtomParticleDelegate {
       (particle): void => {
         const shell = assertExists(
           this.observableScreen.shells.find(
-            (shell): boolean => particle.shellType === shell.shellType
+            (shell): boolean => particle.shellType === shell.shellType,
           ),
-          'shell should not be null or undefined'
+          'shell should not be null or undefined',
         );
         const radius = shell.diameter / 2;
         const angle = this.rotateLeft90Degrees(
           this.calculateAngleByIndex(
             particle.index,
-            this.getParticleCountByShell(particle.shellType)
-          )
+            this.getParticleCountByShell(particle.shellType),
+          ),
         );
         // The coordinates is calculated with respect to the center origin
         const transformedX = radius * Math.cos(angle);
@@ -54,7 +54,7 @@ export class AtomParticleDelegate {
         // Tranform the coordicates back to use the top left origin
         const position = BaseTransformer.reverseTransform(
           this.observableScreen.origin.position,
-          { x: transformedX, y: transformedY }
+          { x: transformedX, y: transformedY },
         );
         const centerX = position.x - config.atom.particleSize / 2;
         const centerY = position.y - config.atom.particleSize / 2;
@@ -62,13 +62,13 @@ export class AtomParticleDelegate {
         const command = new ObservableMoveToCommand(newPosition, 'incompleted');
         particle.commandList.commands.push(command);
         commandList.commands.push(command);
-      }
+      },
     );
 
     if (typeof callback !== 'undefined') {
       this.observer.when(
         (): boolean => commandList.areAllCompleted(),
-        callback
+        callback,
       );
     }
   }
@@ -85,13 +85,13 @@ export class AtomParticleDelegate {
         });
         commandList.commands.push(command);
         particle.commandList.commands.push(command);
-      }
+      },
     );
 
     if (typeof callback !== 'undefined') {
       this.observer.when(
         (): boolean => commandList.areAllCompleted(),
-        callback
+        callback,
       );
     }
   }
@@ -100,7 +100,7 @@ export class AtomParticleDelegate {
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
     newShell: AtomShellType,
-    callback?: () => void
+    callback?: () => void,
   ): void {
     const oldShellType = particle.shellType;
     particle.shellType = newShell;
@@ -115,7 +115,7 @@ export class AtomParticleDelegate {
         } else {
           tempParticle.newPosition = tempParticle.position;
         }
-      }
+      },
     );
 
     // Get all particles in the old shell
@@ -124,7 +124,7 @@ export class AtomParticleDelegate {
     particlesInOldShell.forEach(
       (tempParticle: ObservableParticle): void => {
         tempParticle.newPosition = tempParticle.position;
-      }
+      },
     );
 
     this.refactorIndicesByNewPositions(particlesInNewShell);
@@ -137,7 +137,7 @@ export class AtomParticleDelegate {
   public transferParticleToSameShell(
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
-    callback?: () => void
+    callback?: () => void,
   ): void {
     // Get particles in the same shell
     const particlesInShell = this.getParticlesInShell(particle.shellType);
@@ -149,7 +149,7 @@ export class AtomParticleDelegate {
         } else {
           tempParticle.newPosition = tempParticle.position;
         }
-      }
+      },
     );
 
     const indiceChanged = this.refactorIndicesByNewPositions(particlesInShell);
@@ -163,24 +163,24 @@ export class AtomParticleDelegate {
 
   public changeParticleColors(
     particles: ObservableParticle[],
-    color: 'highlighted' | 'normal'
+    color: 'highlighted' | 'normal',
   ): void {
     particles.forEach(
       (particle): void => {
         particle.color = color;
-      }
+      },
     );
   }
 
   public isMaxReached(shellType: AtomShellType): boolean {
     const shell = assertExists(
       this.observableScreen.shells.find(
-        (shell): boolean => shell.shellType === shellType
+        (shell): boolean => shell.shellType === shellType,
       ),
-      'shell should not be null or undefined'
+      'shell should not be null or undefined',
     );
     const particlesInShell = this.observableScreen.particles.filter(
-      (particle): boolean => particle.shellType === shellType
+      (particle): boolean => particle.shellType === shellType,
     );
 
     return shell.max === particlesInShell.length;
@@ -189,19 +189,19 @@ export class AtomParticleDelegate {
   public getParticleByCharacter(character: string): ObservableParticle {
     return assertExists(
       this.observableScreen.particles.find(
-        (particle): boolean => particle.character === character
+        (particle): boolean => particle.character === character,
       ),
-      'particle should not be null or undefined'
+      'particle should not be null or undefined',
     );
   }
 
   public getParticlesInShell(
     shellType: AtomShellType,
-    _particles?: ObservableParticle[]
+    _particles?: ObservableParticle[],
   ): ObservableParticle[] {
     const particles = _particles || this.observableScreen.particles;
     return particles.filter(
-      (particle): boolean => particle.shellType === shellType
+      (particle): boolean => particle.shellType === shellType,
     );
   }
 
@@ -215,7 +215,7 @@ export class AtomParticleDelegate {
         } else {
           return 0;
         }
-      }
+      },
     );
   }
 
@@ -229,38 +229,38 @@ export class AtomParticleDelegate {
         particles,
         (particle: ObservableParticle): boolean => {
           return particle.shellType === firstParticle.shellType;
-        }
+        },
       );
     }
   }
 
   private getParticleCountByShell(shellType: AtomShellType): number {
     return this.observableScreen.particles.filter(
-      (particle): boolean => shellType === particle.shellType
+      (particle): boolean => shellType === particle.shellType,
     ).length;
   }
 
   private refactorIndicesByNewPositions(
-    particles: ObservableParticle[]
+    particles: ObservableParticle[],
   ): boolean {
     // Sort the list by angles
     particles.sort(
       (particle1, particle2): number => {
         const particle1_newPosition = assertExists(
           particle1.newPosition,
-          "particle 1's new position should not be null or undefined"
+          "particle 1's new position should not be null or undefined",
         );
         const particle2_newPosition = assertExists(
           particle2.newPosition,
-          "particle 2's new position should not be null or undefined"
+          "particle 2's new position should not be null or undefined",
         );
 
         // Because all particles are rotated left before, we have to rotate them back
         const angle1 = this.rotateRight90Degrees(
-          this.calculateAngleByPosition(particle1_newPosition)
+          this.calculateAngleByPosition(particle1_newPosition),
         );
         const angle2 = this.rotateRight90Degrees(
-          this.calculateAngleByPosition(particle2_newPosition)
+          this.calculateAngleByPosition(particle2_newPosition),
         );
         if (angle1 < angle2) {
           return -1;
@@ -269,7 +269,7 @@ export class AtomParticleDelegate {
         } else {
           return 0;
         }
-      }
+      },
     );
 
     let hasChanged = false;
@@ -280,7 +280,7 @@ export class AtomParticleDelegate {
           particle.index = index;
           hasChanged = true;
         }
-      }
+      },
     );
 
     return hasChanged;
@@ -289,7 +289,7 @@ export class AtomParticleDelegate {
   private calculateAngleByPosition(position: { x: number; y: number }): number {
     const { x, y } = BaseTransformer.transformBase(
       this.observableScreen.origin.position,
-      position
+      position,
     );
     const angle = Math.atan2(y, x);
     return angle < 0 ? angle + 2 * Math.PI : angle;

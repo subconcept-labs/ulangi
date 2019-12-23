@@ -45,11 +45,11 @@ export class WritingLessonScreenContainer extends Container<
   private screenFactory = new WritingLessonScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new WritingQuestionIterator(
-    this.props.passedProps.vocabularyList
+    this.props.passedProps.vocabularyList,
   );
 
   protected observableScreen = new ObservableWritingLessonScreen(
@@ -63,21 +63,21 @@ export class WritingLessonScreenContainer extends Container<
       0,
       this.questionIterator.getNumberOfQuestions(),
       0,
-      false
+      false,
     ),
     new ObservableWritingResult(
       config.writing.gradeScale,
       observable.array([]),
       observable.array([]),
       observable.array([]),
-      observable.array([])
+      observable.array([]),
     ),
     new ObservableFeedbackListState(observable.map()),
     new ObservableReviewFeedbackBarState(observable.map(), false, false),
     observable.box(false),
     observable.box(false),
     observable.box(ActivityState.INACTIVE),
-    ScreenName.WRITING_LESSON_SCREEN
+    ScreenName.WRITING_LESSON_SCREEN,
   );
 
   protected navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -85,7 +85,7 @@ export class WritingLessonScreenContainer extends Container<
   protected screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
     this.questionIterator,
-    this.props.passedProps.startLesson
+    this.props.passedProps.startLesson,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -98,14 +98,14 @@ export class WritingLessonScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WritingLessonScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WritingLessonScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WritingLessonScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 
   public componentDidMount(): void {
     this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
     this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
 
     if (this.screenDelegate.shouldLoadAd()) {
@@ -115,7 +115,7 @@ export class WritingLessonScreenContainer extends Container<
 
   public componentWillUnmount(): void {
     this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
   }
 

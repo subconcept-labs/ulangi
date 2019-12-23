@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBSDKCoreKit+Internal.h"
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
 
 #define FBSDK_DEVICE_INFO_DEVICE @"device"
 #define FBSDK_DEVICE_INFO_MODEL @"model"
@@ -65,7 +65,7 @@ static NSMapTable *g_mdnsAdvertisementServices;
   return [[NSString alloc] initWithData:jsonDeviceInfo encoding:NSUTF8StringEncoding];
 }
 
-+ (BOOL)startAdvertisementService:(NSString *)loginCode withDelegate:(id<NSNetServiceDelegate>)delegate;
++ (BOOL)startAdvertisementService:(NSString *)loginCode withDelegate:(id<NSNetServiceDelegate>)delegate
 {
    static NSString *sdkVersion = nil;
   static dispatch_once_t onceToken;

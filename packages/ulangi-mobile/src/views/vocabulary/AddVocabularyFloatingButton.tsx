@@ -23,8 +23,7 @@ export class AddVocabularyFloatingButton extends React.Component<
       <TouchableOpacity
         style={styles.button}
         hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-        onPress={this.props.addVocabulary}
-      >
+        onPress={this.props.addVocabulary}>
         <Image source={Images.ADD_WHITE_22X22} />
       </TouchableOpacity>
     );

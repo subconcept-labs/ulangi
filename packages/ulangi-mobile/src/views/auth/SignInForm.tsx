@@ -63,18 +63,16 @@ export class SignInForm extends React.Component<SignInFormProps> {
             testID={SignInScreenIds.FORGOT_PASSWORD_BTN}
             style={styles.touchable_text}
             onPress={this.props.navigateToForgotPasswordScreen}
-            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-          >
+            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
             <DefaultText style={styles.other_text}>Forgot password</DefaultText>
           </TouchableOpacity>
           <TouchableOpacity
             testID={SignInScreenIds.SIGN_UP_BTN}
             style={styles.touchable_text}
             onPress={this.props.navigateToSignUpScreen}
-            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-          >
+            hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
             <DefaultText style={styles.other_text}>
-              {`Sign up. It's free`}
+              {"Sign up. It's free"}
             </DefaultText>
           </TouchableOpacity>
         </View>

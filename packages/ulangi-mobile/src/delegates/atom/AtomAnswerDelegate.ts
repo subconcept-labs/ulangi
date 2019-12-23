@@ -23,7 +23,7 @@ export class AtomAnswerDelegate {
 
   public constructor(
     observableScreen: ObservableAtomPlayScreen,
-    particleDelegate: AtomParticleDelegate
+    particleDelegate: AtomParticleDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.particleDelegate = particleDelegate;
@@ -35,12 +35,12 @@ export class AtomAnswerDelegate {
       correctSubsetsOfEachShell: {
         shellType: AtomShellType;
         correctSubsets: ObservableParticle[][];
-      }[]
-    ) => void
+      }[],
+    ) => void,
   ): void {
     const correctSubsetsOfEachShell = this.observableScreen.shells.map(
       (
-        shell
+        shell,
       ): {
         shellType: AtomShellType;
         correctSubsets: ObservableParticle[][];
@@ -50,36 +50,36 @@ export class AtomAnswerDelegate {
           correctSubsets: this.getCorrectParticleSubsetsInOneShell(
             this.particleDelegate.getParticlesInShell(
               shell.shellType,
-              this.observableScreen.particles
+              this.observableScreen.particles,
             ),
-            this.observableScreen.question.answer
+            this.observableScreen.question.answer,
           ),
         };
-      }
+      },
     );
 
     const correctParticlesOfEachShell = correctSubsetsOfEachShell.map(
       ({ correctSubsets }): ObservableParticle[] => {
         return _.flatten(correctSubsets);
-      }
+      },
     );
 
     runInAction(
       (): void => {
         this.particleDelegate.changeParticleColors(
           this.observableScreen.particles,
-          'normal'
+          'normal',
         );
 
         correctParticlesOfEachShell.forEach(
           (particles): void => {
             this.particleDelegate.changeParticleColors(
               particles,
-              'highlighted'
+              'highlighted',
             );
-          }
+          },
         );
-      }
+      },
     );
 
     if (this.hasCorrectAnswer()) {
@@ -91,7 +91,7 @@ export class AtomAnswerDelegate {
 
   public hasCorrectAnswer(
     _particles?: ObservableParticle[],
-    _answer?: string
+    _answer?: string,
   ): boolean {
     const particles = _particles || this.observableScreen.particles;
     const answer = _answer || this.observableScreen.question.answer;
@@ -104,12 +104,12 @@ export class AtomAnswerDelegate {
     ) {
       const particlesInTheShell = this.particleDelegate.getParticlesInShell(
         this.observableScreen.shells[i].shellType,
-        particles
+        particles,
       );
 
       hasCorrectAnswer = this.particlesInOneShellHasCorrectAnswer(
         particlesInTheShell,
-        answer
+        answer,
       );
       i++;
     }
@@ -119,7 +119,7 @@ export class AtomAnswerDelegate {
 
   public hasCorrectAnswerDespiteRedundantParticles(
     _particles?: ObservableParticle[],
-    _answer?: string
+    _answer?: string,
   ): boolean {
     const particles = _particles || this.observableScreen.particles;
     const answer = _answer || this.observableScreen.question.answer;
@@ -128,15 +128,15 @@ export class AtomAnswerDelegate {
       (shell): ObservableParticle[] => {
         return this.particleDelegate.getParticlesInShell(
           shell.shellType,
-          particles
+          particles,
         );
-      }
+      },
     );
 
     const correctSubsetsOfEachShell = particlesInEachShell.map(
       (particles): ObservableParticle[][] => {
         return this.getCorrectParticleSubsetsInOneShell(particles, answer);
-      }
+      },
     );
 
     const hasCorrectAnswerInEachShell = correctSubsetsOfEachShell.map(
@@ -146,10 +146,10 @@ export class AtomAnswerDelegate {
           correctSubsets.findIndex(
             (subset): boolean => {
               return this.particlesInOneShellHasCorrectAnswer(subset, answer);
-            }
+            },
           ) !== -1
         );
-      }
+      },
     );
 
     // Return if at least one shell has correct answer
@@ -158,11 +158,11 @@ export class AtomAnswerDelegate {
 
   private particlesInOneShellHasCorrectAnswer(
     particles: ObservableParticle[],
-    answer: string
+    answer: string,
   ): boolean {
     if (this.particleDelegate.areParticlesInOneShellOnly(particles) === false) {
       throw new Error(
-        'All particles in particlesInOneShellHasCorrectAnswer must be in one shell only'
+        'All particles in particlesInOneShellHasCorrectAnswer must be in one shell only',
       );
     }
 
@@ -173,11 +173,11 @@ export class AtomAnswerDelegate {
     while (i < particles.length && found === false) {
       const first = assertExists(
         particles.shift(),
-        'Particle should not be null or undefined'
+        'Particle should not be null or undefined',
       );
       particles.push(first);
       const characters = particles.map(
-        (particle): string => particle.character
+        (particle): string => particle.character,
       );
       if (changeCase.upper(answer) === characters.join('')) {
         found = true;
@@ -191,11 +191,11 @@ export class AtomAnswerDelegate {
 
   private getCorrectParticleSubsetsInOneShell(
     particles: ObservableParticle[],
-    answer: string
+    answer: string,
   ): ObservableParticle[][] {
     if (this.particleDelegate.areParticlesInOneShellOnly(particles) === false) {
       throw new Error(
-        'All particles in getCorrectParticleSubsetsInOneShell must be in one shell only'
+        'All particles in getCorrectParticleSubsetsInOneShell must be in one shell only',
       );
     }
 

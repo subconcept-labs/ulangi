@@ -28,7 +28,7 @@ export abstract class AddEditVocabularyScreenDelegate {
   public constructor(
     eventBus: EventBus,
     vocabularyFormDelegate: VocabularyFormDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.vocabularyFormDelegate = vocabularyFormDelegate;
@@ -70,7 +70,7 @@ export abstract class AddEditVocabularyScreenDelegate {
       {
         message: 'Saving. Please wait...',
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -85,7 +85,7 @@ export abstract class AddEditVocabularyScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -98,7 +98,7 @@ export abstract class AddEditVocabularyScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

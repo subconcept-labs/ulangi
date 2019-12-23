@@ -45,8 +45,7 @@ export class FollowUsScreen extends React.Component<FollowUsScreenProps> {
         <View style={this.styles.section_container}>
           <SectionGroup
             theme={this.props.darkModeStore.theme}
-            header="FOLLOW US"
-          >
+            header="FOLLOW US">
             <SectionRow
               theme={this.props.darkModeStore.theme}
               leftText="Twitter"

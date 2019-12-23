@@ -26,7 +26,7 @@ export class AdScreenDelegate {
     eventBus: EventBus,
     observableScreen: ObservableAdScreen,
     adDelegate: AdDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -46,8 +46,8 @@ export class AdScreenDelegate {
     this.eventBus.subscribe(
       on(
         [ActionType.AD__AD_CLOSED, ActionType.AD__CONSENT_STATUS_CHANGED],
-        (): void => this.back()
-      )
+        (): void => this.back(),
+      ),
     );
   }
 

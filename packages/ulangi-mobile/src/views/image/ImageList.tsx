@@ -112,8 +112,7 @@ export class ImageList extends React.Component<ImageListProps> {
           <DefaultText>IMAGES FROM </DefaultText>
           <DefaultText
             style={this.styles.highlighted}
-            onPress={this.props.goToPixabay}
-          >
+            onPress={this.props.goToPixabay}>
             PIXABAY
           </DefaultText>
         </DefaultText>

@@ -78,8 +78,7 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
         style={[
           styles.item_container,
           { backgroundColor: item.backgroundColor },
-        ]}
-      >
+        ]}>
         <DefaultText style={styles.title}>{item.title}</DefaultText>
         <DefaultText style={styles.message}>{item.message}</DefaultText>
         <View style={styles.button_container}>
@@ -89,7 +88,7 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
               ButtonSize.NORMAL,
               4,
               '#fff',
-              item.buttonTextColor
+              item.buttonTextColor,
             )}
             onPress={item.onPress}
           />

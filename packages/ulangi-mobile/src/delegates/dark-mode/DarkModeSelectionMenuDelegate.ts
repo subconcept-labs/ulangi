@@ -24,7 +24,7 @@ export class DarkModeSelectionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -32,7 +32,7 @@ export class DarkModeSelectionMenuDelegate {
 
   public show(
     currentTrigger: DarkModeTrigger,
-    onSelect: (trigger: DarkModeTrigger) => void
+    onSelect: (trigger: DarkModeTrigger) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -50,12 +50,12 @@ export class DarkModeSelectionMenuDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [currentTrigger],
       },
-      this.styles
+      this.styles,
     );
   }
 }

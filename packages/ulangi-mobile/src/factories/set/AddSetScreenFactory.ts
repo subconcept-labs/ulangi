@@ -16,27 +16,27 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class AddSetScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableAddEditSetScreen
+    observableScreen: ObservableAddEditSetScreen,
   ): AddSetScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const pickerDelegate = new PickerDelegate(
       this.observer,
-      observableScreen.setFormState.pickerState
+      observableScreen.setFormState.pickerState,
     );
 
     const setFormDelegate = new SetFormDelegate(
       observableScreen.setFormState,
-      pickerDelegate
+      pickerDelegate,
     );
 
     const addSetDelegate = new AddSetDelegate(
       this.eventBus,
-      observableScreen.setFormState
+      observableScreen.setFormState,
     );
 
     return new AddSetScreenDelegate(
@@ -46,7 +46,7 @@ export class AddSetScreenFactory extends ScreenFactory {
       addSetDelegate,
       dialogDelegate,
       navigatorDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

@@ -45,7 +45,7 @@ export class ReflexStyle {
           backgroundColor: config.reflex.backgroundColor,
         },
       },
-      options
+      options,
     );
   }
 
@@ -71,7 +71,7 @@ export class ReflexStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         'white',
-        config.reflex.backgroundColor
+        config.reflex.backgroundColor,
       ),
       {
         buttonStyle: {
@@ -81,7 +81,7 @@ export class ReflexStyle {
         textStyle: {
           fontFamily: 'Raleway-Black',
         },
-      }
+      },
     );
   }
 }

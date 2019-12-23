@@ -22,7 +22,7 @@ export class WritingFormDelegate {
   public constructor(
     observer: Observer,
     writingFormState: ObservableWritingFormState,
-    writingResult: ObservableWritingResult
+    writingResult: ObservableWritingResult,
   ) {
     this.observer = observer;
     this.writingFormState = writingFormState;
@@ -46,19 +46,19 @@ export class WritingFormDelegate {
     this.writingFormState.numOfHintsUsedForCurrentQuestion++;
 
     const numberOfCharactersToShow = Array(
-      this.writingFormState.numOfHintsUsedForCurrentQuestion
+      this.writingFormState.numOfHintsUsedForCurrentQuestion,
     )
       .fill(null)
       .map((_, index): number => index + 1)
       .reduce((sum, current): number => sum + current);
 
     const vocabularyTerm = this.vocabularyExtraFieldParser.parse(
-      this.writingFormState.currentQuestion.testingVocabulary.vocabularyText
+      this.writingFormState.currentQuestion.testingVocabulary.vocabularyText,
     ).vocabularyTerm;
 
     this.writingFormState.currentHint = vocabularyTerm.substring(
       0,
-      numberOfCharactersToShow
+      numberOfCharactersToShow,
     );
 
     if (this.writingFormState.currentHint !== vocabularyTerm) {
@@ -69,7 +69,7 @@ export class WritingFormDelegate {
 
   public skip(): void {
     this.writingResult.skippedVocabularyIds.push(
-      this.writingFormState.currentQuestion.testingVocabulary.vocabularyId
+      this.writingFormState.currentQuestion.testingVocabulary.vocabularyId,
     );
   }
 
@@ -77,7 +77,7 @@ export class WritingFormDelegate {
     this.writingFormState.shouldRunFadeOutAnimation = true;
     this.observer.when(
       (): boolean => this.writingFormState.shouldRunFadeOutAnimation === false,
-      callback
+      callback,
     );
   }
 }

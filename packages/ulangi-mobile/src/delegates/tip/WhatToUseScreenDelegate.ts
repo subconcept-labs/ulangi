@@ -17,7 +17,7 @@ export class WhatToUseScreenDelegate {
 
   public constructor(
     linkingDelegate: LinkingDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.linkingDelegate = linkingDelegate;
     this.analytics = analytics;
@@ -26,14 +26,14 @@ export class WhatToUseScreenDelegate {
   public showSpacedRepetitionWiki(): void {
     this.analytics.logEvent('open_srs_wiki_link');
     this.linkingDelegate.openLink(
-      'https://en.wikipedia.org/wiki/Spaced_repetition'
+      'https://en.wikipedia.org/wiki/Spaced_repetition',
     );
   }
 
   public showLeitnerSystemWiki(): void {
     this.analytics.logEvent('open_leitner_wiki_link');
     this.linkingDelegate.openLink(
-      'https://en.wikipedia.org/wiki/Leitner_system'
+      'https://en.wikipedia.org/wiki/Leitner_system',
     );
   }
 }

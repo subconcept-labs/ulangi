@@ -23,7 +23,7 @@ export class GoogleSheetsAddOnScreenStyle {
           text: 'Google Sheets Add-On',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -41,7 +41,7 @@ export class GoogleSheetsAddOnScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -59,18 +59,18 @@ export class GoogleSheetsAddOnScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     GoogleSheetsAddOnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    GoogleSheetsAddOnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    GoogleSheetsAddOnScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     GoogleSheetsAddOnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    GoogleSheetsAddOnScreenStyle.SCREEN_DARK_STYLES_ONLY
+    GoogleSheetsAddOnScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

@@ -30,9 +30,9 @@ export class ChangeEmailScreen extends React.Component<ChangeEmailScreenProps> {
   private renderGuestNote(): null | React.ReactElement<any> {
     if (
       this.props.userStore.existingCurrentUser.email.endsWith(
-        config.general.guestEmailDomain
+        config.general.guestEmailDomain,
       )
-    )
+    ) {
       return (
         <View style={styles.guest_note_container}>
           <DefaultText style={styles.guest_note}>
@@ -44,7 +44,7 @@ export class ChangeEmailScreen extends React.Component<ChangeEmailScreenProps> {
           </DefaultText>
         </View>
       );
-    else {
+    } else {
       return null;
     }
   }

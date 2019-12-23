@@ -40,7 +40,7 @@ export class CategorizeScreenContainer extends Container<
   private screenFactory = new CategorizeScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableCategorizeScreen(
@@ -48,15 +48,15 @@ export class CategorizeScreenContainer extends Container<
       this.props.passedProps.categoryName || '',
       null,
       false,
-      observable.box(ActivityState.INACTIVE)
+      observable.box(ActivityState.INACTIVE),
     ),
-    ScreenName.CATEGORIZE_SCREEN
+    ScreenName.CATEGORIZE_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -77,9 +77,9 @@ export class CategorizeScreenContainer extends Container<
         this.screenDelegate.showMoveToUncategorizedDialog(
           (): void => {
             this.screenDelegate.save(
-              this.props.passedProps.selectedVocabularyIds
+              this.props.passedProps.selectedVocabularyIds,
             );
-          }
+          },
         );
       } else {
         this.screenDelegate.save(this.props.passedProps.selectedVocabularyIds);
@@ -91,7 +91,7 @@ export class CategorizeScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CategorizeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CategorizeScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CategorizeScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

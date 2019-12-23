@@ -40,8 +40,7 @@ export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
       <View
         testID={this.props.dialog.testID || LightBoxDialogIds.DIALOG}
         style={this.styles.dialog_container}
-        onStartShouldSetResponder={(): boolean => true}
-      >
+        onStartShouldSetResponder={(): boolean => true}>
         {typeof this.props.dialog.title !== 'undefined' ? (
           <LightBoxTitle
             theme={this.props.theme}
@@ -68,7 +67,7 @@ export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
         testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
         text: 'CLOSE',
         styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-          ButtonSize.SMALL
+          ButtonSize.SMALL,
         ),
         onPress: this.props.close,
       });

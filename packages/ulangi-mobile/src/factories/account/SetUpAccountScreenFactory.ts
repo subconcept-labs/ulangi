@@ -13,19 +13,19 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class SetUpAccountScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableSetUpAccountScreen
+    observableScreen: ObservableSetUpAccountScreen,
   ): SetUpAccountScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new SetUpAccountScreenDelegate(
       this.eventBus,
       observableScreen,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

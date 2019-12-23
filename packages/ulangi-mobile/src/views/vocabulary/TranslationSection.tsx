@@ -65,7 +65,7 @@ export class TranslationSection extends React.Component<
             theme={this.props.theme}
             errorMessage={
               <DefaultText>
-                <DefaultText>{`We couldn't translate the term`} </DefaultText>
+                <DefaultText>{"We couldn't translate the term"} </DefaultText>
                 <DefaultText>{` to ${
                   this.props.translatedToLanguageName
                 }. Please make sure you enter it correctly.`}</DefaultText>
@@ -109,7 +109,9 @@ export class TranslationSection extends React.Component<
         <PickerError
           theme={this.props.theme}
           testID={VocabularyFormIds.TRANSLATION_SPECIFIC_LANGUAGE_REQUIRED}
-          errorMessage={`Translation is not supported because either the source or the target language is selected as "Any Language"`}
+          errorMessage={
+            'Translation is not supported because either the source or the target language is selected as "Any Language"'
+          }
         />
       );
     } else {
@@ -121,8 +123,7 @@ export class TranslationSection extends React.Component<
               <DefaultText>Oops! Something went wrong. </DefaultText>
               <DefaultText
                 onPress={this.props.translate}
-                style={this.styles.highlighted_text}
-              >
+                style={this.styles.highlighted_text}>
                 Please try again.
               </DefaultText>
               <DefaultText>

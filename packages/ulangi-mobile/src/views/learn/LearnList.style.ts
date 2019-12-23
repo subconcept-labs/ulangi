@@ -64,7 +64,7 @@ export const lightStyles = StyleSheet.create(
     learn_item: {
       backgroundColor: '#fff',
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -72,5 +72,5 @@ export const darkStyles = StyleSheet.create(
     learn_item: {
       backgroundColor: '#494949',
     },
-  })
+  }),
 );

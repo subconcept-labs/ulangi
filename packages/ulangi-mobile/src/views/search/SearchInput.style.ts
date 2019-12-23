@@ -51,7 +51,7 @@ export const lightStyles = StyleSheet.create(
     text_input: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -63,5 +63,5 @@ export const darkStyles = StyleSheet.create(
     text_input: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

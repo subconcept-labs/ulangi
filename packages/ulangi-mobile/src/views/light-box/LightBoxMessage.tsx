@@ -31,8 +31,7 @@ export class LightBoxMessage extends React.Component<LightBoxMessageProps> {
       <View style={this.styles.message_container}>
         <DefaultText
           testID={LightBoxDialogIds.DIALOG_MESSAGE}
-          style={this.styles.message}
-        >
+          style={this.styles.message}>
           {this.props.message}
         </DefaultText>
       </View>

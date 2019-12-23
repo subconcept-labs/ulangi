@@ -29,7 +29,7 @@ export interface CategoryListProps {
   showCategoryDetail: (category: ObservableCategory) => void;
   showCategoryActionMenu: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType
+    filterType: VocabularyFilterType,
   ) => void;
   goToSpacedRepetition: (selectedCategoryNames: string[]) => void;
   goToWriting: (selectedCategoryNames: string[]) => void;

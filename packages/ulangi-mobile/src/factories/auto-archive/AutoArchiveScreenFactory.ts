@@ -19,17 +19,17 @@ export class AutoArchiveScreenFactory extends ScreenFactory {
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableAutoArchiveScreen
+    observableScreen: ObservableAutoArchiveScreen,
   ): AutoArchiveScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const levelSelectionMenuDelegate = new LevelSelectionMenuDelegate(
       navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new AutoArchiveScreenDelegate(
@@ -37,7 +37,7 @@ export class AutoArchiveScreenFactory extends ScreenFactory {
       observableScreen.autoArchiveSettings,
       levelSelectionMenuDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

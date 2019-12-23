@@ -22,7 +22,7 @@ export class TranslationListDelegate {
   public constructor(
     eventBus: EventBus,
     setStore: ObservableSetStore,
-    translationListState: ObservableTranslationListState
+    translationListState: ObservableTranslationListState,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -40,14 +40,14 @@ export class TranslationListDelegate {
     if (this.setStore.existingCurrentSet.isUsingAnyLanguage) {
       this.translationListState.translateState.set(ActivityState.ERROR);
       this.translationListState.translateError.set(
-        ErrorCode.TRANSLATION__SPECIFIC_LANGUAGE_REQUIRED
+        ErrorCode.TRANSLATION__SPECIFIC_LANGUAGE_REQUIRED,
       );
     } else if (
       this.setStore.existingCurrentSet.isUsingSameSourceTargetLanguages
     ) {
       this.translationListState.translateState.set(ActivityState.ERROR);
       this.translationListState.translateError.set(
-        ErrorCode.TRANSLATION__SAME_SOURCE_DESTINATION_LANGUAGE
+        ErrorCode.TRANSLATION__SAME_SOURCE_DESTINATION_LANGUAGE,
       );
     } else {
       this.eventBus.pubsub(
@@ -64,21 +64,21 @@ export class TranslationListDelegate {
             ActionType.TRANSLATION__TRANSLATING,
             (): void => {
               this.translationListState.translateState.set(
-                ActivityState.ACTIVE
+                ActivityState.ACTIVE,
               );
-            }
+            },
           ),
           once(
             ActionType.TRANSLATION__TRANSLATE_SUCCEEDED,
             ({ translations }): void => {
               this.translationListState.isRefreshing.set(false);
               this.translationListState.translateState.set(
-                ActivityState.INACTIVE
+                ActivityState.INACTIVE,
               );
               this.translationListState.translations = observable.array(
-                translations.slice()
+                translations.slice(),
               );
-            }
+            },
           ),
           once(
             ActionType.TRANSLATION__TRANSLATE_FAILED,
@@ -86,9 +86,9 @@ export class TranslationListDelegate {
               this.translationListState.isRefreshing.set(false);
               this.translationListState.translateState.set(ActivityState.ERROR);
               this.translationListState.translateError.set(errorCode);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -99,7 +99,7 @@ export class TranslationListDelegate {
     this.translationListState.translateError.set(undefined);
     this.translationListState.translations = null;
     this.eventBus.publish(
-      createAction(ActionType.TRANSLATION__CLEAR_TRANSLATIONS, null)
+      createAction(ActionType.TRANSLATION__CLEAR_TRANSLATIONS, null),
     );
   }
 
@@ -107,14 +107,14 @@ export class TranslationListDelegate {
     if (this.setStore.existingCurrentSet.isUsingAnyLanguage) {
       this.translationListState.translateState.set(ActivityState.ERROR);
       this.translationListState.translateError.set(
-        ErrorCode.TRANSLATION__SPECIFIC_LANGUAGE_REQUIRED
+        ErrorCode.TRANSLATION__SPECIFIC_LANGUAGE_REQUIRED,
       );
     } else if (
       this.setStore.existingCurrentSet.isUsingSameSourceTargetLanguages
     ) {
       this.translationListState.translateState.set(ActivityState.ERROR);
       this.translationListState.translateError.set(
-        ErrorCode.TRANSLATION__SAME_SOURCE_DESTINATION_LANGUAGE
+        ErrorCode.TRANSLATION__SAME_SOURCE_DESTINATION_LANGUAGE,
       );
     } else {
       this.eventBus.pubsub(
@@ -127,44 +127,44 @@ export class TranslationListDelegate {
             ActionType.TRANSLATION__TRANSLATING_BIDIRECTION,
             (): void => {
               this.translationListState.translateState.set(
-                ActivityState.ACTIVE
+                ActivityState.ACTIVE,
               );
-            }
+            },
           ),
           once(
             ActionType.TRANSLATION__TRANSLATE_BIDIRECTION_SUCCEEDED,
             ({ translations }): void => {
               this.translationListState.isRefreshing.set(false);
               this.translationListState.translateState.set(
-                ActivityState.INACTIVE
+                ActivityState.INACTIVE,
               );
-              this.translationListState.translations = observable(
-                translations.slice()
+              this.translationListState.translationsWithLanguages = observable(
+                translations.slice(),
               );
-            }
+            },
           ),
           once(
             ActionType.TRANSLATION__TRANSLATE_BIDIRECTION_FAILED,
             (): void => {
               this.translationListState.isRefreshing.set(false);
               this.translationListState.translateState.set(ActivityState.ERROR);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
 
   public clearBidirectionalTranslations(): void {
-    this.translationListState.translations = null;
+    this.translationListState.translationsWithLanguages = null;
     this.translationListState.translateState.set(ActivityState.INACTIVE);
     this.translationListState.translateError.set(undefined);
     this.translationListState.isRefreshing.set(false);
     this.eventBus.publish(
       createAction(
         ActionType.TRANSLATION__CLEAR_BIDIRECTIONAL_TRANSLATIONS,
-        null
-      )
+        null,
+      ),
     );
   }
 

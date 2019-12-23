@@ -44,7 +44,7 @@ export class VocabularyBulkActionBar extends React.Component<
               styles={FullRoundedButtonStyle.getFullBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
-                config.styles.darkPrimaryColor
+                config.styles.darkPrimaryColor,
               )}
               onPress={this.props.clearSelections}
             />
@@ -56,7 +56,7 @@ export class VocabularyBulkActionBar extends React.Component<
               styles={FullRoundedButtonStyle.getFullBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
-                config.styles.darkPrimaryColor
+                config.styles.darkPrimaryColor,
               )}
               onPress={this.props.showVocabularyBulkActionMenu}
             />

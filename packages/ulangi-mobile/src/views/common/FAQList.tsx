@@ -62,7 +62,7 @@ export class FAQList extends React.Component<FAQListProps> {
                   </View>
                 </View>
               );
-            }
+            },
           )}
         </ScrollView>
       </View>

@@ -25,9 +25,9 @@ export class SynchronizerScreenDelegate {
         this.eventBus.publish(
           createAction(ActionType.SYNC__ADD_SYNC_TASK, {
             syncTask: syncTask as SyncTask,
-          })
+          }),
         );
-      }
+      },
     );
   }
 }

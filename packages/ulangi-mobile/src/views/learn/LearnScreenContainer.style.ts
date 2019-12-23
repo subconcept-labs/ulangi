@@ -21,28 +21,28 @@ export class LearnScreenStyle {
         testID: LearnScreenIds.TOP_BAR,
         title: touchableTitle(ScreenName.LEARN_SCREEN),
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
-    PrimaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    PrimaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
-    PrimaryScreenStyle.SCREEN_DARK_STYLES_ONLY
+    PrimaryScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     LearnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     LearnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    LearnScreenStyle.SCREEN_DARK_STYLES_ONLY
+    LearnScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

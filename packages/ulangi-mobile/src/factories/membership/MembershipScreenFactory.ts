@@ -13,12 +13,12 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class MembershipScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableMembershipScreen
+    observableScreen: ObservableMembershipScreen,
   ): MembershipScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new MembershipScreenDelegate(
@@ -28,7 +28,7 @@ export class MembershipScreenFactory extends ScreenFactory {
       this.props.rootStore.purchaseStore,
       observableScreen,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

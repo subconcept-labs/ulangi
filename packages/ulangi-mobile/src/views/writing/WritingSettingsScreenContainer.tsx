@@ -28,7 +28,7 @@ export class WritingSettingsScreenContainer extends Container {
   private screenFactory = new WritingSettingsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private writingSettingsDelegate = this.screenFactory.createWritingSettingsDelegate();
@@ -38,13 +38,13 @@ export class WritingSettingsScreenContainer extends Container {
   protected observableScreen = new ObservableWritingSettingsScreen(
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
-    ScreenName.WRITING_SETTINGS_SCREEN
+    ScreenName.WRITING_SETTINGS_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -59,7 +59,7 @@ export class WritingSettingsScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WritingSettingsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WritingSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WritingSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

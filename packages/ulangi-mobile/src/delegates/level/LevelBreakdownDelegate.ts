@@ -22,7 +22,7 @@ export class LevelBreakdownDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -41,7 +41,7 @@ export class LevelBreakdownDelegate {
       {
         levelCounts,
       },
-      this.styles
+      this.styles,
     );
   }
 }

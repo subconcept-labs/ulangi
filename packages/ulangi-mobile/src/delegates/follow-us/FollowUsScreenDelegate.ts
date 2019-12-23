@@ -29,7 +29,7 @@ export class FollowUsScreenDelegate {
           this.showCannotOpenLinkError();
         }
       },
-      (): void => this.showCannotOpenLinkError()
+      (): void => this.showCannotOpenLinkError(),
     );
   }
 
@@ -42,7 +42,7 @@ export class FollowUsScreenDelegate {
           this.showCannotOpenLinkError();
         }
       },
-      (): void => this.showCannotOpenLinkError()
+      (): void => this.showCannotOpenLinkError(),
     );
   }
 
@@ -55,7 +55,7 @@ export class FollowUsScreenDelegate {
           this.showCannotOpenLinkError();
         }
       },
-      (): void => this.fallbackToFacebookPageInBrowser()
+      (): void => this.fallbackToFacebookPageInBrowser(),
     );
   }
 
@@ -67,7 +67,7 @@ export class FollowUsScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -80,7 +80,7 @@ export class FollowUsScreenDelegate {
           this.showCannotOpenLinkError();
         }
       },
-      (): void => this.showCannotOpenLinkError()
+      (): void => this.showCannotOpenLinkError(),
     );
   }
 }

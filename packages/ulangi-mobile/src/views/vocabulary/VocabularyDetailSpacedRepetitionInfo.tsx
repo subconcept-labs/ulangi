@@ -40,7 +40,7 @@ export class VocabularyDetailSpacedRepetitionInfo extends React.Component<
             this.props.vocabulary.lastLearnedAt === null
               ? 'N/A'
               : _.upperFirst(
-                  moment(this.props.vocabulary.lastLearnedAt).fromNow()
+                  moment(this.props.vocabulary.lastLearnedAt).fromNow(),
                 )
           }
         />

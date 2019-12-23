@@ -26,13 +26,13 @@ export class PrivacyPolicyScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.PRIVACY_POLICY_SCREEN
+    ScreenName.PRIVACY_POLICY_SCREEN,
   );
 
   private screenFactory = new PrivacyPolicyScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,7 +47,7 @@ export class PrivacyPolicyScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? PrivacyPolicyScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : PrivacyPolicyScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : PrivacyPolicyScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

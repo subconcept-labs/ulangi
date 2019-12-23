@@ -25,7 +25,7 @@ export class LinkingDelegate {
           this.showCannotOpenLinkError();
         }
       },
-      (): void => this.showCannotOpenLinkError()
+      (): void => this.showCannotOpenLinkError(),
     );
   }
 

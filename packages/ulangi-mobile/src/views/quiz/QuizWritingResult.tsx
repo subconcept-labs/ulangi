@@ -56,7 +56,7 @@ export class QuizWritingResult extends React.Component<QuizWritingResultProps> {
             text="Take another quiz"
             styles={LessonScreenStyle.getLargeButtonStyles(
               config.styles.primaryColor,
-              'white'
+              'white',
             )}
             onPress={this.props.takeAnotherQuiz}
           />

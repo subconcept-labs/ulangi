@@ -23,7 +23,7 @@ export class SpacedRepetitionSettingsScreenStyle {
           text: 'Settings',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class SpacedRepetitionSettingsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class SpacedRepetitionSettingsScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     SpacedRepetitionSettingsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    SpacedRepetitionSettingsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    SpacedRepetitionSettingsScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     SpacedRepetitionSettingsScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    SpacedRepetitionSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY
+    SpacedRepetitionSettingsScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

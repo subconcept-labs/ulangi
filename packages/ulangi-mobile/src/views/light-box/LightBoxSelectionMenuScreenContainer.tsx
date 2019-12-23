@@ -28,13 +28,13 @@ export class LightBoxSelectionMenuScreenContainer extends Container {
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.LIGHT_BOX_SELECTION_MENU_SCREEN
+    ScreenName.LIGHT_BOX_SELECTION_MENU_SCREEN,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,7 +47,7 @@ export class LightBoxSelectionMenuScreenContainer extends Container {
           : {}
         : this.props.styles
         ? this.props.styles.dark
-        : {}
+        : {},
     );
   }
 

@@ -41,13 +41,13 @@ export class LevelBreakdownScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.LEVEL_BREAKDOWN_SCREEN
+    ScreenName.LEVEL_BREAKDOWN_SCREEN,
   );
 
   private screenFactory = new LevelBreakdownScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -57,7 +57,9 @@ export class LevelBreakdownScreenContainer extends Container<
   protected onThemeChanged(theme: Theme): void {
     if (typeof this.props.styles !== 'undefined') {
       this.navigatorDelegate.mergeOptions(
-        theme === Theme.LIGHT ? this.props.styles.light : this.props.styles.dark
+        theme === Theme.LIGHT
+          ? this.props.styles.light
+          : this.props.styles.dark,
       );
     }
   }

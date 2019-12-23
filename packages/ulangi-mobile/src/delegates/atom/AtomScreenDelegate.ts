@@ -32,7 +32,7 @@ export class AtomScreenDelegate {
     fetchVocabularyDelegate: FetchVocabularyDelegate,
     navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.prepareFetchVocabularyDelegate = prepareFetchVocabularyDelegate;
     this.fetchVocabularyDelegate = fetchVocabularyDelegate;
@@ -74,7 +74,7 @@ export class AtomScreenDelegate {
       {
         message: 'Preparing. Please wait...',
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -87,7 +87,7 @@ export class AtomScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

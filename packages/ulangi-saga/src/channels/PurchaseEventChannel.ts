@@ -15,11 +15,11 @@ export class PurchaseEventChannel {
     this.iap = iap;
   }
 
-  public createChannel(): EventChannel<Iap.ProductPurchase> {
+  public createChannel(): EventChannel<Iap.Purchase> {
     return eventChannel(
       (emitter): (() => void) => {
         const subscription = this.iap.purchaseUpdatedListener(
-          (purchase: Iap.ProductPurchase): void => {
+          (purchase: Iap.Purchase): void => {
             emitter(purchase);
           }
         );

@@ -33,7 +33,7 @@ export class SetManagementScreenContainer extends Container {
   private screenFactory = new SetManagementScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSetManagementScreen(
@@ -41,13 +41,13 @@ export class SetManagementScreenContainer extends Container {
     null,
     ActivityState.INACTIVE,
     false,
-    ScreenName.SET_MANAGEMENT_SCREEN
+    ScreenName.SET_MANAGEMENT_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -67,7 +67,7 @@ export class SetManagementScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SetManagementScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SetManagementScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SetManagementScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

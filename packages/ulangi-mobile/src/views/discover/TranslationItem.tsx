@@ -59,9 +59,8 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
     return (
       <FixedTouchableWithoutFeedback
         testID={TranslationItemIds.TRANSLATION_CONTAINER_BY_VOCABULARY_TEXT(
-          vocabularyText
-        )}
-      >
+          vocabularyText,
+        )}>
         <View style={this.styles.container}>
           <View style={this.styles.vocabulary_text_container}>
             <View style={this.styles.left}>
@@ -103,13 +102,12 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
     return (
       <TouchableOpacity
         testID={TranslationItemIds.ADD_VOCABULARY_FROM_TRANSLATION_BTN_BY_VOCABULARY_TEXT(
-          vocabularyText
+          vocabularyText,
         )}
         style={this.styles.button}
         onPress={(): void => {
           this.props.addVocabulary(this.props.translation);
-        }}
-      >
+        }}>
         <Image
           source={
             this.props.theme === Theme.LIGHT
@@ -131,13 +129,12 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
     return (
       <TouchableOpacity
         testID={TranslationItemIds.ADD_VOCABULARY_FROM_TRANSLATION_BTN_BY_VOCABULARY_TEXT(
-          vocabularyText
+          vocabularyText,
         )}
         style={this.styles.button}
         onPress={(): void => {
           this.props.showTranslationActionMenu(this.props.translation);
-        }}
-      >
+        }}>
         <Image
           source={
             this.props.theme === Theme.LIGHT

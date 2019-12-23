@@ -36,13 +36,11 @@ export class ReflexPausedScreen extends React.Component<
         enabled={true}
         activeOpacity={0.2}
         style={styles.light_box_container}
-        onPress={(): void => this.props.continue()}
-      >
+        onPress={(): void => this.props.continue()}>
         <LightBoxAnimatableView
           testID={ReflexPausedScreenIds.CONTAINER}
           observableLightBox={this.props.observableLightBox}
-          style={styles.inner_container}
-        >
+          style={styles.inner_container}>
           <View style={styles.title_container}>
             <DefaultText style={styles.title}>Paused</DefaultText>
           </View>

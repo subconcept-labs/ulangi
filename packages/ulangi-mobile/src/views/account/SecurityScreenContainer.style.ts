@@ -23,7 +23,7 @@ export class SecurityScreenStyle {
           text: 'Security',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -41,7 +41,7 @@ export class SecurityScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -59,18 +59,18 @@ export class SecurityScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     SecurityScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    SecurityScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    SecurityScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     SecurityScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    SecurityScreenStyle.SCREEN_DARK_STYLES_ONLY
+    SecurityScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

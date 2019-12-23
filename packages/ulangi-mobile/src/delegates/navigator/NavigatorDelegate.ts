@@ -30,7 +30,7 @@ export class NavigatorDelegate {
     observer: Observer,
     componentId: string,
     observableLightBox: ObservableLightBox,
-    darkModeStore: ObservableDarkModeStore
+    darkModeStore: ObservableDarkModeStore,
   ) {
     this.observer = observer;
     this.componentId = componentId;
@@ -45,7 +45,7 @@ export class NavigatorDelegate {
   public push<T extends keyof typeof ScreenContainers>(
     screenName: T,
     passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
-    options?: Options
+    options?: Options,
   ): void {
     // On iOS, we use push
     // On Android, we use showModal because it has better animation
@@ -92,7 +92,7 @@ export class NavigatorDelegate {
   public resetTo<T extends keyof typeof ScreenContainers>(
     screenName: T,
     passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
-    options?: Options
+    options?: Options,
   ): void {
     Navigation.setStackRoot(this.componentId, {
       component: {
@@ -122,7 +122,7 @@ export class NavigatorDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ): void {
     if (
       this.observableLightBox.state === LightBoxState.UNMOUNTED ||
@@ -154,7 +154,7 @@ export class NavigatorDelegate {
               },
             });
           }
-        }
+        },
       );
     }
   }
@@ -180,13 +180,13 @@ export class NavigatorDelegate {
               (): void => {
                 const componentId = assertExists(
                   this.observableLightBox.componentId,
-                  'The componentId of the light box should not be null when it is mounted.'
+                  'The componentId of the light box should not be null when it is mounted.',
                 );
                 Navigation.dismissOverlay(componentId);
-              }
+              },
             );
           }
-        }
+        },
       );
     }
   }
@@ -196,7 +196,7 @@ export class NavigatorDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ): void {
     this.observableLightBox.selectionMenu = selectionMenu;
     this.showLightBox(ScreenName.LIGHT_BOX_SELECTION_MENU_SCREEN, {}, styles);
@@ -204,7 +204,7 @@ export class NavigatorDelegate {
 
   public showDialog(
     dialog: Dialog,
-    styles: { light: Options; dark: Options }
+    styles: { light: Options; dark: Options },
   ): void {
     this.observableLightBox.dialog = dialog;
     this.showLightBox(ScreenName.LIGHT_BOX_DIALOG_SCREEN, {}, styles);
@@ -222,14 +222,14 @@ export class NavigatorDelegate {
       (): boolean => this.observableLightBox.state === LightBoxState.WILL_SHOW,
       (): void => {
         BackHandler.addEventListener('hardwareBackPress', handler);
-      }
+      },
     );
 
     when(
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
       (): void => {
         BackHandler.removeEventListener('hardwareBackPress', handler);
-      }
+      },
     );
   }
 }

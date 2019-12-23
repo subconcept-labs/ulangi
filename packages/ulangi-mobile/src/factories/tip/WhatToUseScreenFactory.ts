@@ -13,7 +13,7 @@ import { ScreenFactory } from '../ScreenFactory';
 export class WhatToUseScreenFactory extends ScreenFactory {
   public createScreenDelegate(): WhatToUseScreenDelegate {
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);

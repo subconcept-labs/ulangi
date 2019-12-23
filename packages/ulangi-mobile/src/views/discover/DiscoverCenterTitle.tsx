@@ -31,8 +31,7 @@ export class DiscoverCenterTitle extends React.Component<
           Search dictionary. Type{' '}
           <DefaultText
             style={styles.highlighted}
-            onPress={(): void => this.props.search('hello')}
-          >
+            onPress={(): void => this.props.search('hello')}>
             hello
           </DefaultText>{' '}
           to find out what it is in{' '}

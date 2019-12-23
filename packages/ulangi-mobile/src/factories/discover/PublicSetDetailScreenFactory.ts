@@ -15,28 +15,28 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class PublicSetDetailScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservablePublicSetDetailScreen
+    observableScreen: ObservablePublicSetDetailScreen,
   ): PublicSetDetailScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const addVocabularyDelegate = new AddVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      this.props.analytics
+      this.props.analytics,
     );
 
     const publicVocabularyActionMenuDelegate = new PublicVocabularyActionMenuDelegate(
       this.props.observableLightBox,
       this.props.rootStore.setStore,
       navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new PublicSetDetailScreenDelegate(
       observableScreen.publicSet,
       addVocabularyDelegate,
       publicVocabularyActionMenuDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

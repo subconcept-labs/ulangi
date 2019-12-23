@@ -22,7 +22,7 @@ export class WhatToUseScreenStyle {
           text: 'What to Use',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -40,7 +40,7 @@ export class WhatToUseScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -58,18 +58,18 @@ export class WhatToUseScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     WhatToUseScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    WhatToUseScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    WhatToUseScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     WhatToUseScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    WhatToUseScreenStyle.SCREEN_DARK_STYLES_ONLY
+    WhatToUseScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

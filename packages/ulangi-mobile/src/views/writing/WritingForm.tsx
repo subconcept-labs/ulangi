@@ -64,10 +64,10 @@ export class WritingForm extends React.Component<WritingFormProps> {
           this.animationContainerRef.fadeOutDown(200).then(
             (): void => {
               this.props.writingFormState.shouldRunFadeOutAnimation = false;
-            }
+            },
           );
         }
-      }
+      },
     );
 
     this.unsubscribeAutoFocus = autorun(
@@ -78,7 +78,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
         ) {
           _.delay(this.textInputRef.focus, 500);
         }
-      }
+      },
     );
   }
 
@@ -108,8 +108,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
         }}
         animation="fadeInUp"
         duration={config.general.animationDuration}
-        useNativeDriver={true}
-      >
+        useNativeDriver={true}>
         <View style={this.styles.row}>
           <DefaultText style={this.styles.label}>GIVEN DEFINITION:</DefaultText>
           <View style={this.styles.definition_container}>
@@ -164,7 +163,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
                   testID={WritingFormIds.NEXT_BTN}
                   text={this.props.writingFormState.nextButtonType}
                   styles={FullRoundedButtonStyle.getFullGreenBackgroundStyles(
-                    ButtonSize.SMALL
+                    ButtonSize.SMALL,
                   )}
                   onPress={this.props.next}
                 />
@@ -180,13 +179,11 @@ export class WritingForm extends React.Component<WritingFormProps> {
                 horizontal={true}
                 bounces={false}
                 contentContainerStyle={this.styles.hint_scrollview}
-                showsHorizontalScrollIndicator={false}
-              >
+                showsHorizontalScrollIndicator={false}>
                 <DefaultText
                   testID={WritingFormIds.HINT_TEXT}
                   numberOfLines={1}
-                  style={this.styles.hint_text}
-                >
+                  style={this.styles.hint_text}>
                   {this.props.writingFormState.currentHint}
                 </DefaultText>
               </ScrollView>
@@ -197,7 +194,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
                 testID={WritingFormIds.HINT_BTN}
                 text="Show"
                 styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-                  ButtonSize.SMALL
+                  ButtonSize.SMALL,
                 )}
                 onPress={this.props.showHint}
               />
@@ -215,10 +212,11 @@ export class WritingForm extends React.Component<WritingFormProps> {
         <TouchableOpacity
           testID={WritingFormIds.DISABLE_BTN}
           onPress={this.props.disable}
-          style={this.styles.disable_btn}
-        >
+          style={this.styles.disable_btn}>
           <DefaultText style={this.styles.message}>
-            <DefaultText>{`To disable writing this term permanently, `}</DefaultText>
+            <DefaultText>
+              {'To disable writing this term permanently, '}
+            </DefaultText>
             <DefaultText style={this.styles.message_highlighted}>
               press here.
             </DefaultText>

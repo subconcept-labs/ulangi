@@ -49,10 +49,10 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
           this.animationContainerRef.fadeOutDown(200).then(
             (): void => {
               this.props.reviewState.shouldRunFadeOutAnimation = false;
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 
@@ -77,8 +77,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
         }}
         animation="fadeInUp"
         duration={config.general.animationDuration}
-        useNativeDriver={true}
-      >
+        useNativeDriver={true}>
         <View style={this.styles.vocabulary_text_container}>
           <DefaultText style={this.styles.vocabulary_text}>
             {this.props.reviewState.vocabulary.vocabularyTerm}
@@ -94,8 +93,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
               return (
                 <Animatable.View
                   animation="fadeIn"
-                  key={definition.definitionId}
-                >
+                  key={definition.definitionId}>
                   <DefinitionItem
                     theme={this.props.theme}
                     index={index}
@@ -107,7 +105,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
                   />
                 </Animatable.View>
               );
-            }
+            },
           )
         ) : (
           <React.Fragment>

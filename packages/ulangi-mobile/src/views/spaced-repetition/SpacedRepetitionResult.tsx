@@ -87,7 +87,7 @@ export class SpacedRepetitionResult extends React.Component<
             testID={SpacedRepetitionLessonScreenIds.VIEW_ALL_FEEDBACK_BTN}
             text="View all feedback"
             styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.NORMAL
+              ButtonSize.NORMAL,
             )}
             onPress={this.props.showReviewFeedback}
           />
@@ -108,7 +108,7 @@ export class SpacedRepetitionResult extends React.Component<
             text="Take another lesson"
             styles={LessonScreenStyle.getLargeButtonStyles(
               config.styles.primaryColor,
-              'white'
+              'white',
             )}
             onPress={this.props.takeAnotherLesson}
           />

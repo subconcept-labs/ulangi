@@ -46,7 +46,7 @@ export class AtomStyle {
           backgroundColor: config.atom.backgroundColor,
         },
       },
-      options
+      options,
     );
   }
 
@@ -72,7 +72,7 @@ export class AtomStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.X_LARGE,
         config.atom.primaryColor,
-        config.atom.textColor
+        config.atom.textColor,
       ),
       {
         buttonStyle: {
@@ -88,7 +88,7 @@ export class AtomStyle {
           fontSize: 24,
           marginTop: 5,
         },
-      }
+      },
     );
   }
 
@@ -97,7 +97,7 @@ export class AtomStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         config.atom.secondaryColor,
-        config.atom.textColor
+        config.atom.textColor,
       ),
       {
         buttonStyle: {
@@ -113,7 +113,7 @@ export class AtomStyle {
           fontSize: 20,
           marginTop: 5,
         },
-      }
+      },
     );
   }
 
@@ -127,13 +127,13 @@ export class AtomStyle {
 
   public static getLightBoxButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return _.merge(
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         backgroundColor,
-        textColor
+        textColor,
       ),
       {
         buttonStyle: {
@@ -143,7 +143,7 @@ export class AtomStyle {
         textStyle: {
           fontFamily: 'JosefinSans-Bold',
         },
-      }
+      },
     );
   }
 }

@@ -32,7 +32,7 @@ export class QuizMultipleChoiceScreenDelegate {
     observableScreen: ObservableQuizMultipleChoiceScreen,
     multipleChoiceFormDelegate: MultipleChoiceFormDelegate,
     navigatorDelegate: NavigatorDelegate,
-    startMultipleChoiceQuiz: () => void
+    startMultipleChoiceQuiz: () => void,
   ) {
     this.observer = observer;
     this.questionIterator = questionIterator;
@@ -54,7 +54,7 @@ export class QuizMultipleChoiceScreenDelegate {
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startMultipleChoiceQuiz()
+      (): void => this.startMultipleChoiceQuiz(),
     );
   }
 
@@ -65,7 +65,7 @@ export class QuizMultipleChoiceScreenDelegate {
   private nextQuestion(): void {
     if (this.questionIterator.isDone() === false) {
       this.observableScreen.multipleChoiceFormState.setUpNextQuestion(
-        this.questionIterator.next()
+        this.questionIterator.next(),
       );
     } else {
       this.observableScreen.shouldShowResult.set(true);

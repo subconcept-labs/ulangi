@@ -23,7 +23,7 @@ export class ChangePasswordScreenStyle {
           text: 'Change Password',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class ChangePasswordScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class ChangePasswordScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     ChangePasswordScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ChangePasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    ChangePasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     ChangePasswordScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    ChangePasswordScreenStyle.SCREEN_DARK_STYLES_ONLY
+    ChangePasswordScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

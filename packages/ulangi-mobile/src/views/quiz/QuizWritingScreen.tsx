@@ -45,8 +45,7 @@ export class QuizWritingScreen extends React.Component<QuizWritingScreenProps> {
       <View testID={QuizWritingScreenIds.SCREEN} style={this.styles.screen}>
         <SmartScrollView
           keyboardAware={true}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           {this.props.observableScreen.shouldShowResult.get() === true ? (
             <QuizWritingResult
               theme={this.props.darkModeStore.theme}

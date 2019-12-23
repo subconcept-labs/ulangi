@@ -11,13 +11,10 @@ module.exports = {
     '@typescript-eslint',
     'simple-import-sort',
     'import',
-    'jest',
-    'react'
   ],
   extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:jest/recommended'
+    '@react-native-community',
+    'plugin:@typescript-eslint/recommended'
   ],
   rules: { 
     "react/prop-types": "off",

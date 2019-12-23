@@ -26,13 +26,13 @@ export class WhatsNewScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.WHATS_NEW_SCREEN
+    ScreenName.WHATS_NEW_SCREEN,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,7 +47,7 @@ export class WhatsNewScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WhatsNewScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WhatsNewScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WhatsNewScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

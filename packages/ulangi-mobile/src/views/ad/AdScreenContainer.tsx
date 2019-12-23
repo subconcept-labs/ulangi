@@ -31,19 +31,19 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
 
   protected observableScreen = new ObservableAdScreen(
     false,
-    ScreenName.AD_SCREEN
+    ScreenName.AD_SCREEN,
   );
 
   private screenFactory = new AdScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -52,14 +52,14 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
     this.screenDelegate.closableAfterMs(config.ad.showAdTimeout);
 
     this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
   }
 
   public componentWillUnmount(): void {
     this.screenDelegate.clearAd();
     this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton
+      this.screenDelegate.handleBackButton,
     );
     this.props.passedProps.onClose();
   }
@@ -68,7 +68,7 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? AdScreenStyle.SCREEN_FULL_LIGHT_STYLES
-        : AdScreenStyle.SCREEN_FULL_DARK_STYLES
+        : AdScreenStyle.SCREEN_FULL_DARK_STYLES,
     );
   }
 

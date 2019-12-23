@@ -43,8 +43,7 @@ export class QuickTutorialScreen extends React.Component<
       <View
         onLayout={this.onLayout}
         style={styles.screen}
-        testID={QuickTutorialScreenIds.SCREEN}
-      >
+        testID={QuickTutorialScreenIds.SCREEN}>
         {typeof this.props.observableScreen.sliderHeight !== 'undefined' &&
         typeof this.props.observableScreen.sliderWidth !== 'undefined' ? (
           <React.Fragment>
@@ -59,8 +58,8 @@ export class QuickTutorialScreen extends React.Component<
               data={this.props.observableScreen.images}
               onSnapToItem={this.props.screenDelegate.setSlideIndex}
               renderItem={this.renderItem}
-              sliderWidth={this.props.observableScreen.sliderWidth}
-              itemWidth={this.props.observableScreen.imageWidth}
+              sliderWidth={this.props.observableScreen.sliderWidth || 0}
+              itemWidth={this.props.observableScreen.imageWidth || 0}
             />
             {Platform.select({
               ios: (
@@ -68,7 +67,7 @@ export class QuickTutorialScreen extends React.Component<
                   <DefaultButton
                     text="Close"
                     styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-                      ButtonSize.NORMAL
+                      ButtonSize.NORMAL,
                     )}
                     onPress={this.props.screenDelegate.back}
                   />

@@ -43,11 +43,11 @@ export class ReviewFeedbackScreenContainer extends Container<
   private reviewFeedbackScreenFactory = new ReviewFeedbackScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private reviewFeedbackDataDelegate = this.reviewFeedbackScreenFactory.createReviewFeedbackDataDelegate(
-    this.props.passedProps.lessonType
+    this.props.passedProps.lessonType,
   );
 
   protected observableScreen = new ObservableReviewFeedbackScreen(
@@ -57,29 +57,29 @@ export class ReviewFeedbackScreenContainer extends Container<
           return [
             vocabularyId,
             this.props.observableConverter.convertToObservableVocabulary(
-              vocabulary
+              vocabulary,
             ),
           ];
-        }
-      )
+        },
+      ),
     ),
     new ObservableFeedbackListState(
       observable.map(
-        Array.from(this.props.passedProps.originalFeedbackList.entries())
-      )
+        Array.from(this.props.passedProps.originalFeedbackList.entries()),
+      ),
     ),
     this.reviewFeedbackDataDelegate.createAllNextReviewData(
       this.props.passedProps.vocabularyList,
-      this.props.passedProps.originalFeedbackList
+      this.props.passedProps.originalFeedbackList,
     ),
-    ScreenName.REVIEW_FEEDBACK_SCREEN
+    ScreenName.REVIEW_FEEDBACK_SCREEN,
   );
 
   private navigatorDelegate = this.reviewFeedbackScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.reviewFeedbackScreenFactory.createScreenDelegate(
     this.props.passedProps.lessonType,
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -96,7 +96,7 @@ export class ReviewFeedbackScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ReviewFeedbackScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

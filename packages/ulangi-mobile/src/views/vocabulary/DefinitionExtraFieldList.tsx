@@ -57,7 +57,7 @@ export class DefinitionExtraFieldList extends React.Component<
                 (typeof this.props.hideFields === 'undefined' ||
                   !_.includes(this.props.hideFields, key))
               );
-            }
+            },
           )
           .map(
             ([key, valueList]): React.ReactElement<any> => {
@@ -69,17 +69,17 @@ export class DefinitionExtraFieldList extends React.Component<
                   DefinitionExtraFieldDetails[
                     key as keyof DefinitionExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               } else {
                 return this.renderFieldsByText(
                   DefinitionExtraFieldDetails[
                     key as keyof DefinitionExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               }
-            }
+            },
           )}
       </View>
     );
@@ -87,25 +87,23 @@ export class DefinitionExtraFieldList extends React.Component<
 
   private renderFieldsByImage(
     detail: ExtraFieldDetail,
-    valueList: readonly string[][]
+    valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
       <SmartScrollView
         horizontal={true}
         key={detail.name}
-        contentContainerStyle={this.styles.image_list}
-      >
+        contentContainerStyle={this.styles.image_list}>
         {valueList.map(
           (values): React.ReactElement<any> => {
             return (
               <View
                 testID={VocabularyItemIds.DEFINITION_EXTRA_FIELD_BY_NAME_VALUE(
                   detail.name,
-                  values[0]
+                  values[0],
                 )}
                 key={values[0]}
-                style={this.styles.image_container}
-              >
+                style={this.styles.image_container}>
                 <FastImage
                   style={this.styles.image}
                   source={{ uri: values[0] }}
@@ -113,7 +111,7 @@ export class DefinitionExtraFieldList extends React.Component<
                 />
               </View>
             );
-          }
+          },
         )}
       </SmartScrollView>
     );
@@ -121,7 +119,7 @@ export class DefinitionExtraFieldList extends React.Component<
 
   private renderFieldsByText(
     detail: ExtraFieldDetail,
-    valueList: readonly string[][]
+    valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
       <React.Fragment key={detail.name}>
@@ -131,11 +129,10 @@ export class DefinitionExtraFieldList extends React.Component<
               <View
                 testID={VocabularyItemIds.DEFINITION_EXTRA_FIELD_BY_NAME_VALUE(
                   detail.name,
-                  values[0]
+                  values[0],
                 )}
                 key={values[0]}
-                style={this.styles.field_container}
-              >
+                style={this.styles.field_container}>
                 <View style={this.styles.left}>
                   <DefaultText>
                     <DefaultText style={this.styles.name}>{`${
@@ -148,7 +145,7 @@ export class DefinitionExtraFieldList extends React.Component<
                 </View>
               </View>
             );
-          }
+          },
         )}
       </React.Fragment>
     );

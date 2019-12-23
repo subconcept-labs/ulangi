@@ -9,11 +9,11 @@ export const TranslationItemIds = {
   TRANSLATION_CONTAINER_BY_VOCABULARY_TEXT: (vocabularyText: string): string =>
     'TRANSLATION_CONTAINER_BY_VOCABULARY_TEXT_' + vocabularyText,
   ADD_VOCABULARY_FROM_TRANSLATION_BTN_BY_VOCABULARY_TEXT: (
-    vocabularyText: string
+    vocabularyText: string,
   ): string =>
     'ADD_VOCABULARY_FROM_TRANSLATION_BTN_BY_VOCABULARY_TEXT_' + vocabularyText,
   SHOW_TRANSLATION_ACTION_MENU_BTN_BY_VOCABULARY_TEXT: (
-    vocabularyText: string
+    vocabularyText: string,
   ): string =>
     'SHOW_TRANSLATION_ACTION_MENU_BTN_BY_VOCABULARY_TEXT_' + vocabularyText,
 };

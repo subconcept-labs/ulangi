@@ -30,7 +30,7 @@ export class MultipleChoiceQuestionIterator {
 
   public constructor(vocabularyList?: Map<string, ObservableVocabulary>) {
     this.randomVocabularyIterator = new RandomVocabularyIterator(
-      vocabularyList ? OrderedMap(vocabularyList) : undefined
+      vocabularyList ? OrderedMap(vocabularyList) : undefined,
     );
     this.definitionPool = new DefinitionPool(
       new Map(
@@ -41,12 +41,12 @@ export class MultipleChoiceQuestionIterator {
                 return vocabulary.definitions.map(
                   (definition): [string, ObservableDefinition] => {
                     return [definition.definitionId, definition];
-                  }
+                  },
                 );
-              }
+              },
             )
-          : []
-      )
+          : [],
+      ),
     );
 
     this.numberOfQuestions = this.randomVocabularyIterator.getQueueSize();
@@ -75,21 +75,21 @@ export class MultipleChoiceQuestionIterator {
   }
 
   private makeQuestion(
-    vocabulary: ObservableVocabulary
+    vocabulary: ObservableVocabulary,
   ): ObservableMultipleChoiceQuestion {
     const correctDefinition = assertExists(
       _.sample(vocabulary.definitions.slice()),
-      'correctDefinition should not be null or undefined'
+      'correctDefinition should not be null or undefined',
     );
 
     // Get three random definitions
     const exceptIds = vocabulary.definitions.map(
-      (definition): string => definition.definitionId
+      (definition): string => definition.definitionId,
     );
     let definitions = this.definitionPool.getRandomDefinitionsFromPool(
       3,
       true,
-      exceptIds
+      exceptIds,
     );
 
     // Add the correct definition into list of definitions

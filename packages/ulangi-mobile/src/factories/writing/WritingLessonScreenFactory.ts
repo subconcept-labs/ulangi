@@ -25,14 +25,14 @@ export class WritingLessonScreenFactory extends ScreenFactory {
   public createWritingSettingsDelegate(): WritingSettingsDelegate {
     return new WritingSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
   }
 
   public createScreenDelegate(
     observableScreen: ObservableWritingLessonScreen,
     questionIterator: WritingQuestionIterator,
-    startLesson: () => void
+    startLesson: () => void,
   ): WritingLessonScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -40,17 +40,17 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.adStore,
       this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     );
 
     const adAfterLessonDelegate = new AdAfterLessonDelegate(
       this.observer,
       observableScreen.shouldShowAdOrGoogleConsentForm,
-      navigatorDelegate
+      navigatorDelegate,
     );
 
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     const saveResultDelegate = new WritingSaveResultDelegate(
@@ -58,7 +58,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       observableScreen.vocabularyList,
       observableScreen.feedbackListState.feedbackList,
-      autoArchiveSettingsDelegate
+      autoArchiveSettingsDelegate,
     );
 
     const writingScheduler = new WritingScheduler();
@@ -66,7 +66,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     const writingFormDelegate = new WritingFormDelegate(
       this.observer,
       observableScreen.writingFormState,
-      observableScreen.writingResult
+      observableScreen.writingResult,
     );
 
     const writingSettingsDelegate = this.createWritingSettingsDelegate();
@@ -75,13 +75,13 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       config.writing.maxLevel,
       writingScheduler,
       writingSettingsDelegate,
-      autoArchiveSettingsDelegate
+      autoArchiveSettingsDelegate,
     );
 
     const reviewFeedbackBarDelegate = new ReviewFeedbackBarDelegate(
       this.observer,
       observableScreen.reviewFeedbackBarState,
-      reviewFeedbackDataDelegate
+      reviewFeedbackDataDelegate,
     );
 
     return new WritingLessonScreenDelegate(
@@ -96,7 +96,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       adDelegate,
       adAfterLessonDelegate,
       navigatorDelegate,
-      startLesson
+      startLesson,
     );
   }
 }

@@ -23,7 +23,7 @@ export class EditVocabularyScreenStyle {
           text: 'Edit Vocabulary',
         },
       },
-    }
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
@@ -50,7 +50,7 @@ export class EditVocabularyScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
@@ -77,18 +77,18 @@ export class EditVocabularyScreenStyle {
           },
         ],
       },
-    }
+    },
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     EditVocabularyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    EditVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    EditVocabularyScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     EditVocabularyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    EditVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY
+    EditVocabularyScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

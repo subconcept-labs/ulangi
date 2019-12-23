@@ -48,10 +48,10 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
             (): void => {
               this.props.reviewFeedbackBarState.shouldShow = false;
               this.props.reviewFeedbackBarState.shouldRunCloseAnimation = false;
-            }
+            },
           );
         }
-      }
+      },
     );
   }
 
@@ -79,8 +79,7 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
           }}
           animation="slideInUp"
           duration={config.general.animationDuration}
-          useNativeDriver={true}
-        >
+          useNativeDriver={true}>
           <View style={this.styles.title_container}>
             <DefaultText style={this.styles.title}>
               How well do you memorize it?
@@ -91,14 +90,14 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
           </View>
           <View style={this.styles.feedback_container}>
             {Array.from(
-              this.props.reviewFeedbackBarState.nextReviewByFeedback.entries()
+              this.props.reviewFeedbackBarState.nextReviewByFeedback.entries(),
             ).map(
               ([feedback, nextReviewData]): React.ReactElement<any> => {
                 return (
                   <TouchableOpacity
                     key={feedback}
                     testID={ReviewFeedbackBarIds.SELECT_FEEDBACK_BTN_BY_FEEDBACK(
-                      feedback
+                      feedback,
                     )}
                     style={[
                       this.styles.feedback_btn,
@@ -111,20 +110,17 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
                     ]}
                     onPress={(): void =>
                       this.props.setFeedback(feedback as Feedback)
-                    }
-                  >
+                    }>
                     <DefaultText
                       numberOfLines={1}
                       ellipsizeMode="clip"
-                      style={this.styles.feedback_text}
-                    >
+                      style={this.styles.feedback_text}>
                       {feedback.toUpperCase()}
                     </DefaultText>
                     <DefaultText
                       numberOfLines={1}
                       ellipsizeMode="clip"
-                      style={this.styles.time_text}
-                    >
+                      style={this.styles.time_text}>
                       {nextReviewData.nextReview}
                     </DefaultText>
                     <DefaultText
@@ -135,13 +131,12 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
                         {
                           color: '#fff',
                         },
-                      ]}
-                    >
+                      ]}>
                       lv. {nextReviewData.nextLevel}
                     </DefaultText>
                   </TouchableOpacity>
                 );
-              }
+              },
             )}
           </View>
         </Animatable.View>

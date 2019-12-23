@@ -67,7 +67,7 @@ export class MoreScreenDelegate {
     reminderSettingsDelegate: ReminderSettingsDelegate,
     darkModeSettingsDelegate: DarkModeSettingsDelegate,
     linkingDelegate: LinkingDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
     this.userStore = userStore;
@@ -95,7 +95,7 @@ export class MoreScreenDelegate {
         this.rootScreenDelegate.mergeBottomTabsOptions({
           backgroundColor: BottomTabsStyle.getBackgroundColor(theme),
         });
-      }
+      },
     );
   }
 
@@ -108,7 +108,7 @@ export class MoreScreenDelegate {
       } => {
         return {
           isGuest: this.userStore.existingCurrentUser.email.endsWith(
-            config.general.guestEmailDomain
+            config.general.guestEmailDomain,
           ),
           isPremium: this.userStore.existingCurrentUser.isPremium,
           isReminderActive: this.isReminderActive(),
@@ -127,8 +127,8 @@ export class MoreScreenDelegate {
                   '#5E35B1',
                   'Set up account',
                   '#4527A0',
-                  this.navigateToSetUpAccountScreen
-                )
+                  this.navigateToSetUpAccountScreen,
+                ),
               );
             }
             if (!isPremium) {
@@ -140,8 +140,8 @@ export class MoreScreenDelegate {
                   '#1E88E5',
                   'Follow us on Twitter',
                   '#1565C0',
-                  this.goToTwitter
-                )
+                  this.goToTwitter,
+                ),
               );
             }
             if (!isReminderActive) {
@@ -153,16 +153,16 @@ export class MoreScreenDelegate {
                   '#43A047',
                   'Set up reminder',
                   '#2E7D32',
-                  this.navigateToReminderScreen
-                )
+                  this.navigateToReminderScreen,
+                ),
               );
             }
-          }
+          },
         );
       },
       {
         fireImmediately: true,
-      }
+      },
     );
   }
 
@@ -173,7 +173,7 @@ export class MoreScreenDelegate {
   public logOut(): void {
     const message =
       this.userStore.existingCurrentUser.email.endsWith(
-        config.general.guestEmailDomain
+        config.general.guestEmailDomain,
       ) === true
         ? 'Warning: You have not set up this account yet. If you log out, you will not be able to access it again. Are you sure you want to log out?'
         : 'Are you sure you want to log out?';
@@ -189,7 +189,7 @@ export class MoreScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -202,17 +202,17 @@ export class MoreScreenDelegate {
                   this.observableLightBox.state === LightBoxState.UNMOUNTED,
                 (): void =>
                   this.rootScreenDelegate.setRootToSingleScreen(
-                    ScreenName.SIGN_OUT_SCREEN
-                  )
+                    ScreenName.SIGN_OUT_SCREEN,
+                  ),
               );
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

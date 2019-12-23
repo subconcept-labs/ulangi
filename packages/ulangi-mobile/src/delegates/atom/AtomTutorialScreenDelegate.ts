@@ -44,7 +44,7 @@ export class AtomTutorialScreenDelegate {
     shellDelegate: AtomShellDelegate,
     arcDelegate: AtomArcDelegate,
     answerDelegate: AtomAnswerDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.originDelegate = originDelegate;
@@ -58,10 +58,10 @@ export class AtomTutorialScreenDelegate {
   public initializeShellsAndParticles(): void {
     this.observableScreen.shells = observable.array(this.makeShells().slice());
     this.observableScreen.particles = observable.array(
-      this.makeParticles().slice()
+      this.makeParticles().slice(),
     );
     this.particleDelegate.spreadParticlesByIndices(
-      (): void => this.checkAnswer(false)
+      (): void => this.checkAnswer(false),
     );
   }
 
@@ -70,7 +70,7 @@ export class AtomTutorialScreenDelegate {
       (): void => this.onAnswerCorrect(isUserMove),
       (subsetsOfEachShell): void => {
         this.onAnswerIncorrect(isUserMove, subsetsOfEachShell);
-      }
+      },
     );
   }
 
@@ -85,25 +85,25 @@ export class AtomTutorialScreenDelegate {
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
     newShell: AtomShellType,
-    isUserMove: boolean
+    isUserMove: boolean,
   ): void {
     return this.particleDelegate.transferParticleToAnotherShell(
       particle,
       newPosition,
       newShell,
-      (): void => this.checkAnswer(isUserMove)
+      (): void => this.checkAnswer(isUserMove),
     );
   }
 
   public transferParticleToSameShell(
     particle: ObservableParticle,
     newPosition: { x: number; y: number },
-    isUserMove: boolean
+    isUserMove: boolean,
   ): void {
     return this.particleDelegate.transferParticleToSameShell(
       particle,
       newPosition,
-      (): void => this.checkAnswer(isUserMove)
+      (): void => this.checkAnswer(isUserMove),
     );
   }
 
@@ -128,7 +128,7 @@ export class AtomTutorialScreenDelegate {
         initialPosition,
         AtomShellType.OUTER,
         0,
-        'normal'
+        'normal',
       ),
       new ObservableParticle(
         uuid.v4(),
@@ -137,7 +137,7 @@ export class AtomTutorialScreenDelegate {
         initialPosition,
         AtomShellType.OUTER,
         4,
-        'normal'
+        'normal',
       ),
       new ObservableParticle(
         uuid.v4(),
@@ -146,7 +146,7 @@ export class AtomTutorialScreenDelegate {
         initialPosition,
         AtomShellType.OUTER,
         3,
-        'normal'
+        'normal',
       ),
       new ObservableParticle(
         uuid.v4(),
@@ -155,7 +155,7 @@ export class AtomTutorialScreenDelegate {
         initialPosition,
         AtomShellType.OUTER,
         2,
-        'normal'
+        'normal',
       ),
       new ObservableParticle(
         uuid.v4(),
@@ -164,7 +164,7 @@ export class AtomTutorialScreenDelegate {
         initialPosition,
         AtomShellType.OUTER,
         1,
-        'normal'
+        'normal',
       ),
     ];
   }
@@ -186,7 +186,7 @@ export class AtomTutorialScreenDelegate {
         }
 
         this.step3();
-      }
+      },
     );
 
     this.originDelegate.bounceOrigin();
@@ -197,7 +197,7 @@ export class AtomTutorialScreenDelegate {
     correctSubsetsOfEachShell: {
       shellType: AtomShellType;
       correctSubsets: ObservableParticle[][];
-    }[]
+    }[],
   ): void {
     if (
       isUserMove === true &&
@@ -213,13 +213,13 @@ export class AtomTutorialScreenDelegate {
       ({ shellType, correctSubsets }): void => {
         const shell = assertExists(
           this.observableScreen.shells.find(
-            (shell): boolean => shell.shellType === shellType
+            (shell): boolean => shell.shellType === shellType,
           ),
-          'shell should not be null or undefined'
+          'shell should not be null or undefined',
         );
 
         this.arcDelegate.highlightArcs(correctSubsets, shell.diameter / 2);
-      }
+      },
     );
 
     // If user has the correct answer eventhough there are redundant particles, then go to step 2

@@ -43,11 +43,11 @@ export class QuizMultipleChoiceScreenContainer extends Container<
   private screenFactory = new QuizMultipleChoiceScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new MultipleChoiceQuestionIterator(
-    this.props.passedProps.vocabularyList
+    this.props.passedProps.vocabularyList,
   );
 
   protected observableScreen = new ObservableQuizMultipleChoiceScreen(
@@ -56,11 +56,11 @@ export class QuizMultipleChoiceScreenContainer extends Container<
       0,
       this.questionIterator.getNumberOfQuestions(),
       [],
-      null
+      null,
     ),
     new ObservableMultipleChoiceResult(config.quiz.gradeScale, 0, 0),
     observable.box(false),
-    ScreenName.QUIZ_MULTIPLE_CHOICE_SCREEN
+    ScreenName.QUIZ_MULTIPLE_CHOICE_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -68,7 +68,7 @@ export class QuizMultipleChoiceScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.questionIterator,
     this.observableScreen,
-    this.props.passedProps.startMultipleChoiceQuiz
+    this.props.passedProps.startMultipleChoiceQuiz,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -81,7 +81,7 @@ export class QuizMultipleChoiceScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuizMultipleChoiceScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuizMultipleChoiceScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuizMultipleChoiceScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

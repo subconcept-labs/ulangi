@@ -32,18 +32,18 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
   private quizScreenFactory = new QuizScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableQuizScreen(
     this.props.passedProps.selectedCategoryNames,
-    ScreenName.QUIZ_SCREEN
+    ScreenName.QUIZ_SCREEN,
   );
 
   private navigatorDelegate = this.quizScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.quizScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
@@ -56,7 +56,7 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuizScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuizScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuizScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

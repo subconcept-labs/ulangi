@@ -47,20 +47,20 @@ export class FlashcardPlayerScreenContainer extends Container<
   private screenFactory = new FlashcardPlayerScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableFlashcardPlayerScreen(
     typeof this.props.passedProps.selectedCategoryNames !== 'undefined'
       ? observable.array(this.props.passedProps.selectedCategoryNames.slice())
       : undefined,
-    ScreenName.FLASHCARD_PLAYER_SCREEN
+    ScreenName.FLASHCARD_PLAYER_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(): void {

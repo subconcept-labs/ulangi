@@ -24,8 +24,8 @@ export class VocabularyEventDelegate {
           ActionType.VOCABULARY__DOWNLOAD_VOCABULARY_SUCCEEDED,
           ActionType.VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_SUCCEEDED,
         ],
-        callback
-      )
+        callback,
+      ),
     );
   }
   public onDownloadVocabularyCompleted(callback: () => void): void {
@@ -35,8 +35,8 @@ export class VocabularyEventDelegate {
           ActionType.VOCABULARY__DOWNLOAD_VOCABULARY_SUCCEEDED,
           ActionType.VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_SUCCEEDED,
         ],
-        callback
-      )
+        callback,
+      ),
     );
   }
 }

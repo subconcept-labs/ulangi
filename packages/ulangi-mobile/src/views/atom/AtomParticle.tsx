@@ -37,13 +37,13 @@ export interface AtomParticleProps {
   transferParticleToSameShell: (
     particle: ObservableParticle,
     position: { x: number; y: number },
-    isUserMove: boolean
+    isUserMove: boolean,
   ) => void;
   transferParticleToAnotherShell: (
     particle: ObservableParticle,
     position: { x: number; y: number },
     newShell: AtomShellType,
-    isUserMove: boolean
+    isUserMove: boolean,
   ) => void;
   isMaxReached: (shell: AtomShellType) => boolean;
 }
@@ -131,14 +131,14 @@ export class AtomParticle extends React.Component<
       this.props.transferParticleToSameShell(
         this.props.particle,
         position,
-        true
+        true,
       );
     } else {
       this.props.transferParticleToAnotherShell(
         this.props.particle,
         position,
         newShell.shellType,
-        true
+        true,
       );
     }
   }
@@ -153,7 +153,7 @@ export class AtomParticle extends React.Component<
             500,
             (): void => {
               command.state = 'completed';
-            }
+            },
           );
           break;
       }
@@ -163,7 +163,7 @@ export class AtomParticle extends React.Component<
   private moveToPosition(
     position: { x: number; y: number },
     duration: number,
-    callback?: () => void
+    callback?: () => void,
   ): void {
     Animated.timing(this.state.pan, {
       toValue: { x: position.x, y: position.y },
@@ -177,13 +177,13 @@ export class AtomParticle extends React.Component<
         if (typeof callback !== 'undefined') {
           callback();
         }
-      }
+      },
     );
   }
 
   public componentDidMount(): void {
     this.unsubscribeHandleCommand = autorun(
-      (): void => this.handleCommand(this.props.particle.commandList)
+      (): void => this.handleCommand(this.props.particle.commandList),
     );
   }
 
@@ -221,8 +221,7 @@ export class AtomParticle extends React.Component<
           styles.particle_container,
           this.getContainerStyle(),
           this.getTransformStyle(),
-        ]}
-      >
+        ]}>
         <DefaultText style={styles.character}>
           {this.props.particle.character}
         </DefaultText>

@@ -40,7 +40,7 @@ export class ContactUsScreenDelegate {
         onContactAdminFailed: (errorCode): void => {
           this.showContactAdminFailedDialog(errorCode);
         },
-      }
+      },
     );
   }
 
@@ -60,7 +60,7 @@ export class ContactUsScreenDelegate {
         onContactAdminFailed: (errorCode): void => {
           this.showContactAdminFailedDialog(errorCode);
         },
-      }
+      },
     );
   }
 
@@ -80,7 +80,7 @@ export class ContactUsScreenDelegate {
         onContactAdminFailed: (errorCode): void => {
           this.showContactAdminFailedDialog(errorCode);
         },
-      }
+      },
     );
   }
 
@@ -100,7 +100,7 @@ export class ContactUsScreenDelegate {
         onContactAdminFailed: (errorCode): void => {
           this.showContactAdminFailedDialog(errorCode);
         },
-      }
+      },
     );
   }
 
@@ -109,7 +109,7 @@ export class ContactUsScreenDelegate {
       {
         message: 'Sending. Please wait...',
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -124,7 +124,7 @@ export class ContactUsScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -136,7 +136,7 @@ export class ContactUsScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -149,7 +149,7 @@ export class ContactUsScreenDelegate {
       onContactingAdmin: () => void;
       onContactAdminSucceeded: () => void;
       onContactAdminFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__CONTACT_ADMIN, {
@@ -162,13 +162,13 @@ export class ContactUsScreenDelegate {
         on(ActionType.USER__CONTACT_ADMIN, callback.onContactingAdmin),
         once(
           ActionType.USER__CONTACT_ADMIN_SUCCEEDED,
-          callback.onContactAdminSucceeded
+          callback.onContactAdminSucceeded,
         ),
         once(
           ActionType.USER__CONTACT_ADMIN_FAILED,
-          ({ errorCode }): void => callback.onContactAdminFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onContactAdminFailed(errorCode),
+        ),
+      ),
     );
   }
 }

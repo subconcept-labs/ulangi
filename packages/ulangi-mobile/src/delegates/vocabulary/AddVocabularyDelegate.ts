@@ -30,7 +30,7 @@ export class AddVocabularyDelegate {
     eventBus: EventBus,
     observableConverter: ObservableConverter,
     setStore: ObservableSetStore,
-    vocabularyFormState: ObservableVocabularyFormState
+    vocabularyFormState: ObservableVocabularyFormState,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -45,7 +45,7 @@ export class AddVocabularyDelegate {
   }): void {
     const currentSetId = assertExists(
       this.setStore.currentSetId,
-      'currentSetId should not be null or undefined'
+      'currentSetId should not be null or undefined',
     );
 
     const vocabulary = this.prepareVocabulary();
@@ -62,15 +62,15 @@ export class AddVocabularyDelegate {
           ActionType.VOCABULARY__ADD_FAILED,
           ({ errorCode }): void => {
             callback.onSaveFailed(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
   public createPreview(): ObservableVocabulary {
     return this.observableConverter.convertToObservableVocabulary(
-      this.prepareVocabulary()
+      this.prepareVocabulary(),
     );
   }
 
@@ -85,7 +85,7 @@ export class AddVocabularyDelegate {
             meaning: definition.meaning,
             source: definition.source,
           };
-        }
+        },
       )
       .filter((definition): boolean => definition.meaning !== '');
 

@@ -15,7 +15,7 @@ export class PickerDelegate {
 
   public constructor(
     observer: Observer,
-    pickerState: ObservableSetPickerState
+    pickerState: ObservableSetPickerState,
   ) {
     this.observer = observer;
     this.pickerState = pickerState;
@@ -33,7 +33,7 @@ export class PickerDelegate {
         (): boolean => this.pickerState.currentPicker === null,
         (): void => {
           this.pickerState.currentPicker = pickerType;
-        }
+        },
       );
     }
   }
@@ -46,7 +46,7 @@ export class PickerDelegate {
           this.pickerState.languagePickerShouldRunCloseAnimation === false,
         (): void => {
           this.pickerState.currentPicker = null;
-        }
+        },
       );
     }
   }

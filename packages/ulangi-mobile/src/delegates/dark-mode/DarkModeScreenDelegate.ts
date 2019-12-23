@@ -28,7 +28,7 @@ export class DarkModeScreenDelegate {
     observableScreen: ObservableDarkModeScreen,
     darkModeSelectionMenuDelegate: DarkModeSelectionMenuDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -42,7 +42,7 @@ export class DarkModeScreenDelegate {
       this.observableScreen.settings.trigger,
       (trigger): void => {
         this.observableScreen.settings.trigger = trigger;
-      }
+      },
     );
   }
 
@@ -65,21 +65,21 @@ export class DarkModeScreenDelegate {
           ActionType.USER__EDITING,
           (): void => {
             this.showSavingDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
             this.showSaveSucceededDialog();
-          }
+          },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           ({ errorCode }): void => {
             this.showSaveFailedDialog(errorCode);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 

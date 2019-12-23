@@ -15,7 +15,7 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class SignInScreenFactory extends ScreenFactory {
   public createSignInScreenDelegate(
-    observableScreen: ObservableSignInScreen
+    observableScreen: ObservableSignInScreen,
   ): SignInScreenDelegate {
     const rootScreenDelegate = this.createRootScreenDelegate();
 
@@ -37,7 +37,7 @@ export class SignInScreenFactory extends ScreenFactory {
       fetchSetDelegate,
       rootScreenDelegate,
       navigatorDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

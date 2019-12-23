@@ -38,8 +38,7 @@ export class RegularFeatureList extends React.Component<
               Support development and maintenance through ads.{' '}
               <DefaultText
                 style={styles.highlighted}
-                onPress={this.props.showAdsDialog}
-              >
+                onPress={this.props.showAdsDialog}>
                 See when and where we show ads.
               </DefaultText>
             </DefaultText>

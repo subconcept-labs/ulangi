@@ -48,7 +48,7 @@ export class CreateFirstSetScreen extends React.Component<
       <SimpleLanguagePicker
         onSelect={this.props.screenDelegate.handleLanguageSelect}
         languages={this.props.observableScreen.setFormState.selectableLanguagesForCurrentPicker.filter(
-          (language): boolean => language.languageCode !== 'any'
+          (language): boolean => language.languageCode !== 'any',
         )}
         disabled={this.props.observableScreen.setFormState.pickerState.disabled}
       />

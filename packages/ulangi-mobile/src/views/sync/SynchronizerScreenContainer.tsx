@@ -26,13 +26,13 @@ export class SynchronizerScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.SYNCHRONIZER_SCREEN
+    ScreenName.SYNCHRONIZER_SCREEN,
   );
 
   private screenFactory = new SynchronizerScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -49,7 +49,7 @@ export class SynchronizerScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SynchronizerScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SynchronizerScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SynchronizerScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

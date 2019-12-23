@@ -48,8 +48,7 @@ export class SetUpAccountScreen extends React.Component<
         <SmartScrollView
           style={this.styles.form}
           keyboardAware={true}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           <View style={this.styles.text_input_container}>
             <TextInput
               testID={SetUpAccountScreenIds.EMAIL_INPUT}
@@ -114,7 +113,7 @@ export class SetUpAccountScreen extends React.Component<
                 ButtonSize.LARGE,
                 4,
                 config.styles.primaryColor,
-                'white'
+                'white',
               )}
               onPress={this.props.screenDelegate.submit}
             />
