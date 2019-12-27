@@ -6,10 +6,10 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { action, computed, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableQuickTutorialScreen extends ObservableScreen {
   @observable
@@ -42,9 +42,9 @@ export class ObservableQuickTutorialScreen extends ObservableScreen {
     images: any[],
     currentIndex: number,
     screenName: ScreenName,
-    screenTitle?: ScreenTitle
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.images = images;
     this.currentIndex = currentIndex;
   }

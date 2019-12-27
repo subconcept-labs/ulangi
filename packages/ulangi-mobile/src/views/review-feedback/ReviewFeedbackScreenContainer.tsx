@@ -11,6 +11,8 @@ import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableFeedbackListState,
   ObservableReviewFeedbackScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
@@ -18,6 +20,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { ReviewFeedbackScreenIds } from '../../constants/ids/ReviewFeedbackScreenIds';
 import { ReviewFeedbackScreenFactory } from '../../factories/review-feedback/ReviewFeedbackScreenFactory';
 import { ReviewFeedbackScreen } from './ReviewFeedbackScreen';
@@ -73,6 +76,30 @@ export class ReviewFeedbackScreenContainer extends Container<
       this.props.passedProps.originalFeedbackList,
     ),
     ScreenName.REVIEW_FEEDBACK_SCREEN,
+    new ObservableTitleTopBar(
+      'Review Feedback',
+      new ObservableTopBarButton(
+        ReviewFeedbackScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        ReviewFeedbackScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.saveResult({
+            onSaveSucceeded: this.props.passedProps.onSaveSucceeded,
+          });
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.reviewFeedbackScreenFactory.createNavigatorDelegate();
@@ -81,16 +108,6 @@ export class ReviewFeedbackScreenContainer extends Container<
     this.props.passedProps.lessonType,
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ReviewFeedbackScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === ReviewFeedbackScreenIds.SAVE_BTN) {
-      this.screenDelegate.saveResult({
-        onSaveSucceeded: this.props.passedProps.onSaveSucceeded,
-      });
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

@@ -8,6 +8,7 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableSetFormState } from './ObservableSetFormState';
 
 export class ObservableAddEditSetScreen extends ObservableScreen {
@@ -15,9 +16,10 @@ export class ObservableAddEditSetScreen extends ObservableScreen {
 
   public constructor(
     setFormState: ObservableSetFormState,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.setFormState = setFormState;
   }
 }

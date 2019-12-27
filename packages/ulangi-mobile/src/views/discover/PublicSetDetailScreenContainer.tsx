@@ -8,11 +8,16 @@
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import { PublicSet } from '@ulangi/ulangi-common/interfaces';
-import { ObservablePublicSetDetailScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservablePublicSetDetailScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
 import { PublicSetDetailScreenFactory } from '../../factories/discover/PublicSetDetailScreenFactory';
 import { PublicSetDetailScreen } from './PublicSetDetailScreen';
@@ -43,6 +48,21 @@ export class PublicSetDetailScreenContainer extends Container<
       this.props.passedProps.publicSet,
     ),
     ScreenName.PUBLIC_SET_DETAIL_SCREEN,
+    new ObservableTitleTopBar(
+      'Detail',
+      new ObservableTopBarButton(
+        PublicSetDetailScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -50,12 +70,6 @@ export class PublicSetDetailScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === PublicSetDetailScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

@@ -6,10 +6,10 @@
  */
 
 import { ContactUsFormType, ScreenName } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableContactUsScreen extends ObservableScreen {
   @observable
@@ -22,9 +22,9 @@ export class ObservableContactUsScreen extends ObservableScreen {
     formType: ContactUsFormType,
     text: string,
     screenName: ScreenName,
-    screenTitle: ScreenTitle
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.formType = formType;
     this.text = text;
   }

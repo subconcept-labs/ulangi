@@ -10,7 +10,6 @@ export { Purchase } from './general/Purchase';
 export { Product } from './general/Product';
 export { PlayStoreReceipt } from './general/PlayStoreReceipt';
 export { ButtonStyles } from './general/ButtonStyles';
-export { ScreenTitle } from './general/ScreenTitle';
 export { SetSelectionMenuOptions } from './general/SetSelectionMenuOptions';
 export { AutoArchiveSettings } from './general/AutoArchiveSettings';
 export { Vocabulary } from './general/Vocabulary';

@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
   @observable
@@ -20,9 +21,10 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
   }

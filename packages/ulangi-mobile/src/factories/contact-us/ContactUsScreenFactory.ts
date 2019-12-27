@@ -5,14 +5,22 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ObservableContactUsScreen } from '@ulangi/ulangi-observable';
+
 import { ContactUsScreenDelegate } from '../../delegates/contact-us/ContactUsScreenDelegate';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ContactUsScreenFactory extends ScreenFactory {
-  public createScreenDelegate(): ContactUsScreenDelegate {
+  public createScreenDelegate(
+    observableScreen: ObservableContactUsScreen,
+  ): ContactUsScreenDelegate {
+    const navigatorDelegate = this.createNavigatorDelegate();
+
     return new ContactUsScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate(),
+      this.props.rootStore.userStore,
+      observableScreen,
+      navigatorDelegate,
     );
   }
 }

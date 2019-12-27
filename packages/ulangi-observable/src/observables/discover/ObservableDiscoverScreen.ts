@@ -6,10 +6,10 @@
  */
 
 import { DiscoverListType, ScreenName } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { IObservableValue } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 import { ObservableTranslationListState } from '../translation/ObservableTranslationListState';
 import { ObservablePublicSetListState } from './ObservablePublicSetListState';
 import { ObservablePublicVocabularyListState } from './ObservablePublicVocabularyListState';
@@ -41,9 +41,9 @@ export class ObservableDiscoverScreen extends ObservableScreen {
     publicVocabularyListState: ObservablePublicVocabularyListState,
     translationListState: ObservableTranslationListState,
     screenName: ScreenName,
-    screenTitle: ScreenTitle
+    topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.searchInput = searchInput;
     this.searchInputAutoFocus = searchInputAutoFocus;
     this.shouldFocusSearchInput = shouldFocusSearchInput;

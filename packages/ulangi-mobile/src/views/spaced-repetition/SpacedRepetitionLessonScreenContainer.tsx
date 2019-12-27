@@ -13,6 +13,8 @@ import {
   ObservableReviewFeedbackBarState,
   ObservableReviewState,
   ObservableSpacedRepetitionLessonScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
 import { ObservableMap, observable } from 'mobx';
@@ -20,6 +22,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { SpacedRepetitionLessonScreenIds } from '../../constants/ids/SpacedRepetitionLessonScreenIds';
 import { SpacedRepetitionLessonScreenFactory } from '../../factories/spaced-repetition/SpacedRepetitionLessonScreenFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
@@ -70,6 +73,21 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     observable.box(false),
     observable.box(false),
     ScreenName.SPACED_REPETITION_LESSON_SCREEN,
+    new ObservableTitleTopBar(
+      'Spaced Repetition',
+      new ObservableTopBarButton(
+        SpacedRepetitionLessonScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.back();
+        },
+      ),
+      null,
+    ),
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
@@ -78,21 +96,17 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.props.passedProps.startLesson,
   );
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SpacedRepetitionLessonScreenIds.BACK_BTN) {
-      if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
-        this.screenDelegate.showAdOrGoogleConsentForm(
-          (): void => this.navigatorDelegate.pop(),
-        );
-      } else if (
-        this.observableScreen.saveState.get() === ActivityState.ACTIVE
-      ) {
-        this.screenDelegate.showSavingInProgressDialog();
-      } else if (this.observableScreen.shouldShowResult.get() === false) {
-        this.screenDelegate.showConfirmQuitLessonDialog();
-      } else {
-        this.navigatorDelegate.pop();
-      }
+  private back(): void {
+    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
+      this.screenDelegate.showAdOrGoogleConsentForm(
+        (): void => this.navigatorDelegate.pop(),
+      );
+    } else if (this.observableScreen.saveState.get() === ActivityState.ACTIVE) {
+      this.screenDelegate.showSavingInProgressDialog();
+    } else if (this.observableScreen.shouldShowResult.get() === false) {
+      this.screenDelegate.showConfirmQuitLessonDialog();
+    } else {
+      this.navigatorDelegate.pop();
     }
   }
 

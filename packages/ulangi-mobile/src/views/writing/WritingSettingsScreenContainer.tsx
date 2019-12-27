@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+  ObservableWritingSettingsScreen,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { WritingSettingsScreenIds } from '../../constants/ids/WritingSettingsScreenIds';
 import { WritingSettingsScreenFactory } from '../../factories/writing/WritingSettingsScreenFactory';
 import { WritingSettingsScreen } from './WritingSettingsScreen';
@@ -39,6 +44,28 @@ export class WritingSettingsScreenContainer extends Container {
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
     ScreenName.WRITING_SETTINGS_SCREEN,
+    new ObservableTitleTopBar(
+      'Settings',
+      new ObservableTopBarButton(
+        WritingSettingsScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        WritingSettingsScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.save();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -46,14 +73,6 @@ export class WritingSettingsScreenContainer extends Container {
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === WritingSettingsScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === WritingSettingsScreenIds.SAVE_BTN) {
-      this.screenDelegate.save();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

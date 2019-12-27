@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { AutoArchiveSettings } from '@ulangi/ulangi-common/interfaces';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableAutoArchiveSettings } from './ObservableAutoArchiveSettings';
 
 export class ObservableAutoArchiveScreen extends ObservableScreen {
@@ -16,9 +17,10 @@ export class ObservableAutoArchiveScreen extends ObservableScreen {
 
   public constructor(
     autoArchiveSettings: AutoArchiveSettings,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.autoArchiveSettings = new ObservableAutoArchiveSettings(
       autoArchiveSettings.autoArchiveEnabled,
       autoArchiveSettings.spacedRepetitionLevelThreshold,

@@ -8,6 +8,7 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableCategoryFormState } from './ObservableCategoryFormState';
 
 export class ObservableCategorySelectorScreen extends ObservableScreen {
@@ -15,9 +16,10 @@ export class ObservableCategorySelectorScreen extends ObservableScreen {
 
   public constructor(
     categoryFormState: ObservableCategoryFormState,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.categoryFormState = categoryFormState;
   }
 }

@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableSignUpScreen extends ObservableScreen {
   public email: IObservableValue<string>;
@@ -24,9 +25,10 @@ export class ObservableSignUpScreen extends ObservableScreen {
     confirmPassword: string,
     shouldFocusPassword: boolean,
     shouldFocusConfirmPassword: boolean,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
 
     this.email = observable.box(email);
     this.password = observable.box(password);

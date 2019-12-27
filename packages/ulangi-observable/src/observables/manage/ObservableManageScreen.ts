@@ -10,11 +10,11 @@ import {
   ScreenName,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { IObservableValue } from 'mobx';
 
 import { ObservableCategoryListState } from '../category/ObservableCategoryListState';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabularyListState';
 
 export class ObservableManageScreen extends ObservableScreen {
@@ -32,9 +32,9 @@ export class ObservableManageScreen extends ObservableScreen {
     vocabularyListState: ObservableVocabularyListState,
     categoryListState: ObservableCategoryListState,
     screenName: ScreenName,
-    screenTitle: ScreenTitle
+    topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.manageListType = manageListType;
     this.selectedFilterType = selectedFilterType;
     this.vocabularyListState = vocabularyListState;

@@ -12,12 +12,15 @@ import {
   ObservableAddEditSetScreen,
   ObservableSetFormState,
   ObservableSetPickerState,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { EditSetScreenIds } from '../../constants/ids/EditSetScreenIds';
 import { EditSetScreenFactory } from '../../factories/set/EditSetScreenFactory';
 import { AddEditSetScreen } from './AddEditSetScreen';
@@ -56,24 +59,38 @@ export class EditSetScreenContainer extends Container<
       this.props.rootStore.remoteConfigStore,
     ),
     ScreenName.EDIT_SET_SCREEN,
+    new ObservableTitleTopBar(
+      'Edit Set',
+      new ObservableTopBarButton(
+        EditSetScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        EditSetScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.saveEdit(this.props.passedProps.originalSet, {
+            onSaving: this.screenDelegate.showSavingDialog,
+            onSaveSucceeded: this.screenDelegate.showSaveSucceededDialog,
+            onSaveFailed: this.screenDelegate.showSaveFailedDialog,
+          });
+        },
+      ),
+    ),
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === EditSetScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === EditSetScreenIds.SAVE_BTN) {
-      Keyboard.dismiss();
-      this.screenDelegate.saveEdit(this.props.passedProps.originalSet, {
-        onSaving: this.screenDelegate.showSavingDialog,
-        onSaveSucceeded: this.screenDelegate.showSaveSucceededDialog,
-        onSaveFailed: this.screenDelegate.showSaveFailedDialog,
-      });
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

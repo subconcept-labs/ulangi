@@ -11,6 +11,8 @@ import {
   ObservableMultipleChoiceFormState,
   ObservableMultipleChoiceResult,
   ObservableQuizMultipleChoiceScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
 import { ObservableMap, observable } from 'mobx';
@@ -18,6 +20,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { QuizMultipleChoiceScreenIds } from '../../constants/ids/QuizMultipleChoiceScreenIds';
 import { QuizMultipleChoiceScreenFactory } from '../../factories/quiz/QuizMultipleChoiceScreenFactory';
@@ -61,6 +64,21 @@ export class QuizMultipleChoiceScreenContainer extends Container<
     new ObservableMultipleChoiceResult(config.quiz.gradeScale, 0, 0),
     observable.box(false),
     ScreenName.QUIZ_MULTIPLE_CHOICE_SCREEN,
+    new ObservableTitleTopBar(
+      'Multiple Choice',
+      new ObservableTopBarButton(
+        QuizMultipleChoiceScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -70,12 +88,6 @@ export class QuizMultipleChoiceScreenContainer extends Container<
     this.observableScreen,
     this.props.passedProps.startMultipleChoiceQuiz,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === QuizMultipleChoiceScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

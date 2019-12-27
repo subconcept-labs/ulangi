@@ -30,7 +30,10 @@ export class SignOutScreenContainer extends Container {
     this.observer,
   );
 
-  protected observableScreen = new ObservableScreen(ScreenName.SIGN_OUT_SCREEN);
+  protected observableScreen = new ObservableScreen(
+    ScreenName.SIGN_OUT_SCREEN,
+    null,
+  );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 

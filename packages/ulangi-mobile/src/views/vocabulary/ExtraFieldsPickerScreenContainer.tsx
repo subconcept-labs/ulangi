@@ -43,6 +43,7 @@ export class ExtraFieldsPickerScreenContainer extends Container<
 
   protected observableScreen = new ObservableScreen(
     ScreenName.EXTRA_FIELDS_PICKER_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(

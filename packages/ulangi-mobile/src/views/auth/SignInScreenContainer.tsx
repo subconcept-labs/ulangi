@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSignInScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSignInScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -35,6 +38,7 @@ export class SignInScreenContainer extends Container {
     '',
     false,
     ScreenName.SIGN_IN_SCREEN,
+    new ObservableTitleTopBar('Sign In', null, null),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();

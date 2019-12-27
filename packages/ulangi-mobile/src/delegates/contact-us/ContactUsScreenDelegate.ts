@@ -6,7 +6,12 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ContactUsFormType } from '@ulangi/ulangi-common/enums';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
+import {
+  ObservableContactUsScreen,
+  ObservableUserStore,
+} from '@ulangi/ulangi-observable';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { ErrorConverter } from '../../converters/ErrorConverter';
@@ -17,14 +22,51 @@ export class ContactUsScreenDelegate {
   private errorConverter = new ErrorConverter();
 
   private eventBus: EventBus;
+  private userStore: ObservableUserStore;
+  private observableScreen: ObservableContactUsScreen;
   private navigatorDelegate: NavigatorDelegate;
 
-  public constructor(eventBus: EventBus, navigatorDelegate: NavigatorDelegate) {
+  public constructor(
+    eventBus: EventBus,
+    userStore: ObservableUserStore,
+    observableScreen: ObservableContactUsScreen,
+    navigatorDelegate: NavigatorDelegate,
+  ) {
     this.eventBus = eventBus;
+    this.userStore = userStore;
+    this.observableScreen = observableScreen;
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public sendFeatureRequest(userEmail: string, message: string): void {
+  public send(): void {
+    switch (this.observableScreen.formType) {
+      case ContactUsFormType.FEATURE_REQUEST:
+        this.sendFeatureRequest(
+          this.userStore.existingCurrentUser.email,
+          this.observableScreen.text,
+        );
+        break;
+      case ContactUsFormType.REPORT_A_BUG:
+        this.sendBugReport(
+          this.userStore.existingCurrentUser.email,
+          this.observableScreen.text,
+        );
+        break;
+      case ContactUsFormType.REPORT_AN_ERROR:
+        this.sendAnErrorReport(
+          this.userStore.existingCurrentUser.email,
+          this.observableScreen.text,
+        );
+        break;
+      default:
+        this.sendSupportMessage(
+          this.userStore.existingCurrentUser.email,
+          this.observableScreen.text,
+        );
+    }
+  }
+
+  private sendFeatureRequest(userEmail: string, message: string): void {
     this.sendMessage(
       'feature@ulangi.com',
       userEmail,
@@ -44,7 +86,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public sendBugReport(userEmail: string, message: string): void {
+  private sendBugReport(userEmail: string, message: string): void {
     this.sendMessage(
       'bug@ulangi.com',
       userEmail,
@@ -64,7 +106,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public sendAnErrorReport(userEmail: string, message: string): void {
+  private sendAnErrorReport(userEmail: string, message: string): void {
     this.sendMessage(
       'error@ulangi.com',
       userEmail,
@@ -84,7 +126,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public sendSupportMessage(userEmail: string, message: string): void {
+  private sendSupportMessage(userEmail: string, message: string): void {
     this.sendMessage(
       'support@ulangi.com',
       userEmail,
@@ -104,7 +146,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public showContactingAdminDialog(): void {
+  private showContactingAdminDialog(): void {
     this.navigatorDelegate.showDialog(
       {
         message: 'Sending. Please wait...',
@@ -113,7 +155,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public showContactAdminSucceededDialog(): void {
+  private showContactAdminSucceededDialog(): void {
     this.navigatorDelegate.showDialog(
       {
         testID: LightBoxDialogIds.SUCCESS_DIALOG,
@@ -128,7 +170,7 @@ export class ContactUsScreenDelegate {
     );
   }
 
-  public showContactAdminFailedDialog(errorCode: string): void {
+  private showContactAdminFailedDialog(errorCode: string): void {
     this.navigatorDelegate.showDialog(
       {
         testID: LightBoxDialogIds.FAILED_DIALOG,

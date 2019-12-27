@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableDarkModeSettings } from './ObservableDarkModeSettings';
 
 export class ObservableDarkModeScreen extends ObservableScreen {
@@ -17,9 +18,10 @@ export class ObservableDarkModeScreen extends ObservableScreen {
 
   public constructor(
     settings: ObservableDarkModeSettings,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.settings = settings;
   }
 }

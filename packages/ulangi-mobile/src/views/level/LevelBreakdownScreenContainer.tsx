@@ -42,6 +42,7 @@ export class LevelBreakdownScreenContainer extends Container<
 
   protected observableScreen = new ObservableScreen(
     ScreenName.LEVEL_BREAKDOWN_SCREEN,
+    null,
   );
 
   private screenFactory = new LevelBreakdownScreenFactory(

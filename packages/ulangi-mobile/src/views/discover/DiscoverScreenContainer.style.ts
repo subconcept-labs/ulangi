@@ -8,55 +8,36 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
-import { Images } from '../../constants/Images';
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
-import { touchableTitle } from '../common/TouchableTitle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class DiscoverScreenStyle {
   private static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     PrimaryScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
+      topBar: useCustomTopBar({
         testID: DiscoverScreenIds.TOP_BAR,
-        title: touchableTitle(ScreenName.DISCOVER_SCREEN),
-      },
+        screenName: ScreenName.DISCOVER_SCREEN,
+        styles: {
+          light: PrimaryScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: PrimaryScreenStyle.TOP_BAR_DARK_STYLES,
+        },
+      }),
     },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
     PrimaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
-    {
-      topBar: {
-        rightButtons: [
-          {
-            testID: DiscoverScreenIds.TIP_BTN,
-            icon: Images.INFO_WHITE_22X22,
-            id: DiscoverScreenIds.TIP_BTN,
-            color: 'white',
-          },
-        ],
-      },
-    },
+    {},
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
     PrimaryScreenStyle.SCREEN_DARK_STYLES_ONLY,
-    {
-      topBar: {
-        rightButtons: [
-          {
-            testID: DiscoverScreenIds.TIP_BTN,
-            icon: Images.INFO_WHITE_22X22,
-            id: DiscoverScreenIds.TIP_BTN,
-            color: 'white',
-          },
-        ],
-      },
-    },
+    {},
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(

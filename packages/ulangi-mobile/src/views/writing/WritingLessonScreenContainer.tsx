@@ -10,6 +10,8 @@ import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableFeedbackListState,
   ObservableReviewFeedbackBarState,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
   ObservableWritingFormState,
   ObservableWritingLessonScreen,
@@ -20,6 +22,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { WritingLessonScreenIds } from '../../constants/ids/WritingLessonScreenIds';
 import { WritingLessonScreenFactory } from '../../factories/writing/WritingLessonScreenFactory';
@@ -78,6 +81,21 @@ export class WritingLessonScreenContainer extends Container<
     observable.box(false),
     observable.box(ActivityState.INACTIVE),
     ScreenName.WRITING_LESSON_SCREEN,
+    new ObservableTitleTopBar(
+      'Writing',
+      new ObservableTopBarButton(
+        WritingLessonScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.screenDelegate.quit();
+        },
+      ),
+      null,
+    ),
   );
 
   protected navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -87,12 +105,6 @@ export class WritingLessonScreenContainer extends Container<
     this.questionIterator,
     this.props.passedProps.startLesson,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === WritingLessonScreenIds.BACK_BTN) {
-      this.screenDelegate.quit();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

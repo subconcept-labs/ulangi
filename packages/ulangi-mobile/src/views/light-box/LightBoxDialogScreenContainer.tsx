@@ -30,6 +30,7 @@ export class LightBoxDialogScreenContainer extends Container {
 
   protected observableScreen = new ObservableScreen(
     ScreenName.LIGHT_BOX_DIALOG_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(

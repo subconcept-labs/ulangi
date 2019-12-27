@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableGoogleSheetsAddOnScreen extends ObservableScreen {
   @observable
@@ -24,9 +25,10 @@ export class ObservableGoogleSheetsAddOnScreen extends ObservableScreen {
     password: string,
     apiKey: undefined | string,
     expiredAt: undefined | null | Date,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.password = password;
     this.apiKey = apiKey;
     this.expiredAt = expiredAt;

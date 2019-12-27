@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableQuizSettingsScreen extends ObservableScreen {
   @observable
@@ -24,9 +25,10 @@ export class ObservableQuizSettingsScreen extends ObservableScreen {
     quizPool: 'learned' | 'active',
     selectedMultipleChoiceQuizLimit: number,
     selectedWritingQuizLimit: number,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.selectedVocabularyPool = quizPool;
     this.selectedMultipleChoiceQuizLimit = selectedMultipleChoiceQuizLimit;
     this.selectedWritingQuizLimit = selectedWritingQuizLimit;

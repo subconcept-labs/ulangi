@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { SecurityScreenIds } from '../../constants/ids/SecurityScreenIds';
 import { SecurityScreenFactory } from '../../factories/account/SecurityScreenFactory';
 import { SecurityScreen } from '../../views/account/SecurityScreen';
@@ -31,17 +36,28 @@ export class SecurityScreenContainer extends Container {
     this.observer,
   );
 
-  protected observableScreen = new ObservableScreen(ScreenName.SECURITY_SCREEN);
+  protected observableScreen = new ObservableScreen(
+    ScreenName.SECURITY_SCREEN,
+    new ObservableTitleTopBar(
+      'Security',
+      new ObservableTopBarButton(
+        SecurityScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
+  );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate();
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SecurityScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

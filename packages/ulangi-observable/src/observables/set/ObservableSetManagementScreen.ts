@@ -13,6 +13,7 @@ import {
 import { ObservableMap, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableSet } from './ObservableSet';
 
 export class ObservableSetManagementScreen extends ObservableScreen {
@@ -33,9 +34,10 @@ export class ObservableSetManagementScreen extends ObservableScreen {
     setList: null | ObservableMap<string, ObservableSet>,
     fetchState: ActivityState,
     refreshing: boolean,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.selectedSetStatus = selectedSetStatus;
     this.setList = setList;
     this.fetchState = fetchState;

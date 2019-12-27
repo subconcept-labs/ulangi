@@ -6,10 +6,10 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabularyListState';
 
 export class ObservableSearchScreen extends ObservableScreen {
@@ -22,9 +22,9 @@ export class ObservableSearchScreen extends ObservableScreen {
     searchInput: string,
     vocabularyListState: ObservableVocabularyListState,
     screenName: ScreenName,
-    screenTitle: ScreenTitle
+    topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.searchInput = searchInput;
     this.vocabularyListState = vocabularyListState;
   }

@@ -11,6 +11,7 @@ import { IObservableValue } from 'mobx';
 import { ObservableMultipleChoiceFormState } from '../multiple-choice/ObservableMultipleChoiceFormState';
 import { ObservableMultipleChoiceResult } from '../multiple-choice/ObservableMultipleChoiceResult';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableQuizMultipleChoiceScreen extends ObservableScreen {
   public readonly multipleChoiceFormState: ObservableMultipleChoiceFormState;
@@ -23,9 +24,10 @@ export class ObservableQuizMultipleChoiceScreen extends ObservableScreen {
     multipleChoiceFormState: ObservableMultipleChoiceFormState,
     multipleChoiceResult: ObservableMultipleChoiceResult,
     shouldShowResult: IObservableValue<boolean>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.multipleChoiceFormState = multipleChoiceFormState;
     this.multipleChoiceResult = multipleChoiceResult;
     this.shouldShowResult = shouldShowResult;

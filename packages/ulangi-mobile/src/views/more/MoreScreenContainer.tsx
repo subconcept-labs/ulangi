@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableMoreScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableMoreScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -30,6 +33,7 @@ export class MoreScreenContainer extends Container {
     observable.array(),
     observable.box(0),
     ScreenName.MORE_SCREEN,
+    new ObservableTitleTopBar('More', null, null),
   );
 
   private screenFactory = new MoreScreenFactory(

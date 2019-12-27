@@ -16,6 +16,8 @@ import {
 import {
   ObservableCategoryListState,
   ObservableManageScreen,
+  ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -73,11 +75,10 @@ export class ManageScreenContainer extends Container {
       observable.box(false),
     ),
     ScreenName.MANAGE_SCREEN,
-    {
-      title: 'Manage',
-      subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-      testID: ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      icon: _.has(
+    new ObservableTouchableTopBar(
+      ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
         this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
@@ -87,23 +88,37 @@ export class ManageScreenContainer extends Container {
               .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-      onTitlePress: (): void => {
+      (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    },
+      new ObservableTopBarButton(
+        ManageScreenIds.SEARCH_BTN,
+        null,
+        {
+          light: Images.SEARCH_WHITE_20X20,
+          dark: Images.SEARCH_MILK_20X20,
+        },
+        (): void => {
+          this.screenDelegate.goToSearchVocabulary();
+        },
+      ),
+      new ObservableTopBarButton(
+        ManageScreenIds.QUICK_TUTORIAL_BTN,
+        null,
+        {
+          light: Images.INFO_WHITE_22X22,
+          dark: Images.INFO_MILK_22X22,
+        },
+        (): void => {
+          this.screenDelegate.showQuickTutorial();
+        },
+      ),
+    ),
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ManageScreenIds.QUICK_TUTORIAL_BTN) {
-      this.screenDelegate.showQuickTutorial();
-    } else if (buttonId === ManageScreenIds.SEARCH_BTN) {
-      this.screenDelegate.goToSearchVocabulary();
-    }
-  }
 
   public componentDidAppear(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(

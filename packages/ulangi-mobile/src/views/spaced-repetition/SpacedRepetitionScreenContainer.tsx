@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSpacedRepetitionScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSpacedRepetitionScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionScreenIds';
 import { SpacedRepetitionScreenFactory } from '../../factories/spaced-repetition/SpacedRepetitionScreenFactory';
 import { SpacedRepetitionScreen } from '../../views/spaced-repetition/SpacedRepetitionScreen';
@@ -40,6 +45,21 @@ export class SpacedRepetitionScreenContainer extends Container<
   protected observableScreen = new ObservableSpacedRepetitionScreen(
     this.props.passedProps.selectedCategoryNames,
     ScreenName.SPACED_REPETITION_SCREEN,
+    new ObservableTitleTopBar(
+      '',
+      new ObservableTopBarButton(
+        SpacedRepetitionScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -47,12 +67,6 @@ export class SpacedRepetitionScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SpacedRepetitionScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

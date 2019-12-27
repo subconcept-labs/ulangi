@@ -7,7 +7,11 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableQuickTutorialScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableQuickTutorialScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -32,6 +36,21 @@ export class QuickTutorialScreenContainer extends Container {
       : Images.QUICK_TUTORIAL_SCREENS.dark,
     0,
     ScreenName.QUICK_TUTORIAL_SCREEN,
+    new ObservableTitleTopBar(
+      'Quick Tutorial',
+      new ObservableTopBarButton(
+        QuickTutorialScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private screenFactory = new QuickTutorialScreenFactory(
@@ -48,7 +67,6 @@ export class QuickTutorialScreenContainer extends Container {
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
     if (buttonId === QuickTutorialScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
     }
   }
 

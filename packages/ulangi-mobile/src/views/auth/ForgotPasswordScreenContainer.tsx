@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableForgotPasswordScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableForgotPasswordScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -31,8 +34,9 @@ export class ForgotPasswordScreenContainer extends Container {
   );
 
   protected observableScreen = new ObservableForgotPasswordScreen(
-    '',
+    'Forgot Password',
     ScreenName.FORGOT_PASSWORD_SCREEN,
+    new ObservableTitleTopBar('Forgot Password', null, null),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();

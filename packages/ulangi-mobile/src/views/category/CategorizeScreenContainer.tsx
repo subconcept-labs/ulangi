@@ -10,6 +10,8 @@ import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategorizeScreen,
   ObservableCategoryFormState,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -17,6 +19,7 @@ import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { CategorizeScreenIds } from '../../constants/ids/CategorizeScreenIds';
 import { CategorizeScreenFactory } from '../../factories/category/CategorizeScreenFactory';
 import { CategorizeScreen } from './CategorizeScreen';
@@ -51,6 +54,41 @@ export class CategorizeScreenContainer extends Container<
       observable.box(ActivityState.INACTIVE),
     ),
     ScreenName.CATEGORIZE_SCREEN,
+    new ObservableTitleTopBar(
+      'Categorize',
+      new ObservableTopBarButton(
+        CategorizeScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        CategorizeScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          if (this.observableScreen.categoryFormState.categoryName === '') {
+            this.screenDelegate.showMoveToUncategorizedDialog(
+              (): void => {
+                this.screenDelegate.save(
+                  this.props.passedProps.selectedVocabularyIds,
+                );
+              },
+            );
+          } else {
+            this.screenDelegate.save(
+              this.props.passedProps.selectedVocabularyIds,
+            );
+          }
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -70,20 +108,7 @@ export class CategorizeScreenContainer extends Container<
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
     if (buttonId === CategorizeScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
     } else if (buttonId === CategorizeScreenIds.SAVE_BTN) {
-      Keyboard.dismiss();
-      if (this.observableScreen.categoryFormState.categoryName === '') {
-        this.screenDelegate.showMoveToUncategorizedDialog(
-          (): void => {
-            this.screenDelegate.save(
-              this.props.passedProps.selectedVocabularyIds,
-            );
-          },
-        );
-      } else {
-        this.screenDelegate.save(this.props.passedProps.selectedVocabularyIds);
-      }
     }
   }
 

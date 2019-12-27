@@ -5,79 +5,39 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
-import { Images } from '../../constants/Images';
-import { config } from '../../constants/config';
 import { CategorySelectorScreenIds } from '../../constants/ids/CategorySelectorScreenIds';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class CategorySelectorScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     SecondaryScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
+      topBar: useCustomTopBar({
         testID: CategorySelectorScreenIds.TOP_BAR,
-        title: {
-          text: 'Select Category',
+        screenName: ScreenName.CATEGORY_SELECTOR_SCREEN,
+        styles: {
+          light: SecondaryScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: SecondaryScreenStyle.TOP_BAR_DARK_STYLES,
         },
-      },
+      }),
     },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
     SecondaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
-    {
-      topBar: {
-        rightButtons: [
-          {
-            testID: CategorySelectorScreenIds.DONE_BTN,
-            text: 'Done',
-            id: CategorySelectorScreenIds.DONE_BTN,
-            disableIconTint: true,
-            color: config.styles.primaryColor,
-          },
-        ],
-        leftButtons: [
-          {
-            testID: CategorySelectorScreenIds.BACK_BTN,
-            icon: Images.ARROW_LEFT_BLACK_22X22,
-            id: CategorySelectorScreenIds.BACK_BTN,
-            disableIconTint: true,
-            color: config.styles.light.primaryTextColor,
-          },
-        ],
-      },
-    },
+    {},
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
     SecondaryScreenStyle.SCREEN_DARK_STYLES_ONLY,
-    {
-      topBar: {
-        rightButtons: [
-          {
-            testID: CategorySelectorScreenIds.DONE_BTN,
-            text: 'Done',
-            id: CategorySelectorScreenIds.DONE_BTN,
-            disableIconTint: true,
-            color: config.styles.primaryColor,
-          },
-        ],
-        leftButtons: [
-          {
-            testID: CategorySelectorScreenIds.BACK_BTN,
-            icon: Images.ARROW_LEFT_MILK_22X22,
-            id: CategorySelectorScreenIds.BACK_BTN,
-            disableIconTint: true,
-            color: config.styles.light.primaryTextColor,
-          },
-        ],
-      },
-    },
+    {},
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(

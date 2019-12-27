@@ -9,13 +9,18 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableAdScreen extends ObservableScreen {
   @observable
   public closable: boolean;
 
-  public constructor(closable: boolean, screenName: ScreenName) {
-    super(screenName);
+  public constructor(
+    closable: boolean,
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
+  ) {
+    super(screenName, topBar);
     this.closable = closable;
   }
 }
