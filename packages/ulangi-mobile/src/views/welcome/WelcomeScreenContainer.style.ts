@@ -5,20 +5,24 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
 import { SingleScreenStyle } from '../../styles/SingleScreenStyle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class WelcomeScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
-        title: {
-          text: '',
+      topBar: useCustomTopBar({
+        screenName: ScreenName.WELCOME_SCREEN,
+        styles: {
+          light: SingleScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: SingleScreenStyle.TOP_BAR_DARK_STYLES,
         },
-      },
+      }),
     },
   );
 

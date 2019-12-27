@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableReminderSettings } from './ObservableReminderSettings';
 
 export class ObservableReminderScreen extends ObservableScreen {
@@ -20,9 +21,10 @@ export class ObservableReminderScreen extends ObservableScreen {
   public constructor(
     reminderSettings: ObservableReminderSettings,
     shouldShowTimePicker: boolean,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.reminderSettings = reminderSettings;
     this.shouldShowTimePicker = shouldShowTimePicker;
   }

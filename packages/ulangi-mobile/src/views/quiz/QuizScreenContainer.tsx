@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableQuizScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableQuizScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { QuizScreenIds } from '../../constants/ids/QuizScreenIds';
 import { QuizScreenFactory } from '../../factories/quiz/QuizScreenFactory';
 import { QuizScreen } from '../../views/quiz/QuizScreen';
@@ -38,6 +43,21 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
   protected observableScreen = new ObservableQuizScreen(
     this.props.passedProps.selectedCategoryNames,
     ScreenName.QUIZ_SCREEN,
+    new ObservableTitleTopBar(
+      '',
+      new ObservableTopBarButton(
+        QuizScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.quizScreenFactory.createNavigatorDelegate();
@@ -45,12 +65,6 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
   private screenDelegate = this.quizScreenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === QuizScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

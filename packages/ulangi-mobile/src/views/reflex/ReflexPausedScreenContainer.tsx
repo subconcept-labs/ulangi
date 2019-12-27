@@ -36,6 +36,7 @@ export class ReflexPausedScreenContainer extends Container<
 
   protected observableScreen = new ObservableScreen(
     ScreenName.REFLEX_PAUSED_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(

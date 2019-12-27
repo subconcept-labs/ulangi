@@ -11,6 +11,8 @@ import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableDefinition,
   ObservableEditVocabularyScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabularyFormState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -20,6 +22,7 @@ import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { EditVocabularyScreenIds } from '../../constants/ids/EditVocabularyScreenIds';
 import { EditVocabularyScreenFactory } from '../../factories/vocabulary/EditVocabularyScreenFactory';
 import { AddEditVocabularyScreen } from './AddEditVocabularyScreen';
@@ -80,6 +83,29 @@ export class EditVocabularyScreenContainer extends Container<
       ) || 'Uncategorized',
     ),
     ScreenName.EDIT_VOCABULARY_SCREEN,
+    new ObservableTitleTopBar(
+      'Edit Vocabulary',
+      new ObservableTopBarButton(
+        EditVocabularyScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        EditVocabularyScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.saveEdit();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -90,10 +116,7 @@ export class EditVocabularyScreenContainer extends Container<
 
   public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
     if (buttonId === EditVocabularyScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
     } else if (buttonId === EditVocabularyScreenIds.SAVE_BTN) {
-      Keyboard.dismiss();
-      this.screenDelegate.saveEdit();
     }
   }
 

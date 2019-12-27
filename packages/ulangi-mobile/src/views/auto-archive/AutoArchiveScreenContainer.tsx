@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableAutoArchiveScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableAutoArchiveScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { AutoArchiveScreenIds } from '../../constants/ids/AutoArchiveScreenIds';
 import { AutoArchiveScreenFactory } from '../../factories/auto-archive/AutoArchiveScreenFactory';
 import { AutoArchiveScreen } from './AutoArchiveScreen';
@@ -36,6 +41,28 @@ export class AutoArchiveScreenContainer extends Container {
   protected observableScreen = new ObservableAutoArchiveScreen(
     this.autoArchiveSettingsDelegate.getCurrentSettings(),
     ScreenName.AUTO_ARCHIVE_SCREEN,
+    new ObservableTitleTopBar(
+      'Auto Archive',
+      new ObservableTopBarButton(
+        AutoArchiveScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        AutoArchiveScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.save();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -43,14 +70,6 @@ export class AutoArchiveScreenContainer extends Container {
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === AutoArchiveScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === AutoArchiveScreenIds.SAVE_BTN) {
-      this.screenDelegate.save();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

@@ -37,6 +37,7 @@ export class ReflexGameOverScreenContainer extends Container<
 
   protected observableScreen = new ObservableScreen(
     ScreenName.REFLEX_GAME_OVER_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(

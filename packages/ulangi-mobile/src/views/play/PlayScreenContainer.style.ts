@@ -10,17 +10,21 @@ import * as _ from 'lodash';
 
 import { PlayScreenIds } from '../../constants/ids/PlayScreenIds';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
-import { touchableTitle } from '../common/TouchableTitle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class PlayScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     PrimaryScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
+      topBar: useCustomTopBar({
         testID: PlayScreenIds.TOP_BAR,
-        title: touchableTitle(ScreenName.PLAY_SCREEN),
-      },
+        screenName: ScreenName.PLAY_SCREEN,
+        styles: {
+          light: PrimaryScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: PrimaryScreenStyle.TOP_BAR_DARK_STYLES,
+        },
+      }),
     },
   );
 

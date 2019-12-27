@@ -6,6 +6,5 @@
  */
 
 export enum CustomViewName {
-  CUSTOM_TITLE = 'CUSTOM_TITLE',
-  TOUCHABLE_TITLE = 'TOUCHABLE_TITLE',
+  TOP_BAR = 'TOP_BAR',
 }

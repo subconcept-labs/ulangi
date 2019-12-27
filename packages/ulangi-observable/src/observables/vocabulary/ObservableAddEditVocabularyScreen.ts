@@ -6,10 +6,11 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 import { ObservableVocabularyFormState } from './ObservableVocabularyFormState';
 
 export class ObservableAddEditVocabularyScreen extends ObservableScreen {
@@ -22,9 +23,9 @@ export class ObservableAddEditVocabularyScreen extends ObservableScreen {
     currentTab: IObservableValue<'Editor' | 'Preview'>,
     vocabularyFormState: ObservableVocabularyFormState,
     screenName: ScreenName,
-    screenTitle?: ScreenTitle
+    topBar: ObservableTitleTopBar | ObservableTouchableTopBar
   ) {
-    super(screenName, screenTitle);
+    super(screenName, topBar);
     this.currentTab = currentTab;
     this.vocabularyFormState = vocabularyFormState;
   }

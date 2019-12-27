@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableAdScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableAdScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -32,6 +35,7 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
   protected observableScreen = new ObservableAdScreen(
     false,
     ScreenName.AD_SCREEN,
+    new ObservableTitleTopBar('', null, null),
   );
 
   private screenFactory = new AdScreenFactory(

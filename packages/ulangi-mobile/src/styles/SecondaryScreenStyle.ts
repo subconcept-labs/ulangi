@@ -10,9 +10,9 @@ import * as _ from 'lodash';
 
 import { config } from '../constants/config';
 import {
-  darkStyles as touchableTitleDarkStyles,
-  lightStyles as touchableTitleLightStyles,
-} from '../views/common/TouchableTitle.style';
+  darkStyles as defaultTopBarDarkStyles,
+  lightStyles as defaultTopBarLightStyles,
+} from '../views/top-bar/TopBar.style';
 
 export class SecondaryScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = {
@@ -36,9 +36,6 @@ export class SecondaryScreenStyle {
       background: {
         color: config.styles.light.secondaryBackgroundColor,
       },
-      title: {
-        color: config.styles.light.primaryTextColor,
-      },
     },
     layout: {
       backgroundColor: config.styles.light.secondaryBackgroundColor,
@@ -54,26 +51,35 @@ export class SecondaryScreenStyle {
       background: {
         color: config.styles.dark.secondaryBackgroundColor,
       },
-      title: {
-        color: config.styles.dark.primaryTextColor,
-      },
     },
     layout: {
       backgroundColor: config.styles.dark.secondaryBackgroundColor,
     },
   };
 
-  public static TOUCHABLE_TITLE_STYLES = {
-    light: _.merge({}, touchableTitleLightStyles, {
-      title: {
-        color: '#888',
-      },
-      content_container: {
-        backgroundColor: config.styles.light.secondaryBackgroundColor,
-      },
-    }),
-    dark: _.merge({}, touchableTitleDarkStyles, {}),
-  };
+  public static TOP_BAR_LIGHT_STYLES = _.merge({}, defaultTopBarLightStyles, {
+    title: {
+      color: config.styles.light.primaryTextColor,
+    },
+    touchable: {
+      backgroundColor: config.styles.light.secondaryBackgroundColor,
+    },
+    touchable_text: {
+      color: '#888',
+    },
+  });
+
+  public static TOP_BAR_DARK_STYLES = _.merge({}, defaultTopBarDarkStyles, {
+    title: {
+      color: config.styles.dark.primaryTextColor,
+    },
+    touchable: {
+      backgroundColor: '#eee',
+    },
+    touchable_text: {
+      color: '#777',
+    },
+  });
 
   public static LIGHT_BOX_SCREEN_STYLES: { light: Options; dark: Options } = {
     light: {

@@ -7,13 +7,18 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableImageSelectorScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableImageSelectorScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { ImageSelectorScreenIds } from '../../constants/ids/ImageSelectorScreenIds';
 import { ImageSelectorScreenFactory } from '../../factories/image/ImageSelectorScreenFactory';
 import { ImageSelectorScreen } from './ImageSelectorScreen';
@@ -40,6 +45,29 @@ export class ImageSelectorScreenContainer extends Container<
     observable.box(false),
     observable.box(false),
     ScreenName.IMAGE_SELECTOR_SCREEN,
+    new ObservableTitleTopBar(
+      'Select Images',
+      new ObservableTopBarButton(
+        ImageSelectorScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        ImageSelectorScreenIds.DONE_BTN,
+        'Done',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.uploadImages(this.props.passedProps.onSelect);
+        },
+      ),
+    ),
   );
 
   private screenFactory = new ImageSelectorScreenFactory(
@@ -53,15 +81,6 @@ export class ImageSelectorScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ImageSelectorScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === ImageSelectorScreenIds.DONE_BTN) {
-      Keyboard.dismiss();
-      this.screenDelegate.uploadImages(this.props.passedProps.onSelect);
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

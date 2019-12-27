@@ -9,12 +9,15 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableMembershipScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableUpgradeButtonState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { MembershipScreenIds } from '../../constants/ids/MembershipScreenIds';
 import { MembershipScreenFactory } from '../../factories/membership/MembershipScreenFactory';
 import { MembershipScreen } from '../../views/membership/MembershipScreen';
@@ -32,6 +35,28 @@ export class MembershipScreenContainer extends Container {
     null,
     new ObservableUpgradeButtonState('Fetching product... '),
     ScreenName.MEMBERSHIP_SCREEN,
+    new ObservableTitleTopBar(
+      'Account Type',
+      new ObservableTopBarButton(
+        MembershipScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        MembershipScreenIds.BACK_BTN,
+        'Restore',
+        null,
+        (): void => {
+          this.screenDelegate.restorePurchases();
+        },
+      ),
+    ),
   );
 
   private screenFactory = new MembershipScreenFactory(
@@ -45,14 +70,6 @@ export class MembershipScreenContainer extends Container {
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === MembershipScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === MembershipScreenIds.RESTORE_BTN) {
-      this.screenDelegate.restorePurchases();
-    }
-  }
 
   public componentDidMount(): void {
     if (

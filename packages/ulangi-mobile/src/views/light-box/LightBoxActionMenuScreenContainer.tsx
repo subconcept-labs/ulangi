@@ -29,6 +29,7 @@ export class LightBoxActionMenuScreenContainer extends Container {
 
   protected observableScreen = new ObservableScreen(
     ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(

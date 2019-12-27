@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableChangeEmailScreen extends ObservableScreen {
   @observable
@@ -17,8 +18,13 @@ export class ObservableChangeEmailScreen extends ObservableScreen {
   @observable
   public password: string;
 
-  public constructor(email: string, password: string, screenName: ScreenName) {
-    super(screenName);
+  public constructor(
+    email: string,
+    password: string,
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
+  ) {
+    super(screenName, topBar);
     this.email = email;
     this.password = password;
   }

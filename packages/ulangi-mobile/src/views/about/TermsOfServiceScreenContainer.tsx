@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { TermsOfServiceScreenIds } from '../../constants/ids/TermsOfServiceScreenIds';
 import { TermsOfServiceScreenFactory } from '../../factories/about/TermsOfServiceScreenFactory';
 import { TermsOfServiceScreen } from './TermsOfServiceScreen';
@@ -27,6 +32,21 @@ export class TermsOfServiceScreenContainer extends Container {
 
   protected observableScreen = new ObservableScreen(
     ScreenName.TERMS_OF_SERVICE_SCREEN,
+    new ObservableTitleTopBar(
+      'Terms of Service',
+      new ObservableTopBarButton(
+        TermsOfServiceScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private screenFactory = new TermsOfServiceScreenFactory(
@@ -36,12 +56,6 @@ export class TermsOfServiceScreenContainer extends Container {
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === TermsOfServiceScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

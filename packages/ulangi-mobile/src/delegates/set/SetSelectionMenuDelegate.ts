@@ -78,9 +78,12 @@ export class SetSelectionMenuDelegate {
       on(
         ActionType.SET__SELECT,
         (): void => {
-          if (typeof observableScreen.screenTitle !== 'undefined') {
-            observableScreen.screenTitle.subtitle = this.setStore.existingCurrentSet.setName;
-            observableScreen.screenTitle.icon = _.has(
+          if (
+            observableScreen.topBar !== null &&
+            observableScreen.topBar.kind === 'touchable'
+          ) {
+            observableScreen.topBar.text = this.setStore.existingCurrentSet.setName;
+            observableScreen.topBar.icon = _.has(
               Images.FLAG_ICONS_BY_LANGUAGE_CODE,
               this.setStore.existingCurrentSet.learningLanguageCode,
             )

@@ -15,7 +15,7 @@ export class ObservablePreloadScreen extends ObservableScreen {
   public message: string;
 
   public constructor(message: string, screenName: ScreenName) {
-    super(screenName);
+    super(screenName, null);
 
     this.message = message;
   }

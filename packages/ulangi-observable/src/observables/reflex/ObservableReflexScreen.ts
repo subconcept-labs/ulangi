@@ -32,7 +32,7 @@ export class ObservableReflexScreen extends ObservableScreen {
     noMoreVocabulary: boolean,
     screenName: ScreenName
   ) {
-    super(screenName);
+    super(screenName, null);
     this.selectedCategoryNames = selectedCategoryNames;
     this.gameState = gameState;
     this.gameStats = gameStats;

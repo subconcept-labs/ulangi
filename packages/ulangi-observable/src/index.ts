@@ -374,3 +374,13 @@ export {
 export {
   ObservableDarkModeScreen,
 } from './observables/dark-mode/ObservableDarkModeScreen';
+
+export {
+  ObservableTitleTopBar,
+} from './observables/top-bar/ObservableTitleTopBar';
+export {
+  ObservableTouchableTopBar,
+} from './observables/top-bar/ObservableTouchableTopBar';
+export {
+  ObservableTopBarButton,
+} from './observables/top-bar/ObservableTopBarButton';

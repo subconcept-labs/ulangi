@@ -15,6 +15,8 @@ import {
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableCategoryDetailScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
@@ -22,6 +24,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
 import { CategoryDetailScreenFactory } from '../../factories/category/CategoryDetailScreenFactory';
 import { CategoryDetailScreen } from './CategoryDetailScreen';
@@ -63,6 +66,21 @@ export class CategoryDetailScreenContainer extends Container<
       observable.box(false),
     ),
     ScreenName.CATEGORY_DETAIL_SCREEN,
+    new ObservableTitleTopBar(
+      'Detail',
+      new ObservableTopBarButton(
+        CategoryDetailScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -70,12 +88,6 @@ export class CategoryDetailScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === CategoryDetailScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   public componentDidMount(): void {
     this.screenDelegate.autoUpdateEditedVocabulary();

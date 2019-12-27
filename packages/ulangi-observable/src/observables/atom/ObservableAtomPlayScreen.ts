@@ -84,7 +84,7 @@ export class ObservableAtomPlayScreen extends ObservableScreen {
     shells: readonly ObservableShell[],
     screenName: ScreenName
   ) {
-    super(screenName);
+    super(screenName, null);
     this.gameState = gameState;
     this.gameStats = gameStats;
     this.noMoreVocabulary = noMoreVocabulary;

@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableGoogleSheetsAddOnScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableGoogleSheetsAddOnScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { GoogleSheetsAddOnScreenIds } from '../../constants/ids/GoogleSheetsAddOnScreenIds';
 import { GoogleSheetsAddOnScreenFactory } from '../../factories/google-sheets/GoogleSheetsAddOnScreenFactory';
 import { GoogleSheetsAddOnScreenStyle } from './GoogleSheetsAddOnScreenContainer.style';
@@ -30,6 +35,21 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
     undefined,
     undefined,
     ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN,
+    new ObservableTitleTopBar(
+      'Google Sheets Add-On',
+      new ObservableTopBarButton(
+        GoogleSheetsAddOnScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private screenFactory = new GoogleSheetsAddOnScreenFactory(
@@ -43,12 +63,6 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === GoogleSheetsAddOnScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

@@ -22,7 +22,7 @@ export class ObservableDictionaryPickerScreen extends ObservableScreen {
     translationListState: ObservableTranslationListState,
     screenName: ScreenName
   ) {
-    super(screenName);
+    super(screenName, null);
     this.currentTerm = currentTerm;
     this.dictionaryEntryState = dictionaryEntryState;
     this.translationListState = translationListState;

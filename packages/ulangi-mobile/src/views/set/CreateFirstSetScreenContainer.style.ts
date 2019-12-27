@@ -5,33 +5,26 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
-import { Images } from '../../constants/Images';
 import { CreateFirstSetScreenIds } from '../../constants/ids/CreateFirstSetScreenIds';
 import { SingleScreenStyle } from '../../styles/SingleScreenStyle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class CreateFirstSetScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     SingleScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
+      topBar: useCustomTopBar({
         testID: CreateFirstSetScreenIds.TOP_BAR,
-        visible: true,
-        title: {
-          text: '',
+        screenName: ScreenName.CREATE_FIRST_SET_SCREEN,
+        styles: {
+          light: SingleScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: SingleScreenStyle.TOP_BAR_DARK_STYLES,
         },
-        leftButtons: [
-          {
-            testID: CreateFirstSetScreenIds.LOG_OUT_BTN,
-            icon: Images.ARROW_LEFT_WHITE_22X22,
-            id: CreateFirstSetScreenIds.LOG_OUT_BTN,
-            disableIconTint: true,
-            color: '#fff',
-          },
-        ],
-      },
+      }),
     },
   );
 

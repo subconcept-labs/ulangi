@@ -12,6 +12,8 @@ import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableAddEditVocabularyScreen,
   ObservableDefinition,
+  ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableVocabularyFormState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -86,11 +88,10 @@ export class AddVocabularyScreenContainer extends Container<
         : 'Uncategorized',
     ),
     ScreenName.ADD_VOCABULARY_SCREEN,
-    {
-      title: 'Add Vocabulary',
-      subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-      testID: AddVocabularyScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      icon: _.has(
+    new ObservableTouchableTopBar(
+      AddVocabularyScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
         this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
@@ -100,10 +101,32 @@ export class AddVocabularyScreenContainer extends Container<
               .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-      onTitlePress: (): void => {
+      (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    },
+      new ObservableTopBarButton(
+        AddVocabularyScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        AddVocabularyScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.saveAdd(
+            this.props.passedProps.closeOnSaveSucceeded,
+          );
+        },
+      ),
+    ),
   );
 
   private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
@@ -113,15 +136,6 @@ export class AddVocabularyScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === AddVocabularyScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === AddVocabularyScreenIds.SAVE_BTN) {
-      Keyboard.dismiss();
-      this.screenDelegate.saveAdd(this.props.passedProps.closeOnSaveSucceeded);
-    }
-  }
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(

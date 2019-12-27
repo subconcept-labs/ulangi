@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -24,7 +27,10 @@ export class WelcomeScreenContainer extends Container {
       : WelcomeScreenStyle.SCREEN_FULL_DARK_STYLES;
   }
 
-  protected observableScreen = new ObservableScreen(ScreenName.WELCOME_SCREEN);
+  protected observableScreen = new ObservableScreen(
+    ScreenName.WELCOME_SCREEN,
+    new ObservableTitleTopBar('', null, null),
+  );
 
   private screenFactory = new WelcomeScreenFactory(
     this.props,

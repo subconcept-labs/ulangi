@@ -6,22 +6,26 @@
  */
 
 import { ScreenName, ScreenState } from '@ulangi/ulangi-common/enums';
-import { ScreenTitle } from '@ulangi/ulangi-common/interfaces';
 import { observable } from 'mobx';
+
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 
 export class ObservableScreen {
   @observable
   public screenName: ScreenName;
 
   @observable
-  public screenTitle?: ScreenTitle;
+  public topBar: null | ObservableTitleTopBar | ObservableTouchableTopBar;
 
   @observable
-  public screenState: ScreenState;
+  public screenState: ScreenState = ScreenState.UNMOUNTED;
 
-  public constructor(screenName: ScreenName, screenTitle?: ScreenTitle) {
+  public constructor(
+    screenName: ScreenName,
+    topBar: null | ObservableTitleTopBar | ObservableTouchableTopBar
+  ) {
     this.screenName = screenName;
-    this.screenTitle = screenTitle;
-    this.screenState = ScreenState.UNMOUNTED;
+    this.topBar = topBar;
   }
 }

@@ -9,6 +9,8 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableSearchScreen,
+  ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -49,11 +51,10 @@ export class SearchScreenContainer extends Container {
       observable.box(false),
     ),
     ScreenName.SEARCH_SCREEN,
-    {
-      title: 'Search',
-      subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-      testID: SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      icon: _.has(
+    new ObservableTouchableTopBar(
+      SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
         this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
@@ -63,10 +64,22 @@ export class SearchScreenContainer extends Container {
               .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-      onTitlePress: (): void => {
+      (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    },
+      new ObservableTopBarButton(
+        SearchScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_WHITE_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.searchFactory.createNavigatorDelegate();
@@ -76,12 +89,6 @@ export class SearchScreenContainer extends Container {
   private screenDelegate = this.searchFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SearchScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
