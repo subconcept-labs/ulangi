@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
 
   menu_container: {
     alignSelf: 'stretch',
-    marginTop: -50,
   },
 
   bottom_container: {
