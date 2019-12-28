@@ -101,7 +101,7 @@ export class VocabularyListDelegate {
     categoryName?: string,
   ): void {
     this.vocabularyListState.isRefreshing.set(true);
-    this.vocabularyListState.shouldShowSyncCompletedNotice.set(false);
+    this.vocabularyListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
     this.prepareAndFetch(filterType, categoryName);
   }

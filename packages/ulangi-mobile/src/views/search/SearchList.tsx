@@ -17,7 +17,6 @@ import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { SearchScreenIds } from '../../constants/ids/SearchScreenIds';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultText } from '../common/DefaultText';
-import { SynchronizableListHeader } from '../common/SynchronizableListHeader';
 import { VocabularyItem } from '../vocabulary/VocabularyItem';
 
 export interface SearchListProps {
@@ -102,18 +101,6 @@ export class SearchList extends React.Component<SearchListProps> {
             keyExtractor={this.keyExtractor}
             onEndReachedThreshold={0.5}
             onEndReached={this.props.search}
-            stickyHeaderIndices={[0]}
-            ListHeaderComponent={
-              <SynchronizableListHeader
-                shouldShowSyncingNotice={
-                  this.props.vocabularyListState.shouldShowSyncingNotice
-                }
-                shouldShowSyncCompletedNotice={
-                  this.props.vocabularyListState.shouldShowSyncCompletedNotice
-                }
-                refresh={this.props.refresh}
-              />
-            }
             ListFooterComponent={
               <DefaultActivityIndicator
                 activityState={this.props.vocabularyListState.fetchState}

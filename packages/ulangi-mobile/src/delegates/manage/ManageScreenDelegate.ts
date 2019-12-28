@@ -231,18 +231,18 @@ export class ManageScreenDelegate {
     );
   }
 
-  public autoShowSyncCompleted(): void {
+  public autoShowRefreshNotice(): void {
     this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
       (): void => {
         if (
           this.observableScreen.manageListType.get() ===
           ManageListType.CATEGORY_LIST
         ) {
-          this.observableScreen.categoryListState.shouldShowSyncCompletedNotice.set(
+          this.observableScreen.categoryListState.shouldShowRefreshNotice.set(
             true,
           );
         } else {
-          this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
+          this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
             true,
           );
         }

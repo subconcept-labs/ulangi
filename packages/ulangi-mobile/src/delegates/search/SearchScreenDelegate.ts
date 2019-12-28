@@ -96,7 +96,7 @@ export class SearchScreenDelegate {
   public autoShowSyncCompleted(): void {
     this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
       (): void => {
-        this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
+        this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
           true,
         );
       },

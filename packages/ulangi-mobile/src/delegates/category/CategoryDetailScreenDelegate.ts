@@ -108,10 +108,10 @@ export class CategoryDetailScreenDelegate {
     );
   }
 
-  public autoShowSyncCompleted(): void {
+  public autoShowRefreshNotice(): void {
     this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
       (): void => {
-        this.observableScreen.vocabularyListState.shouldShowSyncCompletedNotice.set(
+        this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
           true,
         );
       },

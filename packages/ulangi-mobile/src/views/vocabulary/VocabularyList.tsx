@@ -15,7 +15,6 @@ import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
-import { SynchronizableListHeader } from '../common/SynchronizableListHeader';
 import { VocabularyItem } from '../vocabulary/VocabularyItem';
 
 export interface VocabularyListProps {
@@ -27,7 +26,6 @@ export interface VocabularyListProps {
   showVocabularyActionMenu: (vocabulary: ObservableVocabulary) => void;
   fetchNext: () => void;
   refresh: () => void;
-  hideSyncingNotice?: boolean;
 }
 
 @observer
@@ -66,20 +64,6 @@ export class VocabularyList extends React.Component<VocabularyListProps> {
           onEndReached={(): void => this.props.fetchNext()}
           onRefresh={this.props.refresh}
           refreshing={this.props.vocabularyListState.isRefreshing.get()}
-          stickyHeaderIndices={this.props.hideSyncingNotice === true ? [] : [0]}
-          ListHeaderComponent={
-            this.props.hideSyncingNotice === true ? null : (
-              <SynchronizableListHeader
-                shouldShowSyncingNotice={
-                  this.props.vocabularyListState.shouldShowSyncingNotice
-                }
-                shouldShowSyncCompletedNotice={
-                  this.props.vocabularyListState.shouldShowSyncCompletedNotice
-                }
-                refresh={this.props.refresh}
-              />
-            )
-          }
           ListFooterComponent={
             <DefaultActivityIndicator
               activityState={this.props.vocabularyListState.fetchState}

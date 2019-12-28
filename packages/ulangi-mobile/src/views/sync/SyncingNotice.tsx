@@ -17,42 +17,72 @@ import { DefaultText } from '../common/DefaultText';
 
 export interface SyncingNoticeProps {
   shouldShowSyncingNotice: IObservableValue<boolean>;
+  shouldShowRefreshNotice: IObservableValue<boolean>;
   refresh: () => void;
 }
 
 @observer
 export class SyncingNotice extends React.Component<SyncingNoticeProps> {
   public render(): null | React.ReactElement<any> {
-    if (this.props.shouldShowSyncingNotice.get() === true) {
+    if (
+      this.props.shouldShowSyncingNotice.get() === true ||
+      this.props.shouldShowRefreshNotice.get() === true
+    ) {
       return (
-        <TouchableOpacity onPress={this.props.refresh} style={styles.container}>
-          <Animatable.View
-            animation="rotate"
-            easing="linear"
-            iterationCount="infinite"
-            useNativeDriver={true}>
-            <Image style={styles.icon} source={Images.SYNC_WHITE_20X20} />
-          </Animatable.View>
-          <DefaultText style={styles.text}>
-            <DefaultText>Syncing... </DefaultText>
-            <DefaultText style={styles.highlighted_text}>
-              Refresh content
-            </DefaultText>
-          </DefaultText>
-        </TouchableOpacity>
+        <Animatable.View
+          style={styles.container}
+          animation="slideInUp"
+          useNativeDriver={true}>
+          {this.renderContent()}
+        </Animatable.View>
       );
     } else {
       return null;
     }
   }
+
+  private renderContent(): React.ReactElement<any> {
+    return (
+      <TouchableOpacity
+        onPress={this.props.refresh}
+        style={styles.content_container}>
+        {this.props.shouldShowSyncingNotice.get() ? (
+          <>
+            <Animatable.View
+              animation="rotate"
+              easing="linear"
+              iterationCount="infinite"
+              useNativeDriver={true}>
+              <Image style={styles.icon} source={Images.SYNC_WHITE_20X20} />
+            </Animatable.View>
+            <DefaultText
+              allowFontScaling={false}
+              numberOfLines={1}
+              style={styles.text}>
+              <DefaultText>Syncing</DefaultText>
+            </DefaultText>
+          </>
+        ) : (
+          <DefaultText
+            allowFontScaling={false}
+            numberOfLines={1}
+            style={styles.text}>
+            <DefaultText>Tap to refresh</DefaultText>
+          </DefaultText>
+        )}
+      </TouchableOpacity>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {},
+
+  content_container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     height: 30,
     borderRadius: 15,
     backgroundColor: config.styles.primaryColor,

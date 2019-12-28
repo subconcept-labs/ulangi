@@ -92,7 +92,7 @@ export class CategoryDetailScreenContainer extends Container<
   public componentDidMount(): void {
     this.screenDelegate.autoUpdateEditedVocabulary();
     this.screenDelegate.autoRefreshOnMultipleEdit();
-    this.screenDelegate.autoShowSyncCompleted();
+    this.screenDelegate.autoShowRefreshNotice();
     this.screenDelegate.autoShowSyncingInProgress();
     this.screenDelegate.prepareAndFetch(
       this.observableScreen.selectedFilterType.get(),

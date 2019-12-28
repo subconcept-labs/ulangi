@@ -125,7 +125,7 @@ export class ManageScreenContainer extends Container {
       this.observableScreen,
     );
     this.screenDelegate.autoShowSyncingInProgress();
-    this.screenDelegate.autoShowSyncCompleted();
+    this.screenDelegate.autoShowRefreshNotice();
     this.screenDelegate.autoRefreshOnSetChange();
     this.screenDelegate.autoRefreshOnMultipleEdit();
     this.screenDelegate.autoRefreshEmptyListOnVocabularyChange();
