@@ -38,7 +38,7 @@ export class PremiumFeatureList extends React.Component {
           <Image style={styles.bullet} source={Images.STAR_BLUE_12X12} />
           <View style={styles.text_container}>
             <DefaultText style={styles.text}>
-              Support development and maintenance through one-time purchase.
+              Support development and maintenance through a one-time purchase.
             </DefaultText>
           </View>
         </View>

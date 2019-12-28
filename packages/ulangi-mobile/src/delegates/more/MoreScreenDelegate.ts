@@ -134,13 +134,13 @@ export class MoreScreenDelegate {
             if (!isPremium) {
               this.observableScreen.messages.push(
                 new ObservableCarouselMessage(
-                  'follow-us-on-twitter',
-                  'PROMOTIONAL OFFER',
-                  'A chance to get lifetime Premium for free. We give away promotional codes on Twitter weekly.',
+                  'open-source-projects',
+                  'DID YOU KNOW',
+                  'Ulangi is an open-source project. You can build more tools and features for it.',
                   '#1E88E5',
-                  'Follow us on Twitter',
+                  'See open-source projects',
                   '#1565C0',
-                  this.goToTwitter,
+                  this.navigateToOpenSourceProjectsScreen,
                 ),
               );
             }
@@ -279,6 +279,10 @@ export class MoreScreenDelegate {
 
   public navigateToGoogleSheetsAddOnScreen(): void {
     this.navigatorDelegate.push(ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN, {});
+  }
+
+  public navigateToOpenSourceProjectsScreen(): void {
+    this.navigatorDelegate.push(ScreenName.OPEN_SOURCE_PROJECTS_SCREEN, {});
   }
 
   public navigateToWhatsNewScreen(): void {

@@ -303,6 +303,15 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         key="general"
         header="GENERAL">
         <SectionRow
+          testID={MoreScreenIds.OPEN_SOURCE_PROJECTS_BTN}
+          theme={this.props.darkModeStore.theme}
+          leftText="Open-Source Projects"
+          showArrow={true}
+          onPress={(): void => {
+            this.props.screenDelegate.navigateToOpenSourceProjectsScreen();
+          }}
+        />
+        <SectionRow
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
           theme={this.props.darkModeStore.theme}
           leftText="Rate This App"

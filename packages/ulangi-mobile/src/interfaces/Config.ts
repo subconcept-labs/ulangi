@@ -37,6 +37,7 @@ export interface Config {
   };
 
   readonly links: {
+    readonly github: string;
     readonly reddit: string;
     readonly twitter: string;
     readonly instagram: string;
