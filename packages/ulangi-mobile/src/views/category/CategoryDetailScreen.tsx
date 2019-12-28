@@ -91,7 +91,6 @@ export class CategoryDetailScreen extends React.Component<
           }
           fetchNext={this.props.screenDelegate.fetch}
           refresh={this.props.screenDelegate.refreshCurrentList}
-          hideSyncingNotice={true}
         />
       );
     } else {

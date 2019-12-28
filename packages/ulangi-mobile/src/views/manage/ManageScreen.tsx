@@ -13,12 +13,13 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { ManageScreenDelegate } from '../../delegates/manage/ManageScreenDelegate';
 import { CategoryBulkActionBar } from '../category/CategoryBulkActionBar';
 import { CategoryList } from '../category/CategoryList';
+import { SyncingNotice } from '../sync/SyncingNotice';
 import { AddVocabularyFloatingButton } from '../vocabulary/AddVocabularyFloatingButton';
 import { NoVocabulary } from '../vocabulary/NoVocabulary';
 import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
@@ -53,7 +54,8 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           ? this.renderVocabularyList()
           : this.renderCategoryList()}
         {this.renderBulkActionBar()}
-        {this.renderFloatingButton()}
+        {this.renderSyncingNotice()}
+        {this.renderFloatingActionButton()}
       </View>
     );
   }
@@ -170,13 +172,13 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     }
   }
 
-  private renderFloatingButton(): null | React.ReactElement<any> {
+  private renderFloatingActionButton(): null | React.ReactElement<any> {
     if (
       !this.shouldShowVocabularyBulkActionBar() &&
       !this.shouldShowCategoryBulkActionBar()
     ) {
       return (
-        <View style={styles.floating_button_container}>
+        <View style={styles.floating_action_button}>
           <AddVocabularyFloatingButton
             addVocabulary={this.props.screenDelegate.goToAddVocabulary}
           />
@@ -187,6 +189,38 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     }
   }
 
+  private renderSyncingNotice(): null | React.ReactElement<any> {
+    if (
+      !this.shouldShowVocabularyBulkActionBar() &&
+      !this.shouldShowCategoryBulkActionBar()
+    ) {
+      return (
+        <View style={styles.syncing_notice}>
+          <SyncingNotice
+            shouldShowSyncingNotice={
+              this.props.observableScreen.manageListType.get() ===
+              ManageListType.CATEGORY_LIST
+                ? this.props.observableScreen.categoryListState
+                    .shouldShowSyncingNotice
+                : this.props.observableScreen.vocabularyListState
+                    .shouldShowSyncingNotice
+            }
+            shouldShowRefreshNotice={
+              this.props.observableScreen.manageListType.get() ===
+              ManageListType.CATEGORY_LIST
+                ? this.props.observableScreen.categoryListState
+                    .shouldShowRefreshNotice
+                : this.props.observableScreen.vocabularyListState
+                    .shouldShowRefreshNotice
+            }
+            refresh={this.props.screenDelegate.refreshCurrentList}
+          />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
   private shouldShowVocabularyBulkActionBar(): boolean {
     return (
       this.props.observableScreen.manageListType.get() ===
@@ -217,9 +251,18 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 
-  floating_button_container: {
+  floating_action_button: {
     position: 'absolute',
     right: 14,
     bottom: 14,
+  },
+
+  syncing_notice: {
+    position: 'absolute',
+    left: (Dimensions.get('window').width - 120) / 2,
+    bottom: 16,
+    width: 120,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

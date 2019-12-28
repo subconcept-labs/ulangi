@@ -84,7 +84,7 @@ export class CategoryListDelegate {
 
   public refresh(filterType: VocabularyFilterType): void {
     this.categoryListState.isRefreshing.set(true);
-    this.categoryListState.shouldShowSyncCompletedNotice.set(false);
+    this.categoryListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
     this.prepareAndFetch(filterType);
   }

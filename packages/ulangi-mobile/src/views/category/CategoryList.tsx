@@ -18,7 +18,6 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { CategoryItem } from '../category/CategoryItem';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
-import { SynchronizableListHeader } from '../common/SynchronizableListHeader';
 
 export interface CategoryListProps {
   testID: string;
@@ -37,7 +36,6 @@ export interface CategoryListProps {
   showLevelBreakdownForWR: (category: ObservableCategory) => void;
   refresh: () => void;
   fetchNext: () => void;
-  hideSyncingNotice?: boolean;
 }
 
 @observer
@@ -88,20 +86,6 @@ export class CategoryList extends React.Component<CategoryListProps> {
           onEndReached={(): void => this.props.fetchNext()}
           onRefresh={this.props.refresh}
           refreshing={this.props.categoryListState.isRefreshing.get()}
-          stickyHeaderIndices={this.props.hideSyncingNotice === true ? [] : [0]}
-          ListHeaderComponent={
-            this.props.hideSyncingNotice === true ? null : (
-              <SynchronizableListHeader
-                shouldShowSyncingNotice={
-                  this.props.categoryListState.shouldShowSyncingNotice
-                }
-                shouldShowSyncCompletedNotice={
-                  this.props.categoryListState.shouldShowSyncCompletedNotice
-                }
-                refresh={this.props.refresh}
-              />
-            )
-          }
           ListFooterComponent={
             <DefaultActivityIndicator
               activityState={this.props.categoryListState.fetchState}
