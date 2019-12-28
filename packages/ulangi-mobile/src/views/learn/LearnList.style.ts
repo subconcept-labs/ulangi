@@ -39,7 +39,6 @@ export const baseStyles: LearnListStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    paddingTop: 54,
   },
 
   writing_title_container: {
@@ -47,7 +46,6 @@ export const baseStyles: LearnListStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    paddingTop: 50,
   },
 
   quiz_title_container: {
@@ -55,7 +53,6 @@ export const baseStyles: LearnListStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    paddingTop: 50,
   },
 };
 

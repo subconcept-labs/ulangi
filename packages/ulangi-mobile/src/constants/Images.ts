@@ -58,6 +58,10 @@ export class Images {
     ],
   };
 
+  public static readonly SPACED_REPETITION_GREEN_30X30 = require('../../assets/img/spaced_repetition_green_30x30.png');
+  public static readonly WRITING_GREEN_30X30 = require('../../assets/img/writing_green_30x30.png');
+  public static readonly QUIZ_GREEN_30X30 = require('../../assets/img/quiz_green_30x30.png');
+
   public static readonly LOGO_60X60 = require('../../assets/img/logo_60x60.png');
   public static readonly LOGO_86X86 = require('../../assets/img/logo_86x86.png');
   public static readonly LOGO_120X120 = require('../../assets/img/logo_120x120.png');
@@ -178,20 +182,6 @@ export class Images {
 
   public static readonly CROSS_GREY_40X40 = require('../../assets/img/cross_grey_40x40.png');
   public static readonly REFRESH_GREY_40X40 = require('../../assets/img/refresh_grey_40x40.png');
-
-  public static readonly SPACED_REPETITION_TITLE_BLACK_184X42 = require('../../assets/img/spaced_repetition_title_black_184x42.png');
-  public static readonly SPACED_REPETITION_TITLE_WHITE_184X42 = require('../../assets/img/spaced_repetition_title_white_184x42.png');
-  public static readonly SPACED_REPETITION_FLORAL_50X76 = require('../../assets/img/spaced_repetition_floral_50x76.png');
-
-  public static readonly WRITING_TITLE_WHITE_115X42 = require('../../assets/img/writing_title_white_115x42.png');
-  public static readonly WRITING_TITLE_BLACK_115X42 = require('../../assets/img/writing_title_black_115x42.png');
-  public static readonly WRITING_FLORAL_32X74 = require('../../assets/img/writing_floral_32x74.png');
-
-  public static readonly QUIZ_TITLE_BLACK_118X42 = require('../../assets/img/quiz_title_black_118x42.png');
-  public static readonly QUIZ_TITLE_WHITE_118X42 = require('../../assets/img/quiz_title_white_118x42.png');
-  public static readonly QUIZ_FLORAL_40X80 = require('../../assets/img/quiz_floral_40x80.png');
-
-  public static readonly PREMIUM_FLORAL_62X56 = require('../../assets/img/premium_floral_62x56.png');
 
   public static readonly ATOM_TITLE_111X61 = require('../../assets/img/atom_title_111x61.png');
 

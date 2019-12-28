@@ -8,42 +8,41 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
+import { DefaultText } from '../common/DefaultText';
+import {
+  WritingTitleStyles,
+  darkStyles,
+  lightStyles,
+} from './WritingTitle.style';
 
-export interface WritingTitleStyles {
+export interface WritingTitleProps {
   theme: Theme;
+  styles?: {
+    light: WritingTitleStyles;
+    dark: WritingTitleStyles;
+  };
 }
 
 @observer
-export class WritingTitle extends React.Component<WritingTitleStyles> {
+export class WritingTitle extends React.Component<WritingTitleProps> {
+  public get styles(): WritingTitleStyles {
+    const light = this.props.styles ? this.props.styles.light : lightStyles;
+    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
+    return this.props.theme === Theme.LIGHT ? light : dark;
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.title}
-          source={
-            this.props.theme === Theme.LIGHT
-              ? Images.WRITING_TITLE_BLACK_115X42
-              : Images.WRITING_TITLE_WHITE_115X42
-          }
-        />
-        <Image style={styles.floral} source={Images.WRITING_FLORAL_32X74} />
+      <View style={this.styles.container}>
+        <DefaultText style={this.styles.title}>Writing</DefaultText>
+        <DefaultText style={this.styles.subtitle}>
+          WITH SPACED REPETITION
+        </DefaultText>
+        <Image source={Images.WRITING_GREEN_30X30} style={this.styles.icon} />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title: {},
-
-  floral: {
-    marginTop: 14,
-  },
-});
