@@ -114,7 +114,7 @@ export class MoreScreenDelegate {
           isReminderActive: this.isReminderActive(),
         };
       },
-      ({ isGuest, isPremium, isReminderActive }): void => {
+      ({ isGuest, isReminderActive }): void => {
         runInAction(
           (): void => {
             this.observableScreen.messages.clear();
@@ -131,19 +131,19 @@ export class MoreScreenDelegate {
                 ),
               );
             }
-            if (!isPremium) {
-              this.observableScreen.messages.push(
-                new ObservableCarouselMessage(
-                  'open-source-projects',
-                  'DID YOU KNOW',
-                  'Ulangi is an open-source project. You can build more tools and features for it.',
-                  '#1E88E5',
-                  'See open-source projects',
-                  '#1565C0',
-                  this.navigateToOpenSourceProjectsScreen,
-                ),
-              );
-            }
+
+            this.observableScreen.messages.push(
+              new ObservableCarouselMessage(
+                'open-source-projects',
+                'DID YOU KNOW',
+                'Ulangi is an open-source project. You can build more tools and features for it.',
+                '#1E88E5',
+                'See open-source projects',
+                '#1565C0',
+                this.navigateToOpenSourceProjectsScreen,
+              ),
+            );
+
             if (!isReminderActive) {
               this.observableScreen.messages.push(
                 new ObservableCarouselMessage(
