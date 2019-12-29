@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-mobile",
-  "version": "2.18.1",
+  "version": "3.0.0",
   "scripts": {
     "android": "react-native run-android --variant devDebug",
     "ios": "react-native run-ios --scheme UlangiMobile-Dev",
