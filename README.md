@@ -10,10 +10,8 @@
 <h3 align="center">
   <a href="/" alt="Written in React-Native">
     <img src="https://img.shields.io/badge/framework-react--native-brightgreen" /></a>
-  <a href="/" alt="Release version">
-    <img src="https://img.shields.io/github/v/release/minhloi/ulangi" /></a>
-  <a href="https://github.com/minhloi/ulangi/blob/master/LICENSE" alt="License: GPL v3">
-    <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
+  <a href="https://github.com/minhloi/ulangi/releases" alt="Release version">
+    <img src="https://img.shields.io/github/v/tag/minhloi/ulangi?label=version" /></a>
   <a href="https://twitter.com/UlangiApp" alt="Ulangi's Twitter">
     <img src="https://img.shields.io/twitter/follow/UlangiApp?style=social" /></a>
 </h3>

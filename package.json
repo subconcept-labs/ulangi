@@ -34,5 +34,6 @@
   },
   "dependencies": {
     "@types/google-apps-script": "0.0.54"
-  }
+  },
+  "license": "GPL-3.0"
 }
