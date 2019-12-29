@@ -18,7 +18,7 @@ export const QuizSettingsScreenIds = {
   SELECT_MULTIPLE_CHOICE_QUIZ_LIMIT_BTN_BY_LIMIT: (limit: number): string =>
     'SELECT_MULTIPLE_CHOICE_QUIZ_BTN_BY_LIMIT' + limit,
   SELECT_VOCABULARY_POOL_BTN_BY_VOCABULARY_POOL_NAME: (
-    vocabularyPoolName: string
+    vocabularyPoolName: string,
   ): string =>
     'SELECT_VOCABULARY_POOL_BTN_BY_VOCABULARY_POOL_NAME_' + vocabularyPoolName,
 };

@@ -54,8 +54,7 @@ export class AddEditVocabularyScreen extends React.Component<
         <SmartScrollView
           keyboardShouldPersistTaps="handled"
           keyboardAware={true}
-          style={styles.scrollview}
-        >
+          style={styles.scrollview}>
           <DismissKeyboardView>
             <VocabularyForm
               theme={this.props.darkModeStore.theme}

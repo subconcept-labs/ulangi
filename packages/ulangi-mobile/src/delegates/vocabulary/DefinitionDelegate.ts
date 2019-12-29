@@ -22,7 +22,7 @@ export class DefinitionDelegate {
 
   public prependBuiltInWordClassesToMeaning(
     meaning: string,
-    wordClasses: readonly WordClass[]
+    wordClasses: readonly WordClass[],
   ): string {
     // Only prepend if there are no custom word classes in meaning
     if (!this.hasCustomWordClasses(meaning) && wordClasses.length > 0) {
@@ -30,7 +30,7 @@ export class DefinitionDelegate {
         .map(
           (wordClass): string => {
             return '[' + config.builtInWordClass.map[wordClass].abbr + ']';
-          }
+          },
         )
         .join(' ');
 

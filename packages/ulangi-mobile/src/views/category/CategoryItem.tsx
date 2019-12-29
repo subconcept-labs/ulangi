@@ -37,11 +37,11 @@ export interface CategoryItemProps {
   toggleSelection: (categoryName: string) => void;
   showCategoryDetail: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType
+    filterType: VocabularyFilterType,
   ) => void;
   showCategoryActionMenu: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType
+    filterType: VocabularyFilterType,
   ) => void;
   reviewWithSpacedRepetition: () => void;
   reviewWithWriting: () => void;
@@ -66,16 +66,15 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
       <View style={this.styles.item_container}>
         <TouchableOpacity
           testID={CategoryItemIds.VIEW_DETAIL_BTN_BY_CATEGORY_NAME(
-            this.props.category.categoryName
+            this.props.category.categoryName,
           )}
           style={this.styles.top_container}
           onPress={(): void =>
             this.props.showCategoryDetail(
               this.props.category,
-              this.props.selectedFilterType.get()
+              this.props.selectedFilterType.get(),
             )
-          }
-        >
+          }>
           <View style={this.styles.left}>
             <DefaultText style={this.styles.category_name}>
               {this.props.category.categoryName}
@@ -86,8 +85,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           </View>
           <View style={this.styles.right}>
             <View
-              style={[this.styles.right_item, this.styles.first_right_item]}
-            >
+              style={[this.styles.right_item, this.styles.first_right_item]}>
               <DefaultText style={this.styles.count}>
                 {this.props.category.totalCount}
               </DefaultText>
@@ -108,8 +106,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           style={this.styles.stats_container}
           onPress={(): void =>
             this.props.showLevelBreakdownForSR(this.props.category)
-          }
-        >
+          }>
           <View style={this.styles.stats_label_container}>
             <DefaultText style={this.styles.stats_label}>SR</DefaultText>
           </View>
@@ -136,7 +133,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 ButtonSize.X_SMALL,
                 this.props.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
-                  : config.styles.dark.primaryTextColor
+                  : config.styles.dark.primaryTextColor,
               )}
             />
           </View>
@@ -145,8 +142,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           style={this.styles.stats_container}
           onPress={(): void =>
             this.props.showLevelBreakdownForWR(this.props.category)
-          }
-        >
+          }>
           <View style={this.styles.stats_label_container}>
             <DefaultText style={this.styles.stats_label}>WR</DefaultText>
           </View>
@@ -173,7 +169,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 ButtonSize.X_SMALL,
                 this.props.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
-                  : config.styles.dark.primaryTextColor
+                  : config.styles.dark.primaryTextColor,
               )}
             />
           </View>
@@ -192,18 +188,17 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           testID={
             this.props.category.isSelected.get()
               ? CategoryItemIds.UNSELECT_BTN_BY_CATEGORY_NAME(
-                  this.props.category.categoryName
+                  this.props.category.categoryName,
                 )
               : CategoryItemIds.SELECT_BTN_BY_CATEGORY_NAME(
-                  this.props.category.categoryName
+                  this.props.category.categoryName,
                 )
           }
           hitSlop={{ top: 22, bottom: 22, right: 16, left: 16 }}
           onPress={(): void =>
             this.props.toggleSelection(this.props.category.categoryName)
           }
-          style={this.styles.action_btn}
-        >
+          style={this.styles.action_btn}>
           {this.props.category.isSelected.get() === true ? (
             <Image source={Images.CHECK_BLUE_22X22} />
           ) : (
@@ -215,17 +210,16 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
       return (
         <TouchableOpacity
           testID={CategoryItemIds.SHOW_ACTION_MENU_BTN_BY_CATEGORY_NAME(
-            this.props.category.categoryName
+            this.props.category.categoryName,
           )}
           style={this.styles.action_btn}
           hitSlop={{ top: 22, bottom: 22, right: 16, left: 16 }}
           onPress={(): void =>
             this.props.showCategoryActionMenu(
               this.props.category,
-              this.props.selectedFilterType.get()
+              this.props.selectedFilterType.get(),
             )
-          }
-        >
+          }>
           <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
         </TouchableOpacity>
       );

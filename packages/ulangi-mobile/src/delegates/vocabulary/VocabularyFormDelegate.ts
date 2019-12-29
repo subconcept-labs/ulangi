@@ -45,7 +45,7 @@ export class VocabularyFormDelegate {
     vocabularyFormState: ObservableVocabularyFormState,
     definitionDelegate: DefinitionDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableLightBox = observableLightBox;
     this.observableKeyboard = observableKeyboard;
@@ -59,8 +59,8 @@ export class VocabularyFormDelegate {
   public addDefinitionSlot(): void {
     this.vocabularyFormState.definitions.push(
       this.observableConverter.convertToObservableDefinition(
-        this.definitionBuilder.build({ source: 'N/A' })
-      )
+        this.definitionBuilder.build({ source: 'N/A' }),
+      ),
     );
   }
 
@@ -70,11 +70,11 @@ export class VocabularyFormDelegate {
       typeof definition.meaning !== 'undefined'
     ) {
       const meaning = !this.definitionDelegate.hasCustomWordClasses(
-        definition.meaning
+        definition.meaning,
       )
         ? this.definitionDelegate.prependBuiltInWordClassesToMeaning(
             definition.meaning,
-            definition.wordClasses
+            definition.wordClasses,
           )
         : definition.meaning;
 
@@ -83,7 +83,7 @@ export class VocabularyFormDelegate {
 
     const lastDefinition = assertExists(
       _.last(this.vocabularyFormState.definitions),
-      'lastDefintion should not be null or undefined'
+      'lastDefintion should not be null or undefined',
     );
 
     // If the meaning is empty, merge definition to the last one
@@ -94,15 +94,15 @@ export class VocabularyFormDelegate {
         this.definitionBuilder.build({
           ...definition,
           definitionId: lastDefinition.definitionId,
-        })
+        }),
       );
     }
     // If the meaning is not empty, then add new slot
     else {
       this.vocabularyFormState.definitions.push(
         this.observableConverter.convertToObservableDefinition(
-          this.definitionBuilder.build(definition)
-        )
+          this.definitionBuilder.build(definition),
+        ),
       );
     }
   }
@@ -112,7 +112,7 @@ export class VocabularyFormDelegate {
     if (this.vocabularyFormState.definitions.length === 1) {
       this.vocabularyFormState.setDefinitions([
         this.observableConverter.convertToObservableDefinition(
-          this.definitionBuilder.build({ source: 'N/A' })
+          this.definitionBuilder.build({ source: 'N/A' }),
         ),
       ]);
     } else {
@@ -136,7 +136,7 @@ export class VocabularyFormDelegate {
             this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
         {
@@ -147,7 +147,7 @@ export class VocabularyFormDelegate {
             this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
       ],
@@ -169,7 +169,7 @@ export class VocabularyFormDelegate {
           currentTerm: this.vocabularyFormState.vocabularyTerm,
           onPick: (definition): void => this.addDefinition(definition),
         },
-        SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+        SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
       );
     }
   }
@@ -184,7 +184,7 @@ export class VocabularyFormDelegate {
         onPick: (extraField, value, cursor): void =>
           this.addExtraFieldForTerm(extraField.parseDirection, value, cursor),
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -205,7 +205,7 @@ export class VocabularyFormDelegate {
                   message: 'Please enter the definition first.',
                   showCloseButton: true,
                 });
-              }
+              },
             );
           } else {
             this.selectImages(index);
@@ -216,10 +216,10 @@ export class VocabularyFormDelegate {
             index,
             extraField.parseDirection,
             value,
-            cursor
+            cursor,
           ),
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -237,7 +237,7 @@ export class VocabularyFormDelegate {
             this.vocabularyFormState.categoryName = categoryName;
           },
         });
-      }
+      },
     );
   }
 
@@ -249,7 +249,7 @@ export class VocabularyFormDelegate {
           index,
           'right',
           urls.map((url): string => `[image: ${url}]`).join('\n'),
-          undefined
+          undefined,
         );
       },
     });
@@ -258,7 +258,7 @@ export class VocabularyFormDelegate {
   private addExtraFieldForTerm(
     position: 'left' | 'right',
     value: string,
-    cursor: undefined | number
+    cursor: undefined | number,
   ): void {
     const currentText = this.vocabularyFormState.vocabularyText;
 
@@ -275,7 +275,7 @@ export class VocabularyFormDelegate {
               'This extra field must be added after the term. Please enter the term first.',
             showCloseButton: true,
           });
-        }
+        },
       );
     } else {
       if (position === 'left') {
@@ -317,7 +317,7 @@ export class VocabularyFormDelegate {
     index: number,
     position: 'left' | 'right',
     value: string,
-    cursor: undefined | number
+    cursor: undefined | number,
   ): void {
     const currentDefinition = this.vocabularyFormState.definitions[index];
     if (position === 'right' && currentDefinition.plainMeaning === '') {
@@ -330,7 +330,7 @@ export class VocabularyFormDelegate {
               'This extra field must be added after the definition. Please enter the definition first.',
             showCloseButton: true,
           });
-        }
+        },
       );
     } else {
       if (position === 'left') {

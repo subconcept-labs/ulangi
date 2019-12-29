@@ -23,7 +23,7 @@ export interface ExtraFieldsPickerScreenPassedProps {
   readonly onPick: (
     extraFieldDetail: ExtraFieldDetail,
     value: string,
-    cursor: undefined | number
+    cursor: undefined | number,
   ) => void;
 }
 
@@ -42,19 +42,20 @@ export class ExtraFieldsPickerScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.EXTRA_FIELDS_PICKER_SCREEN
+    ScreenName.EXTRA_FIELDS_PICKER_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = new ExtraFieldsPickerScreenDelegate(
-    this.navigatorDelegate
+    this.navigatorDelegate,
   );
 
   protected onThemeChanged(theme: Theme): void {
@@ -65,7 +66,7 @@ export class ExtraFieldsPickerScreenContainer extends Container<
           : {}
         : this.props.styles
         ? this.props.styles.dark
-        : {}
+        : {},
     );
   }
 

@@ -8,47 +8,46 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
+import { DefaultText } from '../common/DefaultText';
+import {
+  SpacedRepetitionTitleStyles,
+  darkStyles,
+  lightStyles,
+} from './SpacedRepetitionTitle.style';
 
-export interface SpacedRepetitionTitleStyles {
+export interface SpacedRepetitionTitleProps {
   theme: Theme;
+  styles?: {
+    light: SpacedRepetitionTitleStyles;
+    dark: SpacedRepetitionTitleStyles;
+  };
 }
 
 @observer
 export class SpacedRepetitionTitle extends React.Component<
-  SpacedRepetitionTitleStyles
+  SpacedRepetitionTitleProps
 > {
+  public get styles(): SpacedRepetitionTitleStyles {
+    const light = this.props.styles ? this.props.styles.light : lightStyles;
+    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
+    return this.props.theme === Theme.LIGHT ? light : dark;
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View style={this.styles.container}>
+        <DefaultText style={this.styles.title}>Spaced Repetition</DefaultText>
+        <DefaultText style={this.styles.subtitle}>
+          A WELL-KNOWN LEARNING TECHNIQUE
+        </DefaultText>
         <Image
-          style={styles.title}
-          source={
-            this.props.theme === Theme.LIGHT
-              ? Images.SPACED_REPETITION_TITLE_BLACK_184X42
-              : Images.SPACED_REPETITION_TITLE_WHITE_184X42
-          }
-        />
-        <Image
-          style={styles.floral}
-          source={Images.SPACED_REPETITION_FLORAL_50X76}
+          source={Images.SPACED_REPETITION_GREEN_30X30}
+          style={this.styles.icon}
         />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title: {},
-
-  floral: {
-    marginTop: 18,
-  },
-});

@@ -45,8 +45,7 @@ export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
         theme={this.props.darkModeStore.theme}
         observableLightBox={this.props.observableLightBox}
         dismissLightBox={this.props.screenDelegate.dismissLightBox}
-        title="Intervals"
-      >
+        title="Intervals">
         {this.props.levelIntervalPairs.map(
           ([level, interval]): React.ReactElement<any> => {
             return (
@@ -55,8 +54,7 @@ export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
                   <DefaultText
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={this.styles.level}
-                  >
+                    style={this.styles.level}>
                     {'Level ' + level}
                   </DefaultText>
                 </View>
@@ -69,7 +67,7 @@ export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
                 </View>
               </View>
             );
-          }
+          },
         )}
       </LightBoxContainerWithTitle>
     );

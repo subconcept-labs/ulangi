@@ -27,10 +27,13 @@ export class SignOutScreenContainer extends Container {
   private screenFactory = new SignOutScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
-  protected observableScreen = new ObservableScreen(ScreenName.SIGN_OUT_SCREEN);
+  protected observableScreen = new ObservableScreen(
+    ScreenName.SIGN_OUT_SCREEN,
+    null,
+  );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
@@ -43,7 +46,7 @@ export class SignOutScreenContainer extends Container {
         this.screenDelegate.didAllScreenNameUnmountedExceptSignOutScreen(),
       (): void => {
         this.screenDelegate.signOut();
-      }
+      },
     );
   }
 
@@ -51,7 +54,7 @@ export class SignOutScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SignOutScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SignOutScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SignOutScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

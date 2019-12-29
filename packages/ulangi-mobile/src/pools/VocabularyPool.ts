@@ -27,7 +27,7 @@ export class VocabularyPool<V extends Vocabulary = Vocabulary> {
   public getRandomVocabularyFromPool(
     limit: number,
     unique: boolean,
-    except?: readonly string[]
+    except?: readonly string[],
   ): readonly V[] {
     let picked: V[] = [];
 
@@ -38,13 +38,13 @@ export class VocabularyPool<V extends Vocabulary = Vocabulary> {
       except.forEach(
         (vocabularyId): void => {
           vocabularyPool = vocabularyPool.remove(vocabularyId);
-        }
+        },
       );
     }
 
     while (picked.length < limit && !vocabularyPool.isEmpty()) {
       const [vocabularyId, vocabulary] = pickRandomFromImmutableMap(
-        vocabularyPool
+        vocabularyPool,
       );
       if (unique === true) {
         // Remove it remove pool, so we won't pick it again

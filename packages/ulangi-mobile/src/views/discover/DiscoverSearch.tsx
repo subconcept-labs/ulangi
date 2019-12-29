@@ -49,7 +49,7 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
           this.textInputRef.focus();
           this.props.shouldFocusSearchInput.set(false);
         }
-      }
+      },
     );
   }
 
@@ -102,8 +102,7 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
         <TouchableOpacity
           testID={DiscoverScreenIds.CLEAR_SEARCH_INPUT}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          onPress={this.props.clearSearchInput}
-        >
+          onPress={this.props.clearSearchInput}>
           <Image
             style={this.styles.remove_icon}
             source={Images.REMOVE_GREY_16X16}

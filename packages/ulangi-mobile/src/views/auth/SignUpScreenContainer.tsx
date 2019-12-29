@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSignUpScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSignUpScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -27,7 +30,7 @@ export class SignUpScreenContainer extends Container {
   private screenFactory = new SignUpScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSignUpScreen(
@@ -36,20 +39,21 @@ export class SignUpScreenContainer extends Container {
     '',
     false,
     false,
-    ScreenName.SIGN_UP_SCREEN
+    ScreenName.SIGN_UP_SCREEN,
+    new ObservableTitleTopBar('Sign Up', null, null),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SignUpScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SignUpScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SignUpScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -50,13 +50,12 @@ export class VocabularyDetailScreen extends React.Component<
   public render(): React.ReactElement<any> {
     const currentSet = assertExists(
       this.props.setStore.currentSet,
-      'currentSet should not be undefined or null'
+      'currentSet should not be undefined or null',
     );
     return (
       <View
         style={this.styles.screen}
-        testID={VocabularyDetailScreenIds.SCREEN}
-      >
+        testID={VocabularyDetailScreenIds.SCREEN}>
         <ScrollView style={this.styles.container}>
           <VocabularyDetailTitle
             theme={this.props.darkModeStore.theme}
@@ -70,7 +69,7 @@ export class VocabularyDetailScreen extends React.Component<
             speak={(): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
                 this.props.observableScreen.vocabulary.vocabularyTerm,
-                currentSet.learningLanguageCode
+                currentSet.learningLanguageCode,
               )
             }
           />
@@ -85,7 +84,7 @@ export class VocabularyDetailScreen extends React.Component<
             speak={(text): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
                 text,
-                currentSet.learningLanguageCode
+                currentSet.learningLanguageCode,
               )
             }
           />
@@ -97,14 +96,14 @@ export class VocabularyDetailScreen extends React.Component<
             theme={this.props.darkModeStore.theme}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextSpacedRepetitionReview(
-              this.props.observableScreen.vocabulary
+              this.props.observableScreen.vocabulary,
             )}
           />
           <VocabularyDetailWritingInfo
             theme={this.props.darkModeStore.theme}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextWritingReview(
-              this.props.observableScreen.vocabulary
+              this.props.observableScreen.vocabulary,
             )}
           />
         </ScrollView>

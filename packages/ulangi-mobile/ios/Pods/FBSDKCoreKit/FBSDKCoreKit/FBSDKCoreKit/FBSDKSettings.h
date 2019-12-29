@@ -95,7 +95,8 @@ NS_SWIFT_NAME(jpegCompressionQuality);
  Controls sdk crash report
  If not explicitly set, the default is true
  */
-@property (class, nonatomic, assign, getter=isInstrumentEnabled) BOOL instrumentEnabled;
+@property (class, nonatomic, assign, getter=isInstrumentEnabled) BOOL instrumentEnabled
+__attribute((deprecated("This attribute is no longer used, use autoLogAppEventsEnabled instead.")));
 
 /**
  Controls the auto logging of basic app events, such as activateApp and deactivateApp.
@@ -132,14 +133,14 @@ NS_SWIFT_NAME(jpegCompressionQuality);
 
  If not explicitly set, the default will be read from the application's plist (FacebookAppID).
  */
-@property (class, nonatomic, copy, null_resettable) NSString *appID;
+@property (class, nonatomic, copy, nullable) NSString *appID;
 
 /**
   The default url scheme suffix used for sessions.
 
  If not explicitly set, the default will be read from the application's plist (FacebookUrlSchemeSuffix).
  */
-@property (class, nonatomic, copy, null_resettable) NSString *appURLSchemeSuffix;
+@property (class, nonatomic, copy, nullable) NSString *appURLSchemeSuffix;
 
 /**
   The Client Token that has been set via [FBSDKSettings setClientToken].
@@ -150,7 +151,7 @@ NS_SWIFT_NAME(jpegCompressionQuality);
 
  If not explicitly set, the default will be read from the application's plist (FacebookClientToken).
  */
-@property (class, nonatomic, copy, null_resettable) NSString *clientToken;
+@property (class, nonatomic, copy, nullable) NSString *clientToken;
 
 /**
   The Facebook Display Name used by the SDK.
@@ -160,7 +161,7 @@ NS_SWIFT_NAME(jpegCompressionQuality);
 
  If not explicitly set, the default will be read from the application's plist (FacebookDisplayName).
  */
-@property (class, nonatomic, copy, null_resettable) NSString *displayName;
+@property (class, nonatomic, copy, nullable) NSString *displayName;
 
 /**
  The Facebook domain part. This can be used to change the Facebook domain
@@ -168,7 +169,7 @@ NS_SWIFT_NAME(jpegCompressionQuality);
 
  If not explicitly set, the default will be read from the application's plist (FacebookDomainPart).
  */
-@property (class, nonatomic, copy, null_resettable) NSString *facebookDomainPart;
+@property (class, nonatomic, copy, nullable) NSString *facebookDomainPart;
 
 /**
   The current Facebook SDK logging behavior. This should consist of strings

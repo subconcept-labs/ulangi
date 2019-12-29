@@ -29,7 +29,7 @@ export const lightStyles = StyleSheet.create(
     dialog_container: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -37,5 +37,5 @@ export const darkStyles = StyleSheet.create(
     dialog_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
-  })
+  }),
 );

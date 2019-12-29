@@ -13,14 +13,14 @@ import { ScreenFactory } from '../ScreenFactory';
 export class SpacedRepetitionFAQScreenFactory extends ScreenFactory {
   public createScreenDelegate(): SpacedRepetitionFAQScreenDelegate {
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
     return new SpacedRepetitionFAQScreenDelegate(
       linkingDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

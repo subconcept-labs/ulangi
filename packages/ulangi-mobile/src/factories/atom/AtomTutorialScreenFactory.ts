@@ -22,19 +22,19 @@ export class AtomTutorialScreenFactory extends ScreenFactory {
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableAtomTutorialScreen
+    observableScreen: ObservableAtomTutorialScreen,
   ): AtomTutorialScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
     const originDelegate = new AtomOriginDelegate(observableScreen);
     const particleDelegate = new AtomParticleDelegate(
       this.observer,
-      observableScreen
+      observableScreen,
     );
     const shellDelegate = new AtomShellDelegate(observableScreen);
     const arcDelegate = new AtomArcDelegate(observableScreen);
     const answerDelegate = new AtomAnswerDelegate(
       observableScreen,
-      particleDelegate
+      particleDelegate,
     );
 
     return new AtomTutorialScreenDelegate(
@@ -44,7 +44,7 @@ export class AtomTutorialScreenFactory extends ScreenFactory {
       shellDelegate,
       arcDelegate,
       answerDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

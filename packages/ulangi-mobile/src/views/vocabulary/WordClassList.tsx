@@ -34,7 +34,7 @@ export class WordClassList extends React.Component<WordClassListProps> {
   }
 
   private renderCustomWordClasses(
-    wordClasses: readonly string[]
+    wordClasses: readonly string[],
   ): React.ReactElement<any> {
     return (
       <React.Fragment>
@@ -42,7 +42,7 @@ export class WordClassList extends React.Component<WordClassListProps> {
           (wordClass): React.ReactElement<any> => {
             let wordClassConfig = config.customWordClass.map[wordClass];
             if (typeof wordClassConfig === 'undefined') {
-              wordClassConfig = config.customWordClass.map['other'];
+              wordClassConfig = config.customWordClass.map.other;
             }
 
             const container_extra_style = {
@@ -59,21 +59,20 @@ export class WordClassList extends React.Component<WordClassListProps> {
               <View
                 key={wordClass}
                 testID={VocabularyItemIds.WORD_CLASS_BY_VALUE(wordClass)}
-                style={[styles.word_class_container, container_extra_style]}
-              >
+                style={[styles.word_class_container, container_extra_style]}>
                 <DefaultText style={[styles.word_class, text_extra_style]}>
                   {wordClass}
                 </DefaultText>
               </View>
             );
-          }
+          },
         )}
       </React.Fragment>
     );
   }
 
   private renderBuiltInWordClasses(
-    wordClasses: readonly WordClass[]
+    wordClasses: readonly WordClass[],
   ): React.ReactElement<any> {
     return (
       <React.Fragment>
@@ -93,14 +92,13 @@ export class WordClassList extends React.Component<WordClassListProps> {
               <View
                 key={wordClass}
                 testID={VocabularyItemIds.WORD_CLASS_BY_VALUE(wordClass)}
-                style={[styles.word_class_container, container_extra_style]}
-              >
+                style={[styles.word_class_container, container_extra_style]}>
                 <DefaultText style={[styles.word_class, text_extra_style]}>
                   {config.builtInWordClass.map[wordClass].abbr}
                 </DefaultText>
               </View>
             );
-          }
+          },
         )}
       </React.Fragment>
     );

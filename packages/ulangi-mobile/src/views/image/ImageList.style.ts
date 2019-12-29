@@ -86,7 +86,7 @@ export const lightStyles = StyleSheet.create(
     empty_text: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -103,7 +103,7 @@ export const darkStyles = StyleSheet.create(
     empty_text: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const selectableImageLightStyles = StyleSheet.create(
@@ -112,7 +112,7 @@ export const selectableImageLightStyles = StyleSheet.create(
       padding: imagePadding,
     },
     image: calculateImageDimension(),
-  })
+  }),
 );
 
 export const selectableImageDarkStyles = StyleSheet.create(
@@ -121,7 +121,7 @@ export const selectableImageDarkStyles = StyleSheet.create(
       padding: imagePadding,
     },
     image: calculateImageDimension(),
-  })
+  }),
 );
 
 function calculateImageDimension(): ViewStyle {

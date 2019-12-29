@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableTouchableTopBar,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -30,26 +33,31 @@ export class LearnScreenContainer extends Container {
   private screenFactory = new LearnScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
-  protected observableScreen = new ObservableScreen(ScreenName.LEARN_SCREEN, {
-    title: 'Learn',
-    subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-    testID: LearnScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-    icon: _.has(
-      Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-      this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
-    )
-      ? _.get(
-          Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-          this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
-        )
-      : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-    onTitlePress: (): void => {
-      this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
-    },
-  });
+  protected observableScreen = new ObservableScreen(
+    ScreenName.LEARN_SCREEN,
+    new ObservableTouchableTopBar(
+      LearnScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
+        Images.FLAG_ICONS_BY_LANGUAGE_CODE,
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
+      )
+        ? _.get(
+            Images.FLAG_ICONS_BY_LANGUAGE_CODE,
+            this.props.rootStore.setStore.existingCurrentSet
+              .learningLanguageCode,
+          )
+        : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
+      (): void => {
+        this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
+      },
+      null,
+      null,
+    ),
+  );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
@@ -59,7 +67,7 @@ export class LearnScreenContainer extends Container {
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
   }
 
@@ -67,7 +75,7 @@ export class LearnScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : LearnScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : LearnScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -30,7 +30,7 @@ export class AddVocabularyDelegate {
   public constructor(
     eventBus: EventBus,
     setStore: ObservableSetStore,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -44,12 +44,12 @@ export class AddVocabularyDelegate {
       onAdding: () => void;
       onAddSucceeded: () => void;
       onAddFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.analytics.logEvent('add_vocab_from_dictionary');
     const vocabulary = this.publicVocabularyConverter.convertToVocabulary(
       publicVocabulary,
-      categoryName
+      categoryName,
     );
     this.eventBus.pubsub(
       createAction(ActionType.VOCABULARY__ADD, {
@@ -61,9 +61,9 @@ export class AddVocabularyDelegate {
         once(ActionType.VOCABULARY__ADD_SUCCEEDED, callback.onAddSucceeded),
         once(
           ActionType.VOCABULARY__ADD_FAILED,
-          ({ errorCode }): void => callback.onAddFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onAddFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -74,7 +74,7 @@ export class AddVocabularyDelegate {
       onAddingAll: () => void;
       onAddAllSucceeded: () => void;
       onAddAllFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.analytics.logEvent('add_vocab_from_list');
     const newVocabularyList = vocabularyList.map(
@@ -83,9 +83,9 @@ export class AddVocabularyDelegate {
           {
             ...vocabulary,
           },
-          categoryName
+          categoryName,
         );
-      }
+      },
     );
     this.eventBus.pubsub(
       createAction(ActionType.VOCABULARY__ADD_MULTIPLE, {
@@ -96,13 +96,13 @@ export class AddVocabularyDelegate {
         on(ActionType.VOCABULARY__ADDING_MULTIPLE, callback.onAddingAll),
         once(
           ActionType.VOCABULARY__ADD_MULTIPLE_SUCCEEDED,
-          callback.onAddAllSucceeded
+          callback.onAddAllSucceeded,
         ),
         once(
           ActionType.VOCABULARY__ADD_MULTIPLE_FAILED,
-          ({ errorCode }): void => callback.onAddAllFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onAddAllFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -112,17 +112,17 @@ export class AddVocabularyDelegate {
       onAdding: () => void;
       onAddSucceeded: () => void;
       onAddFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.analytics.logEvent('add_vocab_from_translation');
     const translation = this.translationConverter.convertToTranslation(
       translationWithLanguages,
       this.setStore.existingCurrentSet.learningLanguageCode,
-      this.setStore.existingCurrentSet.translatedToLanguageCode
+      this.setStore.existingCurrentSet.translatedToLanguageCode,
     );
 
     const newVocabulary = this.translationConverter.convertToVocabulary(
-      translation
+      translation,
     );
 
     this.eventBus.pubsub(
@@ -135,9 +135,9 @@ export class AddVocabularyDelegate {
         once(ActionType.VOCABULARY__ADD_SUCCEEDED, callback.onAddSucceeded),
         once(
           ActionType.VOCABULARY__ADD_FAILED,
-          ({ errorCode }): void => callback.onAddFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onAddFailed(errorCode),
+        ),
+      ),
     );
   }
 }

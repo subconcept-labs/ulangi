@@ -47,8 +47,7 @@ export class CategoryDetailScreen extends React.Component<
     return (
       <SafeAreaView
         style={this.styles.screen}
-        testID={CategoryDetailScreenIds.SCREEN}
-      >
+        testID={CategoryDetailScreenIds.SCREEN}>
         <CategoryDetailHeader
           theme={this.props.darkModeStore.theme}
           category={this.props.observableScreen.category}
@@ -92,7 +91,6 @@ export class CategoryDetailScreen extends React.Component<
           }
           fetchNext={this.props.screenDelegate.fetch}
           refresh={this.props.screenDelegate.refreshCurrentList}
-          hideSyncingNotice={true}
         />
       );
     } else {

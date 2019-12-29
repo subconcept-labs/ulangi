@@ -67,7 +67,7 @@ export const lightStyles = StyleSheet.create(
     save_text: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -79,5 +79,5 @@ export const darkStyles = StyleSheet.create(
     save_text: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

@@ -29,7 +29,7 @@ export class AddSetScreenDelegate extends AddEditSetScreenDelegate {
     addSetDelegate: AddSetDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     super(setFormDelegate, pickerDelegate, dialogDelegate, navigatorDelegate);
     this.setFormState = setFormState;

@@ -7,7 +7,7 @@
 
 export const ReviewFeedbackItemIds = {
   SHOW_FEEDBACK_SELECTION_MENU_BTN_BY_VOCABULARY_TEXT: (
-    vocabularyText: string
+    vocabularyText: string,
   ): string =>
     'SHOW_FEEDBACK_SELECTION_MENU_BTN_BY_VOCABULARY_TEXT_' + vocabularyText,
 

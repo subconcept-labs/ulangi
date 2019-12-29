@@ -37,7 +37,7 @@ export class AutorunDelegate {
     reminderDelegate: ReminderDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
     dialogDelegate: DialogDelegate,
-    rootScreenDelegate: RootScreenDelegate
+    rootScreenDelegate: RootScreenDelegate,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -103,8 +103,8 @@ export class AutorunDelegate {
         ActionType.USER__DOWNLOAD_USER_SUCCEEDED,
         (): void => {
           this.eventBus.publish(createAction(ActionType.USER__FETCH, null));
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -117,8 +117,8 @@ export class AutorunDelegate {
         ],
         (): void => {
           this.eventBus.publish(createAction(ActionType.SET__FETCH_ALL, null));
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -130,13 +130,13 @@ export class AutorunDelegate {
           this.eventBus.publish(
             createAction(ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING, {
               addUploadTasks: true,
-            })
+            }),
           );
         }
       },
       {
         fireImmediately: true,
-      }
+      },
     );
   }
 
@@ -148,14 +148,14 @@ export class AutorunDelegate {
           this.eventBus.publish(
             createAction(
               ActionType.SYNC__OBSERVE_REMOTE_UPDATES_FOR_SYNCING,
-              null
-            )
+              null,
+            ),
           );
         }
       },
       {
         fireImmediately: true,
-      }
+      },
     );
   }
 
@@ -165,7 +165,7 @@ export class AutorunDelegate {
         if (this.adDelegate.shouldSetUp()) {
           this.adDelegate.setUp();
         }
-      }
+      },
     );
   }
 
@@ -175,7 +175,7 @@ export class AutorunDelegate {
         if (this.adDelegate.shouldInitialize()) {
           this.adDelegate.initialize();
         }
-      }
+      },
     );
   }
 
@@ -185,7 +185,7 @@ export class AutorunDelegate {
 
   private autoClearAudioCache(): void {
     this.eventBus.publish(
-      createAction(ActionType.AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE, null)
+      createAction(ActionType.AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE, null),
     );
   }
 
@@ -213,7 +213,7 @@ export class AutorunDelegate {
       },
       {
         fireImmediately: true,
-      }
+      },
     );
   }
 
@@ -230,7 +230,7 @@ export class AutorunDelegate {
             closeOnTouchOutside: true,
             onClose: (): void => {
               this.rootScreenDelegate.setRootToSingleScreen(
-                ScreenName.SIGN_OUT_SCREEN
+                ScreenName.SIGN_OUT_SCREEN,
               );
             },
           });
@@ -238,7 +238,7 @@ export class AutorunDelegate {
       },
       {
         fireImmediately: true,
-      }
+      },
     );
   }
 }

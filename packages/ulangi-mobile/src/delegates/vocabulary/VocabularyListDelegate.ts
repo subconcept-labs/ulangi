@@ -44,7 +44,7 @@ export class VocabularyListDelegate {
     observableConverter: ObservableConverter,
     vocabularyListState: ObservableVocabularyListState,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    writingSettingsDelegate: WritingSettingsDelegate
+    writingSettingsDelegate: WritingSettingsDelegate,
   ) {
     this.forManageScreen = forManageScreen;
     this.eventBus = eventBus;
@@ -57,14 +57,14 @@ export class VocabularyListDelegate {
 
   public prepareAndFetch(
     filterType: VocabularyFilterType,
-    categoryName?: string
+    categoryName?: string,
   ): void {
     this.eventBus.pubsub(
       createAction(
         this.forManageScreen
           ? ActionType.MANAGE__PREPARE_FETCH_VOCABULARY
           : ActionType.VOCABULARY__PREPARE_FETCH,
-        this.createPrepareFetchPayload(filterType, categoryName)
+        this.createPrepareFetchPayload(filterType, categoryName),
       ),
       group(
         on(
@@ -73,7 +73,7 @@ export class VocabularyListDelegate {
             : ActionType.VOCABULARY__PREPARING_FETCH,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.ACTIVE);
-          }
+          },
         ),
         once(
           this.forManageScreen
@@ -82,7 +82,7 @@ export class VocabularyListDelegate {
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.INACTIVE);
             this.fetch();
-          }
+          },
         ),
         once(
           this.forManageScreen
@@ -90,18 +90,18 @@ export class VocabularyListDelegate {
             : ActionType.VOCABULARY__PREPARE_FETCH_FAILED,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.ERROR);
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
   public refresh(
     filterType: VocabularyFilterType,
-    categoryName?: string
+    categoryName?: string,
   ): void {
     this.vocabularyListState.isRefreshing.set(true);
-    this.vocabularyListState.shouldShowSyncCompletedNotice.set(false);
+    this.vocabularyListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
     this.prepareAndFetch(filterType, categoryName);
   }
@@ -117,7 +117,7 @@ export class VocabularyListDelegate {
           this.forManageScreen
             ? ActionType.MANAGE__FETCH_VOCABULARY
             : ActionType.VOCABULARY__FETCH,
-          null
+          null,
         ),
         group(
           once(
@@ -134,12 +134,12 @@ export class VocabularyListDelegate {
                   (vocabulary): [string, ObservableVocabulary] => [
                     vocabulary.vocabularyId,
                     this.observableConverter.convertToObservableVocabulary(
-                      vocabulary
+                      vocabulary,
                     ),
-                  ]
-                )
+                  ],
+                ),
               );
-            }
+            },
           ),
           once(
             this.forManageScreen
@@ -148,9 +148,9 @@ export class VocabularyListDelegate {
             (): void => {
               this.vocabularyListState.fetchState.set(ActivityState.ERROR);
               this.vocabularyListState.isRefreshing.set(false);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -164,14 +164,14 @@ export class VocabularyListDelegate {
         this.forManageScreen
           ? ActionType.MANAGE__CLEAR_FETCH_VOCABULARY
           : ActionType.VOCABULARY__CLEAR_FETCH,
-        null
-      )
+        null,
+      ),
     );
   }
 
   public refreshIfEmpty(
     filterType: VocabularyFilterType,
-    categoryName?: string
+    categoryName?: string,
   ): void {
     if (
       this.vocabularyListState.vocabularyList !== null &&
@@ -183,7 +183,7 @@ export class VocabularyListDelegate {
 
   private createPrepareFetchPayload(
     filterType: VocabularyFilterType,
-    categoryName?: string
+    categoryName?: string,
   ):
     | {
         filterBy: 'VocabularyStatus';

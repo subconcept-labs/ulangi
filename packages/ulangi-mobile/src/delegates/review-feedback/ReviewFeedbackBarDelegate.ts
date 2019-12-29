@@ -23,7 +23,7 @@ export class ReviewFeedbackBarDelegate {
   public constructor(
     observer: Observer,
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
-    reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate
+    reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate,
   ) {
     this.observer = observer;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
@@ -47,7 +47,7 @@ export class ReviewFeedbackBarDelegate {
       this.reviewFeedbackBarState.shouldRunCloseAnimation = true;
       this.observer.when(
         (): boolean => this.reviewFeedbackBarState.shouldShow === false,
-        callback
+        callback,
       );
     }
   }
@@ -62,11 +62,11 @@ export class ReviewFeedbackBarDelegate {
               vocabulary,
               feedback as Feedback,
               true,
-              true
+              true,
             ),
           ];
-        }
-      )
+        },
+      ),
     );
   }
 }

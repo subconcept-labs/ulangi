@@ -82,7 +82,7 @@ export const lightStyles = StyleSheet.create(
     picker_content_container: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -103,5 +103,5 @@ export const darkStyles = StyleSheet.create(
     picker_content_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
-  })
+  }),
 );

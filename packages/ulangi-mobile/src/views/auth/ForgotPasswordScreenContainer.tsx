@@ -7,7 +7,10 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableForgotPasswordScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableForgotPasswordScreen,
+  ObservableTitleTopBar,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -27,25 +30,26 @@ export class ForgotPasswordScreenContainer extends Container {
   private screenFactory = new ForgotPasswordScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableForgotPasswordScreen(
-    '',
-    ScreenName.FORGOT_PASSWORD_SCREEN
+    'Forgot Password',
+    ScreenName.FORGOT_PASSWORD_SCREEN,
+    new ObservableTitleTopBar('Forgot Password', null, null),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ForgotPasswordScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ForgotPasswordScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

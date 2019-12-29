@@ -25,8 +25,7 @@ export class FlashcardPlayerTopBar extends React.Component<
           testID={FlashcardPlayerScreenIds.BACK_BTN}
           hitSlop={{ top: 10, bottom: 10, left: 25, right: 25 }}
           style={styles.button}
-          onPress={this.props.back}
-        >
+          onPress={this.props.back}>
           <Image source={Images.ARROW_LEFT_WHITE_22X22} />
         </TouchableOpacity>
       </View>

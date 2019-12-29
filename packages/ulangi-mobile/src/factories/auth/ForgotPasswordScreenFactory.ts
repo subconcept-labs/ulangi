@@ -12,14 +12,14 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class ForgotPasswordScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableForgotPasswordScreen
+    observableScreen: ObservableForgotPasswordScreen,
   ): ForgotPasswordScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     return new ForgotPasswordScreenDelegate(
       this.eventBus,
       observableScreen,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

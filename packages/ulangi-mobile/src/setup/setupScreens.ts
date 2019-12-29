@@ -21,8 +21,8 @@ export function setupScreens(): void {
         screenName,
         (): Constructor<React.Component> => extendContainer(container),
         Provider,
-        null
+        null,
       );
-    }
+    },
   );
 }

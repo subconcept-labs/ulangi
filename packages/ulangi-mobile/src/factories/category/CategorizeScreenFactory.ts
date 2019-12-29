@@ -14,19 +14,19 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class CategorizeScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableCategorizeScreen
+    observableScreen: ObservableCategorizeScreen,
   ): CategorizeScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categoryFormDelegate = new CategoryFormDelegate(
       this.eventBus,
       this.observer,
       this.props.rootStore.setStore,
-      observableScreen.categoryFormState
+      observableScreen.categoryFormState,
     );
 
     return new CategorizeScreenDelegate(
@@ -34,7 +34,7 @@ export class CategorizeScreenFactory extends ScreenFactory {
       observableScreen,
       categoryFormDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

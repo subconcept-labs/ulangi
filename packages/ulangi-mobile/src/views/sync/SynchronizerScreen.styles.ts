@@ -74,7 +74,7 @@ export const lightStyles: SynchronizerScreenStyles = StyleSheet.create(
     sync_state: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles: SynchronizerScreenStyles = StyleSheet.create(
@@ -91,5 +91,5 @@ export const darkStyles: SynchronizerScreenStyles = StyleSheet.create(
     sync_state: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

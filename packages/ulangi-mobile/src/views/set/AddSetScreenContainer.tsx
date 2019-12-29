@@ -11,6 +11,8 @@ import {
   ObservableAddEditSetScreen,
   ObservableSetFormState,
   ObservableSetPickerState,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,6 +20,7 @@ import { Keyboard } from 'react-native';
 import * as uuid from 'uuid';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { AddSetScreenIds } from '../../constants/ids/AddSetScreenIds';
 import { AddSetScreenFactory } from '../../factories/set/AddSetScreenFactory';
 import { AddEditSetScreen } from './AddEditSetScreen';
@@ -34,7 +37,7 @@ export class AddSetScreenContainer extends Container {
   private addSetScreenFactory = new AddSetScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableAddEditSetScreen(
@@ -45,35 +48,49 @@ export class AddSetScreenContainer extends Container {
       'en',
       true,
       new ObservableSetPickerState(null, false, false),
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     ),
-    ScreenName.ADD_SET_SCREEN
+    ScreenName.ADD_SET_SCREEN,
+    new ObservableTitleTopBar(
+      'Add Set',
+      new ObservableTopBarButton(
+        AddSetScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        AddSetScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.saveAdd({
+            onSaving: this.screenDelegate.showSavingDialog,
+            onSaveSucceeded: this.screenDelegate.showSaveSucceededDialog,
+            onSaveFailed: this.screenDelegate.showSaveFailedDialog,
+          });
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.addSetScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.addSetScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === AddSetScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === AddSetScreenIds.SAVE_BTN) {
-      Keyboard.dismiss();
-      this.screenDelegate.saveAdd({
-        onSaving: this.screenDelegate.showSavingDialog,
-        onSaveSucceeded: this.screenDelegate.showSaveSucceededDialog,
-        onSaveFailed: this.screenDelegate.showSaveFailedDialog,
-      });
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? AddSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : AddSetScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : AddSetScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

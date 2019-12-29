@@ -62,8 +62,9 @@ export class SetForm extends React.Component<SetFormProps> {
           <TouchableOpacity
             testID={SetFormIds.SHOW_LEARNING_LANGUAGE_PICKER_BTN}
             style={this.styles.button_touchable}
-            onPress={(): void => this.props.showPicker(SetFormPickerType.LEARN)}
-          >
+            onPress={(): void =>
+              this.props.showPicker(SetFormPickerType.LEARN)
+            }>
             <DefaultText style={[this.styles.button_text]}>
               <DefaultText style={this.styles.bold}>Learn: </DefaultText>
               {this.props.setFormState.learningLanguageCode === null ? (
@@ -93,16 +94,14 @@ export class SetForm extends React.Component<SetFormProps> {
               } else {
                 this.props.showSelectLearningLanguageFirstDialog();
               }
-            }}
-          >
+            }}>
             <DefaultText
               style={[
                 this.styles.button_text,
                 this.props.setFormState.canSelectTranslatedIntoLanguage
                   ? {}
                   : this.styles.button_text_disabled,
-              ]}
-            >
+              ]}>
               <DefaultText style={this.styles.bold}>
                 Translated into:{' '}
               </DefaultText>

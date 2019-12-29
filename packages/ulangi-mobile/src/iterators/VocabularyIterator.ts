@@ -34,7 +34,7 @@ export class VocabularyIterator<T extends Vocabulary = Vocabulary> {
   public current(): T {
     return assertExists(
       this.vocabularyList.valueSeq().get(this.currentIndex || 0),
-      'index out of bound'
+      'index out of bound',
     );
   }
 

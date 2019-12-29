@@ -48,8 +48,7 @@ export class LevelBreakdownScreen extends React.Component<
           light: lightBoxContainerWithTitleLightStyles,
           dark: lightBoxContainerWithTitleDarkStyles,
         }}
-        title="Level Breakdown"
-      >
+        title="Level Breakdown">
         <LevelBreakdown
           theme={this.props.darkModeStore.theme}
           levelCounts={this.props.levelCounts}

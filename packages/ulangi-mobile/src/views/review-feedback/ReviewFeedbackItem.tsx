@@ -69,10 +69,9 @@ export class ReviewFeedbackItem extends React.Component<
           <View style={[this.styles.right_container, this.styles.flex_row]}>
             <DefaultText
               testID={ReviewFeedbackItemIds.NEXT_LEVEL_BY_VOCABULARY_TEXT(
-                this.props.vocabulary.vocabularyText
+                this.props.vocabulary.vocabularyText,
               )}
-              style={this.styles.right_text}
-            >
+              style={this.styles.right_text}>
               {this.props.nextReviewData.nextLevel}
             </DefaultText>
             <LevelNetChange
@@ -88,10 +87,9 @@ export class ReviewFeedbackItem extends React.Component<
           <View style={this.styles.right_container}>
             <DefaultText
               testID={ReviewFeedbackItemIds.NEXT_REVIEW_BY_VOCABULARY_TEXT(
-                this.props.vocabulary.vocabularyText
+                this.props.vocabulary.vocabularyText,
               )}
-              style={this.styles.right_text}
-            >
+              style={this.styles.right_text}>
               {this.props.nextReviewData.nextReview}
             </DefaultText>
           </View>
@@ -104,16 +102,16 @@ export class ReviewFeedbackItem extends React.Component<
     return (
       <DefaultButton
         testID={ReviewFeedbackItemIds.SHOW_FEEDBACK_SELECTION_MENU_BTN_BY_VOCABULARY_TEXT(
-          this.props.vocabulary.vocabularyText
+          this.props.vocabulary.vocabularyText,
         )}
         text={this.props.feedback}
         styles={LessonScreenStyle.getNormalButtonStyles(
           config.reviewFeedback.feedbackMap[this.props.feedback].color,
-          'white'
+          'white',
         )}
         onPress={(): void =>
           this.props.showFeedbackSelectionMenu(
-            this.props.vocabulary.vocabularyId
+            this.props.vocabulary.vocabularyId,
           )
         }
       />

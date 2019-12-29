@@ -15,6 +15,8 @@ import {
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableCategoryDetailScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
@@ -22,6 +24,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
 import { CategoryDetailScreenFactory } from '../../factories/category/CategoryDetailScreenFactory';
 import { CategoryDetailScreen } from './CategoryDetailScreen';
@@ -45,12 +48,12 @@ export class CategoryDetailScreenContainer extends Container<
   private screenFactory = new CategoryDetailScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableCategoryDetailScreen(
     this.props.observableConverter.convertToObservableCategory(
-      this.props.passedProps.category
+      this.props.passedProps.category,
     ),
     observable.box(this.props.passedProps.selectedFilterType),
     new ObservableVocabularyListState(
@@ -60,30 +63,39 @@ export class CategoryDetailScreenContainer extends Container<
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
-    ScreenName.CATEGORY_DETAIL_SCREEN
+    ScreenName.CATEGORY_DETAIL_SCREEN,
+    new ObservableTitleTopBar(
+      'Detail',
+      new ObservableTopBarButton(
+        CategoryDetailScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === CategoryDetailScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   public componentDidMount(): void {
     this.screenDelegate.autoUpdateEditedVocabulary();
     this.screenDelegate.autoRefreshOnMultipleEdit();
-    this.screenDelegate.autoShowSyncCompleted();
+    this.screenDelegate.autoShowRefreshNotice();
     this.screenDelegate.autoShowSyncingInProgress();
     this.screenDelegate.prepareAndFetch(
-      this.observableScreen.selectedFilterType.get()
+      this.observableScreen.selectedFilterType.get(),
     );
   }
 
@@ -95,7 +107,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CategoryDetailScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CategoryDetailScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CategoryDetailScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

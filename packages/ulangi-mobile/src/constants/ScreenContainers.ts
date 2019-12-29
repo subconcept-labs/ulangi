@@ -42,6 +42,7 @@ import { LightBoxSelectionMenuScreenContainer } from '../views/light-box/LightBo
 import { ManageScreenContainer } from '../views/manage/ManageScreenContainer';
 import { MembershipScreenContainer } from '../views/membership/MembershipScreenContainer';
 import { MoreScreenContainer } from '../views/more/MoreScreenContainer';
+import { OpenSourceProjectsScreenContainer } from '../views/open-source/OpenSourceProjectsScreenContainer';
 import { PlayScreenContainer } from '../views/play/PlayScreenContainer';
 import { PreloadScreenContainer } from '../views/preload/PreloadScreenContainer';
 import { QuizMultipleChoiceScreenContainer } from '../views/quiz/QuizMultipleChoiceScreenContainer';
@@ -149,4 +150,5 @@ export const ScreenContainers = {
   REMINDER_SCREEN: ReminderScreenContainer,
   DARK_MODE_SCREEN: DarkModeScreenContainer,
   LEVEL_BREAKDOWN_SCREEN: LevelBreakdownScreenContainer,
+  OPEN_SOURCE_PROJECTS_SCREEN: OpenSourceProjectsScreenContainer,
 };

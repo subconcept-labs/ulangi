@@ -29,7 +29,7 @@ export class GoogleSheetsAddOnScreenDelegate {
     eventBus: EventBus,
     observableScreen: ObservableGoogleSheetsAddOnScreen,
     dialogDelegate: DialogDelegate,
-    linkingDelegate: LinkingDelegate
+    linkingDelegate: LinkingDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -54,7 +54,7 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.dialogDelegate.show({
               message: 'Getting API key...',
             });
-          }
+          },
         ),
         once(
           ActionType.API_KEY__GET_API_KEY_SUCCEEDED,
@@ -62,15 +62,15 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.observableScreen.apiKey = apiKey;
             this.observableScreen.expiredAt = expiredAt;
             this.dialogDelegate.dismiss();
-          }
+          },
         ),
         once(
           ActionType.API_KEY__GET_API_KEY_FAILED,
           ({ errorCode }): void => {
             this.dialogDelegate.showFailedDialog(errorCode, {});
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -94,7 +94,7 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.dialogDelegate.show({
               message: 'Sending to your email...',
             });
-          }
+          },
         ),
         once(
           ActionType.API_KEY__SEND_API_KEY_SUCCEEDED,
@@ -102,21 +102,21 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.dialogDelegate.showSuccessDialog({
               message: 'Sent successfully.',
             });
-          }
+          },
         ),
         once(
           ActionType.API_KEY__SEND_API_KEY_FAILED,
           ({ errorCode }): void => {
             this.dialogDelegate.showFailedDialog(errorCode, {});
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
   public showInvalidateApiKeyConfirmation(): void {
     this.dialogDelegate.show({
-      message: `The API key will no longer be valid. Do you want to continue?`,
+      message: 'The API key will no longer be valid. Do you want to continue?',
       buttonList: [
         {
           testID: LightBoxDialogIds.CANCEL_BTN,
@@ -125,7 +125,7 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
         {
@@ -135,7 +135,7 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.invalidateApiKey();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
       ],
@@ -154,7 +154,7 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.dialogDelegate.show({
               message: 'Invalidating API key...',
             });
-          }
+          },
         ),
         once(
           ActionType.API_KEY__DELETE_API_KEY_SUCCEEDED,
@@ -163,15 +163,15 @@ export class GoogleSheetsAddOnScreenDelegate {
             this.observableScreen.expiredAt = undefined;
             this.observableScreen.password = '';
             this.dialogDelegate.dismiss();
-          }
+          },
         ),
         once(
           ActionType.API_KEY__DELETE_API_KEY_FAILED,
           ({ errorCode }): void => {
             this.dialogDelegate.showFailedDialog(errorCode, {});
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 }

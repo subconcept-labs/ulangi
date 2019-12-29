@@ -51,8 +51,7 @@ export class PremiumMembership extends React.Component<PremiumMembershipProps> {
             <TouchableOpacity
               style={styles.feature_request_btn}
               onPress={this.props.navigateToFeatureRequest}
-              hitSlop={{ top: 10, bottom: 10 }}
-            >
+              hitSlop={{ top: 10, bottom: 10 }}>
               <DefaultText style={styles.highlighted}>
                 Have a feature request?
               </DefaultText>

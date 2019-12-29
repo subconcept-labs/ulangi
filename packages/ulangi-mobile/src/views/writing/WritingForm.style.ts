@@ -146,7 +146,7 @@ export const lightStyles = StyleSheet.create(
     message: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -178,7 +178,7 @@ export const darkStyles = StyleSheet.create(
     message: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const definitionItemLightStyles = _.merge(
@@ -188,7 +188,7 @@ export const definitionItemLightStyles = _.merge(
     item_container: {
       borderTopWidth: 0,
     },
-  }
+  },
 );
 
 export const definitionItemDarkStyles = _.merge(
@@ -198,5 +198,5 @@ export const definitionItemDarkStyles = _.merge(
     item_container: {
       borderTopWidth: 0,
     },
-  }
+  },
 );

@@ -35,7 +35,7 @@ export class IntervalsScreenContainer extends Container<
   private screenFactory = new IntervalsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableLightBox = this.props.observableLightBox;
@@ -49,7 +49,9 @@ export class IntervalsScreenContainer extends Container<
   protected onThemeChanged(theme: Theme): void {
     if (typeof this.props.styles !== 'undefined') {
       this.navigatorDelegate.mergeOptions(
-        theme === Theme.LIGHT ? this.props.styles.light : this.props.styles.dark
+        theme === Theme.LIGHT
+          ? this.props.styles.light
+          : this.props.styles.dark,
       );
     }
   }
@@ -61,7 +63,7 @@ export class IntervalsScreenContainer extends Container<
         observableLightBox={this.props.observableLightBox}
         levelIntervalPairs={this.spacedRepetitionScheduler.calculateWaitingHoursInRange(
           this.props.passedProps.initialInterval,
-          this.props.passedProps.range
+          this.props.passedProps.range,
         )}
         screenDelegate={this.screenDelegate}
       />

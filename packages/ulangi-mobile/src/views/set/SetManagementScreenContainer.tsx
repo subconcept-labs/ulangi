@@ -12,11 +12,16 @@ import {
   SetStatus,
   Theme,
 } from '@ulangi/ulangi-common/enums';
-import { ObservableSetManagementScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSetManagementScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { SetManagementScreenIds } from '../../constants/ids/SetManagementScreenIds';
 import { SetManagementScreenFactory } from '../../factories/set/SetManagementScreenFactory';
 import { SetManagementScreen } from './SetManagementScreen';
@@ -33,7 +38,7 @@ export class SetManagementScreenContainer extends Container {
   private screenFactory = new SetManagementScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSetManagementScreen(
@@ -41,13 +46,38 @@ export class SetManagementScreenContainer extends Container {
     null,
     ActivityState.INACTIVE,
     false,
-    ScreenName.SET_MANAGEMENT_SCREEN
+    ScreenName.SET_MANAGEMENT_SCREEN,
+    new ObservableTitleTopBar(
+      'Set Management',
+      new ObservableTopBarButton(
+        SetManagementScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        SetManagementScreenIds.ADD_BTN,
+        null,
+        {
+          light: Images.PLUS_BLACK_22X22,
+          dark: Images.PLUS_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.push(ScreenName.ADD_SET_SCREEN, {});
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -55,19 +85,11 @@ export class SetManagementScreenContainer extends Container {
     this.screenDelegate.selectAndFetchSets(SetStatus.ACTIVE);
   }
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SetManagementScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === SetManagementScreenIds.ADD_BTN) {
-      this.navigatorDelegate.push(ScreenName.ADD_SET_SCREEN, {});
-    }
-  }
-
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SetManagementScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SetManagementScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SetManagementScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

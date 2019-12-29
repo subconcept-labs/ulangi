@@ -25,7 +25,7 @@ export class AddEditSetScreenDelegate {
     setFormDelegate: SetFormDelegate,
     pickerDelegate: PickerDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.setFormDelegate = setFormDelegate;
     this.pickerDelegate = pickerDelegate;
@@ -46,7 +46,7 @@ export class AddEditSetScreenDelegate {
   }
 
   public showLanguageNotSelectedDialog(
-    languageType: 'learningLanguage' | 'translatedToLanguage'
+    languageType: 'learningLanguage' | 'translatedToLanguage',
   ): void {
     this.dialogDelegate.show({
       message:

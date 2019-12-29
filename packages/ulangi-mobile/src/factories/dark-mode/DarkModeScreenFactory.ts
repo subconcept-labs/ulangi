@@ -19,17 +19,17 @@ export class DarkModeScreenFactory extends ScreenFactory {
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableDarkModeScreen
+    observableScreen: ObservableDarkModeScreen,
   ): DarkModeScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const darkModeSelectionMenuDelegate = new DarkModeSelectionMenuDelegate(
       navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new DarkModeScreenDelegate(
@@ -37,7 +37,7 @@ export class DarkModeScreenFactory extends ScreenFactory {
       observableScreen,
       darkModeSelectionMenuDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

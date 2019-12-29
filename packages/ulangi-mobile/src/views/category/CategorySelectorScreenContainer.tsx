@@ -10,6 +10,8 @@ import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryFormState,
   ObservableCategorySelectorScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -17,6 +19,7 @@ import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { CategorySelectorScreenIds } from '../../constants/ids/CategorySelectorScreenIds';
 import { CategorySelectorScreenFactory } from '../../factories/category/CategorySelectorScreenFactory';
 import { CategorySelectorScreen } from './CategorySelectorScreen';
@@ -40,7 +43,7 @@ export class CategorySelectorScreenContainer extends Container<
   private categorySelectorScreenFactory = new CategorySelectorScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableCategorySelectorScreen(
@@ -48,15 +51,43 @@ export class CategorySelectorScreenContainer extends Container<
       this.props.passedProps.initialCategoryName || '',
       null,
       false,
-      observable.box(ActivityState.INACTIVE)
+      observable.box(ActivityState.INACTIVE),
     ),
-    ScreenName.CATEGORY_SELECTOR_SCREEN
+    ScreenName.CATEGORY_SELECTOR_SCREEN,
+    new ObservableTitleTopBar(
+      'Select Category',
+      new ObservableTopBarButton(
+        CategorySelectorScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        CategorySelectorScreenIds.DONE_BTN,
+        'Done',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.props.passedProps.onSelect(
+            this.observableScreen.categoryFormState.categoryName === ''
+              ? 'Uncategorized'
+              : this.observableScreen.categoryFormState.categoryName,
+          );
+          this.navigatorDelegate.pop();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.categorySelectorScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.categorySelectorScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -68,25 +99,11 @@ export class CategorySelectorScreenContainer extends Container<
     this.screenDelegate.clearFetchCategorySuggestions();
   }
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === CategorySelectorScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === CategorySelectorScreenIds.DONE_BTN) {
-      Keyboard.dismiss();
-      this.props.passedProps.onSelect(
-        this.observableScreen.categoryFormState.categoryName === ''
-          ? 'Uncategorized'
-          : this.observableScreen.categoryFormState.categoryName
-      );
-      this.navigatorDelegate.pop();
-    }
-  }
-
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CategorySelectorScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CategorySelectorScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CategorySelectorScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -10,6 +10,7 @@ import { Product } from '@ulangi/ulangi-common/interfaces';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableUpgradeButtonState } from './ObservableUpgradeButtonState';
 
 export class ObservableMembershipScreen extends ObservableScreen {
@@ -22,9 +23,10 @@ export class ObservableMembershipScreen extends ObservableScreen {
   public constructor(
     premiumLifetimeProduct: null | Product,
     upgradeButtonState: ObservableUpgradeButtonState,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.premiumLifetimeProduct = premiumLifetimeProduct;
     this.upgradeButtonState = upgradeButtonState;
   }

@@ -21,8 +21,8 @@ export function setupCustomViews(): void {
         name,
         (): Constructor<React.Component> => component,
         Provider,
-        null
+        null,
       );
-    }
+    },
   );
 }

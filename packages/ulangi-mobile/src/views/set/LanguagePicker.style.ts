@@ -81,7 +81,7 @@ export const lightStyles = StyleSheet.create(
     top_bar_text: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -102,5 +102,5 @@ export const darkStyles = StyleSheet.create(
     top_bar_text: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

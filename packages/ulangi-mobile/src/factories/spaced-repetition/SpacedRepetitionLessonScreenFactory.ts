@@ -25,14 +25,14 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
   public createSpacedRepetitionSettingsDelegate(): SpacedRepetitionSettingsDelegate {
     return new SpacedRepetitionSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
   }
 
   public createScreenDelegate(
     observableScreen: ObservableSpacedRepetitionLessonScreen,
     reviewIterator: ReviewIterator,
-    startLesson: () => void
+    startLesson: () => void,
   ): SpacedRepetitionLessonScreenDelegate {
     const spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
@@ -41,7 +41,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     const spacedRepetitionSettingsDelegate = this.createSpacedRepetitionSettingsDelegate();
 
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
-      this.props.rootStore.userStore
+      this.props.rootStore.userStore,
     );
 
     const saveResultDelegate = new SpacedRepetitionSaveResultDelegate(
@@ -49,38 +49,38 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       observableScreen.vocabularyList,
       observableScreen.feedbackListState.feedbackList,
-      autoArchiveSettingsDelegate
+      autoArchiveSettingsDelegate,
     );
 
     const speakDelegate = new SpeakDelegate(
       this.eventBus,
-      this.props.rootStore.audioStore
+      this.props.rootStore.audioStore,
     );
 
     const reviewFeedbackDataDelegate = new ReviewFeedbackDataDelegate(
       config.spacedRepetition.maxLevel,
       spacedRepetitionScheduler,
       spacedRepetitionSettingsDelegate,
-      autoArchiveSettingsDelegate
+      autoArchiveSettingsDelegate,
     );
 
     const reviewFeedbackBarDelegate = new ReviewFeedbackBarDelegate(
       this.observer,
       observableScreen.reviewFeedbackBarState,
-      reviewFeedbackDataDelegate
+      reviewFeedbackDataDelegate,
     );
 
     const adDelegate = new AdDelegate(
       this.eventBus,
       this.props.rootStore.adStore,
       this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     );
 
     const adAfterLessonDelegate = new AdAfterLessonDelegate(
       this.observer,
       observableScreen.shouldShowAdOrGoogleConsentForm,
-      navigatorDelegate
+      navigatorDelegate,
     );
 
     return new SpacedRepetitionLessonScreenDelegate(
@@ -94,7 +94,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       adDelegate,
       adAfterLessonDelegate,
       navigatorDelegate,
-      startLesson
+      startLesson,
     );
   }
 }

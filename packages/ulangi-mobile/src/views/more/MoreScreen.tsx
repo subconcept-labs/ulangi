@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
   ObservableDarkModeStore,
@@ -23,15 +23,15 @@ import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { MoreScreenDelegate } from '../../delegates/more/MoreScreenDelegate';
+import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { SectionGroup } from '../../views/section/SectionGroup';
 import { SectionRow } from '../../views/section/SectionRow';
+import { DefaultButton } from '../common/DefaultButton';
 import { MessageCarousel } from './MessageCarousel';
 import {
   MoreScreenStyles,
   darkStyles,
   lightStyles,
-  logOutSectionRowDarkStyles,
-  logOutSectionRowLightStyles,
   premiumMembershipSectionRowDarkStyles,
   premiumMembershipSectionRowLightStyles,
   regularMembershipSectionRowDarkStyles,
@@ -61,8 +61,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <View testID={MoreScreenIds.SCREEN} style={this.styles.screen}>
         <ScrollView
           testID={MoreScreenIds.MORE_SCROLL_VIEW}
-          style={this.styles.scroll_view_container}
-        >
+          style={this.styles.scroll_view_container}>
           <MessageCarousel
             theme={this.props.darkModeStore.theme}
             messages={this.props.observableScreen.messages}
@@ -92,10 +91,9 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="account"
-        header="ACCOUNT"
-      >
+        header="ACCOUNT">
         {this.props.userStore.existingCurrentUser.email.endsWith(
-          config.general.guestEmailDomain
+          config.general.guestEmailDomain,
         ) ? (
           <SectionRow
             testID={MoreScreenIds.SET_UP_ACCOUNT_BTN}
@@ -151,8 +149,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="tools-and-settings"
-        header="TOOLS AND SETTINGS"
-      >
+        header="TOOLS AND SETTINGS">
         <SectionRow
           testID={MoreScreenIds.SET_MANAGEMENT_BTN}
           theme={this.props.darkModeStore.theme}
@@ -226,8 +223,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="contact-us"
-        header="CONTACT US"
-      >
+        header="CONTACT US">
         <SectionRow
           testID={MoreScreenIds.FEATURE_REQUEST_BTN}
           theme={this.props.darkModeStore.theme}
@@ -261,8 +257,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="about"
-        header="ABOUT"
-      >
+        header="ABOUT">
         <SectionRow
           testID={MoreScreenIds.VERSION_BTN}
           theme={this.props.darkModeStore.theme}
@@ -306,8 +301,16 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="general"
-        header="GENERAL"
-      >
+        header="GENERAL">
+        <SectionRow
+          testID={MoreScreenIds.OPEN_SOURCE_PROJECTS_BTN}
+          theme={this.props.darkModeStore.theme}
+          leftText="Open-Source Projects"
+          showArrow={true}
+          onPress={(): void => {
+            this.props.screenDelegate.navigateToOpenSourceProjectsScreen();
+          }}
+        />
         <SectionRow
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
           theme={this.props.darkModeStore.theme}
@@ -378,13 +381,17 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         <SectionRow
           theme={this.props.darkModeStore.theme}
           testID={MoreScreenIds.LOG_OUT_BTN}
-          leftText="Log Out"
-          rightText=""
-          onPress={(): void => this.props.screenDelegate.logOut()}
-          styles={{
-            light: logOutSectionRowLightStyles,
-            dark: logOutSectionRowDarkStyles,
-          }}
+          customLeft={
+            <DefaultButton
+              text="Log Out"
+              styles={FullRoundedButtonStyle.getFullBackgroundStyles(
+                ButtonSize.SMALL,
+                'red',
+                'white',
+              )}
+              onPress={(): void => this.props.screenDelegate.logOut()}
+            />
+          }
         />
       </SectionGroup>
     );

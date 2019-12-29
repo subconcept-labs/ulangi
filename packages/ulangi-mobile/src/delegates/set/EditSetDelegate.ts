@@ -27,15 +27,15 @@ export class EditSetDelegate {
       onSaving: () => void;
       onSaveSucceeded: (set: Set) => void;
       onSaveFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     const learningLanguageCode = assertExists(
       this.setFormState.learningLanguageCode,
-      'Cannot save edit because learningLanguageCode is null'
+      'Cannot save edit because learningLanguageCode is null',
     );
     const translatedToLanguageCode = assertExists(
       this.setFormState.translatedToLanguageCode,
-      'Cannot save edit because translatedToLanguageCode is null'
+      'Cannot save edit because translatedToLanguageCode is null',
     );
 
     const setName =
@@ -64,13 +64,13 @@ export class EditSetDelegate {
         on(ActionType.SET__EDITING, callback.onSaving),
         once(
           ActionType.SET__EDIT_SUCCEEDED,
-          ({ set }): void => callback.onSaveSucceeded(set)
+          ({ set }): void => callback.onSaveSucceeded(set),
         ),
         once(
           ActionType.SET__EDIT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+        ),
+      ),
     );
   }
 

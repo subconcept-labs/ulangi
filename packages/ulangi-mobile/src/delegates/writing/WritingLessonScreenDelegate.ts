@@ -62,7 +62,7 @@ export class WritingLessonScreenDelegate {
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
     navigatorDelegate: NavigatorDelegate,
-    startLesson: () => void
+    startLesson: () => void,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -100,9 +100,9 @@ export class WritingLessonScreenDelegate {
         (): void => {
           this.reviewFeedbackBarDelegate.show(
             this.observableScreen.writingFormState.currentQuestion
-              .testingVocabulary
+              .testingVocabulary,
           );
-        }
+        },
       );
     }
   }
@@ -111,12 +111,12 @@ export class WritingLessonScreenDelegate {
     this.observableScreen.feedbackListState.feedbackList.set(
       this.observableScreen.writingFormState.currentQuestion.testingVocabulary
         .vocabularyId,
-      feedback
+      feedback,
     );
     this.reviewFeedbackBarDelegate.hide(
       (): void => {
         this.nextQuestion();
-      }
+      },
     );
   }
 
@@ -137,7 +137,7 @@ export class WritingLessonScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -154,22 +154,22 @@ export class WritingLessonScreenDelegate {
                 createAction(ActionType.VOCABULARY__EDIT, {
                   vocabulary: editedVocabulary,
                   setId: undefined,
-                })
+                }),
               );
 
               this.observableScreen.writingResult.disabledVocabularyIds.push(
-                vocabularyId
+                vocabularyId,
               );
               this.nextQuestion();
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -206,14 +206,14 @@ export class WritingLessonScreenDelegate {
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startLesson()
+      (): void => this.startLesson(),
     );
   }
 
   public quit(): void {
     if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
       this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.pop()
+        (): void => this.navigatorDelegate.pop(),
       );
     } else {
       this.navigatorDelegate.pop();
@@ -247,7 +247,7 @@ export class WritingLessonScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -258,12 +258,12 @@ export class WritingLessonScreenDelegate {
               this.navigatorDelegate.pop();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -272,13 +272,13 @@ export class WritingLessonScreenDelegate {
       this.writingFormDelegate.fadeOut(
         (): void => {
           this.observableScreen.writingFormState.setUpNextQuestion(
-            this.questionIterator.next()
+            this.questionIterator.next(),
           );
-        }
+        },
       );
     } else {
       this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm()
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
       );
 
       this.observableScreen.shouldShowResult.set(true);
@@ -301,7 +301,7 @@ export class WritingLessonScreenDelegate {
   }
 
   private updateFeedbackList(
-    feedbackList: ReadonlyMap<string, Feedback>
+    feedbackList: ReadonlyMap<string, Feedback>,
   ): void {
     this.observableScreen.feedbackListState.feedbackList.replace(feedbackList);
   }

@@ -21,7 +21,7 @@ export class ObservableCategoryListState {
 
   public readonly shouldShowSyncingNotice: IObservableValue<boolean>;
 
-  public readonly shouldShowSyncCompletedNotice: IObservableValue<boolean>;
+  public readonly shouldShowRefreshNotice: IObservableValue<boolean>;
 
   public readonly isRefreshing: IObservableValue<boolean>;
 
@@ -52,7 +52,7 @@ export class ObservableCategoryListState {
     noMore: boolean,
     fetchState: IObservableValue<ActivityState>,
     shouldShowSyncingNotice: IObservableValue<boolean>,
-    shouldShowSyncCompletedNotice: IObservableValue<boolean>,
+    shouldShowRefreshNotice: IObservableValue<boolean>,
     isSelectionModeOn: IObservableValue<boolean>,
     isRefreshing: IObservableValue<boolean>
   ) {
@@ -60,7 +60,7 @@ export class ObservableCategoryListState {
     this.noMore = noMore;
     this.fetchState = fetchState;
     this.shouldShowSyncingNotice = shouldShowSyncingNotice;
-    this.shouldShowSyncCompletedNotice = shouldShowSyncCompletedNotice;
+    this.shouldShowRefreshNotice = shouldShowRefreshNotice;
     this.isRefreshing = isRefreshing;
     this.isSelectionModeOn = isSelectionModeOn;
   }

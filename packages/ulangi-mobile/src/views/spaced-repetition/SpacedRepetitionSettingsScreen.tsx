@@ -50,8 +50,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       <ScrollView
         style={this.styles.screen}
         contentContainerStyle={this.styles.content_container}
-        testID={SpacedRepetitionSettingsScreenIds.SCREEN}
-      >
+        testID={SpacedRepetitionSettingsScreenIds.SCREEN}>
         {this.renderSections()}
       </ScrollView>
     );
@@ -71,8 +70,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         header="LESSON SETTINGS"
-        key="lesson-settings"
-      >
+        key="lesson-settings">
         <SectionRow
           theme={this.props.darkModeStore.theme}
           leftText="Lesson Size"
@@ -81,7 +79,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
               testID={SpacedRepetitionSettingsScreenIds.LIMIT_BTN}
               text={this.props.observableScreen.selectedLimit.toString()}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLimitMenu(
@@ -89,7 +87,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
                   this.props.observableScreen.selectedLimit,
                   (limit): void => {
                     this.props.observableScreen.selectedLimit = limit;
-                  }
+                  },
                 );
               }}
             />
@@ -109,8 +107,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         header="SPACED REPETITION FACTORS"
-        key="spaced-repetition-factors"
-      >
+        key="spaced-repetition-factors">
         <SectionRow
           theme={this.props.darkModeStore.theme}
           leftText="Initial Interval"
@@ -122,7 +119,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
                 ' hours'
               }
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showInitialIntervalMenu(
@@ -130,7 +127,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
                   this.props.observableScreen.selectedInitialInterval,
                   (initialInterval): void => {
                     this.props.observableScreen.selectedInitialInterval = initialInterval;
-                  }
+                  },
                 );
               }}
             />
@@ -161,8 +158,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
           style={this.styles.touchable_text}
           onPress={(): void =>
             this.props.screenDelegate.showIntervalsLightBox()
-          }
-        >
+          }>
           Press here{' '}
         </DefaultText>
         to view intervals at each level.
@@ -172,7 +168,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
 
   private getLimitValuePairs(): readonly [number, string][] {
     return config.spacedRepetition.selectableLimits.map(function(
-      limit
+      limit,
     ): [number, string] {
       return [limit, limit.toString()];
     });
@@ -180,7 +176,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
 
   private getInitialIntervalValuePairs(): readonly [number, string][] {
     return config.spacedRepetition.selectableInitialIntervals.map(function(
-      initialInterval
+      initialInterval,
     ): [number, string] {
       return [initialInterval, initialInterval + ' hours'];
     });

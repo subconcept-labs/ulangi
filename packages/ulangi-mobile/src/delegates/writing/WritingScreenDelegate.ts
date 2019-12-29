@@ -48,7 +48,7 @@ export class WritingScreenDelegate {
     writingSettingsDelegate: WritingSettingsDelegate,
     navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -73,7 +73,7 @@ export class WritingScreenDelegate {
         initialInterval,
         limit,
         selectedCategoryNames: toJS(
-          this.observableScreen.selectedCategoryNames
+          this.observableScreen.selectedCategoryNames,
         ),
         includeFromOtherCategories,
       }),
@@ -90,15 +90,15 @@ export class WritingScreenDelegate {
                     return [
                       vocabulary.vocabularyId,
                       this.observableConverter.convertToObservableVocabulary(
-                        vocabulary
+                        vocabulary,
                       ),
                     ];
-                  }
-                )
+                  },
+                ),
               ),
               startLesson: (): void => this.startLesson(false),
             });
-          }
+          },
         ),
         once(
           ActionType.WRITING__FETCH_VOCABULARY_FAILED,
@@ -116,9 +116,9 @@ export class WritingScreenDelegate {
             } else {
               this.showPrepareFailedDialog(errorCode);
             }
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -139,7 +139,7 @@ export class WritingScreenDelegate {
       {
         message: 'Preparing. Please wait...',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -159,7 +159,7 @@ export class WritingScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -169,12 +169,12 @@ export class WritingScreenDelegate {
               this.startLesson(true);
             },
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -189,7 +189,7 @@ export class WritingScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -201,7 +201,7 @@ export class WritingScreenDelegate {
         title: 'FAILED TO START',
         showCloseButton: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

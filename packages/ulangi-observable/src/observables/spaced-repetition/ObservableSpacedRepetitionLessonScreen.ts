@@ -12,6 +12,7 @@ import { ObservableReviewActionBarState } from '../review-action/ObservableRevie
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
 import { ObservableReviewFeedbackBarState } from '../review-feedback/ObservableReviewFeedbackBarState';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableVocabulary } from '../vocabulary/ObservableVocabulary';
 import { ObservableReviewState } from './ObservableReviewState';
 
@@ -44,9 +45,10 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     speakState: IObservableValue<ActivityState>,
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.vocabularyList = vocabularyList;
     this.reviewState = reviewState;
     this.reviewActionBarState = reviewActionBarState;

@@ -27,7 +27,7 @@ export class FetchVocabularyDelegate {
     eventBus: EventBus,
     setStore: ObservableSetStore,
     observableScreen: ObservableReflexScreen,
-    questionIterator: ReflexQuestionIterator
+    questionIterator: ReflexQuestionIterator,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -52,20 +52,20 @@ export class FetchVocabularyDelegate {
         on(ActionType.REFLEX__PREPARING_FETCH_VOCABULARY, callback.onPreparing),
         once(
           ActionType.REFLEX__PREPARE_FETCH_VOCABULARY_SUCCEEDED,
-          callback.onPrepareSucceeded
+          callback.onPrepareSucceeded,
         ),
         once(
           ActionType.REFLEX__PREPARE_FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onPrepareFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onPrepareFailed(errorCode),
+        ),
+      ),
     );
   }
 
   public fetch(callback: {
     onFetchSucceeded: (
       vocabularyList: readonly Vocabulary[],
-      noMore: boolean
+      noMore: boolean,
     ) => void;
     onFetchFailed: (errorCode: string) => void;
   }): void {
@@ -75,20 +75,20 @@ export class FetchVocabularyDelegate {
         once(
           ActionType.REFLEX__FETCH_VOCABULARY_SUCCEEDED,
           ({ vocabularyList, noMore }): void =>
-            callback.onFetchSucceeded(vocabularyList, noMore)
+            callback.onFetchSucceeded(vocabularyList, noMore),
         ),
         once(
           ActionType.REFLEX__FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onFetchFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onFetchFailed(errorCode),
+        ),
+      ),
     );
   }
 
   public fetchVocabularyIfBelowThreshold(callback: {
     onFetchSucceeded: (
       vocabularyList: readonly Vocabulary[],
-      noMore: boolean
+      noMore: boolean,
     ) => void;
   }): void {
     if (
@@ -104,7 +104,7 @@ export class FetchVocabularyDelegate {
 
   public clearFetch(): void {
     this.eventBus.publish(
-      createAction(ActionType.REFLEX__CLEAR_FETCH_VOCABULARY, null)
+      createAction(ActionType.REFLEX__CLEAR_FETCH_VOCABULARY, null),
     );
   }
 }

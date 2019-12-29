@@ -30,7 +30,7 @@ export class AtomArcs extends React.Component<AtomArcsProps> {
   public describeArc(
     fromPosition: { x: number; y: number },
     toPosition: { x: number; y: number },
-    radius: number
+    radius: number,
   ): string {
     const arc = [
       'M',
@@ -71,8 +71,7 @@ export class AtomArcs extends React.Component<AtomArcsProps> {
         key={this.generateSvgKey()}
         style={styles.container}
         width={dimensions.width}
-        height={dimensions.height}
-      >
+        height={dimensions.height}>
         {this.props.arcs.map(
           (arc): React.ReactElement<any> => {
             return (
@@ -81,14 +80,14 @@ export class AtomArcs extends React.Component<AtomArcsProps> {
                 d={this.describeArc(
                   arc.fromPosition,
                   arc.toPosition,
-                  arc.radius
+                  arc.radius,
                 )}
                 stroke={config.atom.primaryColor}
                 strokeWidth={3}
                 fill="none"
               />
             );
-          }
+          },
         )}
       </Svg>
     );

@@ -25,7 +25,7 @@ export class FeedbackSelectionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -33,7 +33,7 @@ export class FeedbackSelectionMenuDelegate {
 
   public show(
     selectedFeedback: Feedback,
-    onPress: (feedback: Feedback) => void
+    onPress: (feedback: Feedback) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -44,7 +44,7 @@ export class FeedbackSelectionMenuDelegate {
                 feedback,
                 {
                   testID: FeedbackSelectionMenuIds.SELECT_FEEDBACK_BTN_BY_FEEDBACK(
-                    feedback
+                    feedback,
                   ),
                   text: feedback,
                   onPress: (): void => {
@@ -53,13 +53,13 @@ export class FeedbackSelectionMenuDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedFeedback],
         title: 'Select',
       },
-      this.styles
+      this.styles,
     );
   }
 }

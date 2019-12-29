@@ -33,7 +33,7 @@ export class ChangeEmailScreenDelegate {
       onChangingEmail: () => void;
       onChangeEmailSucceeded: () => void;
       onChangeEmailFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__CHANGE_EMAIL, {
@@ -44,13 +44,13 @@ export class ChangeEmailScreenDelegate {
         on(ActionType.USER__CHANGING_EMAIL, callback.onChangingEmail),
         once(
           ActionType.USER__CHANGE_EMAIL_SUCCEEDED,
-          callback.onChangeEmailSucceeded
+          callback.onChangeEmailSucceeded,
         ),
         once(
           ActionType.USER__CHANGE_EMAIL_FAILED,
-          ({ errorCode }): void => callback.onChangeEmailFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onChangeEmailFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -59,7 +59,7 @@ export class ChangeEmailScreenDelegate {
       {
         message: 'Changing email. Please wait...',
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -74,7 +74,7 @@ export class ChangeEmailScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -87,7 +87,7 @@ export class ChangeEmailScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

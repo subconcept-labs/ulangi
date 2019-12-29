@@ -11,6 +11,7 @@ import { ObservableMap } from 'mobx';
 
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableVocabulary } from '../vocabulary/ObservableVocabulary';
 
 export class ObservableReviewFeedbackScreen extends ObservableScreen {
@@ -24,9 +25,10 @@ export class ObservableReviewFeedbackScreen extends ObservableScreen {
     vocabularyList: ObservableMap<string, ObservableVocabulary>,
     feedbackListState: ObservableFeedbackListState,
     allNextReviewData: ObservableMap<string, NextReviewData>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.vocabularyList = vocabularyList;
     this.feedbackListState = feedbackListState;
     this.allNextReviewData = allNextReviewData;

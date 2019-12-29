@@ -33,7 +33,7 @@ export class CategorySelectorScreenDelegate {
     observableScreen: ObservableCategorySelectorScreen,
     categoryFormDelegate: CategoryFormDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -56,7 +56,7 @@ export class CategorySelectorScreenDelegate {
 
   public prepareAndFetchCategorySuggestions(): void {
     this.categoryFormDelegate.prepareAndFetchSuggestions(
-      this.observableScreen.categoryFormState.categoryName
+      this.observableScreen.categoryFormState.categoryName,
     );
   }
 
@@ -73,10 +73,10 @@ export class CategorySelectorScreenDelegate {
   }
 
   public autoRefreshCategorySuggestionsOnNameChange(
-    debounceTime: number
+    debounceTime: number,
   ): void {
     this.categoryFormDelegate.autoRefreshCategorySuggestionsOnNameChange(
-      debounceTime
+      debounceTime,
     );
   }
 
@@ -103,7 +103,7 @@ export class CategorySelectorScreenDelegate {
             this.dialogDelegate.show({
               message: 'Saving...',
             });
-          }
+          },
         ),
         once(
           ActionType.VOCABULARY__EDIT_SUCCEEDED,
@@ -115,7 +115,7 @@ export class CategorySelectorScreenDelegate {
                 this.navigatorDelegate.pop();
               },
             });
-          }
+          },
         ),
         once(
           ActionType.VOCABULARY__EDIT_FAILED,
@@ -123,9 +123,9 @@ export class CategorySelectorScreenDelegate {
             this.dialogDelegate.showFailedDialog(errorCode, {
               title: 'SAVE FAILED',
             });
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -145,7 +145,7 @@ export class CategorySelectorScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -153,12 +153,12 @@ export class CategorySelectorScreenDelegate {
             text: 'OKAY',
             onPress: proceedCallback,
             styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -174,7 +174,7 @@ export class CategorySelectorScreenDelegate {
                 : this.observableScreen.categoryFormState.categoryName,
           },
         };
-      }
+      },
     );
 
     this.eventBus.pubsub(
@@ -189,7 +189,7 @@ export class CategorySelectorScreenDelegate {
             this.dialogDelegate.show({
               message: 'Saving...',
             });
-          }
+          },
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
@@ -201,7 +201,7 @@ export class CategorySelectorScreenDelegate {
                 this.navigatorDelegate.pop();
               },
             });
-          }
+          },
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_FAILED,
@@ -209,9 +209,9 @@ export class CategorySelectorScreenDelegate {
             this.dialogDelegate.showFailedDialog(errorCode, {
               title: 'SAVE FAILED',
             });
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 }

@@ -11,6 +11,8 @@ import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableFeedbackListState,
   ObservableReviewFeedbackScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
@@ -18,6 +20,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { ReviewFeedbackScreenIds } from '../../constants/ids/ReviewFeedbackScreenIds';
 import { ReviewFeedbackScreenFactory } from '../../factories/review-feedback/ReviewFeedbackScreenFactory';
 import { ReviewFeedbackScreen } from './ReviewFeedbackScreen';
@@ -43,11 +46,11 @@ export class ReviewFeedbackScreenContainer extends Container<
   private reviewFeedbackScreenFactory = new ReviewFeedbackScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private reviewFeedbackDataDelegate = this.reviewFeedbackScreenFactory.createReviewFeedbackDataDelegate(
-    this.props.passedProps.lessonType
+    this.props.passedProps.lessonType,
   );
 
   protected observableScreen = new ObservableReviewFeedbackScreen(
@@ -57,46 +60,60 @@ export class ReviewFeedbackScreenContainer extends Container<
           return [
             vocabularyId,
             this.props.observableConverter.convertToObservableVocabulary(
-              vocabulary
+              vocabulary,
             ),
           ];
-        }
-      )
+        },
+      ),
     ),
     new ObservableFeedbackListState(
       observable.map(
-        Array.from(this.props.passedProps.originalFeedbackList.entries())
-      )
+        Array.from(this.props.passedProps.originalFeedbackList.entries()),
+      ),
     ),
     this.reviewFeedbackDataDelegate.createAllNextReviewData(
       this.props.passedProps.vocabularyList,
-      this.props.passedProps.originalFeedbackList
+      this.props.passedProps.originalFeedbackList,
     ),
-    ScreenName.REVIEW_FEEDBACK_SCREEN
+    ScreenName.REVIEW_FEEDBACK_SCREEN,
+    new ObservableTitleTopBar(
+      'Review Feedback',
+      new ObservableTopBarButton(
+        ReviewFeedbackScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        ReviewFeedbackScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.saveResult({
+            onSaveSucceeded: this.props.passedProps.onSaveSucceeded,
+          });
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.reviewFeedbackScreenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.reviewFeedbackScreenFactory.createScreenDelegate(
     this.props.passedProps.lessonType,
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ReviewFeedbackScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === ReviewFeedbackScreenIds.SAVE_BTN) {
-      this.screenDelegate.saveResult({
-        onSaveSucceeded: this.props.passedProps.onSaveSucceeded,
-      });
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ReviewFeedbackScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ReviewFeedbackScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

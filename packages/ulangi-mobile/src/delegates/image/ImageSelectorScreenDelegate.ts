@@ -37,7 +37,7 @@ export class ImageSelectorScreenDelegate {
     uploadImageDelegate: UploadImageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    linkingDelegate: LinkingDelegate
+    linkingDelegate: LinkingDelegate,
   ) {
     this.observableLightBox = observableLightBox;
     this.observableScreen = observableScreen;
@@ -77,12 +77,12 @@ export class ImageSelectorScreenDelegate {
           .filter(
             (image): boolean => {
               return image.isSelected.get();
-            }
+            },
           )
           .map(
             (image): PixabayImage => {
               return image.toRaw();
-            }
+            },
           ),
         {
           onUploading: this.showUploading,
@@ -93,11 +93,11 @@ export class ImageSelectorScreenDelegate {
               (): void => {
                 this.navigatorDelegate.pop();
                 callback(urls);
-              }
+              },
             );
           },
           onUploadFailed: this.showUploadFailed,
-        }
+        },
       );
     }
   }

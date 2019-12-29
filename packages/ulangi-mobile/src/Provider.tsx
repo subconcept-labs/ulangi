@@ -17,7 +17,7 @@ export class Provider extends React.Component {
   public render(): React.ReactElement<any> {
     const child = assertExists(
       React.Children.only(this.props.children),
-      'Provider requires one child'
+      'Provider requires one child',
     );
 
     if (React.isValidElement<any>(child)) {

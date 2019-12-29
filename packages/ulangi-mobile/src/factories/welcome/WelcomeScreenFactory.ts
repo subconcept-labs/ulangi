@@ -15,7 +15,7 @@ export class WelcomeScreenFactory extends ScreenFactory {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const authDelegate = new AuthDelegate(this.eventBus);
@@ -24,7 +24,7 @@ export class WelcomeScreenFactory extends ScreenFactory {
       authDelegate,
       navigatorDelegate,
       dialogDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

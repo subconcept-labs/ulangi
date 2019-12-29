@@ -65,7 +65,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
     navigatorDelegate: NavigatorDelegate,
-    startLesson: () => void
+    startLesson: () => void,
   ) {
     this.observer = observer;
     this.setStore = setStore;
@@ -84,7 +84,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.observableScreen.reviewActionBarState.buttons.forEach(
       (button): void => {
         button.disabled = true;
-      }
+      },
     );
   }
 
@@ -101,7 +101,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           dark: Images.ARROW_LEFT_MILK_25X25,
         },
         this.observableScreen.reviewState.currentIndex === 0,
-        (): void => this.previousItem()
+        (): void => this.previousItem(),
       ),
       new ObservableReviewActionButton(
         'SHOW ANSWER',
@@ -125,9 +125,9 @@ export class SpacedRepetitionLessonScreenDelegate {
             false,
             (): void => {
               this.showReviewFeedbackBar();
-            }
+            },
           );
-        }
+        },
       ),
       new ObservableReviewActionButton(
         'PLAY AUDIO',
@@ -141,7 +141,7 @@ export class SpacedRepetitionLessonScreenDelegate {
         (): void => {
           this.synthesizeAndSpeak(vocabulary.vocabularyTerm);
         },
-        this.autoUpdateAudioButton
+        this.autoUpdateAudioButton,
       ),
     ]);
 
@@ -156,7 +156,7 @@ export class SpacedRepetitionLessonScreenDelegate {
               (values: string[]): void => {
                 this.observableScreen.reviewActionBarState.buttons.push(
                   new ObservableReviewActionButton(
-                    `PLAY AUDIO`,
+                    'PLAY AUDIO',
                     values[0],
                     ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(values[0]),
                     {
@@ -165,13 +165,13 @@ export class SpacedRepetitionLessonScreenDelegate {
                     },
                     false,
                     (): void => this.synthesizeAndSpeak(values[0]),
-                    this.autoUpdateAudioButton
-                  )
+                    this.autoUpdateAudioButton,
+                  ),
                 );
-              }
+              },
             );
           }
-        }
+        },
       );
     }
   }
@@ -184,22 +184,22 @@ export class SpacedRepetitionLessonScreenDelegate {
             if (typeof button.autorun !== 'undefined') {
               button.autorun(button);
             }
-          }
+          },
         );
-      }
+      },
     );
   }
 
   public setFeedback(feedback: Feedback): void {
     this.observableScreen.feedbackListState.feedbackList.set(
       this.observableScreen.reviewState.vocabulary.vocabularyId,
-      feedback
+      feedback,
     );
 
     this.reviewFeedbackBarDelegate.hide(
       (): void => {
         this.nextItem();
-      }
+      },
     );
   }
 
@@ -208,14 +208,14 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startLesson()
+      (): void => this.startLesson(),
     );
   }
 
   public quit(): void {
     if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
       this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.pop()
+        (): void => this.navigatorDelegate.pop(),
       );
     } else {
       this.navigatorDelegate.pop();
@@ -291,7 +291,7 @@ export class SpacedRepetitionLessonScreenDelegate {
               this.navigatorDelegate.dismissLightBox();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
           {
@@ -302,12 +302,12 @@ export class SpacedRepetitionLessonScreenDelegate {
               this.navigatorDelegate.pop();
             },
             styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL
+              ButtonSize.SMALL,
             ),
           },
         ],
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -319,7 +319,7 @@ export class SpacedRepetitionLessonScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -334,7 +334,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           const previousItem = this.reviewIterator.previous();
           this.observableScreen.reviewState.setUpPreviousItem(previousItem);
           this.setUpButtons();
-        }
+        },
       );
     }
   }
@@ -342,7 +342,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private nextItem(): void {
     if (this.reviewIterator.isDone()) {
       this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm()
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
       );
 
       this.observableScreen.shouldShowResult.set(true);
@@ -357,7 +357,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           const nextItem = this.reviewIterator.next();
           this.observableScreen.reviewState.setUpNextItem(nextItem);
           this.setUpButtons();
-        }
+        },
       );
     }
   }
@@ -376,7 +376,7 @@ export class SpacedRepetitionLessonScreenDelegate {
 
   private showReviewFeedbackBar(): void {
     this.reviewFeedbackBarDelegate.show(
-      this.observableScreen.reviewState.vocabulary
+      this.observableScreen.reviewState.vocabulary,
     );
   }
 
@@ -401,7 +401,7 @@ export class SpacedRepetitionLessonScreenDelegate {
             this.observableScreen.speakState.set(ActivityState.INACTIVE);
             this.showSynthesizeErrorDialog(errorCode);
           },
-        }
+        },
       );
     }
   }
@@ -424,12 +424,12 @@ export class SpacedRepetitionLessonScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   private updateFeedbackList(
-    feedbackList: ReadonlyMap<string, Feedback>
+    feedbackList: ReadonlyMap<string, Feedback>,
   ): void {
     this.observableScreen.feedbackListState.feedbackList.replace(feedbackList);
   }

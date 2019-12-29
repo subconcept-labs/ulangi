@@ -35,15 +35,15 @@ export class KeyboardSpacer extends React.Component<
   public componentDidMount(): void {
     this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      this.keyboardDidShow.bind(this)
+      this.keyboardDidShow.bind(this),
     );
     this.keyboardWillHideListener = Keyboard.addListener(
       'keyboardWillHide',
-      this.keyboardWillHide.bind(this)
+      this.keyboardWillHide.bind(this),
     );
     this.keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
-      this.keyboardDidHide.bind(this)
+      this.keyboardDidHide.bind(this),
     );
   }
 

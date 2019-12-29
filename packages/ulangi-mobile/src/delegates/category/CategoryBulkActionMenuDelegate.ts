@@ -38,7 +38,7 @@ export class CategoryBulkActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.observableLightBox = observableLightBox;
     this.observableScreen = observableScreen;
@@ -55,7 +55,7 @@ export class CategoryBulkActionMenuDelegate {
       this.getLearnWithWritingBtn(),
       this.getQuizBtn(),
       this.getPlayWithReflex(),
-      this.getPlayWithAtom()
+      this.getPlayWithAtom(),
       //this.getAutoplayBtn()
     );
 
@@ -68,7 +68,7 @@ export class CategoryBulkActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
@@ -83,10 +83,10 @@ export class CategoryBulkActionMenuDelegate {
               Array.from(this.observableScreen.categoryList.values()).forEach(
                 (vocabulary): void => {
                   vocabulary.isSelected.set(true);
-                }
+                },
               );
             }
-          }
+          },
         );
         this.navigatorDelegate.dismissLightBox();
       },
@@ -145,7 +145,7 @@ export class CategoryBulkActionMenuDelegate {
             this.navigatorDelegate.push(ScreenName.REFLEX_SCREEN, {
               selectedCategoryNames: this.observableScreen.selectedCategoryNames.slice(),
             });
-          }
+          },
         );
       },
     };
@@ -164,7 +164,7 @@ export class CategoryBulkActionMenuDelegate {
             this.navigatorDelegate.push(ScreenName.ATOM_SCREEN, {
               selectedCategoryNames: this.observableScreen.selectedCategoryNames.slice(),
             });
-          }
+          },
         );
       },
     };

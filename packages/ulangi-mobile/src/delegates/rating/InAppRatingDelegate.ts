@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import Rate from '@ulangi/react-native-rate';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, UserExtraDataName } from '@ulangi/ulangi-common/enums';
 import { EventBus } from '@ulangi/ulangi-event';
@@ -16,6 +15,7 @@ import {
 import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import * as moment from 'moment';
 import { Platform } from 'react-native';
+import Rate from 'react-native-rate';
 
 import { env } from '../../constants/env';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -33,7 +33,7 @@ export class InAppRatingDelegate {
     userStore: ObservableUserStore,
     remoteConfigStore: ObservableRemoteConfigStore,
     dialogDelegate: DialogDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.userStore = userStore;
@@ -67,7 +67,7 @@ export class InAppRatingDelegate {
             this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
         {
@@ -77,7 +77,7 @@ export class InAppRatingDelegate {
             this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL
+            ButtonSize.SMALL,
           ),
         },
       ],
@@ -95,7 +95,7 @@ export class InAppRatingDelegate {
       },
       (success): void => {
         console.log(success);
-      }
+      },
     );
   }
 
@@ -110,7 +110,7 @@ export class InAppRatingDelegate {
             },
           ],
         },
-      })
+      }),
     );
   }
 
@@ -136,7 +136,7 @@ export class InAppRatingDelegate {
           .subtract(
             this.remoteConfigStore.existingRemoteConfig.app
               .showInAppRatingAfterDays,
-            'days'
+            'days',
           )
           .toDate()
     );

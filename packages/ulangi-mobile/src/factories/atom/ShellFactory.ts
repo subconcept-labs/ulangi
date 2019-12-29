@@ -20,15 +20,15 @@ export class ShellFactory {
         config.atom.innerShellDiameter,
         originPosition,
         null,
-        10
+        10,
       ),
       new ObservableShell(
         AtomShellType.OUTER,
         config.atom.outerShellDiameter,
         originPosition,
         null,
-        20
-      )
+        20,
+      ),
     );
 
     return shells;

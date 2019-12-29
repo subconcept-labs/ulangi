@@ -5,10 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { CustomTitle } from '../views/common/CustomTitle';
-import { TouchableTitle } from '../views/common/TouchableTitle';
+import { TopBar } from '../views/top-bar/TopBar';
 
 export const CustomViews = {
-  CUSTOM_TITLE: CustomTitle,
-  TOUCHABLE_TITLE: TouchableTitle,
+  TOP_BAR: TopBar,
 };

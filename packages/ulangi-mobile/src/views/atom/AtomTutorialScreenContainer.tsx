@@ -33,14 +33,14 @@ export class AtomTutorialScreenContainer extends Container {
   private atomTutorialScreenFactory = new AtomTutorialScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private question = new ObservableAtomQuestion(
     '____',
     'ATOM',
     '',
-    observable.array(['A', 'T', 'O', 'M', 'K'])
+    observable.array(['A', 'T', 'O', 'M', 'K']),
   );
 
   private atomSettingsDelegate = this.atomTutorialScreenFactory.createAtomSettingsDelegate();
@@ -55,11 +55,11 @@ export class AtomTutorialScreenContainer extends Container {
     [],
     [],
     [],
-    ScreenName.ATOM_TUTORIAL_SCREEN
+    ScreenName.ATOM_TUTORIAL_SCREEN,
   );
 
   private screenDelegate = this.atomTutorialScreenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {

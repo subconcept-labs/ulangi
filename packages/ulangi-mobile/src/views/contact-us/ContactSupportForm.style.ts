@@ -65,7 +65,7 @@ export const lightStyles: ContactSupportFormStyles = StyleSheet.create(
       borderTopColor: config.styles.light.primaryBorderColor,
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles: ContactSupportFormStyles = StyleSheet.create(
@@ -80,5 +80,5 @@ export const darkStyles: ContactSupportFormStyles = StyleSheet.create(
       borderTopColor: config.styles.dark.primaryBorderColor,
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

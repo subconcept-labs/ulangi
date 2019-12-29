@@ -52,7 +52,7 @@ export class VocabularyDetailExtraFields extends React.Component<
         this.props.vocabularyExtraFields,
         (valueList): boolean => {
           return valueList.length === 0;
-        }
+        },
       ) === true
     ) {
       return null;
@@ -69,17 +69,17 @@ export class VocabularyDetailExtraFields extends React.Component<
                   VocabularyExtraFieldDetails[
                     key as keyof VocabularyExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               } else {
                 return this.renderFieldsByText(
                   VocabularyExtraFieldDetails[
                     key as keyof VocabularyExtraFields
                   ],
-                  valueList
+                  valueList,
                 );
               }
-            }
+            },
           )}
         </SectionGroup>
       );
@@ -88,7 +88,7 @@ export class VocabularyDetailExtraFields extends React.Component<
 
   private renderFieldsByImage(
     detail: ExtraFieldDetail,
-    valueList: readonly string[][]
+    valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
       <React.Fragment key={detail.name}>
@@ -108,7 +108,7 @@ export class VocabularyDetailExtraFields extends React.Component<
                 }
               />
             );
-          }
+          },
         )}
       </React.Fragment>
     );
@@ -116,7 +116,7 @@ export class VocabularyDetailExtraFields extends React.Component<
 
   private renderFieldsByText(
     detail: ExtraFieldDetail,
-    valueList: readonly string[]
+    valueList: readonly string[],
   ): React.ReactElement<any> {
     return (
       <React.Fragment key={detail.name}>
@@ -136,7 +136,7 @@ export class VocabularyDetailExtraFields extends React.Component<
                 shrink="left"
               />
             );
-          }
+          },
         )}
       </React.Fragment>
     );
@@ -148,8 +148,7 @@ export class VocabularyDetailExtraFields extends React.Component<
         <TouchableOpacity
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           style={this.styles.speak_touchable}
-          onPress={(): void => this.props.speak(value)}
-        >
+          onPress={(): void => this.props.speak(value)}>
           <Image
             style={this.styles.speaker_icon}
             source={Images.SPEAKER_BLACK_17X17}

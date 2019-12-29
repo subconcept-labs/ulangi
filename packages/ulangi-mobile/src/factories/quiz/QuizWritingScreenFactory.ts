@@ -16,14 +16,14 @@ export class QuizWritingScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     questionIterator: WritingQuestionIterator,
     observableScreen: ObservableQuizWritingScreen,
-    startWritingQuiz: () => void
+    startWritingQuiz: () => void,
   ): QuizWritingScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const writingFormDelegate = new WritingFormDelegate(
       this.observer,
       observableScreen.writingFormState,
-      observableScreen.writingResult
+      observableScreen.writingResult,
     );
 
     return new QuizWritingScreenDelegate(
@@ -32,7 +32,7 @@ export class QuizWritingScreenFactory extends ScreenFactory {
       observableScreen,
       writingFormDelegate,
       navigatorDelegate,
-      startWritingQuiz
+      startWritingQuiz,
     );
   }
 }

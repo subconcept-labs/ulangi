@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSetUpAccountScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSetUpAccountScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { SetUpAccountScreenIds } from '../../constants/ids/SetUpAccountScreenIds';
 import { SetUpAccountScreenFactory } from '../../factories/account/SetUpAccountScreenFactory';
 import { SetUpAccountScreen } from './SetUpAccountScreen';
@@ -28,33 +33,42 @@ export class SetUpAccountScreenContainer extends Container {
   private screenFactory = new SetUpAccountScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableSetUpAccountScreen(
     '',
     '',
     '',
-    ScreenName.SET_UP_ACCOUNT_SCREEN
+    ScreenName.SET_UP_ACCOUNT_SCREEN,
+    new ObservableTitleTopBar(
+      'Set Up Account',
+      new ObservableTopBarButton(
+        SetUpAccountScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === SetUpAccountScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? SetUpAccountScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : SetUpAccountScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : SetUpAccountScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -13,7 +13,7 @@ export class SignOutScreenFactory extends ScreenFactory {
     return new SignOutScreenDelegate(
       this.eventBus,
       this.props.observableScreenRegistry,
-      this.createNavigatorDelegate()
+      this.createNavigatorDelegate(),
     );
   }
 }

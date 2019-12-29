@@ -35,13 +35,14 @@ export class ReflexPausedScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.REFLEX_PAUSED_SCREEN
+    ScreenName.REFLEX_PAUSED_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();

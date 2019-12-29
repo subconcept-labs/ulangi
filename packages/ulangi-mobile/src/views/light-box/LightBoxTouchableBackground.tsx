@@ -58,19 +58,19 @@ export class LightBoxTouchableBackground extends React.Component<
           this.animationContainerRef
         ) {
           this.props.observableLightBox.pendingAnimations.push(
-            'fading background'
+            'fading background',
           );
           this.animationContainerRef
             .fadeOut(config.lightBox.animationDuration)
             .then(
               (): void => {
                 this.props.observableLightBox.removePendingAnimation(
-                  'fading background'
+                  'fading background',
                 );
-              }
+              },
             );
         }
-      }
+      },
     );
   }
 
@@ -131,7 +131,7 @@ export class LightBoxTouchableBackground extends React.Component<
             if (this.state.isTouchingBackground) {
               this.onBackgroundPress();
             }
-          }
+          },
         );
       },
     });
@@ -172,8 +172,7 @@ export class LightBoxTouchableBackground extends React.Component<
     return (
       <View
         testID={this.props.testID}
-        style={[styles.light_box_container, this.props.style]}
-      >
+        style={[styles.light_box_container, this.props.style]}>
         <Animatable.View
           ref={(ref: any): void => {
             this.animationContainerRef = ref;
@@ -188,8 +187,7 @@ export class LightBoxTouchableBackground extends React.Component<
           style={{ opacity: innerViewOpacity }}
           onLayout={(event): void => {
             this.innerViewLayout = event.nativeEvent.layout;
-          }}
-        >
+          }}>
           {this.props.children}
         </View>
       </View>

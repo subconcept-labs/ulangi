@@ -45,7 +45,7 @@ export class VocabularyDetailScreenDelegate {
     speakDelegate: SpeakDelegate,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
     writingSettingsDelegate: WritingSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.vocabularyActionMenuDelegate = vocabularyActionMenuDelegate;
@@ -67,7 +67,7 @@ export class VocabularyDetailScreenDelegate {
         },
         onSynthesizeSucceeded: (filePath): void => {
           this.observableScreen.synthesizeSpeechState.set(
-            ActivityState.INACTIVE
+            ActivityState.INACTIVE,
           );
           this.speak(filePath);
         },
@@ -94,7 +94,7 @@ export class VocabularyDetailScreenDelegate {
       return this.spacedRepetitionScheduler.getReviewTimeFromNow(
         initialInterval,
         vocabulary,
-        config.spacedRepetition.maxLevel
+        config.spacedRepetition.maxLevel,
       );
     }
   }
@@ -110,7 +110,7 @@ export class VocabularyDetailScreenDelegate {
       return this.writingScheduler.getReviewTimeFromNow(
         initialInterval,
         vocabulary,
-        config.writing.maxLevel
+        config.writing.maxLevel,
       );
     }
   }
@@ -133,7 +133,7 @@ export class VocabularyDetailScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

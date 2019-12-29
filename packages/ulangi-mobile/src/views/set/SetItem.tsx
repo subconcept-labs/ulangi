@@ -42,18 +42,17 @@ export class SetItem extends React.Component<SetItemProps> {
     return (
       <View
         style={this.styles.cell_container}
-        testID={SetItemIds.SET_ITEM_CONTAINER_BY_SET_NAME(set.setName)}
-      >
+        testID={SetItemIds.SET_ITEM_CONTAINER_BY_SET_NAME(set.setName)}>
         <View style={this.styles.icon_container}>
           {_.has(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            set.learningLanguageCode
+            set.learningLanguageCode,
           ) ? (
             <Image
               style={this.styles.flag_icon}
               source={_.get(
                 Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-                set.learningLanguageCode
+                set.learningLanguageCode,
               )}
             />
           ) : (
@@ -95,8 +94,7 @@ export class SetItem extends React.Component<SetItemProps> {
               testID={SetItemIds.SHOW_ACTION_MENU_BTN_BY_SET_NAME(set.setName)}
               hitSlop={{ top: 18, bottom: 18, left: 10, right: 10 }}
               style={this.styles.option_touchable}
-              onPress={(): void => this.props.showSetActionMenu(set)}
-            >
+              onPress={(): void => this.props.showSetActionMenu(set)}>
               <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
             </TouchableOpacity>
           </View>

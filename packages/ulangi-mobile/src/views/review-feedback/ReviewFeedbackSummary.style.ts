@@ -108,7 +108,7 @@ export const lightStyles = StyleSheet.create(
     grade: {
       color: config.styles.light.primaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -132,5 +132,5 @@ export const darkStyles = StyleSheet.create(
     grade: {
       color: config.styles.dark.primaryTextColor,
     },
-  })
+  }),
 );

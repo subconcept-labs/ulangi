@@ -10,39 +10,43 @@ import * as _ from 'lodash';
 
 import { LearnScreenIds } from '../../constants/ids/LearnScreenIds';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
-import { touchableTitle } from '../common/TouchableTitle';
+import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
 export class LearnScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     PrimaryScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
-      topBar: {
+      topBar: useCustomTopBar({
         testID: LearnScreenIds.TOP_BAR,
-        title: touchableTitle(ScreenName.LEARN_SCREEN),
-      },
-    }
+        screenName: ScreenName.LEARN_SCREEN,
+        styles: {
+          light: PrimaryScreenStyle.TOP_BAR_LIGHT_STYLES,
+          dark: PrimaryScreenStyle.TOP_BAR_DARK_STYLES,
+        },
+      }),
+    },
   );
 
   public static SCREEN_LIGHT_STYLES_ONLY = _.merge(
     {},
-    PrimaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    PrimaryScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_DARK_STYLES_ONLY = _.merge(
     {},
-    PrimaryScreenStyle.SCREEN_DARK_STYLES_ONLY
+    PrimaryScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
     LearnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+    LearnScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
     LearnScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    LearnScreenStyle.SCREEN_DARK_STYLES_ONLY
+    LearnScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

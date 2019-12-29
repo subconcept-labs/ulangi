@@ -49,8 +49,7 @@ export class SynchronizerScreen extends React.Component<
       <View style={this.styles.screen} testID={SynchronizerScreenIds.SCREEN}>
         <SectionGroup
           theme={this.props.darkModeStore.theme}
-          header="SYNC STATE"
-        >
+          header="SYNC STATE">
           <SectionRow
             theme={this.props.darkModeStore.theme}
             customLeft={this.renderSyncState()}
@@ -78,8 +77,7 @@ export class SynchronizerScreen extends React.Component<
           <DefaultText style={this.styles.sync_state}>In sync</DefaultText>
           <TouchableOpacity
             style={this.styles.sync_btn}
-            onPress={this.props.screenDelegate.triggerSync}
-          >
+            onPress={this.props.screenDelegate.triggerSync}>
             <DefaultText style={this.styles.sync_btn_text}>
               Trigger sync
             </DefaultText>

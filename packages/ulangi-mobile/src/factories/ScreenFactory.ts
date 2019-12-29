@@ -11,6 +11,7 @@ import { Observer } from '@ulangi/ulangi-observable';
 
 import { ContainerProps } from '../Container';
 import { DialogDelegate } from '../delegates/dialog/DialogDelegate';
+import { LinkingDelegate } from '../delegates/linking/LinkingDelegate';
 import { NavigatorDelegate } from '../delegates/navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../delegates/root/RootScreenDelegate';
 
@@ -22,7 +23,7 @@ export class ScreenFactory {
   public constructor(
     props: ContainerProps,
     eventBus: EventBus,
-    observer: Observer
+    observer: Observer,
   ) {
     this.props = props;
     this.eventBus = eventBus;
@@ -38,7 +39,7 @@ export class ScreenFactory {
       this.observer,
       this.props.componentId,
       this.props.observableLightBox,
-      this.props.rootStore.darkModeStore
+      this.props.rootStore.darkModeStore,
     );
   }
 
@@ -47,5 +48,12 @@ export class ScreenFactory {
     dark: Options;
   }): DialogDelegate {
     return new DialogDelegate(this.createNavigatorDelegate(), styles);
+  }
+
+  public createLinkingDelegate(styles: {
+    light: Options;
+    dark: Options;
+  }): LinkingDelegate {
+    return new LinkingDelegate(this.createDialogDelegate(styles));
   }
 }

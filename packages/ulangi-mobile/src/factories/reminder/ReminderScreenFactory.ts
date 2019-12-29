@@ -17,17 +17,17 @@ export class ReminderScreenFactory extends ScreenFactory {
   public createReminderSettingsDelegate(): ReminderSettingsDelegate {
     return new ReminderSettingsDelegate(
       this.props.rootStore.userStore,
-      this.props.rootStore.notificationStore
+      this.props.rootStore.notificationStore,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableReminderScreen
+    observableScreen: ObservableReminderScreen,
   ): ReminderScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const reminderDelegate = new ReminderDelegate(this.eventBus);
@@ -38,7 +38,7 @@ export class ReminderScreenFactory extends ScreenFactory {
       observableScreen,
       reminderDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

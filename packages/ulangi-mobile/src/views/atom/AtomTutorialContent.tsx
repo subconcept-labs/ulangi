@@ -73,7 +73,7 @@ export class AtomTutorialContent extends React.Component<
       content: (
         <View>
           <DefaultText key="congratz" style={styles.content}>
-            {`You're done! Here are some gotchas:`}
+            {"You're done! Here are some gotchas:"}
           </DefaultText>
           <DefaultText key="note-1" style={styles.content}>
             - The answer must be formed{' '}
@@ -96,7 +96,7 @@ export class AtomTutorialContent extends React.Component<
               styles={FullRoundedButtonStyle.getFullBackgroundStyles(
                 ButtonSize.SMALL,
                 config.atom.primaryColor,
-                config.atom.textColor
+                config.atom.textColor,
               )}
             />
           </View>

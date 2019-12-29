@@ -41,7 +41,7 @@ export class SetSelectionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -53,45 +53,48 @@ export class SetSelectionMenuDelegate {
     this.showActiveSets(
       (selectedSetId): void => {
         this.eventBus.publish(
-          createAction(ActionType.SET__SELECT, { setId: selectedSetId })
+          createAction(ActionType.SET__SELECT, { setId: selectedSetId }),
         );
-      }
+      },
     );
   }
 
   public showActiveSets(
     onSelect: (selectedSetId: string) => void,
-    options?: SetSelectionMenuOptions
+    options?: SetSelectionMenuOptions,
   ): void {
     this.show(
       this.setStore.existingCurrentSetId,
       this.setStore.existingActiveSetList,
       onSelect,
-      options
+      options,
     );
   }
 
   public autoUpdateSubtitleOnSetChange(
-    observableScreen: ObservableScreen
+    observableScreen: ObservableScreen,
   ): void {
     this.eventBus.subscribe(
       on(
         ActionType.SET__SELECT,
         (): void => {
-          if (typeof observableScreen.screenTitle !== 'undefined') {
-            observableScreen.screenTitle.subtitle = this.setStore.existingCurrentSet.setName;
-            observableScreen.screenTitle.icon = _.has(
+          if (
+            observableScreen.topBar !== null &&
+            observableScreen.topBar.kind === 'touchable'
+          ) {
+            observableScreen.topBar.text = this.setStore.existingCurrentSet.setName;
+            observableScreen.topBar.icon = _.has(
               Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-              this.setStore.existingCurrentSet.learningLanguageCode
+              this.setStore.existingCurrentSet.learningLanguageCode,
             )
               ? _.get(
                   Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-                  this.setStore.existingCurrentSet.learningLanguageCode
+                  this.setStore.existingCurrentSet.learningLanguageCode,
                 )
               : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any;
           }
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -99,7 +102,7 @@ export class SetSelectionMenuDelegate {
     currentSetId: string,
     setList: Map<string, Set>,
     onSelect: (selectedSetId: string) => void,
-    options?: SetSelectionMenuOptions
+    options?: SetSelectionMenuOptions,
   ): void {
     const setArray = Array.from(setList.entries());
     this.navigatorDelegate.showSelectionMenu(
@@ -111,16 +114,16 @@ export class SetSelectionMenuDelegate {
                 setId,
                 {
                   testID: SetSelectionMenuIds.SELECT_SET_BTN_BY_SET_NAME(
-                    set.setName
+                    set.setName,
                   ),
                   text: set.setName,
                   icon: _.has(
                     Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-                    set.learningLanguageCode
+                    set.learningLanguageCode,
                   )
                     ? _.get(
                         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-                        set.learningLanguageCode
+                        set.learningLanguageCode,
                       )
                     : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
                   onPress: (): void => {
@@ -129,8 +132,8 @@ export class SetSelectionMenuDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [currentSetId],
         leftButton:
@@ -143,7 +146,7 @@ export class SetSelectionMenuDelegate {
                   this.navigatorDelegate.dismissLightBox();
                   this.navigatorDelegate.push(
                     ScreenName.SET_MANAGEMENT_SCREEN,
-                    {}
+                    {},
                   );
                 },
                 styles: TextButtonStyle.getNormalStyles(ButtonSize.NORMAL),
@@ -162,7 +165,7 @@ export class SetSelectionMenuDelegate {
               },
         title: options && options.title ? options.title : 'Select',
       },
-      this.styles
+      this.styles,
     );
   }
 }

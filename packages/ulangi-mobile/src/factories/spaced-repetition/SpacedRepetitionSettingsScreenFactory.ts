@@ -15,12 +15,12 @@ export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
   public createSpacedRepetitionSettingsDelegate(): SpacedRepetitionSettingsDelegate {
     return new SpacedRepetitionSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableSpacedRepetitionSettingsScreen
+    observableScreen: ObservableSpacedRepetitionSettingsScreen,
   ): SpacedRepetitionSettingsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -29,7 +29,7 @@ export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
     return new SpacedRepetitionSettingsScreenDelegate(
       observableScreen,
       spacedRepetitionSettingsDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

@@ -9,6 +9,8 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableQuizWritingScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
   ObservableVocabulary,
   ObservableWritingFormState,
   ObservableWritingResult,
@@ -18,6 +20,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { QuizWritingScreenIds } from '../../constants/ids/QuizWritingScreenIds';
 import { QuizWritingScreenFactory } from '../../factories/quiz/QuizWritingScreenFactory';
@@ -43,11 +46,11 @@ export class QuizWritingScreenContainer extends Container<
   private screenFactory = new QuizWritingScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private questionIterator = new WritingQuestionIterator(
-    this.props.passedProps.vocabularyList
+    this.props.passedProps.vocabularyList,
   );
 
   protected observableScreen = new ObservableQuizWritingScreen(
@@ -60,17 +63,32 @@ export class QuizWritingScreenContainer extends Container<
       0,
       this.questionIterator.getNumberOfQuestions(),
       0,
-      false
+      false,
     ),
     new ObservableWritingResult(
       config.writing.gradeScale,
       observable.array([]),
       observable.array([]),
       observable.array([]),
-      observable.array([])
+      observable.array([]),
     ),
     observable.box(false),
-    ScreenName.QUIZ_WRITING_SCREEN
+    ScreenName.QUIZ_WRITING_SCREEN,
+    new ObservableTitleTopBar(
+      'Writing',
+      new ObservableTopBarButton(
+        QuizWritingScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.screenDelegate.quit();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -78,20 +96,14 @@ export class QuizWritingScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.questionIterator,
     this.observableScreen,
-    this.props.passedProps.startWritingQuiz
+    this.props.passedProps.startWritingQuiz,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === QuizWritingScreenIds.BACK_BTN) {
-      this.screenDelegate.quit();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? QuizWritingScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : QuizWritingScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : QuizWritingScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -27,7 +27,7 @@ export class DefinitionPool<D extends Definition = Definition> {
   public getRandomDefinitionsFromPool(
     limit: number,
     unique: boolean,
-    except?: readonly string[]
+    except?: readonly string[],
   ): readonly D[] {
     let picked: D[] = [];
 
@@ -38,13 +38,13 @@ export class DefinitionPool<D extends Definition = Definition> {
       except.forEach(
         (definitionId): void => {
           definitionPool = definitionPool.remove(definitionId);
-        }
+        },
       );
     }
 
     while (picked.length < limit && !definitionPool.isEmpty()) {
       const [definitionId, definition] = pickRandomFromImmutableMap(
-        definitionPool
+        definitionPool,
       );
       if (unique === true) {
         // Remove it from pool, so we won't pick it again

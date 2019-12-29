@@ -30,11 +30,11 @@ export class AddSetDelegate {
   }): void {
     const learningLanguageCode = assertExists(
       this.setFormState.learningLanguageCode,
-      'Cannot save add because learningLanguageCode is null'
+      'Cannot save add because learningLanguageCode is null',
     );
     const translatedToLanguageCode = assertExists(
       this.setFormState.translatedToLanguageCode,
-      'Cannot save add because translatedToLanguageCode is null'
+      'Cannot save add because translatedToLanguageCode is null',
     );
 
     const setName =
@@ -55,13 +55,13 @@ export class AddSetDelegate {
         on(ActionType.SET__ADDING, callback.onSaving),
         once(
           ActionType.SET__ADD_SUCCEEDED,
-          ({ set }): void => callback.onSaveSucceeded(set)
+          ({ set }): void => callback.onSaveSucceeded(set),
         ),
         once(
           ActionType.SET__ADD_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+        ),
+      ),
     );
   }
 }

@@ -7,11 +7,16 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+  ObservableWritingScreen,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { WritingScreenIds } from '../../constants/ids/WritingScreenIds';
 import { WritingScreenFactory } from '../../factories/writing/WritingScreenFactory';
 import { WritingScreen } from './WritingScreen';
@@ -34,31 +39,40 @@ export class WritingScreenContainer extends Container<
   private screenFactory = new WritingScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableWritingScreen(
     this.props.passedProps.selectedCategoryNames,
-    ScreenName.WRITING_SCREEN
+    ScreenName.WRITING_SCREEN,
+    new ObservableTitleTopBar(
+      '',
+      new ObservableTopBarButton(
+        WritingScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === WritingScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? WritingScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : WritingScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : WritingScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -13,7 +13,7 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class AdScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableAdScreen
+    observableScreen: ObservableAdScreen,
   ): AdScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -21,14 +21,14 @@ export class AdScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.adStore,
       this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     );
 
     return new AdScreenDelegate(
       this.eventBus,
       observableScreen,
       adDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

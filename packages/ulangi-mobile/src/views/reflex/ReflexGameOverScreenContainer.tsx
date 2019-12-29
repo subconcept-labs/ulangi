@@ -36,13 +36,14 @@ export class ReflexGameOverScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.REFLEX_GAME_OVER_SCREEN
+    ScreenName.REFLEX_GAME_OVER_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();

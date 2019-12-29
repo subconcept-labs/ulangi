@@ -11,6 +11,7 @@ import { IObservableValue, ObservableMap } from 'mobx';
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
 import { ObservableReviewFeedbackBarState } from '../review-feedback/ObservableReviewFeedbackBarState';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableVocabulary } from '../vocabulary/ObservableVocabulary';
 import { ObservableWritingFormState } from './ObservableWritingFormState';
 import { ObservableWritingResult } from './ObservableWritingResult';
@@ -41,9 +42,10 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     saveState: IObservableValue<ActivityState>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.vocabularyList = vocabularyList;
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;

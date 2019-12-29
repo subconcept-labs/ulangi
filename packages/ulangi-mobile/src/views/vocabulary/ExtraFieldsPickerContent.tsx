@@ -33,7 +33,7 @@ export interface ExtraFieldsPickerContentProps {
   onPick: (
     extraFieldDetail: ExtraFieldDetail,
     value: string,
-    cursor: undefined | number
+    cursor: undefined | number,
   ) => void;
   styles?: {
     light: ExtraFieldsPickerContentStyles;
@@ -56,19 +56,18 @@ export class ExtraFieldsPickerContent extends React.Component<
       <SmartScrollView
         testID={VocabularyFormIds.EXTRA_FIELD_LIST}
         showsVerticalScrollIndicator={true}
-        style={this.styles.picker_content}
-      >
+        style={this.styles.picker_content}>
         {this.renderExtraFields(
           this.props.kind === 'vocabulary'
             ? VocabularyExtraFieldDetails
-            : DefinitionExtraFieldDetails
+            : DefinitionExtraFieldDetails,
         )}
       </SmartScrollView>
     );
   }
 
   private renderExtraFields(
-    extraFieldDetails: { [P in keyof any]: ExtraFieldDetail }
+    extraFieldDetails: { [P in keyof any]: ExtraFieldDetail },
   ): React.ReactElement<any> {
     return (
       <React.Fragment>
@@ -79,15 +78,15 @@ export class ExtraFieldsPickerContent extends React.Component<
                 detail.targetLanguageCodes === 'any' ||
                 _.includes(
                   detail.targetLanguageCodes,
-                  this.props.learningLanguageCode
+                  this.props.learningLanguageCode,
                 )
               );
-            }
+            },
           )
           .map(
             ([key, detail]): React.ReactElement<any> => {
               return this.renderRow(key, detail);
-            }
+            },
           )}
       </React.Fragment>
     );
@@ -95,7 +94,7 @@ export class ExtraFieldsPickerContent extends React.Component<
 
   private renderRow(
     key: string,
-    detail: ExtraFieldDetail
+    detail: ExtraFieldDetail,
   ): React.ReactElement<any> {
     return (
       <View key={key} style={this.styles.row}>
@@ -119,7 +118,7 @@ export class ExtraFieldsPickerContent extends React.Component<
               'Select images',
               (): void => {
                 this.props.selectImages();
-              }
+              },
             )
           : null}
         {detail.shortcodes.map(
@@ -128,9 +127,9 @@ export class ExtraFieldsPickerContent extends React.Component<
               `+ ${shortcode.value}`,
               (): void => {
                 this.props.onPick(detail, shortcode.value, shortcode.cursor);
-              }
+              },
             );
-          }
+          },
         )}
       </View>
     );
@@ -138,15 +137,14 @@ export class ExtraFieldsPickerContent extends React.Component<
 
   private renderButton(
     text: string,
-    onPress: () => void
+    onPress: () => void,
   ): React.ReactElement<any> {
     return (
       <TouchableOpacity
         key={text}
         testID={VocabularyFormIds.ADD_EXTRA_FIELD_BTN_BY_TEXT(text)}
         style={this.styles.btn}
-        onPress={onPress}
-      >
+        onPress={onPress}>
         <DefaultText style={this.styles.btn_text}>{text}</DefaultText>
       </TouchableOpacity>
     );

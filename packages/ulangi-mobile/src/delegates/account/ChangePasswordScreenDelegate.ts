@@ -34,7 +34,7 @@ export class ChangePasswordScreenDelegate {
       onChangingPassword: () => void;
       onChangePasswordSucceeded: () => void;
       onChangePasswordFailed: (errorCode: string) => void;
-    }
+    },
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__CHANGE_PASSWORD, {
@@ -46,13 +46,13 @@ export class ChangePasswordScreenDelegate {
         on(ActionType.USER__CHANGING_PASSWORD, callback.onChangingPassword),
         once(
           ActionType.USER__CHANGE_PASSWORD_SUCCEEDED,
-          callback.onChangePasswordSucceeded
+          callback.onChangePasswordSucceeded,
         ),
         once(
           ActionType.USER__CHANGE_PASSWORD_FAILED,
-          ({ errorCode }): void => callback.onChangePasswordFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onChangePasswordFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -61,7 +61,7 @@ export class ChangePasswordScreenDelegate {
       {
         message: 'Changing password. Please wait...',
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -76,7 +76,7 @@ export class ChangePasswordScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -89,7 +89,7 @@ export class ChangePasswordScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

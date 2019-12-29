@@ -11,6 +11,10 @@ import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 
 import { config } from '../constants/config';
+import {
+  darkStyles as defaultTopBarDarkStyles,
+  lightStyles as defaultTopBarLightStyles,
+} from '../views/top-bar/TopBar.style';
 import { FullRoundedButtonStyle } from './FullRoundedButtonStyle';
 import { RoundedCornerButtonStyle } from './RoundedCornerButtonStyle';
 
@@ -36,9 +40,6 @@ export class LessonScreenStyle {
       background: {
         color: config.styles.light.primaryBackgroundColor,
       },
-      title: {
-        color: config.styles.light.primaryTextColor,
-      },
     },
     layout: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
@@ -54,14 +55,35 @@ export class LessonScreenStyle {
       background: {
         color: config.styles.dark.secondaryBackgroundColor,
       },
-      title: {
-        color: config.styles.dark.primaryTextColor,
-      },
     },
     layout: {
       backgroundColor: config.styles.dark.secondaryBackgroundColor,
     },
   };
+
+  public static TOP_BAR_LIGHT_STYLES = _.merge({}, defaultTopBarLightStyles, {
+    title: {
+      color: config.styles.light.primaryTextColor,
+    },
+    touchable: {
+      backgroundColor: '#eee',
+    },
+    touchable_text: {
+      color: config.styles.light.secondaryTextColor,
+    },
+  });
+
+  public static TOP_BAR_DARK_STYLES = _.merge({}, defaultTopBarDarkStyles, {
+    title: {
+      color: config.styles.dark.primaryTextColor,
+    },
+    touchable: {
+      backgroundColor: '#eee',
+    },
+    touchable_text: {
+      color: config.styles.dark.secondaryTextColor,
+    },
+  });
 
   public static LIGHT_BOX_SCREEN_STYLES: { light: Options; dark: Options } = {
     light: {
@@ -86,9 +108,9 @@ export class LessonScreenStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.X_LARGE,
         config.styles.primaryColor,
-        'white'
+        'white',
       ),
-      { buttonStyle: { marginHorizontal: 5, marginVertical: 6 } }
+      { buttonStyle: { marginHorizontal: 5, marginVertical: 6 } },
     );
   }
 
@@ -98,27 +120,27 @@ export class LessonScreenStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         '#ddd',
-        '#444'
+        '#444',
       ),
-      { buttonStyle: { marginHorizontal: 22, marginVertical: 6 } }
+      { buttonStyle: { marginHorizontal: 22, marginVertical: 6 } },
     );
   }
 
   public static getNormalButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return RoundedCornerButtonStyle.getFullBackgroundStyles(
       ButtonSize.NORMAL,
       3,
       backgroundColor,
-      textColor
+      textColor,
     );
   }
 
   public static getLargeButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return _.merge(
       {},
@@ -126,14 +148,14 @@ export class LessonScreenStyle {
         ButtonSize.LARGE,
         3,
         backgroundColor,
-        textColor
+        textColor,
       ),
       {
         buttonStyle: {
           marginHorizontal: 16,
           marginVertical: 4,
         },
-      }
+      },
     );
   }
 }

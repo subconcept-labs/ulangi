@@ -47,8 +47,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
     return (
       <SafeAreaView
         style={this.styles.screen}
-        testID={SpacedRepetitionLessonScreenIds.SCREEN}
-      >
+        testID={SpacedRepetitionLessonScreenIds.SCREEN}>
         {this.renderContent()}
       </SafeAreaView>
     );

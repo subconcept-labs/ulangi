@@ -50,7 +50,7 @@ export class DiscoverNavBar extends React.Component<DiscoverNavBarProps> {
             }
             onPress={(): void => {
               this.props.setListType(
-                DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST
+                DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST,
               );
             }}
             text="Terms"

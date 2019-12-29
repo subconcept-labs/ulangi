@@ -29,12 +29,11 @@ export class LightBoxButtonList extends React.Component<
               return (
                 <View
                   key={button.testID || index}
-                  style={styles.button_container}
-                >
+                  style={styles.button_container}>
                   <DefaultButton {...button} styles={toJS(button.styles)} />
                 </View>
               );
-            }
+            },
           )}
         </View>
       );

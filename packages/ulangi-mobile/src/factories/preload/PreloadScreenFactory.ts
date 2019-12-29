@@ -13,7 +13,7 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class PreloadScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservablePreloadScreen
+    observableScreen: ObservablePreloadScreen,
   ): PreloadScreenDelegate {
     const rootScreenDelegate = this.createRootScreenDelegate();
 
@@ -26,7 +26,7 @@ export class PreloadScreenFactory extends ScreenFactory {
       observableScreen,
       setListDelegate,
       rootScreenDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

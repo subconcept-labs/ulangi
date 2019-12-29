@@ -46,7 +46,7 @@ export class FlashcardPlayerStyle {
           backgroundColor: config.flashcardPlayer.backgroundColor,
         },
       },
-      options
+      options,
     );
   }
 
@@ -72,7 +72,7 @@ export class FlashcardPlayerStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.X_LARGE,
         config.flashcardPlayer.primaryColor,
-        config.flashcardPlayer.textColor
+        config.flashcardPlayer.textColor,
       ),
       {
         buttonStyle: {
@@ -87,7 +87,7 @@ export class FlashcardPlayerStyle {
           fontFamily: 'Raleway-Black',
           fontSize: 24,
         },
-      }
+      },
     );
   }
 
@@ -96,7 +96,7 @@ export class FlashcardPlayerStyle {
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         config.flashcardPlayer.secondaryColor,
-        config.flashcardPlayer.textColor
+        config.flashcardPlayer.textColor,
       ),
       {
         buttonStyle: {
@@ -111,14 +111,14 @@ export class FlashcardPlayerStyle {
           fontFamily: 'Raleway-Black',
           fontSize: 20,
         },
-      }
+      },
     );
   }
 
   public static getLightBoxPrimaryButtonStyles(): ButtonStyles {
     return FlashcardPlayerStyle.getLightBoxButtonStyles(
       config.flashcardPlayer.primaryColor,
-      'white'
+      'white',
     );
   }
 
@@ -128,13 +128,13 @@ export class FlashcardPlayerStyle {
 
   public static getLightBoxButtonStyles(
     backgroundColor: string,
-    textColor: string
+    textColor: string,
   ): ButtonStyles {
     return _.merge(
       FullRoundedButtonStyle.getFullBackgroundStyles(
         ButtonSize.LARGE,
         backgroundColor,
-        textColor
+        textColor,
       ),
       {
         buttonStyle: {
@@ -144,7 +144,7 @@ export class FlashcardPlayerStyle {
         textStyle: {
           fontFamily: 'Raleway-Black',
         },
-      }
+      },
     );
   }
 }

@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableArray, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableQuizScreen extends ObservableScreen {
   @observable
@@ -16,9 +17,10 @@ export class ObservableQuizScreen extends ObservableScreen {
 
   public constructor(
     selectedCategoryNames: undefined | readonly string[],
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.selectedCategoryNames =
       typeof selectedCategoryNames !== 'undefined'
         ? observable.array(selectedCategoryNames.slice())

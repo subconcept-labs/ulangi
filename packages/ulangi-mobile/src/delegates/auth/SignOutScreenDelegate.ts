@@ -22,7 +22,7 @@ export class SignOutScreenDelegate {
   public constructor(
     eventBus: EventBus,
     observableScreenRegistry: ObservableScreenRegistry,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreenRegistry = observableScreenRegistry;
@@ -41,8 +41,8 @@ export class SignOutScreenDelegate {
               this.navigatorDelegate.resetTo(ScreenName.WELCOME_SCREEN, {});
             },
           });
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -53,7 +53,7 @@ export class SignOutScreenDelegate {
           screen.screenName !== ScreenName.SIGN_OUT_SCREEN &&
           screen.screenState !== ScreenState.UNMOUNTED
         );
-      }
+      },
     );
   }
 
@@ -64,14 +64,14 @@ export class SignOutScreenDelegate {
         ActionType.USER__GET_SESSION_SUCCEEDED,
         (): void => {
           callback.onGetSessionSucceeded();
-        }
-      )
+        },
+      ),
     );
   }
 
   private resetRootState(): void {
     this.eventBus.publish(
-      createAction(ActionType.ROOT__RESET_ROOT_STATE, null)
+      createAction(ActionType.ROOT__RESET_ROOT_STATE, null),
     );
   }
 }

@@ -16,14 +16,14 @@ export class QuizMultipleChoiceScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     questionIterator: MultipleChoiceQuestionIterator,
     observableScreen: ObservableQuizMultipleChoiceScreen,
-    startMultipleChoiceQuiz: () => void
+    startMultipleChoiceQuiz: () => void,
   ): QuizMultipleChoiceScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const multipleChoiceFormDelegate = new MultipleChoiceFormDelegate(
       this.observer,
       observableScreen.multipleChoiceFormState,
-      observableScreen.multipleChoiceResult
+      observableScreen.multipleChoiceResult,
     );
 
     return new QuizMultipleChoiceScreenDelegate(
@@ -32,7 +32,7 @@ export class QuizMultipleChoiceScreenFactory extends ScreenFactory {
       observableScreen,
       multipleChoiceFormDelegate,
       navigatorDelegate,
-      startMultipleChoiceQuiz
+      startMultipleChoiceQuiz,
     );
   }
 }

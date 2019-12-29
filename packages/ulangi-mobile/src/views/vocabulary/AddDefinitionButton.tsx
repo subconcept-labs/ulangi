@@ -45,8 +45,7 @@ export class AddDefinitionButton extends React.Component<
         hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
         onPress={this.props.onPress}
         style={this.styles.add_button}
-        disabled={this.props.disabled}
-      >
+        disabled={this.props.disabled}>
         <Image
           source={
             this.props.theme === Theme.LIGHT

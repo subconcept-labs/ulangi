@@ -27,7 +27,7 @@ export class QuizSettingsScreenDelegate {
   public constructor(
     observableScreen: ObservableQuizSettingsScreen,
     quizSettingsDelegate: QuizSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.quizSettingsDelegate = quizSettingsDelegate;
@@ -46,14 +46,14 @@ export class QuizSettingsScreenDelegate {
         onSaving: this.showSavingDialog,
         onSaveSucceeded: this.showSaveSucceededDialog,
         onSaveFailed: this.showSaveFailedDialog,
-      }
+      },
     );
   }
 
   public showMultipleChoiceQuizLimitMenu(
     valuePairs: readonly [number, string][],
     selectedLimit: number,
-    onSelect: (limit: number) => void
+    onSelect: (limit: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -64,7 +64,7 @@ export class QuizSettingsScreenDelegate {
                 limit,
                 {
                   testID: QuizSettingsScreenIds.SELECT_MULTIPLE_CHOICE_QUIZ_LIMIT_BTN_BY_LIMIT(
-                    limit
+                    limit,
                   ),
                   text: limitText,
                   onPress: (): void => {
@@ -73,20 +73,20 @@ export class QuizSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLimit],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public showWritingQuizLimitMenu(
     valuePairs: readonly [number, string][],
     selectedLimit: number,
-    onSelect: (limit: number) => void
+    onSelect: (limit: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -97,7 +97,7 @@ export class QuizSettingsScreenDelegate {
                 limit,
                 {
                   testID: QuizSettingsScreenIds.SELECT_WRITING_QUIZ_LIMIT_BTN_BY_LIMIT(
-                    limit
+                    limit,
                   ),
                   text: limitText,
                   onPress: (): void => {
@@ -106,20 +106,20 @@ export class QuizSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLimit],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public showVocabularyPoolMenu(
     valuePairs: readonly ['learned' | 'active', string][],
     selectedVocabularyPool: 'learned' | 'active',
-    onSelect: (vocabularyPool: 'learned' | 'active') => void
+    onSelect: (vocabularyPool: 'learned' | 'active') => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
@@ -130,7 +130,7 @@ export class QuizSettingsScreenDelegate {
                 vocabularyPool,
                 {
                   testID: QuizSettingsScreenIds.SELECT_VOCABULARY_POOL_BTN_BY_VOCABULARY_POOL_NAME(
-                    vocabularyPoolName
+                    vocabularyPoolName,
                   ),
                   text: vocabularyPoolName,
                   onPress: (): void => {
@@ -139,13 +139,13 @@ export class QuizSettingsScreenDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedVocabularyPool],
         title: 'Select',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -154,7 +154,7 @@ export class QuizSettingsScreenDelegate {
       {
         message: 'Saving. Please wait...',
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -169,7 +169,7 @@ export class QuizSettingsScreenDelegate {
           this.navigatorDelegate.pop();
         },
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -182,7 +182,7 @@ export class QuizSettingsScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

@@ -37,8 +37,7 @@ export class AtomTopBar extends React.Component<AtomTopBarProps> {
           testID={this.props.iconTestID}
           hitSlop={{ top: 10, bottom: 10, left: 25, right: 25 }}
           style={styles.button}
-          onPress={this.props.onPress}
-        >
+          onPress={this.props.onPress}>
           {this.renderIcon()}
         </TouchableOpacity>
         {typeof this.props.gameStats !== 'undefined' ? (

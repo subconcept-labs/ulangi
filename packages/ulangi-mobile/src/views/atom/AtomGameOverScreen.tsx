@@ -38,11 +38,9 @@ export class AtomGameOverScreen extends React.Component<
         style={styles.light_box_container}
         enabled={true}
         onPress={(): void => this.props.quit()}
-        activeOpacity={0.2}
-      >
+        activeOpacity={0.2}>
         <LightBoxAnimatableView
-          observableLightBox={this.props.observableLightBox}
-        >
+          observableLightBox={this.props.observableLightBox}>
           <View style={styles.inner_container}>
             <View style={styles.title_container}>
               <DefaultText style={styles.title_text}>

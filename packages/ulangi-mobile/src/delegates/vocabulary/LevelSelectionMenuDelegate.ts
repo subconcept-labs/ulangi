@@ -24,7 +24,7 @@ export class LevelSelectionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -33,7 +33,7 @@ export class LevelSelectionMenuDelegate {
   public show(
     range: [number, number],
     selectedLevel: number,
-    onSelect: (level: number) => void
+    onSelect: (level: number) => void,
   ): void {
     const [start, end] = range;
     this.navigatorDelegate.showSelectionMenu(
@@ -45,7 +45,7 @@ export class LevelSelectionMenuDelegate {
                 level,
                 {
                   testID: LevelSelectionMenuIds.SELECT_LEVEL_BTN_BY_LEVEL(
-                    level
+                    level,
                   ),
                   text: 'Level ' + level,
                   onPress: (): void => {
@@ -54,13 +54,13 @@ export class LevelSelectionMenuDelegate {
                   },
                 },
               ];
-            }
-          )
+            },
+          ),
         ),
         selectedIds: [selectedLevel],
         title: 'Select',
       },
-      this.styles
+      this.styles,
     );
   }
 }

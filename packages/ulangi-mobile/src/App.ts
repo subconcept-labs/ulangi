@@ -88,7 +88,7 @@ export class App {
       new AdMobAdapter(
         // @ts-ignore
         firebase.admob,
-        RNAdConsent
+        RNAdConsent,
       ),
       new AppsFlyerAdapter(appsFlyer),
       NetInfo,
@@ -97,10 +97,10 @@ export class App {
       new NotificationsAdapter(
         firebase.notifications(),
         firebase.messaging(),
-        firebase.notifications
+        firebase.notifications,
       ),
       new SystemDarkModeAdapter(systemDarkMode),
-      new CrashlyticsAdapter(firebase.crashlytics(), true)
+      new CrashlyticsAdapter(firebase.crashlytics(), true),
     );
 
     const eventFacade = new EventFacade();
@@ -122,7 +122,7 @@ export class App {
           systemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
         enableLogging: env.ENABLE_LOGGING,
       },
-      [sagaFacade.getMiddleware(), eventFacade.getMiddleware()]
+      [sagaFacade.getMiddleware(), eventFacade.getMiddleware()],
     );
 
     const store = storeFactory.make();
@@ -136,21 +136,21 @@ export class App {
     ServiceRegistry.register('observableKeyboard', new ObservableKeyboard());
     ServiceRegistry.register(
       'observableConverter',
-      new ObservableConverter(store.getState())
+      new ObservableConverter(store.getState()),
     );
     ServiceRegistry.register(
       'observableScreenRegistry',
-      new ObservableScreenRegistry()
+      new ObservableScreenRegistry(),
     );
 
     this.unsubscribeAutoUpdateKeyboard = autoUpdateKeyboardState(
-      ServiceRegistry.get('observableKeyboard')
+      ServiceRegistry.get('observableKeyboard'),
     );
 
     sagaFacade.run();
 
     const rootScreenDelegate = new RootScreenDelegate(
-      store.getState().darkModeStore
+      store.getState().darkModeStore,
     );
 
     rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);

@@ -32,7 +32,7 @@ export class AtomQuestionIterator {
 
   public constructor(vocabularyList?: Map<string, Vocabulary>) {
     this.randomVocabularyIterator = new RandomVocabularyIterator(
-      vocabularyList
+      vocabularyList,
     );
 
     this.vocabularyPool = new VocabularyPool(vocabularyList);
@@ -68,7 +68,7 @@ export class AtomQuestionIterator {
 
   private makeQuestion(vocabulary: Vocabulary): ObservableAtomQuestion {
     const vocabularyTerm = this.vocabularyExtraFieldParser.parse(
-      vocabulary.vocabularyText
+      vocabulary.vocabularyText,
     ).vocabularyTerm;
 
     let answer = changeCase.upper(this.getRandomWord(vocabularyTerm));
@@ -76,7 +76,7 @@ export class AtomQuestionIterator {
       const startIndex = _.random(0, answer.length - config.atom.maxCharacters);
       answer = answer.substring(
         startIndex,
-        startIndex + config.atom.maxCharacters
+        startIndex + config.atom.maxCharacters,
       );
     }
 
@@ -85,8 +85,8 @@ export class AtomQuestionIterator {
         (definition): [string, Definition] => [
           definition.definitionId,
           definition,
-        ]
-      )
+        ],
+      ),
     );
 
     const [, definition] = pickRandomFromImmutableMap(definitionList);
@@ -94,7 +94,7 @@ export class AtomQuestionIterator {
       this.replaceTextWithUnderscores(changeCase.upper(vocabularyTerm), answer),
       changeCase.upper(answer),
       this.definitionExtraFieldParser.parse(definition.meaning).plainMeaning,
-      observable.array(this.generateCharacterPool(answer))
+      observable.array(this.generateCharacterPool(answer)),
     );
   }
 
@@ -114,12 +114,12 @@ export class AtomQuestionIterator {
     while (pool.length < config.atom.minCharacters) {
       const vocabulary = assertExists(
         _.first(this.vocabularyPool.getRandomVocabularyFromPool(1, false)),
-        'vocabulary should not be null or undefined'
+        'vocabulary should not be null or undefined',
       );
 
       const vocabularyTerm = changeCase.upper(
         this.vocabularyExtraFieldParser.parse(vocabulary.vocabularyText)
-          .vocabularyTerm
+          .vocabularyTerm,
       );
       const randomWord = this.getRandomWord(vocabularyTerm);
       const randomCharacter = randomWord[_.random(0, randomWord.length - 1)];

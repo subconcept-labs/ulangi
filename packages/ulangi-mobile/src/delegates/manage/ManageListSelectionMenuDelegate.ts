@@ -23,7 +23,7 @@ export class ManageListSelectionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
@@ -33,13 +33,13 @@ export class ManageListSelectionMenuDelegate {
     selectedListType: ManageListType,
     onSelect: (
       listType: ManageListType,
-      vocabularyStatus: VocabularyStatus
-    ) => void
+      vocabularyStatus: VocabularyStatus,
+    ) => void,
   ): void {
     const items = new Map();
     items.set(ManageListType.CATEGORY_LIST, {
       testID: ManageListSelectionMenuIds.SELECT_LIST_BTN_BY_LIST_TYPE(
-        'categoryList'
+        'categoryList',
       ),
       text: 'Group by category',
       onPress: (): void => {
@@ -49,7 +49,7 @@ export class ManageListSelectionMenuDelegate {
     });
     items.set(ManageListType.VOCABULARY_LIST, {
       testID: ManageListSelectionMenuIds.SELECT_LIST_BTN_BY_LIST_TYPE(
-        'vocabularyList'
+        'vocabularyList',
       ),
       text: 'Show all terms',
       onPress: (): void => {
@@ -64,7 +64,7 @@ export class ManageListSelectionMenuDelegate {
         selectedIds: [selectedListType],
         title: 'Select',
       },
-      this.styles
+      this.styles,
     );
   }
 }

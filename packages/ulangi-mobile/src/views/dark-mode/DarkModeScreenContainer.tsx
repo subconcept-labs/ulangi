@@ -10,11 +10,14 @@ import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDarkModeScreen,
   ObservableDarkModeSettings,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { DarkModeScreenIds } from '../../constants/ids/DarkModeScreenIds';
 import { DarkModeScreenFactory } from '../../factories/dark-mode/DarkModeScreenFactory';
 import { DarkModeScreen } from './DarkModeScreen';
@@ -31,7 +34,7 @@ export class DarkModeScreenContainer extends Container {
   private screenFactory = new DarkModeScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private darkModeSettingsDelegate = this.screenFactory.createDarkModeSettingsDelegate();
@@ -40,28 +43,42 @@ export class DarkModeScreenContainer extends Container {
 
   protected observableScreen = new ObservableDarkModeScreen(
     new ObservableDarkModeSettings(this.currentSettings.trigger),
-    ScreenName.DARK_MODE_SCREEN
+    ScreenName.DARK_MODE_SCREEN,
+    new ObservableTitleTopBar(
+      'Dark Mode',
+      new ObservableTopBarButton(
+        DarkModeScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        DarkModeScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.save();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === DarkModeScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === DarkModeScreenIds.SAVE_BTN) {
-      this.screenDelegate.save();
-    }
-  }
 
   public onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? DarkModeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : DarkModeScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : DarkModeScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

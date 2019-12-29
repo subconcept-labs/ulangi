@@ -16,18 +16,18 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class ImageSelectorScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableImageSelectorScreen
+    observableScreen: ObservableImageSelectorScreen,
   ): ImageSelectorScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const searchImageDelegate = new SearchImageDelegate(
       this.eventBus,
       this.props.observableConverter,
-      observableScreen
+      observableScreen,
     );
 
     const uploadImageDelegate = new UploadImageDelegate(this.eventBus);
@@ -41,7 +41,7 @@ export class ImageSelectorScreenFactory extends ScreenFactory {
       uploadImageDelegate,
       dialogDelegate,
       navigatorDelegate,
-      linkingDelegete
+      linkingDelegete,
     );
   }
 }

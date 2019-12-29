@@ -18,25 +18,25 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class VocabularyDetailScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableVocabularyDetailScreen
+    observableScreen: ObservableVocabularyDetailScreen,
   ): VocabularyDetailScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const setSelectionMenuDelegate = new SetSelectionMenuDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const vocabularyActionMenuDelegate = new VocabularyActionMenuDelegate(
@@ -46,12 +46,12 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
       setSelectionMenuDelegate,
       undefined,
       navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const speakDelegate = new SpeakDelegate(
       this.eventBus,
-      this.props.rootStore.audioStore
+      this.props.rootStore.audioStore,
     );
 
     return new VocabularyDetailScreenDelegate(
@@ -60,7 +60,7 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
       speakDelegate,
       spacedRepetitionSettingsDelegate,
       writingSettingsDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

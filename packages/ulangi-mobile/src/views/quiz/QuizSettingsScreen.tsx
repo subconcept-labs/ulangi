@@ -51,8 +51,7 @@ export class QuizSettingsScreen extends React.Component<
       <ScrollView
         testID={QuizSettingsScreenIds.SCREEN}
         style={this.styles.screen}
-        contentContainerStyle={this.styles.content_container}
-      >
+        contentContainerStyle={this.styles.content_container}>
         {this.renderSections()}
       </ScrollView>
     );
@@ -67,8 +66,7 @@ export class QuizSettingsScreen extends React.Component<
       <SectionGroup
         theme={this.props.darkModeStore.theme}
         key="quiz-settings"
-        header="QUIZ SETTINGS"
-      >
+        header="QUIZ SETTINGS">
         <SectionRow
           theme={this.props.darkModeStore.theme}
           leftText="Vocabulary Pool"
@@ -77,10 +75,10 @@ export class QuizSettingsScreen extends React.Component<
             <DefaultButton
               testID={QuizSettingsScreenIds.VOCABULARY_POOL_BTN}
               text={_.upperFirst(
-                this.props.observableScreen.selectedVocabularyPool
+                this.props.observableScreen.selectedVocabularyPool,
               )}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showVocabularyPoolMenu(
@@ -88,7 +86,7 @@ export class QuizSettingsScreen extends React.Component<
                   this.props.observableScreen.selectedVocabularyPool,
                   (vocabularyPool): void => {
                     this.props.observableScreen.selectedVocabularyPool = vocabularyPool;
-                  }
+                  },
                 );
               }}
             />
@@ -108,7 +106,7 @@ export class QuizSettingsScreen extends React.Component<
               testID={QuizSettingsScreenIds.MULTIPLE_CHOICE_QUIZ_LIMIT_BTN}
               text={this.props.observableScreen.selectedMultipleChoiceQuizLimit.toString()}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showMultipleChoiceQuizLimitMenu(
@@ -116,7 +114,7 @@ export class QuizSettingsScreen extends React.Component<
                   this.props.observableScreen.selectedMultipleChoiceQuizLimit,
                   (limit): void => {
                     this.props.observableScreen.selectedMultipleChoiceQuizLimit = limit;
-                  }
+                  },
                 );
               }}
             />
@@ -136,7 +134,7 @@ export class QuizSettingsScreen extends React.Component<
               testID={QuizSettingsScreenIds.WRITING_QUIZ_LIMIT_BTN}
               text={this.props.observableScreen.selectedWritingQuizLimit.toString()}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL
+                ButtonSize.SMALL,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showWritingQuizLimitMenu(
@@ -144,7 +142,7 @@ export class QuizSettingsScreen extends React.Component<
                   this.props.observableScreen.selectedWritingQuizLimit,
                   (limit): void => {
                     this.props.observableScreen.selectedWritingQuizLimit = limit;
-                  }
+                  },
                 );
               }}
             />
@@ -160,7 +158,7 @@ export class QuizSettingsScreen extends React.Component<
 
   private getMultipleChoiceQuizLimitValuePairs(): readonly [number, string][] {
     return config.quiz.selectableMultipleChoiceQuizLimits.map(function(
-      limit
+      limit,
     ): [number, string] {
       return [limit, limit.toString()];
     });
@@ -168,7 +166,7 @@ export class QuizSettingsScreen extends React.Component<
 
   private getWritingQuizLimitValuePairs(): readonly [number, string][] {
     return config.quiz.selectableWritingQuizLimits.map(function(
-      limit
+      limit,
     ): [number, string] {
       return [limit, limit.toString()];
     });
@@ -179,7 +177,7 @@ export class QuizSettingsScreen extends React.Component<
     string
   ][] {
     return config.quiz.selectableVocabularyPool.map(function(
-      vocabularyPool
+      vocabularyPool,
     ): ['learned' | 'active', string] {
       return [vocabularyPool, _.upperFirst(vocabularyPool)];
     });

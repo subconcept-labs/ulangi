@@ -155,7 +155,7 @@ export const lightStyles = StyleSheet.create(
     add_definition_btn_container: {
       borderTopColor: config.styles.light.primaryBorderColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -189,5 +189,5 @@ export const darkStyles = StyleSheet.create(
     add_definition_btn_container: {
       borderTopColor: config.styles.dark.primaryBorderColor,
     },
-  })
+  }),
 );

@@ -10,11 +10,14 @@ import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableReminderScreen,
   ObservableReminderSettings,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { ReminderScreenIds } from '../../constants/ids/ReminderScreenIds';
 import { ReminderScreenFactory } from '../../factories/reminder/ReminderScreenFactory';
 import { ReminderScreen } from './ReminderScreen';
@@ -31,7 +34,7 @@ export class ReminderScreenContainer extends Container {
   private screenFactory = new ReminderScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private reminderSettingsDelegate = this.screenFactory.createReminderSettingsDelegate();
@@ -42,31 +45,45 @@ export class ReminderScreenContainer extends Container {
     new ObservableReminderSettings(
       this.currentSettings.reminderEnabled,
       this.currentSettings.hours,
-      this.currentSettings.minutes
+      this.currentSettings.minutes,
     ),
     false,
-    ScreenName.REMINDER_SCREEN
+    ScreenName.REMINDER_SCREEN,
+    new ObservableTitleTopBar(
+      'Reminder',
+      new ObservableTopBarButton(
+        ReminderScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        ReminderScreenIds.SAVE_BTN,
+        'Save',
+        null,
+        (): void => {
+          this.screenDelegate.save();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ReminderScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === ReminderScreenIds.SAVE_BTN) {
-      this.screenDelegate.save();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ReminderScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ReminderScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ReminderScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

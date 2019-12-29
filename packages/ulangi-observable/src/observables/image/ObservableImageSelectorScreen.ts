@@ -9,6 +9,7 @@ import { ActivityState, ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableArray, IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservablePixabayImage } from './ObservablePixabayImage';
 
 export class ObservableImageSelectorScreen extends ObservableScreen {
@@ -33,9 +34,10 @@ export class ObservableImageSelectorScreen extends ObservableScreen {
     images: null | IObservableArray<ObservablePixabayImage>,
     noMore: IObservableValue<boolean>,
     isRefreshing: IObservableValue<boolean>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.input = input;
     this.searchState = searchState;
     this.images = images;

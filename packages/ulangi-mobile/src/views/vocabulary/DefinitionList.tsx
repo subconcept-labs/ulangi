@@ -48,7 +48,7 @@ export class DefinitionList extends React.Component<DefinitionListProps> {
                   definition={definition}
                 />
               );
-            }
+            },
           )
         ) : (
           <View style={this.styles.missing_definitions_container}>

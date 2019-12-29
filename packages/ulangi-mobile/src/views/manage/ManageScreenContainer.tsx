@@ -16,6 +16,8 @@ import {
 import {
   ObservableCategoryListState,
   ObservableManageScreen,
+  ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -45,7 +47,7 @@ export class ManageScreenContainer extends Container {
   private screenFactory = new ManageScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
@@ -61,7 +63,7 @@ export class ManageScreenContainer extends Container {
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
     new ObservableCategoryListState(
       null,
@@ -70,47 +72,60 @@ export class ManageScreenContainer extends Container {
       observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
       observable.box(false),
       observable.box(false),
-      observable.box(false)
+      observable.box(false),
     ),
     ScreenName.MANAGE_SCREEN,
-    {
-      title: 'Manage',
-      subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-      testID: ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      icon: _.has(
+    new ObservableTouchableTopBar(
+      ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
         ? _.get(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
             this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode
+              .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-      onTitlePress: (): void => {
+      (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    }
+      new ObservableTopBarButton(
+        ManageScreenIds.SEARCH_BTN,
+        null,
+        {
+          light: Images.SEARCH_WHITE_20X20,
+          dark: Images.SEARCH_MILK_20X20,
+        },
+        (): void => {
+          this.screenDelegate.goToSearchVocabulary();
+        },
+      ),
+      new ObservableTopBarButton(
+        ManageScreenIds.QUICK_TUTORIAL_BTN,
+        null,
+        {
+          light: Images.INFO_WHITE_22X22,
+          dark: Images.INFO_MILK_22X22,
+        },
+        (): void => {
+          this.screenDelegate.showQuickTutorial();
+        },
+      ),
+    ),
   );
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ManageScreenIds.QUICK_TUTORIAL_BTN) {
-      this.screenDelegate.showQuickTutorial();
-    } else if (buttonId === ManageScreenIds.SEARCH_BTN) {
-      this.screenDelegate.goToSearchVocabulary();
-    }
-  }
 
   public componentDidAppear(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
     this.screenDelegate.autoShowSyncingInProgress();
-    this.screenDelegate.autoShowSyncCompleted();
+    this.screenDelegate.autoShowRefreshNotice();
     this.screenDelegate.autoRefreshOnSetChange();
     this.screenDelegate.autoRefreshOnMultipleEdit();
     this.screenDelegate.autoRefreshEmptyListOnVocabularyChange();
@@ -129,7 +144,7 @@ export class ManageScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ManageScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ManageScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ManageScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 
@@ -141,7 +156,7 @@ export class ManageScreenContainer extends Container {
         if (selectedTabIndex === 0) {
           this.screenDelegate.refreshCurrentListIfEmpty();
         }
-      }
+      },
     );
   }
 

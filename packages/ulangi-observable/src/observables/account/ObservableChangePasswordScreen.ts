@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 
 export class ObservableChangePasswordScreen extends ObservableScreen {
   @observable
@@ -24,9 +25,10 @@ export class ObservableChangePasswordScreen extends ObservableScreen {
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.currentPassword = currentPassword;
     this.newPassword = newPassword;
     this.confirmNewPassword = confirmNewPassword;

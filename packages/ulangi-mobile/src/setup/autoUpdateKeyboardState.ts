@@ -9,19 +9,19 @@ import { ObservableKeyboard } from '@ulangi/ulangi-observable';
 import { Keyboard } from 'react-native';
 
 export function autoUpdateKeyboardState(
-  observableKeyboard: ObservableKeyboard
+  observableKeyboard: ObservableKeyboard,
 ): () => void {
   const showingSubscription = Keyboard.addListener(
     'keyboardDidShow',
     (): void => {
       observableKeyboard.state = 'showing';
-    }
+    },
   );
   const hiddenSubscription = Keyboard.addListener(
     'keyboardDidHide',
     (): void => {
       observableKeyboard.state = 'hidden';
-    }
+    },
   );
 
   return (): void => {

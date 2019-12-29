@@ -29,13 +29,14 @@ export class LightBoxDialogScreenContainer extends Container {
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
-    ScreenName.LIGHT_BOX_DIALOG_SCREEN
+    ScreenName.LIGHT_BOX_DIALOG_SCREEN,
+    null,
   );
 
   private screenFactory = new ScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -56,7 +57,7 @@ export class LightBoxDialogScreenContainer extends Container {
           : {}
         : this.props.styles
         ? this.props.styles.dark
-        : {}
+        : {},
     );
   }
 

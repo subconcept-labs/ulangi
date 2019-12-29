@@ -15,17 +15,17 @@ import { ScreenFactory } from '../ScreenFactory';
 
 export class QuizScreenFactory extends ScreenFactory {
   public createScreenDelegate(
-    observableScreen: ObservableQuizScreen
+    observableScreen: ObservableQuizScreen,
   ): QuizScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const quizSettingsDelegate = new QuizSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
@@ -38,7 +38,7 @@ export class QuizScreenFactory extends ScreenFactory {
       quizSettingsDelegate,
       navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics
+      this.props.analytics,
     );
   }
 }

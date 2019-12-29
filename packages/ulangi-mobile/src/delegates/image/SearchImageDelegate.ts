@@ -23,7 +23,7 @@ export class SearchImageDelegate {
   public constructor(
     eventBus: EventBus,
     observableConverter: ObservableConverter,
-    observableScreen: ObservableImageSelectorScreen
+    observableScreen: ObservableImageSelectorScreen,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
@@ -43,28 +43,28 @@ export class SearchImageDelegate {
             ActionType.IMAGE__PREPARING_SEARCH_IMAGES,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.IMAGE__PREPARE_SEARCH_IMAGES_SUCCEEDED,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.INACTIVE);
               this.search();
-            }
+            },
           ),
           once(
             ActionType.IMAGE__PREPARE_SEARCH_IMAGES_FAILED,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.ERROR);
-            }
+            },
           ),
           once(
             ActionType.IMAGE__CLEAR_SEARCH,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.INACTIVE);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }
@@ -81,7 +81,7 @@ export class SearchImageDelegate {
             ActionType.IMAGE__SEARCHING_IMAGES,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.ACTIVE);
-            }
+            },
           ),
           once(
             ActionType.IMAGE__SEARCH_IMAGES_SUCCEEDED,
@@ -92,34 +92,34 @@ export class SearchImageDelegate {
               const observableImages = images.map(
                 (image): ObservablePixabayImage => {
                   return this.observableConverter.convertToObservablePixabayImage(
-                    image
+                    image,
                   );
-                }
+                },
               );
 
               if (this.observableScreen.images !== null) {
                 this.observableScreen.images.push(...observableImages);
               } else {
                 this.observableScreen.images = observable.array(
-                  observableImages
+                  observableImages,
                 );
               }
-            }
+            },
           ),
           once(
             ActionType.IMAGE__SEARCH_IMAGES_FAILED,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.ERROR);
               this.observableScreen.isRefreshing.set(false);
-            }
+            },
           ),
           once(
             ActionType.IMAGE__CLEAR_SEARCH,
             (): void => {
               this.observableScreen.searchState.set(ActivityState.INACTIVE);
-            }
-          )
-        )
+            },
+          ),
+        ),
       );
     }
   }

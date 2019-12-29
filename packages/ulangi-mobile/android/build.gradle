@@ -7,7 +7,7 @@ buildscript {
     minSdkVersion = 21
     compileSdkVersion = 28
     targetSdkVersion = 28
-    supportLibVersion = "28.0.0"
+    androidXCore = "1.0.2"
   }
 
   // Used by detox
@@ -26,10 +26,10 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.4.0'
+    classpath 'com.android.tools.build:gradle:3.4.2'
 
     // Required by react-native-firebase
-    classpath 'com.google.gms:google-services:4.2.0'
+    classpath 'com.google.gms:google-services:4.3.2'
     classpath 'io.fabric.tools:gradle:1.28.1'
 
     // Required by detox
@@ -42,18 +42,17 @@ buildscript {
 
 allprojects {
   repositories {
-    google()
-    mavenCentral()
     mavenLocal()
-    jcenter()
     maven {
       // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-      url "$rootDir/../node_modules/react-native/android"
+      url("$rootDir/../node_modules/react-native/android")
     }
     maven {
-      // Local Maven repo containing AARs with JSC library built for Android
+      // Android JSC is installed from npm
       url "$rootDir/../node_modules/jsc-android/dist"
     }
+    google()
+    jcenter()
     maven { url 'https://jitpack.io' }
   }
 }

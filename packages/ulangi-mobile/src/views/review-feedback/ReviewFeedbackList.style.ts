@@ -42,7 +42,7 @@ export const lightStyles = StyleSheet.create(
     header_text: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles = StyleSheet.create(
@@ -50,5 +50,5 @@ export const darkStyles = StyleSheet.create(
     header_text: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

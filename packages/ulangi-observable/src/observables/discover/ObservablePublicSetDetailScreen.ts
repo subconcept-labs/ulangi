@@ -9,14 +9,19 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservablePublicSet } from './ObservablePublicSet';
 
 export class ObservablePublicSetDetailScreen extends ObservableScreen {
   @observable
   public publicSet: ObservablePublicSet;
 
-  public constructor(publicSet: ObservablePublicSet, screenName: ScreenName) {
-    super(screenName);
+  public constructor(
+    publicSet: ObservablePublicSet,
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
+  ) {
+    super(screenName, topBar);
     this.publicSet = publicSet;
   }
 }

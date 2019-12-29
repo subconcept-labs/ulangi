@@ -49,7 +49,7 @@ export class ReflexScreenDelegate {
     timerDelegate: TimerDelegate,
     navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter
+    analytics: AnalyticsAdapter,
   ) {
     this.observer = observer;
     this.observableLightBox = observableLightBox;
@@ -84,7 +84,7 @@ export class ReflexScreenDelegate {
                   this.disablePopGesture();
                   this.observableScreen.gameState.started = true;
                   this.next();
-                }
+                },
               );
             }
           },
@@ -127,7 +127,7 @@ export class ReflexScreenDelegate {
     this.observableScreen.gameState.reset(
       false,
       config.reflex.timePerQuestion,
-      false
+      false,
     );
     this.observableScreen.gameStats.reset(0);
     this.questionIterator.reset();
@@ -138,7 +138,7 @@ export class ReflexScreenDelegate {
       (): void => {
         this.clearFetchVocabulary();
         this.startGame();
-      }
+      },
     );
   }
 
@@ -147,7 +147,7 @@ export class ReflexScreenDelegate {
 
     const question = assertExists(
       this.observableScreen.gameState.currentQuestion,
-      'currentQuestion should not be null or undefined'
+      'currentQuestion should not be null or undefined',
     );
     if (
       answer === 'YES' &&
@@ -234,7 +234,7 @@ export class ReflexScreenDelegate {
   }
 
   private addVocabularyToQueueAndShuffle(
-    vocabularyList: readonly Vocabulary[]
+    vocabularyList: readonly Vocabulary[],
   ): void {
     // add new vocabulary to queue
     this.questionIterator.merge(
@@ -243,9 +243,9 @@ export class ReflexScreenDelegate {
           (vocabulary): [string, Vocabulary] => [
             vocabulary.vocabularyId,
             vocabulary,
-          ]
-        )
-      )
+          ],
+        ),
+      ),
     );
     this.questionIterator.shuffleQueue();
   }
@@ -258,7 +258,7 @@ export class ReflexScreenDelegate {
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
       (): void => {
         this.next();
-      }
+      },
     );
   }
 
@@ -269,7 +269,7 @@ export class ReflexScreenDelegate {
         title: 'FETCHING VOCABULARY',
         message: 'Fetching more vocabulary. Please wait...',
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -281,7 +281,7 @@ export class ReflexScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -294,7 +294,7 @@ export class ReflexScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -306,7 +306,7 @@ export class ReflexScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -315,7 +315,7 @@ export class ReflexScreenDelegate {
       {
         message: 'Preparing. Please wait...',
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
@@ -328,7 +328,7 @@ export class ReflexScreenDelegate {
         showCloseButton: true,
         closeOnTouchOutside: true,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES
+      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 }

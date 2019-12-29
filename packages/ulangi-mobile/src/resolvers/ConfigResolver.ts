@@ -39,6 +39,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     links: {
+      github: Joi.string(),
       reddit: Joi.string(),
       twitter: Joi.string(),
       instagram: Joi.string(),
@@ -85,13 +86,13 @@ export class ConfigResolver extends AbstractResolver<Config> {
     user: {
       passwordMinLength: Joi.number(),
       defaultGlobalAutoArchive: Joi.object(
-        this.autoArchiveSettingsResolver.getRules()
+        this.autoArchiveSettingsResolver.getRules(),
       ),
       defaultGlobalReminder: Joi.object(
-        this.reminderSettingsResolver.getRules()
+        this.reminderSettingsResolver.getRules(),
       ),
       defaultDarkModeSettings: Joi.object(
-        this.darkModeSettingsResolver.getRules()
+        this.darkModeSettingsResolver.getRules(),
       ),
       autoCheckUserSessionAfterAuth: Joi.boolean(),
       autoFetchOnDownloadSucceededAfterAuth: Joi.boolean(),
@@ -157,7 +158,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
         /^/,
-        Joi.array().ordered(Joi.number(), Joi.number())
+        Joi.array().ordered(Joi.number(), Joi.number()),
       ),
     },
 
@@ -170,7 +171,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
         /^/,
-        Joi.array().ordered(Joi.number(), Joi.number())
+        Joi.array().ordered(Joi.number(), Joi.number()),
       ),
     },
 
@@ -183,7 +184,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       selectableMultipleChoiceQuizLimits: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
         /^/,
-        Joi.array().ordered(Joi.number(), Joi.number())
+        Joi.array().ordered(Joi.number(), Joi.number()),
       ),
       selectableVocabularyPool: Joi.array().items(Joi.string()),
       defaultVocabularyPool: Joi.string().valid(['learned', 'active']),

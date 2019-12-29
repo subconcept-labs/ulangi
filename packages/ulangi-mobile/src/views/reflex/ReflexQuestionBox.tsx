@@ -57,7 +57,7 @@ export class ReflexQuestionBox extends React.Component<
               if (result.finished === true) {
                 command.state = 'completed';
               }
-            }
+            },
           );
           break;
 
@@ -65,7 +65,7 @@ export class ReflexQuestionBox extends React.Component<
           this.state.scaleX.stopAnimation(
             (): void => {
               command.state = 'completed';
-            }
+            },
           );
           break;
 
@@ -74,7 +74,7 @@ export class ReflexQuestionBox extends React.Component<
             (): void => {
               command.state = 'completed';
               this.state.scaleX.setValue(1);
-            }
+            },
           );
           break;
       }
@@ -93,10 +93,10 @@ export class ReflexQuestionBox extends React.Component<
         this.scaling(value);
         this.props.gameState.remainingTime =
           value * config.reflex.timePerQuestion;
-      }
+      },
     );
     this.unsubscribeHandleCommand = autorun(
-      (): void => this.handleCommand(this.props.gameState.timerCommandList)
+      (): void => this.handleCommand(this.props.gameState.timerCommandList),
     );
   }
 
@@ -108,14 +108,14 @@ export class ReflexQuestionBox extends React.Component<
     this.state.scaleX.stopAnimation(
       (): void => {
         this.state.scaleX.removeAllListeners();
-      }
+      },
     );
   }
 
   private renderQuestion(): React.ReactElement<any> {
     const currentQuestion = assertExists(
       this.props.gameState.currentQuestion,
-      'currentQuestion should not be null or undefined'
+      'currentQuestion should not be null or undefined',
     );
     return (
       <DefaultText style={styles.question}>

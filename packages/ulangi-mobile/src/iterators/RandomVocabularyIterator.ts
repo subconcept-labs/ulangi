@@ -21,7 +21,7 @@ export class RandomVocabularyIterator<V extends Vocabulary = Vocabulary> {
   public next(): V {
     this.currentVocabulary = assertExists(
       this.vocabularyQueue.first(),
-      'nextVocabulary should not be null or undefined'
+      'nextVocabulary should not be null or undefined',
     );
 
     // Remove the first one
@@ -33,7 +33,7 @@ export class RandomVocabularyIterator<V extends Vocabulary = Vocabulary> {
   public current(): V {
     return assertExists(
       this.currentVocabulary,
-      'currentVocabulary should not be null or undefined'
+      'currentVocabulary should not be null or undefined',
     );
   }
 

@@ -36,7 +36,7 @@ export class ReviewFeedbackScreenDelegate {
     feedbackSelectionMenuDelegate: FeedbackSelectionMenuDelegate,
     reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.saveResultDelegate = saveResultDelegate;
@@ -53,7 +53,7 @@ export class ReviewFeedbackScreenDelegate {
       onSaving: this.showSavingDialog,
       onSaveSucceeded: (): void => {
         callback.onSaveSucceeded(
-          this.observableScreen.feedbackListState.feedbackList
+          this.observableScreen.feedbackListState.feedbackList,
         );
         this.showSaveSucceededDialog();
       },
@@ -64,25 +64,25 @@ export class ReviewFeedbackScreenDelegate {
   public showFeedbackSelectionMenu(vocabularyId: string): void {
     this.feedbackSelectionMenuDelegate.show(
       assertExists(
-        this.observableScreen.feedbackListState.feedbackList.get(vocabularyId)
+        this.observableScreen.feedbackListState.feedbackList.get(vocabularyId),
       ),
       (feedback): void => {
         const vocabulary = assertExists(
           this.observableScreen.vocabularyList.get(vocabularyId),
-          'vocabulary should not be null or undefined'
+          'vocabulary should not be null or undefined',
         );
         this.observableScreen.feedbackListState.feedbackList.set(
           vocabularyId,
-          feedback
+          feedback,
         );
         this.observableScreen.allNextReviewData.set(
           vocabularyId,
           this.reviewFeedbackDataDelegate.calculateNextReviewData(
             vocabulary,
-            feedback
-          )
+            feedback,
+          ),
         );
-      }
+      },
     );
   }
 

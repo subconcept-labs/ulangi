@@ -25,17 +25,17 @@ export class EditVocabularyScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableEditVocabularyScreen
+    observableScreen: ObservableEditVocabularyScreen,
   ): EditVocabularyScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const definitionDelegate = this.createDefinitionDelegate();
@@ -47,21 +47,21 @@ export class EditVocabularyScreenFactory extends ScreenFactory {
       observableScreen.vocabularyFormState,
       definitionDelegate,
       dialogDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
 
     const editVocabularyDelegate = new EditVocabularyDelegate(
       this.eventBus,
       this.props.observableConverter,
       observableScreen.originalEditingVocabulary,
-      observableScreen.vocabularyFormState
+      observableScreen.vocabularyFormState,
     );
 
     return new EditVocabularyScreenDelegate(
       this.eventBus,
       vocabularyFormDelegate,
       editVocabularyDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

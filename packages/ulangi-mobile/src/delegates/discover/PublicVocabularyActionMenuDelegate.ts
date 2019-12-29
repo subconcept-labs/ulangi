@@ -39,7 +39,7 @@ export class PublicVocabularyActionMenuDelegate {
     styles: {
       light: Options;
       dark: Options;
-    }
+    },
   ) {
     this.observableLightBox = observableLightBox;
     this.setStore = setStore;
@@ -62,12 +62,12 @@ export class PublicVocabularyActionMenuDelegate {
     this.navigatorDelegate.showLightBox(
       ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
       {},
-      this.styles
+      this.styles,
     );
   }
 
   private getEditBeforeAddingButton(
-    publicVocabulary: PublicVocabulary
+    publicVocabulary: PublicVocabulary,
   ): SelectionItem {
     return {
       testID: PublicVocabularyActionMenuIds.EDIT_BEFORE_ADDING_BTN,
@@ -75,7 +75,7 @@ export class PublicVocabularyActionMenuDelegate {
       onPress: (): void => {
         const vocabulary = this.publicVocabularyConverter.convertToVocabulary(
           publicVocabulary,
-          _.first(publicVocabulary.categories)
+          _.first(publicVocabulary.categories),
         );
 
         this.navigatorDelegate.push(ScreenName.ADD_VOCABULARY_SCREEN, {
@@ -88,7 +88,7 @@ export class PublicVocabularyActionMenuDelegate {
   }
 
   private getReportAnErrorButton(
-    publicVocabulary: PublicVocabulary
+    publicVocabulary: PublicVocabulary,
   ): SelectionItem {
     return {
       testID: PublicVocabularyActionMenuIds.REPORT_ERRORS_BTN,

@@ -9,6 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableArray, IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableCarouselMessage } from './ObservableCarouselMessage';
 
 export class ObservableMoreScreen extends ObservableScreen {
@@ -21,9 +22,10 @@ export class ObservableMoreScreen extends ObservableScreen {
   public constructor(
     messages: IObservableArray<ObservableCarouselMessage>,
     currentMessageIndex: IObservableValue<number>,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.messages = messages;
     this.currentMessageIndex = currentMessageIndex;
   }

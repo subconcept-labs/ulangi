@@ -29,18 +29,18 @@ export class PreloadScreenContainer extends Container {
   private screenFactory = new PreloadScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservablePreloadScreen(
     '',
-    ScreenName.PRELOAD_SCREEN
+    ScreenName.PRELOAD_SCREEN,
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
@@ -55,7 +55,7 @@ export class PreloadScreenContainer extends Container {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? PreloadScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : PreloadScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : PreloadScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

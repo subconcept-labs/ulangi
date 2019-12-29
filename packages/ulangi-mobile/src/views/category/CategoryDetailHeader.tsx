@@ -60,12 +60,12 @@ export class CategoryDetailHeader extends React.Component<
               testID={CategoryDetailScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
               text={_.upperFirst(
                 config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-                  .shortName
+                  .shortName,
               )}
               onPress={this.props.showVocabularyFilterMenu}
               styles={FullRoundedButtonStyle.getOutlineStyles(
                 ButtonSize.SMALL,
-                this.getColorByStatus(this.props.selectedFilterType.get())
+                this.getColorByStatus(this.props.selectedFilterType.get()),
               )}
             />
           </View>

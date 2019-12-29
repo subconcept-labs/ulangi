@@ -31,7 +31,7 @@ export class PreloadScreenDelegate {
     observableScreen: ObservablePreloadScreen,
     setListDelegate: SetListDelegate,
     rootScreenDelegate: RootScreenDelegate,
-    navigatorDelegate: NavigatorDelegate
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
@@ -123,11 +123,11 @@ export class PreloadScreenDelegate {
               actionType,
               (): void => {
                 this.observableScreen.message = message;
-              }
+              },
             );
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -169,13 +169,13 @@ export class PreloadScreenDelegate {
       group(
         once(
           ActionType.APP__INITIALIZE_SUCCEEDED,
-          callback.onInitializeSucceeded
+          callback.onInitializeSucceeded,
         ),
         once(
           ActionType.APP__INITIALIZE_FAILED,
-          ({ errorCode }): void => callback.onInitializeFailed(errorCode)
-        )
-      )
+          ({ errorCode }): void => callback.onInitializeFailed(errorCode),
+        ),
+      ),
     );
   }
 
@@ -188,7 +188,7 @@ export class PreloadScreenDelegate {
         }),
         isDebug: env.DEBUG_APPS_FLYER,
         appId: env.APPLE_APP_ID,
-      })
+      }),
     );
   }
 
@@ -207,15 +207,15 @@ export class PreloadScreenDelegate {
             } else {
               callback.onSessionNotFound();
             }
-          }
+          },
         ),
         once(
           ActionType.USER__GET_SESSION_FAILED,
           (): void => {
             callback.onSessionNotFound();
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 
@@ -234,15 +234,15 @@ export class PreloadScreenDelegate {
             } else {
               callback.onNoActiveSetsFound();
             }
-          }
+          },
         ),
         once(
           ActionType.SET__FETCH_ALL_FAILED,
           (): void => {
             callback.onNoActiveSetsFound();
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   }
 

@@ -1,7 +1,7 @@
 # Facebook SDK for iOS
 
 [![Platforms](https://img.shields.io/cocoapods/p/FBSDKCoreKit.svg)](https://cocoapods.org/pods/FBSDKCoreKit)
-[![Build Status](https://travis-ci.org/facebook/facebook-objc-sdk.svg?branch=master)](https://travis-ci.org/facebook/facebook-objc-sdk)
+[![Build Status](https://travis-ci.org/facebook/facebook-ios-sdk.svg?branch=master)](https://travis-ci.org/facebook/facebook-ios-sdk)
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/FBSDKCoreKit.svg)](https://cocoapods.org/pods/FBSDKCoreKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -31,10 +31,12 @@ NOTE: By default, the Facebook SDK for iOS is installed in ~/Documents/FacebookS
 
 ## GIVE FEEDBACK
 
-Please report bugs or issues to <https://developers.facebook.com/bugs/>
+Please report bugs or issues to our designated developer support team -- <https://developers.facebook.com/support/bugs/> -- as this will help us resolve them more quickly.
 
-You can also join the [Facebook Developers Group on Facebook](https://www.facebook.com/groups/fbdevelopers/) or ask
-questions on [Stack Overflow](http://facebook.stackoverflow.com)
+You can also visit our [Facebook Developer Community Forum](https://developers.facebook.com/community/),
+join the [Facebook Developers Group on Facebook](https://www.facebook.com/groups/fbdevelopers/),
+ask questions on [Stack Overflow](http://facebook.stackoverflow.com),
+or open an issue in this repository.
 
 ## LICENSE
 

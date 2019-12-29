@@ -56,6 +56,6 @@ export function setupNavigationDefaultOptions(): void {
   };
 
   Navigation.setDefaultOptions(
-    _.merge(common, Platform.OS === 'android' ? androidOnly : iOSOnly)
+    _.merge(common, Platform.OS === 'android' ? androidOnly : iOSOnly),
   );
 }

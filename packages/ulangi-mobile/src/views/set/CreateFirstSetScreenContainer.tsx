@@ -15,12 +15,15 @@ import {
   ObservableAddEditSetScreen,
   ObservableSetFormState,
   ObservableSetPickerState,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import * as uuid from 'uuid';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { CreateFirstSetScreenIds } from '../../constants/ids/CreateFirstSetScreenIds';
 import { CreateFirstSetScreenFactory } from '../../factories/set/CreateFirstSetScreenFactory';
 import { CreateFirstSetScreen } from './CreateFirstSetScreen';
@@ -37,7 +40,7 @@ export class CreateFirstSetScreenContainer extends Container {
   private screenFactory = new CreateFirstSetScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableAddEditSetScreen(
@@ -48,28 +51,37 @@ export class CreateFirstSetScreenContainer extends Container {
       'en',
       false,
       new ObservableSetPickerState(SetFormPickerType.LEARN, false, false),
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     ),
-    ScreenName.CREATE_FIRST_SET_SCREEN
+    ScreenName.CREATE_FIRST_SET_SCREEN,
+    new ObservableTitleTopBar(
+      '',
+      new ObservableTopBarButton(
+        CreateFirstSetScreenIds.LOG_OUT_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_WHITE_22X22,
+          dark: Images.ARROW_LEFT_WHITE_22X22,
+        },
+        (): void => {
+          this.screenDelegate.showConfirmLogout();
+        },
+      ),
+      null,
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === CreateFirstSetScreenIds.LOG_OUT_BTN) {
-      this.screenDelegate.showConfirmLogout();
-    }
-  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? CreateFirstSetScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : CreateFirstSetScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : CreateFirstSetScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

@@ -27,7 +27,7 @@ export class ReflexQuestionIterator {
 
   public constructor(vocabularyList?: Map<string, Vocabulary>) {
     this.randomVocabularyIterator = new RandomVocabularyIterator(
-      vocabularyList
+      vocabularyList,
     );
 
     this.definitionPool = new DefinitionPool(
@@ -39,12 +39,12 @@ export class ReflexQuestionIterator {
                 return vocabulary.definitions.map(
                   (definition): [string, Definition] => {
                     return [definition.definitionId, definition];
-                  }
+                  },
                 );
-              }
+              },
             )
-          : []
-      )
+          : [],
+      ),
     );
   }
 
@@ -69,12 +69,12 @@ export class ReflexQuestionIterator {
                 return vocabulary.definitions.map(
                   (definition): [string, Definition] => {
                     return [definition.definitionId, definition];
-                  }
+                  },
                 );
-              }
+              },
             )
-          : []
-      )
+          : [],
+      ),
     );
   }
 
@@ -98,34 +98,34 @@ export class ReflexQuestionIterator {
   private makeQuestion(vocabulary: Vocabulary): ObservableReflexQuestion {
     const correctDefinition = assertExists(
       _.sample(vocabulary.definitions.slice()),
-      'definition should not be null or undefined'
+      'definition should not be null or undefined',
     );
 
     const correctMeaning = this.definitionExtraFieldParser.parse(
-      correctDefinition.meaning
+      correctDefinition.meaning,
     ).plainMeaning;
 
     // Get a random definition
     const exceptIds = vocabulary.definitions.map(
-      (definition): string => definition.definitionId
+      (definition): string => definition.definitionId,
     );
     const randomDefinition = assertExists(
       _.first(
-        this.definitionPool.getRandomDefinitionsFromPool(1, false, exceptIds)
+        this.definitionPool.getRandomDefinitionsFromPool(1, false, exceptIds),
       ),
-      'definition should not be null or undefined'
+      'definition should not be null or undefined',
     );
 
     const randomMeaning = this.definitionExtraFieldParser.parse(
-      randomDefinition.meaning
+      randomDefinition.meaning,
     ).plainMeaning;
 
     return new ObservableReflexQuestion(
       this.vocabularyExtraFieldParser.parse(
-        vocabulary.vocabularyText
+        vocabulary.vocabularyText,
       ).vocabularyTerm,
       _.random(0, 1) === 1 ? correctMeaning : randomMeaning,
-      correctMeaning
+      correctMeaning,
     );
   }
 }

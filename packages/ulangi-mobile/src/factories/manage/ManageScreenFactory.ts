@@ -37,41 +37,41 @@ export class ManageScreenFactory extends ScreenFactory {
       this.eventBus,
       this.props.rootStore.setStore,
       this.createNavigatorDelegate(),
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
   public createScreenDelegate(
-    observableScreen: ObservableManageScreen
+    observableScreen: ObservableManageScreen,
   ): ManageScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const setSelectionMenuDelegate = this.createSetSelectionMenuDelegate();
 
     const manageListSelectionMenuDelegate = new ManageListSelectionMenuDelegate(
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
 
     const vocabularyFilterMenuDelegate = new VocabularyFilterMenuDelegate(
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
-      this.props.rootStore.setStore
+      this.props.rootStore.setStore,
     );
 
     const vocabularyListDelegate = new VocabularyListDelegate(
@@ -81,11 +81,11 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen.vocabularyListState,
       spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate
+      writingSettingsDelegate,
     );
 
     const vocabularySelectionDelegate = new VocabularySelectionDelegate(
-      observableScreen.vocabularyListState
+      observableScreen.vocabularyListState,
     );
 
     const vocabularyActionMenuDelegate = new VocabularyActionMenuDelegate(
@@ -95,7 +95,7 @@ export class ManageScreenFactory extends ScreenFactory {
       setSelectionMenuDelegate,
       vocabularySelectionDelegate,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const vocabularyBulkActionMenuDelegate = new VocabularyBulkActionMenuDelegate(
@@ -106,25 +106,25 @@ export class ManageScreenFactory extends ScreenFactory {
       setSelectionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categorySelectionDelegate = new CategorySelectionDelegate(
-      observableScreen.categoryListState
+      observableScreen.categoryListState,
     );
 
     const categoryActionMenuDelegate = new CategoryActionMenuDelegate(
       this.props.observableLightBox,
       categorySelectionDelegate,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categoryBulkActionMenuDelegate = new CategoryBulkActionMenuDelegate(
       this.props.observableLightBox,
       observableScreen.categoryListState,
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categoryListDelegate = new CategoryListDelegate(
@@ -133,21 +133,21 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen.categoryListState,
       spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate
+      writingSettingsDelegate,
     );
 
     const vocabularyLiveUpdateDelegate = new VocabularyLiveUpdateDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
-      observableScreen.vocabularyListState
+      observableScreen.vocabularyListState,
     );
 
     const adDelegate = new AdDelegate(
       this.eventBus,
       this.props.rootStore.adStore,
       this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore
+      this.props.rootStore.remoteConfigStore,
     );
 
     const rootScreenDelegate = this.createRootScreenDelegate();
@@ -156,7 +156,7 @@ export class ManageScreenFactory extends ScreenFactory {
 
     const reminderSettingsDelegate = new ReminderSettingsDelegate(
       this.props.rootStore.userStore,
-      this.props.rootStore.notificationStore
+      this.props.rootStore.notificationStore,
     );
 
     const autorunDelegate = new AutorunDelegate(
@@ -167,12 +167,12 @@ export class ManageScreenFactory extends ScreenFactory {
       reminderDelegate,
       reminderSettingsDelegate,
       dialogDelegate,
-      rootScreenDelegate
+      rootScreenDelegate,
     );
 
     const levelBreakdownDelegate = new LevelBreakdownDelegate(
       navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     return new ManageScreenDelegate(
@@ -192,7 +192,7 @@ export class ManageScreenFactory extends ScreenFactory {
       vocabularySelectionDelegate,
       manageListSelectionMenuDelegate,
       autorunDelegate,
-      navigatorDelegate
+      navigatorDelegate,
     );
   }
 }

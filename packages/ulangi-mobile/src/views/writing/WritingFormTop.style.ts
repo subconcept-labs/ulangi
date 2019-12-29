@@ -86,7 +86,7 @@ export const lightStyles: WritingFormTopStyles = StyleSheet.create(
     note: {
       color: config.styles.light.secondaryTextColor,
     },
-  })
+  }),
 );
 
 export const darkStyles: WritingFormTopStyles = StyleSheet.create(
@@ -102,5 +102,5 @@ export const darkStyles: WritingFormTopStyles = StyleSheet.create(
     note: {
       color: config.styles.dark.secondaryTextColor,
     },
-  })
+  }),
 );

@@ -9,6 +9,7 @@ import { ScreenName, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
 import { IObservableValue } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabularyListState';
 import { ObservableCategory } from './ObservableCategory';
 
@@ -23,9 +24,10 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
     category: ObservableCategory,
     selectedFilterType: IObservableValue<VocabularyFilterType>,
     vocabularyListState: ObservableVocabularyListState,
-    screenName: ScreenName
+    screenName: ScreenName,
+    topBar: ObservableTitleTopBar
   ) {
-    super(screenName);
+    super(screenName, topBar);
     this.category = category;
     this.selectedFilterType = selectedFilterType;
     this.vocabularyListState = vocabularyListState;

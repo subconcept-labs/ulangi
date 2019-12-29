@@ -41,8 +41,7 @@ export class LightBoxSelectionItem extends React.Component<
         <TouchableOpacity
           testID={this.props.item.testID}
           style={this.styles.item_touchable}
-          onPress={this.props.item.onPress}
-        >
+          onPress={this.props.item.onPress}>
           {this.props.isSelected === true ? (
             <Image
               resizeMode="contain"
@@ -68,8 +67,7 @@ export class LightBoxSelectionItem extends React.Component<
               this.props.item.textColor
                 ? { color: this.props.item.textColor }
                 : null,
-            ]}
-          >
+            ]}>
             {this.props.item.text}
           </DefaultText>
         </TouchableOpacity>

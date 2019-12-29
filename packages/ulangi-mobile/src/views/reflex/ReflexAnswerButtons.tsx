@@ -27,7 +27,7 @@ export class ReflexAnswerButtons extends React.Component<
   private isAnswerCorrect(answer: 'YES' | 'NO'): boolean {
     const currentQuestion = assertExists(
       this.props.gameState.currentQuestion,
-      'currentQuestion should not be null or undefined'
+      'currentQuestion should not be null or undefined',
     );
     if (answer === 'YES') {
       return currentQuestion.correctMeaning === currentQuestion.randomMeaning;
@@ -43,8 +43,7 @@ export class ReflexAnswerButtons extends React.Component<
           <TouchableOpacity
             testID={ReflexScreenIds.START_BTN}
             style={styles.start_button}
-            onPress={this.props.startGame}
-          >
+            onPress={this.props.startGame}>
             <DefaultText style={styles.start_text}>START</DefaultText>
           </TouchableOpacity>
           <View style={styles.note_container}>
@@ -65,11 +64,9 @@ export class ReflexAnswerButtons extends React.Component<
                 : ReflexScreenIds.INCORRECT_BTN
             }
             style={styles.touchable}
-            onPress={(): void => this.props.onAnswerPressed('NO')}
-          >
+            onPress={(): void => this.props.onAnswerPressed('NO')}>
             <DefaultText
-              style={[styles.touchable_text, styles.touchable_text_red]}
-            >
+              style={[styles.touchable_text, styles.touchable_text_red]}>
               NO
             </DefaultText>
           </TouchableOpacity>
@@ -80,11 +77,9 @@ export class ReflexAnswerButtons extends React.Component<
                 : ReflexScreenIds.INCORRECT_BTN
             }
             style={styles.touchable}
-            onPress={(): void => this.props.onAnswerPressed('YES')}
-          >
+            onPress={(): void => this.props.onAnswerPressed('YES')}>
             <DefaultText
-              style={[styles.touchable_text, styles.touchable_text_green]}
-            >
+              style={[styles.touchable_text, styles.touchable_text_green]}>
               YES
             </DefaultText>
           </TouchableOpacity>

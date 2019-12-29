@@ -11,12 +11,17 @@ import {
   ScreenName,
   Theme,
 } from '@ulangi/ulangi-common/enums';
-import { ObservableContactUsScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableContactUsScreen,
+  ObservableTitleTopBar,
+  ObservableTopBarButton,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
+import { Images } from '../../constants/Images';
 import { ContactUsScreenIds } from '../../constants/ids/ContactUsScreenIds';
 import { ContactUsScreenFactory } from '../../factories/contact-us/ContactUsScreenFactory';
 import { ContactUsScreen } from './ContactUsScreen';
@@ -40,60 +45,49 @@ export class ContactUsScreenContainer extends Container<
   private screenFactory = new ContactUsScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableContactUsScreen(
     this.props.passedProps.initialFormType,
     this.props.passedProps.message || '',
     ScreenName.CONTACT_US_SCREEN,
-    {
-      title: this.props.passedProps.initialFormType,
-    }
+    new ObservableTitleTopBar(
+      this.props.passedProps.initialFormType,
+      new ObservableTopBarButton(
+        ContactUsScreenIds.BACK_BTN,
+        null,
+        {
+          light: Images.ARROW_LEFT_BLACK_22X22,
+          dark: Images.ARROW_LEFT_MILK_22X22,
+        },
+        (): void => {
+          this.navigatorDelegate.pop();
+        },
+      ),
+      new ObservableTopBarButton(
+        ContactUsScreenIds.SEND_BTN,
+        'Send',
+        null,
+        (): void => {
+          Keyboard.dismiss();
+          this.screenDelegate.send();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
-  private screenDelegate = this.screenFactory.createScreenDelegate();
-
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === ContactUsScreenIds.BACK_BTN) {
-      this.navigatorDelegate.pop();
-    } else if (buttonId === ContactUsScreenIds.SEND_BTN) {
-      Keyboard.dismiss();
-      switch (this.observableScreen.formType) {
-        case ContactUsFormType.FEATURE_REQUEST:
-          this.screenDelegate.sendFeatureRequest(
-            this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
-          );
-          break;
-        case ContactUsFormType.REPORT_A_BUG:
-          this.screenDelegate.sendBugReport(
-            this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
-          );
-          break;
-        case ContactUsFormType.REPORT_AN_ERROR:
-          this.screenDelegate.sendAnErrorReport(
-            this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
-          );
-          break;
-        default:
-          this.screenDelegate.sendSupportMessage(
-            this.props.rootStore.userStore.existingCurrentUser.email,
-            this.observableScreen.text
-          );
-      }
-    }
-  }
+  private screenDelegate = this.screenFactory.createScreenDelegate(
+    this.observableScreen,
+  );
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? ContactUsScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : ContactUsScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 

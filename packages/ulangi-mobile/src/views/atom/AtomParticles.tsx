@@ -22,13 +22,13 @@ export interface AtomParticlesProps {
   transferParticleToSameShell: (
     particle: ObservableParticle,
     position: { x: number; y: number },
-    isUserMove: boolean
+    isUserMove: boolean,
   ) => void;
   transferParticleToAnotherShell: (
     particle: ObservableParticle,
     position: { x: number; y: number },
     newShell: AtomShellType,
-    isUserMove: boolean
+    isUserMove: boolean,
   ) => void;
   isMaxReached: (shell: AtomShellType) => boolean;
 }
@@ -54,7 +54,7 @@ export class AtomParticles extends React.Component<AtomParticlesProps> {
                 isMaxReached={this.props.isMaxReached}
               />
             );
-          }
+          },
         )}
       </View>
     );

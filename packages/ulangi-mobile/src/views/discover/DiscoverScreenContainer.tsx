@@ -11,6 +11,8 @@ import {
   ObservableDiscoverScreen,
   ObservablePublicSetListState,
   ObservablePublicVocabularyListState,
+  ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -36,7 +38,7 @@ export class DiscoverScreenContainer extends Container {
   private screenFactory = new DiscoverScreenFactory(
     this.props,
     this.eventBus,
-    this.observer
+    this.observer,
   );
 
   protected observableScreen = new ObservableDiscoverScreen(
@@ -49,40 +51,51 @@ export class DiscoverScreenContainer extends Container {
       null,
       false,
       observable.box(ActivityState.INACTIVE),
-      observable.box(false)
+      observable.box(false),
     ),
     new ObservablePublicVocabularyListState(
       null,
       false,
       observable.box(ActivityState.INACTIVE),
-      observable.box(false)
+      observable.box(false),
     ),
     new ObservableTranslationListState(
       null,
       null,
       observable.box(ActivityState.INACTIVE),
       observable.box(undefined),
-      observable.box(false)
+      observable.box(false),
     ),
     ScreenName.DISCOVER_SCREEN,
-    {
-      title: 'Discover',
-      testID: DiscoverScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      subtitle: this.props.rootStore.setStore.existingCurrentSet.setName,
-      icon: _.has(
+    new ObservableTouchableTopBar(
+      DiscoverScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.props.rootStore.setStore.existingCurrentSet.setName,
+      _.has(
         Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode
+        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
       )
         ? _.get(
             Images.FLAG_ICONS_BY_LANGUAGE_CODE,
             this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode
+              .learningLanguageCode,
           )
         : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
-      onTitlePress: (): void => {
+      (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
-    }
+      null,
+      new ObservableTopBarButton(
+        DiscoverScreenIds.TIP_BTN,
+        null,
+        {
+          light: Images.INFO_WHITE_22X22,
+          dark: Images.INFO_MILK_22X22,
+        },
+        (): void => {
+          this.screenDelegate.showTip();
+        },
+      ),
+    ),
   );
 
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
@@ -90,12 +103,12 @@ export class DiscoverScreenContainer extends Container {
   private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
-    this.observableScreen
+    this.observableScreen,
   );
 
   public componentDidMount(): void {
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen
+      this.observableScreen,
     );
 
     this.screenDelegate.autoRefreshOnSetChange();
@@ -112,17 +125,11 @@ export class DiscoverScreenContainer extends Container {
     this.screenDelegate.clearAllList();
   }
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === DiscoverScreenIds.TIP_BTN) {
-      this.screenDelegate.showTip();
-    }
-  }
-
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
         ? DiscoverScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : DiscoverScreenStyle.SCREEN_DARK_STYLES_ONLY
+        : DiscoverScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 
