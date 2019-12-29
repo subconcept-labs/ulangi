@@ -93,19 +93,3 @@ export const premiumMembershipSectionRowDarkStyles = StyleSheet.create(
     },
   }),
 );
-
-export const logOutSectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    left_text: {
-      color: 'red',
-    },
-  }),
-);
-
-export const logOutSectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    left_text: {
-      color: 'red',
-    },
-  }),
-);

@@ -38,7 +38,6 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
             renderItem={this.renderItem}
             sliderWidth={screenWidth}
             itemWidth={screenWidth}
-            inactiveSlideScale={1}
             autoplay={true}
             onSnapToItem={(index): void =>
               this.props.currentMessageIndex.set(index)
@@ -74,24 +73,26 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
     item: ObservableCarouselMessage;
   }): React.ReactElement<any> {
     return (
-      <View
-        style={[
-          styles.item_container,
-          { backgroundColor: item.backgroundColor },
-        ]}>
-        <DefaultText style={styles.title}>{item.title}</DefaultText>
-        <DefaultText style={styles.message}>{item.message}</DefaultText>
-        <View style={styles.button_container}>
-          <DefaultButton
-            text={item.buttonText}
-            styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
-              ButtonSize.NORMAL,
-              4,
-              '#fff',
-              item.buttonTextColor,
-            )}
-            onPress={item.onPress}
-          />
+      <View style={styles.item_container}>
+        <View
+          style={[
+            styles.inner_container,
+            { backgroundColor: item.backgroundColor },
+          ]}>
+          <DefaultText style={styles.title}>{item.title}</DefaultText>
+          <DefaultText style={styles.message}>{item.message}</DefaultText>
+          <View style={styles.button_container}>
+            <DefaultButton
+              text={item.buttonText}
+              styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+                ButtonSize.NORMAL,
+                4,
+                '#fff',
+                item.buttonTextColor,
+              )}
+              onPress={item.onPress}
+            />
+          </View>
         </View>
       </View>
     );
@@ -101,7 +102,13 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
 const styles = StyleSheet.create({
   item_container: {
     width: screenWidth,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+
+  inner_container: {
     backgroundColor: '#777',
+    borderRadius: 4,
     paddingHorizontal: 16,
     paddingVertical: 16,
   },

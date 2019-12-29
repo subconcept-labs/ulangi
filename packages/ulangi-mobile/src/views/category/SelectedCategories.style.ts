@@ -51,7 +51,7 @@ export const lightStyles = StyleSheet.create(
     },
 
     category_name: {
-      color: config.styles.light.primaryTextColor,
+      color: config.styles.light.secondaryTextColor,
     },
   }),
 );
