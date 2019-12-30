@@ -9,7 +9,6 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
-import { Platform } from 'react-native';
 
 import { config } from '../constants/config';
 import { FullRoundedButtonStyle } from '../styles/FullRoundedButtonStyle';
@@ -19,7 +18,6 @@ export class ReflexStyle {
     return _.merge(
       {
         statusBar: {
-          visible: Platform.OS === 'android',
           style: 'light',
           backgroundColor: config.reflex.backgroundColor,
         },
@@ -52,14 +50,12 @@ export class ReflexStyle {
   public static LIGHT_BOX_SCREEN_STYLES: { light: Options; dark: Options } = {
     light: {
       statusBar: {
-        visible: Platform.OS === 'android',
         style: 'light',
         backgroundColor: config.reflex.backgroundColor,
       },
     },
     dark: {
       statusBar: {
-        visible: Platform.OS === 'android',
         style: 'light',
         backgroundColor: config.reflex.backgroundColor,
       },

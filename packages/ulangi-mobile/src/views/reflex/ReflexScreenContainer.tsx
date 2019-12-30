@@ -16,7 +16,6 @@ import * as _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Platform } from 'react-native';
 
 import { Container } from '../../Container';
 import { config } from '../../constants/config';
@@ -24,7 +23,6 @@ import { ReflexScreenFactory } from '../../factories/reflex/ReflexScreenFactory'
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
 import { ReflexStyle } from '../../styles/ReflexStyle';
 import { ReflexScreen } from './ReflexScreen';
-import { ReflexScreenStyle } from './ReflexScreenContainer.style';
 
 export interface ReflexScreenPassedProps {
   readonly selectedCategoryNames: undefined | string[];
@@ -33,7 +31,7 @@ export interface ReflexScreenPassedProps {
 @observer
 export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
   public static options(): Options {
-    return ReflexStyle.getScreenStyle(ReflexScreenStyle);
+    return ReflexStyle.getScreenStyle();
   }
 
   private screenFactory = new ReflexScreenFactory(
@@ -54,23 +52,10 @@ export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
     ScreenName.REFLEX_SCREEN,
   );
 
-  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
-
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
     this.questionIterator,
   );
-
-  public componentDidAppear(): void {
-    if (Platform.OS === 'ios') {
-      this.navigatorDelegate.mergeOptions({
-        statusBar: {
-          visible: false,
-          style: 'light',
-        },
-      });
-    }
-  }
 
   public componentWillUnmount(): void {
     this.screenDelegate.clearGame();

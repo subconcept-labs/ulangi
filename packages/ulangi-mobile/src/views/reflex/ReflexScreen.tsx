@@ -9,7 +9,7 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableReflexScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
 import { ReflexScreenDelegate } from '../../delegates/reflex/ReflexScreenDelegate';
@@ -28,7 +28,7 @@ export interface ReflexScreenProps {
 export class ReflexScreen extends React.Component<ReflexScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={ReflexScreenIds.SCREEN}>
+      <SafeAreaView style={styles.screen} testID={ReflexScreenIds.SCREEN}>
         <View style={styles.container}>
           <ReflexTopBar
             onIconPressed={this.props.screenDelegate.handleIconPressed}
@@ -60,7 +60,7 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
             onAnswerPressed={this.props.screenDelegate.handleSelectAnswer}
           />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

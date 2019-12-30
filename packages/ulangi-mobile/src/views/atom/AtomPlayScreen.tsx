@@ -8,7 +8,7 @@
 import { ObservableAtomPlayScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { AtomPlayScreenIds } from '../../constants/ids/AtomPlayScreenIds';
 import { AtomPlayScreenDelegate } from '../../delegates/atom/AtomPlayScreenDelegate';
@@ -28,7 +28,7 @@ export interface AtomPlayScreenProps {
 export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={AtomPlayScreenIds.SCREEN}>
+      <SafeAreaView style={styles.screen} testID={AtomPlayScreenIds.SCREEN}>
         <View style={styles.container}>
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
@@ -59,7 +59,7 @@ export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
           />
           <AtomQuestion question={this.props.observableScreen.question} />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

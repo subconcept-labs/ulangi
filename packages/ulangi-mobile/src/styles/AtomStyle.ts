@@ -9,7 +9,6 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
-import { Platform } from 'react-native';
 
 import { config } from '../constants/config';
 import { FullRoundedButtonStyle } from './FullRoundedButtonStyle';
@@ -19,8 +18,6 @@ export class AtomStyle {
     return _.merge(
       {
         statusBar: {
-          // Only show on Android
-          visible: Platform.OS === 'android',
           style: 'light',
           backgroundColor: config.atom.backgroundColor,
         },
@@ -53,14 +50,12 @@ export class AtomStyle {
   public static LIGHT_BOX_SCREEN_STYLES: { light: Options; dark: Options } = {
     light: {
       statusBar: {
-        visible: Platform.OS === 'android',
         style: 'light',
         backgroundColor: config.atom.backgroundColor,
       },
     },
     dark: {
       statusBar: {
-        visible: Platform.OS === 'android',
         style: 'light',
         backgroundColor: config.atom.backgroundColor,
       },

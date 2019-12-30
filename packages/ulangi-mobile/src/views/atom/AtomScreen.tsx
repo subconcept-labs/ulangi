@@ -9,7 +9,7 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableAtomScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { AtomScreenIds } from '../../constants/ids/AtomScreenIds';
 import { AtomScreenDelegate } from '../../delegates/atom/AtomScreenDelegate';
@@ -28,7 +28,7 @@ export interface AtomScreenProps {
 export class AtomScreen extends React.Component<AtomScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={AtomScreenIds.SCREEN}>
+      <SafeAreaView style={styles.screen} testID={AtomScreenIds.SCREEN}>
         <View style={styles.top_bar_container}>
           <AtomTopBar
             iconTestID={AtomScreenIds.BACK_BTN}
@@ -64,7 +64,7 @@ export class AtomScreen extends React.Component<AtomScreenProps> {
             to practice.
           </DefaultText>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

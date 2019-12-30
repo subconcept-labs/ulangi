@@ -12,7 +12,6 @@ import * as _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Platform } from 'react-native';
 
 import { Container } from '../../Container';
 import { AtomScreenFactory } from '../../factories/atom/AtomScreenFactory';
@@ -26,12 +25,7 @@ export interface AtomScreenPassedProps {
 @observer
 export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
   public static options(): Options {
-    // On iOS, we allow status bar to show at first, then hide it in componentDidAppear
-    return AtomStyle.getScreenStyle({
-      statusBar: {
-        visible: true,
-      },
-    });
+    return AtomStyle.getScreenStyle();
   }
 
   private atomScreenFactory = new AtomScreenFactory(
@@ -47,21 +41,9 @@ export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
     ScreenName.ATOM_SCREEN,
   );
 
-  private navigatorDelegate = this.atomScreenFactory.createNavigatorDelegate();
   private screenDelegate = this.atomScreenFactory.createScreenDelegate(
     this.observableScreen,
   );
-
-  public componentDidAppear(): void {
-    if (Platform.OS === 'ios') {
-      this.navigatorDelegate.mergeOptions({
-        statusBar: {
-          visible: false,
-          style: 'light',
-        },
-      });
-    }
-  }
 
   protected onThemeChanged(): void {
     _.noop();

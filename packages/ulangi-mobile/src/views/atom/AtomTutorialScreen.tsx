@@ -8,7 +8,7 @@
 import { ObservableAtomTutorialScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { AtomTutorialScreenIds } from '../../constants/ids/AtomTutorialScreenIds';
 import { AtomTutorialScreenDelegate } from '../../delegates/atom/AtomTutorialScreenDelegate';
@@ -30,7 +30,7 @@ export class AtomTutorialScreen extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={AtomTutorialScreenIds.SCREEN}>
+      <SafeAreaView style={styles.screen} testID={AtomTutorialScreenIds.SCREEN}>
         <View style={styles.container}>
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
@@ -64,7 +64,7 @@ export class AtomTutorialScreen extends React.Component<
             back={this.props.screenDelegate.back}
           />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
