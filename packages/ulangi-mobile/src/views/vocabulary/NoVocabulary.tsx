@@ -15,7 +15,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
@@ -35,21 +34,16 @@ export class NoVocabulary extends React.Component<NoVocabularyProps> {
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={this.props.refresh} />
         }>
-        <Animatable.View
-          style={styles.animation_container}
-          animation="fadeIn"
-          useNativeDriver>
-          {this.renderText()}
-          {typeof this.props.showQuickTutorial !== 'undefined' ? (
-            <TouchableOpacity
-              style={styles.button_container}
-              onPress={this.props.showQuickTutorial}>
-              <DefaultText style={styles.quick_tutorial}>
-                View quick tutorial
-              </DefaultText>
-            </TouchableOpacity>
-          ) : null}
-        </Animatable.View>
+        {this.renderText()}
+        {typeof this.props.showQuickTutorial !== 'undefined' ? (
+          <TouchableOpacity
+            style={styles.button_container}
+            onPress={this.props.showQuickTutorial}>
+            <DefaultText style={styles.quick_tutorial}>
+              View quick tutorial
+            </DefaultText>
+          </TouchableOpacity>
+        ) : null}
       </ScrollView>
     );
   }

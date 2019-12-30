@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Navigation, Options } from '@ulangi/react-native-navigation';
+import { Options } from '@ulangi/react-native-navigation';
 import {
   ActivityState,
   ManageListType,
@@ -25,11 +25,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
-import {
-  Container,
-  ContainerPassedProps,
-  ContainerProps,
-} from '../../Container';
+import { Container, ContainerPassedProps } from '../../Container';
 import { Images } from '../../constants/Images';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { ManageScreenFactory } from '../../factories/manage/ManageScreenFactory';
@@ -145,18 +141,6 @@ export class ManageScreenContainer extends Container {
       theme === Theme.LIGHT
         ? ManageScreenStyle.SCREEN_LIGHT_STYLES_ONLY
         : ManageScreenStyle.SCREEN_DARK_STYLES_ONLY,
-    );
-  }
-
-  public constructor(props: ContainerProps) {
-    super(props);
-
-    Navigation.events().registerBottomTabSelectedListener(
-      ({ selectedTabIndex }): void => {
-        if (selectedTabIndex === 0) {
-          this.screenDelegate.refreshCurrentListIfEmpty();
-        }
-      },
     );
   }
 
