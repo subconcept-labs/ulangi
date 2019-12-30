@@ -382,7 +382,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - ReactNativeDarkMode (0.2.1):
     - React
-  - ReactNativeNavigation (4.0.9-patch.3):
+  - ReactNativeNavigation (4.0.9-patch.6):
     - React
   - RNFastImage (7.0.2):
     - React
@@ -664,7 +664,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   ReactNativeDarkMode: 0e6e7bdbd387eb949fa7ff238a48f6d6431a428d
-  ReactNativeNavigation: 5571110dec1dedd5e7fb80ef092ac8b799030ec3
+  ReactNativeNavigation: fd2de12123e368b33c3cc234f029f6c7102acc26
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
   RNFirebase: 909a993573ab3e79d9b0dc9690265d5ba379f15b
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b

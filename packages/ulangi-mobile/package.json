@@ -25,7 +25,7 @@
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/react-native-ad-consent": "^2.0.2-patch.1",
     "@ulangi/react-native-firebase": "^5.5.6-patch.10",
-    "@ulangi/react-native-navigation": "^4.0.9-patch.5",
+    "@ulangi/react-native-navigation": "^4.0.9-patch.6",
     "@ulangi/resolver": "^1.0.0",
     "@ulangi/sqlite-adapter": "^1.1.1",
     "autobind-decorator": "^2.4.0",
