@@ -12,10 +12,10 @@ export class OpenSourceProjectsScreenDelegate {
   }
 
   public goToMainUlangiRepo(): void {
-    this.linkingDelegate.openLink(config.links.github);
+    this.linkingDelegate.openLink(config.links.githubMainRepo);
   }
 
   public goToTypescriptLibsRepo(): void {
-    this.linkingDelegate.openLink('https://github.com/minhloi/typescript-libs');
+    this.linkingDelegate.openLink(config.links.githubTypeScriptLibsRepo);
   }
 }

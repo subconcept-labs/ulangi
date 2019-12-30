@@ -17,7 +17,8 @@
   },
 
   "links": {
-    "github": "https://github.com/minhloi/ulangi",
+    "githubMainRepo": "https://github.com/ulangi/ulangi",
+    "githubTypeScriptLibsRepo": "https://github.com/ulangi/typescript-libs",
     "reddit": "https://www.reddit.com/r/Ulangi/",
     "twitter": "https://twitter.com/UlangiApp",
     "instagram": "https://www.instagram.com/ulangi.app/",

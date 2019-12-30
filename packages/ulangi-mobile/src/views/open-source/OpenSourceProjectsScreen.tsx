@@ -98,7 +98,7 @@ export class OpenSourceProjectsScreen extends React.Component<
         <SectionGroup header="PROJECTS" theme={this.props.darkModeStore.theme}>
           <View style={this.styles.project_container}>
             <DefaultText style={this.styles.project_title}>
-              @minhloi/ulangi
+              @ulangi/ulangi
             </DefaultText>
             <DefaultText style={this.styles.project_description}>
               A complete Ulangi project with packages ranging from front-end to
@@ -116,7 +116,7 @@ export class OpenSourceProjectsScreen extends React.Component<
           </View>
           <View style={this.styles.project_container}>
             <DefaultText style={this.styles.project_title}>
-              @minhloi/typescript-libs
+              @ulangi/typescript-libs
             </DefaultText>
             <DefaultText style={this.styles.project_description}>
               Some TypeScript libraries that are extensively used in Ulangi

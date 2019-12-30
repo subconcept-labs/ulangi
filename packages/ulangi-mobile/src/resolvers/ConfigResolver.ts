@@ -39,7 +39,8 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     links: {
-      github: Joi.string(),
+      githubMainRepo: Joi.string(),
+      githubTypeScriptLibsRepo: Joi.string(),
       reddit: Joi.string(),
       twitter: Joi.string(),
       instagram: Joi.string(),
