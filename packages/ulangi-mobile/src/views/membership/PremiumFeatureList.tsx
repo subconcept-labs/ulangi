@@ -30,7 +30,7 @@ export class PremiumFeatureList extends React.Component {
           <Image style={styles.bullet} source={Images.STAR_BLUE_12X12} />
           <View style={styles.text_container}>
             <DefaultText style={styles.text}>
-              Ads will no longer show in the app.
+              Ads will not appear in the app.
             </DefaultText>
           </View>
         </View>
