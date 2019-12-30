@@ -26,7 +26,7 @@ export class LessonScreenStyle {
     },
     bottomTabs: {
       visible: false,
-      animate: true,
+      animate: false,
       drawBehind: true,
     },
   };

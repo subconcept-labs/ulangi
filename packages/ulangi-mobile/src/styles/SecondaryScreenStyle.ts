@@ -22,7 +22,7 @@ export class SecondaryScreenStyle {
     },
     bottomTabs: {
       visible: false,
-      animate: true,
+      animate: false,
       drawBehind: true,
     },
   };

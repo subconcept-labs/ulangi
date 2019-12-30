@@ -26,7 +26,7 @@ export class SearchScreenStyle {
         },
       }),
       bottomTabs: {
-        animate: true,
+        animate: false,
         visible: false,
         drawBehind: true,
       },

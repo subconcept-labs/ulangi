@@ -36,7 +36,7 @@ export class AtomStyle {
         },
         bottomTabs: {
           visible: false,
-          animate: true,
+          animate: false,
           drawBehind: true,
         },
         layout: {

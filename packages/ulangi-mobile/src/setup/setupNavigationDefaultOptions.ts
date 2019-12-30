@@ -33,6 +33,9 @@ export function setupNavigationDefaultOptions(): void {
       selectedIconColor: config.styles.primaryColor,
       selectedTextColor: config.styles.primaryColor,
     },
+    bottomTabs: {
+      animate: false,
+    },
     layout: {
       orientation: ['portrait'],
     },

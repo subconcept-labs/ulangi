@@ -36,7 +36,7 @@ export class ReflexStyle {
         },
         bottomTabs: {
           visible: false,
-          animate: true,
+          animate: false,
           drawBehind: true,
         },
         layout: {
