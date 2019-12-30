@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import { Container } from '../../Container';
 import { Images } from '../../constants/Images';
@@ -56,7 +57,11 @@ export class TopBar extends Container<TopBarPassedProps> {
     ) {
       const topBar = observableScreen.topBar;
       return (
-        <View style={this.styles.top_bar_container}>
+        <Animatable.View
+          style={this.styles.top_bar_container}
+          animation="fadeIn"
+          useNativeDriver
+          duration={1500}>
           <View style={this.styles.button_container}>
             {topBar.leftButton !== null
               ? this.renderButton(topBar.leftButton, 'left')
@@ -77,7 +82,7 @@ export class TopBar extends Container<TopBarPassedProps> {
               ? this.renderButton(topBar.rightButton, 'right')
               : null}
           </View>
-        </View>
+        </Animatable.View>
       );
     } else {
       return null;
