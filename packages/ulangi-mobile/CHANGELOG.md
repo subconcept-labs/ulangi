@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/minhloi/ulangi/compare/v3.0.0...v3.0.1) (2019-12-30)
+
+
+### Bug Fixes
+
+* add @minhloi/typescript-libs github link ([9d93052](https://github.com/minhloi/ulangi/commit/9d93052))
+* add animation for top bar ([a970bfc](https://github.com/minhloi/ulangi/commit/a970bfc))
+* always show statusBar for Reflex and Atom games ([9dcfee9](https://github.com/minhloi/ulangi/commit/9dcfee9))
+* bottom tabs do not reappear after hidden ([822f86f](https://github.com/minhloi/ulangi/commit/822f86f))
+* disable auto refresh on list is empty on ManageScreen ([9e89d94](https://github.com/minhloi/ulangi/commit/9e89d94))
+* grammar fix ([167179d](https://github.com/minhloi/ulangi/commit/167179d))
+* prevent showing screen multiple times on Android ([488c6db](https://github.com/minhloi/ulangi/commit/488c6db))
+* remove conditions for showing open-source message ([12d91f0](https://github.com/minhloi/ulangi/commit/12d91f0))
+* update react-native-navigation (fix return value) ([1744ca4](https://github.com/minhloi/ulangi/commit/1744ca4))
+
+
+
+
+
 # 3.0.0 (2019-12-29)
 
 
