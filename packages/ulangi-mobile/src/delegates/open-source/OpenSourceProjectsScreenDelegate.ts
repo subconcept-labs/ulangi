@@ -11,7 +11,11 @@ export class OpenSourceProjectsScreenDelegate {
     this.linkingDelegate = linkingDelegate;
   }
 
-  public goToGitHub(): void {
+  public goToMainUlangiRepo(): void {
     this.linkingDelegate.openLink(config.links.github);
+  }
+
+  public goToTypescriptLibsRepo(): void {
+    this.linkingDelegate.openLink('https://github.com/minhloi/typescript-libs');
   }
 }

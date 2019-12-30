@@ -101,8 +101,8 @@ export class OpenSourceProjectsScreen extends React.Component<
               @minhloi/ulangi
             </DefaultText>
             <DefaultText style={this.styles.project_description}>
-              A complete Ulangi project with 15 packages ranging from mobile
-              app, server to Google Sheets add-on.
+              A complete Ulangi project with packages ranging from front-end to
+              back-end.
             </DefaultText>
             <View style={this.styles.button_container}>
               <DefaultButton
@@ -110,7 +110,25 @@ export class OpenSourceProjectsScreen extends React.Component<
                 styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
                   ButtonSize.SMALL,
                 )}
-                onPress={this.props.screenDelegate.goToGitHub}
+                onPress={this.props.screenDelegate.goToMainUlangiRepo}
+              />
+            </View>
+          </View>
+          <View style={this.styles.project_container}>
+            <DefaultText style={this.styles.project_title}>
+              @minhloi/typescript-libs
+            </DefaultText>
+            <DefaultText style={this.styles.project_description}>
+              Some TypeScript libraries that are extensively used in Ulangi
+              project.
+            </DefaultText>
+            <View style={this.styles.button_container}>
+              <DefaultButton
+                text="View on GitHub"
+                styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+                  ButtonSize.SMALL,
+                )}
+                onPress={this.props.screenDelegate.goToTypescriptLibsRepo}
               />
             </View>
           </View>
