@@ -14,6 +14,7 @@ import {
   ObservableLightBox,
   Observer,
 } from '@ulangi/ulangi-observable';
+import { debounce } from 'lodash-decorators';
 import { when } from 'mobx';
 import { BackHandler, Platform } from 'react-native';
 
@@ -66,26 +67,7 @@ export class NavigatorDelegate {
         },
       });
     } else {
-      Navigation.showModal({
-        stack: {
-          children: [
-            {
-              component: {
-                name: screenName,
-                passProps: {
-                  theme: this.darkModeStore.theme,
-                  get passedProps(): ExtractPassedProps<
-                    typeof ScreenContainers[T]
-                  > {
-                    return passProps;
-                  },
-                },
-                options,
-              },
-            },
-          ],
-        },
-      });
+      this.debouncedShowModal(screenName, passProps, options);
     }
   }
 
@@ -231,5 +213,34 @@ export class NavigatorDelegate {
         BackHandler.removeEventListener('hardwareBackPress', handler);
       },
     );
+  }
+
+  // Used by Android only to prevent showing screen multiple times
+  @debounce(500, { leading: true, trailing: false })
+  private debouncedShowModal<T extends keyof typeof ScreenContainers>(
+    screenName: T,
+    passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
+    options?: Options,
+  ): void {
+    Navigation.showModal({
+      stack: {
+        children: [
+          {
+            component: {
+              name: screenName,
+              passProps: {
+                theme: this.darkModeStore.theme,
+                get passedProps(): ExtractPassedProps<
+                  typeof ScreenContainers[T]
+                > {
+                  return passProps;
+                },
+              },
+              options,
+            },
+          },
+        ],
+      },
+    });
   }
 }
