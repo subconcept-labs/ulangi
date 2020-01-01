@@ -1,20 +1,26 @@
 <h1 align="center">
-  <img src="https://github.com/minhloi/ulangi/blob/master/images/logo.png?raw=true"><br>
-  <span>Ulangi</span><br>
+  <img src="https://github.com/minhloi/ulangi/blob/master/images/logo_120x120.png?raw=true"><br>
+  <a href="https://ulangi.com"><span>Ulangi</span></a><br>
 </h1>
-<h3 align="center">
-  <span>Advanced open-source language learning app</span><br>
-  <span>with 20+ features</span><br>
-</h3>
+<p align="center">
+  <span>Open-source language learning app</span><br>
+  <span>Build your own version</span><br>
+</p>
 
-<h3 align="center">
+<p align="center">
   <a href="/" alt="Written in React-Native">
     <img src="https://img.shields.io/badge/framework-react--native-brightgreen" /></a>
   <a href="https://github.com/minhloi/ulangi/releases" alt="Release version">
     <img src="https://img.shields.io/github/v/tag/minhloi/ulangi?label=version" /></a>
+  <a href="https://github.com/ulangi/ulangi/blob/master/LICENSE" alt="License">
+    <img src="https://img.shields.io/github/license/ulangi/ulangi" /></a>
+</p>
+<p align="center">
+  <a href="https://www.reddit.com/r/Ulangi/" alt="Ulangi's Subreddit">
+    <img src="https://img.shields.io/reddit/subreddit-subscribers/ulangi?style=social" /></a>
   <a href="https://twitter.com/UlangiApp" alt="Ulangi's Twitter">
     <img src="https://img.shields.io/twitter/follow/UlangiApp?style=social" /></a>
-</h3>
+</p>
 
 ---
 ## Main apps
@@ -25,10 +31,16 @@ Android: [https://play.google.com/store/apps/details?id=com.ulangi](https://play
 
 ---
 ## Table of contents
+- [Documentation](#documentation)
 - [Bootstrapping](#bootstrapping)
 - [Local packages](#local-packages)
 - [Architecture](#architecture)
 - [Dependency diagram](#dependency-diagram)
+
+---
+## Documentation
+Ulangi is just open source. We're building documentation on how to build and run your own Ulangi version on your phone. Stay tuned! 
+[https://ulangi.github.io/ulangi](https://ulangi.github.io/ulangi)
 
 ---
 ## Bootstrapping
