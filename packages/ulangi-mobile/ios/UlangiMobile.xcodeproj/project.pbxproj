@@ -16,10 +16,7 @@
 		14B88F2922FBC93A00FD5812 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B88F2822FBC93A00FD5812 /* StoreKit.framework */; };
 		14C37CD220C5B124009CE387 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		14C37CD320C5B124009CE387 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		14C37CE420C5B124009CE387 /* logo_86x86@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14DA0EB220B08B4500C3F4F6 /* logo_86x86@2x.png */; };
 		14C37CE520C5B124009CE387 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		14C37CE620C5B124009CE387 /* logo_86x86@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14DA0EB420B08B4500C3F4F6 /* logo_86x86@3x.png */; };
-		14C37CE820C5B124009CE387 /* logo_86x86.png in Resources */ = {isa = PBXBuildFile; fileRef = 14DA0EB320B08B4500C3F4F6 /* logo_86x86.png */; };
 		14C37CE920C5B124009CE387 /* Orbitron-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0EC464AC37524E099383BC15 /* Orbitron-Medium.otf */; };
 		14C37CEA20C5B124009CE387 /* Orbitron-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03413C613B1744F7A84CB609 /* Orbitron-Light.otf */; };
 		14C37CEB20C5B124009CE387 /* Dosis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDB54D1869B14C5BB821ED65 /* Dosis-Bold.otf */; };
@@ -665,10 +662,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14C37CE420C5B124009CE387 /* logo_86x86@2x.png in Resources */,
 				14C37CE520C5B124009CE387 /* Images.xcassets in Resources */,
-				14C37CE620C5B124009CE387 /* logo_86x86@3x.png in Resources */,
-				14C37CE820C5B124009CE387 /* logo_86x86.png in Resources */,
 				14C37CE920C5B124009CE387 /* Orbitron-Medium.otf in Resources */,
 				14C37CEA20C5B124009CE387 /* Orbitron-Light.otf in Resources */,
 				14C37CEB20C5B124009CE387 /* Dosis-Bold.otf in Resources */,
