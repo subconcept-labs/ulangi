@@ -36,6 +36,7 @@ Android: [https://play.google.com/store/apps/details?id=com.ulangi](https://play
 - [Local packages](#local-packages)
 - [Architecture](#architecture)
 - [Dependency diagram](#dependency-diagram)
+- [Credits](#credits)
 
 ---
 ## Documentation
@@ -79,3 +80,10 @@ This project uses monorepo architecture. To add/remove dependencies, you must ma
 ---
 ## Dependency Diagram
 ![Ulangi's Dependency Diagram](/images/dependency-diagram.png)
+
+---
+## Credits
+- social-icons by [Just UI](https://www.iconfinder.com/iconsets/social-icons-33)
+- lesson-icons from [Material Design Icons by community](https://github.com/templarian/MaterialDesign/) (SIL Open Font License 1.1)
+- mobile-icons from [Material Design Icons by Google](https://material.io/resources/icons/?style=baseline) (Apache License 2.0)
+- flag-icons are not included in this project due to license incompatibility. You must download and add them manually [here](https://www.flaticon.com/packs/countrys-flags).
