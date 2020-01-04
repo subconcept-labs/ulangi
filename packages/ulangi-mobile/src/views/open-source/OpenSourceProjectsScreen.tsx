@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
+import { config } from '../../constants/config';
 import { OpenSourceProjectsScreenDelegate } from '../../delegates/open-source/OpenSourceProjectsScreenDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
@@ -96,42 +97,31 @@ export class OpenSourceProjectsScreen extends React.Component<
     return (
       <View style={this.styles.projects_container}>
         <SectionGroup header="PROJECTS" theme={this.props.darkModeStore.theme}>
-          <View style={this.styles.project_container}>
-            <DefaultText style={this.styles.project_title}>
-              @ulangi/ulangi
-            </DefaultText>
-            <DefaultText style={this.styles.project_description}>
-              A complete Ulangi project with packages ranging from front-end to
-              back-end.
-            </DefaultText>
-            <View style={this.styles.button_container}>
-              <DefaultButton
-                text="View on GitHub"
-                styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-                  ButtonSize.SMALL,
-                )}
-                onPress={this.props.screenDelegate.goToMainUlangiRepo}
-              />
-            </View>
-          </View>
-          <View style={this.styles.project_container}>
-            <DefaultText style={this.styles.project_title}>
-              @ulangi/typescript-libs
-            </DefaultText>
-            <DefaultText style={this.styles.project_description}>
-              Some TypeScript libraries that are extensively used in Ulangi
-              project.
-            </DefaultText>
-            <View style={this.styles.button_container}>
-              <DefaultButton
-                text="View on GitHub"
-                styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-                  ButtonSize.SMALL,
-                )}
-                onPress={this.props.screenDelegate.goToTypescriptLibsRepo}
-              />
-            </View>
-          </View>
+          {config.openSourceProjects.map(
+            (project): React.ReactElement<any> => {
+              return (
+                <View key={project.name} style={this.styles.project_container}>
+                  <DefaultText style={this.styles.project_title}>
+                    {project.name}
+                  </DefaultText>
+                  <DefaultText style={this.styles.project_description}>
+                    {project.description}
+                  </DefaultText>
+                  <View style={this.styles.button_container}>
+                    <DefaultButton
+                      text="View on GitHub"
+                      styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+                        ButtonSize.SMALL,
+                      )}
+                      onPress={(): void =>
+                        this.props.screenDelegate.openLink(project.gitHubLink)
+                      }
+                    />
+                  </View>
+                </View>
+              );
+            },
+          )}
         </SectionGroup>
       </View>
     );

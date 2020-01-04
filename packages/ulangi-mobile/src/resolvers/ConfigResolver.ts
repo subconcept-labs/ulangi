@@ -38,9 +38,13 @@ export class ConfigResolver extends AbstractResolver<Config> {
       autoInitializeAfterAuth: Joi.boolean(),
     },
 
+    openSourceProjects: Joi.array().items({
+      name: Joi.string(),
+      description: Joi.string(),
+      gitHubLink: Joi.string(),
+    }),
+
     links: {
-      githubMainRepo: Joi.string(),
-      githubTypeScriptLibsRepo: Joi.string(),
       reddit: Joi.string(),
       twitter: Joi.string(),
       instagram: Joi.string(),

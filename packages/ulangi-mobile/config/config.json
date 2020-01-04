@@ -16,9 +16,35 @@
     "autoInitializeAfterAuth": true
   },
 
+  "openSourceProjects": [
+    {
+      "name": "@ulangi/ulangi",
+      "description": "A complete Ulangi project with packages ranging from front-end to back-end.",
+      "gitHubLink": "https://github.com/ulangi/ulangi"
+    },
+    {
+      "name": "@ulangi/typescript-libs",
+      "description": "Some TypeScript libraries that are extensively used in Ulangi project for type safety.",
+      "gitHubLink": "https://github.com/ulangi/typescript-libs"
+    },
+    {
+      "name": "@ulangi/react-native-navigation",
+      "description": "Forked from @wix/react-native-navigation with hot-fixes and optimizations to handle navigation.",
+      "gitHubLink": "https://github.com/ulangi/react-native-navigation"
+    },
+    {
+      "name": "@ulangi/react-native-firebase",
+      "description": "Forked from @invertase/react-native-firebase with some minor changes.",
+      "gitHubLink": "https://github.com/ulangi/react-native-firebase"
+    },
+    {
+      "name": "@ulangi/react-native-ad-consent",
+      "description": "Forked from @birgernass/react-native-ad-consent to handle GDPR compliance.",
+      "gitHubLink": "https://github.com/ulangi/react-native-ad-consent"
+    }
+  ],
+
   "links": {
-    "githubMainRepo": "https://github.com/ulangi/ulangi",
-    "githubTypeScriptLibsRepo": "https://github.com/ulangi/typescript-libs",
     "reddit": "https://www.reddit.com/r/Ulangi/",
     "twitter": "https://twitter.com/UlangiApp",
     "instagram": "https://www.instagram.com/ulangi.app/",

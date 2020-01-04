@@ -36,9 +36,13 @@ export interface Config {
     readonly autoInitializeAfterAuth: boolean;
   };
 
+  readonly openSourceProjects: readonly {
+    name: string;
+    description: string;
+    gitHubLink: string;
+  }[];
+
   readonly links: {
-    readonly githubMainRepo: string;
-    readonly githubTypeScriptLibsRepo: string;
     readonly reddit: string;
     readonly twitter: string;
     readonly instagram: string;
