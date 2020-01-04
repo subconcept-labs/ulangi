@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "@ulangi/ulangi-script",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"description": "Ulangi Script",
 	"scripts": {
 		"test": "npx jest",
@@ -49,10 +49,10 @@
 	"dependencies": {
 		"@ulangi/assert": "^1.0.0",
 		"@ulangi/resolver": "^1.0.0",
-		"@ulangi/ulangi-common": "^3.0.1",
-		"@ulangi/ulangi-dictionary": "^3.0.1",
-		"@ulangi/ulangi-library": "^3.0.1",
-		"@ulangi/ulangi-remote-database": "^3.0.1",
+		"@ulangi/ulangi-common": "^3.0.2",
+		"@ulangi/ulangi-dictionary": "^3.0.2",
+		"@ulangi/ulangi-library": "^3.0.2",
+		"@ulangi/ulangi-remote-database": "^3.0.2",
 		"@ulangi/wiktionary-core": "^1.2.0",
 		"app-root-path": "^2.1.0",
 		"aws-sdk": "^2.254.1",

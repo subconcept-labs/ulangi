@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/minhloi/ulangi/compare/v3.0.1...v3.0.2) (2020-01-04)
+
+
+### Bug Fixes
+
+* add more open-source project links ([c2fdf3e](https://github.com/minhloi/ulangi/commit/c2fdf3e))
+* large button for message carousel, center title in Atom ([793ff22](https://github.com/minhloi/ulangi/commit/793ff22))
+* update github project links ([2528da5](https://github.com/minhloi/ulangi/commit/2528da5))
+* use icons with permissive licenses, organize icons ([4258338](https://github.com/minhloi/ulangi/commit/4258338)), closes [#2](https://github.com/minhloi/ulangi/issues/2)
+
+
+
+
+
 ## [3.0.1](https://github.com/minhloi/ulangi/compare/v3.0.0...v3.0.1) (2019-12-30)
 
 
