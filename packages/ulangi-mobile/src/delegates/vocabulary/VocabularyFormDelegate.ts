@@ -18,7 +18,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { when } from 'mobx';
-import { Keyboard } from 'react-native';
+import { Keyboard, Platform } from 'react-native';
 
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -284,13 +284,15 @@ export class VocabularyFormDelegate {
           : value + ' ' + currentText;
 
         if (typeof cursor !== 'undefined') {
-          const cursorPosition = cursor;
           this.navigatorDelegate.dismissLightBox();
-          this.vocabularyFormState.shouldFocusVocabularyInput = true;
 
-          _.delay((): void => {
-            this.vocabularyFormState.shouldMoveCursorOfVocabularyInput = cursorPosition;
-          }, 200);
+          if (Platform.OS === 'ios') {
+            this.vocabularyFormState.shouldFocusVocabularyInput = true;
+            _.delay((): void => {
+              const cursorPosition = cursor;
+              this.vocabularyFormState.shouldMoveCursorOfVocabularyInput = cursorPosition;
+            }, 200);
+          }
         }
       } else {
         const preparedText = currentText.endsWith('\n')
@@ -300,14 +302,16 @@ export class VocabularyFormDelegate {
         this.vocabularyFormState.vocabularyText = preparedText + value;
 
         if (typeof cursor !== 'undefined') {
-          const cursorPosition = preparedText.length + cursor;
-
           this.navigatorDelegate.dismissLightBox();
-          this.vocabularyFormState.shouldFocusVocabularyInput = true;
 
-          _.delay((): void => {
-            this.vocabularyFormState.shouldMoveCursorOfVocabularyInput = cursorPosition;
-          }, 200);
+          if (Platform.OS === 'ios') {
+            this.vocabularyFormState.shouldFocusVocabularyInput = true;
+
+            _.delay((): void => {
+              const cursorPosition = preparedText.length + cursor;
+              this.vocabularyFormState.shouldMoveCursorOfVocabularyInput = cursorPosition;
+            }, 200);
+          }
         }
       }
     }
@@ -339,16 +343,18 @@ export class VocabularyFormDelegate {
           : value + ' ' + currentDefinition.meaning;
 
         if (typeof cursor !== 'undefined') {
-          const cursorPosition = cursor;
           this.navigatorDelegate.dismissLightBox();
-          this.vocabularyFormState.shouldFocusDefinitionInput.set(index);
 
-          _.delay((): void => {
-            this.vocabularyFormState.shouldMoveCursorOfDefinitionInput.set({
-              index,
-              position: cursorPosition,
-            });
-          }, 200);
+          if (Platform.OS === 'ios') {
+            this.vocabularyFormState.shouldFocusDefinitionInput.set(index);
+            _.delay((): void => {
+              const cursorPosition = cursor;
+              this.vocabularyFormState.shouldMoveCursorOfDefinitionInput.set({
+                index,
+                position: cursorPosition,
+              });
+            }, 200);
+          }
         }
       } else {
         const preparedMeaning = currentDefinition.meaning.endsWith('\n')
@@ -358,17 +364,18 @@ export class VocabularyFormDelegate {
         currentDefinition.meaning = preparedMeaning + value;
 
         if (typeof cursor !== 'undefined') {
-          const cursorPosition = preparedMeaning.length + cursor;
-
           this.navigatorDelegate.dismissLightBox();
-          this.vocabularyFormState.shouldFocusDefinitionInput.set(index);
 
-          _.delay((): void => {
-            this.vocabularyFormState.shouldMoveCursorOfDefinitionInput.set({
-              index,
-              position: cursorPosition,
-            });
-          }, 200);
+          if (Platform.OS === 'ios') {
+            this.vocabularyFormState.shouldFocusDefinitionInput.set(index);
+            _.delay((): void => {
+              const cursorPosition = preparedMeaning.length + cursor;
+              this.vocabularyFormState.shouldMoveCursorOfDefinitionInput.set({
+                index,
+                position: cursorPosition,
+              });
+            }, 200);
+          }
         }
       }
     }
