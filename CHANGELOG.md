@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/minhloi/ulangi/compare/v3.0.2...v3.0.3) (2020-01-04)
+
+
+### Bug Fixes
+
+* add missing logos for ios, update reddit icon ([a4eb53e](https://github.com/minhloi/ulangi/commit/a4eb53e))
+* temporary disable set selection of text input on Android ([5a29990](https://github.com/minhloi/ulangi/commit/5a29990))
+
+
+
+
+
 ## [3.0.2](https://github.com/minhloi/ulangi/compare/v3.0.1...v3.0.2) (2020-01-04)
 
 

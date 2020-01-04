@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-data",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Ulangi Data",
   "main": "dist/index.js",
   "scripts": {
