@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
   title_container: {
     alignItems: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
     padding: 16,
     borderBottomColor: '#a6a28d',
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
   title_text: {
     fontSize: 20,
     fontFamily: 'JosefinSans-Bold',
+    textAlign: 'center',
     color: '#444',
   },
 

@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   button_container: {
     marginTop: 16,
     marginBottom: 2,
-    flexDirection: 'row',
   },
 
   pagination: {
