@@ -232,7 +232,7 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
           testID={VocabularyFormIds.ADD_DEFINITION_BTN}
           onPress={this.props.addDefinitionSlot}
           style={[this.styles.button, this.styles.add_definition_btn]}>
-          <Image source={Images.ADD_BLUE_22X22} />
+          <Image source={Images.PLUS_BLUE_22X22} />
           <DefaultText style={this.styles.add_definition_btn_text}>
             ADD DEFINITION
           </DefaultText>

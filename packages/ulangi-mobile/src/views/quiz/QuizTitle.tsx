@@ -37,7 +37,7 @@ export class QuizTitle extends React.Component<QuizTitleProps> {
         <DefaultText style={this.styles.subtitle}>
           TEST WHAT YOU LEARNED
         </DefaultText>
-        <Image source={Images.QUIZ_GREEN_30X30} style={this.styles.icon} />
+        <Image source={Images.QUIZ_30X30} style={this.styles.icon} />
       </View>
     );
   }

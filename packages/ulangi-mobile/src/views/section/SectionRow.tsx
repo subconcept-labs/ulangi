@@ -151,7 +151,7 @@ export class SectionRow extends React.Component<SectionRowProps> {
         {this.props.showArrow === true ? (
           <Image
             style={this.styles.caret}
-            source={Images.CARET_RIGHT_GREY_10X18}
+            source={Images.CARET_RIGHT_GREY_18X18}
           />
         ) : null}
       </React.Fragment>

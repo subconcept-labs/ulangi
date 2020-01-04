@@ -29,7 +29,7 @@ export class LevelNetChange extends React.Component<LevelNetChangeProps> {
       return (
         <React.Fragment>
           <DefaultText style={styles.text_green}>(</DefaultText>
-          <Image source={Images.ARROW_UP_GREEN_10X8} />
+          <Image source={Images.ARROW_UP_GREEN_10X10} />
           <DefaultText style={styles.text_green}>
             {this.props.netChange}
           </DefaultText>
@@ -46,7 +46,7 @@ export class LevelNetChange extends React.Component<LevelNetChangeProps> {
       return (
         <React.Fragment>
           <DefaultText style={styles.text_red}>(</DefaultText>
-          <Image source={Images.ARROW_DOWN_RED_10X8} />
+          <Image source={Images.ARROW_DOWN_RED_10X10} />
           <DefaultText style={styles.text_red}>
             {Math.abs(this.props.netChange)}
           </DefaultText>

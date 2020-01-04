@@ -220,7 +220,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
               this.props.selectedFilterType.get(),
             )
           }>
-          <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
+          <Image source={Images.HORIZONTAL_DOTS_GREY_22X22} />
         </TouchableOpacity>
       );
     }

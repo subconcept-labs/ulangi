@@ -139,8 +139,8 @@ export class RootScreenDelegate {
                   bottomTab: {
                     testID: BottomTabIds.MORE_BTN,
                     text: 'More',
-                    icon: Images.MORE_GREY_25X7,
-                    selectedIcon: Images.MORE_BLUE_25X7,
+                    icon: Images.MORE_GREY_25X25,
+                    selectedIcon: Images.MORE_BLUE_25X25,
                   },
                 },
               },

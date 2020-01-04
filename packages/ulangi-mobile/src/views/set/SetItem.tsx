@@ -95,7 +95,7 @@ export class SetItem extends React.Component<SetItemProps> {
               hitSlop={{ top: 18, bottom: 18, left: 10, right: 10 }}
               style={this.styles.option_touchable}
               onPress={(): void => this.props.showSetActionMenu(set)}>
-              <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
+              <Image source={Images.HORIZONTAL_DOTS_GREY_22X22} />
             </TouchableOpacity>
           </View>
         </View>

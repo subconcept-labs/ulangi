@@ -44,7 +44,7 @@ export class SpacedRepetitionTitle extends React.Component<
           A WELL-KNOWN LEARNING TECHNIQUE
         </DefaultText>
         <Image
-          source={Images.SPACED_REPETITION_GREEN_30X30}
+          source={Images.SPACED_REPETITION_30X30}
           style={this.styles.icon}
         />
       </View>

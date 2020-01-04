@@ -179,7 +179,7 @@ export class VocabularyExtraFieldList extends React.Component<
           onPress={(): void => speak(value)}>
           <Image
             style={this.styles.speaker_icon}
-            source={Images.SPEAKER_BLACK_17X17}
+            source={Images.SPEAKER_BLACK_16X16}
             resizeMode="contain"
           />
         </TouchableOpacity>

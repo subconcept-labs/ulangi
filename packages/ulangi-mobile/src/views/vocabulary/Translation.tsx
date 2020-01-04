@@ -55,7 +55,7 @@ export class Translation extends React.Component<TranslationProps> {
                 source={
                   this.props.theme === Theme.LIGHT
                     ? Images.TRANSLATE_BY_GOOGLE_COLOR_SHORT
-                    : Images.TRANSLATE_BY_GOOGLE_WHITE_SHORT
+                    : Images.TRANSLATE_BY_GOOGLE_GREY_SHORT
                 }
               />
             ) : null}

@@ -108,8 +108,8 @@ export class SpacedRepetitionLessonScreenDelegate {
         undefined,
         ReviewActionBarIds.SHOW_ANSWER_BTN,
         {
-          light: Images.EYE_BLACK_25X19,
-          dark: Images.EYE_MILK_25X19,
+          light: Images.EYE_BLACK_25X25,
+          dark: Images.EYE_MILK_25X25,
         },
         false,
         (self): void => {
@@ -134,8 +134,8 @@ export class SpacedRepetitionLessonScreenDelegate {
         vocabulary.vocabularyTerm,
         ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(vocabulary.vocabularyTerm),
         {
-          light: Images.SPEAKER_BLACK_23X23,
-          dark: Images.SPEAKER_MILK_23X23,
+          light: Images.SPEAKER_BLACK_25X25,
+          dark: Images.SPEAKER_MILK_25X25,
         },
         false,
         (): void => {
@@ -160,8 +160,8 @@ export class SpacedRepetitionLessonScreenDelegate {
                     values[0],
                     ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(values[0]),
                     {
-                      light: Images.SPEAKER_BLACK_23X23,
-                      dark: Images.SPEAKER_MILK_23X23,
+                      light: Images.SPEAKER_BLACK_25X25,
+                      dark: Images.SPEAKER_MILK_25X25,
                     },
                     false,
                     (): void => this.synthesizeAndSpeak(values[0]),

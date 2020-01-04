@@ -24,7 +24,7 @@ export class CategoryActionFloatingButton extends React.Component<
         style={styles.button}
         hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
         onPress={this.props.showCategoryActionMenu}>
-        <Image source={Images.HORIZONTAL_DOTS_WHITE_22X6} />
+        <Image source={Images.HORIZONTAL_DOTS_WHITE_22X22} />
       </TouchableOpacity>
     );
   }

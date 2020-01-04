@@ -41,7 +41,7 @@ export class WritingTitle extends React.Component<WritingTitleProps> {
         <DefaultText style={this.styles.subtitle}>
           WITH SPACED REPETITION
         </DefaultText>
-        <Image source={Images.WRITING_GREEN_30X30} style={this.styles.icon} />
+        <Image source={Images.WRITING_30X30} style={this.styles.icon} />
       </View>
     );
   }

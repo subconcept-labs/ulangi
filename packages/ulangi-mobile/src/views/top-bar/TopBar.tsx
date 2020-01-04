@@ -149,7 +149,7 @@ export class TopBar extends Container<TopBarPassedProps> {
         </DefaultText>
         <Image
           style={this.styles.touchable_caret}
-          source={Images.CARET_DOWN_GREY_9X7}
+          source={Images.CARET_DOWN_GREY_10X10}
         />
       </TouchableOpacity>
     );

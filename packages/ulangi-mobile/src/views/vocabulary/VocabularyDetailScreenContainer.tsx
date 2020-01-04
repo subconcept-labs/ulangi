@@ -66,8 +66,8 @@ export class VocabularyDetailScreenContainer extends Container<
         VocabularyDetailScreenIds.ACTION_BTN,
         null,
         {
-          light: Images.HORIZONTAL_DOTS_BLACK_22X6,
-          dark: Images.HORIZONTAL_DOTS_MILK_22X6,
+          light: Images.HORIZONTAL_DOTS_BLACK_22X22,
+          dark: Images.HORIZONTAL_DOTS_MILK_22X22,
         },
         (): void => {
           this.screenDelegate.showVocabularyActionMenu(

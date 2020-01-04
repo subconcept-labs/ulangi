@@ -73,7 +73,7 @@ export class SynchronizerScreen extends React.Component<
     } else {
       return (
         <View style={this.styles.sync_state_container}>
-          <Image style={this.styles.icon} source={Images.CHECK_GREEN_14x12} />
+          <Image style={this.styles.icon} source={Images.CHECK_GREEN_14X14} />
           <DefaultText style={this.styles.sync_state}>In sync</DefaultText>
           <TouchableOpacity
             style={this.styles.sync_btn}

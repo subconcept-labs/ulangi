@@ -78,7 +78,7 @@ export class SetForm extends React.Component<SetFormProps> {
                 </DefaultText>
               )}
             </DefaultText>
-            <Image source={Images.CARET_DOWN_GREY_12X8} />
+            <Image source={Images.CARET_DOWN_GREY_12X12} />
           </TouchableOpacity>
           <TouchableOpacity
             testID={SetFormIds.SHOW_TRANSLATED_TO_LANGUAGE_PICKER_BTN}
@@ -116,7 +116,7 @@ export class SetForm extends React.Component<SetFormProps> {
                 </DefaultText>
               )}
             </DefaultText>
-            <Image source={Images.CARET_DOWN_GREY_12X8} />
+            <Image source={Images.CARET_DOWN_GREY_12X12} />
           </TouchableOpacity>
         </View>
       </View>

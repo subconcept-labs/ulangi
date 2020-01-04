@@ -68,8 +68,8 @@ export class VocabularyDetailPronunciation extends React.Component<
             style={this.styles.speaker_icon}
             source={
               this.props.theme === Theme.LIGHT
-                ? Images.SPEAKER_BLACK_17X17
-                : Images.SPEAKER_MILK_17X17
+                ? Images.SPEAKER_BLACK_16X16
+                : Images.SPEAKER_MILK_16X16
             }
           />
         </TouchableOpacity>

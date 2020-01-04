@@ -173,7 +173,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
             }
           }}
           style={this.styles.option_btn}>
-          <Image source={Images.HORIZONTAL_DOTS_GREY_22X6} />
+          <Image source={Images.HORIZONTAL_DOTS_GREY_22X22} />
         </TouchableOpacity>
       );
     } else {
