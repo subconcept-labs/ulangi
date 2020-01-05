@@ -7,8 +7,9 @@
     "bootstrap": "npx lerna bootstrap",
     "rebootstrap": "npx lerna clean --yes && npm run bootstrap",
     "copy-env-files": "./scripts/copy_env_files.sh",
-    "compile": "./scripts/run_compile_all_packages.sh",
-    "build": "./scripts/run_build_all_packages.sh"
+    "set-up-dev-env": "./scripts/set_up_dev_env.sh",
+    "compile-all": "./scripts/run_compile_all_packages.sh",
+    "build-all": "./scripts/run_build_all_packages.sh"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",

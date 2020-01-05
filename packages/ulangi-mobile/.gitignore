@@ -13,7 +13,9 @@ java_pid*.hprof
 # Firebase
 GoogleService-Info.plist
 GoogleService-Info.*.plist
+!GoogleService-Info.example.plist
 google-services.json
+!android/app/src/example/google-services.json
 
 # artifacts folder
 artifacts/

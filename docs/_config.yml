@@ -30,8 +30,8 @@ github_username:  ulangi
 logo: "/assets/images/ulangi-docs-logo.png"
 footer_content: "Copyright &copy; 2019 Minh Loi. All rights reserved."
 aux_links:
-  "App page":
-    - "https://ulangi.com"
+  "GitHub Repo":
+    - "https://github.com/ulangi/ulangi"
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
