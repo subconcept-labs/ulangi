@@ -25,12 +25,12 @@ export class UploadSetsController extends ApiController<
   UploadSetsResponse
 > {
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
+  private firebase: null | FirebaseFacade;
   private setModel: SetModel;
 
   public constructor(
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
+    firebase: null | FirebaseFacade,
     setModel: SetModel
   ) {
     super();
@@ -71,6 +71,8 @@ export class UploadSetsController extends ApiController<
       acknowledged: setList.map((set): string => assertExists(set.setId)),
     });
 
-    await this.firebase.notifySetChange(shardDb, userId);
+    if (this.firebase !== null) {
+      await this.firebase.notifySetChange(shardDb, userId);
+    }
   }
 }

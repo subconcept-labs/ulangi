@@ -12,7 +12,7 @@ export function setupAWS(
   secretKey: string,
   defaultRegion: string
 ): void {
-  AWS.config.update({
+  return AWS.config.update({
     credentials: new AWS.Credentials(accessKey, secretKey),
     region: defaultRegion,
   });

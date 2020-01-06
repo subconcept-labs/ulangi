@@ -32,13 +32,13 @@ export class UploadVocabularyController extends ApiController<
   UploadVocabularyResponse
 > {
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
+  private firebase: null | FirebaseFacade;
   private vocabularyModel: VocabularyModel;
   private setModel: SetModel;
 
   public constructor(
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
+    firebase: null | FirebaseFacade,
     vocabularyModel: VocabularyModel,
     setModel: SetModel
   ) {
@@ -117,6 +117,8 @@ export class UploadVocabularyController extends ApiController<
       ),
     });
 
-    await this.firebase.notifyVocabularyChange(shardDb, userId);
+    if (this.firebase !== null) {
+      await this.firebase.notifyVocabularyChange(shardDb, userId);
+    }
   }
 }

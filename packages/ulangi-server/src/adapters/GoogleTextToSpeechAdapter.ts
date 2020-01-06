@@ -24,10 +24,23 @@ export class GoogleTextToSpeechAdapter {
     });
   }
 
+  public checkSynthesizeSpeech(): Promise<void> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          await this.synthesizeSpeechByLanguageCodeAndVoiceName('test', 'en');
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
   public synthesizeSpeechByLanguageCodeAndVoiceName(
     text: string,
     languageCode: string,
-    voiceName: string
+    voiceName?: string
   ): Promise<[SynthesizeSpeechResponse]> {
     return this.textToSpeechClient.synthesizeSpeech({
       input: {

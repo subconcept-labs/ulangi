@@ -26,7 +26,12 @@ export function resolveEnv(): Env {
   );
   const env = new EnvResolver().resolve(
     {
-      ...process.env,
+      ..._.mapValues(
+        process.env,
+        (value): string | undefined | null => {
+          return value === 'null' ? null : value;
+        }
+      ),
       AUTH_DATABASE_CONFIG,
       ALL_SHARD_DATABASE_CONFIG,
     },

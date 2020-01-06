@@ -58,53 +58,61 @@ import { UploadVocabularyController } from './controllers/UploadVocabularyContro
 export class ApiControllerFactory {
   private authenticator: AuthenticatorFacade;
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
-  private dictionary: DictionaryFacade;
-  private library: LibraryFacade;
   private remoteConfig: RemoteConfigFacade;
-  private googleTranslate: GoogleTranslateAdapter;
-  private googleTextToSpeech: GoogleTextToSpeechAdapter;
-  private mailer: MailerAdapter;
-  private iap: IapAdapter;
-  private imageUploader: ImageUploaderAdapter;
   private modelList: ModelList;
   private env: Env;
   private config: Config;
 
+  private firebase: null | FirebaseFacade;
+  private dictionary: null | DictionaryFacade;
+  private library: null | LibraryFacade;
+  private googleTranslate: null | GoogleTranslateAdapter;
+  private googleTextToSpeech: null | GoogleTextToSpeechAdapter;
+  private mailer: null | MailerAdapter;
+  private iap: null | IapAdapter;
+  private imageUploader: null | ImageUploaderAdapter;
+
   public constructor(
     authenticator: AuthenticatorFacade,
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
-    dictionary: DictionaryFacade,
-    library: LibraryFacade,
     remoteConfig: RemoteConfigFacade,
-    googleTranslate: GoogleTranslateAdapter,
-    googleTextToSpeech: GoogleTextToSpeechAdapter,
-    mailer: MailerAdapter,
-    iap: IapAdapter,
-    imageUploader: ImageUploaderAdapter,
     modelList: ModelList,
     env: Env,
-    config: Config
+    config: Config,
+    firebase: null | FirebaseFacade,
+    dictionary: null | DictionaryFacade,
+    library: null | LibraryFacade,
+    googleTranslate: null | GoogleTranslateAdapter,
+    googleTextToSpeech: null | GoogleTextToSpeechAdapter,
+    mailer: null | MailerAdapter,
+    iap: null | IapAdapter,
+    imageUploader: null | ImageUploaderAdapter
   ) {
     this.authenticator = authenticator;
     this.database = database;
+    this.remoteConfig = remoteConfig;
+    this.modelList = modelList;
+    this.env = env;
+    this.config = config;
     this.firebase = firebase;
     this.dictionary = dictionary;
     this.library = library;
-    this.remoteConfig = remoteConfig;
     this.googleTranslate = googleTranslate;
     this.googleTextToSpeech = googleTextToSpeech;
     this.mailer = mailer;
     this.iap = iap;
     this.imageUploader = imageUploader;
-    this.modelList = modelList;
-    this.env = env;
-    this.config = config;
   }
 
   public makeControllers(): readonly ApiController<any, any>[] {
     return [
+      ...this.makeDefaultControllers(),
+      ...this.makeOptionalControllers(),
+    ];
+  }
+
+  private makeDefaultControllers(): readonly ApiController<any, any>[] {
+    const controllers: ApiController<any, any>[] = [
       new ChangeEmailAndPasswordController(
         this.authenticator,
         this.database,
@@ -140,6 +148,16 @@ export class ApiControllerFactory {
         this.config
       ),
 
+      new ResetPasswordController(
+        this.authenticator,
+        this.database,
+        this.modelList.userModel,
+        this.modelList.resetPasswordModel,
+        this.config
+      ),
+
+      new CheckAccessTokenController(this.authenticator),
+
       new DeleteApiKeyController(this.database, this.modelList.apiKeyModel),
 
       new GetApiKeyController(
@@ -149,14 +167,6 @@ export class ApiControllerFactory {
       ),
 
       new GetRemoteConfigController(this.remoteConfig),
-
-      new GetFirebaseTokenController(this.firebase),
-
-      new GetDictionaryEntryController(this.dictionary),
-
-      new GetPublicSetCountController(this.library),
-
-      new SynthesizeSpeechController(this.googleTextToSpeech, this.config),
 
       new DownloadUserController(this.database, this.modelList.userModel),
 
@@ -196,52 +206,80 @@ export class ApiControllerFactory {
         this.modelList.setModel
       ),
 
-      new RequestPasswordResetController(
-        this.authenticator,
-        this.database,
-        this.mailer,
-        this.modelList.userModel,
-        this.modelList.resetPasswordModel,
-        this.env,
-        this.config
-      ),
-
-      new ResetPasswordController(
-        this.authenticator,
-        this.database,
-        this.modelList.userModel,
-        this.modelList.resetPasswordModel,
-        this.config
-      ),
-
-      new CheckAccessTokenController(this.authenticator),
-
-      new ContactAdminController(this.mailer),
-
-      new TranslateController(this.googleTranslate),
-
-      new TranslateBidirectionController(this.googleTranslate),
-
-      new SearchNativeSetsController(this.library, this.config),
-
-      new SearchNativeVocabularyController(this.library, this.config),
-
-      new SearchPublicSetsController(this.library, this.config),
-
-      new SearchPublicVocabularyController(this.library, this.config),
-
-      new SendApiKeyController(this.mailer),
-
-      new ProcessPurchaseController(
-        this.iap,
-        this.database,
-        this.firebase,
-        this.modelList.purchaseModel
-      ),
-
       new SearchPixabayImagesController(this.config),
-
-      new UploadPixabayImagesController(this.imageUploader, this.config),
     ];
+
+    return controllers;
+  }
+
+  // These are the controllers only work if respective services are enabled
+  private makeOptionalControllers(): readonly ApiController<any, any>[] {
+    const controllers: ApiController<any, any>[] = [];
+
+    if (this.firebase !== null) {
+      controllers.push(new GetFirebaseTokenController(this.firebase));
+    }
+
+    if (this.dictionary !== null) {
+      controllers.push(new GetDictionaryEntryController(this.dictionary));
+    }
+
+    if (this.library !== null) {
+      controllers.push(
+        new GetPublicSetCountController(this.library),
+        new SearchNativeSetsController(this.library, this.config),
+        new SearchNativeVocabularyController(this.library, this.config),
+        new SearchPublicSetsController(this.library, this.config),
+        new SearchPublicVocabularyController(this.library, this.config)
+      );
+    }
+
+    if (this.googleTranslate !== null) {
+      controllers.push(
+        new TranslateController(this.googleTranslate),
+        new TranslateBidirectionController(this.googleTranslate)
+      );
+    }
+
+    if (this.googleTextToSpeech !== null) {
+      controllers.push(
+        new SynthesizeSpeechController(this.googleTextToSpeech, this.config)
+      );
+    }
+
+    if (this.mailer !== null) {
+      controllers.push(
+        new RequestPasswordResetController(
+          this.authenticator,
+          this.database,
+          this.mailer,
+          this.modelList.userModel,
+          this.modelList.resetPasswordModel,
+          this.env,
+          this.config
+        ),
+        new ContactAdminController(this.mailer),
+        new SendApiKeyController(this.mailer)
+      );
+    }
+
+    if (this.iap !== null) {
+      controllers.push(
+        new ProcessPurchaseController(
+          this.iap,
+          this.database,
+          this.firebase,
+          this.modelList.purchaseModel
+        )
+      );
+    }
+
+    if (this.imageUploader !== null) {
+      controllers.push(
+        new UploadPixabayImagesController(this.imageUploader, this.config)
+      );
+    }
+
+    return controllers;
   }
 }
