@@ -25,12 +25,12 @@ export class UploadUserController extends ApiController<
   UploadUserResponse
 > {
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
+  private firebase: null | FirebaseFacade;
   private userModel: UserModel;
 
   public constructor(
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
+    firebase: null | FirebaseFacade,
     userModel: UserModel
   ) {
     super();
@@ -76,7 +76,9 @@ export class UploadUserController extends ApiController<
 
       res.json({ success: true });
 
-      await this.firebase.notifyUserChange(authDb, userId);
+      if (this.firebase !== null) {
+        await this.firebase.notifyUserChange(authDb, userId);
+      }
     } else {
       res.error(400, { errorCode: ErrorCode.GENERAL__INVALID_REQUEST });
     }

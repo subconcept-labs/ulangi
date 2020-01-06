@@ -46,7 +46,7 @@ describe('API endpoint /contact-admin', (): void => {
   > => {
     await expect(
       Axios.post(env.API_URL + '/contact-admin', {
-        adminEmail: 'invalid@ulangi.com',
+        adminEmail: 'invalid@yahoo.com',
         replyToEmail: 'test@ulangi.com',
         subject: 'This is a test. Please ignore.',
         message: 'This is a test. Please ignore',

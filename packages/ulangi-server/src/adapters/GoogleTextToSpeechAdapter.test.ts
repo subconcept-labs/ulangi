@@ -5,6 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { assertExists } from '@ulangi/assert';
+
 import { loadConfig } from '../../src/setup/loadConfig';
 import { resolveEnv } from '../../src/setup/resolveEnv';
 import { GoogleTextToSpeechAdapter } from './GoogleTextToSpeechAdapter';
@@ -17,8 +19,8 @@ describe('GoogleTextToSpeechAdapterTest', (): void => {
   beforeEach(
     (): void => {
       googleTextToSpeechAdapter = new GoogleTextToSpeechAdapter(
-        env.GOOGLE_CLOUD_PROJECT_ID,
-        env.GOOGLE_CLOUD_SERVICE_ACCOUNT
+        assertExists(env.GOOGLE_CLOUD_PROJECT_ID),
+        assertExists(env.GOOGLE_CLOUD_SERVICE_ACCOUNT)
       );
     }
   );

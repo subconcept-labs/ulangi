@@ -28,13 +28,13 @@ export class ProcessPurchaseController extends ApiController<
 > {
   private iap: IapAdapter;
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
+  private firebase: null | FirebaseFacade;
   private purchaseModel: PurchaseModel;
 
   public constructor(
     iap: IapAdapter,
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
+    firebase: null | FirebaseFacade,
     purchaseModel: PurchaseModel
   ) {
     super();
@@ -100,7 +100,10 @@ export class ProcessPurchaseController extends ApiController<
 
         res.json(result);
 
-        if (result.purchasesSuccessfullyApplied.length > 0) {
+        if (
+          result.purchasesSuccessfullyApplied.length > 0 &&
+          this.firebase !== null
+        ) {
           await this.firebase.notifyUserChange(authDb, userId);
         }
       } else {

@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { assertExists } from '@ulangi/assert';
 import * as AWS from 'aws-sdk';
 
 import { loadConfig } from '../../src/setup/loadConfig';
@@ -17,9 +18,9 @@ describe('PollyAdapterTest', (): void => {
   const env = resolveEnv();
 
   setupAWS(
-    env.AWS_ACCESS_KEY_ID,
-    env.AWS_SECRET_ACCESS_KEY,
-    env.AWS_DEFAULT_REGION
+    assertExists(env.AWS_ACCESS_KEY_ID),
+    assertExists(env.AWS_SECRET_ACCESS_KEY),
+    assertExists(env.AWS_DEFAULT_REGION)
   );
 
   let pollyAdapter: PollyAdapter;

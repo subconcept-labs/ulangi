@@ -28,13 +28,13 @@ export class ChangeEmailController extends ApiController<
 > {
   private authenticator: AuthenticatorFacade;
   private database: DatabaseFacade;
-  private firebase: FirebaseFacade;
+  private firebase: null | FirebaseFacade;
   private userModel: UserModel;
 
   public constructor(
     authenticator: AuthenticatorFacade,
     database: DatabaseFacade,
-    firebase: FirebaseFacade,
+    firebase: null | FirebaseFacade,
     userModel: UserModel
   ) {
     super();
@@ -115,7 +115,9 @@ export class ChangeEmailController extends ApiController<
           accessToken,
         });
 
-        await this.firebase.notifyUserChange(authDb, userId);
+        if (this.firebase !== null) {
+          await this.firebase.notifyUserChange(authDb, userId);
+        }
       }
     } else {
       res.error(401, { errorCode: ErrorCode.USER__WRONG_PASSWORD });
