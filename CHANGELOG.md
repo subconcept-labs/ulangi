@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/minhloi/ulangi/compare/v3.0.3...v3.0.4) (2020-01-06)
+
+
+### Bug Fixes
+
+* make it easier to customize server services ([4305fa7](https://github.com/minhloi/ulangi/commit/4305fa7))
+* move shebang line above copyright notice ([cb5542b](https://github.com/minhloi/ulangi/commit/cb5542b))
+
+
+
+
+
 ## [3.0.3](https://github.com/minhloi/ulangi/compare/v3.0.2...v3.0.3) (2020-01-04)
 
 
