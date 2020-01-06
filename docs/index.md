@@ -21,8 +21,8 @@ We use **monorepo** to manage Ulangi project; that is, everything about Ulangi i
 ---
 
 ## Getting started
-- [Customize mobile app](${page.link}/mobile-app/)
-- [Customize server side](/server-side/)
-- [Add CLI scripts](/cli-scripts/)
-- [Add Google Sheets functions](/google-sheets-add-on/)
+- [Customize mobile app]({{ site.baseurl }}/mobile-app/)
+- [Customize server side]({{ site.baseurl }}/server-side/)
+- [Add CLI scripts]({{ site.baseurl }}/cli-scripts/)
+- [Add Google Sheets functions]({{ site.baseurl }}/google-sheets-add-on/)
 

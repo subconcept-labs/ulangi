@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Build and install custom version
+title: Build and install
 parent: Mobile App
 nav_order: 0
-permalink: /mobile-app/build-and-install-custom-version/
+permalink: /mobile-app/build-and-install/
 ---
-## Build and install your own Ulangi app
+# Build and install
 
 #### Difficulty: Easy
 
@@ -28,7 +28,7 @@ npm run bootstrap && npm run compile-all && npm run set-up-dev-env
 
 #### Explanation:
 - ```npm run bootstrap```: Install dependencies of all packages.
-- ```npm run compile```: Compile source code to JavaScript.
+- ```npm run compile-all```: Compile source code to JavaScript.
 - ```npm run set-up-dev-env```: Set up default environment variables.
 
 ---
@@ -38,6 +38,19 @@ npm run bootstrap && npm run compile-all && npm run set-up-dev-env
 ```bash
 # Go to the mobile app project
 cd packages/ulangi-mobile
+```
 
+#### iOS:
+```bash
+# Open xcode to install it on your device
 open ios/UlangiMobile.xcworkspace
+
+# Or install it to the simulator
+npm run ios
+```
+
+#### Android:
+```bash
+# Open emulator or plug-in your device first
+npm run android
 ```

@@ -27,10 +27,10 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: UlangiApp
 github_username:  ulangi
 
-logo: "/assets/images/ulangi-docs-logo.png"
+logo: "/assets/images/ulangi-docs-logo.svg"
 footer_content: "Copyright &copy; 2019 Minh Loi. All rights reserved."
 aux_links:
-  "GitHub Repo":
+  "GitHub":
     - "https://github.com/ulangi/ulangi"
 
 # Build settings
