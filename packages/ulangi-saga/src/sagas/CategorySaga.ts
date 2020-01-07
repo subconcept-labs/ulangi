@@ -14,6 +14,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class CategorySaga extends ProtectedSaga {
@@ -34,7 +35,7 @@ export class CategorySaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearFetchSuggestions],
       config.category.fetchSuggestionsLimit

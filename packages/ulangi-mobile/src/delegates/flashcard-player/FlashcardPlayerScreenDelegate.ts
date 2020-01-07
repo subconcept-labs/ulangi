@@ -45,41 +45,44 @@ export class FlashcardPlayerScreenDelegate {
   }
 
   public uploadToFlashcardPlayer(): void {
-    this.eventBus.pubsub(
-      createAction(ActionType.FLASHCARD_PLAYER__UPLOAD, {
-        setId: this.setStore.existingCurrentSetId,
-        languagePair:
-          this.setStore.existingCurrentSet.learningLanguageCode +
-          '-' +
-          this.setStore.existingCurrentSet.translatedToLanguageCode,
-        selectedCategoryNames:
-          typeof this.observableScreen.selectedCategoryNames !== 'undefined'
-            ? this.observableScreen.selectedCategoryNames.slice()
-            : undefined,
-      }),
-      group(
-        on(
-          ActionType.FLASHCARD_PLAYER__UPLOADING,
-          (): void => {
-            this.dialogDelegate.show({
-              message: 'Uploading to flashcardplayer.com...',
-            });
-          },
+    if (env.FLASHCARD_PLAYER_URL !== null) {
+      this.eventBus.pubsub(
+        createAction(ActionType.FLASHCARD_PLAYER__UPLOAD, {
+          playerUrl: env.FLASHCARD_PLAYER_URL,
+          setId: this.setStore.existingCurrentSetId,
+          languagePair:
+            this.setStore.existingCurrentSet.learningLanguageCode +
+            '-' +
+            this.setStore.existingCurrentSet.translatedToLanguageCode,
+          selectedCategoryNames:
+            typeof this.observableScreen.selectedCategoryNames !== 'undefined'
+              ? this.observableScreen.selectedCategoryNames.slice()
+              : undefined,
+        }),
+        group(
+          on(
+            ActionType.FLASHCARD_PLAYER__UPLOADING,
+            (): void => {
+              this.dialogDelegate.show({
+                message: 'Uploading to flashcardplayer.com...',
+              });
+            },
+          ),
+          once(
+            ActionType.FLASHCARD_PLAYER__UPLOAD_SUCCEEDED,
+            ({ playlistId }): void => {
+              this.navigateToFlashcardPlayer(playlistId);
+            },
+          ),
+          once(
+            ActionType.FLASHCARD_PLAYER__UPLOAD_FAILED,
+            ({ errorCode }): void => {
+              this.dialogDelegate.showFailedDialog(errorCode, {});
+            },
+          ),
         ),
-        once(
-          ActionType.FLASHCARD_PLAYER__UPLOAD_SUCCEEDED,
-          ({ playlistId }): void => {
-            this.navigateToFlashcardPlayer(playlistId);
-          },
-        ),
-        once(
-          ActionType.FLASHCARD_PLAYER__UPLOAD_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {});
-          },
-        ),
-      ),
-    );
+      );
+    }
   }
 
   public back(): void {
@@ -87,15 +90,18 @@ export class FlashcardPlayerScreenDelegate {
   }
 
   public openFlashcardPlayerHomePage(): void {
-    const link = env.FLASHCARD_PLAYER_URL;
-    Linking.openURL(link).catch(
-      (): void => {
-        this.dialogDelegate.show({
-          message:
-            'Cannot open link flashcardplayer.com. Please check internet connection',
-        });
-      },
-    );
+    if (env.FLASHCARD_PLAYER_URL !== null) {
+      Linking.openURL(env.FLASHCARD_PLAYER_URL).catch(
+        (): void => {
+          this.dialogDelegate.show({
+            message:
+              'Cannot open link flashcardplayer.com. Please check internet connection',
+          });
+        },
+      );
+    } else {
+      console.warn('FlashcardPlayer is not configured');
+    }
   }
 
   public showSelectSpecificCategoryMessage(): void {

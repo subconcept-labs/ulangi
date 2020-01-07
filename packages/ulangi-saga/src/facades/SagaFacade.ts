@@ -24,11 +24,13 @@ import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { RootSaga } from '../sagas/RootSaga';
 
 export class SagaFacade {
   private sagaMiddlware = sagaMiddlewareFactory();
 
+  private env: SagaEnv;
   private config: SagaConfig;
 
   private database: DatabaseFacade;
@@ -46,6 +48,7 @@ export class SagaFacade {
   private modelList: ModelList;
 
   public constructor(
+    env: SagaEnv,
     config: SagaConfig,
     sqliteDatabase: SQLiteDatabaseAdapter,
     firebase: FirebaseAdapter,
@@ -58,6 +61,7 @@ export class SagaFacade {
     systemDarkMode: SystemDarkModeAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
+    this.env = env;
     this.config = config;
 
     // Create facades & adapters
@@ -96,6 +100,8 @@ export class SagaFacade {
       this.modelList
     );
 
-    this.sagaMiddlware.run((): IterableIterator<any> => root.run(this.config));
+    this.sagaMiddlware.run(
+      (): IterableIterator<any> => root.run(this.env, this.config)
+    );
   }
 }

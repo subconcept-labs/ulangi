@@ -74,8 +74,8 @@ export interface ActionPayload {
 
   readonly AD__SET_UP: {
     publisherId: string;
-    consentFormDebugDeviceId?: string;
-    consentFormDebugGeography?: 'EEA' | 'NOT_EEA';
+    consentFormDebugDeviceId: null | string;
+    consentFormDebugGeography: null | 'EEA' | 'NOT_EEA';
   };
   readonly AD__SET_UP_SUCCEEDED: null;
   readonly AD__SET_UP_FAILED: { errorCode: string };
@@ -95,7 +95,7 @@ export interface ActionPayload {
   readonly AD__LOAD_AD: {
     adUnitId: string;
     consentStatus: ConsentStatus;
-    adTestDeviceId?: string;
+    adTestDeviceId: null | string;
   };
   readonly AD__LOADING_AD: null;
   readonly AD__LOAD_AD_SUCCEEDED: null;
@@ -700,6 +700,7 @@ export interface ActionPayload {
   readonly WRITING__CLEAR_LESSON: null;
 
   readonly FLASHCARD_PLAYER__UPLOAD: {
+    playerUrl: string;
     setId: string;
     languagePair: string;
     selectedCategoryNames: undefined | string[];

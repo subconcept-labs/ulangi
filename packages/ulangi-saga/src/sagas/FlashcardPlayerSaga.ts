@@ -18,6 +18,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -39,17 +40,15 @@ export class FlashcardPlayerSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowUpload],
-      config.env.flashcardPlayerUrl,
       config.flashcardPlayer.minToPlay,
       config.flashcardPlayer.uploadLimit
     );
   }
 
   public *allowUpload(
-    flashcardPlayerUrl: string,
     minToPlay: number,
     uploadLimit: number
   ): IterableIterator<any> {
@@ -58,7 +57,12 @@ export class FlashcardPlayerSaga extends ProtectedSaga {
         ActionType.FLASHCARD_PLAYER__UPLOAD
       );
 
-      const { setId, languagePair, selectedCategoryNames } = action.payload;
+      const {
+        playerUrl,
+        setId,
+        languagePair,
+        selectedCategoryNames,
+      } = action.payload;
 
       yield put(createAction(ActionType.FLASHCARD_PLAYER__UPLOADING, null));
 
@@ -82,7 +86,7 @@ export class FlashcardPlayerSaga extends ProtectedSaga {
           [axios, 'request'],
           createRequest(
             'post',
-            flashcardPlayerUrl,
+            playerUrl,
             '/upload',
             null,
             this.convertVocabularyListToFlashcardSet(

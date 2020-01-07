@@ -10,21 +10,20 @@ import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
 import { Purchase } from '@ulangi/ulangi-common/interfaces';
 import { ObservablePurchaseStore } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
-import * as _ from 'lodash';
 
 import { Reducer } from './Reducer';
 
 export class PurchaseStoreReducer extends Reducer {
   private purchaseStore: ObservablePurchaseStore;
-  private premiumLifetimeProductIds: readonly string[];
+  private readonly PREMIUM_LIFETIME_PRODUCT_ID: null | string;
 
   public constructor(
     purchaseStore: ObservablePurchaseStore,
-    premiumLifetimeProductIds: readonly string[]
+    PREMIUM_LIFETIME_PRODUCT_ID: null | string
   ) {
     super();
     this.purchaseStore = purchaseStore;
-    this.premiumLifetimeProductIds = premiumLifetimeProductIds;
+    this.PREMIUM_LIFETIME_PRODUCT_ID = PREMIUM_LIFETIME_PRODUCT_ID;
   }
 
   public perform(action: InferableAction): void {
@@ -40,7 +39,7 @@ export class PurchaseStoreReducer extends Reducer {
   private processingPurchase(
     action: Action<ActionType.IAP__PROCESSING_PURCHASE>
   ): void {
-    if (_.includes(this.premiumLifetimeProductIds, action.payload.productId)) {
+    if (this.PREMIUM_LIFETIME_PRODUCT_ID === action.payload.productId) {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.ACTIVE;
     }
   }
@@ -95,6 +94,6 @@ export class PurchaseStoreReducer extends Reducer {
 
   @boundMethod
   private isPremiumLifetimePurchase(purchase: Purchase): boolean {
-    return _.includes(this.premiumLifetimeProductIds, purchase.productId);
+    return this.PREMIUM_LIFETIME_PRODUCT_ID === purchase.productId;
   }
 }

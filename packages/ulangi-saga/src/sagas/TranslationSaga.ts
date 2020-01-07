@@ -23,7 +23,7 @@ import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -48,14 +48,11 @@ export class TranslationSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork(
-      [this, this.allowTranslateAndClearTranslations],
-      config.env.apiUrl
-    );
+  public *run(env: SagaEnv): IterableIterator<any> {
+    yield fork([this, this.allowTranslateAndClearTranslations], env.API_URL);
     yield fork(
       [this, this.allowTranslateBidirectionAndClearBidirectionalTranslations],
-      config.env.apiUrl
+      env.API_URL
     );
   }
 

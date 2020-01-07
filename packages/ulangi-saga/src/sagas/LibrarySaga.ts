@@ -26,6 +26,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -51,16 +52,16 @@ export class LibrarySaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork([this, this.allowGetPublicSetCount], config.env.apiUrl);
+  public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
+    yield fork([this, this.allowGetPublicSetCount], env.API_URL);
     yield fork(
       [this, this.allowPrepareAndClearSearchPublicSets],
-      config.env.apiUrl,
+      env.API_URL,
       config.library.searchPublicSetLimit
     );
     yield fork(
       [this, this.allowPrepareAndClearSearchPublicVocabulary],
-      config.env.apiUrl,
+      env.API_URL,
       config.library.searchPublicVocabularyLimit
     );
   }

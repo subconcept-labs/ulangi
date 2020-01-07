@@ -25,6 +25,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { RandomRangeIterator } from '../iterators/RandomRangeIterator';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -46,7 +47,7 @@ export class AtomSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearFetchVocabulary],
       config.atom.minToPlay,

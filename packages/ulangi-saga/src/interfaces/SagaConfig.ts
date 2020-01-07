@@ -6,12 +6,6 @@
  */
 
 export interface SagaConfig {
-  readonly env: {
-    readonly apiUrl: string;
-    readonly googlePackageName: string;
-    readonly flashcardPlayerUrl: string;
-  };
-
   readonly general: {
     readonly guestEmailDomain: string;
     readonly guestPassword: string;

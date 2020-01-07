@@ -45,16 +45,20 @@ export class AdDelegate {
   }
 
   public setUp(): void {
-    this.eventBus.publish(
-      createAction(ActionType.AD__SET_UP, {
-        publisherId: env.ADMOB_PUBLISHER_ID,
-        consentFormDebugGeography: env.CONSENT_FORM_DEBUG_GEOGRAPHY,
-        consentFormDebugDeviceId: Platform.select({
-          ios: env.IOS_CONSENT_FORM_DEBUG_DEVICE_ID,
-          android: env.ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID,
+    if (env.ADMOB_PUBLISHER_ID !== null) {
+      this.eventBus.publish(
+        createAction(ActionType.AD__SET_UP, {
+          publisherId: env.ADMOB_PUBLISHER_ID,
+          consentFormDebugGeography: env.CONSENT_FORM_DEBUG_GEOGRAPHY,
+          consentFormDebugDeviceId: Platform.select({
+            ios: env.IOS_CONSENT_FORM_DEBUG_DEVICE_ID,
+            android: env.ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID,
+          }),
         }),
-      }),
-    );
+      );
+    } else {
+      console.warn('AdConsent is not configured');
+    }
   }
 
   public shouldInitialize(): boolean {
@@ -68,14 +72,18 @@ export class AdDelegate {
   }
 
   public initialize(): void {
-    this.eventBus.publish(
-      createAction(ActionType.AD__INITIALIZE, {
-        adAppId: Platform.select({
-          ios: env.IOS_AD_APP_ID,
-          android: env.ANDROID_AD_APP_ID,
+    if (env.IOS_AD_APP_ID !== null && env.ANDROID_AD_APP_ID !== null) {
+      this.eventBus.publish(
+        createAction(ActionType.AD__INITIALIZE, {
+          adAppId: Platform.select({
+            ios: env.IOS_AD_APP_ID,
+            android: env.ANDROID_AD_APP_ID,
+          }),
         }),
-      }),
-    );
+      );
+    } else {
+      console.warn('AdConsent is not configured');
+    }
   }
 
   public shouldLoadAd(): boolean {
@@ -91,19 +99,23 @@ export class AdDelegate {
   }
 
   public loadAd(): void {
-    this.eventBus.publish(
-      createAction(ActionType.AD__LOAD_AD, {
-        adUnitId: Platform.select({
-          ios: env.IOS_AD_UNIT_ID,
-          android: env.ANDROID_AD_UNIT_ID,
+    if (env.IOS_AD_UNIT_ID !== null && env.ANDROID_AD_UNIT_ID !== null) {
+      this.eventBus.publish(
+        createAction(ActionType.AD__LOAD_AD, {
+          adUnitId: Platform.select({
+            ios: env.IOS_AD_UNIT_ID,
+            android: env.ANDROID_AD_UNIT_ID,
+          }),
+          consentStatus: this.adStore.consentStatus,
+          adTestDeviceId: Platform.select({
+            ios: env.IOS_AD_TEST_DEVICE_ID,
+            android: env.ANDROID_AD_TEST_DEVICE_ID,
+          }),
         }),
-        consentStatus: this.adStore.consentStatus,
-        adTestDeviceId: Platform.select({
-          ios: env.IOS_AD_TEST_DEVICE_ID,
-          android: env.ANDROID_AD_TEST_DEVICE_ID,
-        }),
-      }),
-    );
+      );
+    } else {
+      console.warn('AdMob is not configured');
+    }
   }
 
   public shouldShowAdOrGoogleConsentForm(): boolean {
@@ -141,12 +153,19 @@ export class AdDelegate {
   }
 
   public showGoogleConsentForm(): void {
-    this.eventBus.publish(
-      createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM, {
-        privacyPolicyUrl: env.PRIVACY_POLICY_URL,
-        shouldOfferAdFree: env.CONSENT_FORM_SHOULD_OFFER_AD_FREE,
-      }),
-    );
+    if (
+      env.PRIVACY_POLICY_URL !== null &&
+      env.CONSENT_FORM_SHOULD_OFFER_AD_FREE !== null
+    ) {
+      this.eventBus.publish(
+        createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM, {
+          privacyPolicyUrl: env.PRIVACY_POLICY_URL,
+          shouldOfferAdFree: env.CONSENT_FORM_SHOULD_OFFER_AD_FREE,
+        }),
+      );
+    } else {
+      console.warn('AdConsent is not configured');
+    }
   }
 
   public clearAd(): void {

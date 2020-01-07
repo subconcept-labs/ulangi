@@ -85,18 +85,22 @@ export class InAppRatingDelegate {
   }
 
   public showInAppRating(preferInApp: boolean): void {
-    this.analytics.logEvent('show_in_app_rating');
-    Rate.rate(
-      {
-        AppleAppID: env.APPLE_APP_ID,
-        GooglePackageName: env.GOOGLE_PACKAGE_NAME,
-        preferInApp,
-        openAppStoreIfInAppFails: !preferInApp,
-      },
-      (success): void => {
-        console.log(success);
-      },
-    );
+    if (env.APPLE_APP_ID !== null && env.GOOGLE_PACKAGE_NAME !== null) {
+      this.analytics.logEvent('show_in_app_rating');
+      Rate.rate(
+        {
+          AppleAppID: env.APPLE_APP_ID,
+          GooglePackageName: env.GOOGLE_PACKAGE_NAME,
+          preferInApp,
+          openAppStoreIfInAppFails: !preferInApp,
+        },
+        (success): void => {
+          console.log(success);
+        },
+      );
+    } else {
+      console.warn('In-app rating is not configured');
+    }
   }
 
   public disableAutoShowInAppRating(): void {

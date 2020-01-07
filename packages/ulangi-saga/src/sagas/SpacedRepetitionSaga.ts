@@ -24,6 +24,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -55,7 +56,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowFetchVocabulary],
       config.spacedRepetition.maxLevel,

@@ -25,7 +25,7 @@ import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -49,10 +49,10 @@ export class ApiKeySaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork([this, this.allowGetApiKey], config.env.apiUrl);
-    yield fork([this, this.allowDeleteApiKey], config.env.apiUrl);
-    yield fork([this, this.allowSendApiKey], config.env.apiUrl);
+  public *run(env: SagaEnv): IterableIterator<any> {
+    yield fork([this, this.allowGetApiKey], env.API_URL);
+    yield fork([this, this.allowDeleteApiKey], env.API_URL);
+    yield fork([this, this.allowSendApiKey], env.API_URL);
   }
 
   public *allowGetApiKey(apiUrl: string): IterableIterator<any> {

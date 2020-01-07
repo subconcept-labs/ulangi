@@ -12,6 +12,7 @@ import { Task } from 'redux-saga';
 import { call, delay, fork, put, race, take } from 'redux-saga/effects';
 
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { SyncQueue } from '../queues/SyncQueue';
 import { DownloadIncompatibleSetSaga } from './DownloadIncompatibleSetSaga';
 import { DownloadIncompatibleVocabularySaga } from './DownloadIncompatibleVocabularySaga';
@@ -68,12 +69,13 @@ export class SyncSaga extends ProtectedSaga {
   }
 
   public *run(
+    env: SagaEnv,
     config: SagaConfig,
     remoteConfig: RemoteConfig
   ): IterableIterator<any> {
     yield fork(
       [this, this.allowAddSyncTask],
-      config.env.apiUrl,
+      env.API_URL,
       config.sync.transactionChunkSize,
       config.sync.delayBetweenChunks,
       remoteConfig.sync.uploadLimit,

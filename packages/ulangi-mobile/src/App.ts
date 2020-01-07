@@ -75,14 +75,8 @@ export class App {
     const analytics = new AnalyticsAdapter(firebase.analytics());
 
     const sagaFacade = new SagaFacade(
-      {
-        env: {
-          apiUrl: env.API_URL,
-          googlePackageName: env.GOOGLE_PACKAGE_NAME,
-          flashcardPlayerUrl: env.FLASHCARD_PLAYER_URL,
-        },
-        ...config,
-      },
+      env,
+      config,
       new SQLiteDatabaseAdapter(sqlite),
       new FirebaseAdapter(firebase),
       new AdMobAdapter(
@@ -107,16 +101,12 @@ export class App {
 
     const storeFactory = new StoreFactory(
       {
-        env: {
-          premiumLifetimeProductIds: [
-            Platform.select({
-              ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
-              android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
-            }),
-          ],
-        },
-        ...config,
+        PREMIUM_LIFETIME_PRODUCT_ID: Platform.select({
+          ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
+          android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
+        }),
       },
+      config,
       {
         initialSystemDarkMode:
           systemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,

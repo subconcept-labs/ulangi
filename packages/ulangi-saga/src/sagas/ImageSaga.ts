@@ -23,7 +23,7 @@ import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -47,12 +47,12 @@ export class ImageSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearSearchPixabayImages],
-      config.env.apiUrl
+      env.API_URL
     );
-    yield fork([this, this.allowUploadPixabayImages], config.env.apiUrl);
+    yield fork([this, this.allowUploadPixabayImages], env.API_URL);
   }
 
   public *allowPrepareAndClearSearchPixabayImages(

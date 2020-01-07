@@ -26,7 +26,7 @@ import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { DatabaseEventChannel } from '../channels/DatabaseEventChannel';
 import { FirebaseEventChannel } from '../channels/FirebaseEventChannel';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -54,12 +54,9 @@ export class ObserveUpdateSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv): IterableIterator<any> {
     yield fork([this, this.allowObserveLocalUpdatesForSyncing]);
-    yield fork(
-      [this, this.allowObserveRemoteUpdatesForSyncing],
-      config.env.apiUrl
-    );
+    yield fork([this, this.allowObserveRemoteUpdatesForSyncing], env.API_URL);
   }
 
   public *allowObserveLocalUpdatesForSyncing(): IterableIterator<any> {

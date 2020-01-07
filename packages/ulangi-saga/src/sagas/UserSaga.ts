@@ -29,6 +29,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -59,24 +60,24 @@ export class UserSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowChangeEmailAndPassword],
-      config.env.apiUrl,
+      env.API_URL,
       config.user.passwordMinLength,
       config.general.guestEmailDomain
     );
     yield fork(
       [this, this.allowChangeEmail],
-      config.env.apiUrl,
+      env.API_URL,
       config.general.guestEmailDomain
     );
     yield fork(
       [this, this.allowChangePassword],
-      config.env.apiUrl,
+      env.API_URL,
       config.user.passwordMinLength
     );
-    yield fork([this, this.allowContactAdmin], config.env.apiUrl);
+    yield fork([this, this.allowContactAdmin], env.API_URL);
     yield fork([this, this.allowEdit]);
     yield fork([this, this.allowFetch]);
   }

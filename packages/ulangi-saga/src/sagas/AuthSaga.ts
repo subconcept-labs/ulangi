@@ -35,6 +35,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { PublicSaga } from './PublicSaga';
 
@@ -62,23 +63,23 @@ export class AuthSaga extends PublicSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork([this, this.allowGetSession]);
-    yield fork([this, this.allowCheckSession], config.env.apiUrl);
-    yield fork([this, this.allowSignIn], config.env.apiUrl);
+    yield fork([this, this.allowCheckSession], env.API_URL);
+    yield fork([this, this.allowSignIn], env.API_URL);
     yield fork(
       [this, this.allowSignInAsGuest],
-      config.env.apiUrl,
+      env.API_URL,
       config.general.guestEmailDomain,
       config.general.guestPassword
     );
     yield fork(
       [this, this.allowSignUp],
-      config.env.apiUrl,
+      env.API_URL,
       config.user.passwordMinLength,
       config.general.guestEmailDomain
     );
-    yield fork([this, this.allowRequestPasswordReset], config.env.apiUrl);
+    yield fork([this, this.allowRequestPasswordReset], env.API_URL);
   }
 
   public *allowGetSession(): IterableIterator<any> {

@@ -27,6 +27,7 @@ import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
 import { ProtectedSagaFactory } from '../factories/ProtectedSagaFactory';
 import { PublicSagaFactory } from '../factories/PublicSagaFactory';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class RootSaga {
@@ -74,14 +75,17 @@ export class RootSaga {
     this.modelList = modelList;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork([this, this.forkPublicSagas], config);
+  public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
+    yield fork([this, this.forkPublicSagas], env, config);
 
-    yield fork([this, this.allowForkProtectedSagas], config);
+    yield fork([this, this.allowForkProtectedSagas], env, config);
     yield fork([this, this.allowCancelProtectedSagas]);
   }
 
-  private *forkPublicSagas(config: SagaConfig): IterableIterator<any> {
+  private *forkPublicSagas(
+    env: SagaEnv,
+    config: SagaConfig
+  ): IterableIterator<any> {
     const publicSagaFactory = new PublicSagaFactory(
       this.database,
       this.modelList,
@@ -93,11 +97,14 @@ export class RootSaga {
     );
 
     for (const saga of publicSagaFactory.createAllPublicSagas()) {
-      yield fork([saga, saga.run], config);
+      yield fork([saga, saga.run], env, config);
     }
   }
 
-  private *allowForkProtectedSagas(config: SagaConfig): IterableIterator<any> {
+  private *allowForkProtectedSagas(
+    env: SagaEnv,
+    config: SagaConfig
+  ): IterableIterator<any> {
     while (true) {
       const action: Action<ActionType.ROOT__FORK_PROTECTED_SAGAS> = yield take(
         ActionType.ROOT__FORK_PROTECTED_SAGAS
@@ -108,6 +115,7 @@ export class RootSaga {
 
       this.forkedProtectedSagasTask = yield spawn(
         [this, this.forkProtectedSagas],
+        env,
         config,
         remoteConfig
       );
@@ -141,6 +149,7 @@ export class RootSaga {
   }
 
   private *forkProtectedSagas(
+    env: SagaEnv,
     config: SagaConfig,
     remoteConfig: RemoteConfig
   ): IterableIterator<any> {
@@ -159,7 +168,7 @@ export class RootSaga {
     this.protectedSagas = protectedSagaFactory.createAllProtectedSagas();
 
     for (const saga of this.protectedSagas) {
-      yield fork([saga, saga.run], config, remoteConfig);
+      yield fork([saga, saga.run], env, config, remoteConfig);
     }
   }
 }
