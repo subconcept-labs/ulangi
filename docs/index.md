@@ -7,8 +7,8 @@ permalink: /
 ---
 
 # Ulangi Documentation
-## Make developing easy and fun
-We use **monorepo** to manage Ulangi project; that is, everything about Ulangi is hosted on a single repository. This makes it easy to reuse code across multiple platforms and to track related issues.
+## Project management
+We use **monorepo ([Lerna](https://github.com/lerna/lerna))** to manage Ulangi project; that is, everything about Ulangi is hosted on a single repository. This makes it easy to reuse code across multiple platforms and to track related issues.
 
 ---
 

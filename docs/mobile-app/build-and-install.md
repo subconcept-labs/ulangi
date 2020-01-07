@@ -9,6 +9,13 @@ permalink: /mobile-app/build-and-install/
 
 #### Difficulty: Easy
 
+---
+
+### Prerequisites
+- [CocoaPods](https://cocoapods.org) installed
+
+--- 
+
 ### 1. Clone the project from GitHub
 
 ```bash

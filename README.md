@@ -24,6 +24,14 @@
 
 ---
 
+## Development principles
+- make it easy to customize and build custom version.
+- use type-checking to reduce number of tests.
+- write clean code.
+- use design pattern.
+
+---
+
 ## Main apps
 
 iOS: [https://itunes.apple.com/us/app/id1435524341?mt=8](https://itunes.apple.com/us/app/id1435524341?mt=8)
@@ -40,8 +48,13 @@ We're adding more docs. Stay tuned!
 
 ---
 
+## License
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. [See full detail.](/LICENSE)
+
+---
+
 ## Credits
 - social-icons by [Just UI](https://www.iconfinder.com/iconsets/social-icons-33)
 - lesson-icons from [Material Design Icons by community](https://github.com/templarian/MaterialDesign/) (SIL Open Font License 1.1)
 - mobile-icons from [Material Design Icons by Google](https://material.io/resources/icons/?style=baseline) (Apache License 2.0)
-- flag-icons are not included in this project due to license incompatibility. You must download and add them manually [here](https://www.flaticon.com/packs/countrys-flags).
+- flag-icons are not included in this project due to license incompatibility but you can download and add them manually [here](https://www.flaticon.com/packs/countrys-flags).
