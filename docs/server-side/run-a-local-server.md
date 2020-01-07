@@ -19,7 +19,7 @@ permalink: /server-side/run-a-local-server/
 
 ### 0. Bootstrap (if you haven't)
 ```bash
-# run the following commands in the root project folder 
+# run the following commands in the root project directory 
 npm run bootstrap && npm run compile-all && npm run set-up-dev-env
 ```
 
@@ -33,7 +33,7 @@ mysql -u root -p
 # Enter password when prompted
 ```
 
-After logged in, create databases by entering following sql:
+After logged in, create databases by entering following SQL:
 ```sql
 create database ulangi_auth;
 create database ulangi_shard_0;

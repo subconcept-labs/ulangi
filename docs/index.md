@@ -21,8 +21,9 @@ We use **monorepo ([Lerna](https://github.com/lerna/lerna))** to manage Ulangi p
 ---
 
 ## Getting started
-- [Customize mobile app]({{ site.baseurl }}/mobile-app/)
-- [Customize server side]({{ site.baseurl }}/server-side/)
-- [Add CLI scripts]({{ site.baseurl }}/cli-scripts/)
-- [Add Google Sheets functions]({{ site.baseurl }}/google-sheets-add-on/)
+What do you want to customize or contribute?
+- [Mobile app]({{ site.baseurl }}/mobile-app/)
+- [Server side]({{ site.baseurl }}/server-side/)
+- [CLI scripts]({{ site.baseurl }}/cli-scripts/)
+- [Google Sheets add-on]({{ site.baseurl }}/google-sheets-add-on/)
 
