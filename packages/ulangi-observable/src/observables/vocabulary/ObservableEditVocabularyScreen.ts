@@ -17,13 +17,20 @@ export class ObservableEditVocabularyScreen extends ObservableAddEditVocabularyS
   public readonly originalEditingVocabulary: Vocabulary;
 
   public constructor(
+    screenAppearedTimes: number,
     originalEditingVocabulary: Vocabulary,
     currentTab: IObservableValue<'Editor' | 'Preview'>,
     vocabularyFormState: ObservableVocabularyFormState,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(currentTab, vocabularyFormState, screenName, topBar);
+    super(
+      screenAppearedTimes,
+      currentTab,
+      vocabularyFormState,
+      screenName,
+      topBar
+    );
     this.originalEditingVocabulary = originalEditingVocabulary;
   }
 }

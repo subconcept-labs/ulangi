@@ -14,18 +14,23 @@ import { ObservableCarouselMessage } from './ObservableCarouselMessage';
 
 export class ObservableMoreScreen extends ObservableScreen {
   @observable
+  public screenAppearedTimes: number;
+
+  @observable
   public messages: IObservableArray<ObservableCarouselMessage>;
 
   @observable
   public currentMessageIndex: IObservableValue<number>;
 
   public constructor(
+    screenAppearedTimes: number,
     messages: IObservableArray<ObservableCarouselMessage>,
     currentMessageIndex: IObservableValue<number>,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.messages = messages;
     this.currentMessageIndex = currentMessageIndex;
   }

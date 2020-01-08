@@ -53,6 +53,7 @@ export class AddVocabularyScreenContainer extends Container<
   );
 
   protected observableScreen = new ObservableAddEditVocabularyScreen(
+    0,
     observable.box('Editor'),
     new ObservableVocabularyFormState(
       typeof this.props.passedProps.vocabulary !== 'undefined'
@@ -144,7 +145,11 @@ export class AddVocabularyScreenContainer extends Container<
   }
 
   public componentDidAppear(): void {
-    this.observableScreen.vocabularyFormState.shouldFocusVocabularyInput = true;
+    this.observableScreen.screenAppearedTimes += 1;
+
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.observableScreen.vocabularyFormState.shouldFocusVocabularyInput = true;
+    }
   }
 
   public onThemeChanged(theme: Theme): void {
