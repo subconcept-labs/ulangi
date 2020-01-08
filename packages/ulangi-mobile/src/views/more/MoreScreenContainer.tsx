@@ -30,6 +30,7 @@ export class MoreScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableMoreScreen(
+    0,
     observable.array(),
     observable.box(0),
     ScreenName.MORE_SCREEN,
@@ -53,11 +54,15 @@ export class MoreScreenContainer extends Container {
   }
 
   public componentDidAppear(): void {
-    if (config.app.showInAppRatingInMoreScreen === true) {
-      this.screenDelegate.autoShowInAppRating();
-    }
+    this.observableScreen.screenAppearedTimes += 1;
 
-    this.screenDelegate.autoUpdateCarouselMessages();
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      if (config.app.showInAppRatingInMoreScreen === true) {
+        this.screenDelegate.autoShowInAppRating();
+      }
+
+      this.screenDelegate.autoUpdateCarouselMessages();
+    }
   }
 
   protected onThemeChanged(theme: Theme): void {

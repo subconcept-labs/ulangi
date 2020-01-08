@@ -17,6 +17,7 @@ import * as uuid from 'uuid';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class AudioSaga extends ProtectedSaga {
@@ -38,10 +39,10 @@ export class AudioSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowSynthesizeSpeech],
-      config.env.apiUrl,
+      env.API_URL,
       config.audio.cacheFolderName
     );
     yield fork(

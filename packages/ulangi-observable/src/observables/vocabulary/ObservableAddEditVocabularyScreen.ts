@@ -15,17 +15,22 @@ import { ObservableVocabularyFormState } from './ObservableVocabularyFormState';
 
 export class ObservableAddEditVocabularyScreen extends ObservableScreen {
   @observable
+  public screenAppearedTimes: number;
+
+  @observable
   public currentTab: IObservableValue<'Editor' | 'Preview'>;
 
   public readonly vocabularyFormState: ObservableVocabularyFormState;
 
   public constructor(
+    screenAppearedTimes: number,
     currentTab: IObservableValue<'Editor' | 'Preview'>,
     vocabularyFormState: ObservableVocabularyFormState,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar | ObservableTouchableTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.currentTab = currentTab;
     this.vocabularyFormState = vocabularyFormState;
   }

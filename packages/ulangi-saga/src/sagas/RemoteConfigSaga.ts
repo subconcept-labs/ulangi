@@ -22,7 +22,7 @@ import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { PublicSaga } from '../sagas/PublicSaga';
 import { createRequest } from '../utils/createRequest';
 
@@ -44,10 +44,10 @@ export class RemoteConfigSaga extends PublicSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(env: SagaEnv): IterableIterator<any> {
     yield fork([this, this.allowFetch]);
 
-    yield fork([this, this.allowUpdate], config.env.apiUrl);
+    yield fork([this, this.allowUpdate], env.API_URL);
   }
 
   public *allowFetch(): IterableIterator<any> {

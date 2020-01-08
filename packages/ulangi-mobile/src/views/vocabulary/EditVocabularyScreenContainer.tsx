@@ -51,6 +51,7 @@ export class EditVocabularyScreenContainer extends Container<
   private definitionDelegate = this.screenFactory.createDefinitionDelegate();
 
   protected observableScreen = new ObservableEditVocabularyScreen(
+    0,
     this.props.passedProps.originalVocabulary,
     observable.box('Editor'),
     new ObservableVocabularyFormState(

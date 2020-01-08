@@ -8,9 +8,11 @@
 import { RemoteConfig } from '@ulangi/ulangi-common/interfaces';
 
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 
 export abstract class ProtectedSaga {
   public abstract run(
+    env: SagaEnv,
     config: SagaConfig,
     remoteConfig: RemoteConfig
   ): IterableIterator<any>;

@@ -180,16 +180,24 @@ export class PreloadScreenDelegate {
   }
 
   private initializeAppsFlyer(): void {
-    this.eventBus.publish(
-      createAction(ActionType.APPS_FLYER__INIT_SDK, {
-        devKey: Platform.select({
-          ios: env.IOS_APPS_FLYER_DEV_KEY,
-          android: env.ANDROID_APPS_FLYER_DEV_KEY,
+    if (
+      env.APPLE_APP_ID !== null &&
+      env.IOS_APPS_FLYER_DEV_KEY !== null &&
+      env.ANDROID_APPS_FLYER_DEV_KEY !== null
+    ) {
+      this.eventBus.publish(
+        createAction(ActionType.APPS_FLYER__INIT_SDK, {
+          devKey: Platform.select({
+            ios: env.IOS_APPS_FLYER_DEV_KEY,
+            android: env.ANDROID_APPS_FLYER_DEV_KEY,
+          }),
+          isDebug: env.DEBUG_APPS_FLYER,
+          appId: env.APPLE_APP_ID,
         }),
-        isDebug: env.DEBUG_APPS_FLYER,
-        appId: env.APPLE_APP_ID,
-      }),
-    );
+      );
+    } else {
+      console.warn('Appsflyer is not configured.');
+    }
   }
 
   private getSession(callback: {

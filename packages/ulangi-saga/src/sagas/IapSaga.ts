@@ -27,7 +27,7 @@ import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { PurchaseEventChannel } from '../channels/PurchaseEventChannel';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -52,12 +52,8 @@ export class IapSaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork(
-      [this, this.init],
-      config.env.apiUrl,
-      config.env.googlePackageName
-    );
+  public *run(env: SagaEnv): IterableIterator<any> {
+    yield fork([this, this.allowInit], env.API_URL);
   }
 
   public *destroy(): IterableIterator<any> {
@@ -66,17 +62,23 @@ export class IapSaga extends ProtectedSaga {
     }
   }
 
-  public *init(
-    apiUrl: string,
-    googlePackageName: string
-  ): IterableIterator<any> {
-    yield call([this.iap, 'initConnection']);
-    yield fork([this, this.observePurchaseUpdates], apiUrl, googlePackageName);
-    yield fork([this, this.allowGetProducts]);
-    yield fork([this, this.allowRequestPurchase], apiUrl, googlePackageName);
-    yield fork([this, this.allowRestorePurchases], apiUrl, googlePackageName);
+  public *allowInit(apiUrl: string): IterableIterator<any> {
+    while (true) {
+      const action = yield take(ActionType.IAP__INIT);
+      const { googlePackageName } = action.payload;
 
-    this.initedConnection = true;
+      yield call([this.iap, 'initConnection']);
+      yield fork(
+        [this, this.observePurchaseUpdates],
+        apiUrl,
+        googlePackageName
+      );
+      yield fork([this, this.allowGetProducts]);
+      yield fork([this, this.allowRequestPurchase], apiUrl, googlePackageName);
+      yield fork([this, this.allowRestorePurchases], apiUrl, googlePackageName);
+
+      this.initedConnection = true;
+    }
   }
 
   public *allowGetProducts(): IterableIterator<any> {

@@ -12,6 +12,7 @@ import { ObservableUserStore, Observer } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 
 import { config } from '../../constants/config';
+import { env } from '../../constants/env';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
@@ -50,6 +51,8 @@ export class AutorunDelegate {
   }
 
   public autorun(): void {
+    this.autoInitIap();
+
     if (config.user.autoCheckUserSessionAfterAuth === true) {
       this.autoCheckUserSession();
     }
@@ -91,6 +94,18 @@ export class AutorunDelegate {
     }
 
     this.autoShowDialogWhenSessionExpired();
+  }
+
+  private autoInitIap(): void {
+    if (env.GOOGLE_PACKAGE_NAME !== null) {
+      this.eventBus.publish(
+        createAction(ActionType.IAP__INIT, {
+          googlePackageName: env.GOOGLE_PACKAGE_NAME,
+        }),
+      );
+    } else {
+      console.warn('IAP is not configured. Missing GOOGLE_PACKAGE_NAME');
+    }
   }
 
   private autoCheckUserSession(): void {

@@ -10,7 +10,7 @@ import {
   ScreenName,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
-import { IObservableValue } from 'mobx';
+import { IObservableValue, observable } from 'mobx';
 
 import { ObservableCategoryListState } from '../category/ObservableCategoryListState';
 import { ObservableScreen } from '../screen/ObservableScreen';
@@ -18,6 +18,9 @@ import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar'
 import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabularyListState';
 
 export class ObservableManageScreen extends ObservableScreen {
+  @observable
+  public screenAppearedTimes: number;
+
   public readonly manageListType: IObservableValue<ManageListType>;
 
   public readonly selectedFilterType: IObservableValue<VocabularyFilterType>;
@@ -27,6 +30,7 @@ export class ObservableManageScreen extends ObservableScreen {
   public readonly categoryListState: ObservableCategoryListState;
 
   public constructor(
+    screenAppearedTimes: number,
     manageListType: IObservableValue<ManageListType>,
     selectedFilterType: IObservableValue<VocabularyFilterType>,
     vocabularyListState: ObservableVocabularyListState,
@@ -35,6 +39,7 @@ export class ObservableManageScreen extends ObservableScreen {
     topBar: ObservableTouchableTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.manageListType = manageListType;
     this.selectedFilterType = selectedFilterType;
     this.vocabularyListState = vocabularyListState;

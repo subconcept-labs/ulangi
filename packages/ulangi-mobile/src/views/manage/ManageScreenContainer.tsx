@@ -50,6 +50,7 @@ export class ManageScreenContainer extends Container {
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   protected observableScreen = new ObservableManageScreen(
+    0,
     observable.box(ManageListType.CATEGORY_LIST),
     observable.box(VocabularyFilterType.ACTIVE),
     new ObservableVocabularyListState(
@@ -117,19 +118,24 @@ export class ManageScreenContainer extends Container {
   );
 
   public componentDidAppear(): void {
-    this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
-      this.observableScreen,
-    );
-    this.screenDelegate.autoShowSyncingInProgress();
-    this.screenDelegate.autoShowRefreshNotice();
-    this.screenDelegate.autoRefreshOnSetChange();
-    this.screenDelegate.autoRefreshOnMultipleEdit();
-    this.screenDelegate.autoRefreshEmptyListOnVocabularyChange();
-    this.screenDelegate.autoUpdateEditedVocabulary();
-    this.screenDelegate.prepareAndFetch(VocabularyFilterType.ACTIVE);
+    this.observableScreen.screenAppearedTimes += 1;
 
-    // Never put autorun in componentDidMount
-    this.screenDelegate.autorun();
+    // Do not put autorun in componentDidMount
+    // because some are fired too early (before screen appears)
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
+        this.observableScreen,
+      );
+      this.screenDelegate.autoShowSyncingInProgress();
+      this.screenDelegate.autoShowRefreshNotice();
+      this.screenDelegate.autoRefreshOnSetChange();
+      this.screenDelegate.autoRefreshOnMultipleEdit();
+      this.screenDelegate.autoRefreshEmptyListOnVocabularyChange();
+      this.screenDelegate.autoUpdateEditedVocabulary();
+      this.screenDelegate.prepareAndFetch(VocabularyFilterType.ACTIVE);
+
+      this.screenDelegate.autorun();
+    }
   }
 
   public componentWillUnmount(): void {

@@ -12,6 +12,7 @@ import {
 } from '@ulangi/ulangi-observable';
 
 import { StoreConfig } from '../interfaces/StoreConfig';
+import { StoreEnv } from '../interfaces/StoreEnv';
 import { StoreOptions } from '../interfaces/StoreOptions';
 import { makeInitialState } from '../utils/makeInitialState';
 import { AdStoreReducer } from './AdStoreReducer';
@@ -34,6 +35,7 @@ export class RootStoreReducer extends Reducer {
 
   public constructor(
     rootStore: ObservableRootStore,
+    env: StoreEnv,
     config: StoreConfig,
     options: StoreOptions
   ) {
@@ -55,7 +57,7 @@ export class RootStoreReducer extends Reducer {
       new SyncStoreReducer(rootStore.syncStore),
       new PurchaseStoreReducer(
         rootStore.purchaseStore,
-        config.env.premiumLifetimeProductIds
+        env.PREMIUM_LIFETIME_PRODUCT_ID
       ),
       new AdStoreReducer(rootStore.adStore),
       new NotificationStoreReducer(rootStore.notificationStore),

@@ -6,7 +6,8 @@
  */
 
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 
 export abstract class PublicSaga {
-  public abstract run(config: SagaConfig): IterableIterator<any>;
+  public abstract run(env: SagaEnv, config: SagaConfig): IterableIterator<any>;
 }

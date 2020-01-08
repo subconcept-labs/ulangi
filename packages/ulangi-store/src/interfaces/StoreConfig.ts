@@ -8,10 +8,6 @@
 import { DarkModeSettings } from '@ulangi/ulangi-common/interfaces';
 
 export interface StoreConfig {
-  readonly env: {
-    readonly premiumLifetimeProductIds: readonly string[];
-  };
-
   readonly user: {
     readonly defaultDarkModeSettings: DarkModeSettings;
   };

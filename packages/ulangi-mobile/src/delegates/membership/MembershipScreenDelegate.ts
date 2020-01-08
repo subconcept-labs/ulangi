@@ -58,46 +58,53 @@ export class MembershipScreenDelegate {
   }
 
   public fetchLocalizedPrice(): void {
-    this.eventBus.pubsub(
-      createAction(ActionType.IAP__GET_PRODUCTS, {
-        skus: [
-          Platform.select({
-            ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
-            android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
-          }),
-        ],
-      }),
-      group(
-        once(
-          ActionType.IAP__GET_PRODUCTS_SUCCEEDED,
-          ({ products }): void => {
-            if (products.length === 0) {
+    if (
+      env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== null &&
+      env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== null
+    ) {
+      this.eventBus.pubsub(
+        createAction(ActionType.IAP__GET_PRODUCTS, {
+          skus: [
+            Platform.select({
+              ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
+              android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
+            }),
+          ],
+        }),
+        group(
+          once(
+            ActionType.IAP__GET_PRODUCTS_SUCCEEDED,
+            ({ products }): void => {
+              if (products.length === 0) {
+                this.observableScreen.premiumLifetimeProduct = null;
+                this.observableScreen.upgradeButtonState.reset(
+                  'Product not found',
+                );
+              } else {
+                this.observableScreen.premiumLifetimeProduct = products[0];
+                this.observableScreen.upgradeButtonState.reset(
+                  'Upgrade to Premium (Lifetime)',
+                  this.observableScreen.premiumLifetimeProduct.localizedPrice,
+                  this.observableScreen.premiumLifetimeProduct.currency,
+                  this.upgradeToPremium,
+                );
+              }
+            },
+          ),
+          once(
+            ActionType.IAP__GET_PRODUCTS_FAILED,
+            (): void => {
               this.observableScreen.premiumLifetimeProduct = null;
               this.observableScreen.upgradeButtonState.reset(
-                'Product not found',
+                'Failed to fetch product',
               );
-            } else {
-              this.observableScreen.premiumLifetimeProduct = products[0];
-              this.observableScreen.upgradeButtonState.reset(
-                'Upgrade to Premium (Lifetime)',
-                this.observableScreen.premiumLifetimeProduct.localizedPrice,
-                this.observableScreen.premiumLifetimeProduct.currency,
-                this.upgradeToPremium,
-              );
-            }
-          },
+            },
+          ),
         ),
-        once(
-          ActionType.IAP__GET_PRODUCTS_FAILED,
-          (): void => {
-            this.observableScreen.premiumLifetimeProduct = null;
-            this.observableScreen.upgradeButtonState.reset(
-              'Failed to fetch product',
-            );
-          },
-        ),
-      ),
-    );
+      );
+    } else {
+      console.warn('IAP is not configured');
+    }
   }
 
   public restorePurchases(): void {
@@ -173,38 +180,45 @@ export class MembershipScreenDelegate {
   }
 
   private upgradeToPremium(): void {
-    this.eventBus.pubsub(
-      createAction(ActionType.IAP__REQUEST_PURCHASE, {
-        sku: Platform.select({
-          ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
-          android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
+    if (
+      env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== null &&
+      env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== null
+    ) {
+      this.eventBus.pubsub(
+        createAction(ActionType.IAP__REQUEST_PURCHASE, {
+          sku: Platform.select({
+            ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
+            android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
+          }),
         }),
-      }),
-      group(
-        on(
-          ActionType.IAP__REQUESTING_PURCHASE,
-          (): void => {
-            // Do not show light box on Android
-            // as it's not automatically closed.
-            if (Platform.OS !== 'android') {
-              this.showRequestingPurchaseDialog();
-            }
-          },
+        group(
+          on(
+            ActionType.IAP__REQUESTING_PURCHASE,
+            (): void => {
+              // Do not show light box on Android
+              // as it's not automatically closed.
+              if (Platform.OS !== 'android') {
+                this.showRequestingPurchaseDialog();
+              }
+            },
+          ),
+          once(
+            ActionType.IAP__REQUEST_PURCHASE_SUCCEEDED,
+            (): void => {
+              this.dialogDelegate.dismiss();
+            },
+          ),
+          once(
+            ActionType.IAP__REQUEST_PURCHASE_FAILED,
+            ({ errorCode }): void => {
+              this.showFailedToRequestPurchase(errorCode);
+            },
+          ),
         ),
-        once(
-          ActionType.IAP__REQUEST_PURCHASE_SUCCEEDED,
-          (): void => {
-            this.dialogDelegate.dismiss();
-          },
-        ),
-        once(
-          ActionType.IAP__REQUEST_PURCHASE_FAILED,
-          ({ errorCode }): void => {
-            this.showFailedToRequestPurchase(errorCode);
-          },
-        ),
-      ),
-    );
+      );
+    } else {
+      console.warn('IAP is not configured');
+    }
   }
 
   private showPurchasesAlreadyAppliedDialog(): void {

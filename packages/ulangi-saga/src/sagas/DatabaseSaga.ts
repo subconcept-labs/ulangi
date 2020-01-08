@@ -11,6 +11,7 @@ import { call, cancel, delay, fork, put, take } from 'redux-saga/effects';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { PublicSaga } from '../sagas/PublicSaga';
 
 export class DatabaseSaga extends PublicSaga {
@@ -26,7 +27,7 @@ export class DatabaseSaga extends PublicSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
+  public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork([this, this.allowConnectSharedDb]);
     yield fork([this, this.allowCheckSharedDb]);
     yield fork([this, this.allowConnectUserDb]);

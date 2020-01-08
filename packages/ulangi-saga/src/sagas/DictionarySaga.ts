@@ -17,7 +17,7 @@ import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SagaConfig } from '../interfaces/SagaConfig';
+import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
 
@@ -41,8 +41,8 @@ export class DictionarySaga extends ProtectedSaga {
     this.crashlytics = crashlytics;
   }
 
-  public *run(config: SagaConfig): IterableIterator<any> {
-    yield fork([this, this.allowGetAndClearEntry], config.env.apiUrl);
+  public *run(env: SagaEnv): IterableIterator<any> {
+    yield fork([this, this.allowGetAndClearEntry], env.API_URL);
   }
 
   public *allowGetAndClearEntry(apiUrl: string): IterableIterator<any> {
