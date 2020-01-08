@@ -115,12 +115,6 @@ export class EditVocabularyScreenContainer extends Container<
     this.observableScreen,
   );
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === EditVocabularyScreenIds.BACK_BTN) {
-    } else if (buttonId === EditVocabularyScreenIds.SAVE_BTN) {
-    }
-  }
-
   public onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT

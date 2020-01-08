@@ -65,11 +65,6 @@ export class QuickTutorialScreenContainer extends Container {
     this.observableScreen,
   );
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === QuickTutorialScreenIds.BACK_BTN) {
-    }
-  }
-
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT

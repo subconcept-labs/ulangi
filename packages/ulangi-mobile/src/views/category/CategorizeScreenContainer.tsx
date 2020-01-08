@@ -106,12 +106,6 @@ export class CategorizeScreenContainer extends Container<
     this.screenDelegate.clearFetchCategorySuggestions();
   }
 
-  public navigationButtonPressed({ buttonId }: { buttonId: string }): void {
-    if (buttonId === CategorizeScreenIds.BACK_BTN) {
-    } else if (buttonId === CategorizeScreenIds.SAVE_BTN) {
-    }
-  }
-
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
