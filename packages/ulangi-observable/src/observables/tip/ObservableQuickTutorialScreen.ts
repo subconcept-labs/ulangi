@@ -6,7 +6,7 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { action, computed, observable } from 'mobx';
+import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
 import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
@@ -18,26 +18,6 @@ export class ObservableQuickTutorialScreen extends ObservableScreen {
   @observable
   public currentIndex: number;
 
-  @observable
-  public sliderWidth?: number;
-
-  @observable
-  public sliderHeight?: number;
-
-  @computed
-  public get imageWidth(): undefined | number {
-    return typeof this.sliderWidth !== 'undefined'
-      ? this.sliderWidth - 16 * 2
-      : undefined;
-  }
-
-  @computed
-  public get imageHeight(): undefined | number {
-    return typeof this.sliderHeight !== 'undefined'
-      ? this.sliderHeight
-      : undefined;
-  }
-
   public constructor(
     images: any[],
     currentIndex: number,
@@ -47,11 +27,5 @@ export class ObservableQuickTutorialScreen extends ObservableScreen {
     super(screenName, topBar);
     this.images = images;
     this.currentIndex = currentIndex;
-  }
-
-  @action
-  public setSliderDimension(width: number, height: number): void {
-    this.sliderWidth = width;
-    this.sliderHeight = height;
   }
 }

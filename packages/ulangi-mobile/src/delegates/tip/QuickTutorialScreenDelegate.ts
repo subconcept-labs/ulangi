@@ -27,10 +27,6 @@ export class QuickTutorialScreenDelegate {
     this.analytics = analytics;
   }
 
-  public setSliderDimension(width: number, height: number): void {
-    this.observableScreen.setSliderDimension(width, height);
-  }
-
   public setSlideIndex(index: number): void {
     this.analytics.logEvent('slide_quick_tutorial');
     this.observableScreen.currentIndex = index;

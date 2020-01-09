@@ -14,9 +14,10 @@ import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import {
+  Dimensions,
   Image,
-  LayoutChangeEvent,
   Platform,
+  SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native';
@@ -27,6 +28,8 @@ import { QuickTutorialScreenIds } from '../../constants/ids/QuickTutorialScreenI
 import { QuickTutorialScreenDelegate } from '../../delegates/tip/QuickTutorialScreenDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
+
+const screenWidth = Dimensions.get('window').width;
 
 export interface QuickTutorialScreenProps {
   darkModeStore: ObservableDarkModeStore;
@@ -40,83 +43,56 @@ export class QuickTutorialScreen extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <View
-        onLayout={this.onLayout}
+      <SafeAreaView
         style={styles.screen}
         testID={QuickTutorialScreenIds.SCREEN}>
-        {typeof this.props.observableScreen.sliderHeight !== 'undefined' &&
-        typeof this.props.observableScreen.sliderWidth !== 'undefined' ? (
-          <React.Fragment>
-            <Carousel
-              layout={Platform.select({
-                ios: 'stack',
-                android: 'default',
-              })}
-              contentContainerCustomStyle={{
-                height: this.props.observableScreen.sliderHeight,
-              }}
-              data={this.props.observableScreen.images}
-              onSnapToItem={this.props.screenDelegate.setSlideIndex}
-              renderItem={this.renderItem}
-              sliderWidth={this.props.observableScreen.sliderWidth || 0}
-              itemWidth={this.props.observableScreen.imageWidth || 0}
-            />
-            {Platform.select({
-              ios: (
-                <View style={styles.button_container}>
-                  <DefaultButton
-                    text="Close"
-                    styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-                      ButtonSize.NORMAL,
-                    )}
-                    onPress={this.props.screenDelegate.back}
-                  />
-                </View>
-              ),
-              android: (
-                <Pagination
-                  containerStyle={styles.pagination}
-                  activeDotIndex={this.props.observableScreen.currentIndex}
-                  dotsLength={this.props.observableScreen.images.length}
-                  dotColor={
-                    this.props.darkModeStore.theme === Theme.LIGHT
-                      ? config.styles.light.primaryTextColor
-                      : config.styles.dark.primaryTextColor
-                  }
-                  inactiveDotColor={
-                    this.props.darkModeStore.theme
-                      ? config.styles.light.secondaryTextColor
-                      : config.styles.dark.secondaryTextColor
-                  }
-                />
-              ),
+        <React.Fragment>
+          <Carousel
+            layout={Platform.select({
+              ios: 'stack',
+              android: 'default',
             })}
-          </React.Fragment>
-        ) : null}
-      </View>
+            data={this.props.observableScreen.images}
+            onSnapToItem={this.props.screenDelegate.setSlideIndex}
+            renderItem={this.renderItem}
+            sliderWidth={screenWidth}
+            itemWidth={screenWidth}
+          />
+          <Pagination
+            containerStyle={styles.pagination}
+            activeDotIndex={this.props.observableScreen.currentIndex}
+            dotsLength={this.props.observableScreen.images.length}
+            dotColor={
+              this.props.darkModeStore.theme === Theme.LIGHT
+                ? config.styles.light.primaryTextColor
+                : config.styles.dark.primaryTextColor
+            }
+            inactiveDotColor={
+              this.props.darkModeStore.theme
+                ? config.styles.light.secondaryTextColor
+                : config.styles.dark.secondaryTextColor
+            }
+          />
+          <View style={styles.button_container}>
+            <DefaultButton
+              text="Close"
+              styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+                ButtonSize.NORMAL,
+              )}
+              onPress={this.props.screenDelegate.back}
+            />
+          </View>
+        </React.Fragment>
+      </SafeAreaView>
     );
-  }
-
-  @boundMethod
-  private onLayout(e: LayoutChangeEvent): void {
-    const { width, height } = e.nativeEvent.layout;
-    this.props.screenDelegate.setSliderDimension(width, height - 50);
   }
 
   @boundMethod
   private renderItem({ item }: { item: any }): React.ReactElement<any> {
     return (
-      <Image
-        style={[
-          styles.image,
-          {
-            height: this.props.observableScreen.imageHeight,
-            width: this.props.observableScreen.imageWidth,
-          },
-        ]}
-        source={item}
-        resizeMode="contain"
-      />
+      <View style={styles.image_container}>
+        <Image style={styles.image} source={item} resizeMode="contain" />
+      </View>
     );
   }
 }
@@ -136,10 +112,19 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
 
-  image: {},
+  image_container: {
+    flexShrink: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+  },
+
+  image: {
+    flexShrink: 1,
+  },
 
   button_container: {
-    height: 50,
+    paddingVertical: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
