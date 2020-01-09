@@ -59,7 +59,7 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     title: {
-      color: config.styles.dark.primaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
     },
 
     category_name: {

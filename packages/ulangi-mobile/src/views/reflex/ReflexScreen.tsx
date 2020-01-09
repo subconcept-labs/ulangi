@@ -6,10 +6,13 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReflexScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableDarkModeStore,
+  ObservableReflexScreen,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
 import { ReflexScreenDelegate } from '../../delegates/reflex/ReflexScreenDelegate';
@@ -17,19 +20,33 @@ import { SelectedCategories } from '../../views/category/SelectedCategories';
 import { ReflexAnswerButtons } from './ReflexAnswerButtons';
 import { ReflexGameStats } from './ReflexGameStats';
 import { ReflexQuestionBox } from './ReflexQuestionBox';
+import {
+  ReflexScreenStyles,
+  darkStyles,
+  lightStyles,
+  selectedCategoriesDarkStyles,
+  selectedCategoriesLightStyles,
+} from './ReflexScreen.style';
 import { ReflexTopBar } from './ReflexTopBar';
 
 export interface ReflexScreenProps {
+  darkModeStore: ObservableDarkModeStore;
   observableScreen: ObservableReflexScreen;
   screenDelegate: ReflexScreenDelegate;
 }
 
 @observer
 export class ReflexScreen extends React.Component<ReflexScreenProps> {
+  public get styles(): ReflexScreenStyles {
+    return this.props.darkModeStore.theme === Theme.LIGHT
+      ? lightStyles
+      : darkStyles;
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.screen} testID={ReflexScreenIds.SCREEN}>
-        <View style={styles.container}>
+      <SafeAreaView style={this.styles.screen} testID={ReflexScreenIds.SCREEN}>
+        <View style={this.styles.container}>
           <ReflexTopBar
             onIconPressed={this.props.screenDelegate.handleIconPressed}
             gameState={this.props.observableScreen.gameState}
@@ -38,7 +55,7 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
             gameState={this.props.observableScreen.gameState}
           />
           {!this.props.observableScreen.gameState.started ? (
-            <View style={styles.selected_categories_container}>
+            <View style={this.styles.selected_categories_container}>
               <SelectedCategories
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
@@ -46,7 +63,11 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={Theme.DARK}
+                theme={this.props.darkModeStore.theme}
+                styles={{
+                  light: selectedCategoriesLightStyles,
+                  dark: selectedCategoriesDarkStyles,
+                }}
               />
             </View>
           ) : (
@@ -64,20 +85,3 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-
-  selected_categories_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

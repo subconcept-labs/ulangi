@@ -68,6 +68,7 @@ export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
   public render(): React.ReactElement<any> {
     return (
       <ReflexScreen
+        darkModeStore={this.props.rootStore.darkModeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />
