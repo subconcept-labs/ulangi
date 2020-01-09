@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.5](https://github.com/minhloi/ulangi/compare/v3.0.4...v3.0.5) (2020-01-09)
+
+
+### Bug Fixes
+
+* refactor env vars, make it easier to customize mobile ([ac4ccdf](https://github.com/minhloi/ulangi/commit/ac4ccdf))
+* sometimes audio does not play on Android ([ca308ff](https://github.com/minhloi/ulangi/commit/ca308ff)), closes [#17](https://github.com/minhloi/ulangi/issues/17)
+
+
+
+
+
 ## [3.0.4](https://github.com/minhloi/ulangi/compare/v3.0.3...v3.0.4) (2020-01-06)
 
 **Note:** Version bump only for package @ulangi/ulangi-action
