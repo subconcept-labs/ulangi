@@ -10,6 +10,7 @@ import { DatabaseEventBus, ModelList } from '@ulangi/ulangi-local-database';
 import * as FileSystem from 'react-native-fs';
 import * as Iap from 'react-native-iap';
 
+import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
@@ -51,6 +52,7 @@ export class ProtectedSagaFactory {
   private firebase: FirebaseAdapter;
   private fileSystem: typeof FileSystem;
   private iap: typeof Iap;
+  private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
   private crashlytics: CrashlyticsAdapter;
   private databaseEventBus: DatabaseEventBus;
@@ -62,6 +64,7 @@ export class ProtectedSagaFactory {
     firebase: FirebaseAdapter,
     fileSystem: typeof FileSystem,
     iap: typeof Iap,
+    audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
     crashlytics: CrashlyticsAdapter,
     databaseEventBus: DatabaseEventBus,
@@ -72,6 +75,7 @@ export class ProtectedSagaFactory {
     this.firebase = firebase;
     this.fileSystem = fileSystem;
     this.iap = iap;
+    this.audioPlayer = audioPlayer;
     this.notifications = notifications;
     this.crashlytics = crashlytics;
     this.databaseEventBus = databaseEventBus;
@@ -117,6 +121,7 @@ export class ProtectedSagaFactory {
         this.sharedDb,
         this.modelList.sessionModel,
         this.fileSystem,
+        this.audioPlayer,
         this.crashlytics
       ),
       new LibrarySaga(

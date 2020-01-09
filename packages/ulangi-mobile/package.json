@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@react-native-community/netinfo": "^4.7.0",
+    "@react-native-community/audio-toolkit": "^2.0.2",
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/react-native-ad-consent": "^2.0.2-patch.1",
@@ -43,6 +44,7 @@
     "react": "^16.9.0",
     "react-native": "^0.61.5",
     "react-native-animatable": "^1.3.3",
+    "react-native-sound": "^0.11.0",
     "react-native-appsflyer": "^1.4.7",
     "react-native-config": "^0.12.0",
     "react-native-dark-mode": "^0.2.1",
@@ -54,7 +56,6 @@
     "react-native-modal-datetime-picker": "^7.6.1",
     "react-native-rate": "^1.1.10",
     "react-native-snap-carousel": "^3.8.4",
-    "react-native-sound": "^0.11.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-sqlite-storage": "^4.1.0",
     "react-native-svg": "^9.13.6",

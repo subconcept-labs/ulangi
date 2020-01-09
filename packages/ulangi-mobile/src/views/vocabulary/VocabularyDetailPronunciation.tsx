@@ -56,8 +56,7 @@ export class VocabularyDetailPronunciation extends React.Component<
 
   private renderSpeaker(): React.ReactElement<any> {
     if (
-      this.props.observableScreen.synthesizeSpeechState.get() ===
-      ActivityState.INACTIVE
+      this.props.observableScreen.speakState.get() === ActivityState.INACTIVE
     ) {
       return (
         <TouchableOpacity

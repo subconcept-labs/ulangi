@@ -20,6 +20,7 @@ import { call, cancel, fork, put, spawn, take } from 'redux-saga/effects';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
@@ -41,6 +42,7 @@ export class RootSaga {
   private admob: AdMobAdapter;
   private appsFlyer: AppsFlyerAdapter;
   private netInfo: typeof NetInfo;
+  private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
   private systemDarkMode: SystemDarkModeAdapter;
   private crashlytics: CrashlyticsAdapter;
@@ -55,6 +57,7 @@ export class RootSaga {
     admob: AdMobAdapter,
     appsFlyer: AppsFlyerAdapter,
     netInfo: typeof NetInfo,
+    audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
     systemDarkMode: SystemDarkModeAdapter,
     crashlytics: CrashlyticsAdapter,
@@ -68,6 +71,7 @@ export class RootSaga {
     this.admob = admob;
     this.appsFlyer = appsFlyer;
     this.netInfo = netInfo;
+    this.audioPlayer = audioPlayer;
     this.notifications = notifications;
     this.systemDarkMode = systemDarkMode;
     this.crashlytics = crashlytics;
@@ -159,6 +163,7 @@ export class RootSaga {
       this.firebase,
       this.fileSystem,
       this.iap,
+      this.audioPlayer,
       this.notifications,
       this.crashlytics,
       this.databaseEventBus,

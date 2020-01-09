@@ -9,6 +9,7 @@ export { SagaFacade } from './facades/SagaFacade';
 export { FirebaseAdapter } from './adapters/FirebaseAdapter';
 export { AdMobAdapter } from './adapters/AdMobAdapter';
 export { AppsFlyerAdapter } from './adapters/AppsFlyerAdapter';
+export { AudioPlayerAdapter } from './adapters/AudioPlayerAdapter';
 export { NotificationsAdapter } from './adapters/NotificationsAdapter';
 export { CrashlyticsAdapter } from './adapters/CrashlyticsAdapter';
 export { AnalyticsAdapter } from './adapters/AnalyticsAdapter';

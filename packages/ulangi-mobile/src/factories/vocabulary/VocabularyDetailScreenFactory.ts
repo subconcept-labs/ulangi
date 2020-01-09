@@ -49,10 +49,7 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const speakDelegate = new SpeakDelegate(
-      this.eventBus,
-      this.props.rootStore.audioStore,
-    );
+    const speakDelegate = new SpeakDelegate(this.eventBus);
 
     return new VocabularyDetailScreenDelegate(
       observableScreen,

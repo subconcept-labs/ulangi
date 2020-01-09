@@ -159,6 +159,10 @@ export interface ActionPayload {
   readonly AUDIO__CLEARING_SYNTHESIZED_SPEECH_CACHE: null;
   readonly AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE_SUCCEEDED: null;
   readonly AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE_FAILED: { errorCode: string };
+  readonly AUDIO__PLAY: { filePath: string };
+  readonly AUDIO__PLAYING: null;
+  readonly AUDIO__PLAY_SUCCEEDED: null;
+  readonly AUDIO__PLAY_FAILED: { errorCode: string };
 
   readonly CATEGORY__PREPARE_FETCH_SUGGESTIONS: { term: string; setId: string };
   readonly CATEGORY__PREPARING_FETCH_SUGGESTIONS: null;

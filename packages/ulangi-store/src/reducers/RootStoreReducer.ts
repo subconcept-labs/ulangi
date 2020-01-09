@@ -16,7 +16,6 @@ import { StoreEnv } from '../interfaces/StoreEnv';
 import { StoreOptions } from '../interfaces/StoreOptions';
 import { makeInitialState } from '../utils/makeInitialState';
 import { AdStoreReducer } from './AdStoreReducer';
-import { AudioStoreReducer } from './AudioStoreReducer';
 import { DarkModeStoreReducer } from './DarkModeStoreReducer';
 import { NetworkStoreReducer } from './NetworkStoreReducer';
 import { NotificationStoreReducer } from './NotificationStoreReducer';
@@ -52,7 +51,6 @@ export class RootStoreReducer extends Reducer {
         rootStore.remoteConfigStore,
         observableConverter
       ),
-      new AudioStoreReducer(rootStore.audioStore),
       new NetworkStoreReducer(rootStore.networkStore),
       new SyncStoreReducer(rootStore.syncStore),
       new PurchaseStoreReducer(

@@ -8,7 +8,6 @@
 import * as _ from 'lodash';
 
 import { ObservableAdStore } from './ObservableAdStore';
-import { ObservableAudioStore } from './ObservableAudioStore';
 import { ObservableDarkModeStore } from './ObservableDarkModeStore';
 import { ObservableNetworkStore } from './ObservableNetworkStore';
 import { ObservableNotificationStore } from './ObservableNotificationStore';
@@ -22,7 +21,6 @@ import { ObservableUserStore } from './ObservableUserStore';
 export class ObservableRootStore extends ObservableStore {
   public readonly userStore: ObservableUserStore;
   public readonly setStore: ObservableSetStore;
-  public readonly audioStore: ObservableAudioStore;
   public readonly networkStore: ObservableNetworkStore;
   public readonly syncStore: ObservableSyncStore;
   public readonly remoteConfigStore: ObservableRemoteConfigStore;
@@ -34,7 +32,6 @@ export class ObservableRootStore extends ObservableStore {
   public constructor(
     userStore: ObservableUserStore,
     setStore: ObservableSetStore,
-    audioStore: ObservableAudioStore,
     networkStore: ObservableNetworkStore,
     syncStore: ObservableSyncStore,
     remoteConfigStore: ObservableRemoteConfigStore,
@@ -46,7 +43,6 @@ export class ObservableRootStore extends ObservableStore {
     super();
     this.userStore = userStore;
     this.setStore = setStore;
-    this.audioStore = audioStore;
     this.networkStore = networkStore;
     this.syncStore = syncStore;
     this.remoteConfigStore = remoteConfigStore;

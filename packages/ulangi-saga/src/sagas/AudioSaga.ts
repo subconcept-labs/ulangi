@@ -15,6 +15,7 @@ import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 import * as uuid from 'uuid';
 
+import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
@@ -24,19 +25,26 @@ export class AudioSaga extends ProtectedSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private fileSystem: typeof FileSystem;
+  private audioPlayer: AudioPlayerAdapter;
   private crashlytics: CrashlyticsAdapter;
+
+  private synthesizedMap: Map<string, string>;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
     fileSystem: typeof FileSystem,
+    audioPlayer: AudioPlayerAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.fileSystem = fileSystem;
+    this.audioPlayer = audioPlayer;
     this.crashlytics = crashlytics;
+
+    this.synthesizedMap = new Map();
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -49,6 +57,7 @@ export class AudioSaga extends ProtectedSaga {
       [this, this.allowClearSynthesizedSpeechCache],
       config.audio.cacheFolderName
     );
+    yield fork([this, this.allowPlay]);
   }
 
   public *allowSynthesizeSpeech(
@@ -70,42 +79,52 @@ export class AudioSaga extends ProtectedSaga {
 
         yield call([this, this.createCacheFolderIfNotExists], cacheFolderName);
 
-        const filePathToSave =
-          this.fileSystem.CachesDirectoryPath +
-          '/' +
-          cacheFolderName +
-          '/' +
-          uuid.v4() +
-          '.mp3';
+        let audioKey = languageCode + '-' + text;
+        let audioFilePath = yield call(
+          [this, this.getSynthesizedAudioFile],
+          audioKey
+        );
 
-        const { promise } = this.fileSystem.downloadFile({
-          fromUrl:
-            apiUrl +
-            '/synthesize-speech?' +
-            querystring.stringify({
-              text,
-              languageCode,
-            }),
-          toFile: filePathToSave,
-          headers: {
-            Authorization: 'Bearer ' + accessToken,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cache-Control': 'no-store',
-          },
-        });
+        if (typeof audioFilePath === 'undefined') {
+          audioFilePath =
+            this.fileSystem.CachesDirectoryPath +
+            '/' +
+            cacheFolderName +
+            '/' +
+            uuid.v4() +
+            '.mp3';
 
-        const response: FileSystem.DownloadResult = yield promise;
+          const { promise } = this.fileSystem.downloadFile({
+            fromUrl:
+              apiUrl +
+              '/synthesize-speech?' +
+              querystring.stringify({
+                text,
+                languageCode,
+              }),
+            toFile: audioFilePath,
+            headers: {
+              Authorization: 'Bearer ' + accessToken,
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Cache-Control': 'no-store',
+            },
+          });
 
-        if (response.statusCode === 200) {
-          yield put(
-            createAction(ActionType.AUDIO__SYNTHESIZE_SPEECH_SUCCEEDED, {
-              text,
-              filePath: filePathToSave,
-            })
-          );
-        } else {
-          throw new Error(ErrorCode.GENERAL__UNKNOWN_ERROR);
+          const response: FileSystem.DownloadResult = yield promise;
+
+          if (response.statusCode === 200) {
+            this.synthesizedMap.set(audioKey, audioFilePath);
+          } else {
+            throw new Error(ErrorCode.GENERAL__UNKNOWN_ERROR);
+          }
         }
+
+        yield put(
+          createAction(ActionType.AUDIO__SYNTHESIZE_SPEECH_SUCCEEDED, {
+            text,
+            filePath: audioFilePath,
+          })
+        );
       } catch (error) {
         yield put(
           createAction(ActionType.AUDIO__SYNTHESIZE_SPEECH_FAILED, {
@@ -148,6 +167,45 @@ export class AudioSaga extends ProtectedSaga {
           )
         );
       }
+    }
+  }
+
+  public *allowPlay(): IterableIterator<any> {
+    while (true) {
+      const action: Action<ActionType.AUDIO__PLAY> = yield take(
+        ActionType.AUDIO__PLAY
+      );
+
+      try {
+        yield put(createAction(ActionType.AUDIO__PLAYING, null));
+
+        yield call([this.audioPlayer, 'stopCurrentSound']);
+
+        // on Android, we need to release the current resource
+        // Otherwise, sometimes the player does not play
+        yield call([this.audioPlayer, 'releaseCurrentSound']);
+
+        yield call([this.audioPlayer, 'play'], action.payload.filePath);
+
+        yield put(createAction(ActionType.AUDIO__PLAY_SUCCEEDED, null));
+      } catch (error) {
+        yield put(
+          createAction(ActionType.AUDIO__PLAY_FAILED, {
+            errorCode: this.crashlytics.getErrorCode(error),
+          })
+        );
+      }
+    }
+  }
+
+  private *getSynthesizedAudioFile(key: string): IterableIterator<any> {
+    let audioFilePath = this.synthesizedMap.get(key);
+
+    if (typeof audioFilePath !== 'undefined') {
+      const exists = yield call([this.fileSystem, 'exists'], audioFilePath);
+      return exists ? audioFilePath : undefined;
+    } else {
+      return undefined;
     }
   }
 

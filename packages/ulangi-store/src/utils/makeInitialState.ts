@@ -8,7 +8,6 @@
 import { ActivityState, ConsentStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
-  ObservableAudioStore,
   ObservableDarkModeStore,
   ObservableNetworkStore,
   ObservableNotificationStore,
@@ -19,7 +18,6 @@ import {
   ObservableSyncStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
-import { observable } from 'mobx';
 
 import { StoreConfig } from '../interfaces/StoreConfig';
 import { StoreOptions } from '../interfaces/StoreOptions';
@@ -30,7 +28,6 @@ export function makeInitialState(
 ): ObservableRootStore {
   const userStore = new ObservableUserStore(null);
   const setStore = new ObservableSetStore(null, null, null);
-  const audioStore = new ObservableAudioStore(observable.map());
   const networkStore = new ObservableNetworkStore(null);
   const syncStore = new ObservableSyncStore('NOT_SYNCING');
   const remoteConfigStore = new ObservableRemoteConfigStore(null);
@@ -56,7 +53,6 @@ export function makeInitialState(
   return new ObservableRootStore(
     userStore,
     setStore,
-    audioStore,
     networkStore,
     syncStore,
     remoteConfigStore,

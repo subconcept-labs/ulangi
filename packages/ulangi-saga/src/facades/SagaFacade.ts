@@ -19,6 +19,7 @@ import sagaMiddlewareFactory, { SagaMiddleware } from 'redux-saga';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
@@ -40,6 +41,7 @@ export class SagaFacade {
   private netInfo: typeof NetInfo;
   private fileSystem: typeof FileSystem;
   private iap: typeof Iap;
+  private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
   private systemDarkMode: SystemDarkModeAdapter;
   private crashlytics: CrashlyticsAdapter;
@@ -57,6 +59,7 @@ export class SagaFacade {
     netInfo: typeof NetInfo,
     fileSystem: typeof FileSystem,
     iap: typeof Iap,
+    audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
     systemDarkMode: SystemDarkModeAdapter,
     crashlytics: CrashlyticsAdapter
@@ -72,6 +75,7 @@ export class SagaFacade {
     this.netInfo = netInfo;
     this.fileSystem = fileSystem;
     this.iap = iap;
+    this.audioPlayer = audioPlayer;
     this.notifications = notifications;
     this.systemDarkMode = systemDarkMode;
     this.crashlytics = crashlytics;
@@ -93,6 +97,7 @@ export class SagaFacade {
       this.adMob,
       this.appsFlyer,
       this.netInfo,
+      this.audioPlayer,
       this.notifications,
       this.systemDarkMode,
       this.crashlytics,

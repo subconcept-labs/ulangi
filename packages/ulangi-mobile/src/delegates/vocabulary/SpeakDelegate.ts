@@ -7,22 +7,12 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
-import { ObservableAudioStore } from '@ulangi/ulangi-observable';
-import * as path from 'path';
-
-import Sound = require('react-native-sound');
 
 export class SpeakDelegate {
   private eventBus: EventBus;
-  private audioStore: ObservableAudioStore;
 
-  public constructor(eventBus: EventBus, audioStore: ObservableAudioStore) {
+  public constructor(eventBus: EventBus) {
     this.eventBus = eventBus;
-    this.audioStore = audioStore;
-  }
-
-  public getAudioFilePath(text: string): undefined | string {
-    return this.audioStore.synthesizedSpeechMap.get(text);
   }
 
   public synthesize(
@@ -57,29 +47,27 @@ export class SpeakDelegate {
   public speak(
     filePath: string,
     callback: {
+      onSpeaking: () => void;
       onSpeakSucceeded: () => void;
-      onSpeakFailed: () => void;
+      onSpeakFailed: (errorCode: string) => void;
     },
   ): void {
-    const fileName = path.basename(filePath);
-    const baseDir = path.dirname(filePath);
-    Sound.setCategory('Playback', false);
+    this.eventBus.pubsub(
+      createAction(ActionType.AUDIO__PLAY, {
+        filePath,
+      }),
 
-    const sound = new Sound(
-      fileName,
-      baseDir,
-      (error: any): void => {
-        if (error) {
-          callback.onSpeakFailed();
-          console.warn(error);
-        } else {
-          sound.play(
-            (): void => {
-              callback.onSpeakSucceeded();
-            },
-          );
-        }
-      },
+      group(
+        on(ActionType.AUDIO__PLAYING, callback.onSpeaking),
+        once(
+          ActionType.AUDIO__PLAY_SUCCEEDED,
+          (): void => callback.onSpeakSucceeded(),
+        ),
+        once(
+          ActionType.AUDIO__PLAY_FAILED,
+          ({ errorCode }): void => callback.onSpeakFailed(errorCode),
+        ),
+      ),
     );
   }
 }

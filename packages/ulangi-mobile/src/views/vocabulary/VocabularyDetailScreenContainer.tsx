@@ -96,7 +96,6 @@ export class VocabularyDetailScreenContainer extends Container<
     return (
       <VocabularyDetailScreen
         setStore={this.props.rootStore.setStore}
-        audioStore={this.props.rootStore.audioStore}
         darkModeStore={this.props.rootStore.darkModeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}

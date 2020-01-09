@@ -21,6 +21,7 @@ import {
   AdMobAdapter,
   AnalyticsAdapter,
   AppsFlyerAdapter,
+  AudioPlayerAdapter,
   CrashlyticsAdapter,
   FirebaseAdapter,
   NotificationsAdapter,
@@ -43,6 +44,8 @@ import { autoUpdateKeyboardState } from './setup/autoUpdateKeyboardState';
 import { setupCustomViews } from './setup/setupCustomViews';
 import { setupNavigationDefaultOptions } from './setup/setupNavigationDefaultOptions';
 import { setupScreens } from './setup/setupScreens';
+
+import AudioPlayer = require('react-native-sound');
 
 export class App {
   private started: boolean;
@@ -88,6 +91,7 @@ export class App {
       NetInfo,
       FileSystem,
       Iap,
+      new AudioPlayerAdapter(AudioPlayer),
       new NotificationsAdapter(
         firebase.notifications(),
         firebase.messaging(),

@@ -8,7 +8,6 @@
 import { assertExists } from '@ulangi/assert';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableAudioStore,
   ObservableDarkModeStore,
   ObservableSetStore,
   ObservableVocabularyDetailScreen,
@@ -32,7 +31,6 @@ import {
 
 export interface VocabularyDetailScreenProps {
   setStore: ObservableSetStore;
-  audioStore: ObservableAudioStore;
   darkModeStore: ObservableDarkModeStore;
   observableScreen: ObservableVocabularyDetailScreen;
   screenDelegate: VocabularyDetailScreenDelegate;
@@ -78,9 +76,7 @@ export class VocabularyDetailScreen extends React.Component<
             vocabularyExtraFields={
               this.props.observableScreen.vocabulary.vocabularyExtraFields
             }
-            synthesizeSpeechState={
-              this.props.observableScreen.synthesizeSpeechState
-            }
+            speakState={this.props.observableScreen.speakState}
             speak={(text): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
                 text,

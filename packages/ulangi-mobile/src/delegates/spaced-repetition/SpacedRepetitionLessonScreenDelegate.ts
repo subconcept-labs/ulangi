@@ -379,33 +379,29 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   private synthesizeAndSpeak(text: string): void {
-    const filePath = this.speakDelegate.getAudioFilePath(text);
-
-    if (typeof filePath !== 'undefined') {
-      this.speak(filePath);
-    } else {
-      this.speakDelegate.synthesize(
-        text,
-        this.setStore.existingCurrentSet.learningLanguageCode,
-        {
-          onSynthesizing: (): void => {
-            this.observableScreen.speakState.set(ActivityState.ACTIVE);
-          },
-          onSynthesizeSucceeded: (newFilePath): void => {
-            this.observableScreen.speakState.set(ActivityState.INACTIVE);
-            this.speak(newFilePath);
-          },
-          onSynthesizeFailed: (errorCode): void => {
-            this.observableScreen.speakState.set(ActivityState.INACTIVE);
-            this.showSynthesizeErrorDialog(errorCode);
-          },
+    this.speakDelegate.synthesize(
+      text,
+      this.setStore.existingCurrentSet.learningLanguageCode,
+      {
+        onSynthesizing: (): void => {
+          this.observableScreen.speakState.set(ActivityState.ACTIVE);
         },
-      );
-    }
+        onSynthesizeSucceeded: (filePath): void => {
+          this.speak(filePath);
+        },
+        onSynthesizeFailed: (errorCode): void => {
+          this.observableScreen.speakState.set(ActivityState.INACTIVE);
+          this.showSynthesizeErrorDialog(errorCode);
+        },
+      },
+    );
   }
 
   private speak(filePath: string): void {
     this.speakDelegate.speak(filePath, {
+      onSpeaking: (): void => {
+        this.observableScreen.speakState.set(ActivityState.ACTIVE);
+      },
       onSpeakSucceeded: (): void => {
         this.observableScreen.speakState.set(ActivityState.INACTIVE);
       },

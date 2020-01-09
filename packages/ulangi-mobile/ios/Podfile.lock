@@ -380,6 +380,8 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
+  - ReactNativeAudioToolkit (2.0.2):
+    - React
   - ReactNativeDarkMode (0.2.1):
     - React
   - ReactNativeNavigation (4.0.9-patch.6):
@@ -465,6 +467,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativeAudioToolkit (from `../node_modules/@react-native-community/audio-toolkit`)"
   - ReactNativeDarkMode (from `../node_modules/react-native-dark-mode`)
   - "ReactNativeNavigation (from `../node_modules/@ulangi/react-native-navigation/ReactNativeNavigation.podspec`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
@@ -578,6 +581,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativeAudioToolkit:
+    :path: "../node_modules/@react-native-community/audio-toolkit"
   ReactNativeDarkMode:
     :path: "../node_modules/react-native-dark-mode"
   ReactNativeNavigation:
@@ -663,6 +668,7 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
+  ReactNativeAudioToolkit: 8febb6c0664cf03fdf83eafaf7f645029b66bd62
   ReactNativeDarkMode: 0e6e7bdbd387eb949fa7ff238a48f6d6431a428d
   ReactNativeNavigation: fd2de12123e368b33c3cc234f029f6c7102acc26
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2

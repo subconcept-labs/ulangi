@@ -52,10 +52,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       autoArchiveSettingsDelegate,
     );
 
-    const speakDelegate = new SpeakDelegate(
-      this.eventBus,
-      this.props.rootStore.audioStore,
-    );
+    const speakDelegate = new SpeakDelegate(this.eventBus);
 
     const reviewFeedbackDataDelegate = new ReviewFeedbackDataDelegate(
       config.spacedRepetition.maxLevel,

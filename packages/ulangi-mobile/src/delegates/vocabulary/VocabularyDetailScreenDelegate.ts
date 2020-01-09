@@ -56,27 +56,18 @@ export class VocabularyDetailScreenDelegate {
   }
 
   public synthesizeAndSpeak(text: string, languageCode: string): void {
-    const filePath = this.speakDelegate.getAudioFilePath(text);
-
-    if (typeof filePath !== 'undefined') {
-      this.speak(filePath);
-    } else {
-      this.speakDelegate.synthesize(text, languageCode, {
-        onSynthesizing: (): void => {
-          this.observableScreen.synthesizeSpeechState.set(ActivityState.ACTIVE);
-        },
-        onSynthesizeSucceeded: (newFilePath): void => {
-          this.observableScreen.synthesizeSpeechState.set(
-            ActivityState.INACTIVE,
-          );
-          this.speak(newFilePath);
-        },
-        onSynthesizeFailed: (errorCode): void => {
-          this.observableScreen.synthesizeSpeechState.set(ActivityState.ERROR);
-          this.showErrorDialog(errorCode);
-        },
-      });
-    }
+    this.speakDelegate.synthesize(text, languageCode, {
+      onSynthesizing: (): void => {
+        this.observableScreen.speakState.set(ActivityState.ACTIVE);
+      },
+      onSynthesizeSucceeded: (filePath): void => {
+        this.speak(filePath);
+      },
+      onSynthesizeFailed: (errorCode): void => {
+        this.observableScreen.speakState.set(ActivityState.ERROR);
+        this.showErrorDialog(errorCode);
+      },
+    });
   }
 
   public showVocabularyActionMenu(vocabulary: ObservableVocabulary): void {
@@ -117,11 +108,14 @@ export class VocabularyDetailScreenDelegate {
 
   private speak(filePath: string): void {
     this.speakDelegate.speak(filePath, {
+      onSpeaking: (): void => {
+        this.observableScreen.speakState.set(ActivityState.ACTIVE);
+      },
       onSpeakSucceeded: (): void => {
-        this.observableScreen.synthesizeSpeechState.set(ActivityState.INACTIVE);
+        this.observableScreen.speakState.set(ActivityState.INACTIVE);
       },
       onSpeakFailed: (): void => {
-        this.observableScreen.synthesizeSpeechState.set(ActivityState.INACTIVE);
+        this.observableScreen.speakState.set(ActivityState.INACTIVE);
       },
     });
   }

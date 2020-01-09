@@ -28,7 +28,7 @@ import {
 export interface VocabularyDetailExtraFieldsProps {
   theme: Theme;
   vocabularyExtraFields: VocabularyExtraFields;
-  synthesizeSpeechState: IObservableValue<ActivityState>;
+  speakState: IObservableValue<ActivityState>;
   speak: (text: string) => void;
   styles?: {
     light: VocabularyDetailExtraFieldsStyles;
@@ -143,7 +143,7 @@ export class VocabularyDetailExtraFields extends React.Component<
   }
 
   private renderSpeaker(value: string): React.ReactElement<any> {
-    if (this.props.synthesizeSpeechState.get() === ActivityState.INACTIVE) {
+    if (this.props.speakState.get() === ActivityState.INACTIVE) {
       return (
         <TouchableOpacity
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}

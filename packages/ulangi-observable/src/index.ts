@@ -238,9 +238,6 @@ export {
 export { ObservableUserStore } from './observables/stores/ObservableUserStore';
 export { ObservableSetStore } from './observables/stores/ObservableSetStore';
 export {
-  ObservableAudioStore,
-} from './observables/stores/ObservableAudioStore';
-export {
   ObservableNetworkStore,
 } from './observables/stores/ObservableNetworkStore';
 export { ObservableSyncStore } from './observables/stores/ObservableSyncStore';
