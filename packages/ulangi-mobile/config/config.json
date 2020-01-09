@@ -50,8 +50,8 @@
     "instagram": "https://www.instagram.com/ulangi.app/",
     "facebookPage": "fb://page?id=393649531152390",
     "facebookPageFallback": "https://www.facebook.com/ulangi.flashcards/",
-    "installUlangiSheetsAddOnTutorial": "https://medium.com/ulangi-app/tutorial-how-to-install-and-set-up-google-sheets-add-on-for-ulangi-4b855bbee6fd",
-    "useUlangiSheetsAddOnTutorial": "https://medium.com/ulangi-app/tutorial-how-to-use-google-sheets-add-on-for-ulangi-a13a50dc86aa"
+    "installUlangiSheetsAddOnTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/install-ulangi-sheets-add-on",
+    "useUlangiSheetsAddOnTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on"
   },
 
   "styles": {

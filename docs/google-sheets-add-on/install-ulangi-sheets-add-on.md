@@ -24,7 +24,7 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 
 1. Choose *Add-on > Ulangi Sheets > Show sidebar.*
 
-2. Click on **Set API key** and use the key from the mobile app (navigate to *More > Sync with Google Sheets*.)
+2. Click on **Set API key**. You can retrieve the API key from Ulangi mobile app (navigate to *More > Sync with Google Sheets*.)
 
 3. Click on **Set up for syncing** and select the set you want to sync.
 
