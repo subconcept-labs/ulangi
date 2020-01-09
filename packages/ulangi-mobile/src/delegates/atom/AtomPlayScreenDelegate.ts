@@ -320,7 +320,7 @@ export class AtomPlayScreenDelegate {
       ({ shellType, correctSubsets }): void => {
         const shell = assertExists(
           this.observableScreen.shells.find(
-            (shell): boolean => shell.shellType === shellType,
+            (currentShell): boolean => currentShell.shellType === shellType,
           ),
           'shell should not be null or undefined',
         );

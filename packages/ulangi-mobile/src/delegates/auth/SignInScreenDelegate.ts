@@ -93,12 +93,12 @@ export class SignInScreenDelegate {
                   onDownloadCompleted: (): void =>
                     this.fetchSetDelegate.fetchAllSets({
                       onFetchingAll: this.showFetchingDataDialog,
-                      onFetchAllSucceeded: (setList): void => {
-                        if (this.setListDelegate.hasActiveSets(setList)) {
+                      onFetchAllSucceeded: (newSetList): void => {
+                        if (this.setListDelegate.hasActiveSets(newSetList)) {
                           this.showSyncingInProgressDialog({
                             onClose: (): void => {
                               this.setListDelegate.selectFirstActiveSet(
-                                setList,
+                                newSetList,
                               );
                               this.rootScreenDelegate.setRootToTabBasedScreen();
                             },

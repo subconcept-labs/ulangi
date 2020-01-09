@@ -145,35 +145,33 @@ export class SpacedRepetitionLessonScreenDelegate {
       ),
     ]);
 
-    {
-      _.toPairs(vocabulary.vocabularyExtraFields).forEach(
-        ([key, valueList]): void => {
-          if (
-            VocabularyExtraFieldDetails[key as keyof VocabularyExtraFields]
-              .params[0].isSpeakable === true
-          ) {
-            valueList.forEach(
-              (values: string[]): void => {
-                this.observableScreen.reviewActionBarState.buttons.push(
-                  new ObservableReviewActionButton(
-                    'PLAY AUDIO',
-                    values[0],
-                    ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(values[0]),
-                    {
-                      light: Images.SPEAKER_BLACK_25X25,
-                      dark: Images.SPEAKER_MILK_25X25,
-                    },
-                    false,
-                    (): void => this.synthesizeAndSpeak(values[0]),
-                    this.autoUpdateAudioButton,
-                  ),
-                );
-              },
-            );
-          }
-        },
-      );
-    }
+    _.toPairs(vocabulary.vocabularyExtraFields).forEach(
+      ([key, valueList]): void => {
+        if (
+          VocabularyExtraFieldDetails[key as keyof VocabularyExtraFields]
+            .params[0].isSpeakable === true
+        ) {
+          valueList.forEach(
+            (values: string[]): void => {
+              this.observableScreen.reviewActionBarState.buttons.push(
+                new ObservableReviewActionButton(
+                  'PLAY AUDIO',
+                  values[0],
+                  ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(values[0]),
+                  {
+                    light: Images.SPEAKER_BLACK_25X25,
+                    dark: Images.SPEAKER_MILK_25X25,
+                  },
+                  false,
+                  (): void => this.synthesizeAndSpeak(values[0]),
+                  this.autoUpdateAudioButton,
+                ),
+              );
+            },
+          );
+        }
+      },
+    );
   }
 
   public autoUpdateButtons(): void {
@@ -393,9 +391,9 @@ export class SpacedRepetitionLessonScreenDelegate {
           onSynthesizing: (): void => {
             this.observableScreen.speakState.set(ActivityState.ACTIVE);
           },
-          onSynthesizeSucceeded: (filePath): void => {
+          onSynthesizeSucceeded: (newFilePath): void => {
             this.observableScreen.speakState.set(ActivityState.INACTIVE);
-            this.speak(filePath);
+            this.speak(newFilePath);
           },
           onSynthesizeFailed: (errorCode): void => {
             this.observableScreen.speakState.set(ActivityState.INACTIVE);

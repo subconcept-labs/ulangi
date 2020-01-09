@@ -14,7 +14,7 @@ import {
   lightStyles as defaultDefinitionItemLightStyles,
 } from './DefinitionItem.style';
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface VocabularyDetailDefinitionsStyles {}
 
 export const baseStyles: VocabularyDetailDefinitionsStyles = {};

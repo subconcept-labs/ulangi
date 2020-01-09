@@ -37,7 +37,8 @@ export class AtomParticleDelegate {
       (particle): void => {
         const shell = assertExists(
           this.observableScreen.shells.find(
-            (shell): boolean => particle.shellType === shell.shellType,
+            (currentShell): boolean =>
+              particle.shellType === currentShell.shellType,
           ),
           'shell should not be null or undefined',
         );
@@ -175,7 +176,7 @@ export class AtomParticleDelegate {
   public isMaxReached(shellType: AtomShellType): boolean {
     const shell = assertExists(
       this.observableScreen.shells.find(
-        (shell): boolean => shell.shellType === shellType,
+        (currentShell): boolean => currentShell.shellType === shellType,
       ),
       'shell should not be null or undefined',
     );

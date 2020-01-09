@@ -76,7 +76,7 @@ export const baseStyles: ReviewFeedbackBarStyles = {
   level_text: {
     textAlign: 'center',
     fontSize: 13,
-    color: '#f7f7f7',
+    color: '#fff',
   },
 };
 

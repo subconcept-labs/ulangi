@@ -65,11 +65,11 @@ export class VocabularyDetailScreenDelegate {
         onSynthesizing: (): void => {
           this.observableScreen.synthesizeSpeechState.set(ActivityState.ACTIVE);
         },
-        onSynthesizeSucceeded: (filePath): void => {
+        onSynthesizeSucceeded: (newFilePath): void => {
           this.observableScreen.synthesizeSpeechState.set(
             ActivityState.INACTIVE,
           );
-          this.speak(filePath);
+          this.speak(newFilePath);
         },
         onSynthesizeFailed: (errorCode): void => {
           this.observableScreen.synthesizeSpeechState.set(ActivityState.ERROR);

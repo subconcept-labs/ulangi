@@ -55,7 +55,7 @@ export class AddSetDelegate {
         on(ActionType.SET__ADDING, callback.onSaving),
         once(
           ActionType.SET__ADD_SUCCEEDED,
-          ({ set }): void => callback.onSaveSucceeded(set),
+          ({ set: newSet }): void => callback.onSaveSucceeded(newSet),
         ),
         once(
           ActionType.SET__ADD_FAILED,

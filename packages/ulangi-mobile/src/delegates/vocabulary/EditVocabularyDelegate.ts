@@ -142,8 +142,8 @@ export class EditVocabularyDelegate {
     return originalDefinitions.filter(
       (originDefinition): boolean => {
         const currentDefinition = currentDefinitions.find(
-          (currentDefinition): boolean =>
-            currentDefinition.definitionId === originDefinition.definitionId,
+          (definition): boolean =>
+            definition.definitionId === originDefinition.definitionId,
         );
 
         return (

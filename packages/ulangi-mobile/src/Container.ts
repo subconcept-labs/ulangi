@@ -36,7 +36,6 @@ export interface ContainerProps<T extends object = {}>
 export abstract class Container<T extends object = {}> extends React.Component<
   ContainerProps<T>
 > {
-  // eslint-disable-next-line
   protected onThemeChanged(__: Theme): void {
     _.noop();
   }

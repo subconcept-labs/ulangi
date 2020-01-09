@@ -84,8 +84,9 @@ export class AtomOrigin extends React.Component<
     }
   }
 
-  // eslint-disable-next-line
-  private getTransformStyle() {
+  private getTransformStyle(): {
+    transform: { [key: string]: Animated.Value }[];
+  } {
     return {
       transform: [{ scaleX: this.state.scale }, { scaleY: this.state.scale }],
     };

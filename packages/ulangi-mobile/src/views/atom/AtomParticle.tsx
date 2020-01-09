@@ -71,7 +71,7 @@ export class AtomParticle extends React.Component<
     };
 
     this.unsubscribeHandleCommand = (): void => {
-      _.noop;
+      _.noop();
     };
 
     this.panResponder = PanResponder.create({
@@ -81,7 +81,7 @@ export class AtomParticle extends React.Component<
         //this.state.pan.extractOffset()
         //this.state.pan.setValue({ x: 0, y: 0 })
       },
-      onPanResponderMove: (_, gestureState): void => {
+      onPanResponderMove: (__, gestureState): void => {
         if (this.props.particle.enabled === true) {
           const x = gestureState.moveX - config.atom.particleSize / 2;
           const y = gestureState.moveY - config.atom.particleSize / 2;
@@ -89,7 +89,7 @@ export class AtomParticle extends React.Component<
           //this.onMoving({ x: this.currentPositionX, y: this.currentPositionY })
         }
       },
-      onPanResponderRelease: (_, gestureState): void => {
+      onPanResponderRelease: (__, gestureState): void => {
         //this.state.pan.flattenOffset()
         const x = gestureState.moveX - config.atom.particleSize / 2;
         const y = gestureState.moveY - config.atom.particleSize / 2;
@@ -191,16 +191,6 @@ export class AtomParticle extends React.Component<
     this.unsubscribeHandleCommand();
   }
 
-  // eslint-disable-next-line
-  private getTransformStyle() {
-    return {
-      transform: [
-        { translateX: this.state.pan.x },
-        { translateY: this.state.pan.y },
-      ],
-    };
-  }
-
   private getContainerStyle(): ViewStyle {
     return {
       height: config.atom.particleSize,
@@ -220,7 +210,9 @@ export class AtomParticle extends React.Component<
         style={[
           styles.particle_container,
           this.getContainerStyle(),
-          this.getTransformStyle(),
+          {
+            transform: this.state.pan.getTranslateTransform(),
+          },
         ]}>
         <DefaultText style={styles.character}>
           {this.props.particle.character}

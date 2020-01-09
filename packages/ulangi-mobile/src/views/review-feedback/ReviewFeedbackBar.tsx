@@ -126,12 +126,7 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
                     <DefaultText
                       numberOfLines={1}
                       ellipsizeMode="clip"
-                      style={[
-                        this.styles.level_text,
-                        {
-                          color: '#fff',
-                        },
-                      ]}>
+                      style={this.styles.level_text}>
                       lv. {nextReviewData.nextLevel}
                     </DefaultText>
                   </TouchableOpacity>

@@ -134,8 +134,11 @@ export class AtomAnswerDelegate {
     );
 
     const correctSubsetsOfEachShell = particlesInEachShell.map(
-      (particles): ObservableParticle[][] => {
-        return this.getCorrectParticleSubsetsInOneShell(particles, answer);
+      (currentParticles): ObservableParticle[][] => {
+        return this.getCorrectParticleSubsetsInOneShell(
+          currentParticles,
+          answer,
+        );
       },
     );
 
