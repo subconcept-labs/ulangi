@@ -1,11 +1,11 @@
 <h1 align="center">
-  <img src="https://github.com/minhloi/ulangi/blob/master/images/logo_120x120.png?raw=true"><br>
+  <img src="./images/logo_120x120.svg"><br>
   <a href="https://ulangi.com"><span>Ulangi</span></a><br>
 </h1>
-<p align="center">
-  <span>Open-source language learning app</span><br>
-  <span>Build your own version</span><br>
-</p>
+<h4 align="center">
+  <span>Open-source language learning project</span><br>
+  <span>Crafted with love 💛</span><br>
+</h4>
 
 <p align="center">
   <a href="/" alt="Written in React-Native">
@@ -25,10 +25,9 @@
 ---
 
 ## Development principles
-- make it easy to customize and build custom version.
-- use type-checking to reduce number of tests.
-- write clean code.
-- use design pattern.
+- Make it easy to customize
+- Write type-safe code
+- Use design patterns
 
 ---
 
