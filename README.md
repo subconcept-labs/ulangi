@@ -2,10 +2,10 @@
   <img src="./images/logo_120x120.svg"><br>
   <a href="https://ulangi.com"><span>Ulangi</span></a><br>
 </h1>
-<h4 align="center">
-  <span>Open-source language learning project</span><br>
-  <span>Crafted with love 💛</span><br>
-</h4>
+
+<h3 align="center">
+  <span>Open-source language learning tools</span><br>
+</h3>
 
 <p align="center">
   <a href="/" alt="Written in React-Native">
@@ -25,9 +25,9 @@
 ---
 
 ## Development principles
-- Make it easy to customize
 - Write type-safe code
 - Use design patterns
+- Make it easy to build/customize tools
 
 ---
 

@@ -20,6 +20,11 @@ We use **monorepo ([Lerna](https://github.com/lerna/lerna))** to manage Ulangi p
 
 ---
 
+## Dependency diagram
+![Ulangi's dependency diagram](./assets/images/dependency-diagram.png)
+
+---
+
 ## Getting started
 What do you want to customize or contribute?
 - [Mobile app]({{ site.baseurl }}/mobile-app/)

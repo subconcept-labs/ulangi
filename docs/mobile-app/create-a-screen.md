@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Add a screen [TODO]
+title: Create a screen [TODO]
 parent: Mobile App
-nav_order: 1
-permalink: /mobile-app/add-a-screen/
+nav_order: 2
+permalink: /mobile-app/create-a-screen/
 robots: noindex
 ---
 
