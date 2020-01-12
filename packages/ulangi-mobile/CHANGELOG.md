@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/minhloi/ulangi/compare/v3.1.0...v3.2.0) (2020-01-12)
+
+
+### Bug Fixes
+
+* action bar jumps to top when vocabulary list is empty ([38fbc62](https://github.com/minhloi/ulangi/commit/38fbc62))
+* small UI fixes ([f7fcc17](https://github.com/minhloi/ulangi/commit/f7fcc17))
+* use view instead of scrollview to show image list ([cefdf27](https://github.com/minhloi/ulangi/commit/cefdf27)), closes [#23](https://github.com/minhloi/ulangi/issues/23)
+
+
+### Features
+
+* add Edit button to edit terms on demand ([c6b550c](https://github.com/minhloi/ulangi/commit/c6b550c)), closes [#18](https://github.com/minhloi/ulangi/issues/18)
+
+
+
+
+
 # [3.1.0](https://github.com/minhloi/ulangi/compare/v3.0.5...v3.1.0) (2020-01-12)
 
 

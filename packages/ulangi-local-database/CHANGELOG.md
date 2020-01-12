@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/minhloi/ulangi/compare/v3.1.0...v3.2.0) (2020-01-12)
+
+
+### Bug Fixes
+
+* incorrect level statistics for Writing ([c129327](https://github.com/minhloi/ulangi/commit/c129327)), closes [#24](https://github.com/minhloi/ulangi/issues/24)
+
+
+
+
+
 # [3.1.0](https://github.com/minhloi/ulangi/compare/v3.0.5...v3.1.0) (2020-01-12)
 
 
