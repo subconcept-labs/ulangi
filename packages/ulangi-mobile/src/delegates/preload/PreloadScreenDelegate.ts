@@ -85,7 +85,7 @@ export class PreloadScreenDelegate {
         ActionType.DATABASE__CONNECT_USER_DB_FAILED,
         'Connect user database failed. ' + contactDeveloperMessage,
       ],
-      [ActionType.DATABASE__CHECKING_USER_DB, 'Checking user database failed.'],
+      [ActionType.DATABASE__CHECKING_USER_DB, 'Checking user database...'],
       [
         ActionType.DATABASE__CHECK_USER_DB_SUCCEEDED,
         'Checking user database succeeded.',

@@ -64,20 +64,42 @@ export class IapSaga extends ProtectedSaga {
 
   public *allowInit(apiUrl: string): IterableIterator<any> {
     while (true) {
-      const action = yield take(ActionType.IAP__INIT);
-      const { googlePackageName } = action.payload;
+      try {
+        const action: Action<ActionType.IAP__INIT> = yield take(
+          ActionType.IAP__INIT
+        );
+        const { googlePackageName } = action.payload;
 
-      yield call([this.iap, 'initConnection']);
-      yield fork(
-        [this, this.observePurchaseUpdates],
-        apiUrl,
-        googlePackageName
-      );
-      yield fork([this, this.allowGetProducts]);
-      yield fork([this, this.allowRequestPurchase], apiUrl, googlePackageName);
-      yield fork([this, this.allowRestorePurchases], apiUrl, googlePackageName);
+        yield put(createAction(ActionType.IAP__INITING, null));
 
-      this.initedConnection = true;
+        yield call([this.iap, 'initConnection']);
+        yield fork(
+          [this, this.observePurchaseUpdates],
+          apiUrl,
+          googlePackageName
+        );
+        yield fork([this, this.allowGetProducts]);
+        yield fork(
+          [this, this.allowRequestPurchase],
+          apiUrl,
+          googlePackageName
+        );
+        yield fork(
+          [this, this.allowRestorePurchases],
+          apiUrl,
+          googlePackageName
+        );
+
+        this.initedConnection = true;
+
+        yield put(createAction(ActionType.IAP__INIT_SUCCEEDED, null));
+      } catch (error) {
+        yield put(
+          createAction(ActionType.IAP__INIT_FAILED, {
+            errorCode: this.crashlytics.getErrorCode(error),
+          })
+        );
+      }
     }
   }
 

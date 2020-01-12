@@ -49,6 +49,10 @@ export interface ActionPayload {
   readonly APPS_FLYER__INIT_SDK_SUCCEEDED: null;
   readonly APPS_FLYER__INIT_SDK_FAILED: { errorCode: string };
 
+  readonly IAP__INIT: { googlePackageName: string };
+  readonly IAP__INITING: null;
+  readonly IAP__INIT_SUCEEDED: null;
+  readonly IAP__INIT_FAILED: { errorCode: string };
   readonly IAP__GET_PRODUCTS: { skus: readonly string[] };
   readonly IAP__GETTING_PRODUCTS: null;
   readonly IAP__GET_PRODUCTS_SUCCEEDED: { products: readonly Product[] };
