@@ -56,15 +56,31 @@ export class ReviewActionButtonFactory {
 
   public createPlayAudioButton(
     subtitle: string,
+    testIDSuffix: string,
     onPress: () => void,
   ): ObservableReviewActionButton {
     return new ObservableReviewActionButton(
       'PLAY AUDIO',
       subtitle,
-      ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(subtitle),
+      ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(testIDSuffix),
       {
         light: Images.SPEAKER_BLACK_25X25,
         dark: Images.SPEAKER_MILK_25X25,
+      },
+      false,
+      false,
+      onPress,
+    );
+  }
+
+  public createEditButton(onPress: () => void): ObservableReviewActionButton {
+    return new ObservableReviewActionButton(
+      'EDIT',
+      '',
+      ReviewActionBarIds.EDIT_BTN,
+      {
+        light: Images.EDIT_BLACK_25X25,
+        dark: Images.EDIT_MILK_25X25,
       },
       false,
       false,

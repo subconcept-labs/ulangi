@@ -72,7 +72,7 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
                         : {};
                       return (
                         <TouchableOpacity
-                          key={[button.title, button.subtitle || ''].join(',')}
+                          key={button.testID}
                           testID={button.testID}
                           style={[this.styles.action_btn, disabledStyle]}
                           onPress={button.onPress}
