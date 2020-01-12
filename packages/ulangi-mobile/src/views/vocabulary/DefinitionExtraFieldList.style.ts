@@ -45,12 +45,13 @@ export const baseStyles: DefinitionExtraFieldListStyles = {
 
   image_list: {
     flexDirection: 'row',
-    marginBottom: 10,
+    flexWrap: 'wrap',
     marginHorizontal: -8,
   },
 
   image_container: {
     paddingHorizontal: 8,
+    paddingVertical: 10,
   },
 
   image: {
