@@ -60,7 +60,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     );
   }
 
-  private renderVocabularyList(): null | React.ReactElement<any> {
+  private renderVocabularyList(): React.ReactElement<any> {
     if (
       this.props.observableScreen.vocabularyListState.vocabularyList !== null &&
       this.props.observableScreen.vocabularyListState.noMore === true &&
@@ -73,9 +73,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
         />
       );
-    } else if (
-      this.props.observableScreen.vocabularyListState.vocabularyList !== null
-    ) {
+    } else {
       return (
         <VocabularyList
           key={this.props.observableScreen.selectedFilterType.get()}
@@ -91,12 +89,10 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           refresh={this.props.screenDelegate.refreshCurrentList}
         />
       );
-    } else {
-      return null;
     }
   }
 
-  private renderCategoryList(): null | React.ReactElement<any> {
+  private renderCategoryList(): React.ReactElement<any> {
     if (
       this.props.observableScreen.categoryListState.categoryList !== null &&
       this.props.observableScreen.categoryListState.noMore === true &&
@@ -109,9 +105,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
         />
       );
-    } else if (
-      this.props.observableScreen.categoryListState.categoryList !== null
-    ) {
+    } else {
       return (
         <CategoryList
           testID={ManageScreenIds.CATEGORY_LIST}
@@ -135,8 +129,6 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           }
         />
       );
-    } else {
-      return null;
     }
   }
 
