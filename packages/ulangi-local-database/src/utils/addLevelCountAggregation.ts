@@ -36,19 +36,19 @@ export function addLevelCountAggregation(
       'wrLevel0Count'
     )
     .field(
-      'COALESCE(SUM(CASE WHEN w.level >= 1 AND v.level <= 3 THEN 1 else 0 END), 0)',
+      'COALESCE(SUM(CASE WHEN w.level >= 1 AND w.level <= 3 THEN 1 else 0 END), 0)',
       'wrLevel1To3Count'
     )
     .field(
-      'COALESCE(SUM(CASE WHEN w.level >= 4 AND v.level <= 6 THEN 1 else 0 END), 0)',
+      'COALESCE(SUM(CASE WHEN w.level >= 4 AND w.level <= 6 THEN 1 else 0 END), 0)',
       'wrLevel4To6Count'
     )
     .field(
-      'COALESCE(SUM(CASE WHEN w.level >= 7 AND v.level <= 8 THEN 1 else 0 END), 0)',
+      'COALESCE(SUM(CASE WHEN w.level >= 7 AND w.level <= 8 THEN 1 else 0 END), 0)',
       'wrLevel7To8Count'
     )
     .field(
-      'COALESCE(SUM(CASE WHEN w.level >= 9 AND v.level <= 10 THEN 1 else 0 END), 0)',
+      'COALESCE(SUM(CASE WHEN w.level >= 9 AND w.level <= 10 THEN 1 else 0 END), 0)',
       'wrLevel9To10Count'
     );
 
