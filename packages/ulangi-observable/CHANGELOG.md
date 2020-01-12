@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/minhloi/ulangi/compare/v3.0.5...v3.1.0) (2020-01-12)
+
+
+### Features
+
+* add review strategies for spaced repetition ([2715e7b](https://github.com/minhloi/ulangi/commit/2715e7b)), closes [#15](https://github.com/minhloi/ulangi/issues/15)
+
+
+
+
+
 ## [3.0.5](https://github.com/minhloi/ulangi/compare/v3.0.4...v3.0.5) (2020-01-09)
 
 
