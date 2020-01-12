@@ -7,7 +7,7 @@
 
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { SetExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ReviewStrategy, SetExtraDataName } from '@ulangi/ulangi-common/enums';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
@@ -26,6 +26,7 @@ export class SpacedRepetitionSettingsDelegate {
   public getCurrentSettings(): {
     initialInterval: number;
     limit: number;
+    reviewStrategy: ReviewStrategy;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet
@@ -39,9 +40,16 @@ export class SpacedRepetitionSettingsDelegate {
         ? this.setStore.existingCurrentSet.spacedRepetitionMaxLimit
         : config.spacedRepetition.maxPerLesson;
 
+    const reviewStrategy =
+      typeof this.setStore.existingCurrentSet.spacedRepetitionReviewStrategy !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.spacedRepetitionReviewStrategy
+        : config.spacedRepetition.defaultReviewStrategy;
+
     return {
       initialInterval,
       limit,
+      reviewStrategy,
     };
   }
 
@@ -49,6 +57,7 @@ export class SpacedRepetitionSettingsDelegate {
     newSettings: {
       initialInterval: number;
       limit: number;
+      reviewStrategy: ReviewStrategy;
     },
     callback: {
       onSaving: () => void;
@@ -73,6 +82,13 @@ export class SpacedRepetitionSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
         dataValue: newSettings.limit,
+      });
+    }
+
+    if (originalSettings.reviewStrategy !== newSettings.reviewStrategy) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY,
+        dataValue: newSettings.reviewStrategy,
       });
     }
 

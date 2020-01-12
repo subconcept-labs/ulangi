@@ -100,7 +100,7 @@ export class QuizSettingsScreen extends React.Component<
           theme={this.props.darkModeStore.theme}
           leftText="Multiple Choice Quiz Size"
           shrink="left"
-          description="Number of question per multiple choice quiz"
+          description="Number of questions per multiple choice quiz"
           customRight={
             <DefaultButton
               testID={QuizSettingsScreenIds.MULTIPLE_CHOICE_QUIZ_LIMIT_BTN}

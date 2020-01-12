@@ -339,7 +339,7 @@
     "maxPerLesson": 10,
     "selectableLimits": [ 4, 6, 8, 10, 12, 14, 16, 18, 20],
     "defaultInitialInterval": 12,
-    "defaultShowDefinitionSideEffectState": true,
+    "defaultReviewStrategy": "Alternating",
     "selectableInitialIntervals": [ 6, 12, 18, 24, 36, 48 ],
     "gradeScale": { 
       "A+": [ 98, 100 ],

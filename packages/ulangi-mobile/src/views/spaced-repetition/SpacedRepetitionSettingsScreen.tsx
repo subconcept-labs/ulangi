@@ -5,11 +5,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ReviewStrategy, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDarkModeStore,
   ObservableSpacedRepetitionSettingsScreen,
 } from '@ulangi/ulangi-observable';
+import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView } from 'react-native';
@@ -71,6 +72,33 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
         theme={this.props.darkModeStore.theme}
         header="LESSON SETTINGS"
         key="lesson-settings">
+        <SectionRow
+          theme={this.props.darkModeStore.theme}
+          leftText="Review Strategy"
+          customRight={
+            <DefaultButton
+              testID={SpacedRepetitionSettingsScreenIds.REVIEW_STRATEGY_BTN}
+              text={this.props.observableScreen.selectedReviewStrategy}
+              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showReviewStrategyMenu(
+                  this.getReviewStrategyPairs(),
+                  this.props.observableScreen.selectedReviewStrategy,
+                  (reviewStrategy): void => {
+                    this.props.observableScreen.selectedReviewStrategy = reviewStrategy;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderReviewStrategyDescription()}
+          styles={{
+            light: sectionRowLightStyles,
+            dark: sectionRowDarkStyles,
+          }}
+        />
         <SectionRow
           theme={this.props.darkModeStore.theme}
           leftText="Lesson Size"
@@ -142,6 +170,73 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     );
   }
 
+  private renderReviewStrategyDescription(): React.ReactElement<any> {
+    let description: string | Element = '';
+    switch (this.props.observableScreen.selectedReviewStrategy) {
+      case ReviewStrategy.FORWARD:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>Forward: </DefaultText>
+            <DefaultText>
+              {'Given terms, answer what their definitions are.'}
+            </DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewStrategy.REVERSED:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>Reversed: </DefaultText>
+            <DefaultText>
+              {'Given definitions, answer what their terms are.'}
+            </DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewStrategy.HALF_AND_HALF:
+        description = (
+          <DefaultText>
+            <DefaultText>
+              <DefaultText style={this.styles.bold}>
+                Half-and-half:{' '}
+              </DefaultText>
+              <DefaultText>
+                {
+                  'Switch review direction after reaching half of the level range.\n\n'
+                }
+              </DefaultText>
+            </DefaultText>
+            <DefaultText>{'- Level 0 - 4: Forward\n'}</DefaultText>
+            <DefaultText>{'- Level 5 - 9: Reversed\n'}</DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewStrategy.ALTERNATING:
+        description = (
+          <DefaultText>
+            <DefaultText>
+              <DefaultText style={this.styles.bold}>Alternating: </DefaultText>
+              <DefaultText>
+                {'Rotate review direction repeatedly (every 3 levels.)\n\n'}
+              </DefaultText>
+            </DefaultText>
+            <DefaultText>{'- Level 0: Forward\n'}</DefaultText>
+            <DefaultText>{'- Level 1 - 3: Reversed\n'}</DefaultText>
+            <DefaultText>{'- Level 4 - 6: Forward\n'}</DefaultText>
+            <DefaultText>{'- Level 7 - 9: Reversed'}</DefaultText>
+          </DefaultText>
+        );
+        break;
+    }
+
+    return (
+      <DefaultText style={this.styles.description}>{description}</DefaultText>
+    );
+  }
+
   private renderLimitDescription(): React.ReactElement<any> {
     return (
       <DefaultText style={this.styles.description}>
@@ -164,6 +259,20 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
         to view intervals at each level.
       </DefaultText>
     );
+  }
+
+  private getReviewStrategyPairs(): readonly [
+    ReviewStrategy,
+    ReviewStrategy
+  ][] {
+    return _.values(ReviewStrategy).map(function(
+      reviewStrategy,
+    ): [ReviewStrategy, ReviewStrategy] {
+      return [
+        reviewStrategy as ReviewStrategy,
+        reviewStrategy as ReviewStrategy,
+      ];
+    });
   }
 
   private getLimitValuePairs(): readonly [number, string][] {

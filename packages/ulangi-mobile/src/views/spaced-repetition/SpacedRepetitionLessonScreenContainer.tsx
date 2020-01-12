@@ -50,6 +50,8 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.observer,
   );
 
+  private spacedRepetitionSettingsDelegate = this.screenFactory.createSpacedRepetitionSettingsDelegate();
+
   private reviewIterator = new ReviewIterator(
     this.props.passedProps.vocabularyList,
   );
@@ -59,6 +61,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   protected observableScreen = new ObservableSpacedRepetitionLessonScreen(
     this.props.passedProps.vocabularyList,
     new ObservableReviewState(
+      this.spacedRepetitionSettingsDelegate.getCurrentSettings().reviewStrategy,
       this.reviewIterator.next(),
       false,
       0,

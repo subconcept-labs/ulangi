@@ -76,7 +76,7 @@ describe('SetExtraDataModel', (): void => {
           return setExtraDataModel.upsertMultipleExtraData(tx, userId, [
             [
               new SetExtraDataItemBuilder().build({
-                dataName: SetExtraDataName.SPACED_REPETITION_INITIAL_INTERVAL,
+                dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                 dataValue: 5,
               }),
               'setId',
@@ -125,7 +125,7 @@ describe('SetExtraDataModel', (): void => {
         const setExtraDataSetIdPairs = setList.map(
           (set): [SetExtraDataItem, string] => [
             new SetExtraDataItemBuilder().build({
-              dataName: SetExtraDataName.SPACED_REPETITION_INITIAL_INTERVAL,
+              dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
               dataValue: 5,
             }),
             set.setId,
@@ -183,7 +183,7 @@ describe('SetExtraDataModel', (): void => {
             setExtraDataSetIdPairs = setList.map(
               (set, index): [SetExtraDataItem, string] => [
                 new SetExtraDataItemBuilder().build({
-                  dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                   dataValue: index,
                 }),
                 set.setId,
@@ -243,7 +243,7 @@ describe('SetExtraDataModel', (): void => {
             ([, setId]): [SetExtraDataItem, string] => {
               return [
                 new SetExtraDataItemBuilder().build({
-                  dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                   dataValue: 5,
                 }),
                 setId,
@@ -280,8 +280,7 @@ describe('SetExtraDataModel', (): void => {
                     ([setExtraDataItem]): SetExtraDataItem => {
                       return {
                         ...setExtraDataItem,
-                        dataName:
-                          SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                        dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                         dataValue: 5,
                         firstSyncedAt: expect.any(Date),
                         lastSyncedAt: expect.any(Date),

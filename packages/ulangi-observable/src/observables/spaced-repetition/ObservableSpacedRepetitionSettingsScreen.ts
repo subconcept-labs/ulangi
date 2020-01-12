@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ReviewStrategy, ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
@@ -18,14 +18,19 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
   @observable
   public selectedLimit: number;
 
+  @observable
+  public selectedReviewStrategy: ReviewStrategy;
+
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
+    selectedReviewStrategy: ReviewStrategy,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
+    this.selectedReviewStrategy = selectedReviewStrategy;
   }
 }

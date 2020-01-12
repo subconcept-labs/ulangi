@@ -5,11 +5,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ReviewStrategy } from '../../enums/ReviewStrategy';
 import { SetExtraDataName } from '../../enums/SetExtraDataName';
 
-export interface WritingUseHintSideEffectState {
-  readonly dataName: SetExtraDataName.WRITING_USE_HINT_SIDE_EFFECT_STATE;
-  readonly dataValue: boolean;
+export interface SpacedRepetitionReviewStrategy {
+  readonly dataName: SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY;
+  readonly dataValue: ReviewStrategy;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly firstSyncedAt: null | Date;

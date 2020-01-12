@@ -27,10 +27,10 @@ export class ObservableReviewActionButton {
   public disabled: boolean;
 
   @observable
-  public onPress: (self: ObservableReviewActionButton) => void;
+  public loading: boolean;
 
   @observable
-  public autorun?: (self: ObservableReviewActionButton) => void;
+  public onPress: () => void;
 
   public constructor(
     title: string,
@@ -38,16 +38,16 @@ export class ObservableReviewActionButton {
     testID: string,
     icon: { light: any; dark: any },
     disabled: boolean,
-    onPress: (self: ObservableReviewActionButton) => void,
-    autorun?: (self: ObservableReviewActionButton) => void
+    loading: boolean,
+    onPress: () => void
   ) {
     this.title = title;
     this.subtitle = subtitle;
     this.testID = testID;
     this.icon = icon;
     this.disabled = disabled;
+    this.loading = loading;
     this.onPress = onPress;
-    this.autorun = autorun;
   }
 
   @action
@@ -57,8 +57,7 @@ export class ObservableReviewActionButton {
     testID: string,
     icon: { light: any; dark: any },
     disabled: boolean,
-    onPress: (self: ObservableReviewActionButton) => void,
-    autorun?: (self: ObservableReviewActionButton) => void
+    onPress: () => void
   ): void {
     this.title = title;
     this.subtitle = subtitle;
@@ -66,6 +65,5 @@ export class ObservableReviewActionButton {
     this.icon = icon;
     this.disabled = disabled;
     this.onPress = onPress;
-    this.autorun = autorun;
   }
 }

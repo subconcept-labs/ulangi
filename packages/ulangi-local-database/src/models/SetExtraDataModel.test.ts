@@ -67,7 +67,7 @@ describe('SetExtraDataModel', (): void => {
       void
     > => {
       const setExtraDataItem: SetExtraDataItem = {
-        dataName: SetExtraDataName.SPACED_REPEITTION_NEXT_TERM_POSITION,
+        dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
         dataValue: 0,
         createdAt: moment().toDate(),
         updatedAt: moment().toDate(),
@@ -120,8 +120,8 @@ describe('SetExtraDataModel', (): void => {
       > => {
         const setExtraData: SetExtraDataItem = new SetExtraDataItemBuilder().build(
           {
-            dataName: SetExtraDataName.SPACED_REPETITION_AUTO_ARCHIVE,
-            dataValue: false,
+            dataName: SetExtraDataName.SPACED_REPETITION_INITIAL_INTERVAL,
+            dataValue: 12,
           }
         );
 
@@ -156,7 +156,7 @@ describe('SetExtraDataModel', (): void => {
           (set, index): [SetExtraDataItem, string] => {
             return [
               new SetExtraDataItemBuilder().build({
-                dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                 dataValue: index,
               }),
               set.setId,
@@ -203,8 +203,7 @@ describe('SetExtraDataModel', (): void => {
               (set, index): [SetExtraDataItem, string] => {
                 return [
                   new SetExtraDataItemBuilder().build({
-                    dataName:
-                      SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                    dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                     dataValue: index,
                   }),
                   set.setId,
@@ -283,7 +282,7 @@ describe('SetExtraDataModel', (): void => {
                     (pair): boolean =>
                       pair[1] === setId &&
                       pair[0].dataName ===
-                        SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD
+                        SetExtraDataName.SPACED_REPETITION_MAX_LIMIT
                   )
                   .map(([setExtraData]): SetExtraDataItem => setExtraData)
               );
@@ -298,7 +297,7 @@ describe('SetExtraDataModel', (): void => {
             (set): [DeepPartial<SetExtraDataItem>, string] => {
               return [
                 {
-                  dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                   dataValue: 10,
                 },
                 set.setId,
@@ -334,14 +333,13 @@ describe('SetExtraDataModel', (): void => {
                     (pair): boolean =>
                       pair[1] === setId &&
                       pair[0].dataName ===
-                        SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD
+                        SetExtraDataName.SPACED_REPETITION_MAX_LIMIT
                   )
                   .map(
                     ([setExtraData]): SetExtraDataItem => {
                       return {
                         ...setExtraData,
-                        dataName:
-                          SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                        dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                         dataValue: 10,
                       };
                     }
@@ -358,7 +356,7 @@ describe('SetExtraDataModel', (): void => {
             (set): [DeepPartial<SetExtraDataItem>, string] => {
               return [
                 {
-                  dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                   dataValue: 10,
                   firstSyncedAt: moment().toDate(),
                   lastSyncedAt: moment().toDate(),
@@ -395,7 +393,7 @@ describe('SetExtraDataModel', (): void => {
                     (pair): boolean =>
                       pair[1] === setId &&
                       pair[0].dataName ===
-                        SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD
+                        SetExtraDataName.SPACED_REPETITION_MAX_LIMIT
                   )
                   .map(([setExtraData]): SetExtraDataItem => setExtraData)
               );
@@ -413,8 +411,7 @@ describe('SetExtraDataModel', (): void => {
               (set, index): [SetExtraDataItem, string] => {
                 return [
                   new SetExtraDataItemBuilder().build({
-                    dataName:
-                      SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                    dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                     dataValue: index,
                   }),
                   set.setId,
@@ -455,7 +452,7 @@ describe('SetExtraDataModel', (): void => {
             (set): [DeepPartial<SetExtraDataItem>, string] => {
               return [
                 {
-                  dataName: SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                   dataValue: 10,
                 },
                 set.setId,
@@ -490,14 +487,13 @@ describe('SetExtraDataModel', (): void => {
                     (pair): boolean =>
                       pair[1] === setId &&
                       pair[0].dataName ===
-                        SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD
+                        SetExtraDataName.SPACED_REPETITION_MAX_LIMIT
                   )
                   .map(
                     ([setExtraData]): SetExtraDataItem => {
                       return {
                         ...setExtraData,
-                        dataName:
-                          SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                        dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                         dataValue: 10,
                         updatedAt: moment().toDate(),
                       };

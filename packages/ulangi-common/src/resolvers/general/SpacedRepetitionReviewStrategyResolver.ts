@@ -7,18 +7,20 @@
 
 import { AbstractResolver } from '@ulangi/resolver';
 import * as Joi from 'joi';
+import * as _ from 'lodash';
 
+import { ReviewStrategy } from '../../enums/ReviewStrategy';
 import { SetExtraDataName } from '../../enums/SetExtraDataName';
-import { SpacedRepetitionNextTermPosition } from '../../interfaces/general/SpacedRepetitionNextTermPosition';
+import { SpacedRepetitionReviewStrategy } from '../../interfaces/general/SpacedRepetitionReviewStrategy';
 
-export class SpacedRepetitionNextTermPositionResolver extends AbstractResolver<
-  SpacedRepetitionNextTermPosition
+export class SpacedRepetitionReviewStrategyResolver extends AbstractResolver<
+  SpacedRepetitionReviewStrategy
 > {
   protected rules = {
     dataName: Joi.string().valid(
-      SetExtraDataName.SPACED_REPEITTION_NEXT_TERM_POSITION
+      SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY
     ),
-    dataValue: Joi.number(),
+    dataValue: Joi.string().valid(_.values(ReviewStrategy)),
     createdAt: Joi.date(),
     updatedAt: Joi.date(),
     firstSyncedAt: Joi.date().allow(null),
