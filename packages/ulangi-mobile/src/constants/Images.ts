@@ -68,7 +68,7 @@ export class Images {
 
   // Google Translate attributions
   public static readonly TRANSLATE_BY_GOOGLE_COLOR_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-color-short.png');
-  public static readonly TRANSLATE_BY_GOOGLE_GREY_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-grey-short.png');
+  public static readonly TRANSLATE_BY_GOOGLE_WHITE_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-white-short.png');
 
   // Social icons
   public static readonly TWITTER_20x20 = require('../../assets/img/social-icons/twitter_20x20.png');
