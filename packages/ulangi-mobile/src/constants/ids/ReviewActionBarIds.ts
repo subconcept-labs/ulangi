@@ -11,4 +11,5 @@ export const ReviewActionBarIds = {
   SHOW_ANSWER_BTN: 'SHOW_ANSWER_BTN',
   PLAY_AUDIO_BTN_BY_VALUE: (value: string): string =>
     'PLAY_AUDIO_BTN_BY_VALUE_' + value,
+  EDIT_BTN: 'EDIT_BTN',
 };

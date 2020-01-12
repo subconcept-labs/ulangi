@@ -17,7 +17,6 @@ import FastImage from 'react-native-fast-image';
 
 import { VocabularyItemIds } from '../../constants/ids/VocabularyItemIds';
 import { DefaultText } from '../common/DefaultText';
-import { SmartScrollView } from '../common/SmartScrollView';
 import {
   DefinitionExtraFieldListStyles,
   darkStyles,
@@ -90,10 +89,7 @@ export class DefinitionExtraFieldList extends React.Component<
     valueList: readonly string[][],
   ): React.ReactElement<any> {
     return (
-      <SmartScrollView
-        horizontal={true}
-        key={detail.name}
-        contentContainerStyle={this.styles.image_list}>
+      <View key={detail.name} style={this.styles.image_list}>
         {valueList.map(
           (values): React.ReactElement<any> => {
             return (
@@ -113,7 +109,7 @@ export class DefinitionExtraFieldList extends React.Component<
             );
           },
         )}
-      </SmartScrollView>
+      </View>
     );
   }
 

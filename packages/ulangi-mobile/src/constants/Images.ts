@@ -68,7 +68,7 @@ export class Images {
 
   // Google Translate attributions
   public static readonly TRANSLATE_BY_GOOGLE_COLOR_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-color-short.png');
-  public static readonly TRANSLATE_BY_GOOGLE_GREY_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-grey-short.png');
+  public static readonly TRANSLATE_BY_GOOGLE_WHITE_SHORT = require('../../assets/img/google-translate-attributions/translate-by-google-white-short.png');
 
   // Social icons
   public static readonly TWITTER_20x20 = require('../../assets/img/social-icons/twitter_20x20.png');
@@ -103,6 +103,8 @@ export class Images {
   public static readonly ARROW_LEFT_MILK_25X25 = require('../../assets/img/mobile-icons/arrow_left_milk_25x25.png');
   public static readonly ARROW_RIGHT_BLACK_25X25 = require('../../assets/img/mobile-icons/arrow_right_black_25x25.png');
   public static readonly ARROW_RIGHT_MILK_25X25 = require('../../assets/img/mobile-icons/arrow_right_milk_25x25.png');
+  public static readonly EDIT_BLACK_25X25 = require('../../assets/img/mobile-icons/edit_black_25x25.png');
+  public static readonly EDIT_MILK_25X25 = require('../../assets/img/mobile-icons/edit_milk_25x25.png');
 
   // 22x22
   public static readonly ADD_WHITE_22X22 = require('../../assets/img/mobile-icons/add_white_22x22.png');

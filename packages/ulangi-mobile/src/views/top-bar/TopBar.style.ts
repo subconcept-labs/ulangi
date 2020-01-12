@@ -88,7 +88,7 @@ export const baseStyles: TopBarStyles = {
   button_icon: {},
 
   title: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
     paddingHorizontal: 6,
     flexShrink: 1,

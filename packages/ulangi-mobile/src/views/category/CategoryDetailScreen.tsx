@@ -63,7 +63,7 @@ export class CategoryDetailScreen extends React.Component<
     );
   }
 
-  private renderVocabularyList(): null | React.ReactElement<any> {
+  private renderVocabularyList(): React.ReactElement<any> {
     if (
       this.props.observableScreen.vocabularyListState.vocabularyList !== null &&
       this.props.observableScreen.vocabularyListState.noMore === true &&
@@ -75,9 +75,7 @@ export class CategoryDetailScreen extends React.Component<
           refresh={this.props.screenDelegate.refreshCurrentList}
         />
       );
-    } else if (
-      this.props.observableScreen.vocabularyListState.vocabularyList !== null
-    ) {
+    } else {
       return (
         <VocabularyList
           key={this.props.observableScreen.selectedFilterType.get()}
@@ -93,8 +91,6 @@ export class CategoryDetailScreen extends React.Component<
           refresh={this.props.screenDelegate.refreshCurrentList}
         />
       );
-    } else {
-      return null;
     }
   }
 

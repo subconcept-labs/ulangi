@@ -113,11 +113,14 @@ export class SpacedRepetitionLessonScreenDelegate {
         shouldShowAnswer === true || currentQuestionType === 'forward'
           ? vocabulary.vocabularyTerm
           : '',
+        vocabulary.vocabularyTerm,
         (): void => {
           this.synthesizeAndSpeak(vocabulary.vocabularyTerm);
         },
       ),
     ]);
+
+    // Play audio buttons for extra fields
     _.toPairs(vocabulary.vocabularyExtraFields).forEach(
       ([key, valueList]): void => {
         if (
@@ -126,16 +129,35 @@ export class SpacedRepetitionLessonScreenDelegate {
         ) {
           valueList.forEach(
             (values: string[]): void => {
-              this.reviewActionButtonFactory.createPlayAudioButton(
-                shouldShowAnswer === true || currentQuestionType === 'forward'
-                  ? values[0]
-                  : '',
-                (): void => this.synthesizeAndSpeak(values[0]),
+              this.observableScreen.reviewActionBarState.buttons.push(
+                this.reviewActionButtonFactory.createPlayAudioButton(
+                  shouldShowAnswer === true || currentQuestionType === 'forward'
+                    ? values[0]
+                    : '',
+                  values[0],
+                  (): void => this.synthesizeAndSpeak(values[0]),
+                ),
               );
             },
           );
         }
       },
+    );
+
+    this.observableScreen.reviewActionBarState.buttons.push(
+      this.reviewActionButtonFactory.createEditButton(
+        (): void => {
+          this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
+            originalVocabulary: this.observableScreen.reviewState.vocabulary.toRaw(),
+            onSave: (newVocabulary): void => {
+              _.merge(
+                this.observableScreen.reviewState.vocabulary,
+                newVocabulary,
+              );
+            },
+          });
+        },
+      ),
     );
   }
 

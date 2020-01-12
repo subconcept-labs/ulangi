@@ -71,7 +71,7 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
                 source={
                   this.props.theme === Theme.LIGHT
                     ? Images.TRANSLATE_BY_GOOGLE_COLOR_SHORT
-                    : Images.TRANSLATE_BY_GOOGLE_GREY_SHORT
+                    : Images.TRANSLATE_BY_GOOGLE_WHITE_SHORT
                 }
               />
             </View>

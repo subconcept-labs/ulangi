@@ -30,6 +30,7 @@ import { EditVocabularyScreenStyle } from './EditVocabularyScreenContainer.style
 
 export interface EditVocabularyScreenPassedProps {
   readonly originalVocabulary: Vocabulary;
+  readonly onSave?: (newVocabulary: Vocabulary) => void;
 }
 
 @observer
@@ -104,6 +105,11 @@ export class EditVocabularyScreenContainer extends Container<
         (): void => {
           Keyboard.dismiss();
           this.screenDelegate.saveEdit();
+          if (typeof this.props.passedProps.onSave !== 'undefined') {
+            this.props.passedProps.onSave(
+              this.screenDelegate.createPreview().toRaw(),
+            );
+          }
         },
       ),
     ),
