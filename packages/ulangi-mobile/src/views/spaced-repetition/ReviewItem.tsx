@@ -78,6 +78,18 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
         animation="fadeInUp"
         duration={config.general.animationDuration}
         useNativeDriver={true}>
+        {this.props.reviewState.shouldShowAnswer === true
+          ? this.renderAll()
+          : this.props.reviewState.currentQuestionType === 'forward'
+          ? this.renderForwardQuestion()
+          : this.renderReversedQuestion()}
+      </Animatable.View>
+    );
+  }
+
+  private renderAll(): React.ReactElement<any> {
+    return (
+      <Animatable.View animation="fadeIn">
         <View style={this.styles.vocabulary_text_container}>
           <DefaultText style={this.styles.vocabulary_text}>
             {this.props.reviewState.vocabulary.vocabularyTerm}
@@ -87,36 +99,73 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
           theme={this.props.theme}
           extraFields={this.props.reviewState.vocabulary.vocabularyExtraFields}
         />
-        {this.props.reviewState.shouldShowDefinitions === true ? (
-          this.props.reviewState.vocabulary.definitions.map(
-            (definition, index): React.ReactElement<any> => {
-              return (
-                <Animatable.View
-                  animation="fadeIn"
-                  key={definition.definitionId}>
-                  <DefinitionItem
-                    theme={this.props.theme}
-                    index={index}
-                    definition={definition}
-                    styles={{
-                      light: definitionItemLightStyles,
-                      dark: definitionItemDarkStyles,
-                    }}
-                  />
-                </Animatable.View>
-              );
-            },
-          )
-        ) : (
-          <React.Fragment>
-            <View style={this.styles.message_container}>
-              <DefaultText style={this.styles.message_inline}>
-                <DefaultText>What does it mean?</DefaultText>
-              </DefaultText>
-            </View>
-          </React.Fragment>
+        {this.props.reviewState.vocabulary.definitions.map(
+          (definition, index): React.ReactElement<any> => {
+            return (
+              <DefinitionItem
+                key={definition.definitionId}
+                theme={this.props.theme}
+                index={index}
+                definition={definition}
+                styles={{
+                  light: definitionItemLightStyles,
+                  dark: definitionItemDarkStyles,
+                }}
+              />
+            );
+          },
         )}
       </Animatable.View>
+    );
+  }
+
+  private renderForwardQuestion(): React.ReactElement<any> {
+    return (
+      <>
+        <View style={this.styles.vocabulary_text_container}>
+          <DefaultText style={this.styles.vocabulary_text}>
+            {this.props.reviewState.vocabulary.vocabularyTerm}
+          </DefaultText>
+        </View>
+        <VocabularyExtraFieldList
+          theme={this.props.theme}
+          extraFields={this.props.reviewState.vocabulary.vocabularyExtraFields}
+        />
+        <View style={this.styles.message_container}>
+          <DefaultText style={this.styles.message_inline}>
+            <DefaultText>What does it mean?</DefaultText>
+          </DefaultText>
+        </View>
+      </>
+    );
+  }
+
+  private renderReversedQuestion(): React.ReactElement<any> {
+    return (
+      <>
+        <View style={this.styles.vocabulary_text_container}>
+          <DefaultText style={this.styles.vocabulary_text}>
+            What is the term?
+          </DefaultText>
+        </View>
+        {this.props.reviewState.vocabulary.definitions.map(
+          (definition, index): React.ReactElement<any> => {
+            return (
+              <DefinitionItem
+                key={definition.definitionId}
+                theme={this.props.theme}
+                index={index}
+                definition={definition}
+                hideFields={['example', 'note']}
+                styles={{
+                  light: definitionItemLightStyles,
+                  dark: definitionItemDarkStyles,
+                }}
+              />
+            );
+          },
+        )}
+      </>
     );
   }
 }

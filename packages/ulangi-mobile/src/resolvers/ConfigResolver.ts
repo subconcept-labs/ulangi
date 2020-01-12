@@ -6,12 +6,14 @@
  */
 
 import { AbstractResolver } from '@ulangi/resolver';
+import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettingsResolver,
   DarkModeSettingsResolver,
   ReminderSettingsResolver,
 } from '@ulangi/ulangi-common/resolvers';
 import * as Joi from 'joi';
+import * as _ from 'lodash';
 
 import { Config } from '../interfaces/Config';
 
@@ -160,6 +162,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       maxPerLesson: Joi.number(),
       selectableLimits: Joi.array().items(Joi.number()),
       defaultInitialInterval: Joi.number(),
+      defaultReviewStrategy: Joi.string().valid(_.values(ReviewStrategy)),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
         /^/,

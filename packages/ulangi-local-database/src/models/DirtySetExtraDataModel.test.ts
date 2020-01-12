@@ -97,8 +97,7 @@ describe('DirtySetExtraDataModel', (): void => {
               (set, index): [SetExtraDataItem, string] => {
                 return [
                   new SetExtraDataItemBuilder().build({
-                    dataName:
-                      SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                    dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                     dataValue: index,
                   }),
                   set.setId,
@@ -293,8 +292,7 @@ describe('DirtySetExtraDataModel', (): void => {
               (set, index): [SetExtraDataItem, string] => {
                 return [
                   new SetExtraDataItemBuilder().build({
-                    dataName:
-                      SetExtraDataName.SPACED_REPETITION_LEVEL_THRESHOLD,
+                    dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                     dataValue: index,
                   }),
                   set.setId,

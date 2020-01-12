@@ -43,6 +43,7 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
   protected observableScreen = new ObservableSpacedRepetitionSettingsScreen(
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
+    this.originalSettings.reviewStrategy,
     ScreenName.SPACED_REPETITION_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

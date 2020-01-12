@@ -25,27 +25,12 @@ export {
   SpacedRepetitionMaxLimitResolver,
 } from './general/SpacedRepetitionMaxLimitResolver';
 export {
-  SpacedRepetitionAutoArchiveResolver,
-} from './general/SpacedRepetitionAutoArchiveResolver';
-export {
-  SpacedRepetitionLevelThresholdResolver,
-} from './general/SpacedRepetitionLevelThresholdResolver';
-export {
-  SpacedRepetitionNextTermPositionResolver,
-} from './general/SpacedRepetitionNextTermPositionResolver';
-export {
-  SpacedRepetitionShowDefSideEffectStateResolver,
-} from './general/SpacedRepetitionShowDefSideEffectStateResolver';
+  SpacedRepetitionReviewStrategyResolver,
+} from './general/SpacedRepetitionReviewStrategyResolver';
 export {
   WritingInitialIntervalResolver,
 } from './general/WritingInitialIntervalResolver';
 export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
-export {
-  WritingUseHintSideEffectStateResolver,
-} from './general/WritingUseHintSideEffectStateResolver';
-export {
-  WritingNextTermPositionResolver,
-} from './general/WritingNextTermPositionResolver';
 export {
   QuizVocabularyPoolResolver,
 } from './general/QuizVocabularyPoolResolver';

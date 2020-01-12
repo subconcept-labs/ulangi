@@ -128,8 +128,8 @@ describe('SetModel', (): void => {
                   translatedToLanguageCode: 'en',
                   extraData: [
                     new SetExtraDataItemBuilder().build({
-                      dataName: SetExtraDataName.SPACED_REPETITION_AUTO_ARCHIVE,
-                      dataValue: true,
+                      dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
+                      dataValue: 0,
                     }),
                   ],
                 });
@@ -265,8 +265,8 @@ describe('SetModel', (): void => {
                 translatedToLanguageCode: 'zh',
                 extraData: [
                   new SetExtraDataItemBuilder().build({
-                    dataName: SetExtraDataName.SPACED_REPETITION_AUTO_ARCHIVE,
-                    dataValue: true,
+                    dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
+                    dataValue: 0,
                   }),
                 ],
               });
@@ -321,8 +321,8 @@ describe('SetModel', (): void => {
                 {
                   createdAt: moment().toDate(),
                   updatedAt: moment().toDate(),
-                  dataName: SetExtraDataName.SPACED_REPETITION_AUTO_ARCHIVE,
-                  dataValue: false,
+                  dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
+                  dataValue: 1,
                 },
               ],
             };
@@ -355,8 +355,8 @@ describe('SetModel', (): void => {
                 extraData: set.extraData.map(
                   (): SetExtraDataItem => {
                     return {
-                      dataName: SetExtraDataName.SPACED_REPETITION_AUTO_ARCHIVE,
-                      dataValue: false,
+                      dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
+                      dataValue: 1,
                       createdAt: moment().toDate(),
                       updatedAt: moment().toDate(),
                       firstSyncedAt: expect.any(Date),

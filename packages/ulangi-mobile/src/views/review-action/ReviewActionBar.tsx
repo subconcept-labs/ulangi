@@ -10,7 +10,13 @@ import { ObservableReviewActionBarState } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import { SmartScrollView } from '../common/SmartScrollView';
@@ -68,17 +74,21 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
                         <TouchableOpacity
                           key={[button.title, button.subtitle || ''].join(',')}
                           testID={button.testID}
-                          onPress={(): void => button.onPress(button)}
                           style={[this.styles.action_btn, disabledStyle]}
+                          onPress={button.onPress}
                           disabled={button.disabled}>
                           <View style={this.styles.icon_container}>
-                            <Image
-                              source={
-                                this.props.theme === Theme.LIGHT
-                                  ? button.icon.light
-                                  : button.icon.dark
-                              }
-                            />
+                            {button.loading === true ? (
+                              <ActivityIndicator size="small" />
+                            ) : (
+                              <Image
+                                source={
+                                  this.props.theme === Theme.LIGHT
+                                    ? button.icon.light
+                                    : button.icon.dark
+                                }
+                              />
+                            )}
                           </View>
                           <DefaultText style={this.styles.action_title}>
                             {button.title}

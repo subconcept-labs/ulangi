@@ -111,8 +111,7 @@ describe('IncompatibleSetModel', (): void => {
                     .toDate(),
                   extraData: [
                     {
-                      dataName:
-                        SetExtraDataName.SPACED_REPEITTION_NEXT_TERM_POSITION,
+                      dataName: SetExtraDataName.SPACED_REPETITION_MAX_LIMIT,
                       dataValue: 0,
                     },
                   ],

@@ -19,6 +19,7 @@ export interface SpacedRepetitionSettingsScreenStyles {
   content_container: ViewStyle;
   description: TextStyle;
   touchable_text: TextStyle;
+  bold: TextStyle;
 }
 
 export const baseStyles: SpacedRepetitionSettingsScreenStyles = {
@@ -37,6 +38,10 @@ export const baseStyles: SpacedRepetitionSettingsScreenStyles = {
 
   touchable_text: {
     color: config.styles.primaryColor,
+  },
+
+  bold: {
+    fontWeight: 'bold',
   },
 };
 

@@ -7,6 +7,7 @@
 
 import {
   Feedback,
+  ReviewStrategy,
   SetStatus,
   VocabularyFilterType,
   VocabularyStatus,
@@ -184,6 +185,7 @@ export interface Config {
     readonly maxPerLesson: number;
     readonly selectableLimits: readonly number[];
     readonly defaultInitialInterval: number;
+    readonly defaultReviewStrategy: ReviewStrategy;
     readonly selectableInitialIntervals: readonly number[];
     readonly gradeScale: { [P in string]: [number, number] };
   };

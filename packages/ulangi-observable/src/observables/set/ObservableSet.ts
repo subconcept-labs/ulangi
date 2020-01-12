@@ -6,7 +6,11 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { SetExtraDataName, SetStatus } from '@ulangi/ulangi-common/enums';
+import {
+  ReviewStrategy,
+  SetExtraDataName,
+  SetStatus,
+} from '@ulangi/ulangi-common/enums';
 import {
   QuizMultipleChoiceMaxLimit,
   QuizVocabularyPool,
@@ -14,10 +18,9 @@ import {
   Set,
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
-  SpacedRepetitionShowDefSideEffectState,
+  SpacedRepetitionReviewStrategy,
   WritingInitialInterval,
   WritingMaxLimit,
-  WritingUseHintSideEffectState,
 } from '@ulangi/ulangi-common/interfaces';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { computed, observable } from 'mobx';
@@ -79,11 +82,10 @@ export class ObservableSet {
   }
 
   @computed
-  public get spacedRepetitionShowDefSideEffectState(): undefined | boolean {
+  public get spacedRepetitionReviewStrategy(): undefined | ReviewStrategy {
     const data = this.extraData.find(
-      (data): data is SpacedRepetitionShowDefSideEffectState =>
-        data.dataName ===
-        SetExtraDataName.SPACED_REPETITION_SHOW_DEF_SIDE_EFFECT_STATE
+      (data): data is SpacedRepetitionReviewStrategy =>
+        data.dataName === SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY
     );
     return data ? data.dataValue : undefined;
   }
@@ -102,15 +104,6 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is WritingMaxLimit =>
         data.dataName === SetExtraDataName.WRITING_MAX_LIMIT
-    );
-    return data ? data.dataValue : undefined;
-  }
-
-  @computed
-  public get writingUseHintSideEffectState(): undefined | boolean {
-    const data = this.extraData.find(
-      (data): data is WritingUseHintSideEffectState =>
-        data.dataName === SetExtraDataName.WRITING_USE_HINT_SIDE_EFFECT_STATE
     );
     return data ? data.dataValue : undefined;
   }

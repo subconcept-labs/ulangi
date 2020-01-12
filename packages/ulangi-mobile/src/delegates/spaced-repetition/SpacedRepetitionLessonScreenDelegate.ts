@@ -15,7 +15,6 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
 import {
-  ObservableReviewActionButton,
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
   Observer,
@@ -24,10 +23,9 @@ import { boundClass } from 'autobind-decorator';
 import * as _ from 'lodash';
 import { BackHandler } from 'react-native';
 
-import { Images } from '../../constants/Images';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { ErrorConverter } from '../../converters/ErrorConverter';
+import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
@@ -41,6 +39,7 @@ import { SpacedRepetitionSaveResultDelegate } from './SpacedRepetitionSaveResult
 @boundClass
 export class SpacedRepetitionLessonScreenDelegate {
   private errorConverter = new ErrorConverter();
+  private reviewActionButtonFactory = new ReviewActionButtonFactory();
 
   private observer: Observer;
   private setStore: ObservableSetStore;
@@ -89,62 +88,36 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public setUpButtons(): void {
-    const vocabulary = this.observableScreen.reviewState.vocabulary;
+    const {
+      vocabulary,
+      currentQuestionType,
+      shouldShowAnswer,
+    } = this.observableScreen.reviewState;
 
     this.observableScreen.reviewActionBarState.buttons.replace([
-      new ObservableReviewActionButton(
-        'PREVIOUS',
-        undefined,
-        ReviewActionBarIds.PREVIOUS_BTN,
-        {
-          light: Images.ARROW_LEFT_BLACK_25X25,
-          dark: Images.ARROW_LEFT_MILK_25X25,
-        },
+      this.reviewActionButtonFactory.createPreviousButton(
         this.observableScreen.reviewState.currentIndex === 0,
         (): void => this.previousItem(),
       ),
-      new ObservableReviewActionButton(
-        'SHOW ANSWER',
-        undefined,
-        ReviewActionBarIds.SHOW_ANSWER_BTN,
-        {
-          light: Images.EYE_BLACK_25X25,
-          dark: Images.EYE_MILK_25X25,
-        },
-        false,
-        (self): void => {
-          this.showDefinitions();
-          self.reset(
-            'NEXT',
-            undefined,
-            ReviewActionBarIds.NEXT_BTN,
-            {
-              light: Images.ARROW_RIGHT_BLACK_25X25,
-              dark: Images.ARROW_RIGHT_MILK_25X25,
-            },
-            false,
+      shouldShowAnswer === false
+        ? this.reviewActionButtonFactory.createShowAnswerButton(
             (): void => {
-              this.showReviewFeedbackBar();
+              this.showAnswer();
+              this.setUpButtons();
             },
-          );
-        },
-      ),
-      new ObservableReviewActionButton(
-        'PLAY AUDIO',
-        vocabulary.vocabularyTerm,
-        ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(vocabulary.vocabularyTerm),
-        {
-          light: Images.SPEAKER_BLACK_25X25,
-          dark: Images.SPEAKER_MILK_25X25,
-        },
-        false,
+          )
+        : this.reviewActionButtonFactory.createNextButton(
+            (): void => this.showReviewFeedbackBar(),
+          ),
+      this.reviewActionButtonFactory.createPlayAudioButton(
+        shouldShowAnswer === true || currentQuestionType === 'forward'
+          ? vocabulary.vocabularyTerm
+          : '',
         (): void => {
           this.synthesizeAndSpeak(vocabulary.vocabularyTerm);
         },
-        this.autoUpdateAudioButton,
       ),
     ]);
-
     _.toPairs(vocabulary.vocabularyExtraFields).forEach(
       ([key, valueList]): void => {
         if (
@@ -153,19 +126,11 @@ export class SpacedRepetitionLessonScreenDelegate {
         ) {
           valueList.forEach(
             (values: string[]): void => {
-              this.observableScreen.reviewActionBarState.buttons.push(
-                new ObservableReviewActionButton(
-                  'PLAY AUDIO',
-                  values[0],
-                  ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(values[0]),
-                  {
-                    light: Images.SPEAKER_BLACK_25X25,
-                    dark: Images.SPEAKER_MILK_25X25,
-                  },
-                  false,
-                  (): void => this.synthesizeAndSpeak(values[0]),
-                  this.autoUpdateAudioButton,
-                ),
+              this.reviewActionButtonFactory.createPlayAudioButton(
+                shouldShowAnswer === true || currentQuestionType === 'forward'
+                  ? values[0]
+                  : '',
+                (): void => this.synthesizeAndSpeak(values[0]),
               );
             },
           );
@@ -175,12 +140,15 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public autoUpdateButtons(): void {
-    this.observer.autorun(
-      (): void => {
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.speakState.get() === ActivityState.ACTIVE,
+      (isSpeaking): void => {
         this.observableScreen.reviewActionBarState.buttons.forEach(
           (button): void => {
-            if (typeof button.autorun !== 'undefined') {
-              button.autorun(button);
+            if (button.title === 'PLAY AUDIO') {
+              button.loading = isSpeaking;
+              button.disabled = isSpeaking;
             }
           },
         );
@@ -360,16 +328,8 @@ export class SpacedRepetitionLessonScreenDelegate {
     }
   }
 
-  private autoUpdateAudioButton(button: ObservableReviewActionButton): void {
-    if (this.observableScreen.speakState.get() === ActivityState.ACTIVE) {
-      button.disabled = true;
-    } else {
-      button.disabled = false;
-    }
-  }
-
-  private showDefinitions(): void {
-    this.observableScreen.reviewState.shouldShowDefinitions = true;
+  private showAnswer(): void {
+    this.observableScreen.reviewState.shouldShowAnswer = true;
   }
 
   private showReviewFeedbackBar(): void {

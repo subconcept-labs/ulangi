@@ -8,28 +8,18 @@
 import { QuizMultipleChoiceMaxLimit } from '../interfaces/general/QuizMultipleChoiceMaxLimit';
 import { QuizVocabularyPool } from '../interfaces/general/QuizVocabularyPool';
 import { QuizWritingMaxLimit } from '../interfaces/general/QuizWritingMaxLimit';
-import { SpacedRepetitionAutoArchive } from '../interfaces/general/SpacedRepetitionAutoArchive';
 import { SpacedRepetitionInitialInterval } from '../interfaces/general/SpacedRepetitionInitialInterval';
-import { SpacedRepetitionLevelThreshold } from '../interfaces/general/SpacedRepetitionLevelThreshold';
 import { SpacedRepetitionMaxLimit } from '../interfaces/general/SpacedRepetitionMaxLimit';
-import { SpacedRepetitionNextTermPosition } from '../interfaces/general/SpacedRepetitionNextTermPosition';
-import { SpacedRepetitionShowDefSideEffectState } from '../interfaces/general/SpacedRepetitionShowDefSideEffectState';
+import { SpacedRepetitionReviewStrategy } from '../interfaces/general/SpacedRepetitionReviewStrategy';
 import { WritingInitialInterval } from '../interfaces/general/WritingInitialInterval';
 import { WritingMaxLimit } from '../interfaces/general/WritingMaxLimit';
-import { WritingNextTermPosition } from '../interfaces/general/WritingNextTermPosition';
-import { WritingUseHintSideEffectState } from '../interfaces/general/WritingUseHintSideEffectState';
 
 export type SetExtraDataItem =
   | SpacedRepetitionInitialInterval
   | SpacedRepetitionMaxLimit
-  | SpacedRepetitionShowDefSideEffectState
-  | SpacedRepetitionAutoArchive
-  | SpacedRepetitionLevelThreshold
-  | SpacedRepetitionNextTermPosition
+  | SpacedRepetitionReviewStrategy
   | WritingInitialInterval
   | WritingMaxLimit
-  | WritingUseHintSideEffectState
-  | WritingNextTermPosition
   | QuizVocabularyPool
   | QuizMultipleChoiceMaxLimit
   | QuizWritingMaxLimit;

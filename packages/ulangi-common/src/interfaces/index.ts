@@ -31,23 +31,10 @@ export {
 } from './general/SpacedRepetitionInitialInterval';
 export { SpacedRepetitionMaxLimit } from './general/SpacedRepetitionMaxLimit';
 export {
-  SpacedRepetitionAutoArchive,
-} from './general/SpacedRepetitionAutoArchive';
-export {
-  SpacedRepetitionLevelThreshold,
-} from './general/SpacedRepetitionLevelThreshold';
-export {
-  SpacedRepetitionNextTermPosition,
-} from './general/SpacedRepetitionNextTermPosition';
-export {
-  SpacedRepetitionShowDefSideEffectState,
-} from './general/SpacedRepetitionShowDefSideEffectState';
+  SpacedRepetitionReviewStrategy,
+} from './general/SpacedRepetitionReviewStrategy';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
-export { WritingNextTermPosition } from './general/WritingNextTermPosition';
-export {
-  WritingUseHintSideEffectState,
-} from './general/WritingUseHintSideEffectState';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';
 export { GlobalReminder } from './general/GlobalReminder';
 export { GlobalDarkMode } from './general/GlobalDarkMode';

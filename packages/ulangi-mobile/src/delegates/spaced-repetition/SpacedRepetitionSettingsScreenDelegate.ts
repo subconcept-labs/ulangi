@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ReviewStrategy, ScreenName } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableSpacedRepetitionSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -41,6 +41,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
       {
         initialInterval: this.observableScreen.selectedInitialInterval,
         limit: this.observableScreen.selectedLimit,
+        reviewStrategy: this.observableScreen.selectedReviewStrategy,
       },
       {
         onSaving: this.showSavingDialog,
@@ -77,6 +78,42 @@ export class SpacedRepetitionSettingsScreenDelegate {
           ),
         ),
         selectedIds: [selectedLimit],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showReviewStrategyMenu(
+    valuePairs: readonly [ReviewStrategy, ReviewStrategy][],
+    selectedReviewStrategy: ReviewStrategy,
+    onSelect: (reviewStrategy: ReviewStrategy) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([reviewStrategy, reviewStrategyText]): [
+              ReviewStrategy,
+              SelectionItem
+            ] => {
+              return [
+                reviewStrategy,
+                {
+                  testID: SpacedRepetitionSettingsScreenIds.SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY(
+                    reviewStrategy,
+                  ),
+                  text: reviewStrategyText,
+                  onPress: (): void => {
+                    onSelect(reviewStrategy);
+                    this.navigatorDelegate.dismissLightBox();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedReviewStrategy],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
