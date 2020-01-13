@@ -10,7 +10,7 @@ permalink: /mobile-app/the-frontend-architecture/
 
 ![Ulangi's frontend architecture](./assets/images/architecture.png)
 
-The architecture we use is basically a modified version of Redux. We add two more components (**EventBus** and **Delegates**) to make it become an **event-driven architecture**.
+The architecture we use is basically a modified version of **Redux**. We add two more components (**EventBus** and **Delegates**) to make it become an **event-driven architecture**.
 
 This archiecture:
 - reduces the usage of global state.
@@ -18,7 +18,7 @@ This archiecture:
 - makes it easy to reuse code.
 
 ## How it reduces the usage of global state. 
-In our modified version, we are not required to use global **Store** for event-driven data because **Delegates** can also subscribe to any events to perform local state changes. Currently, we use local state to store **screen-related** data and global state to store **session-related** data.
+In our modified version, we are not required to use global **Store** for event-driven data because **Delegates** can also subscribe to any events to perform local state changes. We currently store **screen-related** data in local state and **session-related** data in global state.
 
 ## How it makes the app faster.
 In tradition Redux, updating state in global **Store** will cause the whole app to be re-rendered unless you have some optimizations in hand. In our version, we use mostly local state thus only the views that use them will be re-rendered.
