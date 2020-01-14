@@ -24,17 +24,19 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 
 1. Choose *Add-on > Ulangi Sheets > Show sidebar.*
 
-2. Click on **Set API key**. You can retrieve the API key from Ulangi mobile app (navigate to *More > Sync with Google Sheets*.)
+2. Click on **Set API key**. You can retrieve the API key from the mobile app (by navigating to **More > Sync with Google Sheets**.)
 
-3. Click on **Set up for syncing** and select the set you want to sync.
+3. Click on **Set up for syncing** and select a set you want to sync.
 
 4. Click on the **PULL** button to start downloading data.
 
 
 #### TIP:
-If you want to set up syncing for another set, create a new document and repeat step 1 - 3.
+If you want to set up another set for syncing, create a new document and repeat step 1 - 3.
 
 ---
 ## Important 
 {: .text-red-200}
-The API key is stored with the document. If you share the document with someone else, they will have the ability to edit your flashcards.
+- The API key is stored with the document. If you share the document with someone else, they will have the ability to edit your flashcards.
+
+- This add-on is optimized to sync with one Ulangi account. Please do not set API key from multiple accounts within the same document. **Sharing flashcards and collaboration between multiple users are not yet supportted.**{: .text-red-200}
