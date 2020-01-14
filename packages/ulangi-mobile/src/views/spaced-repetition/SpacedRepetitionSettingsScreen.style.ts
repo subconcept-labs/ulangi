@@ -67,6 +67,9 @@ export const sectionRowLightStyles = StyleSheet.create(
       fontSize: 16,
       fontWeight: 'bold',
     },
+    inner_container: {
+      backgroundColor: '#f0f0f0',
+    },
   }),
 );
 
