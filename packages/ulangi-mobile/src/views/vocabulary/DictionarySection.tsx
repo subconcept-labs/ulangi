@@ -66,26 +66,16 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
         <React.Fragment>
           {_.map(
             dictionaryEntry.definitionsBySource,
-            ({
-              definitions,
-              formattedSource,
-              license,
-              link,
-            }): React.ReactElement<any> => {
+            ({ definitions, attribution }): React.ReactElement<any> => {
               return (
                 <DictionaryDefinitionList
-                  key={formattedSource}
+                  key={attribution.sourceName}
                   theme={this.props.theme}
                   term={dictionaryEntry.vocabularyText}
-                  formattedSource={formattedSource}
-                  license={license}
+                  attribution={attribution}
                   definitions={definitions}
                   onPick={this.props.onPick}
-                  openSourceLink={(): void => {
-                    if (typeof link !== 'undefined') {
-                      this.props.openLink(link);
-                    }
-                  }}
+                  openLink={this.props.openLink}
                 />
               );
             },

@@ -47,9 +47,7 @@ export class PublicSetDetailScreen extends React.Component<
           theme={this.props.darkModeStore.theme}
           title={this.props.observableScreen.publicSet.title}
           subtitle={this.props.observableScreen.publicSet.subtitle}
-          formattedAuthors={
-            this.props.observableScreen.publicSet.formattedAuthors
-          }
+          attributions={this.props.observableScreen.publicSet.attributions}
           openLink={this.props.screenDelegate.openLink}
         />
         <PublicVocabularyList

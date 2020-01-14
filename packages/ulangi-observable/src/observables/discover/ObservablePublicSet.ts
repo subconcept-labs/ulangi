@@ -5,13 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { SourceFormatter } from '@ulangi/ulangi-common/core';
+import { AttributionHelper } from '@ulangi/ulangi-common/core';
+import { Attribution } from '@ulangi/ulangi-common/interfaces';
 import { IObservableArray, computed, observable } from 'mobx';
 
 import { ObservablePublicVocabulary } from './ObservablePublicVocabulary';
 
 export class ObservablePublicSet {
-  private sourceFormatter = new SourceFormatter();
+  private attributionHelper = new AttributionHelper();
 
   @observable
   public publicSetId: string;
@@ -41,21 +42,20 @@ export class ObservablePublicSet {
   public isCurated?: boolean;
 
   @computed
-  public get formattedAuthors(): {
-    formattedName: string;
-    link?: string;
-  }[] {
+  public get attributions(): Attribution[] {
     return this.authors.map(
-      ({
-        name,
-        link,
-      }): {
-        formattedName: string;
-        link?: string;
-      } => {
+      ({ name, link }): Attribution => {
+        const sourceName = this.attributionHelper.formatSource(name);
+        const sourceLink = link;
+        const license = this.attributionHelper.getLicenseBySource(name);
+        const licenseLink = this.attributionHelper.getLinkByLicense(
+          license || ''
+        );
         return {
-          formattedName: this.sourceFormatter.format(name),
-          link,
+          sourceName,
+          sourceLink,
+          license,
+          licenseLink,
         };
       }
     );

@@ -6,7 +6,7 @@
  */
 
 import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
@@ -15,8 +15,7 @@ export interface DictionaryDefinitionListStyles {
   source_left: ViewStyle;
   source_text: TextStyle;
   license_text: TextStyle;
-  link_container: ViewStyle;
-  link_icon: ImageStyle;
+  hightlighted: TextStyle;
 }
 
 export const baseStyles: DictionaryDefinitionListStyles = {
@@ -43,13 +42,8 @@ export const baseStyles: DictionaryDefinitionListStyles = {
     fontSize: 13,
   },
 
-  link_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  link_icon: {
-    marginLeft: 2,
+  hightlighted: {
+    color: config.styles.primaryColor,
   },
 };
 
@@ -62,7 +56,7 @@ export const lightStyles = StyleSheet.create(
     },
 
     source_text: {
-      color: config.styles.light.primaryTextColor,
+      color: config.styles.light.secondaryTextColor,
     },
 
     license_text: {
@@ -80,7 +74,7 @@ export const darkStyles = StyleSheet.create(
     },
 
     source_text: {
-      color: config.styles.dark.primaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
     },
 
     license_text: {

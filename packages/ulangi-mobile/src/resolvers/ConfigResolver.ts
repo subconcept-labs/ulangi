@@ -71,6 +71,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       light: {
         primaryBackgroundColor: Joi.string(),
         secondaryBackgroundColor: Joi.string(),
+        tertiaryBackgroundColor: Joi.string(),
         primaryTextColor: Joi.string(),
         secondaryTextColor: Joi.string(),
         primaryBorderColor: Joi.string(),
@@ -79,6 +80,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       dark: {
         primaryBackgroundColor: Joi.string(),
         secondaryBackgroundColor: Joi.string(),
+        tertiaryBackgroundColor: Joi.string(),
         primaryTextColor: Joi.string(),
         secondaryTextColor: Joi.string(),
         primaryBorderColor: Joi.string(),

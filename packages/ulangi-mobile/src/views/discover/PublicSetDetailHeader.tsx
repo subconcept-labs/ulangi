@@ -6,11 +6,11 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { Attribution } from '@ulangi/ulangi-common/interfaces';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
-import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import {
   PublicSetDetailHeaderStyles,
@@ -22,7 +22,7 @@ export interface PublicSetDetailHeaderProps {
   theme: Theme;
   title: string;
   subtitle?: string;
-  formattedAuthors: { formattedName: string; link?: string }[];
+  attributions: Attribution[];
   openLink: (link: string) => void;
   styles?: {
     light: PublicSetDetailHeaderStyles;
@@ -50,56 +50,50 @@ export class PublicSetDetailHeader extends React.Component<
             {this.props.subtitle}
           </DefaultText>
         ) : null}
-        <View style={this.styles.author_containers}>
-          {this.renderAuthors()}
+        <View style={this.styles.attribution_containers}>
+          {this.props.attributions.map(
+            (attribution): React.ReactElement<any> => {
+              return this.renderAttribution(attribution);
+            },
+          )}
         </View>
       </View>
     );
   }
 
-  private renderAuthors(): React.ReactElement<any> {
+  private renderAttribution(attribution: Attribution): React.ReactElement<any> {
     return (
-      <React.Fragment>
-        {this.props.formattedAuthors.map(
-          ({ formattedName, link }): React.ReactElement<any> => {
-            if (typeof link !== 'undefined' && link !== '') {
-              return (
-                <TouchableOpacity
-                  key={formattedName}
-                  onPress={(): void => {
-                    this.props.openLink(link);
-                  }}>
-                  {this.renderAuthor(formattedName, link)}
-                </TouchableOpacity>
-              );
-            } else {
-              return this.renderAuthor(formattedName, link);
-            }
-          },
-        )}
-      </React.Fragment>
-    );
-  }
-
-  private renderAuthor(
-    formattedName: string,
-    link?: string,
-  ): React.ReactElement<any> {
-    return (
-      <View key={formattedName} style={this.styles.author_container}>
-        <View style={this.styles.author_name_container}>
-          <DefaultText allowFontScaling={false} style={this.styles.author}>
-            {formattedName}
+      <View
+        key={attribution.sourceName}
+        style={this.styles.attribution_container}>
+        <DefaultText allowFontScaling={false} style={this.styles.attribution}>
+          <DefaultText
+            style={attribution.sourceLink ? this.styles.highlighted : null}
+            onPress={(): void => {
+              if (typeof attribution.sourceLink !== 'undefined') {
+                this.props.openLink(attribution.sourceLink);
+              }
+            }}>
+            {attribution.sourceName}
           </DefaultText>
-        </View>
-        {typeof link !== 'undefined' && link !== '' ? (
-          <View style={this.styles.link_icon_container}>
-            <Image
-              style={this.styles.link_icon}
-              source={Images.LINK_GREY_14X14}
-            />
-          </View>
-        ) : null}
+          {typeof attribution.license !== 'undefined' ? (
+            <DefaultText>
+              <DefaultText> (under </DefaultText>
+              <DefaultText
+                onPress={(): void => {
+                  if (typeof attribution.licenseLink !== 'undefined') {
+                    this.props.openLink(attribution.licenseLink);
+                  }
+                }}
+                style={
+                  attribution.licenseLink ? this.styles.highlighted : null
+                }>
+                {attribution.license}
+              </DefaultText>
+              <DefaultText>)</DefaultText>
+            </DefaultText>
+          ) : null}
+        </DefaultText>
       </View>
     );
   }

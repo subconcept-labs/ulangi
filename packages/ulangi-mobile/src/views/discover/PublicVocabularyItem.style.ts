@@ -21,9 +21,9 @@ export interface PublicVocabularyItemStyles {
   meaning_container: ViewStyle;
   plain_meaning_container: ViewStyle;
   plain_meaning: TextStyle;
-  source_list: ViewStyle;
-  source_container: ViewStyle;
-  source: TextStyle;
+  attribution_container: ViewStyle;
+  attribution: TextStyle;
+  highlighted: TextStyle;
   dot_container: ViewStyle;
   dot: TextStyle;
   button: ViewStyle;
@@ -35,6 +35,7 @@ export const baseStyles: PublicVocabularyItemStyles = {
     marginVertical: 8,
     borderRadius: 5,
     borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
 
   vocabulary_text_container: {
@@ -96,19 +97,20 @@ export const baseStyles: PublicVocabularyItemStyles = {
     fontSize: 15,
   },
 
-  source_list: {
-    paddingVertical: 2,
+  attribution_container: {
+    paddingVertical: 13,
     flexDirection: 'row',
     alignItems: 'center',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 16,
   },
 
-  source_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  source: {
+  attribution: {
     fontSize: 12,
+  },
+
+  highlighted: {
+    color: config.styles.primaryColor,
   },
 
   dot_container: {
@@ -144,7 +146,12 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.primaryTextColor,
     },
 
-    source: {
+    attribution_container: {
+      backgroundColor: config.styles.light.tertiaryBackgroundColor,
+      borderTopColor: config.styles.light.secondaryBorderColor,
+    },
+
+    attribution: {
       color: config.styles.light.secondaryTextColor,
     },
 
@@ -178,7 +185,12 @@ export const darkStyles = StyleSheet.create(
       color: config.styles.dark.primaryTextColor,
     },
 
-    source: {
+    attribution_container: {
+      backgroundColor: config.styles.dark.tertiaryBackgroundColor,
+      borderTopColor: config.styles.dark.secondaryBorderColor,
+    },
+
+    attribution: {
       color: config.styles.dark.secondaryTextColor,
     },
 

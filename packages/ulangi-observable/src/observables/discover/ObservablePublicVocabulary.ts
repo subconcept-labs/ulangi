@@ -6,11 +6,13 @@
  */
 
 import {
-  LinkGenerator,
-  SourceFormatter,
+  AttributionHelper,
   VocabularyExtraFieldParser,
 } from '@ulangi/ulangi-common/core';
-import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
+import {
+  Attribution,
+  VocabularyExtraFields,
+} from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 import { IObservableArray, computed, observable } from 'mobx';
 
@@ -18,8 +20,7 @@ import { ObservablePublicDefinition } from './ObservablePublicDefinition';
 
 export class ObservablePublicVocabulary {
   private vocabularyExtraFieldParser = new VocabularyExtraFieldParser();
-  private sourceFormatter = new SourceFormatter();
-  private linkGenerator = new LinkGenerator();
+  private attributionHelper = new AttributionHelper();
 
   @observable
   public publicVocabularyId: string;
@@ -46,18 +47,23 @@ export class ObservablePublicVocabulary {
   }
 
   @computed
-  public get formattedSourcesAndLinks(): {
-    formattedSource: string;
-    link?: string;
-  }[] {
+  public get attributions(): Attribution[] {
     return this.sources.map(
-      (source): { formattedSource: string; link?: string } => {
+      (source): Attribution => {
+        const sourceName = this.attributionHelper.formatSource(source);
+        const sourceLink = this.attributionHelper.generateLinkBySource(source, {
+          term: this.vocabularyTerm,
+        });
+        const license = this.attributionHelper.getLicenseBySource(source);
+        const licenseLink = this.attributionHelper.getLinkByLicense(
+          license || ''
+        );
+
         return {
-          formattedSource: this.sourceFormatter.format(source),
-          link: this.linkGenerator.generateLinkBySourceAndValue(
-            source,
-            this.vocabularyTerm
-          ),
+          sourceName,
+          sourceLink,
+          license,
+          licenseLink,
         };
       }
     );

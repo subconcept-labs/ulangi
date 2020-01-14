@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+export { ExtraFieldDetail } from './extra-field-details/ExtraFieldDetail';
 export {
   VocabularyExtraFieldParser,
 } from './extra-field-parsers/VocabularyExtraFieldParser';
@@ -17,8 +18,5 @@ export {
 } from './schedulers/SpacedRepetitionScheduler';
 export { WritingScheduler } from './schedulers/WritingScheduler';
 export { ArchiveDecider } from './ArchiveDecider';
+export { AttributionHelper } from './AttributionHelper';
 export { BaseTransformer } from './BaseTransformer';
-export { SourceFormatter } from './SourceFormatter';
-export { LinkGenerator } from './LinkGenerator';
-export { LicenseGetter } from './LicenseGetter';
-export { ExtraFieldDetail } from './extra-field-details/ExtraFieldDetail';

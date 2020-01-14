@@ -68,6 +68,7 @@ export interface Config {
     readonly light: {
       primaryBackgroundColor: string;
       secondaryBackgroundColor: string;
+      tertiaryBackgroundColor: string;
       primaryTextColor: string;
       secondaryTextColor: string;
       primaryBorderColor: string;
@@ -76,6 +77,7 @@ export interface Config {
     readonly dark: {
       primaryBackgroundColor: string;
       secondaryBackgroundColor: string;
+      tertiaryBackgroundColor: string;
       primaryTextColor: string;
       secondaryTextColor: string;
       primaryBorderColor: string;

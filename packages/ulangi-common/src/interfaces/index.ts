@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+export { Attribution } from './general/Attribution';
 export { PixabayImage } from './general/PixabayImage';
 export { Purchase } from './general/Purchase';
 export { Product } from './general/Product';
