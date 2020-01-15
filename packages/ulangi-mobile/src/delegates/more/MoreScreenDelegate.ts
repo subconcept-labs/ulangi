@@ -323,6 +323,10 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.PRIVACY_POLICY_SCREEN, {});
   }
 
+  public navigateToDataSharingScreen(): void {
+    this.navigatorDelegate.push(ScreenName.DATA_SHARING_SCREEN, {});
+  }
+
   public showGoogleConsentForm(): void {
     this.adDelegate.showGoogleConsentForm();
   }

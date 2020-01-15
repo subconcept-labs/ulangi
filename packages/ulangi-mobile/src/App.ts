@@ -20,9 +20,9 @@ import {
 import {
   AdMobAdapter,
   AnalyticsAdapter,
-  AppsFlyerAdapter,
   AudioPlayerAdapter,
   CrashlyticsAdapter,
+  FacebookAdapter,
   FirebaseAdapter,
   NotificationsAdapter,
   SagaFacade,
@@ -30,8 +30,8 @@ import {
 } from '@ulangi/ulangi-saga';
 import { StoreFactory } from '@ulangi/ulangi-store';
 import { Platform } from 'react-native';
-import appsFlyer from 'react-native-appsflyer';
 import * as systemDarkMode from 'react-native-dark-mode';
+import * as facebook from 'react-native-fbsdk';
 import * as FileSystem from 'react-native-fs';
 import * as Iap from 'react-native-iap';
 import * as sqlite from 'react-native-sqlite-storage';
@@ -76,18 +76,17 @@ export class App {
     setupNavigationDefaultOptions();
 
     const analytics = new AnalyticsAdapter(firebase.analytics());
+    const crashlytics = new CrashlyticsAdapter(firebase.crashlytics(), true);
 
     const sagaFacade = new SagaFacade(
       env,
       config,
       new SQLiteDatabaseAdapter(sqlite),
       new FirebaseAdapter(firebase),
-      new AdMobAdapter(
-        // @ts-ignore
-        firebase.admob,
-        RNAdConsent,
-      ),
-      new AppsFlyerAdapter(appsFlyer),
+      // @ts-ignore
+      new AdMobAdapter(firebase.admob, RNAdConsent),
+      analytics,
+      new FacebookAdapter(facebook),
       NetInfo,
       FileSystem,
       Iap,
@@ -98,7 +97,7 @@ export class App {
         firebase.notifications,
       ),
       new SystemDarkModeAdapter(systemDarkMode),
-      new CrashlyticsAdapter(firebase.crashlytics(), true),
+      crashlytics,
     );
 
     const eventFacade = new EventFacade();
@@ -124,6 +123,7 @@ export class App {
     const eventBusFactory = new EventBusFactory(store, eventFacade);
 
     ServiceRegistry.register('analytics', analytics);
+    ServiceRegistry.register('crashlytics', crashlytics);
     ServiceRegistry.register('eventBusFactory', eventBusFactory);
     ServiceRegistry.register('rootStore', store.getState());
     ServiceRegistry.register('observableLightBox', new ObservableLightBox());

@@ -12,6 +12,7 @@ import {
   DarkModeSettings,
   GlobalAutoArchive,
   GlobalDarkMode,
+  GlobalDataSharing,
   GlobalReminder,
   ReminderSettings,
 } from '@ulangi/ulangi-common/interfaces';
@@ -65,6 +66,15 @@ export class ObservableUser {
     const data = this.extraData.find(
       (data): data is GlobalReminder =>
         data.dataName === UserExtraDataName.GLOBAL_REMINDER
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get globalDataSharing(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is GlobalDataSharing =>
+        data.dataName === UserExtraDataName.GLOBAL_DATA_SHARING
     );
     return data ? data.dataValue : undefined;
   }

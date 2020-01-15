@@ -11,9 +11,7 @@ import { Set } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, EventListener, group, on, once } from '@ulangi/ulangi-event';
 import { ObservablePreloadScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
-import { Platform } from 'react-native';
 
-import { env } from '../../constants/env';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
 import { SetListDelegate } from '../set/SetListDelegate';
@@ -156,8 +154,6 @@ export class PreloadScreenDelegate {
           'Initialize Failed. Please contact developer (support@ulangi.com).';
       },
     });
-
-    this.initializeAppsFlyer();
   }
 
   private initializeApp(callback: {
@@ -177,27 +173,6 @@ export class PreloadScreenDelegate {
         ),
       ),
     );
-  }
-
-  private initializeAppsFlyer(): void {
-    if (
-      env.APPLE_APP_ID !== null &&
-      env.IOS_APPS_FLYER_DEV_KEY !== null &&
-      env.ANDROID_APPS_FLYER_DEV_KEY !== null
-    ) {
-      this.eventBus.publish(
-        createAction(ActionType.APPS_FLYER__INIT_SDK, {
-          devKey: Platform.select({
-            ios: env.IOS_APPS_FLYER_DEV_KEY,
-            android: env.ANDROID_APPS_FLYER_DEV_KEY,
-          }),
-          isDebug: env.DEBUG_APPS_FLYER,
-          appId: env.APPLE_APP_ID,
-        }),
-      );
-    } else {
-      console.warn('Appsflyer is not configured.');
-    }
   }
 
   private getSession(callback: {

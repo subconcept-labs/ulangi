@@ -18,9 +18,10 @@ import * as Iap from 'react-native-iap';
 import sagaMiddlewareFactory, { SagaMiddleware } from 'redux-saga';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
@@ -37,7 +38,8 @@ export class SagaFacade {
   private database: DatabaseFacade;
   private firebase: FirebaseAdapter;
   private adMob: AdMobAdapter;
-  private appsFlyer: AppsFlyerAdapter;
+  private analytics: AnalyticsAdapter;
+  private facebook: FacebookAdapter;
   private netInfo: typeof NetInfo;
   private fileSystem: typeof FileSystem;
   private iap: typeof Iap;
@@ -55,7 +57,8 @@ export class SagaFacade {
     sqliteDatabase: SQLiteDatabaseAdapter,
     firebase: FirebaseAdapter,
     adMob: AdMobAdapter,
-    appsFlyer: AppsFlyerAdapter,
+    analytics: AnalyticsAdapter,
+    facebook: FacebookAdapter,
     netInfo: typeof NetInfo,
     fileSystem: typeof FileSystem,
     iap: typeof Iap,
@@ -71,7 +74,8 @@ export class SagaFacade {
     this.database = new DatabaseFacade(sqliteDatabase);
     this.firebase = firebase;
     this.adMob = adMob;
-    this.appsFlyer = appsFlyer;
+    this.analytics = analytics;
+    this.facebook = facebook;
     this.netInfo = netInfo;
     this.fileSystem = fileSystem;
     this.iap = iap;
@@ -95,7 +99,8 @@ export class SagaFacade {
       this.fileSystem,
       this.iap,
       this.adMob,
-      this.appsFlyer,
+      this.analytics,
+      this.facebook,
       this.netInfo,
       this.audioPlayer,
       this.notifications,

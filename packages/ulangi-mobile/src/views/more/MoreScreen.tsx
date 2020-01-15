@@ -276,6 +276,16 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
             onPress={this.props.screenDelegate.showGoogleConsentForm}
           />
         ) : null}
+        {this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
+          <SectionRow
+            testID={MoreScreenIds.DATA_SHARING_BTN}
+            theme={this.props.darkModeStore.theme}
+            leftText="Data Sharing"
+            rightText=""
+            showArrow={true}
+            onPress={this.props.screenDelegate.navigateToDataSharingScreen}
+          />
+        ) : null}
         <SectionRow
           testID={MoreScreenIds.TERMS_OF_SERVICE_BTN}
           theme={this.props.darkModeStore.theme}

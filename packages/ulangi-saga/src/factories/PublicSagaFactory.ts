@@ -9,14 +9,15 @@ import NetInfo from '@react-native-community/netinfo';
 import { DatabaseFacade, ModelList } from '@ulangi/ulangi-local-database';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
 import { AdSaga } from '../sagas/AdSaga';
 import { AppSaga } from '../sagas/AppSaga';
-import { AppsFlyerSaga } from '../sagas/AppsFlyerSaga';
 import { AuthSaga } from '../sagas/AuthSaga';
 import { DarkModeSaga } from '../sagas/DarkModeSaga';
+import { DataSharingSaga } from '../sagas/DataSharingSaga';
 import { DatabaseSaga } from '../sagas/DatabaseSaga';
 import { NetworkSaga } from '../sagas/NetworkSaga';
 import { PublicSaga } from '../sagas/PublicSaga';
@@ -27,7 +28,8 @@ export class PublicSagaFactory {
   private modelList: ModelList;
   private netInfo: typeof NetInfo;
   private adMob: AdMobAdapter;
-  private appsFlyer: AppsFlyerAdapter;
+  private analytics: AnalyticsAdapter;
+  private facebook: FacebookAdapter;
   private systemDarkMode: SystemDarkModeAdapter;
   private crashlytics: CrashlyticsAdapter;
 
@@ -36,7 +38,8 @@ export class PublicSagaFactory {
     modelList: ModelList,
     netInfo: typeof NetInfo,
     adMob: AdMobAdapter,
-    appsFlyer: AppsFlyerAdapter,
+    analytics: AnalyticsAdapter,
+    facebook: FacebookAdapter,
     systemDarkMode: SystemDarkModeAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
@@ -44,7 +47,8 @@ export class PublicSagaFactory {
     this.modelList = modelList;
     this.netInfo = netInfo;
     this.adMob = adMob;
-    this.appsFlyer = appsFlyer;
+    this.analytics = analytics;
+    this.facebook = facebook;
     this.systemDarkMode = systemDarkMode;
     this.crashlytics = crashlytics;
   }
@@ -52,7 +56,7 @@ export class PublicSagaFactory {
   public createAllPublicSagas(): readonly PublicSaga[] {
     return [
       new AppSaga(),
-      new AppsFlyerSaga(this.appsFlyer, this.crashlytics),
+      new DataSharingSaga(this.analytics, this.crashlytics, this.facebook),
       new AuthSaga(
         this.database,
         this.modelList.sessionModel,

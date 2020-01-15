@@ -381,3 +381,6 @@ export {
 export {
   ObservableTopBarButton,
 } from './observables/top-bar/ObservableTopBarButton';
+export {
+  ObservableDataSharingScreen,
+} from './observables/data-sharing/ObservableDataSharingScreen';

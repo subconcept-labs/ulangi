@@ -104,4 +104,10 @@ export class CrashlyticsAdapter {
       console.log(name, message, stack);
     }
   }
+
+  public enableCrashlyticsCollection(): void {
+    if (this.crashlytics !== null) {
+      this.crashlytics.enableCrashlyticsCollection();
+    }
+  }
 }

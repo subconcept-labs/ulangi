@@ -14,6 +14,10 @@ export class AnalyticsAdapter {
     this.analytics = analytics;
   }
 
+  public setAnalyticsCollectionEnabled(enabled: boolean): void {
+    this.analytics.setAnalyticsCollectionEnabled(enabled);
+  }
+
   public logEvent(event: string, params?: object): void {
     this.analytics.logEvent(event, params);
   }

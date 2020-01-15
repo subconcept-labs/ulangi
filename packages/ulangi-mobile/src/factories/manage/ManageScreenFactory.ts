@@ -12,6 +12,7 @@ import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryAct
 import { CategoryBulkActionMenuDelegate } from '../../delegates/category/CategoryBulkActionMenuDelegate';
 import { CategoryListDelegate } from '../../delegates/category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../../delegates/category/CategorySelectionDelegate';
+import { DataSharingDelegate } from '../../delegates/data-sharing/DataSharingDelegate';
 import { LevelBreakdownDelegate } from '../../delegates/level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../../delegates/manage/AutorunDelegate';
 import { ManageListSelectionMenuDelegate } from '../../delegates/manage/ManageListSelectionMenuDelegate';
@@ -159,6 +160,13 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.rootStore.notificationStore,
     );
 
+    const dataSharingDelegate = new DataSharingDelegate(
+      this.eventBus,
+      this.observer,
+      this.props.rootStore.userStore,
+      this.props.rootStore.adStore,
+    );
+
     const autorunDelegate = new AutorunDelegate(
       this.eventBus,
       this.observer,
@@ -166,6 +174,7 @@ export class ManageScreenFactory extends ScreenFactory {
       adDelegate,
       reminderDelegate,
       reminderSettingsDelegate,
+      dataSharingDelegate,
       dialogDelegate,
       rootScreenDelegate,
     );

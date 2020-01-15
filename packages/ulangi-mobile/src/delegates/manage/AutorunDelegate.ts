@@ -15,6 +15,7 @@ import { config } from '../../constants/config';
 import { env } from '../../constants/env';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { AdDelegate } from '../ad/AdDelegate';
+import { DataSharingDelegate } from '../data-sharing/DataSharingDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { ReminderDelegate } from '../reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../reminder/ReminderSettingsDelegate';
@@ -27,6 +28,7 @@ export class AutorunDelegate {
   private adDelegate: AdDelegate;
   private reminderDelegate: ReminderDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
+  private dataSharingDelegate: DataSharingDelegate;
   private dialogDelegate: DialogDelegate;
   private rootScreenDelegate: RootScreenDelegate;
 
@@ -37,6 +39,7 @@ export class AutorunDelegate {
     adDelegate: AdDelegate,
     reminderDelegate: ReminderDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
+    dataSharingDelegate: DataSharingDelegate,
     dialogDelegate: DialogDelegate,
     rootScreenDelegate: RootScreenDelegate,
   ) {
@@ -46,6 +49,7 @@ export class AutorunDelegate {
     this.adDelegate = adDelegate;
     this.reminderDelegate = reminderDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
+    this.dataSharingDelegate = dataSharingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.rootScreenDelegate = rootScreenDelegate;
   }
@@ -92,6 +96,8 @@ export class AutorunDelegate {
     if (config.reminder.autoCheckPermissionAndSetUpReminder) {
       this.autoCheckPermissionAndSetUpReminder();
     }
+
+    this.autoToggleDataSharing();
 
     this.autoShowDialogWhenSessionExpired();
   }
@@ -192,6 +198,10 @@ export class AutorunDelegate {
         }
       },
     );
+  }
+
+  private autoToggleDataSharing(): void {
+    this.dataSharingDelegate.autoToggleDataSharing();
   }
 
   private autoUpdateRemoteConfig(): void {

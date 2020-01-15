@@ -36,9 +36,8 @@ export class AdDelegate {
   }
 
   public shouldSetUp(): boolean {
+    // set up even if user has a Premium account
     return (
-      this.userStore.existingCurrentUser.membership ===
-        UserMembership.REGULAR &&
       this.userStore.existingCurrentUser.isSessionValid === true &&
       this.adStore.isSetUp === false
     );

@@ -31,10 +31,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
 	<key>FacebookAppID</key>
 	<string>398840477411584</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
-	<true/>
+	<false/>
 	<key>FacebookDisplayName</key>
 	<string>Ulangi</string>
 	<key>GADApplicationIdentifier</key>
@@ -96,5 +98,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>firebase_crashlytics_collection_enabled</key>
+	<false/>
 </dict>
 </plist>

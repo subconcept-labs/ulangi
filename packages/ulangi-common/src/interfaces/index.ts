@@ -37,6 +37,7 @@ export {
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';
+export { GlobalDataSharing } from './general/GlobalDataSharing';
 export { GlobalReminder } from './general/GlobalReminder';
 export { GlobalDarkMode } from './general/GlobalDarkMode';
 export { AutoShowInAppRating } from './general/AutoShowInAppRating';

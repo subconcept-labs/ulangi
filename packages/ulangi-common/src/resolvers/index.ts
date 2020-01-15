@@ -44,6 +44,7 @@ export {
   AutoArchiveSettingsResolver,
 } from './general/AutoArchiveSettingsResolver';
 export { ReminderSettingsResolver } from './general/ReminderSettingsResolver';
+export { GlobalDataSharingResolver } from './general/GlobalDataSharingResolver';
 export { GlobalAutoArchiveResolver } from './general/GlobalAutoArchiveResolver';
 export { GlobalReminderResolver } from './general/GlobalReminderResolver';
 export {

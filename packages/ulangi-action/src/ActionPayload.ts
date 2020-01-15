@@ -41,13 +41,14 @@ export interface ActionPayload {
   readonly APP__INITIALIZE_SUCCEEDED: null;
   readonly APP__INITIALIZE_FAILED: { errorCode: string };
 
-  readonly APPS_FLYER__INIT_SDK: {
-    devKey: string;
-    isDebug: boolean;
-    appId: string;
-  };
-  readonly APPS_FLYER__INIT_SDK_SUCCEEDED: null;
-  readonly APPS_FLYER__INIT_SDK_FAILED: { errorCode: string };
+  readonly DATA_SHARING__ENABLE_ANALYTICS: null;
+  readonly DATA_SHARING__ENABLING_ANALYTICS: null;
+  readonly DATA_SHARING__ENABLE_ANALYTICS_SUCCEEDED: null;
+  readonly DATA_SHARING__ENABLE_ANALYTICS_FAILED: { errorCode: string };
+  readonly DATA_SHARING__DISABLE_ANALYTICS: null;
+  readonly DATA_SHARING__DISABLING_ANALYTICS: null;
+  readonly DATA_SHARING__DISABLE_ANALYTICS_SUCCEEDED: null;
+  readonly DATA_SHARING__DISABLE_ANALYTICS_FAILED: { errorCode: string };
 
   readonly IAP__INIT: { googlePackageName: string };
   readonly IAP__INITING: null;

@@ -1,5 +1,4 @@
 PODS:
-  - AppsFlyerFramework (4.10.4)
   - boost-for-react-native (1.63.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -316,9 +315,6 @@ PODS:
     - Google-Mobile-Ads-SDK
     - PersonalizedAdConsent
     - React
-  - react-native-appsflyer (1.4.7):
-    - AppsFlyerFramework (~> 4.10.4)
-    - React
   - react-native-config (0.12.0):
     - React
   - react-native-fbsdk (1.1.1):
@@ -448,7 +444,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-ad-consent (from `../node_modules/@ulangi/react-native-ad-consent`)"
-  - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -481,7 +476,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AppsFlyerFramework
     - boost-for-react-native
     - Crashlytics
     - Fabric
@@ -545,8 +539,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-ad-consent:
     :path: "../node_modules/@ulangi/react-native-ad-consent"
-  react-native-appsflyer:
-    :path: "../node_modules/react-native-appsflyer"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-fbsdk:
@@ -605,7 +597,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppsFlyerFramework: aeb793095c1b33170ae30bef66652c0645f409be
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
@@ -650,7 +641,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-ad-consent: 87326f56a9b70e03b755e56798f8d470f4b2ab50
-  react-native-appsflyer: 6837f0921f1fee84cb3fcbec437c1a607e0e37a5
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
   react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7

@@ -16,14 +16,11 @@ export interface Env {
   readonly ADMOB_PUBLISHER_ID: null | string;
   readonly CONSENT_FORM_SHOULD_OFFER_AD_FREE: null | boolean;
   readonly CONSENT_FORM_DEBUG_GEOGRAPHY: null | 'EEA' | 'NOT_EEA';
-  readonly DEBUG_APPS_FLYER: boolean;
-  readonly IOS_APPS_FLYER_DEV_KEY: null | string;
   readonly IOS_PREMIUM_LIFETIME_PRODUCT_ID: null | string;
   readonly IOS_AD_APP_ID: null | string;
   readonly IOS_AD_UNIT_ID: null | string;
   readonly IOS_AD_TEST_DEVICE_ID: null | string;
   readonly IOS_CONSENT_FORM_DEBUG_DEVICE_ID: null | string;
-  readonly ANDROID_APPS_FLYER_DEV_KEY: null | string;
   readonly ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: null | string;
   readonly ANDROID_AD_APP_ID: null | string;
   readonly ANDROID_AD_UNIT_ID: null | string;

@@ -27,6 +27,7 @@ import { CategoryDetailScreenContainer } from '../views/category/CategoryDetailS
 import { CategorySelectorScreenContainer } from '../views/category/CategorySelectorScreenContainer';
 import { ContactUsScreenContainer } from '../views/contact-us/ContactUsScreenContainer';
 import { DarkModeScreenContainer } from '../views/dark-mode/DarkModeScreenContainer';
+import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
 import { FlashcardPlayerScreenContainer } from '../views/flashcard-player/FlashcardPlayerScreenContainer';
@@ -151,4 +152,5 @@ export const ScreenContainers = {
   DARK_MODE_SCREEN: DarkModeScreenContainer,
   LEVEL_BREAKDOWN_SCREEN: LevelBreakdownScreenContainer,
   OPEN_SOURCE_PROJECTS_SCREEN: OpenSourceProjectsScreenContainer,
+  DATA_SHARING_SCREEN: DataSharingScreenContainer,
 };

@@ -19,9 +19,10 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, spawn, take } from 'redux-saga/effects';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
@@ -40,7 +41,8 @@ export class RootSaga {
   private fileSystem: typeof FileSystem;
   private iap: typeof Iap;
   private admob: AdMobAdapter;
-  private appsFlyer: AppsFlyerAdapter;
+  private analytics: AnalyticsAdapter;
+  private facebook: FacebookAdapter;
   private netInfo: typeof NetInfo;
   private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
@@ -55,7 +57,8 @@ export class RootSaga {
     fileSystem: typeof FileSystem,
     iap: typeof Iap,
     admob: AdMobAdapter,
-    appsFlyer: AppsFlyerAdapter,
+    analytics: AnalyticsAdapter,
+    facebook: FacebookAdapter,
     netInfo: typeof NetInfo,
     audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
@@ -69,7 +72,8 @@ export class RootSaga {
     this.fileSystem = fileSystem;
     this.iap = iap;
     this.admob = admob;
-    this.appsFlyer = appsFlyer;
+    this.analytics = analytics;
+    this.facebook = facebook;
     this.netInfo = netInfo;
     this.audioPlayer = audioPlayer;
     this.notifications = notifications;
@@ -95,7 +99,8 @@ export class RootSaga {
       this.modelList,
       this.netInfo,
       this.admob,
-      this.appsFlyer,
+      this.analytics,
+      this.facebook,
       this.systemDarkMode,
       this.crashlytics
     );

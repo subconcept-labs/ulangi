@@ -24,14 +24,11 @@ export class EnvResolver extends AbstractResolver<Env> {
     CONSENT_FORM_DEBUG_GEOGRAPHY: Joi.string()
       .valid(['EEA', 'NOT_EEA'])
       .allow(null),
-    DEBUG_APPS_FLYER: Joi.boolean().allow(null),
-    IOS_APPS_FLYER_DEV_KEY: Joi.string().allow(null),
     IOS_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().allow(null),
     IOS_AD_APP_ID: Joi.string().allow(null),
     IOS_AD_UNIT_ID: Joi.string().allow(null),
     IOS_AD_TEST_DEVICE_ID: Joi.string().allow(null),
     IOS_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().allow(null),
-    ANDROID_APPS_FLYER_DEV_KEY: Joi.string().allow(null),
     ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().allow(null),
     ANDROID_AD_APP_ID: Joi.string().allow(null),
     ANDROID_AD_UNIT_ID: Joi.string().allow(null),

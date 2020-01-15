@@ -8,10 +8,12 @@
 import { AutoShowInAppRating } from '../interfaces/general/AutoShowInAppRating';
 import { GlobalAutoArchive } from '../interfaces/general/GlobalAutoArchive';
 import { GlobalDarkMode } from '../interfaces/general/GlobalDarkMode';
+import { GlobalDataSharing } from '../interfaces/general/GlobalDataSharing';
 import { GlobalReminder } from '../interfaces/general/GlobalReminder';
 
 export type UserExtraDataItem =
   | GlobalAutoArchive
   | GlobalReminder
   | GlobalDarkMode
+  | GlobalDataSharing
   | AutoShowInAppRating;
