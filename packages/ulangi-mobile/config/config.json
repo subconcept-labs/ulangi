@@ -12,8 +12,6 @@
 
   "ad": {
     "showAdTimeout": 5000,
-    "autoSetUpAfterAuth": true,
-    "autoInitializeAfterAuth": true
   },
 
   "openSourceProjects": [
@@ -90,10 +88,6 @@
     "animationDuration": 200
   },
 
-  "remoteConfig": {
-    "autoUpdateAfterAuth": true
-  },
-
   "user": {
     "passwordMinLength": 8,
     "defaultGlobalAutoArchive": {
@@ -109,8 +103,6 @@
     "defaultDarkModeSettings": {
       "trigger": "System"
     },
-    "autoCheckUserSessionAfterAuth": true,
-    "autoFetchOnDownloadSucceededAfterAuth": true
   },
 
   "set": {
@@ -125,7 +117,6 @@
         "name": "deleted"
       }
     },
-    "autoFetchAllOnDownloadSucceededAfterAuth": true
   },
 
   "vocabulary": {
@@ -428,18 +419,14 @@
   },
 
   "audio": {
-    "cacheFolderName": "SpeechCache",
-    "autoClearCacheAfterAuth": true
+    "cacheFolderName": "SpeechCache"
   },
 
   "sync": {
     "transactionChunkSize": 5,
-    "delayBetweenChunks": 500,
-    "autoObserveLocalUpdatesAfterAuth": true,
-    "autoObserveRemoteUpdatesAfterAuth": true
+    "delayBetweenChunks": 500
   },
 
   "reminder": {
-    "autoCheckPermissionAndSetUpReminder": true
   }
 }

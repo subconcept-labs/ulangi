@@ -36,8 +36,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     ad: {
       showAdTimeout: Joi.number(),
-      autoSetUpAfterAuth: Joi.boolean(),
-      autoInitializeAfterAuth: Joi.boolean(),
     },
 
     openSourceProjects: Joi.array().items({
@@ -88,10 +86,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
       },
     },
 
-    remoteConfig: {
-      autoUpdateAfterAuth: Joi.boolean(),
-    },
-
     user: {
       passwordMinLength: Joi.number(),
       defaultGlobalAutoArchive: Joi.object(
@@ -103,8 +97,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultDarkModeSettings: Joi.object(
         this.darkModeSettingsResolver.getRules(),
       ),
-      autoCheckUserSessionAfterAuth: Joi.boolean(),
-      autoFetchOnDownloadSucceededAfterAuth: Joi.boolean(),
     },
 
     set: {
@@ -112,7 +104,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
         // TODO: Use validation for key
         name: Joi.string(),
       }),
-      autoFetchAllOnDownloadSucceededAfterAuth: Joi.boolean(),
     },
 
     vocabulary: {
@@ -260,18 +251,11 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     audio: {
       cacheFolderName: Joi.string(),
-      autoClearCacheAfterAuth: Joi.boolean(),
     },
 
     sync: {
       transactionChunkSize: Joi.number(),
       delayBetweenChunks: Joi.number(),
-      autoObserveLocalUpdatesAfterAuth: Joi.boolean(),
-      autoObserveRemoteUpdatesAfterAuth: Joi.boolean(),
-    },
-
-    reminder: {
-      autoCheckPermissionAndSetUpReminder: Joi.boolean(),
     },
   };
 }
