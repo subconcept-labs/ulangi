@@ -88,6 +88,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     return new SpacedRepetitionLessonScreenDelegate(
       this.observer,
       this.props.rootStore.setStore,
+      this.props.observableConverter,
       observableScreen,
       reviewIterator,
       reviewFeedbackBarDelegate,

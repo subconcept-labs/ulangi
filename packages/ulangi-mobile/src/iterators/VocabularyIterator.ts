@@ -50,6 +50,10 @@ export class VocabularyIterator<T extends Vocabulary = Vocabulary> {
     return this.vocabularyList.size;
   }
 
+  public update(key: string, value: T): void {
+    this.vocabularyList = this.vocabularyList.set(key, value);
+  }
+
   public merge(vocabularyList: Map<string, T> | OrderedMap<string, T>): void {
     this.vocabularyList = this.vocabularyList.merge(vocabularyList);
   }

@@ -18,6 +18,7 @@ import {
   VocabularyExtraFields,
 } from '@ulangi/ulangi-common/interfaces';
 import {
+  ObservableConverter,
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
   Observer,
@@ -44,6 +45,7 @@ export class SpacedRepetitionLessonScreenDelegate {
 
   private observer: Observer;
   private setStore: ObservableSetStore;
+  private observableConverter: ObservableConverter;
   private observableScreen: ObservableSpacedRepetitionLessonScreen;
   private reviewIterator: ReviewIterator;
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
@@ -58,6 +60,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   public constructor(
     observer: Observer,
     setStore: ObservableSetStore,
+    observableConverter: ObservableConverter,
     observableScreen: ObservableSpacedRepetitionLessonScreen,
     reviewIterator: ReviewIterator,
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
@@ -71,6 +74,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   ) {
     this.observer = observer;
     this.setStore = setStore;
+    this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.reviewIterator = reviewIterator;
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
@@ -154,9 +158,19 @@ export class SpacedRepetitionLessonScreenDelegate {
           this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
             originalVocabulary: this.observableScreen.reviewState.vocabulary.toRaw(),
             onSave: (newVocabulary): void => {
-              _.merge(
-                this.observableScreen.reviewState.vocabulary,
+              const observableVocabulary = this.observableConverter.convertToObservableVocabulary(
                 newVocabulary,
+              );
+
+              this.observableScreen.reviewState.vocabulary = observableVocabulary;
+
+              this.observableScreen.vocabularyList.set(
+                observableVocabulary.vocabularyId,
+                observableVocabulary,
+              );
+              this.reviewIterator.update(
+                observableVocabulary.vocabularyId,
+                observableVocabulary,
               );
             },
           });
