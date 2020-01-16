@@ -7,7 +7,7 @@
 
 import {
   ObservableChangePasswordScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import * as React from 'react';
@@ -19,7 +19,7 @@ import { DefaultText } from '../common/DefaultText';
 import { ChangePasswordForm } from './ChangePasswordForm';
 
 export interface ChangePasswordScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
   observableScreen: ObservableChangePasswordScreen;
 }
@@ -54,7 +54,7 @@ export class ChangePasswordScreen extends React.Component<
       <View testID={ChangePasswordScreenIds.SCREEN} style={styles.screen}>
         {this.renderGuestNote()}
         <ChangePasswordForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
         />
       </View>

@@ -6,9 +6,9 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableSetManagementScreen,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -21,7 +21,7 @@ import { SetManagementTopBar } from './SetManagementTopBar';
 
 export interface SetManagementScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSetManagementScreen;
   screenDelegate: SetManagementScreenDelegate;
 }
@@ -34,13 +34,13 @@ export class SetManagementScreen extends React.Component<
     return (
       <View style={styles.screen} testID={SetManagementScreenIds.SCREEN}>
         <SetManagementTopBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           selectedSetStatus={this.props.observableScreen.selectedSetStatus}
           selectSetStatus={this.props.screenDelegate.selectAndFetchSets}
         />
         <SetList
           testID={SetManagementScreenIds.SET_LIST}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           currentSetId={this.props.setStore.existingCurrentSetId}
           setList={this.props.observableScreen.setList}
           isRefreshing={this.props.observableScreen.refreshing}

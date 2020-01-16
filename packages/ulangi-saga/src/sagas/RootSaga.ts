@@ -25,7 +25,7 @@ import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { ProtectedSagaFactory } from '../factories/ProtectedSagaFactory';
 import { PublicSagaFactory } from '../factories/PublicSagaFactory';
 import { SagaConfig } from '../interfaces/SagaConfig';
@@ -46,7 +46,7 @@ export class RootSaga {
   private netInfo: typeof NetInfo;
   private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
-  private systemDarkMode: SystemDarkModeAdapter;
+  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
   private databaseEventBus: DatabaseEventBus;
   private modelList: ModelList;
@@ -62,7 +62,7 @@ export class RootSaga {
     netInfo: typeof NetInfo,
     audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
-    systemDarkMode: SystemDarkModeAdapter,
+    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter,
     databaseEventBus: DatabaseEventBus,
     modelList: ModelList
@@ -77,7 +77,7 @@ export class RootSaga {
     this.netInfo = netInfo;
     this.audioPlayer = audioPlayer;
     this.notifications = notifications;
-    this.systemDarkMode = systemDarkMode;
+    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
     this.databaseEventBus = databaseEventBus;
     this.modelList = modelList;
@@ -101,7 +101,7 @@ export class RootSaga {
       this.admob,
       this.analytics,
       this.facebook,
-      this.systemDarkMode,
+      this.systemTheme,
       this.crashlytics
     );
 

@@ -5,10 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-export const DarkModeScreenIds = {
-  SCREEN: 'DARK_MODE_SCREEN',
-  TOP_BAR: 'DARK_MODE_TOP_BAR',
+export const ThemeScreenIds = {
+  SCREEN: 'THEME_SCREEN',
+  TOP_BAR: 'THEME_TOP_BAR',
   SAVE_BTN: 'SAVE_BTN',
   BACK_BTN: 'BACK_BTN',
-  SHOW_DARK_MODE_SELECTION_MENU_BTN: 'SHOW_DARK_MODE_SELECTION_MENU_BTN',
+  SHOW_THEME_SELECTION_MENU_BTN: 'SHOW_THEME_SELECTION_MENU_BTN',
 };

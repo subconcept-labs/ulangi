@@ -7,8 +7,8 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableQuizSettingsScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
@@ -31,7 +31,7 @@ import {
 } from './QuizSettingsScreen.style';
 
 export interface QuizSettingsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableQuizSettingsScreen;
   screenDelegate: QuizSettingsScreenDelegate;
 }
@@ -41,7 +41,7 @@ export class QuizSettingsScreen extends React.Component<
   QuizSettingsScreenProps
 > {
   public get styles(): QuizSettingsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -64,11 +64,11 @@ export class QuizSettingsScreen extends React.Component<
   private renderQuizSettingsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="quiz-settings"
         header="QUIZ SETTINGS">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Vocabulary Pool"
           description="Specify to test only learned terms or all active ones."
           customRight={
@@ -97,7 +97,7 @@ export class QuizSettingsScreen extends React.Component<
           }}
         />
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Multiple Choice Quiz Size"
           shrink="left"
           description="Number of questions per multiple choice quiz"
@@ -125,7 +125,7 @@ export class QuizSettingsScreen extends React.Component<
           }}
         />
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Writing Quiz Size"
           description="Number of questions per writing quiz"
           shrink="left"

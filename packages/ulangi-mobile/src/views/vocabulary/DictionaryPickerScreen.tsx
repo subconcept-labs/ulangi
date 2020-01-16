@@ -9,10 +9,10 @@ import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
-  ObservableDarkModeStore,
   ObservableDictionaryPickerScreen,
   ObservableLightBox,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -34,7 +34,7 @@ import {
 export interface DictionaryPickerScreenProps {
   observableLightBox: ObservableLightBox;
   observableScreen: ObservableDictionaryPickerScreen;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
   screenDelegate: DictionaryPickerScreenDelegate;
   onPick: (definition: DeepPartial<Definition>) => void;
@@ -45,7 +45,7 @@ export class DictionaryPickerScreen extends React.Component<
   DictionaryPickerScreenProps
 > {
   public get styles(): DictionaryPickerScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -94,7 +94,7 @@ export class DictionaryPickerScreen extends React.Component<
   private renderPickerContent(): React.ReactElement<any> {
     return (
       <DictionaryPickerContent
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         learningLanguageName={
           this.props.setStore.existingCurrentSet.learningLanguage.fullName
         }

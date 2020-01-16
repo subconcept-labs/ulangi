@@ -9,8 +9,8 @@ import { AbstractResolver } from '@ulangi/resolver';
 import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettingsResolver,
-  DarkModeSettingsResolver,
   ReminderSettingsResolver,
+  ThemeSettingsResolver,
 } from '@ulangi/ulangi-common/resolvers';
 import * as Joi from 'joi';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ import { Config } from '../interfaces/Config';
 export class ConfigResolver extends AbstractResolver<Config> {
   private autoArchiveSettingsResolver = new AutoArchiveSettingsResolver();
   private reminderSettingsResolver = new ReminderSettingsResolver();
-  private darkModeSettingsResolver = new DarkModeSettingsResolver();
+  private themeSettingsResolver = new ThemeSettingsResolver();
 
   protected rules = {
     general: {
@@ -94,9 +94,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultGlobalReminder: Joi.object(
         this.reminderSettingsResolver.getRules(),
       ),
-      defaultDarkModeSettings: Joi.object(
-        this.darkModeSettingsResolver.getRules(),
-      ),
+      defaultThemeSettings: Joi.object(this.themeSettingsResolver.getRules()),
     },
 
     set: {

@@ -6,7 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -22,7 +22,7 @@ import {
 } from './SpacedRepetitionFAQScreen.style';
 
 export interface SpacedRepetitionFAQScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: SpacedRepetitionFAQScreenDelegate;
 }
 
@@ -31,7 +31,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
   SpacedRepetitionFAQScreenProps
 > {
   public get styles(): SpacedRepetitionFAQScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -87,7 +87,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
         style={this.styles.screen}
         testID={SpacedRepetitionFAQScreenIds.SCREEN}>
         <FAQList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           sections={this.data.sections}
         />
       </View>

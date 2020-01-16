@@ -47,9 +47,7 @@ export class TopBar extends Container<TopBarPassedProps> {
       ? this.props.passedProps.styles.dark
       : darkStyles;
 
-    return this.props.rootStore.darkModeStore.theme === Theme.LIGHT
-      ? light
-      : dark;
+    return this.props.rootStore.themeStore.theme === Theme.LIGHT ? light : dark;
   }
 
   public render(): null | React.ReactElement<any> {
@@ -119,7 +117,7 @@ export class TopBar extends Container<TopBarPassedProps> {
           <Image
             style={this.styles.button_icon}
             source={
-              this.props.rootStore.darkModeStore.theme === Theme.LIGHT
+              this.props.rootStore.themeStore.theme === Theme.LIGHT
                 ? button.icon.light
                 : button.icon.dark
             }

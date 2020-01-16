@@ -24,7 +24,7 @@ import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { RootSaga } from '../sagas/RootSaga';
@@ -45,7 +45,7 @@ export class SagaFacade {
   private iap: typeof Iap;
   private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
-  private systemDarkMode: SystemDarkModeAdapter;
+  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
 
   private databaseEventBus: DatabaseEventBus;
@@ -64,7 +64,7 @@ export class SagaFacade {
     iap: typeof Iap,
     audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
-    systemDarkMode: SystemDarkModeAdapter,
+    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
     this.env = env;
@@ -81,7 +81,7 @@ export class SagaFacade {
     this.iap = iap;
     this.audioPlayer = audioPlayer;
     this.notifications = notifications;
-    this.systemDarkMode = systemDarkMode;
+    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
 
     this.databaseEventBus = new DatabaseEventBus();
@@ -104,7 +104,7 @@ export class SagaFacade {
       this.netInfo,
       this.audioPlayer,
       this.notifications,
-      this.systemDarkMode,
+      this.systemTheme,
       this.crashlytics,
       this.databaseEventBus,
       this.modelList

@@ -9,15 +9,15 @@ import { AbstractResolver } from '@ulangi/resolver';
 import * as Joi from 'joi';
 
 import { UserExtraDataName } from '../../enums/UserExtraDataName';
-import { GlobalDarkMode } from '../../interfaces/general/GlobalDarkMode';
-import { DarkModeSettingsResolver } from './DarkModeSettingsResolver';
+import { GlobalTheme } from '../../interfaces/general/GlobalTheme';
+import { ThemeSettingsResolver } from './ThemeSettingsResolver';
 
-export class GlobalDarkModeResolver extends AbstractResolver<GlobalDarkMode> {
-  private darkModeSettingsResolver = new DarkModeSettingsResolver();
+export class GlobalThemeResolver extends AbstractResolver<GlobalTheme> {
+  private themeSettingsResolver = new ThemeSettingsResolver();
 
   protected rules = {
-    dataName: Joi.string().valid(UserExtraDataName.GLOBAL_DARK_MODE),
-    dataValue: Joi.object(this.darkModeSettingsResolver.getRules()),
+    dataName: Joi.string().valid(UserExtraDataName.GLOBAL_THEME),
+    dataValue: Joi.object(this.themeSettingsResolver.getRules()),
     createdAt: Joi.date(),
     updatedAt: Joi.date(),
     firstSyncedAt: Joi.date().allow(null),

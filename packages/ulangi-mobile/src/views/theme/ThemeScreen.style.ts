@@ -8,11 +8,11 @@
 import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
-export interface DarkModeScreenStyles {
+export interface ThemeScreenStyles {
   screen: ViewStyle;
 }
 
-export const baseStyles: DarkModeScreenStyles = {
+export const baseStyles: ThemeScreenStyles = {
   screen: {
     flex: 1,
   },

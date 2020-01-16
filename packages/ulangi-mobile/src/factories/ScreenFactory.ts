@@ -31,7 +31,7 @@ export class ScreenFactory {
   }
 
   public createRootScreenDelegate(): RootScreenDelegate {
-    return new RootScreenDelegate(this.props.rootStore.darkModeStore);
+    return new RootScreenDelegate(this.props.rootStore.themeStore);
   }
 
   public createNavigatorDelegate(): NavigatorDelegate {
@@ -39,7 +39,7 @@ export class ScreenFactory {
       this.observer,
       this.props.componentId,
       this.props.observableLightBox,
-      this.props.rootStore.darkModeStore,
+      this.props.rootStore.themeStore,
     );
   }
 

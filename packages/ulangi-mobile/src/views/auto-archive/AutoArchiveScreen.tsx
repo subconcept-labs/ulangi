@@ -8,7 +8,7 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAutoArchiveScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +27,7 @@ import {
 } from './AutoArchiveScreen.style';
 
 export interface AutoArchiveScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAutoArchiveScreen;
   screenDelegate: AutoArchiveScreenDelegate;
 }
@@ -35,7 +35,7 @@ export interface AutoArchiveScreenProps {
 @observer
 export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
   public get styles(): AutoArchiveScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -51,9 +51,9 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
 
   private renderToggleSection(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.darkModeStore.theme} key="toggle">
+      <SectionGroup theme={this.props.themeStore.theme} key="toggle">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Auto Archive"
           customRight={
             <DefaultButton
@@ -83,11 +83,11 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
   private renderConditionsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="conditions"
         header="CONDITIONS">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="When Spaced Repetition Level (SR) is at or above"
           customRight={
             <DefaultButton
@@ -111,7 +111,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
           }
         />
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="When Writing Level (WR) is at or above"
           customRight={
             <DefaultButton

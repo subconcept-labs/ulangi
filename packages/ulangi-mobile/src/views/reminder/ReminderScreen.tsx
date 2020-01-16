@@ -7,9 +7,9 @@
 
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableNotificationStore,
   ObservableReminderScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as moment from 'moment';
@@ -27,7 +27,7 @@ import { SectionRow } from '../section/SectionRow';
 export interface ReminderScreenProps {
   observableScreen: ObservableReminderScreen;
   notificationStore: ObservableNotificationStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: ReminderScreenDelegate;
 }
 
@@ -47,7 +47,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
           mode="time"
           onConfirm={this.props.screenDelegate.handleTimePicked}
           onCancel={this.props.screenDelegate.handleTimeCanceled}
-          isDarkModeEnabled={this.props.darkModeStore.systemMode === 'dark'}
+          isDarkModeEnabled={this.props.themeStore.systemMode === 'dark'}
         />
       </View>
     );
@@ -59,9 +59,9 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
       this.props.notificationStore.hasPermission === true;
 
     return (
-      <SectionGroup theme={this.props.darkModeStore.theme} key="reminder">
+      <SectionGroup theme={this.props.themeStore.theme} key="reminder">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Daily Reminder"
           customRight={
             <DefaultButton
@@ -76,7 +76,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
           description="Set up daily reminder so that you won't forget to review your flashcards."
         />
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Time"
           customRight={
             <DefaultButton

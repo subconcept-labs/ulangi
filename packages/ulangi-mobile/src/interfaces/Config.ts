@@ -15,8 +15,8 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettings,
-  DarkModeSettings,
   ReminderSettings,
+  ThemeSettings,
 } from '@ulangi/ulangi-common/interfaces';
 
 export interface Config {
@@ -87,7 +87,7 @@ export interface Config {
     readonly passwordMinLength: number;
     readonly defaultGlobalAutoArchive: AutoArchiveSettings;
     readonly defaultGlobalReminder: ReminderSettings;
-    readonly defaultDarkModeSettings: DarkModeSettings;
+    readonly defaultThemeSettings: ThemeSettings;
   };
 
   readonly set: {

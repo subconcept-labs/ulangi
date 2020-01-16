@@ -5,8 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DarkModeTrigger } from '../../enums/DarkModeTrigger';
-
-export interface DarkModeSettings {
-  readonly trigger: DarkModeTrigger;
+export enum ThemeTrigger {
+  SYSTEM = 'System',
+  ALWAYS_LIGHT = 'Always light',
+  ALWAYS_DARK = 'Always dark',
 }

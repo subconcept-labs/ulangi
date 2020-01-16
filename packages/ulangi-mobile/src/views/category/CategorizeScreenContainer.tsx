@@ -117,7 +117,7 @@ export class CategorizeScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <CategorizeScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
         observableScreen={this.observableScreen}
       />

@@ -8,25 +8,25 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { put, take } from 'redux-saga/effects';
 
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { PublicSaga } from '../sagas/PublicSaga';
 
-export class DarkModeSaga extends PublicSaga {
-  private systemDarkMode: SystemDarkModeAdapter;
+export class ThemeSaga extends PublicSaga {
+  private systemTheme: SystemThemeAdapter;
 
-  public constructor(systemDarkMode: SystemDarkModeAdapter) {
+  public constructor(systemTheme: SystemThemeAdapter) {
     super();
-    this.systemDarkMode = systemDarkMode;
+    this.systemTheme = systemTheme;
   }
 
   public *run(): IterableIterator<any> {
-    const channel = this.systemDarkMode.createEventChannel();
+    const channel = this.systemTheme.createEventChannel();
 
     while (true) {
       const systemMode = yield take(channel);
 
       yield put(
-        createAction(ActionType.DARK_MODE__SYSTEM_MODE_CHANGED, { systemMode })
+        createAction(ActionType.THEME__SYSTEM_MODE_CHANGED, { systemMode })
       );
     }
   }

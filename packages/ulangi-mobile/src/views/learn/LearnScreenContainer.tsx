@@ -83,7 +83,7 @@ export class LearnScreenContainer extends Container {
     return (
       <LearnScreen
         setStore={this.props.rootStore.setStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
       />
     );

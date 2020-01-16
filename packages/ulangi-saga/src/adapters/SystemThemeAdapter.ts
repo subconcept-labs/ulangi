@@ -10,17 +10,17 @@ import * as _ from 'lodash';
 import * as RNDarkMode from 'react-native-dark-mode';
 import { EventChannel, eventChannel } from 'redux-saga';
 
-export class SystemDarkModeAdapter {
-  public systemDarkMode: typeof RNDarkMode;
+export class SystemThemeAdapter {
+  public systemTheme: typeof RNDarkMode;
 
-  public constructor(systemDarkMode: typeof RNDarkMode) {
-    this.systemDarkMode = systemDarkMode;
+  public constructor(systemTheme: typeof RNDarkMode) {
+    this.systemTheme = systemTheme;
   }
 
   public createEventChannel(): EventChannel<Theme> {
     return eventChannel(
       (emit): (() => void) => {
-        this.systemDarkMode.eventEmitter.on(
+        this.systemTheme.eventEmitter.on(
           'currentModeChanged',
           (newMode): void => {
             if (newMode === 'light') {

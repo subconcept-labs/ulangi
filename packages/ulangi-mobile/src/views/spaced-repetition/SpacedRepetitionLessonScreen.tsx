@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableSpacedRepetitionLessonScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -28,7 +28,7 @@ import {
 import { SpacedRepetitionResult } from './SpacedRepetitionResult';
 
 export interface SpacedRepetitionLessonScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionLessonScreen;
   screenDelegate: SpacedRepetitionLessonScreenDelegate;
 }
@@ -38,7 +38,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
   SpacedRepetitionLessonScreenProps
 > {
   public get styles(): SpacedRepetitionLessonScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -58,7 +58,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
       return (
         <ScrollView contentContainerStyle={this.styles.container}>
           <SpacedRepetitionResult
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
             shouldShowAdOrGoogleConsentForm={
@@ -75,11 +75,11 @@ export class SpacedRepetitionLessonScreen extends React.Component<
         <React.Fragment>
           <ScrollView contentContainerStyle={this.styles.container}>
             <ReviewTop
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               reviewState={this.props.observableScreen.reviewState}
             />
             <ReviewItem
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               key={
                 this.props.observableScreen.reviewState.vocabulary.vocabularyId
               }
@@ -98,7 +98,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
     ) {
       return (
         <ReviewFeedbackBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           reviewFeedbackBarState={
             this.props.observableScreen.reviewFeedbackBarState
           }
@@ -108,7 +108,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
     } else {
       return (
         <ReviewActionBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           reviewActionBarState={
             this.props.observableScreen.reviewActionBarState
           }

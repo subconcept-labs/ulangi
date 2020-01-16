@@ -7,7 +7,7 @@
 
 import {
   ObservableCategorizeScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,7 +18,7 @@ import { CategorizeScreenDelegate } from '../../delegates/category/CategorizeScr
 import { CategoryForm } from './CategoryForm';
 
 export interface CategorizeScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableCategorizeScreen;
   screenDelegate: CategorizeScreenDelegate;
 }
@@ -29,7 +29,7 @@ export class CategorizeScreen extends React.Component<CategorizeScreenProps> {
     return (
       <View style={styles.screen} testID={CategorizeScreenIds.SCREEN}>
         <CategoryForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           categoryFormState={this.props.observableScreen.categoryFormState}
           setCategoryName={this.props.screenDelegate.setCategoryName}
           fetchCategorySuggestions={

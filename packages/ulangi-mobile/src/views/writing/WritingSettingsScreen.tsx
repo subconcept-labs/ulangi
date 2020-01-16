@@ -7,7 +7,7 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableWritingSettingsScreen,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -31,7 +31,7 @@ import {
 } from './WritingSettingsScreen.style';
 
 export interface WritingSettingsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableWritingSettingsScreen;
   screenDelegate: WritingSettingsScreenDelegate;
 }
@@ -41,7 +41,7 @@ export class WritingSettingsScreen extends React.Component<
   WritingSettingsScreenProps
 > {
   public get styles(): WritingSettingsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -69,11 +69,11 @@ export class WritingSettingsScreen extends React.Component<
   private renderLessonSettingsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         header="LESSON SETTINGS"
         key="lesson-settings">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Lesson Size"
           customRight={
             <DefaultButton
@@ -106,11 +106,11 @@ export class WritingSettingsScreen extends React.Component<
   private renderSpacedRepetitionFactorsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         header="SPACED REPETITION FACTORS"
         key="spaced-repetition-factors">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Initial Interval"
           description={this.renderInitialIntervalDescription()}
           customRight={

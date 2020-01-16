@@ -5,19 +5,19 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DarkModeTrigger, Theme } from '@ulangi/ulangi-common/enums';
-import { DarkModeSettings } from '@ulangi/ulangi-common/interfaces';
+import { Theme, ThemeTrigger } from '@ulangi/ulangi-common/enums';
+import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
 import { computed, observable } from 'mobx';
 
 import { ObservableStore } from './ObservableStore';
 import { ObservableUserStore } from './ObservableUserStore';
 
-export class ObservableDarkModeStore extends ObservableStore {
-  protected noReset = ['userStore', 'defaultDarkModeSettings', 'systemMode'];
+export class ObservableThemeStore extends ObservableStore {
+  protected noReset = ['userStore', 'defaultThemeSettings', 'systemMode'];
 
   private userStore: ObservableUserStore;
 
-  private defaultDarkModeSettings: DarkModeSettings;
+  private defaultThemeSettings: ThemeSettings;
 
   @observable
   public systemMode: undefined | Theme;
@@ -26,15 +26,15 @@ export class ObservableDarkModeStore extends ObservableStore {
   public get theme(): Theme {
     const trigger =
       this.userStore.currentUser === null ||
-      typeof this.userStore.currentUser.darkModeSettings === 'undefined'
-        ? this.defaultDarkModeSettings.trigger
-        : this.userStore.currentUser.darkModeSettings.trigger;
+      typeof this.userStore.currentUser.themeSettings === 'undefined'
+        ? this.defaultThemeSettings.trigger
+        : this.userStore.currentUser.themeSettings.trigger;
 
-    if (trigger === DarkModeTrigger.SYSTEM) {
+    if (trigger === ThemeTrigger.SYSTEM) {
       return typeof this.systemMode !== 'undefined'
         ? this.systemMode
         : Theme.LIGHT;
-    } else if (trigger === DarkModeTrigger.ALWAYS_DARK) {
+    } else if (trigger === ThemeTrigger.ALWAYS_DARK) {
       return Theme.DARK;
     } else {
       return Theme.LIGHT;
@@ -43,12 +43,12 @@ export class ObservableDarkModeStore extends ObservableStore {
 
   public constructor(
     userStore: ObservableUserStore,
-    defaultDarkModeSettings: DarkModeSettings,
+    defaultThemeSettings: ThemeSettings,
     systemMode: undefined | Theme
   ) {
     super();
     this.userStore = userStore;
-    this.defaultDarkModeSettings = defaultDarkModeSettings;
+    this.defaultThemeSettings = defaultThemeSettings;
     this.systemMode = systemMode;
   }
 }

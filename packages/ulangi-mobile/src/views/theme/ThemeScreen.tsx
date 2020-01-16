@@ -7,42 +7,42 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeScreen,
-  ObservableDarkModeStore,
+  ObservableThemeScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Platform, View } from 'react-native';
 
-import { DarkModeScreenIds } from '../../constants/ids/DarkModeScreenIds';
-import { DarkModeScreenDelegate } from '../../delegates/dark-mode/DarkModeScreenDelegate';
+import { ThemeScreenIds } from '../../constants/ids/ThemeScreenIds';
+import { ThemeScreenDelegate } from '../../delegates/theme/ThemeScreenDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
-  DarkModeScreenStyles,
+  ThemeScreenStyles,
   darkStyles,
   lightStyles,
-} from './DarkModeScreen.style';
+} from './ThemeScreen.style';
 
-export interface DarkModeScreenProps {
-  darkModeStore: ObservableDarkModeStore;
-  observableScreen: ObservableDarkModeScreen;
-  screenDelegate: DarkModeScreenDelegate;
+export interface ThemeScreenProps {
+  themeStore: ObservableThemeStore;
+  observableScreen: ObservableThemeScreen;
+  screenDelegate: ThemeScreenDelegate;
 }
 
 @observer
-export class DarkModeScreen extends React.Component<DarkModeScreenProps> {
-  public get styles(): DarkModeScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+export class ThemeScreen extends React.Component<ThemeScreenProps> {
+  public get styles(): ThemeScreenStyles {
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={DarkModeScreenIds.SCREEN}>
+      <View style={this.styles.screen} testID={ThemeScreenIds.SCREEN}>
         {this.renderSection()}
       </View>
     );
@@ -50,21 +50,21 @@ export class DarkModeScreen extends React.Component<DarkModeScreenProps> {
 
   private renderSection(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.darkModeStore.theme}>
+      <SectionGroup theme={this.props.themeStore.theme}>
         <SectionRow
-          theme={this.props.darkModeStore.theme}
-          leftText="Dark mode"
+          theme={this.props.themeStore.theme}
+          leftText="Theme Mode"
           customRight={
             <DefaultButton
-              testID={DarkModeScreenIds.SHOW_DARK_MODE_SELECTION_MENU_BTN}
+              testID={ThemeScreenIds.SHOW_THEME_SELECTION_MENU_BTN}
               text={this.props.observableScreen.settings.trigger}
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
               )}
-              onPress={this.props.screenDelegate.showDarkModeSelectionMenu}
+              onPress={this.props.screenDelegate.showThemeSelectionMenu}
             />
           }
-          description={`Select 'System' to automatically adjust mode based on OS setting which is only available on ${
+          description={`Select 'System' to automatically adjust theme based on OS setting which is only available on ${
             Platform.OS === 'ios' ? 'iOS 13+' : 'Android 10+'
           }.`}
         />

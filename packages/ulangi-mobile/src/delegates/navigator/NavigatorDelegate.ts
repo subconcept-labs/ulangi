@@ -10,8 +10,8 @@ import { Navigation, Options } from '@ulangi/react-native-navigation';
 import { LightBoxState, ScreenName } from '@ulangi/ulangi-common/enums';
 import { SelectionMenu } from '@ulangi/ulangi-common/interfaces';
 import {
-  ObservableDarkModeStore,
   ObservableLightBox,
+  ObservableThemeStore,
   Observer,
 } from '@ulangi/ulangi-observable';
 import { debounce } from 'lodash-decorators';
@@ -25,18 +25,18 @@ export class NavigatorDelegate {
   private observer: Observer;
   private componentId: string;
   private observableLightBox: ObservableLightBox;
-  private darkModeStore: ObservableDarkModeStore;
+  private themeStore: ObservableThemeStore;
 
   public constructor(
     observer: Observer,
     componentId: string,
     observableLightBox: ObservableLightBox,
-    darkModeStore: ObservableDarkModeStore,
+    themeStore: ObservableThemeStore,
   ) {
     this.observer = observer;
     this.componentId = componentId;
     this.observableLightBox = observableLightBox;
-    this.darkModeStore = darkModeStore;
+    this.themeStore = themeStore;
   }
 
   public mergeOptions(options: any): void {
@@ -55,7 +55,7 @@ export class NavigatorDelegate {
         component: {
           name: screenName,
           passProps: {
-            theme: this.darkModeStore.theme,
+            theme: this.themeStore.theme,
             // WORKAROUND FOR BUG:
             // We wrap passedProps inside a getter because
             // react-native-navigation cannot pass observables directly.
@@ -80,7 +80,7 @@ export class NavigatorDelegate {
       component: {
         name: screenName,
         passProps: {
-          theme: this.darkModeStore.theme,
+          theme: this.themeStore.theme,
           get passedProps(): ExtractPassedProps<typeof ScreenContainers[T]> {
             return passProps;
           },
@@ -125,7 +125,7 @@ export class NavigatorDelegate {
               component: {
                 name: screenName,
                 passProps: {
-                  theme: this.darkModeStore.theme,
+                  theme: this.themeStore.theme,
                   styles,
                   get passedProps(): ExtractPassedProps<
                     typeof ScreenContainers[T]
@@ -221,7 +221,7 @@ export class NavigatorDelegate {
             component: {
               name: screenName,
               passProps: {
-                theme: this.darkModeStore.theme,
+                theme: this.themeStore.theme,
                 get passedProps(): ExtractPassedProps<
                   typeof ScreenContainers[T]
                 > {

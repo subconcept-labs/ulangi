@@ -8,7 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryDetailScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -28,7 +28,7 @@ import {
 } from './CategoryDetailScreen.style';
 
 export interface CategoryDetailScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableCategoryDetailScreen;
   screenDelegate: CategoryDetailScreenDelegate;
 }
@@ -38,7 +38,7 @@ export class CategoryDetailScreen extends React.Component<
   CategoryDetailScreenProps
 > {
   public get styles(): CategoryDetailScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -49,7 +49,7 @@ export class CategoryDetailScreen extends React.Component<
         style={this.styles.screen}
         testID={CategoryDetailScreenIds.SCREEN}>
         <CategoryDetailHeader
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           category={this.props.observableScreen.category}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
           showVocabularyFilterMenu={
@@ -80,7 +80,7 @@ export class CategoryDetailScreen extends React.Component<
         <VocabularyList
           key={this.props.observableScreen.selectedFilterType.get()}
           testID={CategoryDetailScreenIds.VOCABULARY_LIST}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           toggleSelection={this.props.screenDelegate.toggleSelection}
           showVocabularyDetail={this.props.screenDelegate.showVocabularyDetail}

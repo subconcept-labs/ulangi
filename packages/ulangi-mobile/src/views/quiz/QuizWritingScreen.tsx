@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableQuizWritingScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +27,7 @@ import {
 } from './QuizWritingScreen.style';
 
 export interface QuizWritingScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableQuizWritingScreen;
   screenDelegate: QuizWritingScreenDelegate;
 }
@@ -35,7 +35,7 @@ export interface QuizWritingScreenProps {
 @observer
 export class QuizWritingScreen extends React.Component<QuizWritingScreenProps> {
   public get styles(): QuizWritingScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -48,7 +48,7 @@ export class QuizWritingScreen extends React.Component<QuizWritingScreenProps> {
           keyboardShouldPersistTaps="handled">
           {this.props.observableScreen.shouldShowResult.get() === true ? (
             <QuizWritingResult
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               writingResult={this.props.observableScreen.writingResult}
               takeAnotherQuiz={this.props.screenDelegate.takeAnotherQuiz}
               quit={this.props.screenDelegate.quit}
@@ -56,7 +56,7 @@ export class QuizWritingScreen extends React.Component<QuizWritingScreenProps> {
           ) : (
             <React.Fragment>
               <WritingFormTop
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
                 writingFormState={this.props.observableScreen.writingFormState}
                 showLastWritten={false}
                 skip={this.props.screenDelegate.skip}
@@ -66,7 +66,7 @@ export class QuizWritingScreen extends React.Component<QuizWritingScreenProps> {
                   this.props.observableScreen.writingFormState.currentQuestion
                     .questionId
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
                 writingFormState={this.props.observableScreen.writingFormState}
                 setAnswer={this.props.screenDelegate.setAnswer}
                 showHint={this.props.screenDelegate.showHint}

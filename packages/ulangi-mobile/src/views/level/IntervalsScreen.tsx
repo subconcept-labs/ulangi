@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableLightBox,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as moment from 'moment';
@@ -25,7 +25,7 @@ import {
 } from './IntervalsScreen.style';
 
 export interface IntervalsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   levelIntervalPairs: readonly [number, number][];
   observableLightBox: ObservableLightBox;
   screenDelegate: IntervalsScreenDelegate;
@@ -34,7 +34,7 @@ export interface IntervalsScreenProps {
 @observer
 export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
   public get styles(): IntervalsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -42,7 +42,7 @@ export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
   public render(): React.ReactElement<any> {
     return (
       <LightBoxContainerWithTitle
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         observableLightBox={this.props.observableLightBox}
         dismissLightBox={this.props.screenDelegate.dismissLightBox}
         title="Intervals">

@@ -11,7 +11,7 @@
   },
 
   "ad": {
-    "showAdTimeout": 5000,
+    "showAdTimeout": 5000
   },
 
   "openSourceProjects": [
@@ -100,9 +100,9 @@
       "hours": 11,
       "minutes": 0
     },
-    "defaultDarkModeSettings": {
+    "defaultThemeSettings": {
       "trigger": "System"
-    },
+    }
   },
 
   "set": {
@@ -116,7 +116,7 @@
       "DELETED": {
         "name": "deleted"
       }
-    },
+    }
   },
 
   "vocabulary": {

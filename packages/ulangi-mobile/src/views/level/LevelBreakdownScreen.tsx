@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableLightBox,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -21,7 +21,7 @@ import {
 import { LevelBreakdown } from './LevelBreakdown';
 
 export interface LevelBreakdownScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
   levelCounts: {
     readonly totalCount: number;
@@ -41,7 +41,7 @@ export class LevelBreakdownScreen extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <LightBoxContainerWithTitle
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         observableLightBox={this.props.observableLightBox}
         dismissLightBox={this.props.screenDelegate.dismissLightBox}
         styles={{
@@ -50,7 +50,7 @@ export class LevelBreakdownScreen extends React.Component<
         }}
         title="Level Breakdown">
         <LevelBreakdown
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           levelCounts={this.props.levelCounts}
         />
       </LightBoxContainerWithTitle>

@@ -6,11 +6,11 @@
  */
 
 import { UserExtraDataName } from '../../enums/UserExtraDataName';
-import { DarkModeSettings } from '../../interfaces/general/DarkModeSettings';
+import { ThemeSettings } from '../../interfaces/general/ThemeSettings';
 
-export interface GlobalDarkMode {
-  readonly dataName: UserExtraDataName.GLOBAL_DARK_MODE;
-  readonly dataValue: DarkModeSettings;
+export interface GlobalTheme {
+  readonly dataName: UserExtraDataName.GLOBAL_THEME;
+  readonly dataValue: ThemeSettings;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly firstSyncedAt: null | Date;

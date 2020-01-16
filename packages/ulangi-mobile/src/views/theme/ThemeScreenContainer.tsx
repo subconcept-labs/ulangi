@@ -8,8 +8,8 @@
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeScreen,
-  ObservableDarkModeSettings,
+  ObservableThemeScreen,
+  ObservableThemeSettings,
   ObservableTitleTopBar,
   ObservableTopBarButton,
 } from '@ulangi/ulangi-observable';
@@ -18,36 +18,36 @@ import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
 import { Images } from '../../constants/Images';
-import { DarkModeScreenIds } from '../../constants/ids/DarkModeScreenIds';
-import { DarkModeScreenFactory } from '../../factories/dark-mode/DarkModeScreenFactory';
-import { DarkModeScreen } from './DarkModeScreen';
-import { DarkModeScreenStyle } from './DarkModeScreenContainer.style';
+import { ThemeScreenIds } from '../../constants/ids/ThemeScreenIds';
+import { ThemeScreenFactory } from '../../factories/theme/ThemeScreenFactory';
+import { ThemeScreen } from './ThemeScreen';
+import { ThemeScreenStyle } from './ThemeScreenContainer.style';
 
 @observer
-export class DarkModeScreenContainer extends Container {
+export class ThemeScreenContainer extends Container {
   public static options(props: ContainerPassedProps): Options {
     return props.theme === Theme.LIGHT
-      ? DarkModeScreenStyle.SCREEN_FULL_LIGHT_STYLES
-      : DarkModeScreenStyle.SCREEN_FULL_DARK_STYLES;
+      ? ThemeScreenStyle.SCREEN_FULL_LIGHT_STYLES
+      : ThemeScreenStyle.SCREEN_FULL_DARK_STYLES;
   }
 
-  private screenFactory = new DarkModeScreenFactory(
+  private screenFactory = new ThemeScreenFactory(
     this.props,
     this.eventBus,
     this.observer,
   );
 
-  private darkModeSettingsDelegate = this.screenFactory.createDarkModeSettingsDelegate();
+  private themeSettingsDelegate = this.screenFactory.createThemeSettingsDelegate();
 
-  private currentSettings = this.darkModeSettingsDelegate.getCurrentSettings();
+  private currentSettings = this.themeSettingsDelegate.getCurrentSettings();
 
-  protected observableScreen = new ObservableDarkModeScreen(
-    new ObservableDarkModeSettings(this.currentSettings.trigger),
-    ScreenName.DARK_MODE_SCREEN,
+  protected observableScreen = new ObservableThemeScreen(
+    new ObservableThemeSettings(this.currentSettings.trigger),
+    ScreenName.THEME_SCREEN,
     new ObservableTitleTopBar(
-      'Dark Mode',
+      'Theme',
       new ObservableTopBarButton(
-        DarkModeScreenIds.BACK_BTN,
+        ThemeScreenIds.BACK_BTN,
         null,
         {
           light: Images.ARROW_LEFT_BLACK_22X22,
@@ -58,7 +58,7 @@ export class DarkModeScreenContainer extends Container {
         },
       ),
       new ObservableTopBarButton(
-        DarkModeScreenIds.SAVE_BTN,
+        ThemeScreenIds.SAVE_BTN,
         'Save',
         null,
         (): void => {
@@ -77,15 +77,15 @@ export class DarkModeScreenContainer extends Container {
   public onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT
-        ? DarkModeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
-        : DarkModeScreenStyle.SCREEN_DARK_STYLES_ONLY,
+        ? ThemeScreenStyle.SCREEN_LIGHT_STYLES_ONLY
+        : ThemeScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <DarkModeScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+      <ThemeScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

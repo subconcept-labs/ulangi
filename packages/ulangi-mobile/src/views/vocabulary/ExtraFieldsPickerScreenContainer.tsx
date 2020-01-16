@@ -75,7 +75,7 @@ export class ExtraFieldsPickerScreenContainer extends Container<
       <ExtraFieldsPickerScreen
         observableLightBox={this.props.observableLightBox}
         screenDelegate={this.screenDelegate}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}
         kind={this.props.passedProps.kind}
         selectImages={this.props.passedProps.selectImages}

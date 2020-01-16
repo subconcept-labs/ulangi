@@ -16,7 +16,6 @@ import { StoreEnv } from '../interfaces/StoreEnv';
 import { StoreOptions } from '../interfaces/StoreOptions';
 import { makeInitialState } from '../utils/makeInitialState';
 import { AdStoreReducer } from './AdStoreReducer';
-import { DarkModeStoreReducer } from './DarkModeStoreReducer';
 import { NetworkStoreReducer } from './NetworkStoreReducer';
 import { NotificationStoreReducer } from './NotificationStoreReducer';
 import { PurchaseStoreReducer } from './PurchaseStoreReducer';
@@ -24,6 +23,7 @@ import { Reducer } from './Reducer';
 import { RemoteConfigStoreReducer } from './RemoteConfigStoreReducer';
 import { SetStoreReducer } from './SetStoreReducer';
 import { SyncStoreReducer } from './SyncStoreReducer';
+import { ThemeStoreReducer } from './ThemeStoreReducer';
 import { UserStoreReducer } from './UserStoreReducer';
 
 export class RootStoreReducer extends Reducer {
@@ -59,7 +59,7 @@ export class RootStoreReducer extends Reducer {
       ),
       new AdStoreReducer(rootStore.adStore),
       new NotificationStoreReducer(rootStore.notificationStore),
-      new DarkModeStoreReducer(rootStore.darkModeStore),
+      new ThemeStoreReducer(rootStore.themeStore),
     ];
   }
 

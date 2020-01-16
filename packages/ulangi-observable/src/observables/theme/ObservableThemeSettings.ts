@@ -5,14 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DarkModeTrigger } from '@ulangi/ulangi-common/enums';
+import { ThemeTrigger } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
-export class ObservableDarkModeSettings {
+export class ObservableThemeSettings {
   @observable
-  public trigger: DarkModeTrigger;
+  public trigger: ThemeTrigger;
 
-  public constructor(trigger: DarkModeTrigger) {
+  public constructor(trigger: ThemeTrigger) {
     this.trigger = trigger;
   }
 }

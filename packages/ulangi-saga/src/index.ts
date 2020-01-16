@@ -13,4 +13,4 @@ export { AudioPlayerAdapter } from './adapters/AudioPlayerAdapter';
 export { NotificationsAdapter } from './adapters/NotificationsAdapter';
 export { CrashlyticsAdapter } from './adapters/CrashlyticsAdapter';
 export { AnalyticsAdapter } from './adapters/AnalyticsAdapter';
-export { SystemDarkModeAdapter } from './adapters/SystemDarkModeAdapter';
+export { SystemThemeAdapter } from './adapters/SystemThemeAdapter';

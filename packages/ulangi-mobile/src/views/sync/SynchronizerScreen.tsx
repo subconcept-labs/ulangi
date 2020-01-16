@@ -7,9 +7,9 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableNetworkStore,
   ObservableSyncStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -28,7 +28,7 @@ import {
 } from './SynchronizerScreen.styles';
 
 export interface SynchronizerScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
   screenDelegate: SynchronizerScreenDelegate;
@@ -39,7 +39,7 @@ export class SynchronizerScreen extends React.Component<
   SynchronizerScreenProps
 > {
   public get styles(): SynchronizerScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -47,11 +47,9 @@ export class SynchronizerScreen extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.screen} testID={SynchronizerScreenIds.SCREEN}>
-        <SectionGroup
-          theme={this.props.darkModeStore.theme}
-          header="SYNC STATE">
+        <SectionGroup theme={this.props.themeStore.theme} header="SYNC STATE">
           <SectionRow
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             customLeft={this.renderSyncState()}
             description="The synchonizer automatically synchronizes your data with our remote servers. Whenever you're online, your data will be backed up automatically."
           />

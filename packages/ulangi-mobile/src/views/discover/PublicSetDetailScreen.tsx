@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservablePublicSetDetailScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -25,7 +25,7 @@ import {
 import { PublicVocabularyList } from './PublicVocabularyList';
 
 export interface PublicSetDetailScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservablePublicSetDetailScreen;
   screenDelegate: PublicSetDetailScreenDelegate;
 }
@@ -35,7 +35,7 @@ export class PublicSetDetailScreen extends React.Component<
   PublicSetDetailScreenProps
 > {
   public get styles(): PublicSetDetailScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -44,7 +44,7 @@ export class PublicSetDetailScreen extends React.Component<
     return (
       <View style={this.styles.screen} testID={PublicSetDetailScreenIds.SCREEN}>
         <PublicSetDetailHeader
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           title={this.props.observableScreen.publicSet.title}
           subtitle={this.props.observableScreen.publicSet.subtitle}
           attributions={this.props.observableScreen.publicSet.attributions}
@@ -52,7 +52,7 @@ export class PublicSetDetailScreen extends React.Component<
         />
         <PublicVocabularyList
           testID={PublicSetDetailScreenIds.PUBLIC_VOCABULARY_LIST}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabularyList={this.props.observableScreen.publicSet.vocabularyList}
           addVocabulary={this.props.screenDelegate.addVocabulary}
           addAllVocabulary={this.props.screenDelegate.showAddAllDialog}

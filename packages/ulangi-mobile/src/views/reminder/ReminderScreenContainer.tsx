@@ -92,7 +92,7 @@ export class ReminderScreenContainer extends Container {
       <ReminderScreen
         observableScreen={this.observableScreen}
         notificationStore={this.props.rootStore.notificationStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
       />
     );

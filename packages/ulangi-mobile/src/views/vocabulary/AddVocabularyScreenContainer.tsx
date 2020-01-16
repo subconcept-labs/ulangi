@@ -168,7 +168,7 @@ export class AddVocabularyScreenContainer extends Container<
         testID={AddVocabularyScreenIds.SCREEN}
         learningLanguage={currentSet.learningLanguage}
         translatedToLanguage={currentSet.translatedToLanguage}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

@@ -8,6 +8,6 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 
 export interface StoreOptions {
-  initialSystemDarkMode: Theme;
+  initialSystemTheme: Theme;
   enableLogging?: boolean;
 }

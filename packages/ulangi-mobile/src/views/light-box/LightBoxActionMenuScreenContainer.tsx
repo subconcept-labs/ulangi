@@ -55,7 +55,7 @@ export class LightBoxActionMenuScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <LightBoxActionMenuScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.observableLightBox}
         navigatorDelegate={this.navigatorDelegate}
       />

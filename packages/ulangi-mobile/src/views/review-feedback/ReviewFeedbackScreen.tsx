@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableReviewFeedbackScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -24,7 +24,7 @@ import {
 } from './ReviewFeedbackScreen.style';
 
 export interface ReviewFeedbackScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableReviewFeedbackScreen;
   screenDelegate: ReviewFeedbackScreenDelegate;
 }
@@ -34,7 +34,7 @@ export class ReviewFeedbackScreen extends React.Component<
   ReviewFeedbackScreenProps
 > {
   public get styles(): ReviewFeedbackScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -43,7 +43,7 @@ export class ReviewFeedbackScreen extends React.Component<
     return (
       <View style={this.styles.screen} testID={ReviewFeedbackScreenIds.SCREEN}>
         <ReviewFeedbackList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabularyList={this.props.observableScreen.vocabularyList}
           feedbackList={
             this.props.observableScreen.feedbackListState.feedbackList

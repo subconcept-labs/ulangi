@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableReflexScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -30,7 +30,7 @@ import {
 import { ReflexTopBar } from './ReflexTopBar';
 
 export interface ReflexScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableReflexScreen;
   screenDelegate: ReflexScreenDelegate;
 }
@@ -38,7 +38,7 @@ export interface ReflexScreenProps {
 @observer
 export class ReflexScreen extends React.Component<ReflexScreenProps> {
   public get styles(): ReflexScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -63,7 +63,7 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
                 styles={{
                   light: selectedCategoriesLightStyles,
                   dark: selectedCategoriesDarkStyles,

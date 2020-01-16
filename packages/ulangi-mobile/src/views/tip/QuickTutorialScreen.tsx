@@ -7,8 +7,8 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableQuickTutorialScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
@@ -32,7 +32,7 @@ import { DefaultButton } from '../common/DefaultButton';
 const screenWidth = Dimensions.get('window').width;
 
 export interface QuickTutorialScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableQuickTutorialScreen;
   screenDelegate: QuickTutorialScreenDelegate;
 }
@@ -63,12 +63,12 @@ export class QuickTutorialScreen extends React.Component<
             activeDotIndex={this.props.observableScreen.currentIndex}
             dotsLength={this.props.observableScreen.images.length}
             dotColor={
-              this.props.darkModeStore.theme === Theme.LIGHT
+              this.props.themeStore.theme === Theme.LIGHT
                 ? config.styles.light.primaryTextColor
                 : config.styles.dark.primaryTextColor
             }
             inactiveDotColor={
-              this.props.darkModeStore.theme
+              this.props.themeStore.theme
                 ? config.styles.light.secondaryTextColor
                 : config.styles.dark.secondaryTextColor
             }

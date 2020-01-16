@@ -9,13 +9,11 @@ import { AbstractResolver } from '@ulangi/resolver';
 import * as Joi from 'joi';
 import * as _ from 'lodash';
 
-import { DarkModeTrigger } from '../../enums/DarkModeTrigger';
-import { DarkModeSettings } from '../../interfaces/general/DarkModeSettings';
+import { ThemeTrigger } from '../../enums/ThemeTrigger';
+import { ThemeSettings } from '../../interfaces/general/ThemeSettings';
 
-export class DarkModeSettingsResolver extends AbstractResolver<
-  DarkModeSettings
-> {
+export class ThemeSettingsResolver extends AbstractResolver<ThemeSettings> {
   protected rules = {
-    trigger: Joi.string().valid(_.values(DarkModeTrigger)),
+    trigger: Joi.string().valid(_.values(ThemeTrigger)),
   };
 }

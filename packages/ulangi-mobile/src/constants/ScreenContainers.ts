@@ -26,7 +26,6 @@ import { CategorizeScreenContainer } from '../views/category/CategorizeScreenCon
 import { CategoryDetailScreenContainer } from '../views/category/CategoryDetailScreenContainer';
 import { CategorySelectorScreenContainer } from '../views/category/CategorySelectorScreenContainer';
 import { ContactUsScreenContainer } from '../views/contact-us/ContactUsScreenContainer';
-import { DarkModeScreenContainer } from '../views/dark-mode/DarkModeScreenContainer';
 import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
@@ -65,6 +64,7 @@ import { SpacedRepetitionLessonScreenContainer } from '../views/spaced-repetitio
 import { SpacedRepetitionScreenContainer } from '../views/spaced-repetition/SpacedRepetitionScreenContainer';
 import { SpacedRepetitionSettingsScreenContainer } from '../views/spaced-repetition/SpacedRepetitionSettingsScreenContainer';
 import { SynchronizerScreenContainer } from '../views/sync/SynchronizerScreenContainer';
+import { ThemeScreenContainer } from '../views/theme/ThemeScreenContainer';
 import { QuickTutorialScreenContainer } from '../views/tip/QuickTutorialScreenContainer';
 import { WhatToUseScreenContainer } from '../views/tip/WhatToUseScreenContainer';
 import { AddVocabularyScreenContainer } from '../views/vocabulary/AddVocabularyScreenContainer';
@@ -149,7 +149,7 @@ export const ScreenContainers = {
   IMAGE_SELECTOR_SCREEN: ImageSelectorScreenContainer,
   WELCOME_SCREEN: WelcomeScreenContainer,
   REMINDER_SCREEN: ReminderScreenContainer,
-  DARK_MODE_SCREEN: DarkModeScreenContainer,
+  THEME_SCREEN: ThemeScreenContainer,
   LEVEL_BREAKDOWN_SCREEN: LevelBreakdownScreenContainer,
   OPEN_SOURCE_PROJECTS_SCREEN: OpenSourceProjectsScreenContainer,
   DATA_SHARING_SCREEN: DataSharingScreenContainer,

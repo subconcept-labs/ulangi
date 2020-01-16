@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableLightBox,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -19,7 +19,7 @@ import { LightBoxAnimatableView } from './LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
 
 export interface LightBoxActionMenuScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
   navigatorDelegate: NavigatorDelegate;
 }
@@ -56,7 +56,7 @@ export class LightBoxActionMenuScreen extends React.Component<
             observableLightBox={this.props.observableLightBox}
             style={styles.inner_container}>
             <LightBoxActionMenu
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               actionMenu={this.props.observableLightBox.actionMenu}
             />
           </LightBoxAnimatableView>

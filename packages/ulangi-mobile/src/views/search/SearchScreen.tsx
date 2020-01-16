@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableSearchScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,7 +20,7 @@ import { SearchBar } from './SearchBar';
 import { SearchList } from './SearchList';
 
 export interface SearchScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSearchScreen;
   screenDelegate: SearchScreenDelegate;
 }
@@ -31,12 +31,12 @@ export class SearchScreen extends React.Component<SearchScreenProps> {
     return (
       <SafeAreaView style={styles.screen} testID={SearchScreenIds.SCREEN}>
         <SearchBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
           handleSearchInputEnd={this.props.screenDelegate.handleSearchInputEnd}
         />
         <SearchList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           search={this.props.screenDelegate.search}
           refresh={this.props.screenDelegate.refreshCurrentList}

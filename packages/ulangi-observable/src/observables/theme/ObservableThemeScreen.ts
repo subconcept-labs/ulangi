@@ -10,14 +10,14 @@ import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
 import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
-import { ObservableDarkModeSettings } from './ObservableDarkModeSettings';
+import { ObservableThemeSettings } from './ObservableThemeSettings';
 
-export class ObservableDarkModeScreen extends ObservableScreen {
+export class ObservableThemeScreen extends ObservableScreen {
   @observable
-  public settings: ObservableDarkModeSettings;
+  public settings: ObservableThemeSettings;
 
   public constructor(
-    settings: ObservableDarkModeSettings,
+    settings: ObservableThemeSettings,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {

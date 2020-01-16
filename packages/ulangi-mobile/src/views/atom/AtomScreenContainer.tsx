@@ -52,7 +52,7 @@ export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
   public render(): React.ReactElement<any> {
     return (
       <AtomScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

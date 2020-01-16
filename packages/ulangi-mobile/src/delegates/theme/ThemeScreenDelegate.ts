@@ -9,37 +9,37 @@ import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { UserExtraDataName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
-import { ObservableDarkModeScreen } from '@ulangi/ulangi-observable';
+import { ObservableThemeScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
-import { DarkModeSelectionMenuDelegate } from './DarkModeSelectionMenuDelegate';
+import { ThemeSelectionMenuDelegate } from './ThemeSelectionMenuDelegate';
 
 @boundClass
-export class DarkModeScreenDelegate {
+export class ThemeScreenDelegate {
   private eventBus: EventBus;
-  private observableScreen: ObservableDarkModeScreen;
-  private darkModeSelectionMenuDelegate: DarkModeSelectionMenuDelegate;
+  private observableScreen: ObservableThemeScreen;
+  private themeSelectionMenuDelegate: ThemeSelectionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
-    observableScreen: ObservableDarkModeScreen,
-    darkModeSelectionMenuDelegate: DarkModeSelectionMenuDelegate,
+    observableScreen: ObservableThemeScreen,
+    themeSelectionMenuDelegate: ThemeSelectionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
-    this.darkModeSelectionMenuDelegate = darkModeSelectionMenuDelegate;
+    this.themeSelectionMenuDelegate = themeSelectionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public showDarkModeSelectionMenu(): void {
-    this.darkModeSelectionMenuDelegate.show(
+  public showThemeSelectionMenu(): void {
+    this.themeSelectionMenuDelegate.show(
       this.observableScreen.settings.trigger,
       (trigger): void => {
         this.observableScreen.settings.trigger = trigger;
@@ -53,7 +53,7 @@ export class DarkModeScreenDelegate {
         user: {
           extraData: [
             {
-              dataName: UserExtraDataName.GLOBAL_DARK_MODE,
+              dataName: UserExtraDataName.GLOBAL_THEME,
               dataValue: {
                 trigger: this.observableScreen.settings.trigger,
               },

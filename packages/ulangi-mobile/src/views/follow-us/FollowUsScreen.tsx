@@ -6,7 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -23,14 +23,14 @@ import {
 } from './FollowUsScreen.style';
 
 export interface FollowUsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: FollowUsScreenDelegate;
 }
 
 @observer
 export class FollowUsScreen extends React.Component<FollowUsScreenProps> {
   public get styles(): FollowUsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -43,23 +43,21 @@ export class FollowUsScreen extends React.Component<FollowUsScreenProps> {
           </DefaultText>
         </View>
         <View style={this.styles.section_container}>
-          <SectionGroup
-            theme={this.props.darkModeStore.theme}
-            header="FOLLOW US">
+          <SectionGroup theme={this.props.themeStore.theme} header="FOLLOW US">
             <SectionRow
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               leftText="Twitter"
               showArrow={true}
               onPress={this.props.screenDelegate.goToTwitter}
             />
             <SectionRow
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               leftText="Reddit"
               showArrow={true}
               onPress={this.props.screenDelegate.goToReddit}
             />
             <SectionRow
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               leftText="Facebook Page"
               showArrow={true}
               onPress={this.props.screenDelegate.goToFacebookPage}

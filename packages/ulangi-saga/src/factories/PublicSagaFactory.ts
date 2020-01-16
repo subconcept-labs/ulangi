@@ -12,16 +12,16 @@ import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { AdSaga } from '../sagas/AdSaga';
 import { AppSaga } from '../sagas/AppSaga';
 import { AuthSaga } from '../sagas/AuthSaga';
-import { DarkModeSaga } from '../sagas/DarkModeSaga';
 import { DataSharingSaga } from '../sagas/DataSharingSaga';
 import { DatabaseSaga } from '../sagas/DatabaseSaga';
 import { NetworkSaga } from '../sagas/NetworkSaga';
 import { PublicSaga } from '../sagas/PublicSaga';
 import { RemoteConfigSaga } from '../sagas/RemoteConfigSaga';
+import { ThemeSaga } from '../sagas/ThemeSaga';
 
 export class PublicSagaFactory {
   private database: DatabaseFacade;
@@ -30,7 +30,7 @@ export class PublicSagaFactory {
   private adMob: AdMobAdapter;
   private analytics: AnalyticsAdapter;
   private facebook: FacebookAdapter;
-  private systemDarkMode: SystemDarkModeAdapter;
+  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
 
   public constructor(
@@ -40,7 +40,7 @@ export class PublicSagaFactory {
     adMob: AdMobAdapter,
     analytics: AnalyticsAdapter,
     facebook: FacebookAdapter,
-    systemDarkMode: SystemDarkModeAdapter,
+    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
     this.database = database;
@@ -49,7 +49,7 @@ export class PublicSagaFactory {
     this.adMob = adMob;
     this.analytics = analytics;
     this.facebook = facebook;
-    this.systemDarkMode = systemDarkMode;
+    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
   }
 
@@ -66,7 +66,7 @@ export class PublicSagaFactory {
       new NetworkSaga(this.netInfo),
       new RemoteConfigSaga(this.database, this.modelList.remoteConfigModel),
       new AdSaga(this.adMob),
-      new DarkModeSaga(this.systemDarkMode),
+      new ThemeSaga(this.systemTheme),
     ];
   }
 }

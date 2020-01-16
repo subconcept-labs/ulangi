@@ -6,7 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -19,12 +19,12 @@ import {
 } from './WritingFAQScreen.style';
 
 export interface WritingFAQScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
 }
 
 export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
   public get styles(): WritingFAQScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -48,7 +48,7 @@ export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
     return (
       <View style={this.styles.screen} testID={WritingFAQScreenIds.SCREEN}>
         <FAQList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           sections={this.data.sections}
         />
       </View>

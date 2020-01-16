@@ -7,21 +7,21 @@
 
 import { Navigation, OptionsBottomTabs } from '@ulangi/react-native-navigation';
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 
 import { Images } from '../../constants/Images';
 import { BottomTabIds } from '../../constants/ids/BottomTabIds';
 import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
 
 export class RootScreenDelegate {
-  private darkModeStore: ObservableDarkModeStore;
+  private themeStore: ObservableThemeStore;
 
-  public constructor(darkModeStore: ObservableDarkModeStore) {
-    this.darkModeStore = darkModeStore;
+  public constructor(themeStore: ObservableThemeStore) {
+    this.themeStore = themeStore;
   }
 
   public setRootToSingleScreen(screenName: ScreenName): void {
-    const theme = this.darkModeStore.theme;
+    const theme = this.themeStore.theme;
     Navigation.setRoot({
       root: {
         stack: {
@@ -39,7 +39,7 @@ export class RootScreenDelegate {
   }
 
   public setRootToTabBasedScreen(): void {
-    const theme = this.darkModeStore.theme;
+    const theme = this.themeStore.theme;
     Navigation.setRoot({
       root: {
         bottomTabs: {

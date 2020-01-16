@@ -5,26 +5,26 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DarkModeSettings } from '@ulangi/ulangi-common/interfaces';
+import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
 import { ObservableUserStore } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
 
-export class DarkModeSettingsDelegate {
+export class ThemeSettingsDelegate {
   private userStore: ObservableUserStore;
 
   public constructor(userStore: ObservableUserStore) {
     this.userStore = userStore;
   }
 
-  public getCurrentSettings(): DarkModeSettings {
+  public getCurrentSettings(): ThemeSettings {
     if (
       this.userStore.currentUser === null ||
-      typeof this.userStore.currentUser.darkModeSettings === 'undefined'
+      typeof this.userStore.currentUser.themeSettings === 'undefined'
     ) {
-      return config.user.defaultDarkModeSettings;
+      return config.user.defaultThemeSettings;
     } else {
-      return this.userStore.currentUser.darkModeSettings;
+      return this.userStore.currentUser.themeSettings;
     }
   }
 }

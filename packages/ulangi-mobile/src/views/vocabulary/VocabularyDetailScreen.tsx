@@ -8,8 +8,8 @@
 import { assertExists } from '@ulangi/assert';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableSetStore,
+  ObservableThemeStore,
   ObservableVocabularyDetailScreen,
 } from '@ulangi/ulangi-observable';
 import * as React from 'react';
@@ -31,7 +31,7 @@ import {
 
 export interface VocabularyDetailScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableVocabularyDetailScreen;
   screenDelegate: VocabularyDetailScreenDelegate;
 }
@@ -40,7 +40,7 @@ export class VocabularyDetailScreen extends React.Component<
   VocabularyDetailScreenProps
 > {
   public get styles(): VocabularyDetailScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -56,13 +56,13 @@ export class VocabularyDetailScreen extends React.Component<
         testID={VocabularyDetailScreenIds.SCREEN}>
         <ScrollView style={this.styles.container}>
           <VocabularyDetailTitle
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             vocabularyTerm={
               this.props.observableScreen.vocabulary.vocabularyTerm
             }
           />
           <VocabularyDetailPronunciation
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             observableScreen={this.props.observableScreen}
             speak={(): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
@@ -72,7 +72,7 @@ export class VocabularyDetailScreen extends React.Component<
             }
           />
           <VocabularyDetailExtraFields
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             vocabularyExtraFields={
               this.props.observableScreen.vocabulary.vocabularyExtraFields
             }
@@ -85,18 +85,18 @@ export class VocabularyDetailScreen extends React.Component<
             }
           />
           <VocabularyDetailDefinitions
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             definitions={this.props.observableScreen.vocabulary.definitions}
           />
           <VocabularyDetailSpacedRepetitionInfo
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextSpacedRepetitionReview(
               this.props.observableScreen.vocabulary,
             )}
           />
           <VocabularyDetailWritingInfo
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextWritingReview(
               this.props.observableScreen.vocabulary,

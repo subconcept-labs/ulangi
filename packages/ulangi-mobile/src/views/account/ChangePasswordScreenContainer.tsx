@@ -94,7 +94,7 @@ export class ChangePasswordScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <ChangePasswordScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         userStore={this.props.rootStore.userStore}
         observableScreen={this.observableScreen}
       />

@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,7 +20,7 @@ import { PlayList } from './PlayList';
 
 export interface PlayScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: PlayScreenDelegate;
 }
 
@@ -30,7 +30,7 @@ export class PlayScreen extends React.Component<PlayScreenProps> {
     return (
       <View style={styles.screen} testID={PlayScreenIds.SCREEN}>
         <TipBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           navigateToWhatToUseScreen={
             this.props.screenDelegate.navigateToWhatToUseScreen
           }

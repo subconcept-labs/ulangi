@@ -40,7 +40,7 @@ export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';
 export { GlobalDataSharing } from './general/GlobalDataSharing';
 export { GlobalReminder } from './general/GlobalReminder';
-export { GlobalDarkMode } from './general/GlobalDarkMode';
+export { GlobalTheme } from './general/GlobalTheme';
 export { AutoShowInAppRating } from './general/AutoShowInAppRating';
 export { NextReviewData } from './general/NextReviewData';
 export { QuizVocabularyPool } from './general/QuizVocabularyPool';
@@ -179,6 +179,6 @@ export {
   UploadPixabayImagesRequest,
 } from './request/UploadPixabayImagesRequest';
 export { ReminderSettings } from './general/ReminderSettings';
-export { DarkModeSettings } from './general/DarkModeSettings';
+export { ThemeSettings } from './general/ThemeSettings';
 
 export { DefaultButtonProps } from './props/DefaultButtonProps';

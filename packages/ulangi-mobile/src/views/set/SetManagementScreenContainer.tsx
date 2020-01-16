@@ -96,7 +96,7 @@ export class SetManagementScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <SetManagementScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}

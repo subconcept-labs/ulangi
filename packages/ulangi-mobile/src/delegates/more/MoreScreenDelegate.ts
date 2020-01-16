@@ -12,12 +12,12 @@ import {
   ScreenName,
   Theme,
 } from '@ulangi/ulangi-common/enums';
-import { DarkModeSettings } from '@ulangi/ulangi-common/interfaces';
+import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableCarouselMessage,
-  ObservableDarkModeStore,
   ObservableLightBox,
   ObservableMoreScreen,
+  ObservableThemeStore,
   ObservableUserStore,
   Observer,
 } from '@ulangi/ulangi-observable';
@@ -31,18 +31,18 @@ import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { AdDelegate } from '../ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../auto-archive/AutoArchiveSettingsDelegate';
-import { DarkModeSettingsDelegate } from '../dark-mode/DarkModeSettingsDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { LinkingDelegate } from '../linking/LinkingDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { ReminderSettingsDelegate } from '../reminder/ReminderSettingsDelegate';
+import { ThemeSettingsDelegate } from '../theme/ThemeSettingsDelegate';
 
 @boundClass
 export class MoreScreenDelegate {
   private observer: Observer;
   private userStore: ObservableUserStore;
-  private darkModeStore: ObservableDarkModeStore;
+  private themeStore: ObservableThemeStore;
   private observableLightBox: ObservableLightBox;
   private observableScreen: ObservableMoreScreen;
   private rootScreenDelegate: RootScreenDelegate;
@@ -50,7 +50,7 @@ export class MoreScreenDelegate {
   private inAppRatingDelegate: InAppRatingDelegate;
   private autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
-  private darkModeSettingsDelegate: DarkModeSettingsDelegate;
+  private themeSettingsDelegate: ThemeSettingsDelegate;
   private linkingDelegate: LinkingDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -58,7 +58,7 @@ export class MoreScreenDelegate {
   public constructor(
     observer: Observer,
     userStore: ObservableUserStore,
-    darkModeStore: ObservableDarkModeStore,
+    themeStore: ObservableThemeStore,
     observableLightBox: ObservableLightBox,
     observableScreen: ObservableMoreScreen,
     rootScreenDelegate: RootScreenDelegate,
@@ -66,14 +66,14 @@ export class MoreScreenDelegate {
     inAppRatingDelegate: InAppRatingDelegate,
     autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
-    darkModeSettingsDelegate: DarkModeSettingsDelegate,
+    themeSettingsDelegate: ThemeSettingsDelegate,
     linkingDelegate: LinkingDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
     this.userStore = userStore;
-    this.darkModeStore = darkModeStore;
+    this.themeStore = themeStore;
     this.observableScreen = observableScreen;
     this.observableLightBox = observableLightBox;
     this.rootScreenDelegate = rootScreenDelegate;
@@ -81,7 +81,7 @@ export class MoreScreenDelegate {
     this.inAppRatingDelegate = inAppRatingDelegate;
     this.autoArchiveSettingsDelegate = autoArchiveSettingsDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
-    this.darkModeSettingsDelegate = darkModeSettingsDelegate;
+    this.themeSettingsDelegate = themeSettingsDelegate;
     this.linkingDelegate = linkingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
@@ -93,7 +93,7 @@ export class MoreScreenDelegate {
 
   public autoUpdateBottomTabs(): void {
     this.observer.reaction(
-      (): Theme => this.darkModeStore.theme,
+      (): Theme => this.themeStore.theme,
       (theme): void => {
         this.rootScreenDelegate.mergeBottomTabsOptions({
           backgroundColor: BottomTabsStyle.getBackgroundColor(theme),
@@ -225,8 +225,8 @@ export class MoreScreenDelegate {
     return this.reminderSettingsDelegate.isReminderActive();
   }
 
-  public getDarkModeSettings(): DarkModeSettings {
-    return this.darkModeSettingsDelegate.getCurrentSettings();
+  public getThemeSettings(): ThemeSettings {
+    return this.themeSettingsDelegate.getCurrentSettings();
   }
 
   public getReadableReminderTime(): string {
@@ -269,8 +269,8 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.REMINDER_SCREEN, {});
   }
 
-  public navigateToDarkModeScreen(): void {
-    this.navigatorDelegate.push(ScreenName.DARK_MODE_SCREEN, {});
+  public navigateToThemeScreen(): void {
+    this.navigatorDelegate.push(ScreenName.THEME_SCREEN, {});
   }
 
   public navigateToAutoArchiveScreen(): void {

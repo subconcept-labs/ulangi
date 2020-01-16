@@ -59,7 +59,7 @@ export class IntervalsScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <IntervalsScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
         levelIntervalPairs={this.spacedRepetitionScheduler.calculateWaitingHoursInRange(
           this.props.passedProps.initialInterval,

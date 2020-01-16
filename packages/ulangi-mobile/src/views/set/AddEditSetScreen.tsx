@@ -7,7 +7,7 @@
 
 import {
   ObservableAddEditSetScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,7 +20,7 @@ import { SetForm } from './SetForm';
 
 export interface AddEditSetScreenProps {
   testID: string;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAddEditSetScreen;
   screenDelegate: AddEditSetScreenDelegate;
 }
@@ -31,7 +31,7 @@ export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
     return (
       <DismissKeyboardView testID={this.props.testID} style={styles.screen}>
         <SetForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           setFormState={this.props.observableScreen.setFormState}
           showSelectLearningLanguageFirstDialog={
             this.props.screenDelegate.showSelectLearningLanguageFirstDialog
@@ -49,7 +49,7 @@ export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
   private renderLanguagePicker(): React.ReactElement<any> {
     return (
       <LanguagePicker
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         pickerState={this.props.observableScreen.setFormState.pickerState}
         selectedLanguageCode={
           this.props.observableScreen.setFormState

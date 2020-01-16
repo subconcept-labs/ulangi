@@ -6,7 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -21,14 +21,14 @@ import {
 } from './WhatToUseScreen.style';
 
 export interface WhatToUseScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: WhatToUseScreenDelegate;
 }
 
 @observer
 export class WhatToUseScreen extends React.Component<WhatToUseScreenProps> {
   public get styles(): WhatToUseScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }

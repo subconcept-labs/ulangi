@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import NetInfo from '@react-native-community/netinfo';
+import RNNetInfo from '@react-native-community/netinfo';
 import RNAdConsent from '@ulangi/react-native-ad-consent';
 import RNFirebase from '@ulangi/react-native-firebase';
 import { SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
@@ -26,15 +26,15 @@ import {
   FirebaseAdapter,
   NotificationsAdapter,
   SagaFacade,
-  SystemDarkModeAdapter,
+  SystemThemeAdapter,
 } from '@ulangi/ulangi-saga';
 import { StoreFactory } from '@ulangi/ulangi-store';
 import { Platform } from 'react-native';
-import * as RNSystemDarkMode from 'react-native-dark-mode';
+import * as RNDarkMode from 'react-native-dark-mode';
 import * as RNFacebook from 'react-native-fbsdk';
-import * as FileSystem from 'react-native-fs';
-import * as Iap from 'react-native-iap';
-import * as sqlite from 'react-native-sqlite-storage';
+import * as RNFileSystem from 'react-native-fs';
+import * as RNIap from 'react-native-iap';
+import * as RNSqlite from 'react-native-sqlite-storage';
 
 import { RemoteLogger } from './RemoteLogger';
 import { ServiceRegistry } from './ServiceRegistry';
@@ -76,7 +76,7 @@ export class App {
 
     setupNavigationDefaultOptions();
 
-    const sqliteDatabase = new SQLiteDatabaseAdapter(sqlite);
+    const sqliteDatabase = new SQLiteDatabaseAdapter(RNSqlite);
     const firebase = new FirebaseAdapter(RNFirebase);
     const analytics = new AnalyticsAdapter(RNFirebase.analytics());
     const crashlytics = new CrashlyticsAdapter(RNFirebase.crashlytics());
@@ -89,7 +89,7 @@ export class App {
       RNFirebase.messaging(),
       RNFirebase.notifications,
     );
-    const systemDarkMode = new SystemDarkModeAdapter(RNSystemDarkMode);
+    const systemTheme = new SystemThemeAdapter(RNDarkMode);
 
     RemoteLogger.useAnalytics(analytics);
     RemoteLogger.useCrashlytics(crashlytics);
@@ -102,12 +102,12 @@ export class App {
       adMob,
       analytics,
       facebook,
-      NetInfo,
-      FileSystem,
-      Iap,
+      RNNetInfo,
+      RNFileSystem,
+      RNIap,
       audioPlayer,
       notifications,
-      systemDarkMode,
+      systemTheme,
       crashlytics,
     );
 
@@ -122,8 +122,8 @@ export class App {
       },
       config,
       {
-        initialSystemDarkMode:
-          RNSystemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
+        initialSystemTheme:
+          RNDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
         enableLogging: env.ENABLE_LOGGING,
       },
       [sagaFacade.getMiddleware(), eventFacade.getMiddleware()],
@@ -153,7 +153,7 @@ export class App {
     sagaFacade.run();
 
     const rootScreenDelegate = new RootScreenDelegate(
-      store.getState().darkModeStore,
+      store.getState().themeStore,
     );
 
     rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);

@@ -31,7 +31,7 @@ export class QuickTutorialScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableQuickTutorialScreen(
-    this.props.rootStore.darkModeStore.theme === Theme.LIGHT
+    this.props.rootStore.themeStore.theme === Theme.LIGHT
       ? Images.QUICK_TUTORIAL_SCREENS.light
       : Images.QUICK_TUTORIAL_SCREENS.dark,
     0,
@@ -81,7 +81,7 @@ export class QuickTutorialScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <QuickTutorialScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

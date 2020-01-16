@@ -6,13 +6,13 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
-import { DarkModeTrigger } from '@ulangi/ulangi-common/enums';
+import { ThemeTrigger } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
-export class DarkModeSelectionMenuDelegate {
+export class ThemeSelectionMenuDelegate {
   private navigatorDelegate: NavigatorDelegate;
   private styles: {
     light: Options;
@@ -31,21 +31,21 @@ export class DarkModeSelectionMenuDelegate {
   }
 
   public show(
-    currentTrigger: DarkModeTrigger,
-    onSelect: (trigger: DarkModeTrigger) => void,
+    currentTrigger: ThemeTrigger,
+    onSelect: (trigger: ThemeTrigger) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
         title: 'Select',
         items: new Map(
-          _.toPairs(DarkModeTrigger).map(
+          _.toPairs(ThemeTrigger).map(
             ([, trigger]): [string, SelectionItem] => {
               return [
                 trigger,
                 {
                   text: trigger,
                   onPress: (): void => {
-                    onSelect(trigger as DarkModeTrigger);
+                    onSelect(trigger as ThemeTrigger);
                     this.navigatorDelegate.dismissLightBox();
                   },
                 },

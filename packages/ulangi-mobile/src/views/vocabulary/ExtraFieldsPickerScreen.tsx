@@ -8,9 +8,9 @@
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableLightBox,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -32,7 +32,7 @@ import {
 export interface ExtraFieldsPickerScreenProps {
   kind: 'vocabulary' | 'definition';
   observableLightBox: ObservableLightBox;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
   screenDelegate: ExtraFieldsPickerScreenDelegate;
   onPick: (
@@ -48,7 +48,7 @@ export class ExtraFieldsPickerScreen extends React.Component<
   ExtraFieldsPickerScreenProps
 > {
   public get styles(): ExtraFieldsPickerScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -98,7 +98,7 @@ export class ExtraFieldsPickerScreen extends React.Component<
   private renderPickerContent(): React.ReactElement<any> {
     return (
       <ExtraFieldsPickerContent
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         kind={this.props.kind}
         learningLanguageCode={
           this.props.setStore.existingCurrentSet.learningLanguage.languageCode

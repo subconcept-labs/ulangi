@@ -8,7 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAtomScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -30,7 +30,7 @@ import { AtomTitle } from './AtomTitle';
 import { AtomTopBar } from './AtomTopBar';
 
 export interface AtomScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAtomScreen;
   screenDelegate: AtomScreenDelegate;
 }
@@ -38,7 +38,7 @@ export interface AtomScreenProps {
 @observer
 export class AtomScreen extends React.Component<AtomScreenProps> {
   public get styles(): AtomScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -71,7 +71,7 @@ export class AtomScreen extends React.Component<AtomScreenProps> {
               showSelectSpecificCategoryMessage={
                 this.props.screenDelegate.showSelectSpecificCategoryMessage
               }
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               styles={{
                 light: selectedCategoriesLightStyles,
                 dark: selectedCategoriesDarkStyles,

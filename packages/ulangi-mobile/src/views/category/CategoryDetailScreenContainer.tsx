@@ -114,7 +114,7 @@ export class CategoryDetailScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <CategoryDetailScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

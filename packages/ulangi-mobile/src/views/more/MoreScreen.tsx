@@ -8,10 +8,10 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
-  ObservableDarkModeStore,
   ObservableMoreScreen,
   ObservableNetworkStore,
   ObservableSyncStore,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -39,7 +39,7 @@ import {
 } from './MoreScreen.style';
 
 export interface MoreScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
@@ -51,7 +51,7 @@ export interface MoreScreenProps {
 @observer
 export class MoreScreen extends React.Component<MoreScreenProps> {
   public get styles(): MoreScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -63,7 +63,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           testID={MoreScreenIds.MORE_SCROLL_VIEW}
           style={this.styles.scroll_view_container}>
           <MessageCarousel
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             messages={this.props.observableScreen.messages}
             currentMessageIndex={
               this.props.observableScreen.currentMessageIndex
@@ -89,7 +89,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
   private renderAccountSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="account"
         header="ACCOUNT">
         {this.props.userStore.existingCurrentUser.email.endsWith(
@@ -97,7 +97,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         ) ? (
           <SectionRow
             testID={MoreScreenIds.SET_UP_ACCOUNT_BTN}
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             leftText="Set Up Account"
             leftIcon={
               <Image
@@ -112,7 +112,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         ) : (
           <SectionRow
             testID={MoreScreenIds.SECURITY_BTN}
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             leftText="Security"
             rightText={this.props.userStore.existingCurrentUser.email}
             showArrow={true}
@@ -122,7 +122,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         )}
         <SectionRow
           testID={MoreScreenIds.MEMBERSHIP_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Account Type"
           rightText={
             this.props.userStore.existingCurrentUser.isPremium === true
@@ -147,12 +147,12 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
   private renderToolsAndSettingsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="tools-and-settings"
         header="TOOLS AND SETTINGS">
         <SectionRow
           testID={MoreScreenIds.SET_MANAGEMENT_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Set Management"
           rightText=""
           showArrow={true}
@@ -160,7 +160,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.SYNCHRONIZER_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Synchronizer"
           rightText={
             this.props.networkStore.isConnected === false
@@ -174,7 +174,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.REMINDER_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Reminder"
           rightText={
             this.props.screenDelegate.isReminderActive() === true
@@ -188,7 +188,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.AUTO_ARCHIVE_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Auto Archive"
           rightText={
             this.props.screenDelegate.isAutoArchiveEnabled() === true
@@ -200,15 +200,15 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.DARK_MODE_BTN}
-          theme={this.props.darkModeStore.theme}
-          leftText="Dark Mode"
-          rightText={this.props.screenDelegate.getDarkModeSettings().trigger}
+          theme={this.props.themeStore.theme}
+          leftText="Theme Mode"
+          rightText={this.props.screenDelegate.getThemeSettings().trigger}
           showArrow={true}
-          onPress={this.props.screenDelegate.navigateToDarkModeScreen}
+          onPress={this.props.screenDelegate.navigateToThemeScreen}
         />
         <SectionRow
           testID={MoreScreenIds.SYNC_WITH_GOOGLE_SHEETS_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Sync with Google Sheets"
           rightText=""
           showArrow={true}
@@ -221,12 +221,12 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
   private renderContactUsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="contact-us"
         header="CONTACT US">
         <SectionRow
           testID={MoreScreenIds.FEATURE_REQUEST_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Feature Request"
           rightText=""
           showArrow={true}
@@ -234,7 +234,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.REPORT_A_BUG_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Report a Bug"
           rightText=""
           showArrow={true}
@@ -242,7 +242,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.CONTACT_SUPPORT_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Contact Support"
           rightText=""
           showArrow={true}
@@ -255,12 +255,12 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
   private renderFAQSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="about"
         header="ABOUT">
         <SectionRow
           testID={MoreScreenIds.VERSION_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Version"
           rightText={VersionInfo.appVersion}
           showArrow={true}
@@ -269,7 +269,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         {this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
           <SectionRow
             testID={MoreScreenIds.AD_CONSENT_BTN}
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             leftText="Ad Consent"
             rightText=""
             showArrow={true}
@@ -279,7 +279,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         {this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
           <SectionRow
             testID={MoreScreenIds.DATA_SHARING_BTN}
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             leftText="Data Sharing"
             rightText=""
             showArrow={true}
@@ -288,7 +288,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         ) : null}
         <SectionRow
           testID={MoreScreenIds.TERMS_OF_SERVICE_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Terms of Service"
           rightText=""
           showArrow={true}
@@ -296,7 +296,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.PRIVACY_POLICY_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Privacy Policy"
           rightText=""
           showArrow={true}
@@ -309,12 +309,12 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
   private renderGeneralSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="general"
         header="GENERAL">
         <SectionRow
           testID={MoreScreenIds.OPEN_SOURCE_PROJECTS_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Open-Source Projects"
           showArrow={true}
           onPress={(): void => {
@@ -323,7 +323,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Rate This App"
           showArrow={true}
           onPress={(): void => {
@@ -332,7 +332,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.WHATS_NEW_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="What's New"
           showArrow={true}
           onPress={(): void => {
@@ -341,7 +341,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.FOLLOW_US_ON_TWITTER_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Follow Us on Twitter"
           leftIcon={
             <Image
@@ -356,7 +356,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.FOLLOW_US_ON_INSTAGRAM_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Follow Us on Instagram"
           leftIcon={
             <Image
@@ -371,7 +371,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         />
         <SectionRow
           testID={MoreScreenIds.JOIN_OUR_COMMUNITY_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Join our Reddit community"
           leftIcon={
             <Image style={this.styles.left_icon} source={Images.REDDIT_20x20} />
@@ -387,9 +387,9 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
 
   private renderLogOutSection(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.darkModeStore.theme} key="logout">
+      <SectionGroup theme={this.props.themeStore.theme} key="logout">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           testID={MoreScreenIds.LOG_OUT_BTN}
           customLeft={
             <DefaultButton

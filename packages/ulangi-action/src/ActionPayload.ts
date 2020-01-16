@@ -741,5 +741,5 @@ export interface ActionPayload {
   readonly REMINDER__DELETE_REMINDER_SUCCEEDED: null;
   readonly REMINDER__DELETE_REMINDER_FAILED: ErrorBag;
 
-  readonly DARK_MODE__SYSTEM_MODE_CHANGED: { systemMode: Theme };
+  readonly THEME__SYSTEM_MODE_CHANGED: { systemMode: Theme };
 }

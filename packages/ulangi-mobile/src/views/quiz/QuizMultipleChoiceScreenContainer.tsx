@@ -100,7 +100,7 @@ export class QuizMultipleChoiceScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <QuizMultipleChoiceScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

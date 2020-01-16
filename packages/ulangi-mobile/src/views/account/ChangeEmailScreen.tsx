@@ -7,7 +7,7 @@
 
 import {
   ObservableChangeEmailScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -20,7 +20,7 @@ import { ChangeEmailForm } from '../../views/account/ChangeEmailForm';
 import { DefaultText } from '../common/DefaultText';
 
 export interface ChangeEmailScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
   observableScreen: ObservableChangeEmailScreen;
 }
@@ -53,7 +53,7 @@ export class ChangeEmailScreen extends React.Component<ChangeEmailScreenProps> {
       <View testID={ChangeEmailScreenIds.SCREEN} style={styles.screen}>
         {this.renderGuestNote()}
         <ChangeEmailForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
         />
       </View>

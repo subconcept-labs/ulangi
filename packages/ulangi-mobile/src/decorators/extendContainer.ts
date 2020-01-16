@@ -57,7 +57,7 @@ export function extendContainer<T extends Constructor<Container>>(
       }
 
       this.observer.reaction(
-        (): Theme => this.props.rootStore.darkModeStore.theme,
+        (): Theme => this.props.rootStore.themeStore.theme,
         (theme): void => {
           this.onThemeChanged(theme);
         },

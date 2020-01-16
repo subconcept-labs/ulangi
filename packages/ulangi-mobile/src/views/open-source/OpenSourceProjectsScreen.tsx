@@ -6,7 +6,7 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDarkModeStore } from '@ulangi/ulangi-observable';
+import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -24,7 +24,7 @@ import {
 } from './OpenSourceProjectsScreen.style';
 
 export interface OpenSourceProjectsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: OpenSourceProjectsScreenDelegate;
 }
 
@@ -33,7 +33,7 @@ export class OpenSourceProjectsScreen extends React.Component<
   OpenSourceProjectsScreenProps
 > {
   private get styles(): OpenSourceProjectsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -96,7 +96,7 @@ export class OpenSourceProjectsScreen extends React.Component<
   private renderProjects(): React.ReactElement<any> {
     return (
       <View style={this.styles.projects_container}>
-        <SectionGroup header="PROJECTS" theme={this.props.darkModeStore.theme}>
+        <SectionGroup header="PROJECTS" theme={this.props.themeStore.theme}>
           {config.openSourceProjects.map(
             (project): React.ReactElement<any> => {
               return (

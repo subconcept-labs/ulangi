@@ -233,8 +233,8 @@ export { ObservableSet } from './observables/set/ObservableSet';
 
 export { ObservableRootStore } from './observables/stores/ObservableRootStore';
 export {
-  ObservableDarkModeStore,
-} from './observables/stores/ObservableDarkModeStore';
+  ObservableThemeStore,
+} from './observables/stores/ObservableThemeStore';
 export { ObservableUserStore } from './observables/stores/ObservableUserStore';
 export { ObservableSetStore } from './observables/stores/ObservableSetStore';
 export {
@@ -366,11 +366,11 @@ export {
 } from './observables/reminder/ObservableReminderScreen';
 
 export {
-  ObservableDarkModeSettings,
-} from './observables/dark-mode/ObservableDarkModeSettings';
+  ObservableThemeSettings,
+} from './observables/theme/ObservableThemeSettings';
 export {
-  ObservableDarkModeScreen,
-} from './observables/dark-mode/ObservableDarkModeScreen';
+  ObservableThemeScreen,
+} from './observables/theme/ObservableThemeScreen';
 
 export {
   ObservableTitleTopBar,

@@ -1,7 +1,7 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableDataSharingScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -19,14 +19,14 @@ import {
 } from './DataSharingScreen.style';
 
 export interface DataSharingScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableDataSharingScreen;
   screenDelegate: DataSharingScreenDelegate;
 }
 
 export class DataSharingScreen extends React.Component<DataSharingScreenProps> {
   public get styles(): DataSharingScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }

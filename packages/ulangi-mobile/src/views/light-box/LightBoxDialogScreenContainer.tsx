@@ -76,7 +76,7 @@ export class LightBoxDialogScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <LightBoxDialogScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.observableLightBox}
         navigatorDelegate={this.navigatorDelegate}
       />

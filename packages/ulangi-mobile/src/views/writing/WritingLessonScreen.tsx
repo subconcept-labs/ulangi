@@ -7,7 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableWritingLessonScreen,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -29,7 +29,7 @@ import {
 } from './WritingLessonScreen.style';
 
 export interface WritingLessonScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableWritingLessonScreen;
   screenDelegate: WritingLessonScreenDelegate;
 }
@@ -39,7 +39,7 @@ export class WritingLessonScreen extends React.Component<
   WritingLessonScreenProps
 > {
   public get styles(): WritingLessonScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -59,7 +59,7 @@ export class WritingLessonScreen extends React.Component<
       return (
         <ScrollView keyboardShouldPersistTaps="handled">
           <WritingLessonResult
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
             showReviewFeedback={this.props.screenDelegate.showReviewFeedback}
@@ -78,7 +78,7 @@ export class WritingLessonScreen extends React.Component<
             keyboardAware={true}
             keyboardShouldPersistTaps="handled">
             <WritingFormTop
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               writingFormState={this.props.observableScreen.writingFormState}
               showLastWritten={true}
             />
@@ -87,7 +87,7 @@ export class WritingLessonScreen extends React.Component<
                 this.props.observableScreen.writingFormState.currentQuestion
                   .questionId
               }
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               writingFormState={this.props.observableScreen.writingFormState}
               setAnswer={this.props.screenDelegate.setAnswer}
               showHint={this.props.screenDelegate.showHint}
@@ -96,7 +96,7 @@ export class WritingLessonScreen extends React.Component<
             />
           </SmartScrollView>
           <ReviewFeedbackBar
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-export { DarkModeSettingsResolver } from './general/DarkModeSettingsResolver';
+export { ThemeSettingsResolver } from './general/ThemeSettingsResolver';
 export { UserResolver } from './general/UserResolver';
 export { PixabayImageResolver } from './general/PixabayImageResolver';
 export { VocabularyResolver } from './general/VocabularyResolver';

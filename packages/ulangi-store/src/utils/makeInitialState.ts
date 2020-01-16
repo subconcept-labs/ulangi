@@ -8,7 +8,6 @@
 import { ActivityState, ConsentStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
-  ObservableDarkModeStore,
   ObservableNetworkStore,
   ObservableNotificationStore,
   ObservablePurchaseStore,
@@ -16,6 +15,7 @@ import {
   ObservableRootStore,
   ObservableSetStore,
   ObservableSyncStore,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 
@@ -44,10 +44,10 @@ export function makeInitialState(
     0
   );
   const notificationStore = new ObservableNotificationStore(null);
-  const darkModeStore = new ObservableDarkModeStore(
+  const themeStore = new ObservableThemeStore(
     userStore,
-    config.user.defaultDarkModeSettings,
-    options.initialSystemDarkMode
+    config.user.defaultThemeSettings,
+    options.initialSystemTheme
   );
 
   return new ObservableRootStore(
@@ -59,6 +59,6 @@ export function makeInitialState(
     purchaseStore,
     adStore,
     notificationStore,
-    darkModeStore
+    themeStore
   );
 }

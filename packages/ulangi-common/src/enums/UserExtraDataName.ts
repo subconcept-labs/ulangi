@@ -8,7 +8,7 @@
 export enum UserExtraDataName {
   GLOBAL_AUTO_ARCHIVE = 'globalAutoArchive',
   GLOBAL_REMINDER = 'globalReminder',
-  GLOBAL_DARK_MODE = 'global',
+  GLOBAL_THEME = 'globalTheme',
   GLOBAL_DATA_SHARING = 'globalDataSharing',
   AUTO_SHOW_IN_APP_RATING = 'autoShowInAppRating',
 }
