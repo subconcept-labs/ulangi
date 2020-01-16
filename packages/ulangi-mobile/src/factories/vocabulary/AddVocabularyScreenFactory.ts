@@ -59,8 +59,8 @@ export class AddVocabularyScreenFactory extends ScreenFactory {
       observableScreen.vocabularyFormState,
       vocabularyFormDelegate,
       addVocabularyDelegate,
+      dialogDelegate,
       navigatorDelegate,
-      this.props.analytics,
     );
   }
 }

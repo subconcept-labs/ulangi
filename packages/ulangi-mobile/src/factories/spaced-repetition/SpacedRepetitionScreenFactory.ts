@@ -39,10 +39,10 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen,
       spacedRepetitionSettingsDelegate,
-      navigatorDelegate,
       categoryMessageDelegate,
       linkingDelegate,
-      this.props.analytics,
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

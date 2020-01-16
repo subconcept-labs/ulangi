@@ -47,7 +47,11 @@ export class ScreenFactory {
     light: Options;
     dark: Options;
   }): DialogDelegate {
-    return new DialogDelegate(this.createNavigatorDelegate(), styles);
+    return new DialogDelegate(
+      this.props.observableLightBox,
+      this.createNavigatorDelegate(),
+      styles,
+    );
   }
 
   public createLinkingDelegate(styles: {

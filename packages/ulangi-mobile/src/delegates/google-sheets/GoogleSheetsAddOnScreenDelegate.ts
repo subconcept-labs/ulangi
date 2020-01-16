@@ -66,8 +66,8 @@ export class GoogleSheetsAddOnScreenDelegate {
         ),
         once(
           ActionType.API_KEY__GET_API_KEY_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {});
+          (errorBag): void => {
+            this.dialogDelegate.showFailedDialog(errorBag);
           },
         ),
       ),
@@ -106,8 +106,8 @@ export class GoogleSheetsAddOnScreenDelegate {
         ),
         once(
           ActionType.API_KEY__SEND_API_KEY_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {});
+          (errorBag): void => {
+            this.dialogDelegate.showFailedDialog(errorBag);
           },
         ),
       ),
@@ -167,8 +167,8 @@ export class GoogleSheetsAddOnScreenDelegate {
         ),
         once(
           ActionType.API_KEY__DELETE_API_KEY_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {});
+          (errorBag): void => {
+            this.dialogDelegate.showFailedDialog(errorBag);
           },
         ),
       ),

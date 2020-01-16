@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState } from '@ulangi/ulangi-common/enums';
+import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
 import { IObservableArray, IObservableValue, action, observable } from 'mobx';
 
 import { ObservableTranslation } from './ObservableTranslation';
@@ -22,7 +22,7 @@ export class ObservableTranslationListState {
 
   public readonly translateState: IObservableValue<ActivityState>;
 
-  public readonly translateError: IObservableValue<undefined | string>;
+  public readonly translateError: IObservableValue<undefined | ErrorCode>;
 
   public readonly isRefreshing: IObservableValue<boolean>;
 
@@ -41,7 +41,7 @@ export class ObservableTranslationListState {
     >,
     translations: null | IObservableArray<ObservableTranslation>,
     translateState: IObservableValue<ActivityState>,
-    translateError: IObservableValue<undefined | string>,
+    translateError: IObservableValue<undefined | ErrorCode>,
     isRefreshing: IObservableValue<boolean>
   ) {
     this.translationsWithLanguages = translationsWithLanguages;

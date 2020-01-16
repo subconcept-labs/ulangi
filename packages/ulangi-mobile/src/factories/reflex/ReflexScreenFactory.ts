@@ -44,9 +44,9 @@ export class ReflexScreenFactory extends ScreenFactory {
       questionIterator,
       fetchVocabularyDelegate,
       timerDelegate,
-      navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics,
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

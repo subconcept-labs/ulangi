@@ -22,10 +22,10 @@ import { EventChannel } from 'redux-saga';
 import { call, cancelled, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { DatabaseEventChannel } from '../channels/DatabaseEventChannel';
 import { FirebaseEventChannel } from '../channels/FirebaseEventChannel';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -37,21 +37,18 @@ export class ObserveUpdateSaga extends ProtectedSaga {
   private sessionModel: SessionModel;
   private firebase: FirebaseAdapter;
   private databaseEventBus: DatabaseEventBus;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
     firebase: FirebaseAdapter,
-    databaseEventBus: DatabaseEventBus,
-    crashlytics: CrashlyticsAdapter
+    databaseEventBus: DatabaseEventBus
   ) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.firebase = firebase;
     this.databaseEventBus = databaseEventBus;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -123,7 +120,8 @@ export class ObserveUpdateSaga extends ProtectedSaga {
         createAction(
           ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING_FAILED,
           {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           }
         )
       );
@@ -208,7 +206,8 @@ export class ObserveUpdateSaga extends ProtectedSaga {
         createAction(
           ActionType.SYNC__OBSERVE_REMOTE_UPDATES_FOR_SYNCING_FAILED,
           {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           }
         )
       );

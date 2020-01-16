@@ -29,10 +29,10 @@ import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { RootScreenDelegate } from '../../delegates/root/RootScreenDelegate';
 import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { AdDelegate } from '../ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../auto-archive/AutoArchiveSettingsDelegate';
 import { DarkModeSettingsDelegate } from '../dark-mode/DarkModeSettingsDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { LinkingDelegate } from '../linking/LinkingDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
@@ -52,6 +52,7 @@ export class MoreScreenDelegate {
   private reminderSettingsDelegate: ReminderSettingsDelegate;
   private darkModeSettingsDelegate: DarkModeSettingsDelegate;
   private linkingDelegate: LinkingDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
@@ -67,6 +68,7 @@ export class MoreScreenDelegate {
     reminderSettingsDelegate: ReminderSettingsDelegate,
     darkModeSettingsDelegate: DarkModeSettingsDelegate,
     linkingDelegate: LinkingDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
@@ -81,6 +83,7 @@ export class MoreScreenDelegate {
     this.reminderSettingsDelegate = reminderSettingsDelegate;
     this.darkModeSettingsDelegate = darkModeSettingsDelegate;
     this.linkingDelegate = linkingDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -177,43 +180,40 @@ export class MoreScreenDelegate {
       ) === true
         ? 'Warning: You have not set up this account yet. If you log out, you will not be able to access it again. Are you sure you want to log out?'
         : 'Are you sure you want to log out?';
-    this.navigatorDelegate.showDialog(
-      {
-        message,
-        closeOnTouchOutside: true,
-        buttonList: [
-          {
-            testID: MoreScreenIds.NO_BTN,
-            text: 'NO',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+    this.dialogDelegate.show({
+      message,
+      closeOnTouchOutside: true,
+      buttonList: [
+        {
+          testID: MoreScreenIds.NO_BTN,
+          text: 'NO',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
           },
-          {
-            testID: MoreScreenIds.YES_BTN,
-            text: 'YES',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-              this.observer.when(
-                (): boolean =>
-                  this.observableLightBox.state === LightBoxState.UNMOUNTED,
-                (): void =>
-                  this.rootScreenDelegate.setRootToSingleScreen(
-                    ScreenName.SIGN_OUT_SCREEN,
-                  ),
-              );
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: MoreScreenIds.YES_BTN,
+          text: 'YES',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+            this.observer.when(
+              (): boolean =>
+                this.observableLightBox.state === LightBoxState.UNMOUNTED,
+              (): void =>
+                this.rootScreenDelegate.setRootToSingleScreen(
+                  ScreenName.SIGN_OUT_SCREEN,
+                ),
+            );
           },
-        ],
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   public isAutoArchiveEnabled(): boolean {

@@ -19,7 +19,7 @@ import * as _ from 'lodash';
 import { CallEffect, all, call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { RandomRangeIterator } from '../iterators/RandomRangeIterator';
@@ -30,21 +30,18 @@ export class QuizSaga extends ProtectedSaga {
   private vocabularyModel: VocabularyModel;
   private quizMultipleChoiceModel: QuizMultipleChoiceModel;
   private quizWritingModel: QuizWritingModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     vocabularyModel: VocabularyModel,
     quizMultipleChoiceModel: QuizMultipleChoiceModel,
-    quizWritingModel: QuizWritingModel,
-    crashlytics: CrashlyticsAdapter
+    quizWritingModel: QuizWritingModel
   ) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
     this.quizMultipleChoiceModel = quizMultipleChoiceModel;
     this.quizWritingModel = quizWritingModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -196,7 +193,8 @@ export class QuizSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.QUIZ__FETCH_VOCABULARY_FOR_WRITING_FAILED, {
             setId,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -351,7 +349,8 @@ export class QuizSaga extends ProtectedSaga {
             ActionType.QUIZ__FETCH_VOCABULARY_FOR_MULTIPLE_CHOICE_FAILED,
             {
               setId,
-              errorCode: this.crashlytics.getErrorCode(error),
+              errorCode: errorConverter.getErrorCode(error),
+              error,
             }
           )
         );

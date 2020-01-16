@@ -7,7 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { Feedback } from '@ulangi/ulangi-common/enums';
-import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
 import { ObservableMap } from 'mobx';
@@ -40,7 +40,7 @@ export class WritingSaveResultDelegate {
     callback: {
       onSaving: () => void;
       onSaveSucceeded: () => void;
-      onSaveFailed: (errorCode: string) => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     const autoArchiveSettings = this.autoArchiveSettingsDelegate.getCurrentSettings();
@@ -61,7 +61,9 @@ export class WritingSaveResultDelegate {
         ),
         once(
           ActionType.WRITING__SAVE_RESULT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          (errorBag): void => {
+            callback.onSaveFailed(errorBag);
+          },
         ),
       ),
     );

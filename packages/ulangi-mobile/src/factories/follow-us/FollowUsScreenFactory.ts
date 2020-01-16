@@ -6,12 +6,15 @@
  */
 
 import { FollowUsScreenDelegate } from '../../delegates/follow-us/FollowUsScreenDelegate';
+import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class FollowUsScreenFactory extends ScreenFactory {
   public createScreenDelegate(): FollowUsScreenDelegate {
-    const navigatorDelegate = this.createNavigatorDelegate();
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
 
-    return new FollowUsScreenDelegate(navigatorDelegate);
+    return new FollowUsScreenDelegate(dialogDelegate);
   }
 }

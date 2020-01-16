@@ -8,7 +8,7 @@
 import { assertExists } from '@ulangi/assert';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { SetBuilder } from '@ulangi/ulangi-common/builders';
-import { Set } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Set } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetFormState } from '@ulangi/ulangi-observable';
 
@@ -26,7 +26,7 @@ export class AddSetDelegate {
   public saveAdd(callback: {
     onSaving: () => void;
     onSaveSucceeded: (set: Set) => void;
-    onSaveFailed: (errorCode: string) => void;
+    onSaveFailed: (errorBag: ErrorBag) => void;
   }): void {
     const learningLanguageCode = assertExists(
       this.setFormState.learningLanguageCode,
@@ -59,7 +59,7 @@ export class AddSetDelegate {
         ),
         once(
           ActionType.SET__ADD_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          (errorBag): void => callback.onSaveFailed(errorBag),
         ),
       ),
     );

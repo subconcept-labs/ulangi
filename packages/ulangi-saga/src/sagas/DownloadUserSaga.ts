@@ -15,7 +15,7 @@ import axios, { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class DownloadUserSaga {
@@ -25,20 +25,17 @@ export class DownloadUserSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private userModel: UserModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    userModel: UserModel,
-    crashlytics: CrashlyticsAdapter
+    userModel: UserModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.userModel = userModel;
-    this.crashlytics = crashlytics;
   }
 
   public *downloadUser(apiUrl: string): IterableIterator<any> {
@@ -79,7 +76,8 @@ export class DownloadUserSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.USER__DOWNLOAD_USER_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
       success = false;

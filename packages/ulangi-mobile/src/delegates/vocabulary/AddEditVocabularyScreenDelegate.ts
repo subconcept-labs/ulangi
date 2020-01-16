@@ -6,32 +6,31 @@
  */
 
 import { DeepPartial } from '@ulangi/extended-types';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
+import { Definition, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus } from '@ulangi/ulangi-event';
 import { ObservableVocabulary } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { VocabularyFormDelegate } from './VocabularyFormDelegate';
 
 @boundClass
 export abstract class AddEditVocabularyScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   protected eventBus: EventBus;
   protected vocabularyFormDelegate: VocabularyFormDelegate;
+  protected dialogDelegate: DialogDelegate;
   protected navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     vocabularyFormDelegate: VocabularyFormDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.vocabularyFormDelegate = vocabularyFormDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -66,39 +65,23 @@ export abstract class AddEditVocabularyScreenDelegate {
   }
 
   public showSavingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Saving. Please wait...',
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Saving. Please wait...',
+    });
   }
 
   public showSaveSucceededDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Saved successfully.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-        onClose: (): void => {
-          this.navigatorDelegate.pop();
-        },
+    this.dialogDelegate.showSuccessDialog({
+      message: 'Saved successfully.',
+      onClose: (): void => {
+        this.navigatorDelegate.pop();
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    });
   }
 
-  public showSaveFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'SAVE FAILED',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  public showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'SAVE FAILED',
+    });
   }
 }

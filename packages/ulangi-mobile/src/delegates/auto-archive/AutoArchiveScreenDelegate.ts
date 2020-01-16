@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { UserExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableAutoArchiveSettings } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -71,8 +72,8 @@ export class AutoArchiveScreenDelegate {
         ),
         once(
           ActionType.USER__EDIT_FAILED,
-          ({ errorCode }): void => {
-            this.showSavaFailedDialog(errorCode);
+          (errorBag): void => {
+            this.showSavaFailedDialog(errorBag);
           },
         ),
       ),
@@ -114,8 +115,8 @@ export class AutoArchiveScreenDelegate {
     });
   }
 
-  private showSavaFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSavaFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
     });
   }

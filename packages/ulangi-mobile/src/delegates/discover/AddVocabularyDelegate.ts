@@ -11,13 +11,15 @@ import {
   TranslationConverter,
 } from '@ulangi/ulangi-common/converters';
 import {
+  ErrorBag,
   PublicVocabulary,
   TranslationWithLanguages,
   Vocabulary,
 } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
+
+import { RemoteLogger } from '../../RemoteLogger';
 
 export class AddVocabularyDelegate {
   private publicVocabularyConverter = new PublicVocabularyConverter();
@@ -25,16 +27,10 @@ export class AddVocabularyDelegate {
 
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
-  private analytics: AnalyticsAdapter;
 
-  public constructor(
-    eventBus: EventBus,
-    setStore: ObservableSetStore,
-    analytics: AnalyticsAdapter,
-  ) {
+  public constructor(eventBus: EventBus, setStore: ObservableSetStore) {
     this.eventBus = eventBus;
     this.setStore = setStore;
-    this.analytics = analytics;
   }
 
   public addVocabularyFromPublicVocabulary(
@@ -43,10 +39,10 @@ export class AddVocabularyDelegate {
     callback: {
       onAdding: () => void;
       onAddSucceeded: () => void;
-      onAddFailed: (errorCode: string) => void;
+      onAddFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
-    this.analytics.logEvent('add_vocab_from_dictionary');
+    RemoteLogger.logEvent('add_vocab_from_dictionary');
     const vocabulary = this.publicVocabularyConverter.convertToVocabulary(
       publicVocabulary,
       categoryName,
@@ -61,7 +57,7 @@ export class AddVocabularyDelegate {
         once(ActionType.VOCABULARY__ADD_SUCCEEDED, callback.onAddSucceeded),
         once(
           ActionType.VOCABULARY__ADD_FAILED,
-          ({ errorCode }): void => callback.onAddFailed(errorCode),
+          (errorBag): void => callback.onAddFailed(errorBag),
         ),
       ),
     );
@@ -73,10 +69,10 @@ export class AddVocabularyDelegate {
     callback: {
       onAddingAll: () => void;
       onAddAllSucceeded: () => void;
-      onAddAllFailed: (errorCode: string) => void;
+      onAddAllFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
-    this.analytics.logEvent('add_vocab_from_list');
+    RemoteLogger.logEvent('add_vocab_from_list');
     const newVocabularyList = vocabularyList.map(
       (vocabulary): Vocabulary => {
         return this.publicVocabularyConverter.convertToVocabulary(
@@ -100,7 +96,7 @@ export class AddVocabularyDelegate {
         ),
         once(
           ActionType.VOCABULARY__ADD_MULTIPLE_FAILED,
-          ({ errorCode }): void => callback.onAddAllFailed(errorCode),
+          (errorBag): void => callback.onAddAllFailed(errorBag),
         ),
       ),
     );
@@ -111,10 +107,10 @@ export class AddVocabularyDelegate {
     callback: {
       onAdding: () => void;
       onAddSucceeded: () => void;
-      onAddFailed: (errorCode: string) => void;
+      onAddFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
-    this.analytics.logEvent('add_vocab_from_translation');
+    RemoteLogger.logEvent('add_vocab_from_translation');
     const translation = this.translationConverter.convertToTranslation(
       translationWithLanguages,
       this.setStore.existingCurrentSet.learningLanguageCode,
@@ -135,7 +131,7 @@ export class AddVocabularyDelegate {
         once(ActionType.VOCABULARY__ADD_SUCCEEDED, callback.onAddSucceeded),
         once(
           ActionType.VOCABULARY__ADD_FAILED,
-          ({ errorCode }): void => callback.onAddFailed(errorCode),
+          (errorBag): void => callback.onAddFailed(errorBag),
         ),
       ),
     );

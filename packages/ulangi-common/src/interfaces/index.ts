@@ -6,6 +6,7 @@
  */
 
 export { Attribution } from './general/Attribution';
+export { ErrorBag } from './general/ErrorBag';
 export { PixabayImage } from './general/PixabayImage';
 export { Purchase } from './general/Purchase';
 export { Product } from './general/Product';

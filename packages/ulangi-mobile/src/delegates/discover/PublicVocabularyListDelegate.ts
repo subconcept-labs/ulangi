@@ -15,31 +15,29 @@ import {
   ObservableSetStore,
   mergeList,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
+
+import { RemoteLogger } from '../../RemoteLogger';
 
 export class PublicVocabularyListDelegate {
   private eventBus: EventBus;
   private observableConverter: ObservableConverter;
   private setStore: ObservableSetStore;
   private vocabularyListState: ObservablePublicVocabularyListState;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
     observableConverter: ObservableConverter,
     setStore: ObservableSetStore,
     vocabularyListState: ObservablePublicVocabularyListState,
-    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
     this.setStore = setStore;
     this.vocabularyListState = vocabularyListState;
-    this.analytics = analytics;
   }
 
   public prepareAndSearch(searchTerm: string): void {
-    this.analytics.logEvent('search_dictionary');
+    RemoteLogger.logEvent('search_dictionary');
     if (
       this.setStore.existingCurrentSet.learningLanguageCode !== 'any' &&
       this.setStore.existingCurrentSet.translatedToLanguageCode !== 'any'

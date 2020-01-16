@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { PixabayImage } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, PixabayImage } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableImageSelectorScreen,
   ObservableLightBox,
@@ -114,7 +114,7 @@ export class ImageSelectorScreenDelegate {
     });
   }
 
-  private showUploadFailed(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {});
+  private showUploadFailed(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag);
   }
 }

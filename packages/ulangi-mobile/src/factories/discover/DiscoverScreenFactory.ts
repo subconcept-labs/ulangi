@@ -33,10 +33,13 @@ export class DiscoverScreenFactory extends ScreenFactory {
   ): DiscoverScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const addVocabularyDelegate = new AddVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      this.props.analytics,
     );
 
     const publicSetListDelegate = new PublicSetListDelegate(
@@ -45,7 +48,6 @@ export class DiscoverScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       observableScreen.publicSetCount,
       observableScreen.publicSetListState,
-      this.props.analytics,
     );
 
     const publicVocabularyListDelegate = new PublicVocabularyListDelegate(
@@ -53,7 +55,6 @@ export class DiscoverScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       this.props.rootStore.setStore,
       observableScreen.publicVocabularyListState,
-      this.props.analytics,
     );
 
     const translationListDelegate = new TranslationListDelegate(
@@ -86,8 +87,8 @@ export class DiscoverScreenFactory extends ScreenFactory {
       publicVocabularyActionMenuDelegate,
       translationListDelegate,
       translationActionMenuDelegate,
+      dialogDelegate,
       navigatorDelegate,
-      this.props.analytics,
     );
   }
 }

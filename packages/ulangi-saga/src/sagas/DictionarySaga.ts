@@ -16,7 +16,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -28,17 +28,11 @@ export class DictionarySaga extends ProtectedSaga {
 
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    sharedDb: SQLiteDatabase,
-    sessionModel: SessionModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(sharedDb: SQLiteDatabase, sessionModel: SessionModel) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -112,7 +106,8 @@ export class DictionarySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.DICTIONARY__GET_ENTRY_FAILED, {
             searchTerm,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

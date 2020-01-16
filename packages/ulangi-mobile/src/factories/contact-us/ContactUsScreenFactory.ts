@@ -8,6 +8,7 @@
 import { ObservableContactUsScreen } from '@ulangi/ulangi-observable';
 
 import { ContactUsScreenDelegate } from '../../delegates/contact-us/ContactUsScreenDelegate';
+import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ContactUsScreenFactory extends ScreenFactory {
@@ -16,10 +17,15 @@ export class ContactUsScreenFactory extends ScreenFactory {
   ): ContactUsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     return new ContactUsScreenDelegate(
       this.eventBus,
       this.props.rootStore.userStore,
       observableScreen,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

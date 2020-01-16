@@ -6,23 +6,26 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { boundClass } from 'autobind-decorator';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 @boundClass
 export class ChangeEmailScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
-  public constructor(eventBus: EventBus, navigatorDelegate: NavigatorDelegate) {
+  public constructor(
+    eventBus: EventBus,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
+  ) {
     this.eventBus = eventBus;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -32,7 +35,7 @@ export class ChangeEmailScreenDelegate {
     callback: {
       onChangingEmail: () => void;
       onChangeEmailSucceeded: () => void;
-      onChangeEmailFailed: (errorCode: string) => void;
+      onChangeEmailFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -48,46 +51,30 @@ export class ChangeEmailScreenDelegate {
         ),
         once(
           ActionType.USER__CHANGE_EMAIL_FAILED,
-          ({ errorCode }): void => callback.onChangeEmailFailed(errorCode),
+          (errorBag): void => callback.onChangeEmailFailed(errorBag),
         ),
       ),
     );
   }
 
   public showChangingEmailDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Changing email. Please wait...',
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Changing email. Please wait...',
+    });
   }
 
   public showChangeEmailSucceededDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Changed email successfully.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-        onClose: (): void => {
-          this.navigatorDelegate.pop();
-        },
+    this.dialogDelegate.showSuccessDialog({
+      message: 'Changed email successfully.',
+      onClose: (): void => {
+        this.navigatorDelegate.pop();
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    });
   }
 
-  public showChangeEmailFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'SAVE FAILED',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  public showChangeEmailFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'SAVE FAILED',
+    });
   }
 }

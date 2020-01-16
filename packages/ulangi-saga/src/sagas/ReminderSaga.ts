@@ -9,21 +9,16 @@ import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ErrorCode } from '@ulangi/ulangi-common/enums';
 import { call, fork, put, take } from 'redux-saga/effects';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class ReminderSaga extends ProtectedSaga {
   private notifications: NotificationsAdapter;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    notifications: NotificationsAdapter,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(notifications: NotificationsAdapter) {
     super();
     this.notifications = notifications;
-    this.crashlytics = crashlytics;
   }
 
   public *run(): IterableIterator<any> {
@@ -48,7 +43,8 @@ export class ReminderSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMINDER__CHECK_PERMISSION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -68,7 +64,8 @@ export class ReminderSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMINDER__REQUEST_PERMISSION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -96,7 +93,8 @@ export class ReminderSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMINDER__SET_UP_REMINDER_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -117,7 +115,8 @@ export class ReminderSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMINDER__DELETE_REMINDER_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

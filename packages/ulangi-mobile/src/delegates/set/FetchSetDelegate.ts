@@ -7,7 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { SetStatus } from '@ulangi/ulangi-common/enums';
-import { Set } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Set } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 
 export class FetchSetDelegate {
@@ -22,7 +22,7 @@ export class FetchSetDelegate {
     callback: {
       onFetching: () => void;
       onFetchSucceeded: (setList: readonly Set[]) => void;
-      onFetchFailed: (errorCode: string) => void;
+      onFetchFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -35,7 +35,7 @@ export class FetchSetDelegate {
         ),
         once(
           ActionType.SET__FETCH_FAILED,
-          ({ errorCode }): void => callback.onFetchFailed(errorCode),
+          (errorBag): void => callback.onFetchFailed(errorBag),
         ),
       ),
     );
@@ -44,7 +44,7 @@ export class FetchSetDelegate {
   public fetchAllSets(callback: {
     onFetchingAll: () => void;
     onFetchAllSucceeded: (setList: readonly Set[]) => void;
-    onFetchAllFailed: (errorCode: string) => void;
+    onFetchAllFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.SET__FETCH_ALL, null),
@@ -56,7 +56,7 @@ export class FetchSetDelegate {
         ),
         once(
           ActionType.SET__FETCH_ALL_FAILED,
-          ({ errorCode }): void => callback.onFetchAllFailed(errorCode),
+          (errorBag): void => callback.onFetchAllFailed(errorBag),
         ),
       ),
     );

@@ -16,7 +16,7 @@ import * as Joi from 'joi';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
@@ -27,17 +27,11 @@ export class FlashcardPlayerSaga extends ProtectedSaga {
 
   private userDb: SQLiteDatabase;
   private vocabularyModel: VocabularyModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    userDb: SQLiteDatabase,
-    vocabularyModel: VocabularyModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(userDb: SQLiteDatabase, vocabularyModel: VocabularyModel) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -110,7 +104,8 @@ export class FlashcardPlayerSaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.FLASHCARD_PLAYER__UPLOAD_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }

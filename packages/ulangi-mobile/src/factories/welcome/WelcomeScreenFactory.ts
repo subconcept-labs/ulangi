@@ -24,7 +24,6 @@ export class WelcomeScreenFactory extends ScreenFactory {
       authDelegate,
       navigatorDelegate,
       dialogDelegate,
-      this.props.analytics,
     );
   }
 }

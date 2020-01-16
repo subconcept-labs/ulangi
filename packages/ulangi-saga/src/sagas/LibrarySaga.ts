@@ -24,7 +24,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
@@ -39,17 +39,11 @@ export class LibrarySaga extends ProtectedSaga {
 
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    sharedDb: SQLiteDatabase,
-    sessionModel: SessionModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(sharedDb: SQLiteDatabase, sessionModel: SessionModel) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -109,7 +103,8 @@ export class LibrarySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.LIBRARY__SEARCH_PUBLIC_SETS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -174,7 +169,12 @@ export class LibrarySaga extends ProtectedSaga {
         )
       );
     } catch (error) {
-      console.warn(error);
+      yield put(
+        createAction(ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_SETS_FAILED, {
+          errorCode: errorConverter.getErrorCode(error),
+          error,
+        })
+      );
     }
   }
 
@@ -233,7 +233,8 @@ export class LibrarySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.LIBRARY__SEARCH_PUBLIC_SETS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -304,7 +305,15 @@ export class LibrarySaga extends ProtectedSaga {
         )
       );
     } catch (error) {
-      console.warn(error);
+      yield put(
+        createAction(
+          ActionType.LIBRARY__PREPARE_SEARCH_PUBLIC_VOCABULARY_FAILED,
+          {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          }
+        )
+      );
     }
   }
 
@@ -363,7 +372,8 @@ export class LibrarySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.LIBRARY__SEARCH_PUBLIC_VOCABULARY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

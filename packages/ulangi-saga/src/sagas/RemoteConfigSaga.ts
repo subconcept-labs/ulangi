@@ -21,7 +21,7 @@ import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { PublicSaga } from '../sagas/PublicSaga';
 import { createRequest } from '../utils/createRequest';
@@ -31,17 +31,14 @@ export class RemoteConfigSaga extends PublicSaga {
 
   private database: DatabaseFacade;
   private remoteConfigModel: RemoteConfigModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     database: DatabaseFacade,
-    remoteConfigModel: RemoteConfigModel,
-    crashlytics: CrashlyticsAdapter
+    remoteConfigModel: RemoteConfigModel
   ) {
     super();
     this.database = database;
     this.remoteConfigModel = remoteConfigModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -75,7 +72,8 @@ export class RemoteConfigSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMOTE_CONFIG__FETCH_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -99,7 +97,8 @@ export class RemoteConfigSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REMOTE_CONFIG__UPDATE_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

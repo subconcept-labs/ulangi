@@ -13,14 +13,14 @@ import {
   ObservableVocabulary,
   ObservableVocabularyFormState,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { runInAction } from 'mobx';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { AddVocabularyScreenIds } from '../../constants/ids/AddVocabularyScreenIds';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AddEditVocabularyScreenDelegate } from './AddEditVocabularyScreenDelegate';
 import { AddVocabularyDelegate } from './AddVocabularyDelegate';
@@ -31,7 +31,6 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
   private observableConverter: ObservableConverter;
   private addVocabularyDelegate: AddVocabularyDelegate;
   private vocabularyFormState: ObservableVocabularyFormState;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
@@ -39,19 +38,18 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
     vocabularyFormState: ObservableVocabularyFormState,
     vocabularyInputDelegate: VocabularyFormDelegate,
     addVocabularyDelegate: AddVocabularyDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter,
   ) {
-    super(eventBus, vocabularyInputDelegate, navigatorDelegate);
+    super(eventBus, vocabularyInputDelegate, dialogDelegate, navigatorDelegate);
 
     this.observableConverter = observableConverter;
     this.addVocabularyDelegate = addVocabularyDelegate;
     this.vocabularyFormState = vocabularyFormState;
-    this.analytics = analytics;
   }
 
   public saveAdd(closeOnSaveSucceeded: boolean): void {
-    this.analytics.logEvent('add_vocabulary');
+    RemoteLogger.logEvent('add_vocabulary');
     this.addVocabularyDelegate.saveAdd({
       onSaving: this.showSavingDialog,
       onSaveSucceeded: closeOnSaveSucceeded
@@ -66,41 +64,38 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
   }
 
   private showWhatToDoNextDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Saved successfully. What do you want to do next?',
-        onBackgroundPress: (): void => {
-          this.navigatorDelegate.dismissLightBox();
-          this.navigatorDelegate.pop();
-        },
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
-            text: 'CLOSE',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-              this.navigatorDelegate.pop();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-          {
-            testID: AddVocabularyScreenIds.ADD_MORE_BTN,
-            text: 'ADD MORE',
-            onPress: (): void => {
-              this.resetForms();
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-        ],
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.SUCCESS_DIALOG,
+      message: 'Saved successfully. What do you want to do next?',
+      onBackgroundPress: (): void => {
+        this.navigatorDelegate.dismissLightBox();
+        this.navigatorDelegate.pop();
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
+          text: 'CLOSE',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+            this.navigatorDelegate.pop();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: AddVocabularyScreenIds.ADD_MORE_BTN,
+          text: 'ADD MORE',
+          onPress: (): void => {
+            this.resetForms();
+            this.navigatorDelegate.dismissLightBox();
+          },
+          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private resetForms(): void {

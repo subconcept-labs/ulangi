@@ -8,7 +8,7 @@
 import { assertExists } from '@ulangi/assert';
 import { Mutable } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { Set } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Set } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetFormState } from '@ulangi/ulangi-observable';
 
@@ -26,7 +26,7 @@ export class EditSetDelegate {
     callback: {
       onSaving: () => void;
       onSaveSucceeded: (set: Set) => void;
-      onSaveFailed: (errorCode: string) => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     const learningLanguageCode = assertExists(
@@ -68,7 +68,7 @@ export class EditSetDelegate {
         ),
         once(
           ActionType.SET__EDIT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          (errorBag): void => callback.onSaveFailed(errorBag),
         ),
       ),
     );

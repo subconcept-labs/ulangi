@@ -11,6 +11,7 @@ import { call, fork, put, take } from 'redux-saga/effects';
 import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { PublicSaga } from './PublicSaga';
 
 export class DataSharingSaga extends PublicSaga {
@@ -56,7 +57,8 @@ export class DataSharingSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATA_SHARING__ENABLE_ANALYTICS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -84,7 +86,8 @@ export class DataSharingSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATA_SHARING__DISABLE_ANALYTICS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

@@ -158,7 +158,7 @@ export class PreloadScreenDelegate {
 
   private initializeApp(callback: {
     onInitializeSucceeded: () => void;
-    onInitializeFailed: (errorCode: string) => void;
+    onInitializeFailed: (error: unknown) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.APP__INITIALIZE, null),
@@ -169,7 +169,7 @@ export class PreloadScreenDelegate {
         ),
         once(
           ActionType.APP__INITIALIZE_FAILED,
-          ({ errorCode }): void => callback.onInitializeFailed(errorCode),
+          ({ error }): void => callback.onInitializeFailed(error),
         ),
       ),
     );

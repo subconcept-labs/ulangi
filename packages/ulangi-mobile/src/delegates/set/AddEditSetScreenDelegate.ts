@@ -6,9 +6,9 @@
  */
 
 import { SetFormPickerType } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { boundClass } from 'autobind-decorator';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { PickerDelegate } from './PickerDelegate';
@@ -74,22 +74,16 @@ export class AddEditSetScreenDelegate {
 
   public showSaveSucceededDialog(): void {
     this.dialogDelegate.showSuccessDialog({
-      testID: LightBoxDialogIds.SUCCESS_DIALOG,
       message: 'Saved successfully.',
-      showCloseButton: true,
-      closeOnTouchOutside: true,
       onClose: (): void => {
         this.navigatorDelegate.pop();
       },
     });
   }
 
-  public showSaveFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
-      testID: LightBoxDialogIds.FAILED_DIALOG,
+  public showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
-      showCloseButton: true,
-      closeOnTouchOutside: true,
     });
   }
 

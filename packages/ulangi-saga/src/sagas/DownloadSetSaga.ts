@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 import { call, delay, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class DownloadSetSaga {
@@ -36,22 +36,19 @@ export class DownloadSetSaga {
   private sessionModel: SessionModel;
   private setModel: SetModel;
   private incompatibleSetModel: IncompatibleSetModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
     setModel: SetModel,
-    incompatibleSetModel: IncompatibleSetModel,
-    crashlytics: CrashlyticsAdapter
+    incompatibleSetModel: IncompatibleSetModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.setModel = setModel;
     this.incompatibleSetModel = incompatibleSetModel;
-    this.crashlytics = crashlytics;
   }
 
   public *downloadSets(
@@ -173,7 +170,8 @@ export class DownloadSetSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.SET__DOWNLOAD_SETS_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
       success = false;

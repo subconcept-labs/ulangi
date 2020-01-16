@@ -14,10 +14,12 @@ describe('createAction', (): void => {
   it('create Action', (): void => {
     const action = createAction(ActionType.APP__INITIALIZE_FAILED, {
       errorCode: ErrorCode.GENERAL__UNKNOWN_ERROR,
+      error: ErrorCode.GENERAL__UNKNOWN_ERROR,
     });
     expect(action.type).toEqual(ActionType.APP__INITIALIZE_FAILED);
     expect(action.payload).toEqual({
       errorCode: ErrorCode.GENERAL__UNKNOWN_ERROR,
+      error: ErrorCode.GENERAL__UNKNOWN_ERROR,
     });
   });
 });

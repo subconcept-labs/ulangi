@@ -8,7 +8,11 @@
 import { DeepMutable, DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { DefinitionStatus, ErrorCode } from '@ulangi/ulangi-common/enums';
-import { Definition, Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import {
+  Definition,
+  ErrorBag,
+  Vocabulary,
+} from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -38,10 +42,13 @@ export class EditVocabularyDelegate {
   public saveEdit(callback: {
     onSaving: () => void;
     onSaveSucceeded: () => void;
-    onSaveFailed: (errorCode: string) => void;
+    onSaveFailed: (errorBag: ErrorBag) => void;
   }): void {
     if (this.vocabularyFormState.areAllDefinitionsEmpty) {
-      callback.onSaveFailed(ErrorCode.VOCABULARY__NO_DEFINITIONS);
+      callback.onSaveFailed({
+        errorCode: ErrorCode.VOCABULARY__NO_DEFINITIONS,
+        error: ErrorCode.VOCABULARY__NO_DEFINITIONS,
+      });
     } else {
       const changes = this.getChanges();
 
@@ -58,7 +65,7 @@ export class EditVocabularyDelegate {
           once(ActionType.VOCABULARY__EDIT_SUCCEEDED, callback.onSaveSucceeded),
           once(
             ActionType.VOCABULARY__EDIT_FAILED,
-            ({ errorCode }): void => callback.onSaveFailed(errorCode),
+            (errorBag): void => callback.onSaveFailed(errorBag),
           ),
         ),
       );

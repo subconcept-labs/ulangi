@@ -24,7 +24,7 @@ import axios from 'axios';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -36,17 +36,11 @@ export class ApiKeySaga extends ProtectedSaga {
 
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    sharedDb: SQLiteDatabase,
-    sessionModel: SessionModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(sharedDb: SQLiteDatabase, sessionModel: SessionModel) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -100,7 +94,8 @@ export class ApiKeySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.API_KEY__GET_API_KEY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -150,7 +145,8 @@ export class ApiKeySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.API_KEY__DELETE_API_KEY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -203,7 +199,8 @@ export class ApiKeySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.API_KEY__SEND_API_KEY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

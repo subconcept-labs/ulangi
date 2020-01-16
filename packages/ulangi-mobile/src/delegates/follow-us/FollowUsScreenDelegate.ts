@@ -9,15 +9,14 @@ import { boundClass } from 'autobind-decorator';
 import { Linking } from 'react-native';
 
 import { config } from '../../constants/config';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
-import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 
 @boundClass
 export class FollowUsScreenDelegate {
-  private navigatorDelegate: NavigatorDelegate;
+  private dialogDelegate: DialogDelegate;
 
-  public constructor(navigatorDelegate: NavigatorDelegate) {
-    this.navigatorDelegate = navigatorDelegate;
+  public constructor(dialogDelegate: DialogDelegate) {
+    this.dialogDelegate = dialogDelegate;
   }
 
   public goToReddit(): void {
@@ -60,15 +59,12 @@ export class FollowUsScreenDelegate {
   }
 
   private showCannotOpenLinkError(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        title: 'ERROR OCCURRED',
-        message: 'Cannot open the link.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      title: 'ERROR OCCURRED',
+      message: 'Cannot open the link.',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
   private fallbackToFacebookPageInBrowser(): void {

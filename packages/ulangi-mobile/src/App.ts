@@ -7,7 +7,7 @@
 
 import NetInfo from '@react-native-community/netinfo';
 import RNAdConsent from '@ulangi/react-native-ad-consent';
-import firebase from '@ulangi/react-native-firebase';
+import RNFirebase from '@ulangi/react-native-firebase';
 import { SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import { EventBusFactory, EventFacade } from '@ulangi/ulangi-event';
@@ -30,12 +30,13 @@ import {
 } from '@ulangi/ulangi-saga';
 import { StoreFactory } from '@ulangi/ulangi-store';
 import { Platform } from 'react-native';
-import * as systemDarkMode from 'react-native-dark-mode';
-import * as facebook from 'react-native-fbsdk';
+import * as RNSystemDarkMode from 'react-native-dark-mode';
+import * as RNFacebook from 'react-native-fbsdk';
 import * as FileSystem from 'react-native-fs';
 import * as Iap from 'react-native-iap';
 import * as sqlite from 'react-native-sqlite-storage';
 
+import { RemoteLogger } from './RemoteLogger';
 import { ServiceRegistry } from './ServiceRegistry';
 import { config } from './constants/config';
 import { env } from './constants/env';
@@ -45,7 +46,7 @@ import { setupCustomViews } from './setup/setupCustomViews';
 import { setupNavigationDefaultOptions } from './setup/setupNavigationDefaultOptions';
 import { setupScreens } from './setup/setupScreens';
 
-import AudioPlayer = require('react-native-sound');
+import RNAudioPlayer = require('react-native-sound');
 
 export class App {
   private started: boolean;
@@ -75,28 +76,38 @@ export class App {
 
     setupNavigationDefaultOptions();
 
-    const analytics = new AnalyticsAdapter(firebase.analytics());
-    const crashlytics = new CrashlyticsAdapter(firebase.crashlytics(), true);
+    const sqliteDatabase = new SQLiteDatabaseAdapter(sqlite);
+    const firebase = new FirebaseAdapter(RNFirebase);
+    const analytics = new AnalyticsAdapter(RNFirebase.analytics());
+    const crashlytics = new CrashlyticsAdapter(RNFirebase.crashlytics());
+    // @ts-ignore
+    const adMob = new AdMobAdapter(RNFirebase.admob, RNAdConsent);
+    const facebook = new FacebookAdapter(RNFacebook);
+    const audioPlayer = new AudioPlayerAdapter(RNAudioPlayer);
+    const notifications = new NotificationsAdapter(
+      RNFirebase.notifications(),
+      RNFirebase.messaging(),
+      RNFirebase.notifications,
+    );
+    const systemDarkMode = new SystemDarkModeAdapter(RNSystemDarkMode);
+
+    RemoteLogger.useAnalytics(analytics);
+    RemoteLogger.useCrashlytics(crashlytics);
 
     const sagaFacade = new SagaFacade(
       env,
       config,
-      new SQLiteDatabaseAdapter(sqlite),
-      new FirebaseAdapter(firebase),
-      // @ts-ignore
-      new AdMobAdapter(firebase.admob, RNAdConsent),
+      sqliteDatabase,
+      firebase,
+      adMob,
       analytics,
-      new FacebookAdapter(facebook),
+      facebook,
       NetInfo,
       FileSystem,
       Iap,
-      new AudioPlayerAdapter(AudioPlayer),
-      new NotificationsAdapter(
-        firebase.notifications(),
-        firebase.messaging(),
-        firebase.notifications,
-      ),
-      new SystemDarkModeAdapter(systemDarkMode),
+      audioPlayer,
+      notifications,
+      systemDarkMode,
       crashlytics,
     );
 
@@ -112,7 +123,7 @@ export class App {
       config,
       {
         initialSystemDarkMode:
-          systemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
+          RNSystemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
         enableLogging: env.ENABLE_LOGGING,
       },
       [sagaFacade.getMiddleware(), eventFacade.getMiddleware()],
@@ -122,8 +133,6 @@ export class App {
 
     const eventBusFactory = new EventBusFactory(store, eventFacade);
 
-    ServiceRegistry.register('analytics', analytics);
-    ServiceRegistry.register('crashlytics', crashlytics);
     ServiceRegistry.register('eventBusFactory', eventBusFactory);
     ServiceRegistry.register('rootStore', store.getState());
     ServiceRegistry.register('observableLightBox', new ObservableLightBox());

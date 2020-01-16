@@ -25,7 +25,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -36,21 +36,18 @@ export class VocabularySaga extends ProtectedSaga {
   private vocabularyModel: VocabularyModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
   private writingModel: WritingModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     vocabularyModel: VocabularyModel,
     spacedRepetitionModel: SpacedRepetitionModel,
-    writingModel: WritingModel,
-    crashlytics: CrashlyticsAdapter
+    writingModel: WritingModel
   ) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
     this.writingModel = writingModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -101,7 +98,8 @@ export class VocabularySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.VOCABULARY__ADD_FAILED, {
             vocabulary,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -144,7 +142,8 @@ export class VocabularySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.VOCABULARY__ADD_MULTIPLE_FAILED, {
             vocabularyList,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -198,7 +197,8 @@ export class VocabularySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.VOCABULARY__EDIT_FAILED, {
             vocabulary,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -286,7 +286,8 @@ export class VocabularySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.VOCABULARY__EDIT_MULTIPLE_FAILED, {
             vocabularyList,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -358,7 +359,8 @@ export class VocabularySaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.VOCABULARY__PREPARE_FETCH_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -458,7 +460,8 @@ export class VocabularySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.VOCABULARY__FETCH_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

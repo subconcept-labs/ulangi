@@ -37,9 +37,9 @@ export class AtomScreenFactory extends ScreenFactory {
     return new AtomScreenDelegate(
       prepareFetchVocabularyDelegate,
       fetchVocabularyDelegate,
-      navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics,
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

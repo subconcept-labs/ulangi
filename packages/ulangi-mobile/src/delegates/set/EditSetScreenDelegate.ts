@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Set } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Set } from '@ulangi/ulangi-common/interfaces';
 import { ObservableSetFormState } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
@@ -39,7 +39,7 @@ export class EditSetScreenDelegate extends AddEditSetScreenDelegate {
     callback: {
       onSaving: () => void;
       onSaveSucceeded: (set: Set) => void;
-      onSaveFailed: (errorCode: string) => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     if (this.setFormState.learningLanguageCode === null) {

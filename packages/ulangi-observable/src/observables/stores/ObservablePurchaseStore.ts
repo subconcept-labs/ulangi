@@ -6,6 +6,7 @@
  */
 
 import { ActivityState } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { observable } from 'mobx';
 
 import { ObservableStore } from './ObservableStore';
@@ -17,14 +18,14 @@ export class ObservablePurchaseStore extends ObservableStore {
   @observable
   public premiumLifetimeProcessResult: null | {
     success: boolean;
-    errorCode: null | string;
+    errorBag: null | ErrorBag;
   };
 
   public constructor(
     premiumLifetimeProcessState: ActivityState,
     premiumLifetimeProcessResult: null | {
       success: boolean;
-      errorCode: null | string;
+      errorBag: null | ErrorBag;
     }
   ) {
     super();

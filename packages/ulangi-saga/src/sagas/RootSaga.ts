@@ -170,7 +170,6 @@ export class RootSaga {
       this.iap,
       this.audioPlayer,
       this.notifications,
-      this.crashlytics,
       this.databaseEventBus,
       this.modelList
     );

@@ -15,7 +15,7 @@ import axios, { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class UploadSetSaga {
@@ -25,20 +25,17 @@ export class UploadSetSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private dirtySetModel: DirtySetModel;
-  private crashlyticsAdapter: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    dirtySetModel: DirtySetModel,
-    crashlyticsAdapter: CrashlyticsAdapter
+    dirtySetModel: DirtySetModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.dirtySetModel = dirtySetModel;
-    this.crashlyticsAdapter = crashlyticsAdapter;
   }
 
   public *uploadSets(
@@ -105,7 +102,8 @@ export class UploadSetSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.SET__UPLOAD_SETS_FAILED, {
-          errorCode: this.crashlyticsAdapter.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
       success = false;

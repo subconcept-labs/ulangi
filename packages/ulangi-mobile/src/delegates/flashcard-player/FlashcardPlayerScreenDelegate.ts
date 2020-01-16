@@ -76,8 +76,8 @@ export class FlashcardPlayerScreenDelegate {
           ),
           once(
             ActionType.FLASHCARD_PLAYER__UPLOAD_FAILED,
-            ({ errorCode }): void => {
-              this.dialogDelegate.showFailedDialog(errorCode, {});
+            (errorBag): void => {
+              this.dialogDelegate.showFailedDialog(errorBag);
             },
           ),
         ),

@@ -9,7 +9,11 @@ import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { VocabularyBuilder } from '@ulangi/ulangi-common/builders';
-import { Definition, Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import {
+  Definition,
+  ErrorBag,
+  Vocabulary,
+} from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -41,7 +45,7 @@ export class AddVocabularyDelegate {
   public saveAdd(callback: {
     onSaving: () => void;
     onSaveSucceeded: () => void;
-    onSaveFailed: (errorCode: string) => void;
+    onSaveFailed: (errorBag: ErrorBag) => void;
   }): void {
     const currentSetId = assertExists(
       this.setStore.currentSetId,
@@ -60,8 +64,8 @@ export class AddVocabularyDelegate {
         once(ActionType.VOCABULARY__ADD_SUCCEEDED, callback.onSaveSucceeded),
         once(
           ActionType.VOCABULARY__ADD_FAILED,
-          ({ errorCode }): void => {
-            callback.onSaveFailed(errorCode);
+          (errorBag): void => {
+            callback.onSaveFailed(errorBag);
           },
         ),
       ),

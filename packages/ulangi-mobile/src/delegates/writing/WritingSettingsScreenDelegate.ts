@@ -6,14 +6,13 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { WritingSettingsScreenIds } from '../../constants/ids/WritingSettingsScreenIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -21,8 +20,6 @@ import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 @boundClass
 export class WritingSettingsScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private observableScreen: ObservableWritingSettingsScreen;
   private writingSettingsDelegate: WritingSettingsDelegate;
   private dialogDelegate: DialogDelegate;
@@ -152,13 +149,9 @@ export class WritingSettingsScreenDelegate {
     });
   }
 
-  private showSaveFailedDialog(errorCode: string): void {
-    this.dialogDelegate.show({
-      testID: LightBoxDialogIds.FAILED_DIALOG,
-      message: this.errorConverter.convertToMessage(errorCode),
+  private showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
-      showCloseButton: true,
-      closeOnTouchOutside: true,
     });
   }
 }

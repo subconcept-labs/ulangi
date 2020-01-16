@@ -27,7 +27,7 @@ import * as _ from 'lodash';
 import { call, delay, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class DownloadIncompatibleVocabularySaga {
@@ -39,22 +39,19 @@ export class DownloadIncompatibleVocabularySaga {
   private sessionModel: SessionModel;
   private vocabularyModel: VocabularyModel;
   private incompatibleVocabularyModel: IncompatibleVocabularyModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
     vocabularyModel: VocabularyModel,
-    incompatibleVocabularyModel: IncompatibleVocabularyModel,
-    crashlytics: CrashlyticsAdapter
+    incompatibleVocabularyModel: IncompatibleVocabularyModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.vocabularyModel = vocabularyModel;
     this.incompatibleVocabularyModel = incompatibleVocabularyModel;
-    this.crashlytics = crashlytics;
   }
 
   public *downloadIncompatibleVocabulary(
@@ -238,7 +235,8 @@ export class DownloadIncompatibleVocabularySaga {
         createAction(
           ActionType.VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_FAILED,
           {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           }
         )
       );

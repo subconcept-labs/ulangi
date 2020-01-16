@@ -7,6 +7,7 @@
 
 import { assertExists } from '@ulangi/assert';
 import { Feedback } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { ObservableReviewFeedbackScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
@@ -101,8 +102,8 @@ export class ReviewFeedbackScreenDelegate {
     });
   }
 
-  private showSaveFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
     });
   }

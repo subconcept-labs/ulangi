@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { UserExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableDarkModeScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -75,8 +76,8 @@ export class DarkModeScreenDelegate {
         ),
         once(
           ActionType.USER__EDIT_FAILED,
-          ({ errorCode }): void => {
-            this.showSaveFailedDialog(errorCode);
+          (errorBag): void => {
+            this.showSaveFailedDialog(errorBag);
           },
         ),
       ),
@@ -98,8 +99,8 @@ export class DarkModeScreenDelegate {
     });
   }
 
-  private showSaveFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
     });
   }

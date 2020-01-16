@@ -32,7 +32,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
 import { WritingSaga } from './WritingSaga';
 
@@ -73,8 +72,7 @@ describe('WritingSaga', (): void => {
           mockedUserDatabase,
           mockedSessionModel,
           mockedVocabularyModel,
-          mockedWritingModel,
-          new CrashlyticsAdapter(null, false)
+          mockedWritingModel
         );
       }
     );
@@ -322,6 +320,7 @@ describe('WritingSaga', (): void => {
               createAction(ActionType.WRITING__FETCH_VOCABULARY_FAILED, {
                 setId,
                 errorCode: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
+                error: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
               })
             )
             .silentRun();
@@ -400,6 +399,7 @@ describe('WritingSaga', (): void => {
               createAction(ActionType.WRITING__FETCH_VOCABULARY_FAILED, {
                 setId,
                 errorCode: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
+                error: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
               })
             )
             .silentRun();
@@ -601,6 +601,7 @@ describe('WritingSaga', (): void => {
               createAction(ActionType.WRITING__FETCH_VOCABULARY_FAILED, {
                 setId,
                 errorCode: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
+                error: ErrorCode.WRITING__INSUFFICIENT_VOCABULARY,
               })
             )
             .silentRun();

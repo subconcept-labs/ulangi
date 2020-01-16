@@ -34,7 +34,6 @@ export class MoreScreenFactory extends ScreenFactory {
       this.props.rootStore.userStore,
       this.props.rootStore.remoteConfigStore,
       dialogDelegate,
-      this.props.analytics,
     );
 
     const adDelegate = new AdDelegate(
@@ -72,6 +71,7 @@ export class MoreScreenFactory extends ScreenFactory {
       reminderSettingsDelegate,
       darkModeSettingsDelegate,
       linkingDelegate,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

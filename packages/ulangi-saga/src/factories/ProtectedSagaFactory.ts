@@ -11,7 +11,6 @@ import * as FileSystem from 'react-native-fs';
 import * as Iap from 'react-native-iap';
 
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { ApiKeySaga } from '../sagas/ApiKeySaga';
@@ -54,7 +53,6 @@ export class ProtectedSagaFactory {
   private iap: typeof Iap;
   private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
-  private crashlytics: CrashlyticsAdapter;
   private databaseEventBus: DatabaseEventBus;
   private modelList: ModelList;
 
@@ -66,7 +64,6 @@ export class ProtectedSagaFactory {
     iap: typeof Iap,
     audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
-    crashlytics: CrashlyticsAdapter,
     databaseEventBus: DatabaseEventBus,
     modelList: ModelList
   ) {
@@ -77,7 +74,6 @@ export class ProtectedSagaFactory {
     this.iap = iap;
     this.audioPlayer = audioPlayer;
     this.notifications = notifications;
-    this.crashlytics = crashlytics;
     this.databaseEventBus = databaseEventBus;
     this.modelList = modelList;
   }
@@ -88,181 +84,120 @@ export class ProtectedSagaFactory {
         this.sharedDb,
         this.userDb,
         this.modelList.sessionModel,
-        this.modelList.userModel,
-        this.crashlytics
+        this.modelList.userModel
       ),
-      new SetSaga(this.userDb, this.modelList.setModel, this.crashlytics),
+      new SetSaga(this.userDb, this.modelList.setModel),
       new VocabularySaga(
         this.userDb,
         this.modelList.vocabularyModel,
         this.modelList.spacedRepetitionModel,
-        this.modelList.writingModel,
-        this.crashlytics
+        this.modelList.writingModel
       ),
-      new CategorySaga(
-        this.userDb,
-        this.modelList.categoryModel,
-        this.crashlytics
-      ),
+      new CategorySaga(this.userDb, this.modelList.categoryModel),
       new ManageSaga(
         this.userDb,
         this.modelList.vocabularyModel,
         this.modelList.categoryModel,
         this.modelList.spacedRepetitionModel,
-        this.modelList.writingModel,
-        this.crashlytics
+        this.modelList.writingModel
       ),
-      new SearchSaga(
-        this.userDb,
-        this.modelList.vocabularyModel,
-        this.crashlytics
-      ),
+      new SearchSaga(this.userDb, this.modelList.vocabularyModel),
       new AudioSaga(
         this.sharedDb,
         this.modelList.sessionModel,
         this.fileSystem,
-        this.audioPlayer,
-        this.crashlytics
+        this.audioPlayer
       ),
-      new LibrarySaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.crashlytics
-      ),
+      new LibrarySaga(this.sharedDb, this.modelList.sessionModel),
       new SpacedRepetitionSaga(
         this.sharedDb,
         this.userDb,
         this.modelList.sessionModel,
         this.modelList.vocabularyModel,
-        this.modelList.spacedRepetitionModel,
-        this.crashlytics
+        this.modelList.spacedRepetitionModel
       ),
       new WritingSaga(
         this.sharedDb,
         this.userDb,
         this.modelList.sessionModel,
         this.modelList.vocabularyModel,
-        this.modelList.writingModel,
-        this.crashlytics
+        this.modelList.writingModel
       ),
       new QuizSaga(
         this.userDb,
         this.modelList.vocabularyModel,
         this.modelList.quizMultipleChoiceModel,
-        this.modelList.quizWritingModel,
-        this.crashlytics
+        this.modelList.quizWritingModel
       ),
-      new ReflexSaga(
-        this.userDb,
-        this.modelList.vocabularyModel,
-        this.crashlytics
-      ),
-      new AtomSaga(
-        this.userDb,
-        this.modelList.vocabularyModel,
-        this.crashlytics
-      ),
-      new FlashcardPlayerSaga(
-        this.userDb,
-        this.modelList.vocabularyModel,
-        this.crashlytics
-      ),
-      new DictionarySaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.crashlytics
-      ),
-      new TranslationSaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.crashlytics
-      ),
+      new ReflexSaga(this.userDb, this.modelList.vocabularyModel),
+      new AtomSaga(this.userDb, this.modelList.vocabularyModel),
+      new FlashcardPlayerSaga(this.userDb, this.modelList.vocabularyModel),
+      new DictionarySaga(this.sharedDb, this.modelList.sessionModel),
+      new TranslationSaga(this.sharedDb, this.modelList.sessionModel),
       new SyncSaga(
         new UploadUserSaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
-          this.modelList.dirtyUserModel,
-          this.crashlytics
+          this.modelList.dirtyUserModel
         ),
         new UploadSetSaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
-          this.modelList.dirtySetModel,
-          this.crashlytics
+          this.modelList.dirtySetModel
         ),
         new UploadVocabularySaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
-          this.modelList.dirtyVocabularyModel,
-          this.crashlytics
+          this.modelList.dirtyVocabularyModel
         ),
         new DownloadUserSaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
-          this.modelList.userModel,
-          this.crashlytics
+          this.modelList.userModel
         ),
         new DownloadSetSaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
           this.modelList.setModel,
-          this.modelList.incompatibleSetModel,
-          this.crashlytics
+          this.modelList.incompatibleSetModel
         ),
         new DownloadVocabularySaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
           this.modelList.vocabularyModel,
-          this.modelList.incompatibleVocabularyModel,
-          this.crashlytics
+          this.modelList.incompatibleVocabularyModel
         ),
         new DownloadIncompatibleSetSaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
           this.modelList.setModel,
-          this.modelList.incompatibleSetModel,
-          this.crashlytics
+          this.modelList.incompatibleSetModel
         ),
         new DownloadIncompatibleVocabularySaga(
           this.userDb,
           this.sharedDb,
           this.modelList.sessionModel,
           this.modelList.vocabularyModel,
-          this.modelList.incompatibleVocabularyModel,
-          this.crashlytics
+          this.modelList.incompatibleVocabularyModel
         )
       ),
       new ObserveUpdateSaga(
         this.sharedDb,
         this.modelList.sessionModel,
         this.firebase,
-        this.databaseEventBus,
-        this.crashlytics
+        this.databaseEventBus
       ),
-      new ApiKeySaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.crashlytics
-      ),
-      new IapSaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.iap,
-        this.crashlytics
-      ),
-      new ImageSaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.crashlytics
-      ),
-      new ReminderSaga(this.notifications, this.crashlytics),
+      new ApiKeySaga(this.sharedDb, this.modelList.sessionModel),
+      new IapSaga(this.sharedDb, this.modelList.sessionModel, this.iap),
+      new ImageSaga(this.sharedDb, this.modelList.sessionModel),
+      new ReminderSaga(this.notifications),
     ];
   }
 }

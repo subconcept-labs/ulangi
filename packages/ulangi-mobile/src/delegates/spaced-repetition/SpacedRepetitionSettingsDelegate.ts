@@ -8,6 +8,7 @@
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ReviewStrategy, SetExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
@@ -62,7 +63,7 @@ export class SpacedRepetitionSettingsDelegate {
     callback: {
       onSaving: () => void;
       onSaveSucceeded: () => void;
-      onSaveFailed: (errorCode: string) => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     const currentSet = this.setStore.existingCurrentSet;
@@ -104,7 +105,7 @@ export class SpacedRepetitionSettingsDelegate {
         once(ActionType.SET__EDIT_SUCCEEDED, callback.onSaveSucceeded),
         once(
           ActionType.SET__EDIT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          (errorBag): void => callback.onSaveFailed(errorBag),
         ),
       ),
     );

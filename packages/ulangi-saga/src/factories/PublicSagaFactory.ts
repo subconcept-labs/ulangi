@@ -60,17 +60,12 @@ export class PublicSagaFactory {
       new AuthSaga(
         this.database,
         this.modelList.sessionModel,
-        this.modelList.userModel,
-        this.crashlytics
+        this.modelList.userModel
       ),
-      new DatabaseSaga(this.database, this.crashlytics),
-      new NetworkSaga(this.netInfo, this.crashlytics),
-      new RemoteConfigSaga(
-        this.database,
-        this.modelList.remoteConfigModel,
-        this.crashlytics
-      ),
-      new AdSaga(this.adMob, this.crashlytics),
+      new DatabaseSaga(this.database),
+      new NetworkSaga(this.netInfo),
+      new RemoteConfigSaga(this.database, this.modelList.remoteConfigModel),
+      new AdSaga(this.adMob),
       new DarkModeSaga(this.systemDarkMode),
     ];
   }

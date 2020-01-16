@@ -13,7 +13,7 @@ export class IapErrorConverter {
     E_USER_CANCELLED: ErrorCode.GENERAL__USER_CANCELLED,
   };
 
-  public isIapError(error: any): boolean {
+  public isIapError(error: unknown): boolean {
     return _.includes(_.keys(this.errorCodeMapping), _.get(error, 'code'));
   }
 

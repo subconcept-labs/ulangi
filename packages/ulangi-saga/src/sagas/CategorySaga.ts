@@ -12,7 +12,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -22,17 +22,11 @@ export class CategorySaga extends ProtectedSaga {
 
   private userDb: SQLiteDatabase;
   private categoryModel: CategoryModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    userDb: SQLiteDatabase,
-    categoryModel: CategoryModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(userDb: SQLiteDatabase, categoryModel: CategoryModel) {
     super();
     this.userDb = userDb;
     this.categoryModel = categoryModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -88,7 +82,8 @@ export class CategorySaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.CATEGORY__PREPARE_FETCH_SUGGESTIONS_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -134,7 +129,8 @@ export class CategorySaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.CATEGORY__FETCH_SUGGESTIONS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

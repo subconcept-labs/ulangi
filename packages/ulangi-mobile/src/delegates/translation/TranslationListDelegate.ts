@@ -82,10 +82,10 @@ export class TranslationListDelegate {
           ),
           once(
             ActionType.TRANSLATION__TRANSLATE_FAILED,
-            ({ errorCode }): void => {
+            (errorBag): void => {
               this.translationListState.isRefreshing.set(false);
               this.translationListState.translateState.set(ActivityState.ERROR);
-              this.translationListState.translateError.set(errorCode);
+              this.translationListState.translateError.set(errorBag.errorCode);
             },
           ),
         ),

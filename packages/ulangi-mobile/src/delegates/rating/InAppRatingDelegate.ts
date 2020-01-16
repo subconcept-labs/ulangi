@@ -12,11 +12,11 @@ import {
   ObservableRemoteConfigStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import * as moment from 'moment';
 import { Platform } from 'react-native';
 import Rate from 'react-native-rate';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { env } from '../../constants/env';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
@@ -26,20 +26,17 @@ export class InAppRatingDelegate {
   private userStore: ObservableUserStore;
   private remoteConfigStore: ObservableRemoteConfigStore;
   private dialogDelegate: DialogDelegate;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
     userStore: ObservableUserStore,
     remoteConfigStore: ObservableRemoteConfigStore,
     dialogDelegate: DialogDelegate,
-    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.userStore = userStore;
     this.remoteConfigStore = remoteConfigStore;
     this.dialogDelegate = dialogDelegate;
-    this.analytics = analytics;
   }
 
   public autoShowInAppRating(): void {
@@ -86,7 +83,7 @@ export class InAppRatingDelegate {
 
   public showInAppRating(preferInApp: boolean): void {
     if (env.APPLE_APP_ID !== null && env.GOOGLE_PACKAGE_NAME !== null) {
-      this.analytics.logEvent('show_in_app_rating');
+      RemoteLogger.logEvent('show_in_app_rating');
       Rate.rate(
         {
           AppleAppID: env.APPLE_APP_ID,

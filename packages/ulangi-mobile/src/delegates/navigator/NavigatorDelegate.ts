@@ -8,7 +8,7 @@
 import { assertExists } from '@ulangi/assert';
 import { Navigation, Options } from '@ulangi/react-native-navigation';
 import { LightBoxState, ScreenName } from '@ulangi/ulangi-common/enums';
-import { Dialog, SelectionMenu } from '@ulangi/ulangi-common/interfaces';
+import { SelectionMenu } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableDarkModeStore,
   ObservableLightBox,
@@ -182,14 +182,6 @@ export class NavigatorDelegate {
   ): void {
     this.observableLightBox.selectionMenu = selectionMenu;
     this.showLightBox(ScreenName.LIGHT_BOX_SELECTION_MENU_SCREEN, {}, styles);
-  }
-
-  public showDialog(
-    dialog: Dialog,
-    styles: { light: Options; dark: Options },
-  ): void {
-    this.observableLightBox.dialog = dialog;
-    this.showLightBox(ScreenName.LIGHT_BOX_DIALOG_SCREEN, {}, styles);
   }
 
   private handleLightBoxBackButton(): void {

@@ -6,89 +6,76 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { boundClass } from 'autobind-decorator';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { RemoteLogger } from '../../RemoteLogger';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { FetchVocabularyDelegate } from './FetchVocabularyDelegate';
 import { PrepareFetchVocabularyDelegate } from './PrepareFetchVocabularyDelegate';
 
 @boundClass
 export class AtomScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private prepareFetchVocabularyDelegate: PrepareFetchVocabularyDelegate;
   private fetchVocabularyDelegate: FetchVocabularyDelegate;
-  private navigatorDelegate: NavigatorDelegate;
   private categoryMessageDelegate: CategoryMessageDelegate;
-  private analytics: AnalyticsAdapter;
+  private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     prepareFetchVocabularyDelegate: PrepareFetchVocabularyDelegate,
     fetchVocabularyDelegate: FetchVocabularyDelegate,
-    navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.prepareFetchVocabularyDelegate = prepareFetchVocabularyDelegate;
     this.fetchVocabularyDelegate = fetchVocabularyDelegate;
-    this.navigatorDelegate = navigatorDelegate;
     this.categoryMessageDelegate = categoryMessageDelegate;
-    this.analytics = analytics;
+    this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public startGame(): void {
-    this.analytics.logEvent('start_atom');
+    RemoteLogger.logEvent('start_atom');
     this.prepareFetchVocabularyDelegate.prepareFetch({
       onPreparing: this.showPreparingDialog,
       onPrepareSucceeded: (): void => {
         this.fetchVocabularyDelegate.fetch({
           onFetching: this.showPreparingDialog,
           onFetchSucceeded: (vocabularyList, noMore): void => {
-            this.navigatorDelegate.dismissLightBox();
+            this.dialogDelegate.dismiss();
             this.navigatorDelegate.push(ScreenName.ATOM_PLAY_SCREEN, {
               firstVocabularyBatch: vocabularyList,
               noMoreVocabulary: noMore,
               startGame: this.startGame,
             });
           },
-          onFetchFailed: (errorCode): void => {
+          onFetchFailed: (errorBag): void => {
             this.fetchVocabularyDelegate.clearFetch();
-            this.showFailedToStartDialog(errorCode);
+            this.showFailedToStartDialog(errorBag);
           },
         });
       },
-      onPrepareFailed: (errorCode): void => {
+      onPrepareFailed: (errorBag): void => {
         this.fetchVocabularyDelegate.clearFetch();
-        this.showFailedToStartDialog(errorCode);
+        this.showFailedToStartDialog(errorBag);
       },
     });
   }
 
   public showPreparingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Preparing. Please wait...',
-      },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Preparing. Please wait...',
+    });
   }
 
-  public showFailedToStartDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  public showFailedToStartDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO START',
+    });
   }
 
   public goToTutorial(): void {

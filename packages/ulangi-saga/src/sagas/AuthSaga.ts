@@ -33,7 +33,7 @@ import { call, delay, fork, put, spawn, take } from 'redux-saga/effects';
 import * as shortuuid from 'short-uuid';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
@@ -48,19 +48,16 @@ export class AuthSaga extends PublicSaga {
   private database: DatabaseFacade;
   private sessionModel: SessionModel;
   private userModel: UserModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     database: DatabaseFacade,
     sessionModel: SessionModel,
-    userModel: UserModel,
-    crashlytics: CrashlyticsAdapter
+    userModel: UserModel
   ) {
     super();
     this.database = database;
     this.sessionModel = sessionModel;
     this.userModel = userModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -120,7 +117,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__GET_SESSION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -166,7 +164,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__CHECK_SESSION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -229,7 +228,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__SIGN_IN_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -301,7 +301,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__SIGN_UP_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -360,7 +361,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__SIGN_IN_AS_GUEST_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -404,7 +406,8 @@ export class AuthSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__REQUEST_PASSWORD_RESET_EMAIL_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -441,7 +444,8 @@ export class AuthSaga extends PublicSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.USER__SIGN_OUT_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }

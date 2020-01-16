@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -14,31 +15,28 @@ import {
   ObservableVocabulary,
   ObservableWritingScreen,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { observable, toJS } from 'mobx';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 @boundClass
 export class WritingScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableWritingScreen;
   private writingSettingsDelegate: WritingSettingsDelegate;
-  private navigatorDelegate: NavigatorDelegate;
   private categoryMessageDelegate: CategoryMessageDelegate;
-  private analytics: AnalyticsAdapter;
+  private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
@@ -46,22 +44,22 @@ export class WritingScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableWritingScreen,
     writingSettingsDelegate: WritingSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.writingSettingsDelegate = writingSettingsDelegate;
-    this.navigatorDelegate = navigatorDelegate;
     this.categoryMessageDelegate = categoryMessageDelegate;
-    this.analytics = analytics;
+    this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public startLesson(includeFromOtherCategories: boolean): void {
-    this.analytics.logEvent('start_writing');
+    RemoteLogger.logEvent('start_writing');
     const {
       initialInterval,
       limit,
@@ -82,7 +80,7 @@ export class WritingScreenDelegate {
         once(
           ActionType.WRITING__FETCH_VOCABULARY_SUCCEEDED,
           ({ vocabularyList }): void => {
-            this.navigatorDelegate.dismissLightBox();
+            this.dialogDelegate.dismiss();
             this.navigatorDelegate.push(ScreenName.WRITING_LESSON_SCREEN, {
               vocabularyList: observable.map(
                 vocabularyList.map(
@@ -102,8 +100,10 @@ export class WritingScreenDelegate {
         ),
         once(
           ActionType.WRITING__FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => {
-            if (errorCode === ErrorCode.WRITING__INSUFFICIENT_VOCABULARY) {
+          (errorBag): void => {
+            if (
+              errorBag.errorCode === ErrorCode.WRITING__INSUFFICIENT_VOCABULARY
+            ) {
               if (
                 typeof this.observableScreen.selectedCategoryNames !==
                   'undefined' &&
@@ -114,7 +114,7 @@ export class WritingScreenDelegate {
                 this.showNotEnoughTermsDialog();
               }
             } else {
-              this.showPrepareFailedDialog(errorCode);
+              this.showPrepareFailedDialog(errorBag);
             }
           },
         ),
@@ -135,73 +135,58 @@ export class WritingScreenDelegate {
   }
 
   private showPreparingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Preparing. Please wait...',
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Preparing. Please wait...',
+    });
   }
 
   private showNotEnoughTermsForSelectedCategoriesDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: `Not enough terms for selected categories (minimum is ${
-          config.writing.minPerLesson
-        }). Do you want to include terms from other categories?`,
-        title: 'FAILED TO START',
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CANCEL_BTN,
-            text: 'CANCEL',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.FAILED_DIALOG,
+      message: `Not enough terms for selected categories (minimum is ${
+        config.writing.minPerLesson
+      }). Do you want to include terms from other categories?`,
+      title: 'FAILED TO START',
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CANCEL_BTN,
+          text: 'CANCEL',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
           },
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'OKAY',
-            onPress: (): void => {
-              this.startLesson(true);
-            },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'OKAY',
+          onPress: (): void => {
+            this.startLesson(true);
           },
-        ],
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private showNotEnoughTermsDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: `Not enough terms (min is ${
-          config.writing.minPerLesson
-        }). If you just written all of them, please add new terms or wait for next review.`,
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.FAILED_DIALOG,
+      message: `Not enough terms (min is ${
+        config.writing.minPerLesson
+      }). If you just written all of them, please add new terms or wait for next review.`,
+      title: 'FAILED TO START',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
-  private showPrepareFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'FAILED TO START',
-        showCloseButton: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showPrepareFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO START',
+    });
   }
 }

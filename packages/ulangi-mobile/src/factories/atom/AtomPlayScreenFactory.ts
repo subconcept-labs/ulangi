@@ -16,6 +16,7 @@ import { AtomSettingsDelegate } from '../../delegates/atom/AtomSettingsDelegate'
 import { AtomShellDelegate } from '../../delegates/atom/AtomShellDelegate';
 import { FetchVocabularyDelegate } from '../../delegates/atom/FetchVocabularyDelegate';
 import { AtomQuestionIterator } from '../../iterators/AtomQuestionIterator';
+import { AtomStyle } from '../../styles/AtomStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class AtomPlayScreenFactory extends ScreenFactory {
@@ -29,6 +30,10 @@ export class AtomPlayScreenFactory extends ScreenFactory {
     startGame: () => void,
   ): AtomPlayScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
 
     const fetchVocabularyDelegate = new FetchVocabularyDelegate(this.eventBus);
 
@@ -55,6 +60,7 @@ export class AtomPlayScreenFactory extends ScreenFactory {
       shellDelegate,
       arcDelegate,
       answerDelegate,
+      dialogDelegate,
       navigatorDelegate,
       startGame,
     );

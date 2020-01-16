@@ -9,6 +9,7 @@ import { ObservableSpacedRepetitionSettingsScreen } from '@ulangi/ulangi-observa
 
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpacedRepetitionSettingsScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsScreenDelegate';
+import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
@@ -24,11 +25,16 @@ export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
   ): SpacedRepetitionSettingsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const spacedRepetitionSettingsDelegate = this.createSpacedRepetitionSettingsDelegate();
 
     return new SpacedRepetitionSettingsScreenDelegate(
       observableScreen,
       spacedRepetitionSettingsDelegate,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

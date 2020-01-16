@@ -13,7 +13,10 @@ import {
   ScreenName,
   ScreenState,
 } from '@ulangi/ulangi-common/enums';
-import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
+import {
+  ErrorBag,
+  VocabularyExtraFields,
+} from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
@@ -24,13 +27,12 @@ import * as _ from 'lodash';
 import { BackHandler } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
@@ -38,7 +40,6 @@ import { SpacedRepetitionSaveResultDelegate } from './SpacedRepetitionSaveResult
 
 @boundClass
 export class SpacedRepetitionLessonScreenDelegate {
-  private errorConverter = new ErrorConverter();
   private reviewActionButtonFactory = new ReviewActionButtonFactory();
 
   private observer: Observer;
@@ -50,6 +51,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private startLesson: () => void;
 
@@ -63,6 +65,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     startLesson: () => void,
   ) {
@@ -75,6 +78,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.startLesson = startLesson;
   }
@@ -263,52 +267,46 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public showConfirmQuitLessonDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message:
-          'The lesson result is not yet saved. Are you sure you want to quit?',
-        onBackgroundPress: (): void => {
-          this.navigatorDelegate.dismissLightBox();
-        },
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
-            text: 'NO',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'YES',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-              this.navigatorDelegate.pop();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-        ],
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.DIALOG,
+      message:
+        'The lesson result is not yet saved. Are you sure you want to quit?',
+      onBackgroundPress: (): void => {
+        this.dialogDelegate.dismiss();
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
+          text: 'NO',
+          onPress: (): void => {
+            this.dialogDelegate.dismiss();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'YES',
+          onPress: (): void => {
+            this.dialogDelegate.dismiss();
+            this.navigatorDelegate.pop();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   public showSavingInProgressDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message:
-          'Saving in progress. Please wait until save is completed then try again.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message:
+        'Saving in progress. Please wait until save is completed then try again.',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
   private previousItem(): void {
@@ -371,9 +369,9 @@ export class SpacedRepetitionLessonScreenDelegate {
         onSynthesizeSucceeded: (filePath): void => {
           this.speak(filePath);
         },
-        onSynthesizeFailed: (errorCode): void => {
+        onSynthesizeFailed: (errorBag): void => {
           this.observableScreen.speakState.set(ActivityState.INACTIVE);
-          this.showSynthesizeErrorDialog(errorCode);
+          this.showSynthesizeErrorDialog(errorBag);
         },
       },
     );
@@ -393,15 +391,8 @@ export class SpacedRepetitionLessonScreenDelegate {
     });
   }
 
-  private showSynthesizeErrorDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showSynthesizeErrorDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag);
   }
 
   private updateFeedbackList(

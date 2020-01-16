@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { Feedback } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableSetStore,
@@ -42,7 +43,7 @@ export class SpacedRepetitionSaveResultDelegate {
     callback: {
       onSaving: () => void;
       onSaveSucceeded: () => void;
-      onSaveFailed: (errorCode: string) => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     const autoArchiveSettings = this.autoArchiveSettingsDelegate.getCurrentSettings();
@@ -63,7 +64,7 @@ export class SpacedRepetitionSaveResultDelegate {
         ),
         once(
           ActionType.SPACED_REPETITION__SAVE_RESULT_FAILED,
-          ({ errorCode }): void => callback.onSaveFailed(errorCode),
+          (errorBag): void => callback.onSaveFailed(errorBag),
         ),
       ),
     );

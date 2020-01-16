@@ -39,7 +39,6 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import * as sqlite3 from 'sqlite3';
 import * as tmp from 'tmp-promise';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { DownloadIncompatibleSetSaga } from './DownloadIncompatibleSetSaga';
 
@@ -87,8 +86,7 @@ describe('DownloadIncompatibleSetSaga', (): void => {
           mockedSharedDatabase,
           mockedSessionModel,
           mockedSetModel,
-          mockedIncompatibleSetModel,
-          new CrashlyticsAdapter(null, false)
+          mockedIncompatibleSetModel
         );
       }
     );
@@ -330,8 +328,7 @@ describe('DownloadIncompatibleSetSaga', (): void => {
             mockedSharedDatabase,
             mockedSessionModel,
             setModel,
-            incompatibleSetModel,
-            new CrashlyticsAdapter(null, false)
+            incompatibleSetModel
           );
 
           restoreCurrentTime = mockCurrentTime();

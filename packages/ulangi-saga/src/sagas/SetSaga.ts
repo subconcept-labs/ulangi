@@ -19,23 +19,17 @@ import {
 } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class SetSaga extends ProtectedSaga {
   private userDb: SQLiteDatabase;
   private setModel: SetModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    userDb: SQLiteDatabase,
-    setModel: SetModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(userDb: SQLiteDatabase, setModel: SetModel) {
     super();
     this.userDb = userDb;
     this.setModel = setModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(): IterableIterator<any> {
@@ -67,7 +61,8 @@ export class SetSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.SET__ADD_FAILED, {
             set,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -113,7 +108,8 @@ export class SetSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.SET__EDIT_FAILED, {
             set,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -139,7 +135,8 @@ export class SetSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.SET__FETCH_ALL_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -181,7 +178,8 @@ export class SetSaga extends ProtectedSaga {
       yield put(
         createAction(ActionType.SET__FETCH_FAILED, {
           setStatus,
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }

@@ -19,7 +19,6 @@ import { SetModel } from '@ulangi/ulangi-local-database';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { SetSaga } from './SetSaga';
 
 const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
@@ -44,11 +43,7 @@ describe('SetSaga', (): void => {
         mockedUserDatabase.transaction = mockTransaction(mockedTransaction);
         mockedSetModel = new SetModelMock();
 
-        setSaga = new SetSaga(
-          mockedUserDatabase,
-          mockedSetModel,
-          new CrashlyticsAdapter(null, false)
-        );
+        setSaga = new SetSaga(mockedUserDatabase, mockedSetModel);
       }
     );
 

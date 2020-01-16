@@ -6,16 +6,17 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
-import { Dialog } from '@ulangi/ulangi-common/interfaces';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { Dialog, ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ObservableLightBox } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
+import { errorConverter } from '../../converters/ErrorConverter';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 export class DialogDelegate {
-  private errorConverter = new ErrorConverter();
-
+  private observableLightBox: ObservableLightBox;
   private navigatorDelegate: NavigatorDelegate;
   private styles: {
     light: Options;
@@ -23,22 +24,29 @@ export class DialogDelegate {
   };
 
   public constructor(
+    observableLightBox: ObservableLightBox,
     navigatorDelegate: NavigatorDelegate,
     styles: {
       light: Options;
       dark: Options;
     },
   ) {
+    this.observableLightBox = observableLightBox;
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
   }
 
   public show(dialog: Dialog): void {
-    this.navigatorDelegate.showDialog(dialog, this.styles);
+    this.observableLightBox.dialog = dialog;
+    this.navigatorDelegate.showLightBox(
+      ScreenName.LIGHT_BOX_DIALOG_SCREEN,
+      {},
+      this.styles,
+    );
   }
 
   public showSuccessDialog(dialog: Partial<Dialog>): void {
-    this.navigatorDelegate.showDialog(
+    this.show(
       _.merge(
         {
           testID: LightBoxDialogIds.SUCCESS_DIALOG,
@@ -48,22 +56,20 @@ export class DialogDelegate {
         },
         dialog,
       ),
-      this.styles,
     );
   }
 
-  public showFailedDialog(errorCode: string, dialog: Partial<Dialog>): void {
-    this.navigatorDelegate.showDialog(
+  public showFailedDialog(errorBag: ErrorBag, options?: Partial<Dialog>): void {
+    this.show(
       _.merge(
         {
           testID: LightBoxDialogIds.FAILED_DIALOG,
-          message: this.errorConverter.convertToMessage(errorCode),
+          message: errorConverter.convertToMessage(errorBag),
           showCloseButton: true,
           closeOnTouchOutside: true,
         },
-        dialog,
+        options,
       ),
-      this.styles,
     );
   }
 

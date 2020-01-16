@@ -61,6 +61,7 @@ export class EditVocabularyScreenFactory extends ScreenFactory {
       this.eventBus,
       vocabularyFormDelegate,
       editVocabularyDelegate,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

@@ -27,9 +27,9 @@ import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { WritingFormIds } from '../../constants/ids/WritingFormIds';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { WritingFormDelegate } from './WritingFormDelegate';
@@ -47,6 +47,7 @@ export class WritingLessonScreenDelegate {
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private startLesson: () => void;
 
@@ -61,6 +62,7 @@ export class WritingLessonScreenDelegate {
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     startLesson: () => void,
   ) {
@@ -74,6 +76,7 @@ export class WritingLessonScreenDelegate {
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.startLesson = startLesson;
   }
@@ -121,56 +124,52 @@ export class WritingLessonScreenDelegate {
   }
 
   public disable(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message:
-          'Are you sure you want to disable writing this vocabulary term permanently?',
-        onBackgroundPress: (): void => {
-          this.navigatorDelegate.dismissLightBox();
-        },
-        buttonList: [
-          {
-            testID: WritingFormIds.CANCEL_DISABLE_BTN,
-            text: 'NO',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-          {
-            testID: WritingFormIds.CONFIRM_DISABLE_BTN,
-            text: 'YES',
-            onPress: (): void => {
-              const vocabularyId = this.observableScreen.writingFormState
-                .currentQuestion.testingVocabulary.vocabularyId;
-              const editedVocabulary = {
-                vocabularyId,
-                writing: { disabled: true },
-              };
-              this.eventBus.publish(
-                createAction(ActionType.VOCABULARY__EDIT, {
-                  vocabulary: editedVocabulary,
-                  setId: undefined,
-                }),
-              );
-
-              this.observableScreen.writingResult.disabledVocabularyIds.push(
-                vocabularyId,
-              );
-              this.nextQuestion();
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-        ],
+    this.dialogDelegate.showSuccessDialog({
+      message:
+        'Are you sure you want to disable writing this vocabulary term permanently?',
+      onBackgroundPress: (): void => {
+        this.navigatorDelegate.dismissLightBox();
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+      buttonList: [
+        {
+          testID: WritingFormIds.CANCEL_DISABLE_BTN,
+          text: 'NO',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: WritingFormIds.CONFIRM_DISABLE_BTN,
+          text: 'YES',
+          onPress: (): void => {
+            const vocabularyId = this.observableScreen.writingFormState
+              .currentQuestion.testingVocabulary.vocabularyId;
+            const editedVocabulary = {
+              vocabularyId,
+              writing: { disabled: true },
+            };
+            this.eventBus.publish(
+              createAction(ActionType.VOCABULARY__EDIT, {
+                vocabulary: editedVocabulary,
+                setId: undefined,
+              }),
+            );
+
+            this.observableScreen.writingResult.disabledVocabularyIds.push(
+              vocabularyId,
+            );
+            this.nextQuestion();
+            this.navigatorDelegate.dismissLightBox();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   public autoDisablePopGestureWhenAdRequiredToShow(): void {
@@ -231,40 +230,36 @@ export class WritingLessonScreenDelegate {
   }
 
   public showConfirmQuitLessonDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message:
-          'The lesson result is not yet saved. Are you sure you want to quit?',
-        onBackgroundPress: (): void => {
-          this.navigatorDelegate.dismissLightBox();
-        },
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
-            text: 'NO',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'YES',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-              this.navigatorDelegate.pop();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-        ],
+    this.dialogDelegate.showSuccessDialog({
+      message:
+        'The lesson result is not yet saved. Are you sure you want to quit?',
+      onBackgroundPress: (): void => {
+        this.navigatorDelegate.dismissLightBox();
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
+          text: 'NO',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'YES',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+            this.navigatorDelegate.pop();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private nextQuestion(): void {

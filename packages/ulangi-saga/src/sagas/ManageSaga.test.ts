@@ -26,7 +26,6 @@ import {
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { ManageSaga } from '../sagas/ManageSaga';
 
 const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
@@ -66,8 +65,7 @@ describe('ManageSaga', (): void => {
           mockedVocabularyModel,
           mockedCategoryModel,
           mockedSpacedRepetitionModel,
-          mockedWritingModel,
-          new CrashlyticsAdapter(null, false)
+          mockedWritingModel
         );
       }
     );
@@ -371,8 +369,34 @@ describe('ManageSaga', (): void => {
         const includeUncategorized = true;
 
         const categoryList: Category[] = [
-          { categoryName: 'Uncategorized', count: uncategorizedCount },
-          { categoryName: 'categoryName', count: 1 },
+          {
+            categoryName: 'Uncategorized',
+            totalCount: uncategorizedCount,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
+          {
+            categoryName: 'categoryName',
+            totalCount: 1,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
         ];
 
         await saga
@@ -428,8 +452,34 @@ describe('ManageSaga', (): void => {
         const includeUncategorized = true;
 
         const categoryList: Category[] = [
-          { categoryName: 'Uncategorized', count: uncategorizedCount },
-          { categoryName: 'categoryName', count: 1 },
+          {
+            categoryName: 'Uncategorized',
+            totalCount: uncategorizedCount,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
+          {
+            categoryName: 'categoryName',
+            totalCount: 1,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
         ];
 
         await saga
@@ -485,8 +535,34 @@ describe('ManageSaga', (): void => {
         const includeUncategorized = true;
 
         const categoryList: Category[] = [
-          { categoryName: 'Uncategorized', count: uncategorizedCount },
-          { categoryName: 'categoryName', count: 1 },
+          {
+            categoryName: 'Uncategorized',
+            totalCount: uncategorizedCount,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
+          {
+            categoryName: 'categoryName',
+            totalCount: 1,
+            srLevel0Count: 1,
+            srLevel1To3Count: 0,
+            srLevel4To6Count: 0,
+            srLevel7To8Count: 0,
+            srLevel9To10Count: 0,
+            wrLevel0Count: 1,
+            wrLevel1To3Count: 0,
+            wrLevel4To6Count: 0,
+            wrLevel7To8Count: 0,
+            wrLevel9To10Count: 0,
+          },
         ];
 
         await saga

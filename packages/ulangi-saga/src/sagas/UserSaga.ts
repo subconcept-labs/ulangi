@@ -27,7 +27,7 @@ import * as Joi from 'joi';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
@@ -43,21 +43,18 @@ export class UserSaga extends ProtectedSaga {
   private userDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private userModel: UserModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    userModel: UserModel,
-    crashlytics: CrashlyticsAdapter
+    userModel: UserModel
   ) {
     super();
     this.sharedDb = sharedDb;
     this.userDb = userDb;
     this.sessionModel = sessionModel;
     this.userModel = userModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -160,7 +157,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -231,7 +229,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__CHANGE_EMAIL_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -299,7 +298,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__CHANGE_PASSWORD_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -343,7 +343,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__CONTACT_ADMIN_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -388,7 +389,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__EDIT_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -418,7 +420,8 @@ export class UserSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.USER__FETCH_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
