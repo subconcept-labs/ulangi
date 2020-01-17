@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-common",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Ulangi Common",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
