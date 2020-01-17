@@ -46,6 +46,7 @@ export abstract class Container<T extends object = {}> extends React.Component<
     autoUpdateObservableLightBox: true,
     autoUnsubscribeEventBus: true,
     autoUnsubscribeObserver: true,
+    autoCloseSplashScreen: true,
   };
 
   protected eventBus = this.props.eventBusFactory.createBus();

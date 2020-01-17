@@ -12,11 +12,10 @@ import {
   ObservableConverter,
   ObservableKeyboard,
   ObservableLightBox,
-  ObservableRootStore,
   ObservableScreenRegistry,
 } from '@ulangi/ulangi-observable';
 import { SagaFacade } from '@ulangi/ulangi-saga';
-import { Store, StoreFactory } from '@ulangi/ulangi-store';
+import { StoreFactory } from '@ulangi/ulangi-store';
 
 import { RemoteLogger } from './RemoteLogger';
 import { ServiceRegistry } from './ServiceRegistry';
@@ -31,33 +30,31 @@ import { registerScreens } from './setup/registerScreens';
 import { setDefaultNavigationOptions } from './setup/setDefaultNavigationOptions';
 
 export class App {
-  private appInitialized: boolean;
-  private disposers: Function[];
+  private initialized: boolean;
 
   public constructor() {
-    this.appInitialized = false;
-    this.disposers = [];
+    this.initialized = false;
   }
 
-  public startOnAppLaunched(): void {
+  public start(): void {
     Navigation.events().registerAppLaunchedListener(
       (): void => {
-        this.start();
+        // On Android,
+        // if JS context is not destroyed,
+        // we do not need to init again.
+        if (!this.isInitialized()) {
+          this.init();
+        }
+
+        this.render();
       },
     );
   }
 
-  private start(): void {
-    // On Android,
-    // if JS context is not destroyed, we need to do some cleanup
-    // but we do not need to register screens and custom views again
-    if (this.isInitialized()) {
-      this.cleanUp();
-    } else {
-      setDefaultNavigationOptions();
-      registerScreens();
-      registerCustomViews();
-    }
+  private init(): void {
+    setDefaultNavigationOptions();
+    registerScreens();
+    registerCustomViews();
 
     const adapters = new AdapterFactory().createAdapters();
 
@@ -98,37 +95,38 @@ export class App {
       observableScreenRegistry: new ObservableScreenRegistry(),
     });
 
-    this.disposers.push(
-      autoUpdateKeyboardState(ServiceRegistry.services.observableKeyboard),
-    );
-
     RemoteLogger.useAnalytics(adapters.analytics);
     RemoteLogger.useCrashlytics(adapters.crashlytics);
 
+    autoUpdateKeyboardState(ServiceRegistry.services.observableKeyboard);
     sagaFacade.run();
 
-    this.appInitialized = true;
+    this.initialized = true;
+  }
 
-    this.renderPreloadScreen(store);
+  private render(): void {
+    const {
+      themeStore,
+      userStore,
+      setStore,
+    } = ServiceRegistry.services.rootStore;
+
+    const rootScreenDelegate = new RootScreenDelegate(themeStore);
+
+    if (userStore.currentUser !== null) {
+      if (setStore.currentSetId !== null) {
+        rootScreenDelegate.setRootToTabBasedScreen();
+      } else {
+        rootScreenDelegate.setRootToSingleScreen(
+          ScreenName.CREATE_FIRST_SET_SCREEN,
+        );
+      }
+    } else {
+      rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);
+    }
   }
 
   private isInitialized(): boolean {
-    return this.appInitialized;
-  }
-
-  private cleanUp(): void {
-    this.disposers.forEach(
-      (disposer): void => {
-        disposer();
-      },
-    );
-  }
-
-  private renderPreloadScreen(store: Store<ObservableRootStore>): void {
-    const rootScreenDelegate = new RootScreenDelegate(
-      store.getState().themeStore,
-    );
-
-    rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);
+    return this.initialized;
   }
 }

@@ -8,6 +8,7 @@
 import { Constructor } from '@ulangi/extended-types';
 import { Navigation } from '@ulangi/react-native-navigation';
 import { LightBoxState, ScreenState, Theme } from '@ulangi/ulangi-common/enums';
+import SplashScreen from 'react-native-splash-screen';
 
 import { Container } from '../Container';
 
@@ -54,6 +55,10 @@ export function extendContainer<T extends Constructor<Container>>(
         if (typeof this.observableLightBox !== 'undefined') {
           this.observableLightBox.state = LightBoxState.MOUNTED;
         }
+      }
+
+      if (containerOptions.autoCloseSplashScreen === true) {
+        SplashScreen.hide();
       }
 
       this.observer.reaction(

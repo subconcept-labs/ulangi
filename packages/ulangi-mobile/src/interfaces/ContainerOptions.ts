@@ -11,4 +11,5 @@ export interface ContainerOptions {
   readonly autoUpdateObservableLightBox: boolean;
   readonly autoUnsubscribeEventBus: boolean;
   readonly autoUnsubscribeObserver: boolean;
+  readonly autoCloseSplashScreen: boolean;
 }

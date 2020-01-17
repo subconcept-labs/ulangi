@@ -10,10 +10,8 @@ import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import { ObservablePreloadScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import SplashScreen from 'react-native-splash-screen';
 
 import { Container, ContainerPassedProps } from '../../Container';
-import { env } from '../../constants/env';
 import { PreloadScreenFactory } from '../../factories/preload/PreloadScreenFactory';
 import { PreloadScreen } from './PreloadScreen';
 import { PreloadScreenStyle } from './PreloadScreenContainer.style';
@@ -44,9 +42,6 @@ export class PreloadScreenContainer extends Container {
   );
 
   public componentDidMount(): void {
-    if (env.ENABLE_SPLASH_SCREEN === true) {
-      SplashScreen.hide();
-    }
     this.screenDelegate.autoUpdateMessage();
     this.screenDelegate.preload();
   }
