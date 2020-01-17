@@ -13,8 +13,6 @@ import { ObservableStore } from './ObservableStore';
 import { ObservableUserStore } from './ObservableUserStore';
 
 export class ObservableThemeStore extends ObservableStore {
-  protected noReset = ['userStore', 'defaultThemeSettings', 'systemMode'];
-
   private userStore: ObservableUserStore;
 
   private defaultThemeSettings: ThemeSettings;

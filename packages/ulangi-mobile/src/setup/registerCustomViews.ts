@@ -13,7 +13,7 @@ import * as React from 'react';
 import { Provider } from '../Provider';
 import { CustomViews } from '../constants/CustomViews';
 
-export function setupCustomViews(): void {
+export function registerCustomViews(): void {
   _.forOwn(
     CustomViews,
     (component, name): void => {

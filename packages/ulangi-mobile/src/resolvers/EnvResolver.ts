@@ -12,7 +12,7 @@ import { Env } from '../interfaces/Env';
 
 export class EnvResolver extends AbstractResolver<Env> {
   protected rules = {
-    ENABLE_LOGGING: Joi.boolean(),
+    ENABLE_REDUX_LOGGING: Joi.boolean(),
     ENABLE_SPLASH_SCREEN: Joi.boolean(),
     SERVER_URL: Joi.string(),
     API_URL: Joi.string(),

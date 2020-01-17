@@ -13,6 +13,9 @@ import { ObservableStore } from './ObservableStore';
 
 export class ObservablePurchaseStore extends ObservableStore {
   @observable
+  public premiumLifetimeProductId: null | string;
+
+  @observable
   public premiumLifetimeProcessState: ActivityState;
 
   @observable
@@ -22,6 +25,7 @@ export class ObservablePurchaseStore extends ObservableStore {
   };
 
   public constructor(
+    premiumLifetimeProductId: null | string,
     premiumLifetimeProcessState: ActivityState,
     premiumLifetimeProcessResult: null | {
       success: boolean;
@@ -29,6 +33,7 @@ export class ObservablePurchaseStore extends ObservableStore {
     }
   ) {
     super();
+    this.premiumLifetimeProductId = premiumLifetimeProductId;
     this.premiumLifetimeProcessState = premiumLifetimeProcessState;
     this.premiumLifetimeProcessResult = premiumLifetimeProcessResult;
   }

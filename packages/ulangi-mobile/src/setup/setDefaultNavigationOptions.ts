@@ -11,7 +11,7 @@ import { Platform } from 'react-native';
 
 import { config } from '../constants/config';
 
-export function setupNavigationDefaultOptions(): void {
+export function setDefaultNavigationOptions(): void {
   const common: Options = {
     statusBar: {
       style: 'light',

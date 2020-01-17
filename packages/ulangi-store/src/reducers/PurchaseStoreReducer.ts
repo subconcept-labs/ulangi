@@ -15,15 +15,10 @@ import { Reducer } from './Reducer';
 
 export class PurchaseStoreReducer extends Reducer {
   private purchaseStore: ObservablePurchaseStore;
-  private readonly PREMIUM_LIFETIME_PRODUCT_ID: null | string;
 
-  public constructor(
-    purchaseStore: ObservablePurchaseStore,
-    PREMIUM_LIFETIME_PRODUCT_ID: null | string
-  ) {
+  public constructor(purchaseStore: ObservablePurchaseStore) {
     super();
     this.purchaseStore = purchaseStore;
-    this.PREMIUM_LIFETIME_PRODUCT_ID = PREMIUM_LIFETIME_PRODUCT_ID;
   }
 
   public perform(action: InferableAction): void {
@@ -39,7 +34,9 @@ export class PurchaseStoreReducer extends Reducer {
   private processingPurchase(
     action: Action<ActionType.IAP__PROCESSING_PURCHASE>
   ): void {
-    if (this.PREMIUM_LIFETIME_PRODUCT_ID === action.payload.productId) {
+    if (
+      this.purchaseStore.premiumLifetimeProductId === action.payload.productId
+    ) {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.ACTIVE;
     }
   }
@@ -100,6 +97,6 @@ export class PurchaseStoreReducer extends Reducer {
 
   @boundMethod
   private isPremiumLifetimePurchase(purchase: Purchase): boolean {
-    return this.PREMIUM_LIFETIME_PRODUCT_ID === purchase.productId;
+    return this.purchaseStore.premiumLifetimeProductId === purchase.productId;
   }
 }

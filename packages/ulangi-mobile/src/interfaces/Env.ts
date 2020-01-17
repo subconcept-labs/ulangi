@@ -6,7 +6,7 @@
  */
 
 export interface Env {
-  readonly ENABLE_LOGGING: boolean;
+  readonly ENABLE_REDUX_LOGGING: boolean;
   readonly ENABLE_SPLASH_SCREEN: boolean;
   readonly SERVER_URL: string;
   readonly API_URL: string;

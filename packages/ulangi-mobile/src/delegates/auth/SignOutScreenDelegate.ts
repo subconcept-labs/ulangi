@@ -8,23 +8,30 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ScreenName, ScreenState } from '@ulangi/ulangi-common/enums';
 import { EventBus, once } from '@ulangi/ulangi-event';
-import { ObservableScreenRegistry } from '@ulangi/ulangi-observable';
+import {
+  ObservableRootStore,
+  ObservableScreenRegistry,
+} from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
+import { resetState } from '../../setup/resetState';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 @boundClass
 export class SignOutScreenDelegate {
   private eventBus: EventBus;
+  private rootStore: ObservableRootStore;
   private observableScreenRegistry: ObservableScreenRegistry;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
+    rootStore: ObservableRootStore,
     observableScreenRegistry: ObservableScreenRegistry,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
+    this.rootStore = rootStore;
     this.observableScreenRegistry = observableScreenRegistry;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -35,7 +42,7 @@ export class SignOutScreenDelegate {
       once(
         ActionType.USER__SIGN_OUT_SUCCEEDED,
         (): void => {
-          this.resetRootState();
+          resetState(this.rootStore);
           this.getSession({
             onGetSessionSucceeded: (): void => {
               this.navigatorDelegate.resetTo(ScreenName.WELCOME_SCREEN, {});
@@ -66,12 +73,6 @@ export class SignOutScreenDelegate {
           callback.onGetSessionSucceeded();
         },
       ),
-    );
-  }
-
-  private resetRootState(): void {
-    this.eventBus.publish(
-      createAction(ActionType.ROOT__RESET_ROOT_STATE, null),
     );
   }
 }

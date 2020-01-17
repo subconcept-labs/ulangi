@@ -55,14 +55,12 @@ export class ObservableRootStore extends ObservableStore {
   public reset(newRootStore: ObservableRootStore): void {
     _.forOwn(
       this,
-      (childStore, childStoreName): void => {
+      (_, childStoreName): void => {
         const newStore =
           newRootStore[childStoreName as keyof ObservableRootStore];
-        if (
-          childStore instanceof ObservableStore &&
-          newStore instanceof ObservableStore
-        ) {
-          childStore.reset(newStore);
+        if (newStore instanceof ObservableStore) {
+          // @ts-ignore
+          this[childStoreName] = newStore;
         }
       }
     );

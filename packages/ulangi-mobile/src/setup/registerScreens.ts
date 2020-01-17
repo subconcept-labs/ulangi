@@ -13,7 +13,7 @@ import { Provider } from '../Provider';
 import { ScreenContainers } from '../constants/ScreenContainers';
 import { extendContainer } from '../decorators/extendContainer';
 
-export function setupScreens(): void {
+export function registerScreens(): void {
   _.forOwn(
     ScreenContainers,
     (container, screenName): void => {

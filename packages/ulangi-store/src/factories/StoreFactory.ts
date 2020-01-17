@@ -10,27 +10,18 @@ import { ObservableRootStore } from '@ulangi/ulangi-observable';
 import { Middleware, Store, applyMiddleware, createStore } from 'redux';
 import logger, { ReduxLoggerOptions, createLogger } from 'redux-logger';
 
-import { StoreConfig } from '../interfaces/StoreConfig';
-import { StoreEnv } from '../interfaces/StoreEnv';
 import { StoreOptions } from '../interfaces/StoreOptions';
 import { transactionMiddleware } from '../middlewares/transactionMiddleware';
 import { RootStoreReducer } from '../reducers/RootStoreReducer';
-import { makeInitialState } from '../utils/makeInitialState';
 
 export class StoreFactory {
-  private env: StoreEnv;
-  private config: StoreConfig;
   private middlewares: readonly Middleware[];
   private options: StoreOptions;
 
   public constructor(
-    env: StoreEnv,
-    config: StoreConfig,
     options: StoreOptions,
     middlewares?: readonly Middleware[]
   ) {
-    this.env = env;
-    this.config = config;
     this.options = options;
 
     this.middlewares = middlewares || [];
@@ -50,14 +41,10 @@ export class StoreFactory {
     }
   }
 
-  public make(): Store<ObservableRootStore> {
-    const rootStore = makeInitialState(this.config, this.options);
-    const rootStoreReducer = new RootStoreReducer(
-      rootStore,
-      this.env,
-      this.config,
-      this.options
-    );
+  public createStore(
+    rootStore: ObservableRootStore
+  ): Store<ObservableRootStore> {
+    const rootStoreReducer = new RootStoreReducer(rootStore);
 
     return createStore(
       (rootStore, anyAction): ObservableRootStore => {

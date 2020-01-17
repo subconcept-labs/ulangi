@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState, ConsentStatus } from '@ulangi/ulangi-common/enums';
+import { ActivityState } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
   ObservableNetworkStore,
@@ -19,46 +19,47 @@ import {
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 
-import { StoreConfig } from '../interfaces/StoreConfig';
-import { StoreOptions } from '../interfaces/StoreOptions';
+import { config } from '../constants/config';
 
-export function makeInitialState(
-  config: StoreConfig,
-  options: StoreOptions
-): ObservableRootStore {
+export function resetState(currentState: ObservableRootStore): void {
   const userStore = new ObservableUserStore(null);
   const setStore = new ObservableSetStore(null, null, null);
-  const networkStore = new ObservableNetworkStore(null);
+  const networkStore = new ObservableNetworkStore(
+    currentState.networkStore.isConnected,
+  );
   const syncStore = new ObservableSyncStore('NOT_SYNCING');
   const remoteConfigStore = new ObservableRemoteConfigStore(null);
   const purchaseStore = new ObservablePurchaseStore(
+    currentState.purchaseStore.premiumLifetimeProductId,
     ActivityState.INACTIVE,
-    null
+    null,
   );
   const adStore = new ObservableAdStore(
+    currentState.adStore.isSetUp,
+    currentState.adStore.isInitialized,
+    currentState.adStore.consentStatus,
+    currentState.adStore.isRequestLocationInEeaOrUnknown,
     false,
-    false,
-    ConsentStatus.UNKNOWN,
-    false,
-    false,
-    0
+    0,
   );
   const notificationStore = new ObservableNotificationStore(null);
   const themeStore = new ObservableThemeStore(
     userStore,
     config.user.defaultThemeSettings,
-    options.initialSystemTheme
+    currentState.themeStore.systemMode,
   );
 
-  return new ObservableRootStore(
-    userStore,
-    setStore,
-    networkStore,
-    syncStore,
-    remoteConfigStore,
-    purchaseStore,
-    adStore,
-    notificationStore,
-    themeStore
+  currentState.reset(
+    new ObservableRootStore(
+      userStore,
+      setStore,
+      networkStore,
+      syncStore,
+      remoteConfigStore,
+      purchaseStore,
+      adStore,
+      notificationStore,
+      themeStore,
+    ),
   );
 }
