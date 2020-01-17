@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/minhloi/ulangi/compare/v3.2.0...v3.3.0) (2020-01-17)
+
+
+### Bug Fixes
+
+* redesign attributions ([48a365c](https://github.com/minhloi/ulangi/commit/48a365c)), closes [#26](https://github.com/minhloi/ulangi/issues/26)
+
+
+### Features
+
+* allow to opt-in/opt-out data sharing ([c466872](https://github.com/minhloi/ulangi/commit/c466872)), closes [#28](https://github.com/minhloi/ulangi/issues/28)
+
+
+
+
+
 # [3.2.0](https://github.com/minhloi/ulangi/compare/v3.1.0...v3.2.0) (2020-01-12)
 
 **Note:** Version bump only for package @ulangi/ulangi-observable

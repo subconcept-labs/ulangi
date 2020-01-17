@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/minhloi/ulangi/compare/v3.2.0...v3.3.0) (2020-01-17)
+
+
+### Bug Fixes
+
+* app crashes when edit while reviewing ([5ba93ee](https://github.com/minhloi/ulangi/commit/5ba93ee)), closes [#34](https://github.com/minhloi/ulangi/issues/34)
+* redesign attributions ([48a365c](https://github.com/minhloi/ulangi/commit/48a365c)), closes [#26](https://github.com/minhloi/ulangi/issues/26)
+* remove autorun config ([a049ab9](https://github.com/minhloi/ulangi/commit/a049ab9))
+* small UI fixes ([ddf5962](https://github.com/minhloi/ulangi/commit/ddf5962))
+
+
+### Features
+
+* allow to opt-in/opt-out data sharing ([c466872](https://github.com/minhloi/ulangi/commit/c466872)), closes [#28](https://github.com/minhloi/ulangi/issues/28)
+
+
+
+
+
 # [3.2.0](https://github.com/minhloi/ulangi/compare/v3.1.0...v3.2.0) (2020-01-12)
 
 

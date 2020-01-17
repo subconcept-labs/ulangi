@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-mobile",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "scripts": {
     "postbootstrap": "cd ios && pod install",
     "android": "react-native run-android --variant devDebug",
@@ -75,10 +75,10 @@
     "@types/lodash": "^4.14.110",
     "@types/react": "^16.8.2",
     "@types/react-native": "^0.60.25",
+    "@types/react-native-fbsdk": "^1.0.0",
     "@types/react-native-snap-carousel": "^3.7.4",
     "@types/react-native-sqlite-storage": "^3.3.2",
     "@types/uuid": "^3.4.3",
-    "@types/react-native-fbsdk": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "babel-jest": "^24.8.0",
