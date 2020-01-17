@@ -7,7 +7,7 @@
 
 import { Theme, ThemeTrigger } from '@ulangi/ulangi-common/enums';
 import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import { ObservableStore } from './ObservableStore';
 import { ObservableUserStore } from './ObservableUserStore';
@@ -37,6 +37,13 @@ export class ObservableThemeStore extends ObservableStore {
     } else {
       return Theme.LIGHT;
     }
+  }
+
+  @action
+  public reset(newThemeStore: ObservableThemeStore): void {
+    this.userStore = newThemeStore.userStore;
+    this.defaultThemeSettings = newThemeStore.defaultThemeSettings;
+    this.systemMode = newThemeStore.systemMode;
   }
 
   public constructor(

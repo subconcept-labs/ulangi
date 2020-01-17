@@ -6,7 +6,7 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import { ObservableUser } from '../user/ObservableUser';
 import { ObservableStore } from './ObservableStore';
@@ -21,6 +21,11 @@ export class ObservableUserStore extends ObservableStore {
       this.currentUser,
       'currentUser should not be null or undefined'
     );
+  }
+
+  @action
+  public reset(newUserStore: ObservableUserStore): void {
+    this.currentUser = newUserStore.currentUser;
   }
 
   public constructor(currentUser: null | ObservableUser) {

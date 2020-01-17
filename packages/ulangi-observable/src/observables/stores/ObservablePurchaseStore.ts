@@ -7,7 +7,7 @@
 
 import { ActivityState } from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { ObservableStore } from './ObservableStore';
 
@@ -23,6 +23,15 @@ export class ObservablePurchaseStore extends ObservableStore {
     success: boolean;
     errorBag: null | ErrorBag;
   };
+
+  @action
+  public reset(newPurchaseStore: ObservablePurchaseStore): void {
+    this.premiumLifetimeProductId = newPurchaseStore.premiumLifetimeProductId;
+    this.premiumLifetimeProcessState =
+      newPurchaseStore.premiumLifetimeProcessState;
+    this.premiumLifetimeProcessResult =
+      newPurchaseStore.premiumLifetimeProcessResult;
+  }
 
   public constructor(
     premiumLifetimeProductId: null | string,

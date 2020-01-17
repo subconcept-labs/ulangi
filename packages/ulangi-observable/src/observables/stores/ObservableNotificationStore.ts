@@ -5,13 +5,18 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { ObservableStore } from './ObservableStore';
 
 export class ObservableNotificationStore extends ObservableStore {
   @observable
   public hasPermission: null | boolean;
+
+  @action
+  public reset(newNotificationStore: ObservableNotificationStore): void {
+    this.hasPermission = newNotificationStore.hasPermission;
+  }
 
   public constructor(hasPermission: null | boolean) {
     super();

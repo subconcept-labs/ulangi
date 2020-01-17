@@ -7,7 +7,7 @@
 
 import { assertExists } from '@ulangi/assert';
 import { SetStatus } from '@ulangi/ulangi-common/enums';
-import { ObservableMap, computed, observable } from 'mobx';
+import { ObservableMap, action, computed, observable } from 'mobx';
 
 import { ObservableSet } from '../set/ObservableSet';
 import { ObservableStore } from './ObservableStore';
@@ -139,6 +139,13 @@ export class ObservableSetStore extends ObservableStore {
       allSetList.get(this.existingCurrentSetId),
       'currentSet should not be null or undefined'
     );
+  }
+
+  @action
+  public reset(newSetStore: ObservableSetStore): void {
+    this.currentSetId = newSetStore.currentSetId;
+    this.allSetList = newSetStore.allSetList;
+    this.originalEditingSet = newSetStore.originalEditingSet;
   }
 
   public constructor(

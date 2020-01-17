@@ -6,6 +6,7 @@
  */
 
 import * as _ from 'lodash';
+import { action } from 'mobx';
 
 import { ObservableAdStore } from './ObservableAdStore';
 import { ObservableNetworkStore } from './ObservableNetworkStore';
@@ -29,6 +30,22 @@ export class ObservableRootStore extends ObservableStore {
   public readonly notificationStore: ObservableNotificationStore;
   public readonly themeStore: ObservableThemeStore;
 
+  @action
+  public reset(newRootStore: ObservableRootStore): void {
+    _.forOwn(
+      this,
+      (_, childStoreName): void => {
+        const newChildStore =
+          newRootStore[childStoreName as keyof ObservableRootStore];
+        if (newChildStore instanceof ObservableStore) {
+          (this[
+            childStoreName as keyof ObservableRootStore
+          ] as ObservableStore).reset(newChildStore);
+        }
+      }
+    );
+  }
+
   public constructor(
     userStore: ObservableUserStore,
     setStore: ObservableSetStore,
@@ -50,19 +67,5 @@ export class ObservableRootStore extends ObservableStore {
     this.adStore = adStore;
     this.notificationStore = notificationStore;
     this.themeStore = themeStore;
-  }
-
-  public reset(newRootStore: ObservableRootStore): void {
-    _.forOwn(
-      this,
-      (_, childStoreName): void => {
-        const newStore =
-          newRootStore[childStoreName as keyof ObservableRootStore];
-        if (newStore instanceof ObservableStore) {
-          // @ts-ignore
-          this[childStoreName] = newStore;
-        }
-      }
-    );
   }
 }

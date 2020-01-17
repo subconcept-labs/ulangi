@@ -5,6 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-
-export abstract class ObservableStore {}
+export abstract class ObservableStore {
+  public abstract reset(store: ObservableStore): void;
+}

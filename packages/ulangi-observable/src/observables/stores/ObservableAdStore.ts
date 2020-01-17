@@ -6,7 +6,7 @@
  */
 
 import { ConsentStatus } from '@ulangi/ulangi-common/enums';
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import { ObservableStore } from '../stores/ObservableStore';
 
@@ -35,6 +35,17 @@ export class ObservableAdStore extends ObservableStore {
       this.consentStatus === ConsentStatus.UNKNOWN &&
       this.isRequestLocationInEeaOrUnknown === true
     );
+  }
+
+  @action
+  public reset(newAdStore: ObservableAdStore): void {
+    this.isSetUp = newAdStore.isSetUp;
+    this.isInitialized = newAdStore.isInitialized;
+    this.consentStatus = newAdStore.consentStatus;
+    this.isRequestLocationInEeaOrUnknown =
+      newAdStore.isRequestLocationInEeaOrUnknown;
+    this.isAdLoaded = newAdStore.isAdLoaded;
+    this.numberOfTermsReviewed = newAdStore.numberOfTermsReviewed;
   }
 
   public constructor(

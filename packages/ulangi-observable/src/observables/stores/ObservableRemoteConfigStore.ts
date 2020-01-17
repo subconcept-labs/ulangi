@@ -6,7 +6,7 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 import { ObservableRemoteConfig } from '../remote-config/ObservableRemoteConfig';
 import { ObservableStore } from './ObservableStore';
@@ -18,6 +18,11 @@ export class ObservableRemoteConfigStore extends ObservableStore {
   @computed
   public get existingRemoteConfig(): ObservableRemoteConfig {
     return assertExists(this.remoteConfig);
+  }
+
+  @action
+  public reset(newRemoteConfigStore: ObservableRemoteConfigStore): void {
+    this.remoteConfig = newRemoteConfigStore.remoteConfig;
   }
 
   public constructor(remoteConfig: null | ObservableRemoteConfig) {
