@@ -70,7 +70,7 @@ export class SecurityScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <SecurityScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         currentUser={this.props.rootStore.userStore.existingCurrentUser}
         screenDelegate={this.screenDelegate}
       />

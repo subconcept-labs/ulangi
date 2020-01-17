@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ErrorCode, UserExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableNotificationStore,
@@ -103,8 +104,8 @@ export class ReminderScreenDelegate {
         ),
         once(
           ActionType.USER__EDIT_FAILED,
-          ({ errorCode }): void => {
-            this.showSaveFailedDialog(errorCode);
+          (errorBag): void => {
+            this.showSaveFailedDialog(errorBag);
           },
         ),
       ),
@@ -141,11 +142,17 @@ export class ReminderScreenDelegate {
     });
   }
 
-  private showRequestPermissionFailedDialog(errorCode: string): void {
+  private showRequestPermissionFailedDialog(errorBag: ErrorBag): void {
+    // Use ErrorCode.REMINDER__PERMISSION_REQUIRED
+    // instead of ErrorCode.GENERAL__FAILED_TO_GRANT_PERMISSION
     this.dialogDelegate.showFailedDialog(
-      errorCode === ErrorCode.GENERAL__FAILED_TO_GRANT_PERMISSION
-        ? ErrorCode.REMINDER__PERMISSION_REQUIRED
-        : errorCode,
+      {
+        errorCode:
+          errorBag.errorCode === ErrorCode.GENERAL__FAILED_TO_GRANT_PERMISSION
+            ? ErrorCode.REMINDER__PERMISSION_REQUIRED
+            : errorBag.errorCode,
+        ...errorBag,
+      },
       {
         title: 'REQUEST PERMISSION FAILED',
       },
@@ -167,8 +174,8 @@ export class ReminderScreenDelegate {
     });
   }
 
-  private showSaveFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SAVE FAILED',
     });
   }

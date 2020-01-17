@@ -11,9 +11,7 @@
   },
 
   "ad": {
-    "showAdTimeout": 5000,
-    "autoSetUpAfterAuth": true,
-    "autoInitializeAfterAuth": true
+    "showAdTimeout": 5000
   },
 
   "openSourceProjects": [
@@ -69,6 +67,7 @@
     "light": {
       "primaryBackgroundColor": "#fff",
       "secondaryBackgroundColor": "#e3e3e3",
+      "tertiaryBackgroundColor": "#efefef",
       "primaryTextColor": "#444",
       "secondaryTextColor": "#999",
       "primaryBorderColor": "#b9b9b9",
@@ -77,6 +76,7 @@
     "dark": {
       "primaryBackgroundColor": "#414141",
       "secondaryBackgroundColor": "#292929",
+      "tertiaryBackgroundColor": "#393939",
       "primaryTextColor": "#e3e3e3",
       "secondaryTextColor": "#888",
       "primaryBorderColor": "#212121",
@@ -86,10 +86,6 @@
 
   "lightBox": {
     "animationDuration": 200
-  },
-
-  "remoteConfig": {
-    "autoUpdateAfterAuth": true
   },
 
   "user": {
@@ -104,11 +100,9 @@
       "hours": 11,
       "minutes": 0
     },
-    "defaultDarkModeSettings": {
+    "defaultThemeSettings": {
       "trigger": "System"
-    },
-    "autoCheckUserSessionAfterAuth": true,
-    "autoFetchOnDownloadSucceededAfterAuth": true
+    }
   },
 
   "set": {
@@ -122,8 +116,7 @@
       "DELETED": {
         "name": "deleted"
       }
-    },
-    "autoFetchAllOnDownloadSucceededAfterAuth": true
+    }
   },
 
   "vocabulary": {
@@ -426,18 +419,14 @@
   },
 
   "audio": {
-    "cacheFolderName": "SpeechCache",
-    "autoClearCacheAfterAuth": true
+    "cacheFolderName": "SpeechCache"
   },
 
   "sync": {
     "transactionChunkSize": 5,
-    "delayBetweenChunks": 500,
-    "autoObserveLocalUpdatesAfterAuth": true,
-    "autoObserveRemoteUpdatesAfterAuth": true
+    "delayBetweenChunks": 500
   },
 
   "reminder": {
-    "autoCheckPermissionAndSetUpReminder": true
   }
 }

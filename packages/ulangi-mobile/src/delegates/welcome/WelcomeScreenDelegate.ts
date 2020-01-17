@@ -6,9 +6,10 @@
  */
 
 import { ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { boundClass } from 'autobind-decorator';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { AuthDelegate } from '../auth/AuthDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -18,33 +19,30 @@ export class WelcomeScreenDelegate {
   private authDelegate: AuthDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private dialogDelegate: DialogDelegate;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     authDelegate: AuthDelegate,
     navigatorDelegate: NavigatorDelegate,
     dialogDelegate: DialogDelegate,
-    analytics: AnalyticsAdapter,
   ) {
     this.authDelegate = authDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.dialogDelegate = dialogDelegate;
-    this.analytics = analytics;
   }
 
   public signInAsGuest(): void {
-    this.analytics.logEvent('sign_in_as_guest');
+    RemoteLogger.logEvent('sign_in_as_guest');
     this.authDelegate.signInAsGuest({
       onSigningInAsGuest: this.showSigningInAsGuestDialog,
       onSignInAsGuestSucceeded: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.resetTo(ScreenName.CREATE_FIRST_SET_SCREEN, {});
       },
-      onSignInAsGuestFailed: (errorCode): void => {
-        if (errorCode === ErrorCode.USER__EMAIL_ALREADY_REGISTERED) {
+      onSignInAsGuestFailed: (errorBag): void => {
+        if (errorBag.errorCode === ErrorCode.USER__EMAIL_ALREADY_REGISTERED) {
           this.signInAsGuest();
         } else {
-          this.showSigningInAsGuestFailedDialog(errorCode);
+          this.showSigningInAsGuestFailedDialog(errorBag);
         }
       },
     });
@@ -60,8 +58,8 @@ export class WelcomeScreenDelegate {
     });
   }
 
-  private showSigningInAsGuestFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSigningInAsGuestFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'FAILED TO SIGN IN AS GUEST',
     });
   }

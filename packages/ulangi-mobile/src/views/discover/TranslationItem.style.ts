@@ -21,6 +21,7 @@ export interface TranslationItemStyles {
   definition_container: ViewStyle;
   meaning_container: ViewStyle;
   meaning: TextStyle;
+  attribution_container: ViewStyle;
 }
 
 export const baseStyles: TranslationItemStyles = {
@@ -29,6 +30,7 @@ export const baseStyles: TranslationItemStyles = {
     marginVertical: 8,
     borderRadius: 5,
     borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
   },
 
   vocabulary_text_container: {
@@ -87,6 +89,14 @@ export const baseStyles: TranslationItemStyles = {
   meaning: {
     fontSize: 15,
   },
+
+  attribution_container: {
+    paddingVertical: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 16,
+  },
 };
 
 export const lightStyles = StyleSheet.create(
@@ -115,6 +125,11 @@ export const lightStyles = StyleSheet.create(
 
     meaning: {
       color: config.styles.light.primaryTextColor,
+    },
+
+    attribution_container: {
+      backgroundColor: config.styles.light.tertiaryBackgroundColor,
+      borderTopColor: config.styles.light.secondaryBorderColor,
     },
   }),
 );
@@ -145,6 +160,11 @@ export const darkStyles = StyleSheet.create(
 
     meaning: {
       color: config.styles.dark.primaryTextColor,
+    },
+
+    attribution_container: {
+      backgroundColor: config.styles.dark.tertiaryBackgroundColor,
+      borderTopColor: config.styles.dark.secondaryBorderColor,
     },
   }),
 );

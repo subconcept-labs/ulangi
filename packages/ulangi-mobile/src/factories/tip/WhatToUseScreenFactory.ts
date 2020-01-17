@@ -18,6 +18,6 @@ export class WhatToUseScreenFactory extends ScreenFactory {
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
-    return new WhatToUseScreenDelegate(linkingDelegate, this.props.analytics);
+    return new WhatToUseScreenDelegate(linkingDelegate);
   }
 }

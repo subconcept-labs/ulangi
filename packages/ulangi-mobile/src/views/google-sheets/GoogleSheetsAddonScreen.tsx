@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableGoogleSheetsAddOnScreen,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -30,7 +30,7 @@ import {
 
 export interface GoogleSheetsAddOnScreenProps {
   observableScreen: ObservableGoogleSheetsAddOnScreen;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
   screenDelegate: GoogleSheetsAddOnScreenDelegate;
 }
@@ -40,7 +40,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
   GoogleSheetsAddOnScreenProps
 > {
   public get styles(): GoogleSheetsAddOnScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -58,16 +58,14 @@ export class GoogleSheetsAddOnScreen extends React.Component<
           </DefaultText>
         </View>
         <View style={this.styles.section_container}>
-          <SectionGroup theme={this.props.darkModeStore.theme} header="API KEY">
+          <SectionGroup theme={this.props.themeStore.theme} header="API KEY">
             {typeof this.props.observableScreen.apiKey === 'undefined'
               ? this.renderPasswordInput()
               : this.renderApiKey()}
           </SectionGroup>
-          <SectionGroup
-            theme={this.props.darkModeStore.theme}
-            header="TUTORIALS">
+          <SectionGroup theme={this.props.themeStore.theme} header="TUTORIALS">
             <SectionRow
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               leftText="How to install add-on"
               showArrow={true}
               onPress={(): void =>
@@ -77,7 +75,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               }
             />
             <SectionRow
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               leftText="How to use add-on"
               showArrow={true}
               onPress={(): void =>
@@ -100,14 +98,14 @@ export class GoogleSheetsAddOnScreen extends React.Component<
     ) {
       return (
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="To get API key, please set up your account first."
         />
       );
     } else {
       return (
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           customLeft={
             <TextInput
               style={this.styles.password_input}
@@ -119,7 +117,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               }}
               onSubmitEditing={this.props.screenDelegate.getApiKey}
               placeholderTextColor={
-                this.props.darkModeStore.theme === Theme.LIGHT
+                this.props.themeStore.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
                   : config.styles.dark.secondaryTextColor
               }
@@ -133,7 +131,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
   private renderApiKey(): React.ReactElement<any> {
     return (
       <SectionRow
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         customLeft={
           <DefaultText selectable={true}>
             {this.props.observableScreen.apiKey}

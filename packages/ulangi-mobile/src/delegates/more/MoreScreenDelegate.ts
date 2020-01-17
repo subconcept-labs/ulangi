@@ -12,12 +12,12 @@ import {
   ScreenName,
   Theme,
 } from '@ulangi/ulangi-common/enums';
-import { DarkModeSettings } from '@ulangi/ulangi-common/interfaces';
+import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableCarouselMessage,
-  ObservableDarkModeStore,
   ObservableLightBox,
   ObservableMoreScreen,
+  ObservableThemeStore,
   ObservableUserStore,
   Observer,
 } from '@ulangi/ulangi-observable';
@@ -29,20 +29,20 @@ import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { RootScreenDelegate } from '../../delegates/root/RootScreenDelegate';
 import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { AdDelegate } from '../ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../auto-archive/AutoArchiveSettingsDelegate';
-import { DarkModeSettingsDelegate } from '../dark-mode/DarkModeSettingsDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { LinkingDelegate } from '../linking/LinkingDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { ReminderSettingsDelegate } from '../reminder/ReminderSettingsDelegate';
+import { ThemeSettingsDelegate } from '../theme/ThemeSettingsDelegate';
 
 @boundClass
 export class MoreScreenDelegate {
   private observer: Observer;
   private userStore: ObservableUserStore;
-  private darkModeStore: ObservableDarkModeStore;
+  private themeStore: ObservableThemeStore;
   private observableLightBox: ObservableLightBox;
   private observableScreen: ObservableMoreScreen;
   private rootScreenDelegate: RootScreenDelegate;
@@ -50,14 +50,15 @@ export class MoreScreenDelegate {
   private inAppRatingDelegate: InAppRatingDelegate;
   private autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
-  private darkModeSettingsDelegate: DarkModeSettingsDelegate;
+  private themeSettingsDelegate: ThemeSettingsDelegate;
   private linkingDelegate: LinkingDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     observer: Observer,
     userStore: ObservableUserStore,
-    darkModeStore: ObservableDarkModeStore,
+    themeStore: ObservableThemeStore,
     observableLightBox: ObservableLightBox,
     observableScreen: ObservableMoreScreen,
     rootScreenDelegate: RootScreenDelegate,
@@ -65,13 +66,14 @@ export class MoreScreenDelegate {
     inAppRatingDelegate: InAppRatingDelegate,
     autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
-    darkModeSettingsDelegate: DarkModeSettingsDelegate,
+    themeSettingsDelegate: ThemeSettingsDelegate,
     linkingDelegate: LinkingDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
     this.userStore = userStore;
-    this.darkModeStore = darkModeStore;
+    this.themeStore = themeStore;
     this.observableScreen = observableScreen;
     this.observableLightBox = observableLightBox;
     this.rootScreenDelegate = rootScreenDelegate;
@@ -79,8 +81,9 @@ export class MoreScreenDelegate {
     this.inAppRatingDelegate = inAppRatingDelegate;
     this.autoArchiveSettingsDelegate = autoArchiveSettingsDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
-    this.darkModeSettingsDelegate = darkModeSettingsDelegate;
+    this.themeSettingsDelegate = themeSettingsDelegate;
     this.linkingDelegate = linkingDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -90,7 +93,7 @@ export class MoreScreenDelegate {
 
   public autoUpdateBottomTabs(): void {
     this.observer.reaction(
-      (): Theme => this.darkModeStore.theme,
+      (): Theme => this.themeStore.theme,
       (theme): void => {
         this.rootScreenDelegate.mergeBottomTabsOptions({
           backgroundColor: BottomTabsStyle.getBackgroundColor(theme),
@@ -177,43 +180,40 @@ export class MoreScreenDelegate {
       ) === true
         ? 'Warning: You have not set up this account yet. If you log out, you will not be able to access it again. Are you sure you want to log out?'
         : 'Are you sure you want to log out?';
-    this.navigatorDelegate.showDialog(
-      {
-        message,
-        closeOnTouchOutside: true,
-        buttonList: [
-          {
-            testID: MoreScreenIds.NO_BTN,
-            text: 'NO',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+    this.dialogDelegate.show({
+      message,
+      closeOnTouchOutside: true,
+      buttonList: [
+        {
+          testID: MoreScreenIds.NO_BTN,
+          text: 'NO',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
           },
-          {
-            testID: MoreScreenIds.YES_BTN,
-            text: 'YES',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-              this.observer.when(
-                (): boolean =>
-                  this.observableLightBox.state === LightBoxState.UNMOUNTED,
-                (): void =>
-                  this.rootScreenDelegate.setRootToSingleScreen(
-                    ScreenName.SIGN_OUT_SCREEN,
-                  ),
-              );
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: MoreScreenIds.YES_BTN,
+          text: 'YES',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+            this.observer.when(
+              (): boolean =>
+                this.observableLightBox.state === LightBoxState.UNMOUNTED,
+              (): void =>
+                this.rootScreenDelegate.setRootToSingleScreen(
+                  ScreenName.SIGN_OUT_SCREEN,
+                ),
+            );
           },
-        ],
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   public isAutoArchiveEnabled(): boolean {
@@ -225,8 +225,8 @@ export class MoreScreenDelegate {
     return this.reminderSettingsDelegate.isReminderActive();
   }
 
-  public getDarkModeSettings(): DarkModeSettings {
-    return this.darkModeSettingsDelegate.getCurrentSettings();
+  public getThemeSettings(): ThemeSettings {
+    return this.themeSettingsDelegate.getCurrentSettings();
   }
 
   public getReadableReminderTime(): string {
@@ -269,8 +269,8 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.REMINDER_SCREEN, {});
   }
 
-  public navigateToDarkModeScreen(): void {
-    this.navigatorDelegate.push(ScreenName.DARK_MODE_SCREEN, {});
+  public navigateToThemeScreen(): void {
+    this.navigatorDelegate.push(ScreenName.THEME_SCREEN, {});
   }
 
   public navigateToAutoArchiveScreen(): void {
@@ -321,6 +321,10 @@ export class MoreScreenDelegate {
 
   public navigateToPrivacyPolicyScreen(): void {
     this.navigatorDelegate.push(ScreenName.PRIVACY_POLICY_SCREEN, {});
+  }
+
+  public navigateToDataSharingScreen(): void {
+    this.navigatorDelegate.push(ScreenName.DATA_SHARING_SCREEN, {});
   }
 
   public showGoogleConsentForm(): void {

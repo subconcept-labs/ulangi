@@ -6,7 +6,7 @@
  */
 
 import {
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableUser,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -19,7 +19,7 @@ import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 
 export interface SecurityScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   currentUser: ObservableUser;
   screenDelegate: SecurityScreenDelegate;
 }
@@ -41,12 +41,12 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
   private renderAccountSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         key="ulangi-account"
         header="ULANGI ACCOUNT">
         <SectionRow
           testID={SecurityScreenIds.CHANGE_EMAIL_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           key="change-email"
           leftText="Change Email"
           rightText={this.props.currentUser.email}
@@ -56,7 +56,7 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
         />
         <SectionRow
           testID={SecurityScreenIds.CHANGE_PASSWORD_BTN}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           key="change-password"
           leftText="Change Password"
           rightText=""

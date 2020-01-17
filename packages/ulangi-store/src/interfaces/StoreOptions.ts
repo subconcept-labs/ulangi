@@ -5,9 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
-
 export interface StoreOptions {
-  initialSystemDarkMode: Theme;
   enableLogging?: boolean;
 }

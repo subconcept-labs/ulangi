@@ -9,26 +9,28 @@ import NetInfo from '@react-native-community/netinfo';
 import { DatabaseFacade, ModelList } from '@ulangi/ulangi-local-database';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { FacebookAdapter } from '../adapters/FacebookAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { AdSaga } from '../sagas/AdSaga';
 import { AppSaga } from '../sagas/AppSaga';
-import { AppsFlyerSaga } from '../sagas/AppsFlyerSaga';
 import { AuthSaga } from '../sagas/AuthSaga';
-import { DarkModeSaga } from '../sagas/DarkModeSaga';
+import { DataSharingSaga } from '../sagas/DataSharingSaga';
 import { DatabaseSaga } from '../sagas/DatabaseSaga';
 import { NetworkSaga } from '../sagas/NetworkSaga';
 import { PublicSaga } from '../sagas/PublicSaga';
 import { RemoteConfigSaga } from '../sagas/RemoteConfigSaga';
+import { ThemeSaga } from '../sagas/ThemeSaga';
 
 export class PublicSagaFactory {
   private database: DatabaseFacade;
   private modelList: ModelList;
   private netInfo: typeof NetInfo;
   private adMob: AdMobAdapter;
-  private appsFlyer: AppsFlyerAdapter;
-  private systemDarkMode: SystemDarkModeAdapter;
+  private analytics: AnalyticsAdapter;
+  private facebook: FacebookAdapter;
+  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
 
   public constructor(
@@ -36,38 +38,35 @@ export class PublicSagaFactory {
     modelList: ModelList,
     netInfo: typeof NetInfo,
     adMob: AdMobAdapter,
-    appsFlyer: AppsFlyerAdapter,
-    systemDarkMode: SystemDarkModeAdapter,
+    analytics: AnalyticsAdapter,
+    facebook: FacebookAdapter,
+    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter
   ) {
     this.database = database;
     this.modelList = modelList;
     this.netInfo = netInfo;
     this.adMob = adMob;
-    this.appsFlyer = appsFlyer;
-    this.systemDarkMode = systemDarkMode;
+    this.analytics = analytics;
+    this.facebook = facebook;
+    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
   }
 
   public createAllPublicSagas(): readonly PublicSaga[] {
     return [
       new AppSaga(),
-      new AppsFlyerSaga(this.appsFlyer, this.crashlytics),
+      new DataSharingSaga(this.analytics, this.crashlytics, this.facebook),
       new AuthSaga(
         this.database,
         this.modelList.sessionModel,
-        this.modelList.userModel,
-        this.crashlytics
+        this.modelList.userModel
       ),
-      new DatabaseSaga(this.database, this.crashlytics),
-      new NetworkSaga(this.netInfo, this.crashlytics),
-      new RemoteConfigSaga(
-        this.database,
-        this.modelList.remoteConfigModel,
-        this.crashlytics
-      ),
-      new AdSaga(this.adMob, this.crashlytics),
-      new DarkModeSaga(this.systemDarkMode),
+      new DatabaseSaga(this.database),
+      new NetworkSaga(this.netInfo),
+      new RemoteConfigSaga(this.database, this.modelList.remoteConfigModel),
+      new AdSaga(this.adMob),
+      new ThemeSaga(this.systemTheme),
     ];
   }
 }

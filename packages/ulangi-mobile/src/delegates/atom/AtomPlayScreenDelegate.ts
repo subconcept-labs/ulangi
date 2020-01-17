@@ -27,6 +27,7 @@ import { ParticleFactory } from '../../factories/atom/ParticleFactory';
 import { ShellFactory } from '../../factories/atom/ShellFactory';
 import { AtomQuestionIterator } from '../../iterators/AtomQuestionIterator';
 import { AtomStyle } from '../../styles/AtomStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AtomAnswerDelegate } from './AtomAnswerDelegate';
 import { AtomArcDelegate } from './AtomArcDelegate';
@@ -50,6 +51,7 @@ export class AtomPlayScreenDelegate {
   private shellDelegate: AtomShellDelegate;
   private arcDelegate: AtomArcDelegate;
   private answerDelegate: AtomAnswerDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private startGame: () => void;
 
@@ -64,6 +66,7 @@ export class AtomPlayScreenDelegate {
     shellDelegate: AtomShellDelegate,
     arcDelegate: AtomArcDelegate,
     answerDelegate: AtomAnswerDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     startGame: () => void,
   ) {
@@ -77,6 +80,7 @@ export class AtomPlayScreenDelegate {
     this.shellDelegate = shellDelegate;
     this.arcDelegate = arcDelegate;
     this.answerDelegate = answerDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.startGame = startGame;
   }
@@ -228,7 +232,7 @@ export class AtomPlayScreenDelegate {
 
   private quit(): void {
     this.clearGame();
-    this.navigatorDelegate.dismissLightBox();
+    this.dialogDelegate.dismiss();
     this.observer.when(
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
       (): void => this.navigatorDelegate.pop(),
@@ -236,18 +240,15 @@ export class AtomPlayScreenDelegate {
   }
 
   private showWaitingLightBox(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        title: 'FETCHING VOCABULARY',
-        message: 'Fetching more vocabulary. Please wait...',
-      },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      title: 'FETCHING VOCABULARY',
+      message: 'Fetching more vocabulary. Please wait...',
+    });
   }
 
   private dismissWaitingLightBoxAndNext(): void {
     this.observableScreen.gameState.waitingForFetching = false;
-    this.navigatorDelegate.dismissLightBox();
+    this.dialogDelegate.dismiss();
     this.observer.when(
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
       (): void => {

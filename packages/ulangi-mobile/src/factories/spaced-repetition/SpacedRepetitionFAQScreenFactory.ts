@@ -18,9 +18,6 @@ export class SpacedRepetitionFAQScreenFactory extends ScreenFactory {
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
-    return new SpacedRepetitionFAQScreenDelegate(
-      linkingDelegate,
-      this.props.analytics,
-    );
+    return new SpacedRepetitionFAQScreenDelegate(linkingDelegate);
   }
 }

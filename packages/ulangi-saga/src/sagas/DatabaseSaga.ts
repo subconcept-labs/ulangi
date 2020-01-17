@@ -9,22 +9,17 @@ import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { DatabaseFacade } from '@ulangi/ulangi-local-database';
 import { call, cancel, delay, fork, put, take } from 'redux-saga/effects';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { PublicSaga } from '../sagas/PublicSaga';
 
 export class DatabaseSaga extends PublicSaga {
   private database: DatabaseFacade;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    database: DatabaseFacade,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(database: DatabaseFacade) {
     super();
     this.database = database;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -51,7 +46,8 @@ export class DatabaseSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATABASE__CONNECT_SHARED_DB_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -70,7 +66,8 @@ export class DatabaseSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATABASE__CHECK_SHARED_DB_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -93,7 +90,8 @@ export class DatabaseSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATABASE__CONNECT_USER_DB_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -119,7 +117,8 @@ export class DatabaseSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.DATABASE__CHECK_USER_DB_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

@@ -77,7 +77,7 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
   public render(): React.ReactElement<any> {
     return (
       <QuizScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

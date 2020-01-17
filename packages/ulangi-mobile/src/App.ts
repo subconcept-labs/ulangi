@@ -5,146 +5,128 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import NetInfo from '@react-native-community/netinfo';
-import RNAdConsent from '@ulangi/react-native-ad-consent';
-import firebase from '@ulangi/react-native-firebase';
-import { SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
-import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
+import { Navigation } from '@ulangi/react-native-navigation';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { EventBusFactory, EventFacade } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
   ObservableKeyboard,
   ObservableLightBox,
+  ObservableRootStore,
   ObservableScreenRegistry,
 } from '@ulangi/ulangi-observable';
-import {
-  AdMobAdapter,
-  AnalyticsAdapter,
-  AppsFlyerAdapter,
-  AudioPlayerAdapter,
-  CrashlyticsAdapter,
-  FirebaseAdapter,
-  NotificationsAdapter,
-  SagaFacade,
-  SystemDarkModeAdapter,
-} from '@ulangi/ulangi-saga';
-import { StoreFactory } from '@ulangi/ulangi-store';
-import { Platform } from 'react-native';
-import appsFlyer from 'react-native-appsflyer';
-import * as systemDarkMode from 'react-native-dark-mode';
-import * as FileSystem from 'react-native-fs';
-import * as Iap from 'react-native-iap';
-import * as sqlite from 'react-native-sqlite-storage';
+import { SagaFacade } from '@ulangi/ulangi-saga';
+import { Store, StoreFactory } from '@ulangi/ulangi-store';
 
+import { RemoteLogger } from './RemoteLogger';
 import { ServiceRegistry } from './ServiceRegistry';
 import { config } from './constants/config';
 import { env } from './constants/env';
 import { RootScreenDelegate } from './delegates/root/RootScreenDelegate';
+import { AdapterFactory } from './factories/AdapterFactory';
 import { autoUpdateKeyboardState } from './setup/autoUpdateKeyboardState';
-import { setupCustomViews } from './setup/setupCustomViews';
-import { setupNavigationDefaultOptions } from './setup/setupNavigationDefaultOptions';
-import { setupScreens } from './setup/setupScreens';
-
-import AudioPlayer = require('react-native-sound');
+import { makeInitialState } from './setup/makeInitialState';
+import { registerCustomViews } from './setup/registerCustomViews';
+import { registerScreens } from './setup/registerScreens';
+import { setDefaultNavigationOptions } from './setup/setDefaultNavigationOptions';
 
 export class App {
-  private started: boolean;
-  private unsubscribeAutoUpdateKeyboard?: () => void;
+  private appInitialized: boolean;
+  private disposers: Function[];
 
   public constructor() {
-    this.started = false;
+    this.appInitialized = false;
+    this.disposers = [];
   }
 
-  public init(): void {
-    setupScreens();
-    setupCustomViews();
+  public startOnAppLaunched(): void {
+    Navigation.events().registerAppLaunchedListener(
+      (): void => {
+        this.start();
+      },
+    );
   }
 
-  public isStarted(): boolean {
-    return this.started;
-  }
-
-  public clearApp(): void {
-    if (typeof this.unsubscribeAutoUpdateKeyboard !== 'undefined') {
-      this.unsubscribeAutoUpdateKeyboard();
+  private start(): void {
+    // On Android,
+    // if JS context is not destroyed, we need to do some cleanup
+    // but we do not need to register screens and custom views again
+    if (this.isInitialized()) {
+      this.cleanUp();
+    } else {
+      setDefaultNavigationOptions();
+      registerScreens();
+      registerCustomViews();
     }
-  }
 
-  public startApp(): void {
-    this.started = true;
-
-    setupNavigationDefaultOptions();
-
-    const analytics = new AnalyticsAdapter(firebase.analytics());
+    const adapters = new AdapterFactory().createAdapters();
 
     const sagaFacade = new SagaFacade(
       env,
       config,
-      new SQLiteDatabaseAdapter(sqlite),
-      new FirebaseAdapter(firebase),
-      new AdMobAdapter(
-        // @ts-ignore
-        firebase.admob,
-        RNAdConsent,
-      ),
-      new AppsFlyerAdapter(appsFlyer),
-      NetInfo,
-      FileSystem,
-      Iap,
-      new AudioPlayerAdapter(AudioPlayer),
-      new NotificationsAdapter(
-        firebase.notifications(),
-        firebase.messaging(),
-        firebase.notifications,
-      ),
-      new SystemDarkModeAdapter(systemDarkMode),
-      new CrashlyticsAdapter(firebase.crashlytics(), true),
+      adapters.sqliteDatabase,
+      adapters.firebase,
+      adapters.adMob,
+      adapters.analytics,
+      adapters.facebook,
+      adapters.RNNetInfo,
+      adapters.RNFileSystem,
+      adapters.RNIap,
+      adapters.audioPlayer,
+      adapters.notifications,
+      adapters.systemTheme,
+      adapters.crashlytics,
     );
 
     const eventFacade = new EventFacade();
 
     const storeFactory = new StoreFactory(
       {
-        PREMIUM_LIFETIME_PRODUCT_ID: Platform.select({
-          ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
-          android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
-        }),
-      },
-      config,
-      {
-        initialSystemDarkMode:
-          systemDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
-        enableLogging: env.ENABLE_LOGGING,
+        enableLogging: env.ENABLE_REDUX_LOGGING,
       },
       [sagaFacade.getMiddleware(), eventFacade.getMiddleware()],
     );
 
-    const store = storeFactory.make();
+    const store = storeFactory.createStore(makeInitialState());
 
-    const eventBusFactory = new EventBusFactory(store, eventFacade);
+    ServiceRegistry.registerAll({
+      eventBusFactory: new EventBusFactory(store, eventFacade),
+      rootStore: store.getState(),
+      observableLightBox: new ObservableLightBox(),
+      observableKeyboard: new ObservableKeyboard(),
+      observableConverter: new ObservableConverter(store.getState()),
+      observableScreenRegistry: new ObservableScreenRegistry(),
+    });
 
-    ServiceRegistry.register('analytics', analytics);
-    ServiceRegistry.register('eventBusFactory', eventBusFactory);
-    ServiceRegistry.register('rootStore', store.getState());
-    ServiceRegistry.register('observableLightBox', new ObservableLightBox());
-    ServiceRegistry.register('observableKeyboard', new ObservableKeyboard());
-    ServiceRegistry.register(
-      'observableConverter',
-      new ObservableConverter(store.getState()),
-    );
-    ServiceRegistry.register(
-      'observableScreenRegistry',
-      new ObservableScreenRegistry(),
+    this.disposers.push(
+      autoUpdateKeyboardState(ServiceRegistry.services.observableKeyboard),
     );
 
-    this.unsubscribeAutoUpdateKeyboard = autoUpdateKeyboardState(
-      ServiceRegistry.get('observableKeyboard'),
-    );
+    RemoteLogger.useAnalytics(adapters.analytics);
+    RemoteLogger.useCrashlytics(adapters.crashlytics);
 
     sagaFacade.run();
 
+    this.appInitialized = true;
+
+    this.renderPreloadScreen(store);
+  }
+
+  private isInitialized(): boolean {
+    return this.appInitialized;
+  }
+
+  private cleanUp(): void {
+    this.disposers.forEach(
+      (disposer): void => {
+        disposer();
+      },
+    );
+  }
+
+  private renderPreloadScreen(store: Store<ObservableRootStore>): void {
     const rootScreenDelegate = new RootScreenDelegate(
-      store.getState().darkModeStore,
+      store.getState().themeStore,
     );
 
     rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);

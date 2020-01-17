@@ -46,7 +46,6 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import * as sqlite3 from 'sqlite3';
 import * as tmp from 'tmp-promise';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { DownloadIncompatibleVocabularySaga } from './DownloadIncompatibleVocabularySaga';
 
@@ -94,8 +93,7 @@ describe('DownloadIncompatibleVocabularySaga', (): void => {
           mockedSharedDatabase,
           mockedSessionModel,
           mockedVocabularyModel,
-          mockedIncompatibleVocabularyModel,
-          new CrashlyticsAdapter(null, false)
+          mockedIncompatibleVocabularyModel
         );
       }
     );
@@ -400,8 +398,7 @@ describe('DownloadIncompatibleVocabularySaga', (): void => {
             mockedSharedDatabase,
             mockedSessionModel,
             vocabularyModel,
-            incompatibleVocabularyModel,
-            new CrashlyticsAdapter(null, false)
+            incompatibleVocabularyModel
           );
         }
       );

@@ -11,17 +11,15 @@ import { EventChannel, eventChannel } from 'redux-saga';
 import { call, cancelled, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { PublicSaga } from './PublicSaga';
 
 export class NetworkSaga extends PublicSaga {
   private netInfo: typeof NetInfo;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(netInfo: typeof NetInfo, crashlytics: CrashlyticsAdapter) {
+  public constructor(netInfo: typeof NetInfo) {
     super();
     this.netInfo = netInfo;
-    this.crashlytics = crashlytics;
   }
 
   public *run(): IterableIterator<any> {
@@ -46,7 +44,8 @@ export class NetworkSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.NETWORK__CHECK_CONNECTION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -74,7 +73,8 @@ export class NetworkSaga extends PublicSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.NETWORK__OBSERVE_CONNECTION_CHANGE_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     } finally {

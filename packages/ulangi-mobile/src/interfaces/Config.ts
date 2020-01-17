@@ -15,8 +15,8 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettings,
-  DarkModeSettings,
   ReminderSettings,
+  ThemeSettings,
 } from '@ulangi/ulangi-common/interfaces';
 
 export interface Config {
@@ -33,8 +33,6 @@ export interface Config {
 
   readonly ad: {
     readonly showAdTimeout: number;
-    readonly autoSetUpAfterAuth: boolean;
-    readonly autoInitializeAfterAuth: boolean;
   };
 
   readonly openSourceProjects: readonly {
@@ -68,6 +66,7 @@ export interface Config {
     readonly light: {
       primaryBackgroundColor: string;
       secondaryBackgroundColor: string;
+      tertiaryBackgroundColor: string;
       primaryTextColor: string;
       secondaryTextColor: string;
       primaryBorderColor: string;
@@ -76,6 +75,7 @@ export interface Config {
     readonly dark: {
       primaryBackgroundColor: string;
       secondaryBackgroundColor: string;
+      tertiaryBackgroundColor: string;
       primaryTextColor: string;
       secondaryTextColor: string;
       primaryBorderColor: string;
@@ -83,17 +83,11 @@ export interface Config {
     };
   };
 
-  readonly remoteConfig: {
-    readonly autoUpdateAfterAuth: boolean;
-  };
-
   readonly user: {
     readonly passwordMinLength: number;
     readonly defaultGlobalAutoArchive: AutoArchiveSettings;
     readonly defaultGlobalReminder: ReminderSettings;
-    readonly defaultDarkModeSettings: DarkModeSettings;
-    readonly autoCheckUserSessionAfterAuth: boolean;
-    readonly autoFetchOnDownloadSucceededAfterAuth: boolean;
+    readonly defaultThemeSettings: ThemeSettings;
   };
 
   readonly set: {
@@ -102,7 +96,6 @@ export interface Config {
         readonly name: string;
       }
     };
-    readonly autoFetchAllOnDownloadSucceededAfterAuth: boolean;
   };
 
   readonly vocabulary: {
@@ -249,17 +242,10 @@ export interface Config {
 
   readonly audio: {
     readonly cacheFolderName: string;
-    readonly autoClearCacheAfterAuth: boolean;
   };
 
   readonly sync: {
     readonly transactionChunkSize: number;
     readonly delayBetweenChunks: number;
-    readonly autoObserveLocalUpdatesAfterAuth: boolean;
-    readonly autoObserveRemoteUpdatesAfterAuth: boolean;
-  };
-
-  readonly reminder: {
-    readonly autoCheckPermissionAndSetUpReminder: boolean;
   };
 }

@@ -6,7 +6,7 @@
  */
 
 import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
@@ -14,12 +14,10 @@ export interface PublicSetDetailHeaderStyles {
   container: ViewStyle;
   title: TextStyle;
   subtitle: TextStyle;
-  author_containers: ViewStyle;
-  author_container: ViewStyle;
-  author_name_container: ViewStyle;
-  author: TextStyle;
-  link_icon_container: ViewStyle;
-  link_icon: ImageStyle;
+  attribution_containers: ViewStyle;
+  attribution_container: ViewStyle;
+  attribution: TextStyle;
+  highlighted: TextStyle;
 }
 
 export const baseStyles: PublicSetDetailHeaderStyles = {
@@ -39,35 +37,28 @@ export const baseStyles: PublicSetDetailHeaderStyles = {
     textAlign: 'center',
   },
 
-  author_containers: {
+  attribution_containers: {
     marginTop: 4,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  author_container: {
+  attribution_container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 8,
   },
 
-  author_name_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  author: {
+  attribution: {
     fontSize: 13,
     textAlign: 'center',
   },
 
-  link_icon_container: {
-    marginLeft: 4,
+  highlighted: {
+    color: config.styles.primaryColor,
   },
-
-  link_icon: {},
 };
 
 export const lightStyles = StyleSheet.create(
@@ -80,7 +71,7 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.primaryTextColor,
     },
 
-    author: {
+    attribution: {
       color: config.styles.light.secondaryTextColor,
     },
   }),
@@ -96,7 +87,7 @@ export const darkStyles = StyleSheet.create(
       color: config.styles.dark.primaryTextColor,
     },
 
-    author: {
+    attribution: {
       color: config.styles.dark.secondaryTextColor,
     },
   }),

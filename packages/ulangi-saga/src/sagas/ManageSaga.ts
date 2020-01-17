@@ -22,7 +22,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -36,15 +36,13 @@ export class ManageSaga extends ProtectedSaga {
   private categoryModel: CategoryModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
   private writingModel: WritingModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     vocabularyModel: VocabularyModel,
     categoryModel: CategoryModel,
     spacedRepetitionModel: SpacedRepetitionModel,
-    writingModel: WritingModel,
-    crashlytics: CrashlyticsAdapter
+    writingModel: WritingModel
   ) {
     super();
     this.userDb = userDb;
@@ -52,7 +50,6 @@ export class ManageSaga extends ProtectedSaga {
     this.categoryModel = categoryModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
     this.writingModel = writingModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -140,7 +137,8 @@ export class ManageSaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.MANAGE__PREPARE_FETCH_VOCABULARY_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -240,7 +238,8 @@ export class ManageSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.MANAGE__FETCH_VOCABULARY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -314,7 +313,8 @@ export class ManageSaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.MANAGE__PREPARE_FETCH_CATEGORY_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -420,7 +420,8 @@ export class ManageSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.MANAGE__FETCH_CATEGORY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

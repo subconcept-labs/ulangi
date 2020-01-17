@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -14,33 +15,30 @@ import {
   ObservableSpacedRepetitionScreen,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { observable, toJS } from 'mobx';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
 
 @boundClass
 export class SpacedRepetitionScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableSpacedRepetitionScreen;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
-  private navigatorDelegate: NavigatorDelegate;
   private categoryMessageDelegate: CategoryMessageDelegate;
   private linkingDelegate: LinkingDelegate;
-  private analytics: AnalyticsAdapter;
+  private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
@@ -48,24 +46,24 @@ export class SpacedRepetitionScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableSpacedRepetitionScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
     linkingDelegate: LinkingDelegate,
-    analytics: AnalyticsAdapter,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
-    this.navigatorDelegate = navigatorDelegate;
     this.categoryMessageDelegate = categoryMessageDelegate;
     this.linkingDelegate = linkingDelegate;
-    this.analytics = analytics;
+    this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public startLesson(includeFromOtherCategories: boolean): void {
-    this.analytics.logEvent('start_spaced_repetition');
+    RemoteLogger.logEvent('start_spaced_repetition');
     const {
       initialInterval,
       limit,
@@ -112,9 +110,10 @@ export class SpacedRepetitionScreenDelegate {
         ),
         once(
           ActionType.SPACED_REPETITION__FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => {
+          (errorBag): void => {
             if (
-              errorCode === ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY
+              errorBag.errorCode ===
+              ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY
             ) {
               if (
                 typeof this.observableScreen.selectedCategoryNames !==
@@ -126,7 +125,7 @@ export class SpacedRepetitionScreenDelegate {
                 this.showNotEnoughTermsDialog();
               }
             } else {
-              this.showPrepareFailedDialog(errorCode);
+              this.showPrepareFailedDialog(errorBag);
             }
           },
         ),
@@ -156,74 +155,58 @@ export class SpacedRepetitionScreenDelegate {
   }
 
   private showPreparingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Preparing. Please wait...',
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Preparing. Please wait...',
+    });
   }
 
   private showNotEnoughTermsForSelectedCategoriesDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: `Not enough terms for selected categories (minimum is ${
-          config.spacedRepetition.minPerLesson
-        }). Do you want to include terms from other categories?`,
-        title: 'FAILED TO START',
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CANCEL_BTN,
-            text: 'CANCEL',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.FAILED_DIALOG,
+      message: `Not enough terms for selected categories (minimum is ${
+        config.spacedRepetition.minPerLesson
+      }). Do you want to include terms from other categories?`,
+      title: 'FAILED TO START',
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CANCEL_BTN,
+          text: 'CANCEL',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
           },
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'OKAY',
-            onPress: (): void => {
-              this.startLesson(true);
-            },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'OKAY',
+          onPress: (): void => {
+            this.startLesson(true);
           },
-        ],
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private showNotEnoughTermsDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: `Not enough terms (min is ${
-          config.spacedRepetition.minPerLesson
-        }). If you just learned all of them, please add new terms or wait for next review.`,
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.FAILED_DIALOG,
+      message: `Not enough terms (min is ${
+        config.spacedRepetition.minPerLesson
+      }). If you just learned all of them, please add new terms or wait for next review.`,
+      title: 'FAILED TO START',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
-  private showPrepareFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showPrepareFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO START',
+    });
   }
 }

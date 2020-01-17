@@ -9,11 +9,11 @@ import { ObservableMoreScreen } from '@ulangi/ulangi-observable';
 
 import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
-import { DarkModeSettingsDelegate } from '../../delegates/dark-mode/DarkModeSettingsDelegate';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { MoreScreenDelegate } from '../../delegates/more/MoreScreenDelegate';
 import { InAppRatingDelegate } from '../../delegates/rating/InAppRatingDelegate';
 import { ReminderSettingsDelegate } from '../../delegates/reminder/ReminderSettingsDelegate';
+import { ThemeSettingsDelegate } from '../../delegates/theme/ThemeSettingsDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -34,7 +34,6 @@ export class MoreScreenFactory extends ScreenFactory {
       this.props.rootStore.userStore,
       this.props.rootStore.remoteConfigStore,
       dialogDelegate,
-      this.props.analytics,
     );
 
     const adDelegate = new AdDelegate(
@@ -55,14 +54,14 @@ export class MoreScreenFactory extends ScreenFactory {
 
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
-    const darkModeSettingsDelegate = new DarkModeSettingsDelegate(
+    const themeSettingsDelegate = new ThemeSettingsDelegate(
       this.props.rootStore.userStore,
     );
 
     return new MoreScreenDelegate(
       this.observer,
       this.props.rootStore.userStore,
-      this.props.rootStore.darkModeStore,
+      this.props.rootStore.themeStore,
       this.props.observableLightBox,
       observableScreen,
       rootScreenDelegate,
@@ -70,8 +69,9 @@ export class MoreScreenFactory extends ScreenFactory {
       inAppRatingDelegate,
       autoArchiveSettingsDelegate,
       reminderSettingsDelegate,
-      darkModeSettingsDelegate,
+      themeSettingsDelegate,
       linkingDelegate,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

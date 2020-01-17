@@ -26,7 +26,7 @@ export class Provider extends React.Component {
         theme: child.props.theme,
         styles: child.props.styles,
         passedProps: child.props.passedProps,
-        ...ServiceRegistry.getAll(),
+        ...ServiceRegistry.services,
       };
 
       return React.cloneElement(child, containerProps);

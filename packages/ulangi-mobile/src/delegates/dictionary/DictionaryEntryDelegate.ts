@@ -82,9 +82,9 @@ export class DictionaryEntryDelegate {
           ),
           once(
             ActionType.DICTIONARY__GET_ENTRY_FAILED,
-            ({ errorCode }): void => {
+            (errorBag): void => {
               this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
-              this.dictionaryEntryState.fetchError.set(errorCode);
+              this.dictionaryEntryState.fetchError.set(errorBag.errorCode);
             },
           ),
         ),

@@ -11,7 +11,7 @@ import { ValidationError } from 'joi';
 import * as _ from 'lodash';
 
 export class JoiErrorConverter {
-  public isJoiError(error: any): boolean {
+  public isJoiError(error: unknown): boolean {
     return _.get(error, 'isJoi') === true;
   }
 

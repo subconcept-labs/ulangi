@@ -96,7 +96,7 @@ export class DictionaryPickerScreenContainer extends Container<
       <DictionaryPickerScreen
         observableLightBox={this.props.observableLightBox}
         observableScreen={this.observableScreen}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}
         screenDelegate={this.screenDelegate}
         onPick={this.props.passedProps.onPick}

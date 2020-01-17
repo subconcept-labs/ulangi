@@ -22,7 +22,7 @@ import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
@@ -37,15 +37,13 @@ export class WritingSaga extends ProtectedSaga {
   private sessionModel: SessionModel;
   private vocabularyModel: VocabularyModel;
   private writingModel: WritingModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase,
     sessionModel: SessionModel,
     vocabularyModel: VocabularyModel,
-    writingModel: WritingModel,
-    crashlytics: CrashlyticsAdapter
+    writingModel: WritingModel
   ) {
     super();
     this.sharedDb = sharedDb;
@@ -53,7 +51,6 @@ export class WritingSaga extends ProtectedSaga {
     this.sessionModel = sessionModel;
     this.vocabularyModel = vocabularyModel;
     this.writingModel = writingModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -138,7 +135,8 @@ export class WritingSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.WRITING__FETCH_VOCABULARY_FAILED, {
             setId,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -217,7 +215,8 @@ export class WritingSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.WRITING__SAVE_RESULT_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            error,
+            errorCode: errorConverter.getErrorCode(error),
           })
         );
       }

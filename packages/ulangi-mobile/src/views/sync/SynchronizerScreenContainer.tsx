@@ -70,7 +70,7 @@ export class SynchronizerScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <SynchronizerScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         syncStore={this.props.rootStore.syncStore}
         networkStore={this.props.rootStore.networkStore}
         screenDelegate={this.screenDelegate}

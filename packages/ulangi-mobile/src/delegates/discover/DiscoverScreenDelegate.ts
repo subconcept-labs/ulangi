@@ -8,6 +8,7 @@
 import { ActionType } from '@ulangi/ulangi-action';
 import { DiscoverListType, ScreenName } from '@ulangi/ulangi-common/enums';
 import {
+  ErrorBag,
   PublicVocabulary,
   TranslationWithLanguages,
 } from '@ulangi/ulangi-common/interfaces';
@@ -17,14 +18,12 @@ import {
   ObservablePublicSet,
   ObservableSetStore,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { runInAction } from 'mobx';
 import { Linking } from 'react-native';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
+import { RemoteLogger } from '../../RemoteLogger';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { TranslationListDelegate } from '../translation/TranslationListDelegate';
 import { AddVocabularyDelegate } from './AddVocabularyDelegate';
@@ -35,8 +34,6 @@ import { TranslationActionMenuDelegate } from './TranslationActionMenuDelegate';
 
 @boundClass
 export class DiscoverScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableScreen: ObservableDiscoverScreen;
@@ -46,8 +43,8 @@ export class DiscoverScreenDelegate {
   private publicVocabularyActionMenuDelegate: PublicVocabularyActionMenuDelegate;
   private translationListDelegate: TranslationListDelegate;
   private translationActionMenuDelegate: TranslationActionMenuDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
@@ -59,8 +56,8 @@ export class DiscoverScreenDelegate {
     publicVocabularyActionMenuDelegate: PublicVocabularyActionMenuDelegate,
     translationListDelegate: TranslationListDelegate,
     translationActionMenuDelegate: TranslationActionMenuDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
@@ -71,8 +68,8 @@ export class DiscoverScreenDelegate {
     this.publicVocabularyActionMenuDelegate = publicVocabularyActionMenuDelegate;
     this.translationListDelegate = translationListDelegate;
     this.translationActionMenuDelegate = translationActionMenuDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
-    this.analytics = analytics;
   }
 
   public handleInputEnded(): void {
@@ -225,17 +222,14 @@ export class DiscoverScreenDelegate {
   }
 
   public showTip(): void {
-    this.analytics.logEvent('show_search_set_tip');
-    this.navigatorDelegate.showDialog(
-      {
-        title: 'TIP',
-        message:
-          'You can search dictionary or search for categories. For example, type hello to know what it is in your learning language, or type Animals to search all animal related categories.',
-        closeOnTouchOutside: true,
-        showCloseButton: true,
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    RemoteLogger.logEvent('show_search_set_tip');
+    this.dialogDelegate.show({
+      title: 'TIP',
+      message:
+        'You can search dictionary or search for categories. For example, type hello to know what it is in your learning language, or type Animals to search all animal related categories.',
+      closeOnTouchOutside: true,
+      showCloseButton: true,
+    });
   }
 
   public showPublicVocabularyActionMenu(vocabulary: PublicVocabulary): void {
@@ -249,36 +243,20 @@ export class DiscoverScreenDelegate {
   }
 
   private showAddingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Adding. Please wait...',
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Adding. Please wait...',
+    });
   }
 
   private showAddSucceededDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Added successfully.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.showSuccessDialog({
+      message: 'Added successfully.',
+    });
   }
 
-  private showAddFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'ADD FAILED',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showAddFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'ADD FAILED',
+    });
   }
 }

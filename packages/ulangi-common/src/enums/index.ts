@@ -12,7 +12,7 @@ export { ButtonSize } from './ButtonSize';
 export { ConsentStatus } from './ConsentStatus';
 export { ContactUsFormType } from './ContactUsFormType';
 export { CustomViewName } from './CustomViewName';
-export { DarkModeTrigger } from './DarkModeTrigger';
+export { ThemeTrigger } from './ThemeTrigger';
 export { DefinitionStatus } from './DefinitionStatus';
 export { DiscoverListType } from './DiscoverListType';
 export { DiscoverSectionType } from './DiscoverSectionType';

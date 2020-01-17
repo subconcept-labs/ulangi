@@ -70,7 +70,7 @@ export class FollowUsScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <FollowUsScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
       />
     );

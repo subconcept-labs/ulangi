@@ -32,7 +32,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { DownloadVocabularySaga } from './DownloadVocabularySaga';
 
@@ -80,8 +79,7 @@ describe('DownloadVocabularySaga', (): void => {
           mockedSharedDatabase,
           mockedSessionModel,
           mockedVocabularyModel,
-          mockedIncompatibleVocabularyModel,
-          new CrashlyticsAdapter(null, false)
+          mockedIncompatibleVocabularyModel
         );
       }
     );

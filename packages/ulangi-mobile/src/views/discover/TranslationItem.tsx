@@ -67,13 +67,6 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
               <DefaultText style={this.styles.vocabulary_text}>
                 {vocabularyText}
               </DefaultText>
-              <Image
-                source={
-                  this.props.theme === Theme.LIGHT
-                    ? Images.TRANSLATE_BY_GOOGLE_COLOR_SHORT
-                    : Images.TRANSLATE_BY_GOOGLE_WHITE_SHORT
-                }
-              />
             </View>
             <View style={this.styles.right}>
               {this.renderAddButton()}
@@ -86,6 +79,15 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
                 <DefaultText style={this.styles.meaning}>{meaning}</DefaultText>
               </View>
             </View>
+          </View>
+          <View style={this.styles.attribution_container}>
+            <Image
+              source={
+                this.props.theme === Theme.LIGHT
+                  ? Images.TRANSLATE_BY_GOOGLE_COLOR_SHORT
+                  : Images.TRANSLATE_BY_GOOGLE_WHITE_SHORT
+              }
+            />
           </View>
         </View>
       </FixedTouchableWithoutFeedback>

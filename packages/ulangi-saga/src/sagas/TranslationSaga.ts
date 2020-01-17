@@ -22,7 +22,7 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -35,17 +35,11 @@ export class TranslationSaga extends ProtectedSaga {
   private translateBidirectionTask?: Task;
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    sharedDb: SQLiteDatabase,
-    sessionModel: SessionModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(sharedDb: SQLiteDatabase, sessionModel: SessionModel) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -123,7 +117,8 @@ export class TranslationSaga extends ProtectedSaga {
           createAction(ActionType.TRANSLATION__TRANSLATE_FAILED, {
             sourceText,
             translator,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -205,7 +200,8 @@ export class TranslationSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.TRANSLATION__TRANSLATE_BIDIRECTION_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

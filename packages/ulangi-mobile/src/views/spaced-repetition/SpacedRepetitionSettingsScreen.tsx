@@ -7,8 +7,8 @@
 
 import { ButtonSize, ReviewStrategy, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableSpacedRepetitionSettingsScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
@@ -32,7 +32,7 @@ import {
 } from './SpacedRepetitionSettingsScreen.style';
 
 export interface SpacedRepetitionSettingsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionSettingsScreen;
   screenDelegate: SpacedRepetitionSettingsScreenDelegate;
 }
@@ -42,7 +42,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
   SpacedRepetitionSettingsScreenProps
 > {
   public get styles(): SpacedRepetitionSettingsScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -69,11 +69,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
   private renderLessonSettingsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         header="LESSON SETTINGS"
         key="lesson-settings">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Review Strategy"
           customRight={
             <DefaultButton
@@ -100,7 +100,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
           }}
         />
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Lesson Size"
           customRight={
             <DefaultButton
@@ -133,11 +133,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
   private renderSpacedRepetitonFactorsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
-        theme={this.props.darkModeStore.theme}
+        theme={this.props.themeStore.theme}
         header="SPACED REPETITION FACTORS"
         key="spaced-repetition-factors">
         <SectionRow
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           leftText="Initial Interval"
           customRight={
             <DefaultButton

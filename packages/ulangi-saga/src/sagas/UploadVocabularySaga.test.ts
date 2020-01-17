@@ -24,7 +24,6 @@ import axios from 'axios';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { UploadVocabularySaga } from './UploadVocabularySaga';
 
@@ -64,8 +63,7 @@ describe('UploadVocabularySaga', (): void => {
           mockedUserDatabase,
           mockedSharedDatabase,
           mockedSessionModel,
-          mockedDirtyVocabularyModel,
-          new CrashlyticsAdapter(null, false)
+          mockedDirtyVocabularyModel
         );
       }
     );

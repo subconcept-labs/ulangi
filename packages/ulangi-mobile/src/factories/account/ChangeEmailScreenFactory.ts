@@ -6,13 +6,21 @@
  */
 
 import { ChangeEmailScreenDelegate } from '../../delegates/account/ChangeEmailScreenDelegate';
+import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ChangeEmailScreenFactory extends ScreenFactory {
   public createScreenDelegate(): ChangeEmailScreenDelegate {
+    const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     return new ChangeEmailScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate(),
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

@@ -7,8 +7,8 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableSetUpAccountScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +27,7 @@ import {
 } from './SetUpAccountScreen.style';
 
 export interface SetUpAccountScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSetUpAccountScreen;
   screenDelegate: SetUpAccountScreenDelegate;
 }
@@ -37,7 +37,7 @@ export class SetUpAccountScreen extends React.Component<
   SetUpAccountScreenProps
 > {
   public get styles(): SetUpAccountScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -61,7 +61,7 @@ export class SetUpAccountScreen extends React.Component<
               keyboardType="email-address"
               placeholder="Email"
               placeholderTextColor={
-                this.props.darkModeStore.theme === Theme.LIGHT
+                this.props.themeStore.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
                   : config.styles.dark.secondaryTextColor
               }
@@ -75,7 +75,7 @@ export class SetUpAccountScreen extends React.Component<
               autoCapitalize="none"
               placeholder="Password (min 8 characters)"
               placeholderTextColor={
-                this.props.darkModeStore.theme === Theme.LIGHT
+                this.props.themeStore.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
                   : config.styles.dark.secondaryTextColor
               }
@@ -93,7 +93,7 @@ export class SetUpAccountScreen extends React.Component<
               autoCapitalize="none"
               placeholder="Confirm password"
               placeholderTextColor={
-                this.props.darkModeStore.theme === Theme.LIGHT
+                this.props.themeStore.theme === Theme.LIGHT
                   ? config.styles.light.secondaryTextColor
                   : config.styles.dark.secondaryTextColor
               }

@@ -32,7 +32,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { VocabularySaga } from '../sagas/VocabularySaga';
 
 const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
@@ -68,8 +67,7 @@ describe('VocabularySaga', (): void => {
           mockedUserDatabase,
           mockedVocabularyModel,
           mockedSpacedRepetitionModel,
-          mockedWritingModel,
-          new CrashlyticsAdapter(null, false)
+          mockedWritingModel
         );
       }
     );
@@ -144,6 +142,7 @@ describe('VocabularySaga', (): void => {
             createAction(ActionType.VOCABULARY__ADD_FAILED, {
               vocabulary,
               errorCode: ErrorCode.VOCABULARY__NO_DEFINITIONS,
+              error: ErrorCode.VOCABULARY__NO_DEFINITIONS,
             })
           )
           .silentRun();

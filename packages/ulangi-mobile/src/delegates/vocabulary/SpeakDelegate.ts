@@ -6,6 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 
 export class SpeakDelegate {
@@ -21,7 +22,7 @@ export class SpeakDelegate {
     callback: {
       onSynthesizing: () => void;
       onSynthesizeSucceeded: (filePath: string) => void;
-      onSynthesizeFailed: (errorCode: string) => void;
+      onSynthesizeFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -38,7 +39,7 @@ export class SpeakDelegate {
         ),
         once(
           ActionType.AUDIO__SYNTHESIZE_SPEECH_FAILED,
-          ({ errorCode }): void => callback.onSynthesizeFailed(errorCode),
+          (errorBag): void => callback.onSynthesizeFailed(errorBag),
         ),
       ),
     );
@@ -49,7 +50,7 @@ export class SpeakDelegate {
     callback: {
       onSpeaking: () => void;
       onSpeakSucceeded: () => void;
-      onSpeakFailed: (errorCode: string) => void;
+      onSpeakFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -65,7 +66,7 @@ export class SpeakDelegate {
         ),
         once(
           ActionType.AUDIO__PLAY_FAILED,
-          ({ errorCode }): void => callback.onSpeakFailed(errorCode),
+          (errorBag): void => callback.onSpeakFailed(errorBag),
         ),
       ),
     );

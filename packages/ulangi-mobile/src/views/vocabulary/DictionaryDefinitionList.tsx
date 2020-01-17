@@ -7,13 +7,12 @@
 
 import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
+import { Attribution, Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
-import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import { DictionaryDefinition } from './DictionaryDefinition';
 import {
@@ -25,11 +24,10 @@ import {
 export interface DictionaryDefinitionListProps {
   theme: Theme;
   term: string;
-  formattedSource: string;
-  license: string;
+  attribution: Attribution;
   definitions: readonly ObservableDictionaryDefinition[];
   onPick: (definition: DeepPartial<Definition>) => void;
-  openSourceLink: () => void;
+  openLink: (link: string) => void;
   styles?: {
     light: DictionaryDefinitionListStyles;
     dark: DictionaryDefinitionListStyles;
@@ -51,22 +49,41 @@ export class DictionaryDefinitionList extends React.Component<
       <React.Fragment>
         <View style={this.styles.source_container}>
           <View style={this.styles.source_left}>
-            <TouchableOpacity
-              style={this.styles.link_container}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              onPress={this.props.openSourceLink}>
-              <DefaultText style={this.styles.source_text}>
-                {this.props.formattedSource}
+            <DefaultText style={this.styles.source_text}>
+              <DefaultText>From </DefaultText>
+              <DefaultText
+                onPress={(): void => {
+                  if (
+                    typeof this.props.attribution.sourceLink !== 'undefined'
+                  ) {
+                    this.props.openLink(this.props.attribution.sourceLink);
+                  }
+                }}
+                style={
+                  this.props.attribution.sourceLink
+                    ? this.styles.hightlighted
+                    : null
+                }>
+                {this.props.attribution.sourceName}
               </DefaultText>
-              <Image
-                style={this.styles.link_icon}
-                source={Images.LINK_GREY_14X14}
-              />
-            </TouchableOpacity>
+            </DefaultText>
+            {typeof this.props.attribution.license !== 'undefined' ? (
+              <DefaultText style={this.styles.license_text}>
+                <DefaultText>, under </DefaultText>
+                <DefaultText
+                  style={this.styles.hightlighted}
+                  onPress={(): void => {
+                    if (
+                      typeof this.props.attribution.licenseLink !== 'undefined'
+                    ) {
+                      this.props.openLink(this.props.attribution.licenseLink);
+                    }
+                  }}>
+                  {this.props.attribution.license}
+                </DefaultText>
+              </DefaultText>
+            ) : null}
           </View>
-          <DefaultText style={this.styles.license_text}>
-            {this.props.license}
-          </DefaultText>
         </View>
         {this.props.definitions.map(
           (definition, index): React.ReactElement<any> => {

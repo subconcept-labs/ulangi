@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableQuizMultipleChoiceScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -26,7 +26,7 @@ import {
 } from './QuizMultipleChoiceScreen.style';
 
 export interface QuizMultipleChoiceScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: QuizMultipleChoiceScreenDelegate;
   observableScreen: ObservableQuizMultipleChoiceScreen;
 }
@@ -36,7 +36,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
   QuizMultipleChoiceScreenProps
 > {
   public get styles(): QuizMultipleChoiceScreenStyles {
-    return this.props.darkModeStore.theme === Theme.LIGHT
+    return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
   }
@@ -49,7 +49,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
         <ScrollView>
           {this.props.observableScreen.shouldShowResult.get() === true ? (
             <QuizMultipleChoiceResult
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               observableScreen={this.props.observableScreen}
               takeAnotherQuiz={this.props.screenDelegate.takeAnotherQuiz}
               quit={this.props.screenDelegate.quit}
@@ -57,7 +57,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
           ) : (
             <React.Fragment>
               <MultipleChoiceFormTop
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
                 multipleChoiceFormState={
                   this.props.observableScreen.multipleChoiceFormState
                 }
@@ -67,7 +67,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
                   this.props.observableScreen.multipleChoiceFormState
                     .currentQuestion.questionId
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
                 multipleChoiceFormState={
                   this.props.observableScreen.multipleChoiceFormState
                 }

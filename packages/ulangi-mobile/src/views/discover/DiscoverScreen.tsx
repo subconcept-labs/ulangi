@@ -7,9 +7,9 @@
 
 import { DiscoverListType } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableDiscoverScreen,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -29,7 +29,7 @@ import { TranslationAndPublicVocabularyList } from './TranslationAndPublicVocabu
 
 export interface DiscoverScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableDiscoverScreen;
   screenDelegate: DiscoverScreenDelegate;
 }
@@ -66,10 +66,10 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
 
   private renderTopBar(): React.ReactElement<any> {
     return (
-      <TopBar theme={this.props.darkModeStore.theme}>
+      <TopBar theme={this.props.themeStore.theme}>
         <>
           <DiscoverSearch
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             setStore={this.props.setStore}
             searchInput={this.props.observableScreen.searchInput}
             searchInputAutoFocus={
@@ -82,7 +82,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
             onSubmitEditing={this.props.screenDelegate.handleInputEnded}
           />
           <DiscoverNavBar
-            theme={this.props.darkModeStore.theme}
+            theme={this.props.themeStore.theme}
             listType={this.props.observableScreen.listType}
             publicSetListState={this.props.observableScreen.publicSetListState}
             publicVocabularyListState={
@@ -125,7 +125,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     ) {
       return (
         <TranslationAndPublicVocabularyList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           learningLanguageCode={
             this.props.setStore.existingCurrentSet.learningLanguageCode
           }
@@ -158,7 +158,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     } else {
       return (
         <PublicSetList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           isPremadeSetList={
             this.props.observableScreen.listType.get() ===
             DiscoverListType.PREMADE_SET_LIST

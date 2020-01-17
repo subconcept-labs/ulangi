@@ -16,7 +16,7 @@ import { PromiseType } from 'utility-types';
 import * as uuid from 'uuid';
 
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -26,7 +26,6 @@ export class AudioSaga extends ProtectedSaga {
   private sessionModel: SessionModel;
   private fileSystem: typeof FileSystem;
   private audioPlayer: AudioPlayerAdapter;
-  private crashlytics: CrashlyticsAdapter;
 
   private synthesizedMap: Map<string, string>;
 
@@ -34,15 +33,13 @@ export class AudioSaga extends ProtectedSaga {
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
     fileSystem: typeof FileSystem,
-    audioPlayer: AudioPlayerAdapter,
-    crashlytics: CrashlyticsAdapter
+    audioPlayer: AudioPlayerAdapter
   ) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.fileSystem = fileSystem;
     this.audioPlayer = audioPlayer;
-    this.crashlytics = crashlytics;
 
     this.synthesizedMap = new Map();
   }
@@ -128,7 +125,8 @@ export class AudioSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.AUDIO__SYNTHESIZE_SPEECH_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -162,7 +160,8 @@ export class AudioSaga extends ProtectedSaga {
           createAction(
             ActionType.AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE_FAILED,
             {
-              errorCode: this.crashlytics.getErrorCode(error),
+              errorCode: errorConverter.getErrorCode(error),
+              error,
             }
           )
         );
@@ -191,7 +190,8 @@ export class AudioSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.AUDIO__PLAY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

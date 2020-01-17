@@ -6,7 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { PixabayImage } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, PixabayImage } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 
 export class UploadImageDelegate {
@@ -21,7 +21,7 @@ export class UploadImageDelegate {
     callback: {
       onUploading: () => void;
       onUploadSucceeded: (urls: string[]) => void;
-      onUploadFailed: (errorCode: string) => void;
+      onUploadFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -36,7 +36,7 @@ export class UploadImageDelegate {
         ),
         once(
           ActionType.IMAGE__UPLOAD_IMAGES_FAILED,
-          ({ errorCode }): void => callback.onUploadFailed(errorCode),
+          (errorBag): void => callback.onUploadFailed(errorBag),
         ),
       ),
     );

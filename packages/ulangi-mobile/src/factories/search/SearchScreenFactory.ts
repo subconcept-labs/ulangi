@@ -43,7 +43,6 @@ export class SearchScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen.vocabularyListState,
-      this.props.analytics,
     );
 
     const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);

@@ -9,11 +9,12 @@ import { UserExtraDataName, UserMembership } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettings,
   AutoShowInAppRating,
-  DarkModeSettings,
   GlobalAutoArchive,
-  GlobalDarkMode,
+  GlobalDataSharing,
   GlobalReminder,
+  GlobalTheme,
   ReminderSettings,
+  ThemeSettings,
 } from '@ulangi/ulangi-common/interfaces';
 import { UserExtraDataItem } from '@ulangi/ulangi-common/types';
 import { computed, observable } from 'mobx';
@@ -70,10 +71,19 @@ export class ObservableUser {
   }
 
   @computed
-  public get darkModeSettings(): undefined | DarkModeSettings {
+  public get globalDataSharing(): undefined | boolean {
     const data = this.extraData.find(
-      (data): data is GlobalDarkMode =>
-        data.dataName === UserExtraDataName.GLOBAL_DARK_MODE
+      (data): data is GlobalDataSharing =>
+        data.dataName === UserExtraDataName.GLOBAL_DATA_SHARING
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get themeSettings(): undefined | ThemeSettings {
+    const data = this.extraData.find(
+      (data): data is GlobalTheme =>
+        data.dataName === UserExtraDataName.GLOBAL_THEME
     );
     return data ? data.dataValue : undefined;
   }

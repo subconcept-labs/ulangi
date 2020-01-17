@@ -5,20 +5,15 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import {
-  LicenseGetter,
-  LinkGenerator,
-  SourceFormatter,
-} from '@ulangi/ulangi-common/core';
+import { AttributionHelper } from '@ulangi/ulangi-common/core';
+import { Attribution } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 import { computed, observable } from 'mobx';
 
 import { ObservableDictionaryDefinition } from './ObservableDictionaryDefinition';
 
 export class ObservableDictionaryEntry {
-  private sourceFormatter = new SourceFormatter();
-  private linkGenerator = new LinkGenerator();
-  private licenseGetter = new LicenseGetter();
+  private attributionHelper = new AttributionHelper();
 
   @observable
   public vocabularyText: string;
@@ -28,9 +23,7 @@ export class ObservableDictionaryEntry {
 
   @computed
   public get definitionsBySource(): {
-    formattedSource: string;
-    link?: string;
-    license: string;
+    attribution: Attribution;
     definitions: readonly ObservableDictionaryDefinition[];
   }[] {
     const groupBySource = _.groupBy(
@@ -46,18 +39,25 @@ export class ObservableDictionaryEntry {
         definitions,
         source
       ): {
-        formattedSource: string;
-        link?: string;
-        license: string;
+        attribution: Attribution;
         definitions: readonly ObservableDictionaryDefinition[];
       } => {
+        const sourceName = this.attributionHelper.formatSource(source);
+        const sourceLink = this.attributionHelper.generateLinkBySource(source, {
+          term: this.vocabularyText,
+        });
+        const license = this.attributionHelper.getLicenseBySource(source);
+        const licenseLink = this.attributionHelper.getLinkByLicense(
+          license || ''
+        );
+
         return {
-          formattedSource: this.sourceFormatter.format(source),
-          link: this.linkGenerator.generateLinkBySourceAndValue(
-            source,
-            this.vocabularyText
-          ),
-          license: this.licenseGetter.getLicenseBySource(source),
+          attribution: {
+            sourceName,
+            sourceLink,
+            license,
+            licenseLink,
+          },
           definitions,
         };
       }

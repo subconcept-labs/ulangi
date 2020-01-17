@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableImageSelectorScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -19,7 +19,7 @@ import { ImageList } from './ImageList';
 import { SearchInput } from './SearchInput';
 
 export interface ImageSelectorScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableImageSelectorScreen;
   screenDelegate: ImageSelectorScreenDelegate;
 }
@@ -32,12 +32,12 @@ export class ImageSelectorScreen extends React.Component<
     return (
       <View style={styles.screen} testID={ImageSelectorScreenIds.SCREEN}>
         <SearchInput
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           input={this.props.observableScreen.input}
           onSubmitEditing={this.props.screenDelegate.resetSearch}
         />
         <ImageList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           images={this.props.observableScreen.images}
           searchState={this.props.observableScreen.searchState}
           isRefreshing={this.props.observableScreen.isRefreshing}

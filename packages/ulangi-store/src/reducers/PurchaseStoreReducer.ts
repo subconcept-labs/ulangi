@@ -15,15 +15,10 @@ import { Reducer } from './Reducer';
 
 export class PurchaseStoreReducer extends Reducer {
   private purchaseStore: ObservablePurchaseStore;
-  private readonly PREMIUM_LIFETIME_PRODUCT_ID: null | string;
 
-  public constructor(
-    purchaseStore: ObservablePurchaseStore,
-    PREMIUM_LIFETIME_PRODUCT_ID: null | string
-  ) {
+  public constructor(purchaseStore: ObservablePurchaseStore) {
     super();
     this.purchaseStore = purchaseStore;
-    this.PREMIUM_LIFETIME_PRODUCT_ID = PREMIUM_LIFETIME_PRODUCT_ID;
   }
 
   public perform(action: InferableAction): void {
@@ -39,7 +34,9 @@ export class PurchaseStoreReducer extends Reducer {
   private processingPurchase(
     action: Action<ActionType.IAP__PROCESSING_PURCHASE>
   ): void {
-    if (this.PREMIUM_LIFETIME_PRODUCT_ID === action.payload.productId) {
+    if (
+      this.purchaseStore.premiumLifetimeProductId === action.payload.productId
+    ) {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.ACTIVE;
     }
   }
@@ -59,7 +56,7 @@ export class PurchaseStoreReducer extends Reducer {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.INACTIVE;
       this.purchaseStore.premiumLifetimeProcessResult = {
         success: true,
-        errorCode: null,
+        errorBag: null,
       };
     } else if (
       purchasesAlreadyApplied.filter(this.isPremiumLifetimePurchase).length > 0
@@ -67,7 +64,10 @@ export class PurchaseStoreReducer extends Reducer {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.ERROR;
       this.purchaseStore.premiumLifetimeProcessResult = {
         success: false,
-        errorCode: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED,
+        errorBag: {
+          errorCode: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED,
+          error: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED,
+        },
       };
     } else if (
       purchasesAlreadyAppliedToOtherAccounts.filter(
@@ -77,7 +77,10 @@ export class PurchaseStoreReducer extends Reducer {
       this.purchaseStore.premiumLifetimeProcessState = ActivityState.ERROR;
       this.purchaseStore.premiumLifetimeProcessResult = {
         success: false,
-        errorCode: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED_TO_OTHER_ACCOUNTS,
+        errorBag: {
+          errorCode: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED_TO_OTHER_ACCOUNTS,
+          error: ErrorCode.IAP__PURCHASES_ALREADY_APPLIED_TO_OTHER_ACCOUNTS,
+        },
       };
     }
   }
@@ -88,12 +91,12 @@ export class PurchaseStoreReducer extends Reducer {
     this.purchaseStore.premiumLifetimeProcessState = ActivityState.ERROR;
     this.purchaseStore.premiumLifetimeProcessResult = {
       success: false,
-      errorCode: action.payload.errorCode,
+      errorBag: action.payload,
     };
   }
 
   @boundMethod
   private isPremiumLifetimePurchase(purchase: Purchase): boolean {
-    return this.PREMIUM_LIFETIME_PRODUCT_ID === purchase.productId;
+    return this.purchaseStore.premiumLifetimeProductId === purchase.productId;
   }
 }

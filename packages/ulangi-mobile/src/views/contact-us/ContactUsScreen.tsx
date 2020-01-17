@@ -8,7 +8,7 @@
 import { ContactUsFormType } from '@ulangi/ulangi-common/enums';
 import {
   ObservableContactUsScreen,
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -24,7 +24,7 @@ import { ReportABugForm } from './ReportABugForm';
 import { ReportAnErrorForm } from './ReportAnErrorForm';
 
 export interface ContactUsScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
   observableScreen: ObservableContactUsScreen;
 }
@@ -47,7 +47,7 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
     ) {
       return (
         <FeatureRequestForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
         />
       );
@@ -56,7 +56,7 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
     ) {
       return (
         <ReportABugForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
           isGuestEmail={this.props.userStore.existingCurrentUser.email.endsWith(
             config.general.guestEmailDomain,
@@ -69,14 +69,14 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
     ) {
       return (
         <ReportAnErrorForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
         />
       );
     } else {
       return (
         <ContactSupportForm
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
           isGuestEmail={this.props.userStore.existingCurrentUser.email.endsWith(
             config.general.guestEmailDomain,

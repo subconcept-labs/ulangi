@@ -8,6 +8,7 @@
 import { ObservableForgotPasswordScreen } from '@ulangi/ulangi-observable';
 
 import { ForgotPasswordScreenDelegate } from '../../delegates/auth/ForgotPasswordScreenDelegate';
+import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ForgotPasswordScreenFactory extends ScreenFactory {
@@ -16,9 +17,14 @@ export class ForgotPasswordScreenFactory extends ScreenFactory {
   ): ForgotPasswordScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     return new ForgotPasswordScreenDelegate(
       this.eventBus,
       observableScreen,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

@@ -115,7 +115,7 @@ export class SearchScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <SearchScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

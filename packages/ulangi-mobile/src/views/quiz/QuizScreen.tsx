@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableQuizScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -19,7 +19,7 @@ import { QuizMenu } from './QuizMenu';
 import { QuizTitle } from './QuizTitle';
 
 export interface QuizScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableQuizScreen;
   screenDelegate: QuizScreenDelegate;
 }
@@ -31,7 +31,7 @@ export class QuizScreen extends React.Component<QuizScreenProps> {
         <View style={styles.container}>
           <View style={styles.middle_container}>
             <View style={styles.title_container}>
-              <QuizTitle theme={this.props.darkModeStore.theme} />
+              <QuizTitle theme={this.props.themeStore.theme} />
             </View>
             <View style={styles.menu_container}>
               <QuizMenu
@@ -50,7 +50,7 @@ export class QuizScreen extends React.Component<QuizScreenProps> {
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
               />
             </View>
           </View>

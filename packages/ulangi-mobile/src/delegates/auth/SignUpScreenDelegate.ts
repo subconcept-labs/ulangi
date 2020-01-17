@@ -7,31 +7,31 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSignUpScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import { Keyboard } from 'react-native';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 @boundClass
 export class SignUpScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private observableScreen: ObservableSignUpScreen;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     observableScreen: ObservableSignUpScreen,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -57,32 +57,20 @@ export class SignUpScreenDelegate {
         ),
         once(
           ActionType.USER__SIGN_UP_FAILED,
-          ({ errorCode }): void => this.showSignUpFailedDialog(errorCode),
+          (errorBag): void => this.showSignUpFailedDialog(errorBag),
         ),
       ),
     );
   }
 
   public showCreatingAccountDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Creating account. Please wait...',
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Creating account. Please wait...',
+    });
   }
 
-  public showSignUpFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        title: 'SIGN-UP FAILED',
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  public showSignUpFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag);
   }
 
   public back(): void {

@@ -27,7 +27,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { UserSaga } from './UserSaga';
 
@@ -69,8 +68,7 @@ describe('UserSaga', (): void => {
           mockedSharedDatabase,
           mockedUserDatabase,
           mockedSessionModel,
-          mockedUserModel,
-          new CrashlyticsAdapter(null, false)
+          mockedUserModel
         );
 
         restoreCurrentTime = mockCurrentTime();
@@ -175,6 +173,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__INVALID_EMAIL,
+              error: ErrorCode.USER__INVALID_EMAIL,
             })
           )
           .silentRun();
@@ -198,6 +197,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__INVALID_EMAIL,
+              error: ErrorCode.USER__INVALID_EMAIL,
             })
           )
           .silentRun();
@@ -221,6 +221,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__CONFIRM_PASSWORD_MISMATCHED,
+              error: ErrorCode.USER__CONFIRM_PASSWORD_MISMATCHED,
             })
           )
           .silentRun();
@@ -244,6 +245,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__WEAK_PASSWORD,
+              error: ErrorCode.USER__WEAK_PASSWORD,
             })
           )
           .silentRun();
@@ -328,6 +330,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_FAILED, {
               errorCode: ErrorCode.USER__INVALID_EMAIL,
+              error: ErrorCode.USER__INVALID_EMAIL,
             })
           )
           .silentRun();
@@ -348,6 +351,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_EMAIL_FAILED, {
               errorCode: ErrorCode.USER__INVALID_EMAIL,
+              error: ErrorCode.USER__INVALID_EMAIL,
             })
           )
           .silentRun();
@@ -437,6 +441,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__WEAK_PASSWORD,
+              error: ErrorCode.USER__WEAK_PASSWORD,
             })
           )
           .silentRun();
@@ -460,6 +465,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CHANGE_PASSWORD_FAILED, {
               errorCode: ErrorCode.USER__CONFIRM_PASSWORD_MISMATCHED,
+              error: ErrorCode.USER__CONFIRM_PASSWORD_MISMATCHED,
             })
           )
           .silentRun();
@@ -556,6 +562,7 @@ describe('UserSaga', (): void => {
           .put(
             createAction(ActionType.USER__CONTACT_ADMIN_FAILED, {
               errorCode: ErrorCode.GENERAL__UNKNOWN_ERROR,
+              error: ErrorCode.GENERAL__UNKNOWN_ERROR,
             })
           )
           .silentRun();

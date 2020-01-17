@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState } from '@ulangi/ulangi-common/enums';
+import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
 import { IObservableValue, action, observable } from 'mobx';
 
 import { ObservableDictionaryEntry } from './ObservableDictionaryEntry';
@@ -16,7 +16,7 @@ export class ObservableDictionaryEntryState {
 
   public readonly fetchState: IObservableValue<ActivityState>;
 
-  public readonly fetchError: IObservableValue<undefined | string>;
+  public readonly fetchError: IObservableValue<undefined | ErrorCode>;
 
   @action
   public reset(): void {
@@ -28,7 +28,7 @@ export class ObservableDictionaryEntryState {
   public constructor(
     dictionaryEntry: null | ObservableDictionaryEntry,
     fetchState: IObservableValue<ActivityState>,
-    fetchError: IObservableValue<undefined | string>
+    fetchError: IObservableValue<undefined | ErrorCode>
   ) {
     this.dictionaryEntry = dictionaryEntry;
     this.fetchState = fetchState;

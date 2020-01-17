@@ -8,7 +8,6 @@
 import * as _ from 'lodash';
 
 import { ObservableAdStore } from './ObservableAdStore';
-import { ObservableDarkModeStore } from './ObservableDarkModeStore';
 import { ObservableNetworkStore } from './ObservableNetworkStore';
 import { ObservableNotificationStore } from './ObservableNotificationStore';
 import { ObservablePurchaseStore } from './ObservablePurchaseStore';
@@ -16,6 +15,7 @@ import { ObservableRemoteConfigStore } from './ObservableRemoteConfigStore';
 import { ObservableSetStore } from './ObservableSetStore';
 import { ObservableStore } from './ObservableStore';
 import { ObservableSyncStore } from './ObservableSyncStore';
+import { ObservableThemeStore } from './ObservableThemeStore';
 import { ObservableUserStore } from './ObservableUserStore';
 
 export class ObservableRootStore extends ObservableStore {
@@ -27,7 +27,7 @@ export class ObservableRootStore extends ObservableStore {
   public readonly purchaseStore: ObservablePurchaseStore;
   public readonly adStore: ObservableAdStore;
   public readonly notificationStore: ObservableNotificationStore;
-  public readonly darkModeStore: ObservableDarkModeStore;
+  public readonly themeStore: ObservableThemeStore;
 
   public constructor(
     userStore: ObservableUserStore,
@@ -38,7 +38,7 @@ export class ObservableRootStore extends ObservableStore {
     purchaseStore: ObservablePurchaseStore,
     adStore: ObservableAdStore,
     notificationStore: ObservableNotificationStore,
-    darkModeStore: ObservableDarkModeStore
+    themeStore: ObservableThemeStore
   ) {
     super();
     this.userStore = userStore;
@@ -49,20 +49,18 @@ export class ObservableRootStore extends ObservableStore {
     this.purchaseStore = purchaseStore;
     this.adStore = adStore;
     this.notificationStore = notificationStore;
-    this.darkModeStore = darkModeStore;
+    this.themeStore = themeStore;
   }
 
   public reset(newRootStore: ObservableRootStore): void {
     _.forOwn(
       this,
-      (childStore, childStoreName): void => {
+      (_, childStoreName): void => {
         const newStore =
           newRootStore[childStoreName as keyof ObservableRootStore];
-        if (
-          childStore instanceof ObservableStore &&
-          newStore instanceof ObservableStore
-        ) {
-          childStore.reset(newStore);
+        if (newStore instanceof ObservableStore) {
+          // @ts-ignore
+          this[childStoreName] = newStore;
         }
       }
     );

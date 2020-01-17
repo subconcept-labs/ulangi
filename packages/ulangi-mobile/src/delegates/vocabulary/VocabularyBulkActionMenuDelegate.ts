@@ -268,7 +268,7 @@ export class VocabularyBulkActionMenuDelegate {
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_FAILED,
-          ({ errorCode }): void => this.showFailedDialog(errorCode),
+          (errorBag): void => this.dialogDelegate.showFailedDialog(errorBag),
         ),
       ),
     );
@@ -284,9 +284,5 @@ export class VocabularyBulkActionMenuDelegate {
     this.dialogDelegate.showSuccessDialog({
       message: 'Performed bulk action successfully.',
     });
-  }
-
-  private showFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {});
   }
 }

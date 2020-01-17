@@ -12,6 +12,7 @@ import {
   ScreenName,
   UserMembership,
 } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableMembershipScreen,
@@ -23,14 +24,12 @@ import { boundClass } from 'autobind-decorator';
 import { Platform } from 'react-native';
 
 import { env } from '../../constants/env';
-import { ErrorConverter } from '../../converters/ErrorConverter';
+import { errorConverter } from '../../converters/ErrorConverter';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 @boundClass
 export class MembershipScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private observer: Observer;
   private userStore: ObservableUserStore;
@@ -128,8 +127,8 @@ export class MembershipScreenDelegate {
           ),
           once(
             ActionType.IAP__RESTORE_PURCHASES_FAILED,
-            ({ errorCode }): void => {
-              this.showFailedToRestorePurchases(errorCode);
+            (errorBag): void => {
+              this.showFailedToRestorePurchases(errorBag);
             },
           ),
         ),
@@ -152,12 +151,14 @@ export class MembershipScreenDelegate {
         } else if (this.purchaseStore.premiumLifetimeProcessResult !== null) {
           const {
             success,
-            errorCode,
+            errorBag,
           } = this.purchaseStore.premiumLifetimeProcessResult;
           this.observableScreen.upgradeButtonState.reset(
             success === true
               ? 'Processed purchase successfully'
-              : this.errorConverter.convertToMessage(errorCode || ''),
+              : errorBag !== null
+              ? errorConverter.convertToMessage(errorBag)
+              : 'Invalid state',
           );
         }
       },
@@ -210,8 +211,8 @@ export class MembershipScreenDelegate {
           ),
           once(
             ActionType.IAP__REQUEST_PURCHASE_FAILED,
-            ({ errorCode }): void => {
-              this.showFailedToRequestPurchase(errorCode);
+            (errorBag): void => {
+              this.showFailedToRequestPurchase(errorBag);
             },
           ),
         ),
@@ -234,11 +235,9 @@ export class MembershipScreenDelegate {
     });
   }
 
-  private showFailedToRequestPurchase(errorCode: string): void {
-    this.dialogDelegate.show({
+  private showFailedToRequestPurchase(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'FAILED TO REQUEST PURCHASE',
-      message: this.errorConverter.convertToMessage(errorCode),
-      showCloseButton: true,
     });
   }
 
@@ -248,11 +247,9 @@ export class MembershipScreenDelegate {
     });
   }
 
-  private showFailedToRestorePurchases(errorCode: string): void {
-    this.dialogDelegate.show({
+  private showFailedToRestorePurchases(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'FAILED TO RESTORE PURCHASES',
-      message: this.errorConverter.convertToMessage(errorCode),
-      showCloseButton: true,
     });
   }
 }

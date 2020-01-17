@@ -19,6 +19,7 @@ import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLess
 import { WritingSaveResultDelegate } from '../../delegates/writing/WritingSaveResultDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
+import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class WritingLessonScreenFactory extends ScreenFactory {
@@ -35,6 +36,10 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     startLesson: () => void,
   ): WritingLessonScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
 
     const adDelegate = new AdDelegate(
       this.eventBus,
@@ -95,6 +100,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       reviewFeedbackBarDelegate,
       adDelegate,
       adAfterLessonDelegate,
+      dialogDelegate,
       navigatorDelegate,
       startLesson,
     );

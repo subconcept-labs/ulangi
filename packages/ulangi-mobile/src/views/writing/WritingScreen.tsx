@@ -6,7 +6,7 @@
  */
 
 import {
-  ObservableDarkModeStore,
+  ObservableThemeStore,
   ObservableWritingScreen,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -20,7 +20,7 @@ import { WritingMenu } from './WritingMenu';
 import { WritingTitle } from './WritingTitle';
 
 export interface WritingScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableWritingScreen;
   screenDelegate: WritingScreenDelegate;
 }
@@ -33,7 +33,7 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
         <View style={styles.container}>
           <View style={styles.middle_container}>
             <View style={styles.title_container}>
-              <WritingTitle theme={this.props.darkModeStore.theme} />
+              <WritingTitle theme={this.props.themeStore.theme} />
             </View>
             <View style={styles.menu_container}>
               <WritingMenu
@@ -52,7 +52,7 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
               />
             </View>
           </View>

@@ -11,13 +11,6 @@ import { computed, observable } from 'mobx';
 import { ObservableStore } from '../stores/ObservableStore';
 
 export class ObservableAdStore extends ObservableStore {
-  protected noReset = [
-    'isSetUp',
-    'isInitialized',
-    'consentStatus',
-    'isRequestLocationInEeaOrUnknown',
-  ];
-
   @observable
   public isSetUp: boolean;
 

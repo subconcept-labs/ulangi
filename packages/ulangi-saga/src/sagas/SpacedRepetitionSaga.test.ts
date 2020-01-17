@@ -32,7 +32,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
 import { SpacedRepetitionSaga } from './SpacedRepetitionSaga';
 
@@ -73,8 +72,7 @@ describe('SpacedRepetitionSaga', (): void => {
           mockedUserDatabase,
           mockedSessionModel,
           mockedVocabularyModel,
-          mockedSpacedRepetitionModel,
-          new CrashlyticsAdapter(null, false)
+          mockedSpacedRepetitionModel
         );
       }
     );
@@ -347,6 +345,7 @@ describe('SpacedRepetitionSaga', (): void => {
                   setId,
                   errorCode:
                     ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
+                  error: ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
                 }
               )
             )
@@ -432,6 +431,7 @@ describe('SpacedRepetitionSaga', (): void => {
                   setId,
                   errorCode:
                     ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
+                  error: ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
                 }
               )
             )
@@ -647,6 +647,7 @@ describe('SpacedRepetitionSaga', (): void => {
                   setId,
                   errorCode:
                     ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
+                  error: ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY,
                 }
               )
             )

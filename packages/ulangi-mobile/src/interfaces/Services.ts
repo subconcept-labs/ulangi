@@ -13,7 +13,6 @@ import {
   ObservableRootStore,
   ObservableScreenRegistry,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 
 export interface Services {
   readonly eventBusFactory: EventBusFactory;
@@ -22,5 +21,4 @@ export interface Services {
   readonly observableLightBox: ObservableLightBox;
   readonly observableKeyboard: ObservableKeyboard;
   readonly observableScreenRegistry: ObservableScreenRegistry;
-  readonly analytics: AnalyticsAdapter;
 }

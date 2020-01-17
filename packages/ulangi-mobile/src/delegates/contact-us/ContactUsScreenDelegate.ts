@@ -7,34 +7,34 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ContactUsFormType } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableContactUsScreen,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 export class ContactUsScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private userStore: ObservableUserStore;
   private observableScreen: ObservableContactUsScreen;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     userStore: ObservableUserStore,
     observableScreen: ObservableContactUsScreen,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.userStore = userStore;
     this.observableScreen = observableScreen;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -79,8 +79,8 @@ export class ContactUsScreenDelegate {
         onContactAdminSucceeded: (): void => {
           this.showContactAdminSucceededDialog();
         },
-        onContactAdminFailed: (errorCode): void => {
-          this.showContactAdminFailedDialog(errorCode);
+        onContactAdminFailed: (errorBag): void => {
+          this.dialogDelegate.showFailedDialog(errorBag);
         },
       },
     );
@@ -99,8 +99,8 @@ export class ContactUsScreenDelegate {
         onContactAdminSucceeded: (): void => {
           this.showContactAdminSucceededDialog();
         },
-        onContactAdminFailed: (errorCode): void => {
-          this.showContactAdminFailedDialog(errorCode);
+        onContactAdminFailed: (errorBag): void => {
+          this.dialogDelegate.showFailedDialog(errorBag);
         },
       },
     );
@@ -119,8 +119,8 @@ export class ContactUsScreenDelegate {
         onContactAdminSucceeded: (): void => {
           this.showContactAdminSucceededDialog();
         },
-        onContactAdminFailed: (errorCode): void => {
-          this.showContactAdminFailedDialog(errorCode);
+        onContactAdminFailed: (errorBag): void => {
+          this.dialogDelegate.showFailedDialog(errorBag);
         },
       },
     );
@@ -139,47 +139,26 @@ export class ContactUsScreenDelegate {
         onContactAdminSucceeded: (): void => {
           this.showContactAdminSucceededDialog();
         },
-        onContactAdminFailed: (errorCode): void => {
-          this.showContactAdminFailedDialog(errorCode);
+        onContactAdminFailed: (errorBag): void => {
+          this.dialogDelegate.showFailedDialog(errorBag);
         },
       },
     );
   }
 
   private showContactingAdminDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Sending. Please wait...',
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Sending. Please wait...',
+    });
   }
 
   private showContactAdminSucceededDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Sent successfully.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-        onClose: (): void => {
-          this.navigatorDelegate.pop();
-        },
+    this.dialogDelegate.showSuccessDialog({
+      message: 'Sent successfully.',
+      onClose: (): void => {
+        this.navigatorDelegate.pop();
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
-  }
-
-  private showContactAdminFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    });
   }
 
   private sendMessage(
@@ -190,7 +169,7 @@ export class ContactUsScreenDelegate {
     callback: {
       onContactingAdmin: () => void;
       onContactAdminSucceeded: () => void;
-      onContactAdminFailed: (errorCode: string) => void;
+      onContactAdminFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -208,7 +187,7 @@ export class ContactUsScreenDelegate {
         ),
         once(
           ActionType.USER__CONTACT_ADMIN_FAILED,
-          ({ errorCode }): void => callback.onContactAdminFailed(errorCode),
+          (errorBag): void => callback.onContactAdminFailed(errorBag),
         ),
       ),
     );

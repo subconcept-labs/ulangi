@@ -12,21 +12,21 @@ import {
   ScreenName,
   SyncTask,
 } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, once } from '@ulangi/ulangi-event';
 import {
   ObservableKeyboard,
   ObservableSignInScreen,
   Observer,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { Keyboard } from 'react-native';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { SignInScreenIds } from '../../constants/ids/SignInScreenIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { SingleScreenStyle } from '../../styles/SingleScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
 import { FetchSetDelegate } from '../set/FetchSetDelegate';
@@ -35,8 +35,6 @@ import { AuthDelegate } from './AuthDelegate';
 
 @boundClass
 export class SignInScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private observer: Observer;
   private observableKeyboard: ObservableKeyboard;
@@ -45,8 +43,8 @@ export class SignInScreenDelegate {
   private setListDelegate: SetListDelegate;
   private fetchSetDelegate: FetchSetDelegate;
   private rootScreenDelegate: RootScreenDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
@@ -57,8 +55,8 @@ export class SignInScreenDelegate {
     setListDelegate: SetListDelegate,
     fetchSetDelegate: FetchSetDelegate,
     rootScreenDelegate: RootScreenDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
@@ -68,12 +66,12 @@ export class SignInScreenDelegate {
     this.setListDelegate = setListDelegate;
     this.fetchSetDelegate = fetchSetDelegate;
     this.rootScreenDelegate = rootScreenDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
-    this.analytics = analytics;
   }
 
   public signIn(): void {
-    this.analytics.logEvent('sign_in');
+    RemoteLogger.logEvent('sign_in');
     Keyboard.dismiss();
     this.authDelegate.signIn(
       this.observableScreen.email.get(),
@@ -86,7 +84,7 @@ export class SignInScreenDelegate {
             onFetchAllSucceeded: (setList): void => {
               if (this.setListDelegate.hasActiveSets(setList)) {
                 this.setListDelegate.selectFirstActiveSet(setList);
-                this.navigatorDelegate.dismissLightBox();
+                this.dialogDelegate.dismiss();
                 this.rootScreenDelegate.setRootToTabBasedScreen();
               } else {
                 this.downloadAllSets({
@@ -104,7 +102,7 @@ export class SignInScreenDelegate {
                             },
                           });
                         } else {
-                          this.navigatorDelegate.dismissLightBox();
+                          this.dialogDelegate.dismiss();
                           this.navigatorDelegate.resetTo(
                             ScreenName.CREATE_FIRST_SET_SCREEN,
                             {},
@@ -124,18 +122,18 @@ export class SignInScreenDelegate {
   }
 
   public signInAsGuest(): void {
-    this.analytics.logEvent('sign_in_as_guest');
+    RemoteLogger.logEvent('sign_in_as_guest');
     this.authDelegate.signInAsGuest({
       onSigningInAsGuest: this.showSigningInAsGuestDialog,
       onSignInAsGuestSucceeded: (): void => {
-        this.navigatorDelegate.dismissLightBox();
+        this.dialogDelegate.dismiss();
         this.navigatorDelegate.resetTo(ScreenName.CREATE_FIRST_SET_SCREEN, {});
       },
-      onSignInAsGuestFailed: (errorCode): void => {
-        if (errorCode === ErrorCode.USER__EMAIL_ALREADY_REGISTERED) {
+      onSignInAsGuestFailed: (errorBag): void => {
+        if (errorBag.errorCode === ErrorCode.USER__EMAIL_ALREADY_REGISTERED) {
           this.signInAsGuest();
         } else {
-          this.showSigningInAsGuestFailedDialog(errorCode);
+          this.showSigningInAsGuestFailedDialog(errorBag);
         }
       },
     });
@@ -168,94 +166,61 @@ export class SignInScreenDelegate {
   }
 
   private showSigningInDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Signing in. Please wait...',
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Signing in. Please wait...',
+    });
   }
 
-  private showSignInFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        title: 'SIGN-IN FAILED',
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showSignInFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'SIGN-IN FAILED',
+    });
   }
 
   private showFetchingDataDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Fetching data. Please wait...',
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Fetching data. Please wait...',
+    });
   }
 
-  private showFetchDataFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        title: 'FETCH DATA FAILED',
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showFetchDataFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FETCH DATA FAILED',
+    });
   }
 
   private showSyncingInProgressDialog(callback: { onClose: () => void }): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: SignInScreenIds.SYNCING_DIALOG,
-        title: 'NOTE',
-        message:
-          'Your flashcards will be downloaded gradually while you use the app.',
-        closeOnTouchOutside: false,
-        onClose: callback.onClose,
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'OKAY',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+    this.dialogDelegate.show({
+      testID: SignInScreenIds.SYNCING_DIALOG,
+      title: 'NOTE',
+      message:
+        'Your flashcards will be downloaded gradually while you use the app.',
+      closeOnTouchOutside: false,
+      onClose: callback.onClose,
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'OKAY',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
           },
-        ],
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private showSigningInAsGuestDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Creating an account. Please wait...',
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Creating an account. Please wait...',
+    });
   }
 
-  private showSigningInAsGuestFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        title: 'FAILED TO SIGN IN AS GUEST',
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SingleScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showSigningInAsGuestFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO SIGN IN AS GUEST',
+    });
   }
 }

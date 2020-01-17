@@ -9,6 +9,7 @@ import { ObservableQuizSettingsScreen } from '@ulangi/ulangi-observable';
 
 import { QuizSettingsDelegate } from '../../delegates/quiz/QuizSettingsDelegate';
 import { QuizSettingsScreenDelegate } from '../../delegates/quiz/QuizSettingsScreenDelegate';
+import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class QuizSettingsScreenFactory extends ScreenFactory {
@@ -24,11 +25,16 @@ export class QuizSettingsScreenFactory extends ScreenFactory {
   ): QuizSettingsScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const quizSettingsDelegate = this.createQuizSettingsDelegate();
 
     return new QuizSettingsScreenDelegate(
       observableScreen,
       quizSettingsDelegate,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

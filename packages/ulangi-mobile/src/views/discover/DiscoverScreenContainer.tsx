@@ -137,7 +137,7 @@ export class DiscoverScreenContainer extends Container {
     return (
       <DiscoverScreen
         setStore={this.props.rootStore.setStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

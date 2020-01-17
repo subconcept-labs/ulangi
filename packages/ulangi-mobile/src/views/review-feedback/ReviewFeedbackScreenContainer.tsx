@@ -120,7 +120,7 @@ export class ReviewFeedbackScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <ReviewFeedbackScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

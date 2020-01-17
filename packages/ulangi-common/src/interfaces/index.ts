@@ -5,6 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+export { Attribution } from './general/Attribution';
+export { ErrorBag } from './general/ErrorBag';
 export { PixabayImage } from './general/PixabayImage';
 export { Purchase } from './general/Purchase';
 export { Product } from './general/Product';
@@ -36,8 +38,9 @@ export {
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';
+export { GlobalDataSharing } from './general/GlobalDataSharing';
 export { GlobalReminder } from './general/GlobalReminder';
-export { GlobalDarkMode } from './general/GlobalDarkMode';
+export { GlobalTheme } from './general/GlobalTheme';
 export { AutoShowInAppRating } from './general/AutoShowInAppRating';
 export { NextReviewData } from './general/NextReviewData';
 export { QuizVocabularyPool } from './general/QuizVocabularyPool';
@@ -176,6 +179,6 @@ export {
   UploadPixabayImagesRequest,
 } from './request/UploadPixabayImagesRequest';
 export { ReminderSettings } from './general/ReminderSettings';
-export { DarkModeSettings } from './general/DarkModeSettings';
+export { ThemeSettings } from './general/ThemeSettings';
 
 export { DefaultButtonProps } from './props/DefaultButtonProps';

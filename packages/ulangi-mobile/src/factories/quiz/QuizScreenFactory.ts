@@ -36,9 +36,9 @@ export class QuizScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen,
       quizSettingsDelegate,
-      navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics,
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

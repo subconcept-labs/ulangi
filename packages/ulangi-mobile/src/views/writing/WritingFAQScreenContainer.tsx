@@ -66,8 +66,6 @@ export class WritingFAQScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return (
-      <WritingFAQScreen darkModeStore={this.props.rootStore.darkModeStore} />
-    );
+    return <WritingFAQScreen themeStore={this.props.rootStore.themeStore} />;
   }
 }

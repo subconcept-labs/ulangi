@@ -6,6 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import * as _ from 'lodash';
 
@@ -34,7 +35,7 @@ export class ReminderDelegate {
   public requestPermission(callback: {
     onRequesting: () => void;
     onRequestSucceeded: () => void;
-    onRequestFailed: (errorCode: string) => void;
+    onRequestFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.REMINDER__REQUEST_PERMISSION, null),
@@ -46,7 +47,7 @@ export class ReminderDelegate {
         ),
         once(
           ActionType.REMINDER__REQUEST_PERMISSION_FAILED,
-          ({ errorCode }): void => callback.onRequestFailed(errorCode),
+          (errorBag): void => callback.onRequestFailed(errorBag),
         ),
       ),
     );
@@ -55,7 +56,7 @@ export class ReminderDelegate {
   public checkPermission(callback?: {
     onChecking: () => void;
     onCheckSucceeded: (hasPermission: boolean) => void;
-    onCheckFailed: (errorCode: string) => void;
+    onCheckFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.REMINDER__CHECK_PERMISSION, null),
@@ -69,7 +70,7 @@ export class ReminderDelegate {
             ),
             once(
               ActionType.REMINDER__CHECK_PERMISSION_FAILED,
-              ({ errorCode }): void => callback.onCheckFailed(errorCode),
+              (errorBag): void => callback.onCheckFailed(errorBag),
             ),
           )
         : _.noop,

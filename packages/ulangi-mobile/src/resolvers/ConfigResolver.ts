@@ -9,8 +9,8 @@ import { AbstractResolver } from '@ulangi/resolver';
 import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettingsResolver,
-  DarkModeSettingsResolver,
   ReminderSettingsResolver,
+  ThemeSettingsResolver,
 } from '@ulangi/ulangi-common/resolvers';
 import * as Joi from 'joi';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ import { Config } from '../interfaces/Config';
 export class ConfigResolver extends AbstractResolver<Config> {
   private autoArchiveSettingsResolver = new AutoArchiveSettingsResolver();
   private reminderSettingsResolver = new ReminderSettingsResolver();
-  private darkModeSettingsResolver = new DarkModeSettingsResolver();
+  private themeSettingsResolver = new ThemeSettingsResolver();
 
   protected rules = {
     general: {
@@ -36,8 +36,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     ad: {
       showAdTimeout: Joi.number(),
-      autoSetUpAfterAuth: Joi.boolean(),
-      autoInitializeAfterAuth: Joi.boolean(),
     },
 
     openSourceProjects: Joi.array().items({
@@ -71,6 +69,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       light: {
         primaryBackgroundColor: Joi.string(),
         secondaryBackgroundColor: Joi.string(),
+        tertiaryBackgroundColor: Joi.string(),
         primaryTextColor: Joi.string(),
         secondaryTextColor: Joi.string(),
         primaryBorderColor: Joi.string(),
@@ -79,15 +78,12 @@ export class ConfigResolver extends AbstractResolver<Config> {
       dark: {
         primaryBackgroundColor: Joi.string(),
         secondaryBackgroundColor: Joi.string(),
+        tertiaryBackgroundColor: Joi.string(),
         primaryTextColor: Joi.string(),
         secondaryTextColor: Joi.string(),
         primaryBorderColor: Joi.string(),
         secondaryBorderColor: Joi.string(),
       },
-    },
-
-    remoteConfig: {
-      autoUpdateAfterAuth: Joi.boolean(),
     },
 
     user: {
@@ -98,11 +94,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultGlobalReminder: Joi.object(
         this.reminderSettingsResolver.getRules(),
       ),
-      defaultDarkModeSettings: Joi.object(
-        this.darkModeSettingsResolver.getRules(),
-      ),
-      autoCheckUserSessionAfterAuth: Joi.boolean(),
-      autoFetchOnDownloadSucceededAfterAuth: Joi.boolean(),
+      defaultThemeSettings: Joi.object(this.themeSettingsResolver.getRules()),
     },
 
     set: {
@@ -110,7 +102,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
         // TODO: Use validation for key
         name: Joi.string(),
       }),
-      autoFetchAllOnDownloadSucceededAfterAuth: Joi.boolean(),
     },
 
     vocabulary: {
@@ -258,18 +249,11 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     audio: {
       cacheFolderName: Joi.string(),
-      autoClearCacheAfterAuth: Joi.boolean(),
     },
 
     sync: {
       transactionChunkSize: Joi.number(),
       delayBetweenChunks: Joi.number(),
-      autoObserveLocalUpdatesAfterAuth: Joi.boolean(),
-      autoObserveRemoteUpdatesAfterAuth: Joi.boolean(),
-    },
-
-    reminder: {
-      autoCheckPermissionAndSetUpReminder: Joi.boolean(),
     },
   };
 }

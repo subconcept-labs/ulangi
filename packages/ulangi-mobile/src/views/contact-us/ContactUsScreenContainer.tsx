@@ -95,7 +95,7 @@ export class ContactUsScreenContainer extends Container<
     return (
       <ContactUsScreen
         userStore={this.props.rootStore.userStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
       />
     );

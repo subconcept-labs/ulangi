@@ -66,8 +66,8 @@ export class PublicSetItem extends React.Component<PublicSetItemProps> {
               <DefaultText>
                 <DefaultText style={this.styles.authors}>
                   {'By ' +
-                    this.props.set.formattedAuthors
-                      .map(({ formattedName }): string => formattedName)
+                    this.props.set.attributions
+                      .map((attributions): string => attributions.sourceName)
                       .join(', ')}
                 </DefaultText>
                 {this.props.set.isCurated === true ? (

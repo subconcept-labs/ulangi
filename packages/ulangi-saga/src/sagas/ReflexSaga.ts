@@ -24,7 +24,7 @@ import {
 } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { RandomRangeIterator } from '../iterators/RandomRangeIterator';
@@ -35,17 +35,11 @@ export class ReflexSaga extends ProtectedSaga {
 
   private userDb: SQLiteDatabase;
   private vocabularyModel: VocabularyModel;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(
-    userDb: SQLiteDatabase,
-    vocabularyModel: VocabularyModel,
-    crashlytics: CrashlyticsAdapter
-  ) {
+  public constructor(userDb: SQLiteDatabase, vocabularyModel: VocabularyModel) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -131,7 +125,8 @@ export class ReflexSaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.REFLEX__PREPARE_FETCH_VOCABULARY_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -253,7 +248,8 @@ export class ReflexSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.REFLEX__FETCH_VOCABULARY_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

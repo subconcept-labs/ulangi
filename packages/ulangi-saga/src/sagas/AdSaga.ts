@@ -11,20 +11,18 @@ import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { InterstitialAdAdapter } from '../adapters/InterstitialAdAdapter';
 import { AdEventChannel } from '../channels/AdEventChannel';
+import { errorConverter } from '../converters/ErrorConverter';
 import { AdEventType } from '../enums/AdEventType';
 import { PublicSaga } from '../sagas/PublicSaga';
 
 export class AdSaga extends PublicSaga {
   private adMob: AdMobAdapter;
-  private crashlytics: CrashlyticsAdapter;
 
-  public constructor(adMob: AdMobAdapter, crashlytics: CrashlyticsAdapter) {
+  public constructor(adMob: AdMobAdapter) {
     super();
     this.adMob = adMob;
-    this.crashlytics = crashlytics;
   }
 
   public *run(): IterableIterator<any> {
@@ -81,7 +79,8 @@ export class AdSaga extends PublicSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.AD__SET_UP_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -107,7 +106,8 @@ export class AdSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.AD__INITIALIZE_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -141,7 +141,8 @@ export class AdSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -175,7 +176,8 @@ export class AdSaga extends PublicSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.AD__LOAD_AD_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -197,7 +199,8 @@ export class AdSaga extends PublicSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.AD__SHOW_AD_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }
@@ -216,7 +219,8 @@ export class AdSaga extends PublicSaga {
           case AdEventType.ON_AD_FAILED_TO_LOAD:
             yield put(
               createAction(ActionType.AD__LOAD_AD_FAILED, {
-                errorCode: this.crashlytics.getErrorCode(errorCode),
+                errorCode,
+                error: errorCode,
               })
             );
             break;

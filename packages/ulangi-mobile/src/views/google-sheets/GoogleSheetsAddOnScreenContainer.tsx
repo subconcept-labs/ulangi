@@ -76,7 +76,7 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
     return (
       <GoogleSheetsAddOnScreen
         userStore={this.props.rootStore.userStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

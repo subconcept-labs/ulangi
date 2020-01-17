@@ -8,6 +8,7 @@
 import { ObservableSignUpScreen } from '@ulangi/ulangi-observable';
 
 import { SignUpScreenDelegate } from '../../delegates/auth/SignUpScreenDelegate';
+import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SignUpScreenFactory extends ScreenFactory {
@@ -16,9 +17,14 @@ export class SignUpScreenFactory extends ScreenFactory {
   ): SignUpScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     return new SignUpScreenDelegate(
       this.eventBus,
       observableScreen,
+      dialogDelegate,
       navigatorDelegate,
     );
   }

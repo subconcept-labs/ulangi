@@ -6,6 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableAtomScreen,
@@ -30,7 +31,7 @@ export class PrepareFetchVocabularyDelegate {
   public prepareFetch(callback: {
     onPreparing: () => void;
     onPrepareSucceeded: () => void;
-    onPrepareFailed: (errorCode: string) => void;
+    onPrepareFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.ATOM__PREPARE_FETCH_VOCABULARY, {
@@ -48,7 +49,7 @@ export class PrepareFetchVocabularyDelegate {
         ),
         once(
           ActionType.ATOM__PREPARE_FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onPrepareFailed(errorCode),
+          (errorBag): void => callback.onPrepareFailed(errorBag),
         ),
       ),
     );

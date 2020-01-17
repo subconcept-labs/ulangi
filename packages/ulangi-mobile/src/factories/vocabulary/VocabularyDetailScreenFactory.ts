@@ -22,6 +22,10 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
   ): VocabularyDetailScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
@@ -57,7 +61,7 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
       speakDelegate,
       spacedRepetitionSettingsDelegate,
       writingSettingsDelegate,
-      navigatorDelegate,
+      dialogDelegate,
     );
   }
 }

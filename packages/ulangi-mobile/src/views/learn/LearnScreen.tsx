@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,7 +20,7 @@ import { LearnList } from '../learn/LearnList';
 
 export interface LearnScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   screenDelegate: LearnScreenDelegate;
 }
 
@@ -30,13 +30,13 @@ export class LearnScreen extends React.Component<LearnScreenProps> {
     return (
       <View style={styles.screen} testID={LearnScreenIds.SCREEN}>
         <TipBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           navigateToWhatToUseScreen={
             this.props.screenDelegate.navigateToWhatToUseScreen
           }
         />
         <LearnList
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           navigateToSpacedRepetitionScreen={
             this.props.screenDelegate.navigateToSpacedRepetitionScreen
           }

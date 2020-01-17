@@ -7,7 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
-import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -15,30 +15,27 @@ import {
   ObservableSetStore,
   ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 import { observable, toJS } from 'mobx';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { QuizSettingsDelegate } from './QuizSettingsDelegate';
 
 @boundClass
 export class QuizScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableQuizScreen;
   private quizSettingsDelegate: QuizSettingsDelegate;
-  private navigatorDelegate: NavigatorDelegate;
   private categoryMessageDelegate: CategoryMessageDelegate;
-  private analytics: AnalyticsAdapter;
+  private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
@@ -46,22 +43,22 @@ export class QuizScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableQuizScreen,
     quizSettingsDelegate: QuizSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.quizSettingsDelegate = quizSettingsDelegate;
-    this.navigatorDelegate = navigatorDelegate;
     this.categoryMessageDelegate = categoryMessageDelegate;
-    this.analytics = analytics;
+    this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public startWritingQuiz(): void {
-    this.analytics.logEvent('start_writing_quiz');
+    RemoteLogger.logEvent('start_writing_quiz');
     const {
       vocabularyPool,
       writingQuizLimit,
@@ -88,11 +85,13 @@ export class QuizScreenDelegate {
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_WRITING_FAILED,
-          ({ errorCode }): void => {
-            if (errorCode === ErrorCode.QUIZ__INSUFFICIENT_VOCABULARY) {
+          (errorBag): void => {
+            if (
+              errorBag.errorCode === ErrorCode.QUIZ__INSUFFICIENT_VOCABULARY
+            ) {
               this.showNotEnoughTermsDialog('writing-quiz', vocabularyPool);
             } else {
-              this.showPrepareFailedDialog(errorCode);
+              this.showPrepareFailedDialog(errorBag);
             }
           },
         ),
@@ -101,7 +100,7 @@ export class QuizScreenDelegate {
   }
 
   public startMultipleChoiceQuiz(): void {
-    this.analytics.logEvent('start_multiple_choice_quiz');
+    RemoteLogger.logEvent('start_multiple_choice_quiz');
     const {
       vocabularyPool,
       multipleChoiceQuizLimit,
@@ -131,14 +130,16 @@ export class QuizScreenDelegate {
         ),
         once(
           ActionType.QUIZ__FETCH_VOCABULARY_FOR_MULTIPLE_CHOICE_FAILED,
-          ({ errorCode }): void => {
-            if (errorCode === ErrorCode.QUIZ__INSUFFICIENT_VOCABULARY) {
+          (errorBag): void => {
+            if (
+              errorBag.errorCode === ErrorCode.QUIZ__INSUFFICIENT_VOCABULARY
+            ) {
               this.showNotEnoughTermsDialog(
                 'multiple-choice-quiz',
                 vocabularyPool,
               );
             } else {
-              this.showPrepareFailedDialog(errorCode);
+              this.showPrepareFailedDialog(errorBag);
             }
           },
         ),
@@ -155,19 +156,16 @@ export class QuizScreenDelegate {
   }
 
   private showPreparingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Preparing. Please wait...',
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Preparing. Please wait...',
+    });
   }
 
   private showPrepareSucceededDialog(
     vocabularyList: readonly Vocabulary[],
     quizType: 'writing-quiz' | 'multiple-choice-quiz',
   ): void {
-    this.navigatorDelegate.dismissLightBox();
+    this.dialogDelegate.dismiss();
 
     const observableVocabularyList = observable.map(
       vocabularyList.map(
@@ -207,28 +205,18 @@ export class QuizScreenDelegate {
         ? `A minimum of ${minRequired} learned terms are required. Based on the settings, the quiz test only terms that you learned.`
         : `A minimum of ${minRequired} terms are required. Please add more terms.`;
 
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message,
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      testID: LightBoxDialogIds.FAILED_DIALOG,
+      message,
+      title: 'FAILED TO START',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
-  private showPrepareFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        title: 'FAILED TO START QUIZ',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-        message: this.errorConverter.convertToMessage(errorCode),
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showPrepareFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO START QUIZ',
+    });
   }
 }

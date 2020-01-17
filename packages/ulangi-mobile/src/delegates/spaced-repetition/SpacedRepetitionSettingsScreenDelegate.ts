@@ -6,33 +6,33 @@
  */
 
 import { ReviewStrategy, ScreenName } from '@ulangi/ulangi-common/enums';
-import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableSpacedRepetitionSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { SpacedRepetitionSettingsScreenIds } from '../../constants/ids/SpacedRepetitionSettingsScreenIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
 
 @boundClass
 export class SpacedRepetitionSettingsScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private observableScreen: ObservableSpacedRepetitionSettingsScreen;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
+  private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     observableScreen: ObservableSpacedRepetitionSettingsScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
+    this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -70,7 +70,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
                   text: limitText,
                   onPress: (): void => {
                     onSelect(limit);
-                    this.navigatorDelegate.dismissLightBox();
+                    this.dialogDelegate.dismiss();
                   },
                 },
               ];
@@ -142,7 +142,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
                   text: initialIntervalText,
                   onPress: (): void => {
                     onSelect(initialInterval);
-                    this.navigatorDelegate.dismissLightBox();
+                    this.dialogDelegate.dismiss();
                   },
                 },
               ];
@@ -168,39 +168,23 @@ export class SpacedRepetitionSettingsScreenDelegate {
   }
 
   private showSavingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Saving. Please wait...',
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Saving. Please wait...',
+    });
   }
 
   private showSaveSucceededDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.SUCCESS_DIALOG,
-        message: 'Saved successfully.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-        onClose: (): void => {
-          this.navigatorDelegate.pop();
-        },
+    this.dialogDelegate.showSuccessDialog({
+      message: 'Saved successfully.',
+      onClose: (): void => {
+        this.navigatorDelegate.pop();
       },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    });
   }
 
-  private showSaveFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'SAVE FAILED',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'SAVE FAILED',
+    });
   }
 }

@@ -20,7 +20,6 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { createRequest } from '../utils/createRequest';
 import { UploadUserSaga } from './UploadUserSaga';
 
@@ -59,8 +58,7 @@ describe('UploadUserSaga', (): void => {
           mockedUserDatabase,
           mockedSharedDatabase,
           mockedSessionModel,
-          mockedDirtyUserModel,
-          new CrashlyticsAdapter(null, false)
+          mockedDirtyUserModel
         );
       }
     );

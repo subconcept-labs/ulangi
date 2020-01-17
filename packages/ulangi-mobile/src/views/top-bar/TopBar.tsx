@@ -10,7 +10,13 @@ import { ObservableTopBarButton } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Keyboard,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { Container } from '../../Container';
@@ -41,9 +47,7 @@ export class TopBar extends Container<TopBarPassedProps> {
       ? this.props.passedProps.styles.dark
       : darkStyles;
 
-    return this.props.rootStore.darkModeStore.theme === Theme.LIGHT
-      ? light
-      : dark;
+    return this.props.rootStore.themeStore.theme === Theme.LIGHT ? light : dark;
   }
 
   public render(): null | React.ReactElement<any> {
@@ -59,9 +63,9 @@ export class TopBar extends Container<TopBarPassedProps> {
       return (
         <Animatable.View
           style={this.styles.top_bar_container}
-          animation="fadeIn"
+          animation={Platform.select({ ios: 'fadeInRight', android: 'fadeIn' })}
           useNativeDriver
-          duration={1500}>
+          duration={400}>
           <View style={this.styles.button_container}>
             {topBar.leftButton !== null
               ? this.renderButton(topBar.leftButton, 'left')
@@ -113,7 +117,7 @@ export class TopBar extends Container<TopBarPassedProps> {
           <Image
             style={this.styles.button_icon}
             source={
-              this.props.rootStore.darkModeStore.theme === Theme.LIGHT
+              this.props.rootStore.themeStore.theme === Theme.LIGHT
                 ? button.icon.light
                 : button.icon.dark
             }

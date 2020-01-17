@@ -6,7 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableReflexScreen,
@@ -38,7 +38,7 @@ export class FetchVocabularyDelegate {
   public prepareFetch(callback: {
     onPreparing: () => void;
     onPrepareSucceeded: () => void;
-    onPrepareFailed: (errorCode: string) => void;
+    onPrepareFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.REFLEX__PREPARE_FETCH_VOCABULARY, {
@@ -56,7 +56,7 @@ export class FetchVocabularyDelegate {
         ),
         once(
           ActionType.REFLEX__PREPARE_FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onPrepareFailed(errorCode),
+          (errorBag): void => callback.onPrepareFailed(errorBag),
         ),
       ),
     );
@@ -67,7 +67,7 @@ export class FetchVocabularyDelegate {
       vocabularyList: readonly Vocabulary[],
       noMore: boolean,
     ) => void;
-    onFetchFailed: (errorCode: string) => void;
+    onFetchFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.REFLEX__FETCH_VOCABULARY, null),
@@ -79,7 +79,7 @@ export class FetchVocabularyDelegate {
         ),
         once(
           ActionType.REFLEX__FETCH_VOCABULARY_FAILED,
-          ({ errorCode }): void => callback.onFetchFailed(errorCode),
+          (errorBag): void => callback.onFetchFailed(errorBag),
         ),
       ),
     );

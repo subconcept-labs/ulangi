@@ -11,10 +11,10 @@ import { EventBus, on } from '@ulangi/ulangi-event';
 import { ObservableUserStore, Observer } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 
-import { config } from '../../constants/config';
 import { env } from '../../constants/env';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { AdDelegate } from '../ad/AdDelegate';
+import { DataSharingDelegate } from '../data-sharing/DataSharingDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { ReminderDelegate } from '../reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../reminder/ReminderSettingsDelegate';
@@ -27,6 +27,7 @@ export class AutorunDelegate {
   private adDelegate: AdDelegate;
   private reminderDelegate: ReminderDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
+  private dataSharingDelegate: DataSharingDelegate;
   private dialogDelegate: DialogDelegate;
   private rootScreenDelegate: RootScreenDelegate;
 
@@ -37,6 +38,7 @@ export class AutorunDelegate {
     adDelegate: AdDelegate,
     reminderDelegate: ReminderDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
+    dataSharingDelegate: DataSharingDelegate,
     dialogDelegate: DialogDelegate,
     rootScreenDelegate: RootScreenDelegate,
   ) {
@@ -46,53 +48,24 @@ export class AutorunDelegate {
     this.adDelegate = adDelegate;
     this.reminderDelegate = reminderDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
+    this.dataSharingDelegate = dataSharingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.rootScreenDelegate = rootScreenDelegate;
   }
 
   public autorun(): void {
     this.autoInitIap();
-
-    if (config.user.autoCheckUserSessionAfterAuth === true) {
-      this.autoCheckUserSession();
-    }
-
-    if (config.user.autoFetchOnDownloadSucceededAfterAuth === true) {
-      this.autoFetchUserOnDownloadSucceeded();
-    }
-
-    if (config.set.autoFetchAllOnDownloadSucceededAfterAuth === true) {
-      this.autoFetchAllSetsOnDownloadSucceeded();
-    }
-
-    if (config.sync.autoObserveLocalUpdatesAfterAuth) {
-      this.autoObserveLocalUpdates();
-    }
-
-    if (config.sync.autoObserveRemoteUpdatesAfterAuth) {
-      this.autoObserveRemoteUpdates();
-    }
-
-    if (config.ad.autoSetUpAfterAuth) {
-      this.autoSetUpAd();
-    }
-
-    if (config.ad.autoInitializeAfterAuth) {
-      this.autoInitializeAd();
-    }
-
-    if (config.remoteConfig.autoUpdateAfterAuth) {
-      this.autoUpdateRemoteConfig();
-    }
-
-    if (config.audio.autoClearCacheAfterAuth) {
-      this.autoClearAudioCache();
-    }
-
-    if (config.reminder.autoCheckPermissionAndSetUpReminder) {
-      this.autoCheckPermissionAndSetUpReminder();
-    }
-
+    this.autoCheckUserSession();
+    this.autoFetchUserOnDownloadSucceeded();
+    this.autoFetchAllSetsOnDownloadSucceeded();
+    this.autoObserveLocalUpdates();
+    this.autoObserveRemoteUpdates();
+    this.autoSetUpAd();
+    this.autoInitializeAd();
+    this.autoUpdateRemoteConfig();
+    this.autoClearAudioCache();
+    this.autoCheckPermissionAndSetUpReminder();
+    this.autoToggleDataSharing();
     this.autoShowDialogWhenSessionExpired();
   }
 
@@ -192,6 +165,10 @@ export class AutorunDelegate {
         }
       },
     );
+  }
+
+  private autoToggleDataSharing(): void {
+    this.dataSharingDelegate.autoToggleDataSharing();
   }
 
   private autoUpdateRemoteConfig(): void {

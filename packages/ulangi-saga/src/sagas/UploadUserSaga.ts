@@ -15,7 +15,7 @@ import axios, { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class UploadUserSaga {
@@ -25,20 +25,17 @@ export class UploadUserSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private dirtyUserModel: DirtyUserModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    dirtyUserModel: DirtyUserModel,
-    crashlytics: CrashlyticsAdapter
+    dirtyUserModel: DirtyUserModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.dirtyUserModel = dirtyUserModel;
-    this.crashlytics = crashlytics;
   }
 
   public *uploadUser(apiUrl: string): IterableIterator<any> {
@@ -106,7 +103,8 @@ export class UploadUserSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.USER__UPLOAD_USER_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
 

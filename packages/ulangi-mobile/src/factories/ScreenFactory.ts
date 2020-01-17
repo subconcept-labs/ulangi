@@ -31,7 +31,7 @@ export class ScreenFactory {
   }
 
   public createRootScreenDelegate(): RootScreenDelegate {
-    return new RootScreenDelegate(this.props.rootStore.darkModeStore);
+    return new RootScreenDelegate(this.props.rootStore.themeStore);
   }
 
   public createNavigatorDelegate(): NavigatorDelegate {
@@ -39,7 +39,7 @@ export class ScreenFactory {
       this.observer,
       this.props.componentId,
       this.props.observableLightBox,
-      this.props.rootStore.darkModeStore,
+      this.props.rootStore.themeStore,
     );
   }
 
@@ -47,7 +47,11 @@ export class ScreenFactory {
     light: Options;
     dark: Options;
   }): DialogDelegate {
-    return new DialogDelegate(this.createNavigatorDelegate(), styles);
+    return new DialogDelegate(
+      this.props.observableLightBox,
+      this.createNavigatorDelegate(),
+      styles,
+    );
   }
 
   public createLinkingDelegate(styles: {

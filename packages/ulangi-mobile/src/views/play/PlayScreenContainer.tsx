@@ -83,7 +83,7 @@ export class PlayScreenContainer extends Container {
     return (
       <PlayScreen
         setStore={this.props.rootStore.setStore}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
       />
     );

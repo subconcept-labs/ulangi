@@ -6,13 +6,21 @@
  */
 
 import { ChangePasswordScreenDelegate } from '../../delegates/account/ChangePasswordScreenDelegate';
+import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ChangePasswordScreenFactory extends ScreenFactory {
   public createScreenDelegate(): ChangePasswordScreenDelegate {
+    const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     return new ChangePasswordScreenDelegate(
       this.eventBus,
-      this.createNavigatorDelegate(),
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

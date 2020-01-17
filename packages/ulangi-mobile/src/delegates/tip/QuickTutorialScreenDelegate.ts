@@ -6,7 +6,6 @@
  */
 
 import { ObservableQuickTutorialScreen } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -15,20 +14,16 @@ import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 export class QuickTutorialScreenDelegate {
   private observableScreen: ObservableQuickTutorialScreen;
   private navigatorDelegate: NavigatorDelegate;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     observableScreen: ObservableQuickTutorialScreen,
     navigatorDelegate: NavigatorDelegate,
-    analytics: AnalyticsAdapter,
   ) {
     this.observableScreen = observableScreen;
     this.navigatorDelegate = navigatorDelegate;
-    this.analytics = analytics;
   }
 
   public setSlideIndex(index: number): void {
-    this.analytics.logEvent('slide_quick_tutorial');
     this.observableScreen.currentIndex = index;
   }
 

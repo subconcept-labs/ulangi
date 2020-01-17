@@ -76,7 +76,7 @@ export class MoreScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <MoreScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         userStore={this.props.rootStore.userStore}
         networkStore={this.props.rootStore.networkStore}
         syncStore={this.props.rootStore.syncStore}

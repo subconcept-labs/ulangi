@@ -19,6 +19,7 @@ import { SpacedRepetitionSaveResultDelegate } from '../../delegates/spaced-repet
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpeakDelegate } from '../../delegates/vocabulary/SpeakDelegate';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
+import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
@@ -37,6 +38,10 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     const spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
     const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
 
     const spacedRepetitionSettingsDelegate = this.createSpacedRepetitionSettingsDelegate();
 
@@ -83,6 +88,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     return new SpacedRepetitionLessonScreenDelegate(
       this.observer,
       this.props.rootStore.setStore,
+      this.props.observableConverter,
       observableScreen,
       reviewIterator,
       reviewFeedbackBarDelegate,
@@ -90,6 +96,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       speakDelegate,
       adDelegate,
       adAfterLessonDelegate,
+      dialogDelegate,
       navigatorDelegate,
       startLesson,
     );

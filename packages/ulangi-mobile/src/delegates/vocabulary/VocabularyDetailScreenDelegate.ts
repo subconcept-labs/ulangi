@@ -18,9 +18,7 @@ import {
 import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
-import { ErrorConverter } from '../../converters/ErrorConverter';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
-import { NavigatorDelegate } from '../navigator/navigatorDelegate';
+import { DialogDelegate } from '../dialog/dialogDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
 import { WritingSettingsDelegate } from '../writing/WritingSettingsDelegate';
@@ -28,7 +26,6 @@ import { SpeakDelegate } from './SpeakDelegate';
 
 @boundClass
 export class VocabularyDetailScreenDelegate {
-  private errorConverter = new ErrorConverter();
   private spacedRepetitionScheduler = new SpacedRepetitionScheduler();
   private writingScheduler = new WritingScheduler();
 
@@ -37,7 +34,7 @@ export class VocabularyDetailScreenDelegate {
   private speakDelegate: SpeakDelegate;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
   private writingSettingsDelegate: WritingSettingsDelegate;
-  private navigatorDelegate: NavigatorDelegate;
+  private dialogDelegate: DialogDelegate;
 
   public constructor(
     observableScreen: ObservableVocabularyDetailScreen,
@@ -45,14 +42,14 @@ export class VocabularyDetailScreenDelegate {
     speakDelegate: SpeakDelegate,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
     writingSettingsDelegate: WritingSettingsDelegate,
-    navigatorDelegate: NavigatorDelegate,
+    dialogDelegate: DialogDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.vocabularyActionMenuDelegate = vocabularyActionMenuDelegate;
     this.speakDelegate = speakDelegate;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
     this.writingSettingsDelegate = writingSettingsDelegate;
-    this.navigatorDelegate = navigatorDelegate;
+    this.dialogDelegate = dialogDelegate;
   }
 
   public synthesizeAndSpeak(text: string, languageCode: string): void {
@@ -63,9 +60,9 @@ export class VocabularyDetailScreenDelegate {
       onSynthesizeSucceeded: (filePath): void => {
         this.speak(filePath);
       },
-      onSynthesizeFailed: (errorCode): void => {
+      onSynthesizeFailed: (errorBag): void => {
         this.observableScreen.speakState.set(ActivityState.ERROR);
-        this.showErrorDialog(errorCode);
+        this.dialogDelegate.showFailedDialog(errorBag);
       },
     });
   }
@@ -118,16 +115,5 @@ export class VocabularyDetailScreenDelegate {
         this.observableScreen.speakState.set(ActivityState.INACTIVE);
       },
     });
-  }
-
-  private showErrorDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: this.errorConverter.convertToMessage(errorCode),
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
   }
 }

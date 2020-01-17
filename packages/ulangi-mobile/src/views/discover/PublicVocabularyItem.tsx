@@ -63,7 +63,6 @@ export class PublicVocabularyItem extends React.Component<
               <DefaultText style={this.styles.vocabulary_text}>
                 {this.props.vocabulary.vocabularyTerm}
               </DefaultText>
-              {this.renderSources()}
             </View>
             <View style={this.styles.right}>
               {this.renderAddButton()}
@@ -81,6 +80,7 @@ export class PublicVocabularyItem extends React.Component<
                 this.renderDefintion(definition, index),
             )}
           </View>
+          {this.renderSources()}
         </View>
       </FixedTouchableWithoutFeedback>
     );
@@ -88,31 +88,57 @@ export class PublicVocabularyItem extends React.Component<
 
   private renderSources(): React.ReactElement<any> {
     return (
-      <View style={this.styles.source_list}>
-        {this.props.vocabulary.formattedSourcesAndLinks.map(
-          ({ formattedSource, link }, index): React.ReactElement<any> => {
-            return (
-              <View key={formattedSource} style={this.styles.source_container}>
-                {index > 0 ? (
-                  <View style={this.styles.dot_container}>
+      <View style={this.styles.attribution_container}>
+        <DefaultText style={this.styles.attribution}>
+          <DefaultText>by </DefaultText>
+          {this.props.vocabulary.attributions.map(
+            (attribution, index): React.ReactElement<any> => {
+              return (
+                <DefaultText key={attribution.sourceName}>
+                  {index > 0 ? (
                     <DefaultText style={this.styles.dot}>
                       {'\u00B7'}
                     </DefaultText>
-                  </View>
-                ) : null}
-                <DefaultText
-                  style={this.styles.source}
-                  onPress={(): void => {
-                    if (typeof link !== 'undefined') {
-                      this.props.openLink(link);
-                    }
-                  }}>
-                  {'By ' + formattedSource}
+                  ) : null}
+                  <DefaultText>
+                    <DefaultText
+                      style={
+                        attribution.sourceLink ? this.styles.highlighted : null
+                      }
+                      onPress={(): void => {
+                        if (typeof attribution.sourceLink !== 'undefined') {
+                          this.props.openLink(attribution.sourceLink);
+                        }
+                      }}>
+                      {attribution.sourceName}
+                    </DefaultText>
+                    {typeof attribution.license !== 'undefined' ? (
+                      <DefaultText>
+                        <DefaultText> (under </DefaultText>
+                        <DefaultText
+                          style={
+                            attribution.licenseLink
+                              ? this.styles.highlighted
+                              : null
+                          }
+                          onPress={(): void => {
+                            if (
+                              typeof attribution.licenseLink !== 'undefined'
+                            ) {
+                              this.props.openLink(attribution.licenseLink);
+                            }
+                          }}>
+                          {attribution.license}
+                        </DefaultText>
+                        <DefaultText>)</DefaultText>
+                      </DefaultText>
+                    ) : null}
+                  </DefaultText>
                 </DefaultText>
-              </View>
-            );
-          },
-        )}
+              );
+            },
+          )}
+        </DefaultText>
       </View>
     );
   }

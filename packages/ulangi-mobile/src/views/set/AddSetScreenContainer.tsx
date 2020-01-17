@@ -98,7 +98,7 @@ export class AddSetScreenContainer extends Container {
     return (
       <AddEditSetScreen
         testID={AddSetScreenIds.SCREEN}
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

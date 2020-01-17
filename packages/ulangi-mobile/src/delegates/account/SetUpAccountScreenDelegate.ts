@@ -6,6 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableSetUpAccountScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -56,8 +57,8 @@ export class SetUpAccountScreenDelegate {
         ),
         once(
           ActionType.USER__CHANGE_EMAIL_AND_PASSWORD_FAILED,
-          ({ errorCode }): void => {
-            this.showSetUpAccountFailedDialog(errorCode);
+          (errorBag): void => {
+            this.showSetUpAccountFailedDialog(errorBag);
           },
         ),
       ),
@@ -79,8 +80,8 @@ export class SetUpAccountScreenDelegate {
     });
   }
 
-  private showSetUpAccountFailedDialog(errorCode: string): void {
-    this.dialogDelegate.showFailedDialog(errorCode, {
+  private showSetUpAccountFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'SET UP ACCOUNT FAILED',
     });
   }

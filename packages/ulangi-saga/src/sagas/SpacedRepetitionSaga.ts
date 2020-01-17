@@ -22,7 +22,7 @@ import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
@@ -37,15 +37,13 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
   private sessionModel: SessionModel;
   private vocabularyModel: VocabularyModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase,
     sessionModel: SessionModel,
     vocabularyModel: VocabularyModel,
-    spacedRepetitionModel: SpacedRepetitionModel,
-    crashlytics: CrashlyticsAdapter
+    spacedRepetitionModel: SpacedRepetitionModel
   ) {
     super();
     this.sharedDb = sharedDb;
@@ -53,7 +51,6 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     this.sessionModel = sessionModel;
     this.vocabularyModel = vocabularyModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
-    this.crashlytics = crashlytics;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -144,7 +141,8 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.SPACED_REPETITION__FETCH_VOCABULARY_FAILED, {
             setId,
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -227,7 +225,8 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.SPACED_REPETITION__SAVE_RESULT_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }

@@ -7,9 +7,9 @@
 
 import { ManageListType } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDarkModeStore,
   ObservableManageScreen,
   ObservableSetStore,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -28,7 +28,7 @@ import { ManageBar } from './ManageBar';
 
 export interface ManageScreenProps {
   setStore: ObservableSetStore;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableManageScreen;
   screenDelegate: ManageScreenDelegate;
 }
@@ -39,7 +39,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     return (
       <View testID={ManageScreenIds.SCREEN} style={styles.screen}>
         <ManageBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           manageListType={this.props.observableScreen.manageListType}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
           showManageListSelectionMenu={
@@ -78,7 +78,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
         <VocabularyList
           key={this.props.observableScreen.selectedFilterType.get()}
           testID={ManageScreenIds.VOCABULARY_LIST}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           toggleSelection={this.props.screenDelegate.toggleSelection}
           showVocabularyDetail={this.props.screenDelegate.showVocabularyDetail}
@@ -109,7 +109,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       return (
         <CategoryList
           testID={ManageScreenIds.CATEGORY_LIST}
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           categoryListState={this.props.observableScreen.categoryListState}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
           toggleSelection={this.props.screenDelegate.toggleSelection}

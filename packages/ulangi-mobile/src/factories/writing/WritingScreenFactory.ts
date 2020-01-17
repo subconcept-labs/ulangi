@@ -36,9 +36,9 @@ export class WritingScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen,
       writingSettingsDelegate,
-      navigatorDelegate,
       categoryMessageDelegate,
-      this.props.analytics,
+      dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

@@ -110,7 +110,7 @@ export class QuizWritingScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <QuizWritingScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

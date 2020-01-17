@@ -7,8 +7,8 @@
 
 import {
   ObservableAddEditVocabularyScreen,
-  ObservableDarkModeStore,
   ObservableLanguage,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -25,7 +25,7 @@ export interface AddEditVocabularyScreenProps {
   testID: string;
   learningLanguage: ObservableLanguage;
   translatedToLanguage: ObservableLanguage;
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAddEditVocabularyScreen;
   screenDelegate: AddEditVocabularyScreenDelegate;
 }
@@ -38,7 +38,7 @@ export class AddEditVocabularyScreen extends React.Component<
     return (
       <View style={styles.screen} testID={this.props.testID}>
         <VocabularyFormTopBar
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           currentTab={this.props.observableScreen.currentTab}
         />
         {this.props.observableScreen.currentTab.get() === 'Editor'
@@ -57,7 +57,7 @@ export class AddEditVocabularyScreen extends React.Component<
           style={styles.scrollview}>
           <DismissKeyboardView>
             <VocabularyForm
-              theme={this.props.darkModeStore.theme}
+              theme={this.props.themeStore.theme}
               learningLanguage={this.props.learningLanguage}
               translatedToLanguage={this.props.translatedToLanguage}
               vocabularyFormState={
@@ -84,7 +84,7 @@ export class AddEditVocabularyScreen extends React.Component<
     return (
       <ScrollView contentContainerStyle={styles.preview_container}>
         <VocabularyItem
-          theme={this.props.darkModeStore.theme}
+          theme={this.props.themeStore.theme}
           vocabulary={this.props.screenDelegate.createPreview()}
           shouldShowTags={false}
         />

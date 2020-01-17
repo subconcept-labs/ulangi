@@ -18,7 +18,7 @@ import axios, { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { errorConverter } from '../converters/ErrorConverter';
 import { createRequest } from '../utils/createRequest';
 
 export class UploadVocabularySaga {
@@ -28,20 +28,17 @@ export class UploadVocabularySaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private dirtyVocabularyModel: DirtyVocabularyModel;
-  private crashlytics: CrashlyticsAdapter;
 
   public constructor(
     userDb: SQLiteDatabase,
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    dirtyVocabularyModel: DirtyVocabularyModel,
-    crashlytics: CrashlyticsAdapter
+    dirtyVocabularyModel: DirtyVocabularyModel
   ) {
     this.userDb = userDb;
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.dirtyVocabularyModel = dirtyVocabularyModel;
-    this.crashlytics = crashlytics;
   }
 
   public *uploadVocabulary(
@@ -119,7 +116,8 @@ export class UploadVocabularySaga {
     } catch (error) {
       yield put(
         createAction(ActionType.VOCABULARY__UPLOAD_VOCABULARY_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
       success = false;

@@ -11,6 +11,7 @@ import { AuthDelegate } from '../../delegates/auth/AuthDelegate';
 import { SignInScreenDelegate } from '../../delegates/auth/SignInScreenDelegate';
 import { FetchSetDelegate } from '../../delegates/set/FetchSetDelegate';
 import { SetListDelegate } from '../../delegates/set/SetListDelegate';
+import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SignInScreenFactory extends ScreenFactory {
@@ -20,6 +21,10 @@ export class SignInScreenFactory extends ScreenFactory {
     const rootScreenDelegate = this.createRootScreenDelegate();
 
     const navigatorDelegate = this.createNavigatorDelegate();
+
+    const dialogDelegate = this.createDialogDelegate(
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
 
     const authDelegate = new AuthDelegate(this.eventBus);
 
@@ -36,8 +41,8 @@ export class SignInScreenFactory extends ScreenFactory {
       setListDelegate,
       fetchSetDelegate,
       rootScreenDelegate,
+      dialogDelegate,
       navigatorDelegate,
-      this.props.analytics,
     );
   }
 }

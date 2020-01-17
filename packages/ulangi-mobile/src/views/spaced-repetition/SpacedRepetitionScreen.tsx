@@ -6,8 +6,8 @@
  */
 
 import {
-  ObservableDarkModeStore,
   ObservableSpacedRepetitionScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -21,7 +21,7 @@ import { SpacedRepetitionMenu } from './SpacedRepetitionMenu';
 import { SpacedRepetitionTitle } from './SpacedRepetitionTitle';
 
 export interface SpacedRepetitionScreenProps {
-  darkModeStore: ObservableDarkModeStore;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionScreen;
   screenDelegate: SpacedRepetitionScreenDelegate;
 }
@@ -36,7 +36,7 @@ export class SpacedRepetitionScreen extends React.Component<
         <View style={styles.container}>
           <View style={styles.middle_container}>
             <View style={styles.title_container}>
-              <SpacedRepetitionTitle theme={this.props.darkModeStore.theme} />
+              <SpacedRepetitionTitle theme={this.props.themeStore.theme} />
             </View>
             <View style={styles.menu_container}>
               <SpacedRepetitionMenu
@@ -55,7 +55,7 @@ export class SpacedRepetitionScreen extends React.Component<
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.darkModeStore.theme}
+                theme={this.props.themeStore.theme}
               />
             </View>
           </View>

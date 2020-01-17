@@ -7,38 +7,35 @@
 
 import { assertExists } from '@ulangi/assert';
 import { LightBoxState, ScreenName } from '@ulangi/ulangi-common/enums';
-import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableLightBox,
   ObservableReflexScreen,
   Observer,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { boundClass } from 'autobind-decorator';
 
+import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { ErrorConverter } from '../../converters/ErrorConverter';
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
 import { ReflexStyle } from '../../styles/ReflexStyle';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { FetchVocabularyDelegate } from './FetchVocabularyDelegate';
 import { TimerDelegate } from './TimerDelegate';
 
 @boundClass
 export class ReflexScreenDelegate {
-  private errorConverter = new ErrorConverter();
-
   private observer: Observer;
   private observableLightBox: ObservableLightBox;
   private observableScreen: ObservableReflexScreen;
   private questionIterator: ReflexQuestionIterator;
   private fetchVocabularyDelegate: FetchVocabularyDelegate;
   private timerDelegate: TimerDelegate;
-  private navigatorDelegate: NavigatorDelegate;
   private categoryMessageDelegate: CategoryMessageDelegate;
-  private analytics: AnalyticsAdapter;
+  private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     observer: Observer,
@@ -47,9 +44,9 @@ export class ReflexScreenDelegate {
     questionIterator: ReflexQuestionIterator,
     fetchVocabularyDelegate: FetchVocabularyDelegate,
     timerDelegate: TimerDelegate,
-    navigatorDelegate: NavigatorDelegate,
     categoryMessageDelegate: CategoryMessageDelegate,
-    analytics: AnalyticsAdapter,
+    dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observer = observer;
     this.observableLightBox = observableLightBox;
@@ -57,13 +54,13 @@ export class ReflexScreenDelegate {
     this.questionIterator = questionIterator;
     this.fetchVocabularyDelegate = fetchVocabularyDelegate;
     this.timerDelegate = timerDelegate;
-    this.navigatorDelegate = navigatorDelegate;
     this.categoryMessageDelegate = categoryMessageDelegate;
-    this.analytics = analytics;
+    this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public startGame(): void {
-    this.analytics.logEvent('start_reflex');
+    RemoteLogger.logEvent('start_reflex');
     this.fetchVocabularyDelegate.prepareFetch({
       onPreparing: this.showPreparingDialog,
       onPrepareSucceeded: (): void => {
@@ -88,15 +85,15 @@ export class ReflexScreenDelegate {
               );
             }
           },
-          onFetchFailed: (errorCode): void => {
+          onFetchFailed: (errorBag): void => {
             this.clearFetchVocabulary();
-            this.showPrepareFailedDialog(errorCode);
+            this.showPrepareFailedDialog(errorBag);
           },
         });
       },
-      onPrepareFailed: (errorCode): void => {
+      onPrepareFailed: (errorBag): void => {
         this.clearFetchVocabulary();
-        this.showPrepareFailedDialog(errorCode);
+        this.showPrepareFailedDialog(errorBag);
       },
     });
   }
@@ -264,13 +261,10 @@ export class ReflexScreenDelegate {
 
   private showWaitingLightBox(): void {
     this.observableScreen.gameState.waitingForFetching = true;
-    this.navigatorDelegate.showDialog(
-      {
-        title: 'FETCHING VOCABULARY',
-        message: 'Fetching more vocabulary. Please wait...',
-      },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      title: 'FETCHING VOCABULARY',
+      message: 'Fetching more vocabulary. Please wait...',
+    });
   }
 
   private showPausedLightBox(): void {
@@ -299,36 +293,23 @@ export class ReflexScreenDelegate {
   }
 
   private showNoVocabularyLightBox(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        title: 'FAILED TO START',
-        message: 'No vocabulary available to play. Please add some vocabulary.',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      title: 'FAILED TO START',
+      message: 'No vocabulary available to play. Please add some vocabulary.',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
+    });
   }
 
   private showPreparingDialog(): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message: 'Preparing. Please wait...',
-      },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+    this.dialogDelegate.show({
+      message: 'Preparing. Please wait...',
+    });
   }
 
-  private showPrepareFailedDialog(errorCode: string): void {
-    this.navigatorDelegate.showDialog(
-      {
-        testID: LightBoxDialogIds.FAILED_DIALOG,
-        message: this.errorConverter.convertToMessage(errorCode),
-        title: 'FAILED TO START',
-        showCloseButton: true,
-        closeOnTouchOutside: true,
-      },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+  private showPrepareFailedDialog(errorBag: ErrorBag): void {
+    this.dialogDelegate.showFailedDialog(errorBag, {
+      title: 'FAILED TO START',
+    });
   }
 }

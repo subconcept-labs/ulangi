@@ -91,7 +91,7 @@ export class ChangeEmailScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <ChangeEmailScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         userStore={this.props.rootStore.userStore}
         observableScreen={this.observableScreen}
       />

@@ -10,6 +10,7 @@ import { ObservableVocabulary } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { EditVocabularyDelegate } from '../../delegates/vocabulary/EditVocabularyDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AddEditVocabularyScreenDelegate } from './AddEditVocabularyScreenDelegate';
 import { VocabularyFormDelegate } from './VocabularyFormDelegate';
@@ -22,9 +23,10 @@ export class EditVocabularyScreenDelegate extends AddEditVocabularyScreenDelegat
     eventBus: EventBus,
     vocabularyFormDelegate: VocabularyFormDelegate,
     editVocabularyDelegate: EditVocabularyDelegate,
+    dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
-    super(eventBus, vocabularyFormDelegate, navigatorDelegate);
+    super(eventBus, vocabularyFormDelegate, dialogDelegate, navigatorDelegate);
 
     this.editVocabularyDelegate = editVocabularyDelegate;
   }

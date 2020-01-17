@@ -6,15 +6,16 @@
  */
 
 import { ErrorCode } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { Platform } from 'react-native';
 
+import { RemoteLogger } from '../RemoteLogger';
 import { config } from '../constants/config';
 
 export class ErrorConverter {
-  public convertToMessage(error: string): string {
+  public convertToMessage(errorBag: ErrorBag): string {
     let message: string;
-
-    switch (error) {
+    switch (errorBag.errorCode) {
       case ErrorCode.USER__USER_NOT_FOUND:
         message = 'This account is not yet registered.';
         break;
@@ -124,6 +125,7 @@ export class ErrorConverter {
       case ErrorCode.GENERAL__USER_CANCELLED:
         message = 'User canceled.';
         break;
+
       case ErrorCode.GENERAL__SERVER_ERROR:
         message =
           'Something is wrong with our servers. Please try again later.';
@@ -135,11 +137,17 @@ export class ErrorConverter {
         break;
 
       default:
-        //TODO: Add log here
         message =
           'Oops! An unknown error occurred. Make sure you have the latest version installed. If the problem still persists, please try again later.';
+    }
+
+    // Log unknown error for analysis
+    if (errorBag.errorCode === ErrorCode.GENERAL__UNKNOWN_ERROR) {
+      RemoteLogger.logError(errorBag.error);
     }
 
     return message;
   }
 }
+
+export const errorConverter = new ErrorConverter();

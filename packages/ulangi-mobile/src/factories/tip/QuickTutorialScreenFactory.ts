@@ -16,10 +16,6 @@ export class QuickTutorialScreenFactory extends ScreenFactory {
   ): QuickTutorialScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
-    return new QuickTutorialScreenDelegate(
-      observableScreen,
-      navigatorDelegate,
-      this.props.analytics,
-    );
+    return new QuickTutorialScreenDelegate(observableScreen, navigatorDelegate);
   }
 }

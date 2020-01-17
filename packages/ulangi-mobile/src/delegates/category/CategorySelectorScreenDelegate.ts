@@ -15,7 +15,6 @@ import { boundClass } from 'autobind-decorator';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { CategoryFormDelegate } from './CategoryFormDelegate';
@@ -119,8 +118,8 @@ export class CategorySelectorScreenDelegate {
         ),
         once(
           ActionType.VOCABULARY__EDIT_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {
+          (errorBag): void => {
+            this.dialogDelegate.showFailedDialog(errorBag, {
               title: 'SAVE FAILED',
             });
           },
@@ -130,36 +129,33 @@ export class CategorySelectorScreenDelegate {
   }
 
   public showMoveToUncategorizedDialog(proceedCallback: () => void): void {
-    this.navigatorDelegate.showDialog(
-      {
-        message:
-          'You are moving the term(s) to Uncategorized. If you want to proceed, press OKAY.',
-        onBackgroundPress: (): void => {
-          this.navigatorDelegate.dismissLightBox();
-        },
-        buttonList: [
-          {
-            testID: LightBoxDialogIds.CANCEL_BTN,
-            text: 'CANCEL',
-            onPress: (): void => {
-              this.navigatorDelegate.dismissLightBox();
-            },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-          {
-            testID: LightBoxDialogIds.OKAY_BTN,
-            text: 'OKAY',
-            onPress: proceedCallback,
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
-          },
-        ],
+    this.dialogDelegate.show({
+      message:
+        'You are moving the term(s) to Uncategorized. If you want to proceed, press OKAY.',
+      onBackgroundPress: (): void => {
+        this.navigatorDelegate.dismissLightBox();
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
+      buttonList: [
+        {
+          testID: LightBoxDialogIds.CANCEL_BTN,
+          text: 'CANCEL',
+          onPress: (): void => {
+            this.navigatorDelegate.dismissLightBox();
+          },
+          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+        {
+          testID: LightBoxDialogIds.OKAY_BTN,
+          text: 'OKAY',
+          onPress: proceedCallback,
+          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+            ButtonSize.SMALL,
+          ),
+        },
+      ],
+    });
   }
 
   private saveMultiple(vocabularyIds: readonly string[]): void {
@@ -205,8 +201,8 @@ export class CategorySelectorScreenDelegate {
         ),
         once(
           ActionType.VOCABULARY__EDIT_MULTIPLE_FAILED,
-          ({ errorCode }): void => {
-            this.dialogDelegate.showFailedDialog(errorCode, {
+          (errorBag): void => {
+            this.dialogDelegate.showFailedDialog(errorBag, {
               title: 'SAVE FAILED',
             });
           },

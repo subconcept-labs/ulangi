@@ -6,6 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 
 export class AuthDelegate {
@@ -21,7 +22,7 @@ export class AuthDelegate {
     callback: {
       onSigningIn: () => void;
       onSignInSucceeded: () => void;
-      onSignInFailed: (errorCode: string) => void;
+      onSignInFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -34,7 +35,7 @@ export class AuthDelegate {
         once(ActionType.USER__SIGN_IN_SUCCEEDED, callback.onSignInSucceeded),
         once(
           ActionType.USER__SIGN_IN_FAILED,
-          ({ errorCode }): void => callback.onSignInFailed(errorCode),
+          (errorBag): void => callback.onSignInFailed(errorBag),
         ),
       ),
     );
@@ -43,7 +44,7 @@ export class AuthDelegate {
   public signInAsGuest(callback: {
     onSigningInAsGuest: () => void;
     onSignInAsGuestSucceeded: () => void;
-    onSignInAsGuestFailed: (errorCode: string) => void;
+    onSignInAsGuestFailed: (errorBag: ErrorBag) => void;
   }): void {
     this.eventBus.pubsub(
       createAction(ActionType.USER__SIGN_IN_AS_GUEST, null),
@@ -55,7 +56,7 @@ export class AuthDelegate {
         ),
         once(
           ActionType.USER__SIGN_IN_AS_GUEST_FAILED,
-          ({ errorCode }): void => callback.onSignInAsGuestFailed(errorCode),
+          (errorBag): void => callback.onSignInAsGuestFailed(errorBag),
         ),
       ),
     );
@@ -68,7 +69,7 @@ export class AuthDelegate {
     callback: {
       onSigningUp: () => void;
       onSignUpSucceeded: () => void;
-      onSignUpFailed: (errorCode: string) => void;
+      onSignUpFailed: (errorBag: ErrorBag) => void;
     },
   ): void {
     this.eventBus.pubsub(
@@ -82,7 +83,7 @@ export class AuthDelegate {
         once(ActionType.USER__SIGN_UP_SUCCEEDED, callback.onSignUpSucceeded),
         once(
           ActionType.USER__SIGN_UP_FAILED,
-          ({ errorCode }): void => callback.onSignUpFailed(errorCode),
+          (errorBag): void => callback.onSignUpFailed(errorBag),
         ),
       ),
     );

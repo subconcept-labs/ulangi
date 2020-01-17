@@ -15,8 +15,9 @@ import {
   ObservableSetStore,
   mergeList,
 } from '@ulangi/ulangi-observable';
-import { AnalyticsAdapter } from '@ulangi/ulangi-saga';
 import { IObservableValue } from 'mobx';
+
+import { RemoteLogger } from '../../RemoteLogger';
 
 export class PublicSetListDelegate {
   private eventBus: EventBus;
@@ -24,7 +25,6 @@ export class PublicSetListDelegate {
   private setStore: ObservableSetStore;
   private publicSetCount: IObservableValue<null | number>;
   private publicSetList: ObservablePublicSetListState;
-  private analytics: AnalyticsAdapter;
 
   public constructor(
     eventBus: EventBus,
@@ -32,14 +32,12 @@ export class PublicSetListDelegate {
     setStore: ObservableSetStore,
     publicSetCount: IObservableValue<null | number>,
     publicSetList: ObservablePublicSetListState,
-    analytics: AnalyticsAdapter,
   ) {
     this.eventBus = eventBus;
     this.observableConverter = observableConverter;
     this.setStore = setStore;
     this.publicSetCount = publicSetCount;
     this.publicSetList = publicSetList;
-    this.analytics = analytics;
   }
 
   public getPublicSetCount(): void {
@@ -76,7 +74,7 @@ export class PublicSetListDelegate {
   }
 
   public prepareAndSearch(searchTerm: string): void {
-    this.analytics.logEvent('search_public_sets');
+    RemoteLogger.logEvent('search_public_sets');
     if (
       this.setStore.existingCurrentSet.learningLanguageCode !== 'any' &&
       this.setStore.existingCurrentSet.translatedToLanguageCode !== 'any'

@@ -7,17 +7,4 @@
 
 import * as _ from 'lodash';
 
-export class ObservableStore {
-  protected noReset: string[] = [];
-
-  public reset(newStore: ObservableStore): void {
-    _.forOwn(
-      newStore,
-      (value, key): void => {
-        if (_.has(this, key) && !_.includes(this.noReset, key)) {
-          this[key as keyof ObservableStore] = value;
-        }
-      }
-    );
-  }
-}
+export abstract class ObservableStore {}

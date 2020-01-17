@@ -25,8 +25,8 @@ import {
 } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { PurchaseEventChannel } from '../channels/PurchaseEventChannel';
+import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { createRequest } from '../utils/createRequest';
 import { ProtectedSaga } from './ProtectedSaga';
@@ -35,21 +35,18 @@ export class IapSaga extends ProtectedSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private iap: typeof Iap;
-  private crashlytics: CrashlyticsAdapter;
 
   private initedConnection: boolean = false;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    iap: typeof Iap,
-    crashlytics: CrashlyticsAdapter
+    iap: typeof Iap
   ) {
     super();
     this.sharedDb = sharedDb;
     this.sessionModel = sessionModel;
     this.iap = iap;
-    this.crashlytics = crashlytics;
   }
 
   public *run(env: SagaEnv): IterableIterator<any> {
@@ -96,7 +93,8 @@ export class IapSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.IAP__INIT_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -120,7 +118,8 @@ export class IapSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.IAP__GET_PRODUCTS_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -166,7 +165,8 @@ export class IapSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.IAP__REQUEST_PURCHASE_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -202,7 +202,8 @@ export class IapSaga extends ProtectedSaga {
       } catch (error) {
         yield put(
           createAction(ActionType.IAP__RESTORE_PURCHASES_FAILED, {
-            errorCode: this.crashlytics.getErrorCode(error),
+            errorCode: errorConverter.getErrorCode(error),
+            error,
           })
         );
       }
@@ -283,7 +284,8 @@ export class IapSaga extends ProtectedSaga {
     } catch (error) {
       yield put(
         createAction(ActionType.IAP__PROCESS_PURCHASE_FAILED, {
-          errorCode: this.crashlytics.getErrorCode(error),
+          errorCode: errorConverter.getErrorCode(error),
+          error,
         })
       );
     }

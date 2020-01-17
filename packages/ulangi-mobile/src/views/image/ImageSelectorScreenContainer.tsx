@@ -93,7 +93,7 @@ export class ImageSelectorScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <ImageSelectorScreen
-        darkModeStore={this.props.rootStore.darkModeStore}
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

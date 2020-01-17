@@ -19,12 +19,13 @@ import { Task } from 'redux-saga';
 import { call, cancel, fork, put, spawn, take } from 'redux-saga/effects';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AppsFlyerAdapter } from '../adapters/AppsFlyerAdapter';
+import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
+import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
-import { SystemDarkModeAdapter } from '../adapters/SystemDarkModeAdapter';
+import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { ProtectedSagaFactory } from '../factories/ProtectedSagaFactory';
 import { PublicSagaFactory } from '../factories/PublicSagaFactory';
 import { SagaConfig } from '../interfaces/SagaConfig';
@@ -40,11 +41,12 @@ export class RootSaga {
   private fileSystem: typeof FileSystem;
   private iap: typeof Iap;
   private admob: AdMobAdapter;
-  private appsFlyer: AppsFlyerAdapter;
+  private analytics: AnalyticsAdapter;
+  private facebook: FacebookAdapter;
   private netInfo: typeof NetInfo;
   private audioPlayer: AudioPlayerAdapter;
   private notifications: NotificationsAdapter;
-  private systemDarkMode: SystemDarkModeAdapter;
+  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
   private databaseEventBus: DatabaseEventBus;
   private modelList: ModelList;
@@ -55,11 +57,12 @@ export class RootSaga {
     fileSystem: typeof FileSystem,
     iap: typeof Iap,
     admob: AdMobAdapter,
-    appsFlyer: AppsFlyerAdapter,
+    analytics: AnalyticsAdapter,
+    facebook: FacebookAdapter,
     netInfo: typeof NetInfo,
     audioPlayer: AudioPlayerAdapter,
     notifications: NotificationsAdapter,
-    systemDarkMode: SystemDarkModeAdapter,
+    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter,
     databaseEventBus: DatabaseEventBus,
     modelList: ModelList
@@ -69,11 +72,12 @@ export class RootSaga {
     this.fileSystem = fileSystem;
     this.iap = iap;
     this.admob = admob;
-    this.appsFlyer = appsFlyer;
+    this.analytics = analytics;
+    this.facebook = facebook;
     this.netInfo = netInfo;
     this.audioPlayer = audioPlayer;
     this.notifications = notifications;
-    this.systemDarkMode = systemDarkMode;
+    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
     this.databaseEventBus = databaseEventBus;
     this.modelList = modelList;
@@ -95,8 +99,9 @@ export class RootSaga {
       this.modelList,
       this.netInfo,
       this.admob,
-      this.appsFlyer,
-      this.systemDarkMode,
+      this.analytics,
+      this.facebook,
+      this.systemTheme,
       this.crashlytics
     );
 
@@ -165,7 +170,6 @@ export class RootSaga {
       this.iap,
       this.audioPlayer,
       this.notifications,
-      this.crashlytics,
       this.databaseEventBus,
       this.modelList
     );

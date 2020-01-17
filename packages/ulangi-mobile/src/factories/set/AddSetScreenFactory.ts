@@ -46,7 +46,6 @@ export class AddSetScreenFactory extends ScreenFactory {
       addSetDelegate,
       dialogDelegate,
       navigatorDelegate,
-      this.props.analytics,
     );
   }
 }

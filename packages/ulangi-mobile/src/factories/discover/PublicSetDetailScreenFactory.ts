@@ -19,10 +19,13 @@ export class PublicSetDetailScreenFactory extends ScreenFactory {
   ): PublicSetDetailScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const dialogDelegate = this.createDialogDelegate(
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const addVocabularyDelegate = new AddVocabularyDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-      this.props.analytics,
     );
 
     const publicVocabularyActionMenuDelegate = new PublicVocabularyActionMenuDelegate(
@@ -36,7 +39,7 @@ export class PublicSetDetailScreenFactory extends ScreenFactory {
       observableScreen.publicSet,
       addVocabularyDelegate,
       publicVocabularyActionMenuDelegate,
-      navigatorDelegate,
+      dialogDelegate,
     );
   }
 }
