@@ -65,7 +65,7 @@ export class TopBar extends Container<TopBarPassedProps> {
           style={this.styles.top_bar_container}
           animation={Platform.select({ ios: 'fadeInRight', android: 'fadeIn' })}
           useNativeDriver
-          duration={400}>
+          duration={500}>
           <View style={this.styles.button_container}>
             {topBar.leftButton !== null
               ? this.renderButton(topBar.leftButton, 'left')
