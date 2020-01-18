@@ -6,6 +6,9 @@ export class RemoteLogger {
   private static analytics: null | AnalyticsAdapter;
   private static crashlytics: null | CrashlyticsAdapter;
 
+  public static crashlyticsEnabled: boolean = false;
+  public static analyticsEnabled: boolean = false;
+
   public static useCrashlytics(crashlytics: CrashlyticsAdapter): void {
     RemoteLogger.crashlytics = crashlytics;
   }
@@ -15,17 +18,19 @@ export class RemoteLogger {
   }
 
   public static logEvent(event: string, params?: object): void {
-    if (RemoteLogger.analytics !== null) {
+    if (
+      RemoteLogger.analytics !== null &&
+      RemoteLogger.analyticsEnabled === true
+    ) {
       RemoteLogger.analytics.logEvent(event, params);
-    } else {
-      console.warn(
-        `Cannot log event ${event} remotely because Analytics is not set.`,
-      );
     }
   }
 
   public static logError(error: unknown): void {
-    if (RemoteLogger.crashlytics !== null) {
+    if (
+      RemoteLogger.crashlytics !== null &&
+      RemoteLogger.crashlyticsEnabled === true
+    ) {
       if (error instanceof Error) {
         RemoteLogger.crashlytics.recordCustomError(error.name, error.message);
       } else {
@@ -41,10 +46,6 @@ export class RemoteLogger {
           );
         }
       }
-    } else {
-      console.warn(
-        `Cannot log error ${error} remotely because Crashlytics is not set.`,
-      );
     }
   }
 }

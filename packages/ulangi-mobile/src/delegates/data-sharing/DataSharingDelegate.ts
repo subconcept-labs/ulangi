@@ -1,10 +1,12 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { EventBus } from '@ulangi/ulangi-event';
+import { EventBus, once } from '@ulangi/ulangi-event';
 import {
   ObservableAdStore,
   ObservableUserStore,
   Observer,
 } from '@ulangi/ulangi-observable';
+
+import { RemoteLogger } from '../../RemoteLogger';
 
 export class DataSharingDelegate {
   private eventBus: EventBus;
@@ -38,12 +40,26 @@ export class DataSharingDelegate {
       },
       ({ isInEEAOrUnknown, dataSharingOptedIn }): void => {
         if (dataSharingOptedIn === true || isInEEAOrUnknown === false) {
-          this.eventBus.publish(
+          this.eventBus.pubsub(
             createAction(ActionType.DATA_SHARING__ENABLE_ANALYTICS, null),
+            once(
+              ActionType.DATA_SHARING__ENABLE_ANALYTICS_SUCCEEDED,
+              (): void => {
+                RemoteLogger.analyticsEnabled = true;
+                RemoteLogger.crashlyticsEnabled = true;
+              },
+            ),
           );
         } else {
-          this.eventBus.publish(
+          this.eventBus.pubsub(
             createAction(ActionType.DATA_SHARING__DISABLE_ANALYTICS, null),
+            once(
+              ActionType.DATA_SHARING__DISABLE_ANALYTICS_SUCCEEDED,
+              (): void => {
+                RemoteLogger.analyticsEnabled = false;
+                RemoteLogger.crashlyticsEnabled = false;
+              },
+            ),
           );
         }
       },
