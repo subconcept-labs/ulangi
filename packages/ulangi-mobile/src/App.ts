@@ -31,9 +31,11 @@ import { setDefaultNavigationOptions } from './setup/setDefaultNavigationOptions
 
 export class App {
   private initialized: boolean;
+  private preloaded: boolean;
 
   public constructor() {
     this.initialized = false;
+    this.preloaded = false;
   }
 
   public start(): void {
@@ -113,20 +115,29 @@ export class App {
 
     const rootScreenDelegate = new RootScreenDelegate(themeStore);
 
-    if (userStore.currentUser !== null) {
-      if (setStore.currentSetId !== null) {
-        rootScreenDelegate.setRootToTabBasedScreen();
-      } else {
-        rootScreenDelegate.setRootToSingleScreen(
-          ScreenName.CREATE_FIRST_SET_SCREEN,
-        );
-      }
-    } else {
+    if (!this.isPreloaded()) {
+      this.preloaded = true;
       rootScreenDelegate.setRootToSingleScreen(ScreenName.PRELOAD_SCREEN);
+    } else {
+      if (userStore.currentUser !== null) {
+        if (setStore.currentSetId !== null) {
+          rootScreenDelegate.setRootToTabBasedScreen();
+        } else {
+          rootScreenDelegate.setRootToSingleScreen(
+            ScreenName.CREATE_FIRST_SET_SCREEN,
+          );
+        }
+      } else {
+        rootScreenDelegate.setRootToSingleScreen(ScreenName.WELCOME_SCREEN);
+      }
     }
   }
 
   private isInitialized(): boolean {
     return this.initialized;
+  }
+
+  private isPreloaded(): boolean {
+    return this.preloaded;
   }
 }

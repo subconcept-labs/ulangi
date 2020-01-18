@@ -49,7 +49,7 @@ export class WelcomeScreenDelegate {
   }
 
   public navigateToSignInScreen(): void {
-    this.navigatorDelegate.resetTo(ScreenName.SIGN_IN_SCREEN, {});
+    this.navigatorDelegate.push(ScreenName.SIGN_IN_SCREEN, {});
   }
 
   private showSigningInAsGuestDialog(): void {

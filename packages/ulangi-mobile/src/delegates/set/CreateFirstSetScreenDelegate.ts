@@ -20,6 +20,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import * as _ from 'lodash';
+import { BackHandler } from 'react-native';
 
 import { CreateFirstSetScreenIds } from '../../constants/ids/CreateFirstSetScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -123,6 +124,19 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
         },
       ],
     });
+  }
+
+  public addBackButtonHandler(handler: () => boolean): void {
+    BackHandler.addEventListener('hardwareBackPress', handler);
+  }
+
+  public removeBackButtonHandler(handler: () => boolean): void {
+    BackHandler.removeEventListener('hardwareBackPress', handler);
+  }
+
+  public handleHardwareBackButton(): boolean {
+    this.showConfirmLogout();
+    return true;
   }
 
   private navigateToTabBasedScreen(): void {

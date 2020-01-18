@@ -85,6 +85,18 @@ export class CreateFirstSetScreenContainer extends Container {
     );
   }
 
+  public componentDidMount(): void {
+    this.screenDelegate.addBackButtonHandler(
+      this.screenDelegate.handleHardwareBackButton,
+    );
+  }
+
+  public componentWillUnmount(): void {
+    this.screenDelegate.removeBackButtonHandler(
+      this.screenDelegate.handleHardwareBackButton,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <CreateFirstSetScreen
