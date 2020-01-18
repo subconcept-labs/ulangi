@@ -33,44 +33,54 @@ export class DatabaseSaga extends PublicSaga {
   }
 
   public *allowConnectSharedDb(): IterableIterator<any> {
-    while (true) {
-      yield take(ActionType.DATABASE__CONNECT_SHARED_DB);
-      try {
+    yield take(ActionType.DATABASE__CONNECT_SHARED_DB);
+    try {
+      yield put(createAction(ActionType.DATABASE__CONNECTING_SHARED_DB, null));
+      yield call([this.database, 'connectSharedDb'], 'shared');
+      yield put(
+        createAction(ActionType.DATABASE__CONNECT_SHARED_DB_SUCCEEDED, null)
+      );
+
+      // Avoid connecting shared db again
+      while (true) {
+        yield take(ActionType.DATABASE__CONNECT_SHARED_DB);
         yield put(
-          createAction(ActionType.DATABASE__CONNECTING_SHARED_DB, null)
-        );
-        yield call([this.database, 'connectSharedDb'], 'shared');
-        yield put(
-          createAction(ActionType.DATABASE__CONNECT_SHARED_DB_SUCCEEDED, null)
-        );
-      } catch (error) {
-        yield put(
-          createAction(ActionType.DATABASE__CONNECT_SHARED_DB_FAILED, {
-            errorCode: errorConverter.getErrorCode(error),
-            error,
-          })
+          createAction(ActionType.DATABASE__ALREADY_CONNECTED_SHARED_DB, null)
         );
       }
+    } catch (error) {
+      yield put(
+        createAction(ActionType.DATABASE__CONNECT_SHARED_DB_FAILED, {
+          errorCode: errorConverter.getErrorCode(error),
+          error,
+        })
+      );
     }
   }
 
   public *allowCheckSharedDb(): IterableIterator<any> {
-    while (true) {
-      yield take(ActionType.DATABASE__CHECK_SHARED_DB);
-      try {
-        yield put(createAction(ActionType.DATABASE__CHECKING_SHARED_DB, null));
-        yield call([this.database, 'checkSharedDb']);
+    yield take(ActionType.DATABASE__CHECK_SHARED_DB);
+    try {
+      yield put(createAction(ActionType.DATABASE__CHECKING_SHARED_DB, null));
+      yield call([this.database, 'checkSharedDb']);
+      yield put(
+        createAction(ActionType.DATABASE__CHECK_SHARED_DB_SUCCEEDED, null)
+      );
+
+      // Avoid checking shared db again
+      while (true) {
+        yield take(ActionType.DATABASE__CHECK_SHARED_DB);
         yield put(
-          createAction(ActionType.DATABASE__CHECK_SHARED_DB_SUCCEEDED, null)
-        );
-      } catch (error) {
-        yield put(
-          createAction(ActionType.DATABASE__CHECK_SHARED_DB_FAILED, {
-            errorCode: errorConverter.getErrorCode(error),
-            error,
-          })
+          createAction(ActionType.DATABASE__ALREADY_CHECKED_SHARED_DB, null)
         );
       }
+    } catch (error) {
+      yield put(
+        createAction(ActionType.DATABASE__CHECK_SHARED_DB_FAILED, {
+          errorCode: errorConverter.getErrorCode(error),
+          error,
+        })
+      );
     }
   }
 

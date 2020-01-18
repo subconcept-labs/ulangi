@@ -27,11 +27,23 @@ export class AppSaga extends PublicSaga {
     );
 
     yield put(createAction(ActionType.DATABASE__CONNECT_SHARED_DB, null));
-    yield take(ActionType.DATABASE__CONNECT_SHARED_DB_SUCCEEDED);
+    yield take([
+      ActionType.DATABASE__CONNECT_SHARED_DB_SUCCEEDED,
+      ActionType.DATABASE__ALREADY_CONNECTED_SHARED_DB,
+    ]);
 
     yield put(createAction(ActionType.DATABASE__CHECK_SHARED_DB, null));
-    yield take(ActionType.DATABASE__CHECK_SHARED_DB_SUCCEEDED);
+    yield take([
+      ActionType.DATABASE__CHECK_SHARED_DB_SUCCEEDED,
+      ActionType.DATABASE__ALREADY_CHECKED_SHARED_DB,
+    ]);
 
     yield put(createAction(ActionType.APP__INITIALIZE_SUCCEEDED, null));
+
+    // Avoid initializing app again
+    while (true) {
+      yield take(ActionType.APP__INITIALIZE);
+      yield put(createAction(ActionType.APP__ALREADY_INITIALIZED, null));
+    }
   }
 }

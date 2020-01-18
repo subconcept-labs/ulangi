@@ -41,6 +41,7 @@ export interface ActionPayload {
   readonly APP__INITIALIZING: null;
   readonly APP__INITIALIZE_SUCCEEDED: null;
   readonly APP__INITIALIZE_FAILED: ErrorBag;
+  readonly APP__ALREADY_INITIALIZED: null;
 
   readonly DATA_SHARING__ENABLE_ANALYTICS: null;
   readonly DATA_SHARING__ENABLING_ANALYTICS: null;
@@ -187,10 +188,12 @@ export interface ActionPayload {
   readonly DATABASE__CONNECTING_SHARED_DB: null;
   readonly DATABASE__CONNECT_SHARED_DB_SUCCEEDED: null;
   readonly DATABASE__CONNECT_SHARED_DB_FAILED: ErrorBag;
+  readonly DATABASE__ALREADY_CONNECTED_SHARED_DB: null;
   readonly DATABASE__CHECK_SHARED_DB: null;
   readonly DATABASE__CHECKING_SHARED_DB: null;
   readonly DATABASE__CHECK_SHARED_DB_SUCCEEDED: null;
   readonly DATABASE__CHECK_SHARED_DB_FAILED: ErrorBag;
+  readonly DATABASE__ALREADY_CHECKED_SHARED_DB: null;
   readonly DATABASE__CONNECT_USER_DB: { userId: string };
   readonly DATABASE__CONNECTING_USER_DB: null;
   readonly DATABASE__CONNECT_USER_DB_SUCCEEDED: null;
@@ -312,6 +315,7 @@ export interface ActionPayload {
   readonly NETWORK__OBSERVE_CONNECTION_CHANGE: null;
   readonly NETWORK__OBSERVING_CONNECTION_CHANGE: null;
   readonly NETWORK__OBSERVE_CONNECTION_CHANGE_FAILED: ErrorBag;
+  readonly NETWORK__CANCEL_OBSERVING_CONNECTION_CHANGE: null;
   readonly NETWORK__CONNECTION_CHANGED: { isConnected: boolean };
 
   readonly QUIZ__FETCH_VOCABULARY_FOR_WRITING: {

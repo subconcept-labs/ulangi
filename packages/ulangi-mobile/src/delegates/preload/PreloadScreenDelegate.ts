@@ -43,6 +43,7 @@ export class PreloadScreenDelegate {
     const messageMap = [
       [ActionType.APP__INITIALIZING, 'Initializing...'],
       [ActionType.APP__INITIALIZE_SUCCEEDED, 'Initialize succeeded.'],
+      [ActionType.APP__ALREADY_INITIALIZED, 'Already initialized.'],
       [
         ActionType.APP__INITIALIZE_FAILED,
         'Initialize failed. ' + contactDeveloperMessage,
@@ -131,7 +132,7 @@ export class PreloadScreenDelegate {
 
   public preload(): void {
     this.initializeApp({
-      onInitializeSucceeded: (): void => {
+      onInitializeSucceededOrAlreadyInitialized: (): void => {
         this.getSession({
           onSessionFound: (): void => {
             this.fetchAllSets({
@@ -157,7 +158,7 @@ export class PreloadScreenDelegate {
   }
 
   private initializeApp(callback: {
-    onInitializeSucceeded: () => void;
+    onInitializeSucceededOrAlreadyInitialized: () => void;
     onInitializeFailed: (error: unknown) => void;
   }): void {
     this.eventBus.pubsub(
@@ -165,7 +166,11 @@ export class PreloadScreenDelegate {
       group(
         once(
           ActionType.APP__INITIALIZE_SUCCEEDED,
-          callback.onInitializeSucceeded,
+          callback.onInitializeSucceededOrAlreadyInitialized,
+        ),
+        once(
+          ActionType.APP__ALREADY_INITIALIZED,
+          callback.onInitializeSucceededOrAlreadyInitialized,
         ),
         once(
           ActionType.APP__INITIALIZE_FAILED,

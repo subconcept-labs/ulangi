@@ -8,7 +8,7 @@
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { EventChannel, eventChannel } from 'redux-saga';
-import { call, cancelled, fork, put, take } from 'redux-saga/effects';
+import { call, cancel, cancelled, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { errorConverter } from '../converters/ErrorConverter';
@@ -53,15 +53,34 @@ export class NetworkSaga extends PublicSaga {
   }
 
   public *allowObserveConnectionChange(): IterableIterator<any> {
-    let channel!: EventChannel<boolean>;
+    while (true) {
+      try {
+        yield take(ActionType.NETWORK__OBSERVE_CONNECTION_CHANGE);
+
+        const channel = this.createConnectionChangeEventChannel();
+        yield put(
+          createAction(ActionType.NETWORK__OBSERVING_CONNECTION_CHANGE, null)
+        );
+
+        const task = yield fork([this, this.observeConnectionChange], channel);
+
+        yield take(ActionType.NETWORK__CANCEL_OBSERVING_CONNECTION_CHANGE);
+        yield cancel(task);
+      } catch (error) {
+        yield put(
+          createAction(ActionType.NETWORK__OBSERVE_CONNECTION_CHANGE_FAILED, {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          })
+        );
+      }
+    }
+  }
+
+  private *observeConnectionChange(
+    channel: EventChannel<boolean>
+  ): IterableIterator<any> {
     try {
-      yield take(ActionType.NETWORK__OBSERVE_CONNECTION_CHANGE);
-
-      channel = this.createConnectionChangeEventChannel();
-      yield put(
-        createAction(ActionType.NETWORK__OBSERVING_CONNECTION_CHANGE, null)
-      );
-
       while (true) {
         const isConnected = yield take(channel);
         yield put(
@@ -70,19 +89,10 @@ export class NetworkSaga extends PublicSaga {
           })
         );
       }
-    } catch (error) {
-      yield put(
-        createAction(ActionType.NETWORK__OBSERVE_CONNECTION_CHANGE_FAILED, {
-          errorCode: errorConverter.getErrorCode(error),
-          error,
-        })
-      );
     } finally {
       if (yield cancelled()) {
-        if (typeof channel !== 'undefined') {
-          channel.close();
-          console.log('Network channel closed');
-        }
+        channel.close();
+        console.log('Network channel closed');
       }
     }
   }
