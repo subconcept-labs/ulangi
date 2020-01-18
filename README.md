@@ -33,9 +33,12 @@
 
 ## Main apps
 
-iOS: [https://itunes.apple.com/us/app/id1435524341?mt=8](https://itunes.apple.com/us/app/id1435524341?mt=8)
-
-Android: [https://play.google.com/store/apps/details?id=com.ulangi](https://play.google.com/store/apps/details?id=com.ulangi)
+| Platform | Store |
+| --- | --- |
+| iOS | [Download on App Store](https://itunes.apple.com/us/app/id1435524341?mt=8) |
+| Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
+| Mac | *To be developed* |
+| Window | *To be developed* |
 
 ---
 
@@ -44,6 +47,12 @@ Android: [https://play.google.com/store/apps/details?id=com.ulangi](https://play
 All docs are hosted here: [https://ulangi.github.io/ulangi](https://ulangi.github.io/ulangi)
 
 We're adding more docs. Stay tuned! 
+
+---
+
+## Change log
+
+Please view [CHANGELOG.md](./CHANGELOG.md) file.
 
 ---
 
