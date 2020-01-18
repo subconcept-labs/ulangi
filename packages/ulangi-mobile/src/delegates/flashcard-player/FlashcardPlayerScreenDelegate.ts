@@ -45,7 +45,7 @@ export class FlashcardPlayerScreenDelegate {
   }
 
   public uploadToFlashcardPlayer(): void {
-    if (env.FLASHCARD_PLAYER_URL !== null) {
+    if (typeof env.FLASHCARD_PLAYER_URL !== 'undefined') {
       this.eventBus.pubsub(
         createAction(ActionType.FLASHCARD_PLAYER__UPLOAD, {
           playerUrl: env.FLASHCARD_PLAYER_URL,
@@ -90,7 +90,7 @@ export class FlashcardPlayerScreenDelegate {
   }
 
   public openFlashcardPlayerHomePage(): void {
-    if (env.FLASHCARD_PLAYER_URL !== null) {
+    if (typeof env.FLASHCARD_PLAYER_URL !== 'undefined') {
       Linking.openURL(env.FLASHCARD_PLAYER_URL).catch(
         (): void => {
           this.dialogDelegate.show({

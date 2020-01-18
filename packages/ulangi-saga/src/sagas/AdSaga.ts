@@ -42,8 +42,8 @@ export class AdSaga extends PublicSaga {
       } = action.payload;
 
       if (
-        consentFormDebugDeviceId !== null &&
-        consentFormDebugGeography !== null
+        typeof consentFormDebugDeviceId !== 'undefined' &&
+        typeof consentFormDebugGeography !== 'undefined'
       ) {
         yield call(
           [this.adMob, 'setDebugGeography'],

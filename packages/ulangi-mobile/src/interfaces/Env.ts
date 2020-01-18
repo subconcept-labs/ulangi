@@ -6,25 +6,30 @@
  */
 
 export interface Env {
-  readonly ENABLE_REDUX_LOGGING: boolean;
-  readonly ENABLE_SPLASH_SCREEN: boolean;
   readonly SERVER_URL: string;
   readonly API_URL: string;
-  readonly PRIVACY_POLICY_URL: null | string;
-  readonly APPLE_APP_ID: null | string;
-  readonly GOOGLE_PACKAGE_NAME: null | string;
-  readonly ADMOB_PUBLISHER_ID: null | string;
-  readonly CONSENT_FORM_SHOULD_OFFER_AD_FREE: null | boolean;
-  readonly CONSENT_FORM_DEBUG_GEOGRAPHY: null | 'EEA' | 'NOT_EEA';
-  readonly IOS_PREMIUM_LIFETIME_PRODUCT_ID: null | string;
-  readonly IOS_AD_APP_ID: null | string;
-  readonly IOS_AD_UNIT_ID: null | string;
-  readonly IOS_AD_TEST_DEVICE_ID: null | string;
-  readonly IOS_CONSENT_FORM_DEBUG_DEVICE_ID: null | string;
-  readonly ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: null | string;
-  readonly ANDROID_AD_APP_ID: null | string;
-  readonly ANDROID_AD_UNIT_ID: null | string;
-  readonly ANDROID_AD_TEST_DEVICE_ID: null | string;
-  readonly ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID: null | string;
-  readonly FLASHCARD_PLAYER_URL: null | string;
+  readonly PRIVACY_POLICY_URL: string;
+
+  readonly ENABLE_REDUX_LOGGING: boolean;
+  readonly ENABLE_SPLASH_SCREEN: boolean;
+
+  readonly APPLE_APP_ID: string;
+  readonly GOOGLE_PACKAGE_NAME: string;
+
+  readonly IOS_PREMIUM_LIFETIME_PRODUCT_ID: undefined | string;
+  readonly ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: undefined | string;
+
+  readonly ADMOB_PUBLISHER_ID: undefined | string;
+  readonly CONSENT_FORM_SHOULD_OFFER_AD_FREE: undefined | boolean;
+  readonly CONSENT_FORM_DEBUG_GEOGRAPHY: undefined | 'EEA' | 'NOT_EEA';
+  readonly IOS_AD_APP_ID: undefined | string;
+  readonly IOS_AD_UNIT_ID: undefined | string;
+  readonly IOS_AD_TEST_DEVICE_ID: undefined | string;
+  readonly IOS_CONSENT_FORM_DEBUG_DEVICE_ID: undefined | string;
+  readonly ANDROID_AD_APP_ID: undefined | string;
+  readonly ANDROID_AD_UNIT_ID: undefined | string;
+  readonly ANDROID_AD_TEST_DEVICE_ID: undefined | string;
+  readonly ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID: undefined | string;
+
+  readonly FLASHCARD_PLAYER_URL: undefined | string;
 }

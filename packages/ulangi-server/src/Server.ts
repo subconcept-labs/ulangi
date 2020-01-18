@@ -103,8 +103,8 @@ export class Server {
         : null;
 
     this.firebase =
-      this.env.FIREBASE_SERVICE_ACCOUNT_PATH !== null &&
-      this.env.FIREBASE_DATABASE_URL !== null
+      typeof this.env.FIREBASE_SERVICE_ACCOUNT_PATH !== 'undefined' &&
+      typeof this.env.FIREBASE_DATABASE_URL !== 'undefined'
         ? new FirebaseFacade(
             this.env.FIREBASE_SERVICE_ACCOUNT_PATH,
             this.env.FIREBASE_DATABASE_URL,
@@ -115,12 +115,13 @@ export class Server {
         : null;
 
     this.dictionary =
-      this.env.DICTIONARY_SERVER_URL !== null
+      typeof this.env.DICTIONARY_SERVER_URL !== 'undefined'
         ? new DictionaryFacade(this.env.DICTIONARY_SERVER_URL, AWS.config)
         : null;
 
     this.library =
-      this.env.LIBRARY_SERVER_URL !== null && this.dictionary !== null
+      typeof this.env.LIBRARY_SERVER_URL !== 'undefined' &&
+      this.dictionary !== null
         ? new LibraryFacade(
             this.env.LIBRARY_SERVER_URL,
             this.dictionary,
@@ -129,8 +130,8 @@ export class Server {
         : null;
 
     this.googleTranslate =
-      this.env.GOOGLE_CLOUD_PROJECT_ID !== null &&
-      this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT
+      typeof this.env.GOOGLE_CLOUD_PROJECT_ID !== 'undefined' &&
+      typeof this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT !== 'undefined'
         ? new GoogleTranslateAdapter(
             this.env.GOOGLE_CLOUD_PROJECT_ID,
             this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT
@@ -138,8 +139,8 @@ export class Server {
         : null;
 
     this.googleTextToSpeech =
-      this.env.GOOGLE_CLOUD_PROJECT_ID !== null &&
-      this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT
+      typeof this.env.GOOGLE_CLOUD_PROJECT_ID !== 'undefined' &&
+      typeof this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT !== 'undefined'
         ? new GoogleTextToSpeechAdapter(
             this.env.GOOGLE_CLOUD_PROJECT_ID,
             this.env.GOOGLE_CLOUD_SERVICE_ACCOUNT
@@ -147,9 +148,9 @@ export class Server {
         : null;
 
     this.iap =
-      this.env.PLAY_STORE_SERVICE_ACCOUNT !== null &&
-      this.env.IOS_PREMIUM_LIFETIME_PRODUCT_ID &&
-      this.env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID
+      typeof this.env.PLAY_STORE_SERVICE_ACCOUNT !== 'undefined' &&
+      typeof this.env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined' &&
+      typeof this.env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined'
         ? new IapAdapter(
             this.modelList.userModel,
             this.modelList.purchaseModel,
@@ -160,12 +161,12 @@ export class Server {
         : null;
 
     this.mailer =
-      this.env.AWS_SES_REGION !== null
+      typeof this.env.AWS_SES_REGION !== 'undefined'
         ? new MailerAdapter(new AWS.SES({ region: this.env.AWS_SES_REGION }))
         : null;
 
     this.polly =
-      this.env.AWS_POLLY_REGION !== null
+      typeof this.env.AWS_POLLY_REGION !== 'undefined'
         ? new PollyAdapter(new AWS.Polly({ region: this.env.AWS_POLLY_REGION }))
         : null;
 
@@ -198,89 +199,65 @@ export class Server {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
-          this.logger.info(scope('Server'), `starting...`);
-
           if (this.awsConfig === null) {
-            this.logger.warn(scope('Server'), `AWS is not configured.`);
+            this.handleServiceDisabled('AWS is not configured.');
           } else {
             AWS.config.update(this.awsConfig);
-            this.logger.info(scope('Server'), `using AWS...`);
+            this.handleServiceEnabled('AWS is configured.');
           }
 
-          this.logger.info(scope('Server'), `checking auth database...`);
           await this.database.checkAuthDatabaseTables();
+          this.handleServiceEnabled('Auth database is connected successfully.');
 
-          this.logger.info(scope('Server'), `checking all shard databases...`);
           await this.database.checkAllShardDatabaseTables();
+          this.handleServiceEnabled(
+            'Shard databases are connected successfully.'
+          );
 
           if (this.iap === null) {
-            this.logger.warn(
-              scope('Server'),
-              `in-app purchases verification is not configured.`
-            );
+            this.handleServiceDisabled('In-app purchase is not configured.');
           } else {
-            this.logger.info(scope('Server'), `setting up in-app purchase...`);
             await this.iap.setup();
+            this.handleServiceEnabled('In-app purchase is set up.');
           }
 
           if (this.googleTranslate === null) {
-            this.logger.warn(
-              scope('Server'),
-              `Google Translate is not configured.`
-            );
+            this.handleServiceDisabled('Google Translate is not configured.');
           } else {
-            this.logger.info(
-              scope('Server'),
-              `checking connection to translators...`
-            );
             await this.googleTranslate.checkTranslators();
+            this.handleServiceEnabled('Google Translate is set up correctly.');
           }
 
           if (this.googleTextToSpeech === null) {
-            this.logger.warn(
-              scope('Server'),
-              `Google Text-to-Speech is not configured.`
-            );
+            this.handleServiceDisabled('Google TTS is not configured.');
           } else {
-            this.logger.info(
-              scope('Server'),
-              `checking connection to Google Text-to-Speech...`
-            );
             await this.googleTextToSpeech.checkSynthesizeSpeech();
+            this.handleServiceEnabled('Google TTS is set up correctly.');
           }
 
           if (this.polly === null) {
-            this.logger.warn(scope('Server'), `Polly is not configured.`);
+            this.handleServiceDisabled('Polly is not configured.');
           } else {
-            this.logger.info(scope('Server'), `prefetching Polly voices...`);
             await this.polly.prefetchAllVoiceList();
+            this.handleServiceEnabled(`Polly is set up correctly.`);
           }
 
           if (this.dictionary === null) {
-            this.logger.warn(
-              scope('Server'),
-              `Dictionary server is not configured.`
-            );
+            this.handleServiceDisabled('Dictionary is not configured.');
           } else {
-            this.logger.info(
-              scope('Server'),
-              `prefetching dictionary indices...`
-            );
             await this.dictionary.prefetchAllIndices();
+            this.handleServiceEnabled('Dictionary is set up correctly.');
           }
 
           if (this.library === null) {
-            this.logger.warn(
-              scope('Server'),
-              `Library server is not configured.`
-            );
+            this.handleServiceDisabled('Library is not configured.');
           } else {
-            this.logger.info(scope('Server'), `prefetching library indices...`);
             await this.library.prefetchAllIndices();
+            this.handleServiceEnabled(`Library is set up correctly.`);
           }
 
           if (this.mailer === null) {
-            this.logger.warn(scope('Server'), `Mailer is not configured.`);
+            this.handleServiceDisabled('Mailer is not configured.');
           }
 
           resolve();
@@ -298,11 +275,14 @@ export class Server {
 
     app.use(this.authenticator.createAuthenticationHandler());
 
-    app.use(
-      express.static(
-        path.join(appRoot.toString(), 'public', this.env.PUBLIC_FOLDER_NAME)
-      )
-    );
+    if (typeof this.env.PUBLIC_FOLDER_NAME !== 'undefined') {
+      app.use(
+        express.static(
+          path.join(appRoot.toString(), 'public', this.env.PUBLIC_FOLDER_NAME)
+        )
+      );
+    }
+
     app.use(express.static(path.join(appRoot.toString(), 'public', 'common')));
 
     app.use(
@@ -320,8 +300,20 @@ export class Server {
       (): void =>
         this.logger.info(
           scope('Server'),
-          `listening on port ${chalk.bold.white.bgBlue(' 8082 ')}!`
+          `Server is listening on port ${chalk.bold.white.bgBlue(' 8082 ')}!`
         )
     );
+  }
+
+  private handleServiceDisabled(message: string) {
+    if (this.env.ALERT_SERVICE_DISABLED === 'warn') {
+      this.logger.warn(scope('Server'), message);
+    } else if (this.env.ALERT_SERVICE_DISABLED === 'error') {
+      throw new Error(message);
+    }
+  }
+
+  private handleServiceEnabled(message: string) {
+    this.logger.info(scope('Server'), message);
   }
 }
