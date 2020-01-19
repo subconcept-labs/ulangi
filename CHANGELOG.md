@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.2](https://github.com/minhloi/ulangi/compare/v3.3.1...v3.3.2) (2020-01-19)
+
+
+### Bug Fixes
+
+* change animation duration ([af47241](https://github.com/minhloi/ulangi/commit/af47241))
+* crash when crashlytics is not initialized ([031696e](https://github.com/minhloi/ulangi/commit/031696e))
+* make sure preloading is resumable ([b98bd77](https://github.com/minhloi/ulangi/commit/b98bd77))
+* render correct screen when activity is destroyed ([26c2d7a](https://github.com/minhloi/ulangi/commit/26c2d7a))
+
+
+
+
+
 ## [3.3.1](https://github.com/minhloi/ulangi/compare/v3.3.0...v3.3.1) (2020-01-17)
 
 
