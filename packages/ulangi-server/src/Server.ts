@@ -305,7 +305,7 @@ export class Server {
     );
   }
 
-  private handleServiceDisabled(message: string) {
+  private handleServiceDisabled(message: string): void {
     if (this.env.ALERT_SERVICE_DISABLED === 'warn') {
       this.logger.warn(scope('Server'), message);
     } else if (this.env.ALERT_SERVICE_DISABLED === 'error') {
@@ -313,7 +313,7 @@ export class Server {
     }
   }
 
-  private handleServiceEnabled(message: string) {
+  private handleServiceEnabled(message: string): void {
     this.logger.info(scope('Server'), message);
   }
 }

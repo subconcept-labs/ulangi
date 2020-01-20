@@ -19,6 +19,8 @@ export interface Env {
 
   readonly JWT_SECRET_KEY: string;
 
+  readonly ALERT_SERVICE_DISABLED: 'warn' | 'error' | 'off';
+
   readonly AWS_ACCESS_KEY_ID: undefined | string;
   readonly AWS_SECRET_ACCESS_KEY: undefined | string;
   readonly AWS_DEFAULT_REGION: undefined | string;
@@ -38,7 +40,5 @@ export interface Env {
   readonly LIBRARY_SERVER_URL: undefined | string;
   readonly DICTIONARY_SERVER_URL: undefined | string;
 
-  readonly ALERT_SERVICE_DISABLED: 'warn' | 'error' | 'off';
-
-  readonly PUBLIC_FOLDER_NAME: string;
+  readonly PUBLIC_FOLDER_NAME: undefined | string;
 }

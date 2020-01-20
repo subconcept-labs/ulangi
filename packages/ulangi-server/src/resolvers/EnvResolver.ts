@@ -32,6 +32,8 @@ export class EnvResolver extends AbstractResolver<Env> {
 
     JWT_SECRET_KEY: Joi.string(),
 
+    ALERT_SERVICE_DISABLED: Joi.string().valid(['warn', 'error', 'off']),
+
     AWS_ACCESS_KEY_ID: Joi.string().optional(),
     AWS_SECRET_ACCESS_KEY: Joi.string().optional(),
     AWS_DEFAULT_REGION: Joi.string().optional(),
@@ -50,8 +52,6 @@ export class EnvResolver extends AbstractResolver<Env> {
 
     LIBRARY_SERVER_URL: Joi.string().optional(),
     DICTIONARY_SERVER_URL: Joi.string().optional(),
-
-    ALERT_SERVICE_DISABLED: Joi.string().valid(['warn', 'error', 'off']),
 
     PUBLIC_FOLDER_NAME: Joi.string().optional(),
   };

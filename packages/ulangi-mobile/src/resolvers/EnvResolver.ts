@@ -14,7 +14,7 @@ export class EnvResolver extends AbstractResolver<Env> {
   protected rules = {
     SERVER_URL: Joi.string(),
     API_URL: Joi.string(),
-    PRIVACY_POLICY_URL: Joi.string().allow(null),
+    PRIVACY_POLICY_URL: Joi.string(),
 
     ENABLE_REDUX_LOGGING: Joi.boolean(),
     ENABLE_SPLASH_SCREEN: Joi.boolean(),
