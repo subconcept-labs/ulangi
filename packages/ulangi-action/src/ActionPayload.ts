@@ -81,8 +81,8 @@ export interface ActionPayload {
 
   readonly AD__SET_UP: {
     publisherId: string;
-    consentFormDebugDeviceId: null | string;
-    consentFormDebugGeography: null | 'EEA' | 'NOT_EEA';
+    consentFormDebugDeviceId: undefined | string;
+    consentFormDebugGeography: undefined | 'EEA' | 'NOT_EEA';
   };
   readonly AD__SET_UP_SUCCEEDED: null;
   readonly AD__SET_UP_FAILED: ErrorBag;
@@ -102,7 +102,7 @@ export interface ActionPayload {
   readonly AD__LOAD_AD: {
     adUnitId: string;
     consentStatus: ConsentStatus;
-    adTestDeviceId: null | string;
+    adTestDeviceId: undefined | string;
   };
   readonly AD__LOADING_AD: null;
   readonly AD__LOAD_AD_SUCCEEDED: null;

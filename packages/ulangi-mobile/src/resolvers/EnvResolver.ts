@@ -12,28 +12,33 @@ import { Env } from '../interfaces/Env';
 
 export class EnvResolver extends AbstractResolver<Env> {
   protected rules = {
-    ENABLE_REDUX_LOGGING: Joi.boolean(),
-    ENABLE_SPLASH_SCREEN: Joi.boolean(),
     SERVER_URL: Joi.string(),
     API_URL: Joi.string(),
     PRIVACY_POLICY_URL: Joi.string().allow(null),
-    APPLE_APP_ID: Joi.string().allow(null),
-    GOOGLE_PACKAGE_NAME: Joi.string().allow(null),
-    ADMOB_PUBLISHER_ID: Joi.string().allow(null),
-    CONSENT_FORM_SHOULD_OFFER_AD_FREE: Joi.boolean().allow(null),
+
+    ENABLE_REDUX_LOGGING: Joi.boolean(),
+    ENABLE_SPLASH_SCREEN: Joi.boolean(),
+
+    APPLE_APP_ID: Joi.string(),
+    GOOGLE_PACKAGE_NAME: Joi.string(),
+
+    IOS_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
+    ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
+
+    ADMOB_PUBLISHER_ID: Joi.string().optional(),
+    CONSENT_FORM_SHOULD_OFFER_AD_FREE: Joi.boolean().optional(),
     CONSENT_FORM_DEBUG_GEOGRAPHY: Joi.string()
       .valid(['EEA', 'NOT_EEA'])
-      .allow(null),
-    IOS_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().allow(null),
-    IOS_AD_APP_ID: Joi.string().allow(null),
-    IOS_AD_UNIT_ID: Joi.string().allow(null),
-    IOS_AD_TEST_DEVICE_ID: Joi.string().allow(null),
-    IOS_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().allow(null),
-    ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().allow(null),
-    ANDROID_AD_APP_ID: Joi.string().allow(null),
-    ANDROID_AD_UNIT_ID: Joi.string().allow(null),
-    ANDROID_AD_TEST_DEVICE_ID: Joi.string().allow(null),
-    ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().allow(null),
-    FLASHCARD_PLAYER_URL: Joi.string().allow(null),
+      .optional(),
+    IOS_AD_APP_ID: Joi.string().optional(),
+    IOS_AD_UNIT_ID: Joi.string().optional(),
+    IOS_AD_TEST_DEVICE_ID: Joi.string().optional(),
+    IOS_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().optional(),
+    ANDROID_AD_APP_ID: Joi.string().optional(),
+    ANDROID_AD_UNIT_ID: Joi.string().optional(),
+    ANDROID_AD_TEST_DEVICE_ID: Joi.string().optional(),
+    ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().optional(),
+
+    FLASHCARD_PLAYER_URL: Joi.string().optional(),
   };
 }

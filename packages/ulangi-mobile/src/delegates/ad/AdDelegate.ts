@@ -44,7 +44,7 @@ export class AdDelegate {
   }
 
   public setUp(): void {
-    if (env.ADMOB_PUBLISHER_ID !== null) {
+    if (typeof env.ADMOB_PUBLISHER_ID !== 'undefined') {
       this.eventBus.publish(
         createAction(ActionType.AD__SET_UP, {
           publisherId: env.ADMOB_PUBLISHER_ID,
@@ -98,7 +98,10 @@ export class AdDelegate {
   }
 
   public loadAd(): void {
-    if (env.IOS_AD_UNIT_ID !== null && env.ANDROID_AD_UNIT_ID !== null) {
+    if (
+      typeof env.IOS_AD_UNIT_ID !== 'undefined' &&
+      typeof env.ANDROID_AD_UNIT_ID !== 'undefined'
+    ) {
       this.eventBus.publish(
         createAction(ActionType.AD__LOAD_AD, {
           adUnitId: Platform.select({
@@ -153,8 +156,8 @@ export class AdDelegate {
 
   public showGoogleConsentForm(): void {
     if (
-      env.PRIVACY_POLICY_URL !== null &&
-      env.CONSENT_FORM_SHOULD_OFFER_AD_FREE !== null
+      typeof env.PRIVACY_POLICY_URL !== 'undefined' &&
+      typeof env.CONSENT_FORM_SHOULD_OFFER_AD_FREE !== 'undefined'
     ) {
       this.eventBus.publish(
         createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM, {

@@ -25,13 +25,13 @@ export class AdMobAdapter {
   public loadInterstitialAd(
     addUnitId: string,
     consentStatus: ConsentStatus,
-    adTestDeviceId: null | string
+    adTestDeviceId: undefined | string
   ): InterstitialAdAdapter {
     let adRequest = new this.adMob.AdRequest();
 
     adRequest = adRequest.tagForChildDirectedTreatment(true);
 
-    if (adTestDeviceId !== null) {
+    if (typeof adTestDeviceId !== 'undefined') {
       adRequest = adRequest.addTestDevice(adTestDeviceId);
     }
 
