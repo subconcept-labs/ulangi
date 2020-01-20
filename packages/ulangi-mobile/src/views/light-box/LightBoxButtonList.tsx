@@ -44,6 +44,9 @@ export class LightBoxButtonList extends React.Component<
 const styles = StyleSheet.create({
   button_list_container: {
     flexDirection: 'row',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 8,
     paddingBottom: 12,
   },

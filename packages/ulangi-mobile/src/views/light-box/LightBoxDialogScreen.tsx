@@ -53,7 +53,8 @@ export class LightBoxDialogScreen extends React.Component<
           onPress={(): void => this.onBackgroundPress()}
           activeOpacity={0.2}>
           <LightBoxAnimatableView
-            observableLightBox={this.props.observableLightBox}>
+            observableLightBox={this.props.observableLightBox}
+            style={styles.inner_container}>
             <LightBoxDialog
               theme={this.props.themeStore.theme}
               dialog={this.props.observableLightBox.dialog}
@@ -92,5 +93,9 @@ const styles = StyleSheet.create({
   light_box_container: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  inner_container: {
+    flexShrink: 1,
   },
 });

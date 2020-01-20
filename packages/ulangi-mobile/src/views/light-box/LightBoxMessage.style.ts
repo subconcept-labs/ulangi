@@ -17,6 +17,7 @@ export interface LightBoxMessageStyles {
 
 export const baseStyles: LightBoxMessageStyles = {
   message_container: {
+    alignSelf: 'stretch',
     paddingHorizontal: 16,
     paddingVertical: 11,
   },

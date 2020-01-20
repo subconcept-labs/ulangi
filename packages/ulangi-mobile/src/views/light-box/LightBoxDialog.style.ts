@@ -16,6 +16,7 @@ export interface LightBoxDialogStyles {
 
 export const baseStyles: LightBoxDialogStyles = {
   dialog_container: {
+    flexShrink: 1,
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
