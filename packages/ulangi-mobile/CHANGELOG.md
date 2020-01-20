@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.3](https://github.com/minhloi/ulangi/compare/v3.3.2...v3.3.3) (2020-01-20)
+
+
+### Bug Fixes
+
+* light box overflow on some Android devices ([949272c](https://github.com/minhloi/ulangi/commit/949272c)), closes [#37](https://github.com/minhloi/ulangi/issues/37)
+
+
+
+
+
 ## [3.3.2](https://github.com/minhloi/ulangi/compare/v3.3.1...v3.3.2) (2020-01-19)
 
 
