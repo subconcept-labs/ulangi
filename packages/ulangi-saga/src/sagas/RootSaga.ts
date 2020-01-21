@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import NetInfo from '@react-native-community/netinfo';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { RemoteConfig } from '@ulangi/ulangi-common/interfaces';
 import {
@@ -13,8 +12,6 @@ import {
   DatabaseFacade,
   ModelList,
 } from '@ulangi/ulangi-local-database';
-import * as FileSystem from 'react-native-fs';
-import * as Iap from 'react-native-iap';
 import { Task } from 'redux-saga';
 import { call, cancel, fork, put, spawn, take } from 'redux-saga/effects';
 
@@ -23,7 +20,10 @@ import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
+import { FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
+import { IapAdapter } from '../adapters/IapAdapter';
+import { NetInfoAdapter } from '../adapters/NetInfoAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { ProtectedSagaFactory } from '../factories/ProtectedSagaFactory';
@@ -36,51 +36,51 @@ export class RootSaga {
   private protectedSagas?: readonly ProtectedSaga[];
   private forkedProtectedSagasTask?: Task;
 
-  private database: DatabaseFacade;
-  private firebase: FirebaseAdapter;
-  private fileSystem: typeof FileSystem;
-  private iap: typeof Iap;
   private admob: AdMobAdapter;
   private analytics: AnalyticsAdapter;
-  private facebook: FacebookAdapter;
-  private netInfo: typeof NetInfo;
   private audioPlayer: AudioPlayerAdapter;
+  private crashlytics: CrashlyticsAdapter;
+  private database: DatabaseFacade;
+  private databaseEventBus: DatabaseEventBus;
+  private facebook: FacebookAdapter;
+  private fileSystem: FileSystemAdapter;
+  private firebase: FirebaseAdapter;
+  private iap: IapAdapter;
+  private modelList: ModelList;
+  private netInfo: NetInfoAdapter;
   private notifications: NotificationsAdapter;
   private systemTheme: SystemThemeAdapter;
-  private crashlytics: CrashlyticsAdapter;
-  private databaseEventBus: DatabaseEventBus;
-  private modelList: ModelList;
 
   public constructor(
-    database: DatabaseFacade,
-    firebase: FirebaseAdapter,
-    fileSystem: typeof FileSystem,
-    iap: typeof Iap,
     admob: AdMobAdapter,
     analytics: AnalyticsAdapter,
-    facebook: FacebookAdapter,
-    netInfo: typeof NetInfo,
     audioPlayer: AudioPlayerAdapter,
-    notifications: NotificationsAdapter,
-    systemTheme: SystemThemeAdapter,
     crashlytics: CrashlyticsAdapter,
+    database: DatabaseFacade,
     databaseEventBus: DatabaseEventBus,
-    modelList: ModelList
+    facebook: FacebookAdapter,
+    fileSystem: FileSystemAdapter,
+    firebase: FirebaseAdapter,
+    iap: IapAdapter,
+    modelList: ModelList,
+    netInfo: NetInfoAdapter,
+    notifications: NotificationsAdapter,
+    systemTheme: SystemThemeAdapter
   ) {
-    this.database = database;
-    this.firebase = firebase;
-    this.fileSystem = fileSystem;
-    this.iap = iap;
     this.admob = admob;
     this.analytics = analytics;
-    this.facebook = facebook;
-    this.netInfo = netInfo;
     this.audioPlayer = audioPlayer;
+    this.crashlytics = crashlytics;
+    this.database = database;
+    this.databaseEventBus = databaseEventBus;
+    this.facebook = facebook;
+    this.fileSystem = fileSystem;
+    this.firebase = firebase;
+    this.iap = iap;
+    this.modelList = modelList;
+    this.netInfo = netInfo;
     this.notifications = notifications;
     this.systemTheme = systemTheme;
-    this.crashlytics = crashlytics;
-    this.databaseEventBus = databaseEventBus;
-    this.modelList = modelList;
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -95,14 +95,14 @@ export class RootSaga {
     config: SagaConfig
   ): IterableIterator<any> {
     const publicSagaFactory = new PublicSagaFactory(
-      this.database,
-      this.modelList,
-      this.netInfo,
       this.admob,
       this.analytics,
+      this.crashlytics,
+      this.database,
       this.facebook,
-      this.systemTheme,
-      this.crashlytics
+      this.modelList,
+      this.netInfo,
+      this.systemTheme
     );
 
     for (const saga of publicSagaFactory.createAllPublicSagas()) {
@@ -163,15 +163,15 @@ export class RootSaga {
     remoteConfig: RemoteConfig
   ): IterableIterator<any> {
     const protectedSagaFactory = new ProtectedSagaFactory(
-      this.database.getDb('shared'),
-      this.database.getDb('user'),
-      this.firebase,
-      this.fileSystem,
-      this.iap,
       this.audioPlayer,
-      this.notifications,
       this.databaseEventBus,
-      this.modelList
+      this.fileSystem,
+      this.firebase,
+      this.iap,
+      this.modelList,
+      this.notifications,
+      this.database.getDb('shared'),
+      this.database.getDb('user')
     );
 
     this.protectedSagas = protectedSagaFactory.createAllProtectedSagas();

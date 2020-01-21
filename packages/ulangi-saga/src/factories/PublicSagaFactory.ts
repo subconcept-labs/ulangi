@@ -5,13 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import NetInfo from '@react-native-community/netinfo';
 import { DatabaseFacade, ModelList } from '@ulangi/ulangi-local-database';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
 import { FacebookAdapter } from '../adapters/FacebookAdapter';
+import { NetInfoAdapter } from '../adapters/NetInfoAdapter';
 import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
 import { AdSaga } from '../sagas/AdSaga';
 import { AppSaga } from '../sagas/AppSaga';
@@ -24,33 +24,33 @@ import { RemoteConfigSaga } from '../sagas/RemoteConfigSaga';
 import { ThemeSaga } from '../sagas/ThemeSaga';
 
 export class PublicSagaFactory {
-  private database: DatabaseFacade;
-  private modelList: ModelList;
-  private netInfo: typeof NetInfo;
   private adMob: AdMobAdapter;
   private analytics: AnalyticsAdapter;
-  private facebook: FacebookAdapter;
-  private systemTheme: SystemThemeAdapter;
   private crashlytics: CrashlyticsAdapter;
+  private database: DatabaseFacade;
+  private facebook: FacebookAdapter;
+  private modelList: ModelList;
+  private netInfo: NetInfoAdapter;
+  private systemTheme: SystemThemeAdapter;
 
   public constructor(
-    database: DatabaseFacade,
-    modelList: ModelList,
-    netInfo: typeof NetInfo,
     adMob: AdMobAdapter,
     analytics: AnalyticsAdapter,
+    crashlytics: CrashlyticsAdapter,
+    database: DatabaseFacade,
     facebook: FacebookAdapter,
-    systemTheme: SystemThemeAdapter,
-    crashlytics: CrashlyticsAdapter
+    modelList: ModelList,
+    netInfo: NetInfoAdapter,
+    systemTheme: SystemThemeAdapter
   ) {
-    this.database = database;
-    this.modelList = modelList;
-    this.netInfo = netInfo;
     this.adMob = adMob;
     this.analytics = analytics;
-    this.facebook = facebook;
-    this.systemTheme = systemTheme;
     this.crashlytics = crashlytics;
+    this.database = database;
+    this.facebook = facebook;
+    this.modelList = modelList;
+    this.netInfo = netInfo;
+    this.systemTheme = systemTheme;
   }
 
   public createAllPublicSagas(): readonly PublicSaga[] {

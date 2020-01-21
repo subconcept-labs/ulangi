@@ -5,13 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as Iap from 'react-native-iap';
 import { EventChannel, eventChannel } from 'redux-saga';
 
-export class PurchaseEventChannel {
-  private iap: typeof Iap;
+import { Iap, IapAdapter } from '../adapters/IapAdapter';
 
-  public constructor(iap: typeof Iap) {
+export class PurchaseEventChannel {
+  private iap: IapAdapter;
+
+  public constructor(iap: IapAdapter) {
     this.iap = iap;
   }
 

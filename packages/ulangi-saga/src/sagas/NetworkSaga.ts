@@ -5,19 +5,19 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { EventChannel, eventChannel } from 'redux-saga';
 import { call, cancel, cancelled, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
+import { NetInfoAdapter, NetInfoState } from '../adapters/NetInfoAdapter';
 import { errorConverter } from '../converters/ErrorConverter';
 import { PublicSaga } from './PublicSaga';
 
 export class NetworkSaga extends PublicSaga {
-  private netInfo: typeof NetInfo;
+  private netInfo: NetInfoAdapter;
 
-  public constructor(netInfo: typeof NetInfo) {
+  public constructor(netInfo: NetInfoAdapter) {
     super();
     this.netInfo = netInfo;
   }
@@ -34,7 +34,7 @@ export class NetworkSaga extends PublicSaga {
         yield put(createAction(ActionType.NETWORK__CHECKING_CONNECTION, null));
 
         const netInfoState: PromiseType<
-          ReturnType<typeof NetInfo['fetch']>
+          ReturnType<NetInfoAdapter['fetch']>
         > = yield call([this.netInfo, 'fetch']);
         yield put(
           createAction(ActionType.NETWORK__CHECK_CONNECTION_SUCCEEDED, {

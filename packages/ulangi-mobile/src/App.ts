@@ -63,18 +63,18 @@ export class App {
     const sagaFacade = new SagaFacade(
       env,
       config,
-      adapters.sqliteDatabase,
-      adapters.firebase,
       adapters.adMob,
       adapters.analytics,
-      adapters.facebook,
-      adapters.RNNetInfo,
-      adapters.RNFileSystem,
-      adapters.RNIap,
       adapters.audioPlayer,
-      adapters.notifications,
-      adapters.systemTheme,
       adapters.crashlytics,
+      adapters.facebook,
+      adapters.fileSystem,
+      adapters.firebase,
+      adapters.iap,
+      adapters.netInfo,
+      adapters.notifications,
+      adapters.sqliteDatabase,
+      adapters.systemTheme,
     );
 
     const eventFacade = new EventFacade();
