@@ -10,12 +10,12 @@ import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { ErrorCode } from '@ulangi/ulangi-common/enums';
 import { SessionModel } from '@ulangi/ulangi-local-database';
 import * as querystring from 'query-string';
-import * as FileSystem from 'react-native-fs';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 import * as uuid from 'uuid';
 
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
+import { FileSystem, FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
@@ -24,7 +24,7 @@ import { ProtectedSaga } from './ProtectedSaga';
 export class AudioSaga extends ProtectedSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private fileSystem: typeof FileSystem;
+  private fileSystem: FileSystemAdapter;
   private audioPlayer: AudioPlayerAdapter;
 
   private synthesizedMap: Map<string, string>;
@@ -32,7 +32,7 @@ export class AudioSaga extends ProtectedSaga {
   public constructor(
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    fileSystem: typeof FileSystem,
+    fileSystem: FileSystemAdapter,
     audioPlayer: AudioPlayerAdapter
   ) {
     super();

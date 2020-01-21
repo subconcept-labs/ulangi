@@ -7,11 +7,11 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { DatabaseEventBus, ModelList } from '@ulangi/ulangi-local-database';
-import * as FileSystem from 'react-native-fs';
-import * as Iap from 'react-native-iap';
 
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
+import { FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
+import { IapAdapter } from '../adapters/IapAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { ApiKeySaga } from '../sagas/ApiKeySaga';
 import { AtomSaga } from '../sagas/AtomSaga';
@@ -46,36 +46,36 @@ import { VocabularySaga } from '../sagas/VocabularySaga';
 import { WritingSaga } from '../sagas/WritingSaga';
 
 export class ProtectedSagaFactory {
+  private audioPlayer: AudioPlayerAdapter;
+  private databaseEventBus: DatabaseEventBus;
+  private fileSystem: FileSystemAdapter;
+  private firebase: FirebaseAdapter;
+  private iap: IapAdapter;
+  private modelList: ModelList;
+  private notifications: NotificationsAdapter;
   private sharedDb: SQLiteDatabase;
   private userDb: SQLiteDatabase;
-  private firebase: FirebaseAdapter;
-  private fileSystem: typeof FileSystem;
-  private iap: typeof Iap;
-  private audioPlayer: AudioPlayerAdapter;
-  private notifications: NotificationsAdapter;
-  private databaseEventBus: DatabaseEventBus;
-  private modelList: ModelList;
 
   public constructor(
-    sharedDb: SQLiteDatabase,
-    userDb: SQLiteDatabase,
-    firebase: FirebaseAdapter,
-    fileSystem: typeof FileSystem,
-    iap: typeof Iap,
     audioPlayer: AudioPlayerAdapter,
-    notifications: NotificationsAdapter,
     databaseEventBus: DatabaseEventBus,
-    modelList: ModelList
+    fileSystem: FileSystemAdapter,
+    firebase: FirebaseAdapter,
+    iap: IapAdapter,
+    modelList: ModelList,
+    notifications: NotificationsAdapter,
+    sharedDb: SQLiteDatabase,
+    userDb: SQLiteDatabase
   ) {
+    this.audioPlayer = audioPlayer;
+    this.databaseEventBus = databaseEventBus;
+    this.fileSystem = fileSystem;
+    this.firebase = firebase;
+    this.iap = iap;
+    this.modelList = modelList;
+    this.notifications = notifications;
     this.sharedDb = sharedDb;
     this.userDb = userDb;
-    this.firebase = firebase;
-    this.fileSystem = fileSystem;
-    this.iap = iap;
-    this.audioPlayer = audioPlayer;
-    this.notifications = notifications;
-    this.databaseEventBus = databaseEventBus;
-    this.modelList = modelList;
   }
 
   public createAllProtectedSagas(): readonly ProtectedSaga[] {

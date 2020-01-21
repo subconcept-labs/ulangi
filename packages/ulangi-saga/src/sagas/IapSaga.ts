@@ -14,7 +14,6 @@ import {
 } from '@ulangi/ulangi-common/interfaces';
 import { SessionModel } from '@ulangi/ulangi-local-database';
 import axios, { AxiosResponse } from 'axios';
-import * as Iap from 'react-native-iap';
 import {
   call,
   cancelled,
@@ -25,6 +24,7 @@ import {
 } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
+import { Iap, IapAdapter } from '../adapters/IapAdapter';
 import { PurchaseEventChannel } from '../channels/PurchaseEventChannel';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaEnv } from '../interfaces/SagaEnv';
@@ -34,14 +34,12 @@ import { ProtectedSaga } from './ProtectedSaga';
 export class IapSaga extends ProtectedSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
-  private iap: typeof Iap;
-
-  private initedConnection: boolean = false;
+  private iap: IapAdapter;
 
   public constructor(
     sharedDb: SQLiteDatabase,
     sessionModel: SessionModel,
-    iap: typeof Iap
+    iap: IapAdapter
   ) {
     super();
     this.sharedDb = sharedDb;
@@ -54,9 +52,7 @@ export class IapSaga extends ProtectedSaga {
   }
 
   public *destroy(): IterableIterator<any> {
-    if (this.initedConnection === true) {
-      yield call([this.iap, 'endConnectionAndroid']);
-    }
+    yield call([this.iap, 'endConnection']);
   }
 
   public *allowInit(apiUrl: string): IterableIterator<any> {
@@ -87,8 +83,6 @@ export class IapSaga extends ProtectedSaga {
           googlePackageName
         );
 
-        this.initedConnection = true;
-
         yield put(createAction(ActionType.IAP__INIT_SUCCEEDED, null));
       } catch (error) {
         yield put(
@@ -109,7 +103,7 @@ export class IapSaga extends ProtectedSaga {
 
       try {
         const products: PromiseType<
-          ReturnType<typeof Iap.getProducts>
+          ReturnType<IapAdapter['getProducts']>
         > = yield call([this.iap, 'getProducts'], action.payload.skus.slice());
 
         yield put(
@@ -139,7 +133,7 @@ export class IapSaga extends ProtectedSaga {
         yield put(createAction(ActionType.IAP__REQUESTING_PURCHASE, null));
 
         const purchases: PromiseType<
-          ReturnType<typeof Iap.getAvailablePurchases>
+          ReturnType<IapAdapter['getAvailablePurchases']>
         > = yield call([this.iap, 'getAvailablePurchases']);
 
         if (
@@ -156,7 +150,7 @@ export class IapSaga extends ProtectedSaga {
             );
           }
         } else {
-          yield call([this.iap, 'requestPurchase'], action.payload.sku, false);
+          yield call([this.iap, 'requestPurchase'], action.payload.sku);
         }
 
         yield put(
@@ -184,7 +178,7 @@ export class IapSaga extends ProtectedSaga {
         yield put(createAction(ActionType.IAP__RESTORING_PURCHASES, null));
 
         const purchases: PromiseType<
-          ReturnType<typeof Iap.getAvailablePurchases>
+          ReturnType<IapAdapter['getAvailablePurchases']>
         > = yield call([this.iap, 'getAvailablePurchases']);
 
         for (const purchase of purchases) {
@@ -273,9 +267,15 @@ export class IapSaga extends ProtectedSaga {
       );
 
       if (typeof purchase.purchaseToken !== 'undefined') {
-        this.iap.acknowledgePurchaseAndroid(purchase.purchaseToken);
+        yield call(
+          [this.iap, 'acknowledgePurchaseAndroid'],
+          purchase.purchaseToken
+        );
       } else {
-        this.iap.finishTransactionIOS(assertExists(purchase.transactionId));
+        yield call(
+          [this.iap, 'finishTransactionIOS'],
+          assertExists(purchase.transactionId)
+        );
       }
 
       yield put(
