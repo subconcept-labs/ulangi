@@ -54,19 +54,22 @@ export class AutorunDelegate {
   }
 
   public autorun(): void {
-    this.autoInitIap();
+    if (env.OPEN_SOURCE_ONLY === false) {
+      this.autoInitIap();
+      this.autoSetUpAd();
+      this.autoInitializeAd();
+      this.autoObserveRemoteUpdates();
+      this.autoToggleDataSharing();
+      this.autoCheckPermissionAndSetUpReminder();
+    }
+
     this.autoCheckUserSession();
+    this.autoShowDialogWhenSessionExpired();
+    this.autoUpdateRemoteConfig();
     this.autoFetchUserOnDownloadSucceeded();
     this.autoFetchAllSetsOnDownloadSucceeded();
     this.autoObserveLocalUpdates();
-    this.autoObserveRemoteUpdates();
-    this.autoSetUpAd();
-    this.autoInitializeAd();
-    this.autoUpdateRemoteConfig();
     this.autoClearAudioCache();
-    this.autoCheckPermissionAndSetUpReminder();
-    this.autoToggleDataSharing();
-    this.autoShowDialogWhenSessionExpired();
   }
 
   private autoInitIap(): void {
@@ -77,7 +80,7 @@ export class AutorunDelegate {
         }),
       );
     } else {
-      console.warn('IAP is not configured. Missing GOOGLE_PACKAGE_NAME');
+      console.warn('Cannot init in-app purchase. Missing GOOGLE_PACKAGE_NAME');
     }
   }
 

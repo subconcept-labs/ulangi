@@ -35,35 +35,34 @@ export class SagaFacade {
   private env: SagaEnv;
   private config: SagaConfig;
 
-  private database: DatabaseFacade;
-  private firebase: FirebaseAdapter;
-  private adMob: AdMobAdapter;
-  private analytics: AnalyticsAdapter;
-  private facebook: FacebookAdapter;
-  private netInfo: NetInfoAdapter;
-  private fileSystem: FileSystemAdapter;
-  private iap: IapAdapter;
+  private adMob: null | AdMobAdapter;
+  private analytics: null | AnalyticsAdapter;
   private audioPlayer: AudioPlayerAdapter;
-  private notifications: NotificationsAdapter;
-  private systemTheme: SystemThemeAdapter;
-  private crashlytics: CrashlyticsAdapter;
-
+  private crashlytics: null | CrashlyticsAdapter;
+  private database: DatabaseFacade;
   private databaseEventBus: DatabaseEventBus;
+  private facebook: null | FacebookAdapter;
+  private fileSystem: FileSystemAdapter;
+  private firebase: null | FirebaseAdapter;
+  private iap: null | IapAdapter;
   private modelList: ModelList;
+  private netInfo: NetInfoAdapter;
+  private notifications: null | NotificationsAdapter;
+  private systemTheme: SystemThemeAdapter;
 
   public constructor(
     env: SagaEnv,
     config: SagaConfig,
-    adMob: AdMobAdapter,
-    analytics: AnalyticsAdapter,
+    adMob: null | AdMobAdapter,
+    analytics: null | AnalyticsAdapter,
     audioPlayer: AudioPlayerAdapter,
-    crashlytics: CrashlyticsAdapter,
-    facebook: FacebookAdapter,
+    crashlytics: null | CrashlyticsAdapter,
+    facebook: null | FacebookAdapter,
     fileSystem: FileSystemAdapter,
-    firebase: FirebaseAdapter,
-    iap: IapAdapter,
+    firebase: null | FirebaseAdapter,
+    iap: null | IapAdapter,
     netInfo: NetInfoAdapter,
-    notifications: NotificationsAdapter,
+    notifications: null | NotificationsAdapter,
     sqliteDatabase: SQLiteDatabaseAdapter,
     systemTheme: SystemThemeAdapter
   ) {
@@ -74,8 +73,6 @@ export class SagaFacade {
     this.analytics = analytics;
     this.audioPlayer = audioPlayer;
     this.crashlytics = crashlytics;
-    this.database = new DatabaseFacade(sqliteDatabase);
-    this.databaseEventBus = new DatabaseEventBus();
     this.facebook = facebook;
     this.fileSystem = fileSystem;
     this.firebase = firebase;
@@ -83,6 +80,9 @@ export class SagaFacade {
     this.netInfo = netInfo;
     this.notifications = notifications;
     this.systemTheme = systemTheme;
+
+    this.database = new DatabaseFacade(sqliteDatabase);
+    this.databaseEventBus = new DatabaseEventBus();
     this.modelList = new ModelFactory(this.databaseEventBus).createAllModels();
   }
 

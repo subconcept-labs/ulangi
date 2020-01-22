@@ -38,7 +38,7 @@ export function makeInitialState(): ObservableRootStore {
     Platform.select({
       ios: env.IOS_PREMIUM_LIFETIME_PRODUCT_ID,
       android: env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID,
-    }),
+    }) || 'N/A',
     ActivityState.INACTIVE,
     null,
   );

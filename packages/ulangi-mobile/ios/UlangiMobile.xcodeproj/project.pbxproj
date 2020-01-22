@@ -29,8 +29,6 @@
 		14C37CF320C5B124009CE387 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF471DC3460F427686C39915 /* Raleway-Regular.ttf */; };
 		14D50C812311F21700DA316A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D50C802311F21700DA316A /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		14D50C832311F22800DA316A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D50C822311F22700DA316A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		96025E33D65C4A41B7EF9BDC /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5342B2C301F24E4CB4B8D554 /* libRNFirebase.a */; };
-		BEE49E0867244C40A181F9E4 /* libRNRate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3974C2867A4AFE87FBE843 /* libRNRate.a */; };
 		CB13709F5314A9FFFC636FDB /* libPods-UlangiMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F8A9762217AF504B4F4953D /* libPods-UlangiMobileTests.a */; };
 /* End PBXBuildFile section */
 
@@ -262,8 +260,6 @@
 				1470311B225BBC0800092E9C /* JavaScriptCore.framework in Frameworks */,
 				14B88F2922FBC93A00FD5812 /* StoreKit.framework in Frameworks */,
 				1458BC9C213DFFD0002523C8 /* libsqlite3.0.tbd in Frameworks */,
-				96025E33D65C4A41B7EF9BDC /* libRNFirebase.a in Frameworks */,
-				BEE49E0867244C40A181F9E4 /* libRNRate.a in Frameworks */,
 				09326A98A611FCC922AFB4A6 /* libPods-UlangiMobile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,7 +706,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if (test -e ${PROJECT_DIR}/GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist); then\n    cp ${PROJECT_DIR}/GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\n    echo \"Copied GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist successfully.\"\nelse\n    echo \"Missing Firebase configuration file: GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist.\"\n    exit 1\nfi\n\n";
+			shellScript = "if (test -e ${PROJECT_DIR}/GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist); then\n    cp ${PROJECT_DIR}/GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\n    echo \"Copied GoogleService-Info.${FIREBASE_CONFIG_FILE_POSTFIX}.plist successfully.\"\nfi\n\n";
 		};
 		14C37CF420C5B124009CE387 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -777,12 +773,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-UlangiMobile/Pods-UlangiMobile-resources.sh",
-				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/PersonalizedAdConsent/PersonalizedAdConsent.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PersonalizedAdConsent.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

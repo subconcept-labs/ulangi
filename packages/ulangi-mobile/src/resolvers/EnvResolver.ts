@@ -16,6 +16,7 @@ export class EnvResolver extends AbstractResolver<Env> {
     API_URL: Joi.string(),
     PRIVACY_POLICY_URL: Joi.string(),
 
+    OPEN_SOURCE_ONLY: Joi.boolean(),
     ENABLE_REDUX_LOGGING: Joi.boolean(),
     ENABLE_SPLASH_SCREEN: Joi.boolean(),
 

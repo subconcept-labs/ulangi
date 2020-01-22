@@ -25,6 +25,7 @@ import { boundClass } from 'autobind-decorator';
 import { runInAction } from 'mobx';
 
 import { config } from '../../constants/config';
+import { env } from '../../constants/env';
 import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { RootScreenDelegate } from '../../delegates/root/RootScreenDelegate';
 import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
@@ -147,7 +148,7 @@ export class MoreScreenDelegate {
               ),
             );
 
-            if (!isReminderActive) {
+            if (!isReminderActive && env.OPEN_SOURCE_ONLY === false) {
               this.observableScreen.messages.push(
                 new ObservableCarouselMessage(
                   'set-up-reminder',
