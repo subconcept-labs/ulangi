@@ -97,8 +97,10 @@ export class App {
       observableScreenRegistry: new ObservableScreenRegistry(),
     });
 
-    RemoteLogger.useAnalytics(adapters.analytics);
-    RemoteLogger.useCrashlytics(adapters.crashlytics);
+    if (adapters.analytics !== null && adapters.crashlytics !== null) {
+      RemoteLogger.useAnalytics(adapters.analytics);
+      RemoteLogger.useCrashlytics(adapters.crashlytics);
+    }
 
     autoUpdateKeyboardState(ServiceRegistry.services.observableKeyboard);
     sagaFacade.run();

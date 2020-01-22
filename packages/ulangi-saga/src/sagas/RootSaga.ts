@@ -36,35 +36,35 @@ export class RootSaga {
   private protectedSagas?: readonly ProtectedSaga[];
   private forkedProtectedSagasTask?: Task;
 
-  private admob: AdMobAdapter;
-  private analytics: AnalyticsAdapter;
+  private admob: null | AdMobAdapter;
+  private analytics: null | AnalyticsAdapter;
   private audioPlayer: AudioPlayerAdapter;
-  private crashlytics: CrashlyticsAdapter;
+  private crashlytics: null | CrashlyticsAdapter;
   private database: DatabaseFacade;
   private databaseEventBus: DatabaseEventBus;
-  private facebook: FacebookAdapter;
+  private facebook: null | FacebookAdapter;
   private fileSystem: FileSystemAdapter;
-  private firebase: FirebaseAdapter;
-  private iap: IapAdapter;
+  private firebase: null | FirebaseAdapter;
+  private iap: null | IapAdapter;
   private modelList: ModelList;
   private netInfo: NetInfoAdapter;
-  private notifications: NotificationsAdapter;
+  private notifications: null | NotificationsAdapter;
   private systemTheme: SystemThemeAdapter;
 
   public constructor(
-    admob: AdMobAdapter,
-    analytics: AnalyticsAdapter,
+    admob: null | AdMobAdapter,
+    analytics: null | AnalyticsAdapter,
     audioPlayer: AudioPlayerAdapter,
-    crashlytics: CrashlyticsAdapter,
+    crashlytics: null | CrashlyticsAdapter,
     database: DatabaseFacade,
     databaseEventBus: DatabaseEventBus,
-    facebook: FacebookAdapter,
+    facebook: null | FacebookAdapter,
     fileSystem: FileSystemAdapter,
-    firebase: FirebaseAdapter,
-    iap: IapAdapter,
+    firebase: null | FirebaseAdapter,
+    iap: null | IapAdapter,
     modelList: ModelList,
     netInfo: NetInfoAdapter,
-    notifications: NotificationsAdapter,
+    notifications: null | NotificationsAdapter,
     systemTheme: SystemThemeAdapter
   ) {
     this.admob = admob;

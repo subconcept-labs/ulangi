@@ -10,6 +10,7 @@ export interface Env {
   readonly API_URL: string;
   readonly PRIVACY_POLICY_URL: string;
 
+  readonly OPEN_SOURCE_ONLY: boolean;
   readonly ENABLE_REDUX_LOGGING: boolean;
   readonly ENABLE_SPLASH_SCREEN: boolean;
 

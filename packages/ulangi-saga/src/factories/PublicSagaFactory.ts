@@ -24,21 +24,21 @@ import { RemoteConfigSaga } from '../sagas/RemoteConfigSaga';
 import { ThemeSaga } from '../sagas/ThemeSaga';
 
 export class PublicSagaFactory {
-  private adMob: AdMobAdapter;
-  private analytics: AnalyticsAdapter;
-  private crashlytics: CrashlyticsAdapter;
+  private adMob: null | AdMobAdapter;
+  private analytics: null | AnalyticsAdapter;
+  private crashlytics: null | CrashlyticsAdapter;
   private database: DatabaseFacade;
-  private facebook: FacebookAdapter;
+  private facebook: null | FacebookAdapter;
   private modelList: ModelList;
   private netInfo: NetInfoAdapter;
   private systemTheme: SystemThemeAdapter;
 
   public constructor(
-    adMob: AdMobAdapter,
-    analytics: AnalyticsAdapter,
-    crashlytics: CrashlyticsAdapter,
+    adMob: null | AdMobAdapter,
+    analytics: null | AnalyticsAdapter,
+    crashlytics: null | CrashlyticsAdapter,
     database: DatabaseFacade,
-    facebook: FacebookAdapter,
+    facebook: null | FacebookAdapter,
     modelList: ModelList,
     netInfo: NetInfoAdapter,
     systemTheme: SystemThemeAdapter
@@ -54,9 +54,8 @@ export class PublicSagaFactory {
   }
 
   public createAllPublicSagas(): readonly PublicSaga[] {
-    return [
+    const sagas: PublicSaga[] = [
       new AppSaga(),
-      new DataSharingSaga(this.analytics, this.crashlytics, this.facebook),
       new AuthSaga(
         this.database,
         this.modelList.sessionModel,
@@ -65,8 +64,23 @@ export class PublicSagaFactory {
       new DatabaseSaga(this.database),
       new NetworkSaga(this.netInfo),
       new RemoteConfigSaga(this.database, this.modelList.remoteConfigModel),
-      new AdSaga(this.adMob),
       new ThemeSaga(this.systemTheme),
     ];
+
+    if (
+      this.analytics !== null &&
+      this.crashlytics !== null &&
+      this.facebook !== null
+    ) {
+      sagas.push(
+        new DataSharingSaga(this.analytics, this.crashlytics, this.facebook)
+      );
+    }
+
+    if (this.adMob !== null) {
+      sagas.push(new AdSaga(this.adMob));
+    }
+
+    return sagas;
   }
 }

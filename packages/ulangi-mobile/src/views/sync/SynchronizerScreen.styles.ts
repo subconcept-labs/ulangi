@@ -18,6 +18,8 @@ export interface SynchronizerScreenStyles {
   sync_btn_text: TextStyle;
   sync_state_container: ViewStyle;
   sync_state: TextStyle;
+  title: TextStyle;
+  paragraph: TextStyle;
 }
 
 export const baseStyles: SynchronizerScreenStyles = {
@@ -58,6 +60,17 @@ export const baseStyles: SynchronizerScreenStyles = {
   sync_state: {
     fontSize: 16,
   },
+
+  title: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+  paragraph: {
+    paddingVertical: 6,
+    lineHeight: 19,
+    fontSize: 14,
+  },
 };
 
 export const lightStyles: SynchronizerScreenStyles = StyleSheet.create(
@@ -72,6 +85,14 @@ export const lightStyles: SynchronizerScreenStyles = StyleSheet.create(
     },
 
     sync_state: {
+      color: config.styles.light.primaryTextColor,
+    },
+
+    title: {
+      color: config.styles.light.secondaryTextColor,
+    },
+
+    paragraph: {
       color: config.styles.light.primaryTextColor,
     },
   }),
@@ -89,6 +110,14 @@ export const darkStyles: SynchronizerScreenStyles = StyleSheet.create(
     },
 
     sync_state: {
+      color: config.styles.dark.primaryTextColor,
+    },
+
+    title: {
+      color: config.styles.dark.secondaryTextColor,
+    },
+
+    paragraph: {
       color: config.styles.dark.primaryTextColor,
     },
   }),

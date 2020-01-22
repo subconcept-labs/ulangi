@@ -58,8 +58,8 @@ export class MembershipScreenDelegate {
 
   public fetchLocalizedPrice(): void {
     if (
-      env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== null &&
-      env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== null
+      typeof env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined' &&
+      typeof env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined'
     ) {
       this.eventBus.pubsub(
         createAction(ActionType.IAP__GET_PRODUCTS, {
@@ -102,7 +102,9 @@ export class MembershipScreenDelegate {
         ),
       );
     } else {
-      console.warn('IAP is not configured');
+      console.warn(
+        'Cannot fetch localized price. Missing environment variables.',
+      );
     }
   }
 
@@ -182,8 +184,8 @@ export class MembershipScreenDelegate {
 
   private upgradeToPremium(): void {
     if (
-      env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== null &&
-      env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== null
+      typeof env.IOS_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined' &&
+      typeof env.ANDROID_PREMIUM_LIFETIME_PRODUCT_ID !== 'undefined'
     ) {
       this.eventBus.pubsub(
         createAction(ActionType.IAP__REQUEST_PURCHASE, {
@@ -218,7 +220,7 @@ export class MembershipScreenDelegate {
         ),
       );
     } else {
-      console.warn('IAP is not configured');
+      console.warn('Cannot upgrade to premium. Missing environment variables.');
     }
   }
 

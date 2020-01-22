@@ -56,7 +56,7 @@ export class AdDelegate {
         }),
       );
     } else {
-      console.warn('AdConsent is not configured');
+      console.warn('Cannot set up adMob. Missing environment variables.');
     }
   }
 
@@ -71,7 +71,10 @@ export class AdDelegate {
   }
 
   public initialize(): void {
-    if (env.IOS_AD_APP_ID !== null && env.ANDROID_AD_APP_ID !== null) {
+    if (
+      typeof env.IOS_AD_APP_ID !== 'undefined' &&
+      typeof env.ANDROID_AD_APP_ID !== 'undefined'
+    ) {
       this.eventBus.publish(
         createAction(ActionType.AD__INITIALIZE, {
           adAppId: Platform.select({
@@ -81,7 +84,7 @@ export class AdDelegate {
         }),
       );
     } else {
-      console.warn('AdConsent is not configured');
+      console.warn('Cannot init adMob. Missing environment variables.');
     }
   }
 
@@ -116,7 +119,7 @@ export class AdDelegate {
         }),
       );
     } else {
-      console.warn('AdMob is not configured');
+      console.warn('Cannot load ad. Missing environment variables.');
     }
   }
 
@@ -155,10 +158,7 @@ export class AdDelegate {
   }
 
   public showGoogleConsentForm(): void {
-    if (
-      typeof env.PRIVACY_POLICY_URL !== 'undefined' &&
-      typeof env.CONSENT_FORM_SHOULD_OFFER_AD_FREE !== 'undefined'
-    ) {
+    if (typeof env.CONSENT_FORM_SHOULD_OFFER_AD_FREE !== 'undefined') {
       this.eventBus.publish(
         createAction(ActionType.AD__SHOW_GOOGLE_CONSENT_FORM, {
           privacyPolicyUrl: env.PRIVACY_POLICY_URL,
@@ -166,7 +166,7 @@ export class AdDelegate {
         }),
       );
     } else {
-      console.warn('AdConsent is not configured');
+      console.warn('Cannot show consent form. Missing environment variables.');
     }
   }
 

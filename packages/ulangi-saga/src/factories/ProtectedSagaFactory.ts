@@ -28,7 +28,8 @@ import { IapSaga } from '../sagas/IapSaga';
 import { ImageSaga } from '../sagas/ImageSaga';
 import { LibrarySaga } from '../sagas/LibrarySaga';
 import { ManageSaga } from '../sagas/ManageSaga';
-import { ObserveUpdateSaga } from '../sagas/ObserveUpdateSaga';
+import { ObserveLocalUpdateSaga } from '../sagas/ObserveLocalUpdateSaga';
+import { ObserveRemoteUpdateSaga } from '../sagas/ObserveRemoteUpdateSaga';
 import { ProtectedSaga } from '../sagas/ProtectedSaga';
 import { QuizSaga } from '../sagas/QuizSaga';
 import { ReflexSaga } from '../sagas/ReflexSaga';
@@ -49,10 +50,10 @@ export class ProtectedSagaFactory {
   private audioPlayer: AudioPlayerAdapter;
   private databaseEventBus: DatabaseEventBus;
   private fileSystem: FileSystemAdapter;
-  private firebase: FirebaseAdapter;
-  private iap: IapAdapter;
+  private firebase: null | FirebaseAdapter;
+  private iap: null | IapAdapter;
   private modelList: ModelList;
-  private notifications: NotificationsAdapter;
+  private notifications: null | NotificationsAdapter;
   private sharedDb: SQLiteDatabase;
   private userDb: SQLiteDatabase;
 
@@ -60,10 +61,10 @@ export class ProtectedSagaFactory {
     audioPlayer: AudioPlayerAdapter,
     databaseEventBus: DatabaseEventBus,
     fileSystem: FileSystemAdapter,
-    firebase: FirebaseAdapter,
-    iap: IapAdapter,
+    firebase: null | FirebaseAdapter,
+    iap: null | IapAdapter,
     modelList: ModelList,
-    notifications: NotificationsAdapter,
+    notifications: null | NotificationsAdapter,
     sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase
   ) {
@@ -79,7 +80,7 @@ export class ProtectedSagaFactory {
   }
 
   public createAllProtectedSagas(): readonly ProtectedSaga[] {
-    return [
+    const sagas: ProtectedSaga[] = [
       new UserSaga(
         this.sharedDb,
         this.userDb,
@@ -188,16 +189,31 @@ export class ProtectedSagaFactory {
           this.modelList.incompatibleVocabularyModel
         )
       ),
-      new ObserveUpdateSaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.firebase,
-        this.databaseEventBus
-      ),
+      new ObserveLocalUpdateSaga(this.databaseEventBus),
       new ApiKeySaga(this.sharedDb, this.modelList.sessionModel),
-      new IapSaga(this.sharedDb, this.modelList.sessionModel, this.iap),
       new ImageSaga(this.sharedDb, this.modelList.sessionModel),
-      new ReminderSaga(this.notifications),
     ];
+
+    if (this.iap !== null) {
+      sagas.push(
+        new IapSaga(this.sharedDb, this.modelList.sessionModel, this.iap)
+      );
+    }
+
+    if (this.notifications !== null) {
+      sagas.push(new ReminderSaga(this.notifications));
+    }
+
+    if (this.firebase !== null) {
+      sagas.push(
+        new ObserveRemoteUpdateSaga(
+          this.sharedDb,
+          this.modelList.sessionModel,
+          this.firebase
+        )
+      );
+    }
+
+    return sagas;
   }
 }

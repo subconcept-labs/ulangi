@@ -21,6 +21,7 @@ import VersionInfo from 'react-native-version-info';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
+import { env } from '../../constants/env';
 import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { MoreScreenDelegate } from '../../delegates/more/MoreScreenDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -120,26 +121,28 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
             onPress={this.props.screenDelegate.navigateToSecurityScreen}
           />
         )}
-        <SectionRow
-          testID={MoreScreenIds.MEMBERSHIP_BTN}
-          theme={this.props.themeStore.theme}
-          leftText="Account Type"
-          rightText={
-            this.props.userStore.existingCurrentUser.isPremium === true
-              ? 'Premium'
-              : 'Free'
-          }
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToMembershipScreen}
-          styles={{
-            light: this.props.userStore.existingCurrentUser.isPremium
-              ? premiumMembershipSectionRowLightStyles
-              : regularMembershipSectionRowLightStyles,
-            dark: this.props.userStore.existingCurrentUser.isPremium
-              ? premiumMembershipSectionRowDarkStyles
-              : regularMembershipSectionRowDarkStyles,
-          }}
-        />
+        {env.OPEN_SOURCE_ONLY === false ? (
+          <SectionRow
+            testID={MoreScreenIds.MEMBERSHIP_BTN}
+            theme={this.props.themeStore.theme}
+            leftText="Account Type"
+            rightText={
+              this.props.userStore.existingCurrentUser.isPremium === true
+                ? 'Premium'
+                : 'Free'
+            }
+            showArrow={true}
+            onPress={this.props.screenDelegate.navigateToMembershipScreen}
+            styles={{
+              light: this.props.userStore.existingCurrentUser.isPremium
+                ? premiumMembershipSectionRowLightStyles
+                : regularMembershipSectionRowLightStyles,
+              dark: this.props.userStore.existingCurrentUser.isPremium
+                ? premiumMembershipSectionRowDarkStyles
+                : regularMembershipSectionRowDarkStyles,
+            }}
+          />
+        ) : null}
       </SectionGroup>
     );
   }
@@ -172,20 +175,22 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToSynchronizerScreen}
         />
-        <SectionRow
-          testID={MoreScreenIds.REMINDER_BTN}
-          theme={this.props.themeStore.theme}
-          leftText="Reminder"
-          rightText={
-            this.props.screenDelegate.isReminderActive() === true
-              ? this.props.screenDelegate
-                  .getReadableReminderTime()
-                  .toUpperCase()
-              : 'Off'
-          }
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToReminderScreen}
-        />
+        {env.OPEN_SOURCE_ONLY === false ? (
+          <SectionRow
+            testID={MoreScreenIds.REMINDER_BTN}
+            theme={this.props.themeStore.theme}
+            leftText="Reminder"
+            rightText={
+              this.props.screenDelegate.isReminderActive() === true
+                ? this.props.screenDelegate
+                    .getReadableReminderTime()
+                    .toUpperCase()
+                : 'Off'
+            }
+            showArrow={true}
+            onPress={this.props.screenDelegate.navigateToReminderScreen}
+          />
+        ) : null}
         <SectionRow
           testID={MoreScreenIds.AUTO_ARCHIVE_BTN}
           theme={this.props.themeStore.theme}
@@ -266,7 +271,8 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToWhatsNewScreen}
         />
-        {this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
+        {env.OPEN_SOURCE_ONLY === false &&
+        this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
           <SectionRow
             testID={MoreScreenIds.AD_CONSENT_BTN}
             theme={this.props.themeStore.theme}
@@ -276,7 +282,8 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
             onPress={this.props.screenDelegate.showGoogleConsentForm}
           />
         ) : null}
-        {this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
+        {env.OPEN_SOURCE_ONLY === false &&
+        this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
           <SectionRow
             testID={MoreScreenIds.DATA_SHARING_BTN}
             theme={this.props.themeStore.theme}

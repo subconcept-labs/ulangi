@@ -21,10 +21,6 @@
 
 #import "ReactNativeConfig.h"
 
-#import "RNFirebaseNotifications.h"
-
-#import <Firebase.h>
-
 #import <AdSupport/AdSupport.h>
 
 @implementation AppDelegate
@@ -32,12 +28,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
-  [FIRApp configure];
-  [RNFirebaseNotifications configure];
-  
-  NSLog(@"Advertising ID: %@",
-        ASIdentifierManager.sharedManager.advertisingIdentifier.UUIDString);
-  
+  //NSLog(@"Advertising ID: %@",
+        //ASIdentifierManager.sharedManager.advertisingIdentifier.UUIDString);
   
   // react-native-navigation v2
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
@@ -47,7 +39,6 @@
   if ([enableSplashScreen  isEqual: @"true"]){
     [RNSplashScreen show];
   }
-  
   
   // original RN bootstrap -
   /*
@@ -67,10 +58,6 @@
    */
   
   return YES;
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-  [[RNFirebaseNotifications instance] didReceiveLocalNotification:notification];
 }
 
 @end

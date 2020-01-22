@@ -13,9 +13,16 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { Images } from '../../constants/Images';
+import { env } from '../../constants/env';
 import { SynchronizerScreenIds } from '../../constants/ids/SynchronizerScreenIds';
 import { SynchronizerScreenDelegate } from '../../delegates/sync/SynchronizerScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
@@ -51,7 +58,7 @@ export class SynchronizerScreen extends React.Component<
           <SectionRow
             theme={this.props.themeStore.theme}
             customLeft={this.renderSyncState()}
-            description="The synchonizer automatically synchronizes your data with our remote servers. Whenever you're online, your data will be backed up automatically."
+            description={this.renderDescription()}
           />
         </SectionGroup>
       </View>
@@ -80,6 +87,40 @@ export class SynchronizerScreen extends React.Component<
               Trigger sync
             </DefaultText>
           </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  private renderDescription(): React.ReactElement<any> {
+    if (env.OPEN_SOURCE_ONLY === false) {
+      return (
+        <View>
+          <DefaultText style={this.styles.title}>Two-way syncing:</DefaultText>
+          <DefaultText style={this.styles.paragraph}>
+            When you're online, the synchronizer automatically backs up your
+            data.
+          </DefaultText>
+          <DefaultText style={this.styles.paragraph}>
+            It also automatically downloads changes you make from somewhere else
+            (such as from the Google Sheets add-on, or from another device.)
+          </DefaultText>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <DefaultText style={this.styles.title}>One-way syncing:</DefaultText>
+          <DefaultText style={this.styles.paragraph}>
+            When you're online, the synchronizer automatically backs up your
+            data.
+          </DefaultText>
+          <DefaultText
+            style={
+              this.styles.paragraph
+            }>{`However, it does not automatically download new changes. If you make changes from somewhere else, tap 'Trigger sync' button to download them or use the ${Platform.select(
+            { ios: 'App Store', android: 'Play Store' },
+          )} version for two-way syncing.`}</DefaultText>
         </View>
       );
     }

@@ -11,7 +11,6 @@ import { WebView } from 'react-native-webview';
 
 import { env } from '../../constants/env';
 import { PrivacyPolicyScreenIds } from '../../constants/ids/PrivacyPolicyScreenIds';
-import { DefaultText } from '../common/DefaultText';
 
 export class PrivacyPolicyScreen extends React.Component {
   private renderLoading(): React.ReactElement<any> {
@@ -21,15 +20,11 @@ export class PrivacyPolicyScreen extends React.Component {
   public render(): React.ReactElement<any> {
     return (
       <View style={styles.screen} testID={PrivacyPolicyScreenIds.SCREEN}>
-        {env.PRIVACY_POLICY_URL !== null ? (
-          <WebView
-            source={{ uri: env.PRIVACY_POLICY_URL }}
-            renderLoading={this.renderLoading}
-            startInLoadingState={true}
-          />
-        ) : (
-          <DefaultText>Privacy policy url is not set.</DefaultText>
-        )}
+        <WebView
+          source={{ uri: env.PRIVACY_POLICY_URL }}
+          renderLoading={this.renderLoading}
+          startInLoadingState={true}
+        />
       </View>
     );
   }
