@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4](https://github.com/minhloi/ulangi/compare/v3.3.3...v3.3.4) (2020-01-25)
+
+**Note:** Version bump only for package @ulangi/ulangi-data
+
+
+
+
+
 ## [3.3.3](https://github.com/minhloi/ulangi/compare/v3.3.2...v3.3.3) (2020-01-20)
 
 **Note:** Version bump only for package @ulangi/ulangi-data
