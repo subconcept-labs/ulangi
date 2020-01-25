@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-observable",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "Ulangi Observable",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/ulangi-action": "^3.3.3",
-    "@ulangi/ulangi-common": "^3.3.3",
+    "@ulangi/ulangi-action": "^3.3.4",
+    "@ulangi/ulangi-common": "^3.3.4",
     "change-case": "^3.0.2",
     "lodash": "^4.17.4",
     "moment": "^2.22.2"
