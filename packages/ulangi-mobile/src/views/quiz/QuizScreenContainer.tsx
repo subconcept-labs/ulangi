@@ -9,8 +9,8 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableQuizScreen,
-  ObservableTitleTopBar,
   ObservableTopBarButton,
+  ObservableTouchableTopBar,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -34,17 +34,24 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
       : QuizScreenStyle.SCREEN_FULL_DARK_STYLES;
   }
 
-  private quizScreenFactory = new QuizScreenFactory(
+  private screenFactory = new QuizScreenFactory(
     this.props,
     this.eventBus,
     this.observer,
   );
 
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
   protected observableScreen = new ObservableQuizScreen(
     this.props.passedProps.selectedCategoryNames,
     ScreenName.QUIZ_SCREEN,
-    new ObservableTitleTopBar(
-      '',
+    new ObservableTouchableTopBar(
+      QuizScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
+      (): void => {
+        this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
+      },
       new ObservableTopBarButton(
         QuizScreenIds.BACK_BTN,
         null,
@@ -60,9 +67,9 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
     ),
   );
 
-  private navigatorDelegate = this.quizScreenFactory.createNavigatorDelegate();
+  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
-  private screenDelegate = this.quizScreenFactory.createScreenDelegate(
+  private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
 
@@ -71,6 +78,12 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
       theme === Theme.LIGHT
         ? QuizScreenStyle.SCREEN_LIGHT_STYLES_ONLY
         : QuizScreenStyle.SCREEN_DARK_STYLES_ONLY,
+    );
+  }
+
+  public componentDidMount(): void {
+    this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
+      this.observableScreen,
     );
   }
 

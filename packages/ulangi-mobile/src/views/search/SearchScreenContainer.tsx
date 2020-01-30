@@ -13,7 +13,6 @@ import {
   ObservableTouchableTopBar,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -39,6 +38,10 @@ export class SearchScreenContainer extends Container {
     this.observer,
   );
 
+  private setSelectionMenuDelegate = this.searchFactory.createSetSelectionMenuDelegateWithStyles();
+
+  private navigatorDelegate = this.searchFactory.createNavigatorDelegate();
+
   protected observableScreen = new ObservableSearchScreen(
     '',
     new ObservableVocabularyListState(
@@ -53,17 +56,8 @@ export class SearchScreenContainer extends Container {
     ScreenName.SEARCH_SCREEN,
     new ObservableTouchableTopBar(
       SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      this.props.rootStore.setStore.existingCurrentSet.setName,
-      _.has(
-        Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
-      )
-        ? _.get(
-            Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode,
-          )
-        : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
       (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
@@ -81,10 +75,6 @@ export class SearchScreenContainer extends Container {
       null,
     ),
   );
-
-  private navigatorDelegate = this.searchFactory.createNavigatorDelegate();
-
-  private setSelectionMenuDelegate = this.searchFactory.createSetSelectionMenuDelegate();
 
   private screenDelegate = this.searchFactory.createScreenDelegate(
     this.observableScreen,

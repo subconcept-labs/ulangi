@@ -10,10 +10,17 @@ import { ObservableQuizScreen } from '@ulangi/ulangi-observable';
 import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { QuizScreenDelegate } from '../../delegates/quiz/QuizScreenDelegate';
 import { QuizSettingsDelegate } from '../../delegates/quiz/QuizSettingsDelegate';
+import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class QuizScreenFactory extends ScreenFactory {
+  public createSetSelectionMenuDelegateWithStyles(): SetSelectionMenuDelegate {
+    return this.createSetSelectionMenuDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
   public createScreenDelegate(
     observableScreen: ObservableQuizScreen,
   ): QuizScreenDelegate {

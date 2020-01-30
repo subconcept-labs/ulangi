@@ -9,7 +9,7 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableArray, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
-import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
+import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 
 export class ObservableWritingScreen extends ObservableScreen {
   @observable
@@ -18,7 +18,7 @@ export class ObservableWritingScreen extends ObservableScreen {
   public constructor(
     selectedCategoryNames: undefined | readonly string[],
     screenName: ScreenName,
-    topBar: ObservableTitleTopBar
+    topBar: ObservableTouchableTopBar
   ) {
     super(screenName, topBar);
     this.selectedCategoryNames =

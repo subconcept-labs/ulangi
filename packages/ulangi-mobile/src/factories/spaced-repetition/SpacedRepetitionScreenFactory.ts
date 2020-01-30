@@ -9,12 +9,19 @@ import { ObservableSpacedRepetitionScreen } from '@ulangi/ulangi-observable';
 
 import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
+import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SpacedRepetitionScreenFactory extends ScreenFactory {
+  public createSetSelectionMenuDelegateWithStyles(): SetSelectionMenuDelegate {
+    return this.createSetSelectionMenuDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
   public createScreenDelegate(
     observableScreen: ObservableSpacedRepetitionScreen,
   ): SpacedRepetitionScreenDelegate {

@@ -15,7 +15,6 @@ import {
   ObservableTouchableTopBar,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -40,6 +39,10 @@ export class DiscoverScreenContainer extends Container {
     this.eventBus,
     this.observer,
   );
+
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
+  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   protected observableScreen = new ObservableDiscoverScreen(
     observable.box(''),
@@ -69,17 +72,8 @@ export class DiscoverScreenContainer extends Container {
     ScreenName.DISCOVER_SCREEN,
     new ObservableTouchableTopBar(
       DiscoverScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      this.props.rootStore.setStore.existingCurrentSet.setName,
-      _.has(
-        Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
-      )
-        ? _.get(
-            Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode,
-          )
-        : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
       (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
@@ -97,10 +91,6 @@ export class DiscoverScreenContainer extends Container {
       ),
     ),
   );
-
-  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
-
-  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,

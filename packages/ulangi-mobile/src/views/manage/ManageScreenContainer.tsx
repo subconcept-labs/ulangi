@@ -20,7 +20,6 @@ import {
   ObservableTouchableTopBar,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -46,7 +45,8 @@ export class ManageScreenContainer extends Container {
     this.observer,
   );
 
-  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   protected observableScreen = new ObservableManageScreen(
@@ -74,17 +74,8 @@ export class ManageScreenContainer extends Container {
     ScreenName.MANAGE_SCREEN,
     new ObservableTouchableTopBar(
       ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      this.props.rootStore.setStore.existingCurrentSet.setName,
-      _.has(
-        Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
-      )
-        ? _.get(
-            Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode,
-          )
-        : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
       (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },

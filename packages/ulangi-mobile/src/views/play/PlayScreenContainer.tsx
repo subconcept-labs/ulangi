@@ -11,12 +11,10 @@ import {
   ObservableScreen,
   ObservableTouchableTopBar,
 } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
-import { Images } from '../../constants/Images';
 import { PlayScreenIds } from '../../constants/ids/PlayScreenIds';
 import { PlayScreenFactory } from '../../factories/play/PlayScreenFactory';
 import { LearnScreenStyle } from '../learn/LearnScreenContainer.style';
@@ -36,21 +34,16 @@ export class PlayScreenContainer extends Container {
     this.observer,
   );
 
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
+  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
+
   protected observableScreen = new ObservableScreen(
     ScreenName.PLAY_SCREEN,
     new ObservableTouchableTopBar(
       PlayScreenIds.SHOW_SET_SELECTION_MENU_BTN,
-      this.props.rootStore.setStore.existingCurrentSet.setName,
-      _.has(
-        Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-        this.props.rootStore.setStore.existingCurrentSet.learningLanguageCode,
-      )
-        ? _.get(
-            Images.FLAG_ICONS_BY_LANGUAGE_CODE,
-            this.props.rootStore.setStore.existingCurrentSet
-              .learningLanguageCode,
-          )
-        : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
       (): void => {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
@@ -58,10 +51,6 @@ export class PlayScreenContainer extends Container {
       null,
     ),
   );
-
-  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
-
-  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate();
 

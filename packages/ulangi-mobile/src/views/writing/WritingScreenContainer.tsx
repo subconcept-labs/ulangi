@@ -8,8 +8,8 @@
 import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableTitleTopBar,
   ObservableTopBarButton,
+  ObservableTouchableTopBar,
   ObservableWritingScreen,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -42,11 +42,18 @@ export class WritingScreenContainer extends Container<
     this.observer,
   );
 
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
   protected observableScreen = new ObservableWritingScreen(
     this.props.passedProps.selectedCategoryNames,
     ScreenName.WRITING_SCREEN,
-    new ObservableTitleTopBar(
-      '',
+    new ObservableTouchableTopBar(
+      WritingScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
+      (): void => {
+        this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
+      },
       new ObservableTopBarButton(
         WritingScreenIds.BACK_BTN,
         null,
@@ -67,6 +74,12 @@ export class WritingScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
   );
+
+  public componentDidMount(): void {
+    this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
+      this.observableScreen,
+    );
+  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
