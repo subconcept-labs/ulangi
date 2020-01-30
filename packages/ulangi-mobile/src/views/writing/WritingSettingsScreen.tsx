@@ -105,7 +105,9 @@ export class WritingSettingsScreen extends React.Component<
           customRight={
             <DefaultButton
               testID={WritingSettingsScreenIds.FEEDBACK_BUTTONS_BTN}
-              text={this.props.observableScreen.selectedFeedbackButtons + ' buttons'}
+              text={
+                this.props.observableScreen.selectedFeedbackButtons + ' buttons'
+              }
               styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
               )}
@@ -198,21 +200,21 @@ export class WritingSettingsScreen extends React.Component<
     let text = '';
     switch (this.props.observableScreen.selectedFeedbackButtons) {
       case 3:
-        text = `Use 3 feedback buttons: ${this.props.screenDelegate.getButtonsToShow(
-          3,
-        ).join(", ")}`;
+        text = `Use 3 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(3)
+          .join(', ')}`;
         break;
 
       case 4:
-        text = `Use 4 feedback buttons: ${this.props.screenDelegate.getButtonsToShow(
-          4,
-        ).join(", ")}`;
+        text = `Use 4 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(4)
+          .join(', ')}`;
         break;
 
       case 5:
-        text = `Use 5 feedback buttons: ${this.props.screenDelegate.getButtonsToShow(
-          5,
-        ).join(", ")}`;
+        text = `Use 5 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(5)
+          .join(', ')}`;
         break;
     }
 

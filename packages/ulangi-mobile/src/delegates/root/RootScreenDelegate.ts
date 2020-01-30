@@ -110,26 +110,6 @@ export class RootScreenDelegate {
                 children: [
                   {
                     component: {
-                      name: ScreenName.PLAY_SCREEN,
-                      passProps: { theme },
-                    },
-                  },
-                ],
-                options: {
-                  bottomTab: {
-                    testID: BottomTabIds.PLAY_BTN,
-                    text: 'Play',
-                    icon: Images.PLAY_GREY_25X25,
-                    selectedIcon: Images.PLAY_BLUE_25X25,
-                  },
-                },
-              },
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
                       name: ScreenName.MORE_SCREEN,
                       passProps: { theme },
                     },
