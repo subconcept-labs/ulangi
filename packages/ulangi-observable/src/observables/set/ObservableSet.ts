@@ -16,9 +16,11 @@ import {
   QuizVocabularyPool,
   QuizWritingMaxLimit,
   Set,
+  SpacedRepetitionFeedbackButtons,
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
   SpacedRepetitionReviewStrategy,
+  WritingFeedbackButtons,
   WritingInitialInterval,
   WritingMaxLimit,
 } from '@ulangi/ulangi-common/interfaces';
@@ -91,6 +93,15 @@ export class ObservableSet {
   }
 
   @computed
+  public get spacedRepetitionFeedbackButtons(): undefined | 3 | 4 | 5 {
+    const data = this.extraData.find(
+      (data): data is SpacedRepetitionFeedbackButtons =>
+        data.dataName === SetExtraDataName.SPACED_REPETITION_FEEDBACK_BUTTONS
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
   public get writingInitialInterval(): undefined | number {
     const data = this.extraData.find(
       (data): data is WritingInitialInterval =>
@@ -104,6 +115,15 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is WritingMaxLimit =>
         data.dataName === SetExtraDataName.WRITING_MAX_LIMIT
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get writingFeedbackButtons(): undefined | 3 | 4 | 5 {
+    const data = this.extraData.find(
+      (data): data is WritingFeedbackButtons =>
+        data.dataName === SetExtraDataName.WRITING_FEEDBACK_BUTTONS
     );
     return data ? data.dataValue : undefined;
   }

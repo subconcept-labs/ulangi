@@ -11,12 +11,18 @@ export const SpacedRepetitionSettingsScreenIds = {
   TOP_BAR: 'SPACED_REPETITION_SETTINGS_TOP_BAR',
   REVIEW_STRATEGY_BTN: 'REVIEW_STRATEGY_BTN',
   LIMIT_BTN: 'LIMIT_BTN',
+  FEEDBACK_BUTTONS_BTN: 'FEEDBACK_BUTTONS_BTN',
   INITIAL_INTERVAL_BTN: 'INITIAL_INTERVAL_BTN',
   SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY: (
     reviewStrategy: ReviewStrategy,
-  ): string => 'SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY' + reviewStrategy,
+  ): string =>
+    'SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY_' + reviewStrategy,
   SELECT_LIMIT_BTN_BY_LIMIT: (limit: number): string =>
-    'SELECT_LIMIT_BTN_BY_LIMIT' + limit,
+    'SELECT_LIMIT_BTN_BY_LIMIT_' + limit,
+  SELECT_FEEDBACK_BUTTONS_BTN_BY_FEEDBACK_BUTTONS: (
+    feedbackButtons: 3 | 4 | 5,
+  ): string =>
+    'SELECT_FEEDBACK_BUTTONS_BTN_BY_FEEDBACK_BUTTONS_' + feedbackButtons,
   SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL: (
     initialInterval: number,
   ): string =>

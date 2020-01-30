@@ -11,27 +11,33 @@ import {
   ObservableReviewFeedbackBarState,
   Observer,
 } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 
+import { ReviewFeedbackButtonDelegate } from './ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from './ReviewFeedbackDataDelegate';
 
 export class ReviewFeedbackBarDelegate {
   private observer: Observer;
   private reviewFeedbackBarState: ObservableReviewFeedbackBarState;
   private reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate;
+  private reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate;
 
   public constructor(
     observer: Observer,
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
     reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate,
+    reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate,
   ) {
     this.observer = observer;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
     this.reviewFeedbackDataDelegate = reviewFeedbackDataDelegate;
+    this.reviewFeedbackButtonDelegate = reviewFeedbackButtonDelegate;
   }
 
-  public show(vocabulary: Vocabulary): void {
-    this.calculateNextReviewData(vocabulary);
+  public show(
+    vocabulary: Vocabulary,
+    numberOfFeedbackButtons: 3 | 4 | 5,
+  ): void {
+    this.calculateNextReviewData(vocabulary, numberOfFeedbackButtons);
 
     if (this.reviewFeedbackBarState.shouldShow === false) {
       this.reviewFeedbackBarState.shouldShow = true;
@@ -52,21 +58,26 @@ export class ReviewFeedbackBarDelegate {
     }
   }
 
-  private calculateNextReviewData(vocabulary: Vocabulary): void {
+  private calculateNextReviewData(
+    vocabulary: Vocabulary,
+    numberOfFeedbackButtons: 3 | 4 | 5,
+  ): void {
     this.reviewFeedbackBarState.nextReviewByFeedback.replace(
-      _.values(Feedback).map(
-        (feedback): [Feedback, NextReviewData] => {
-          return [
-            feedback as Feedback,
-            this.reviewFeedbackDataDelegate.calculateNextReviewData(
-              vocabulary,
+      this.reviewFeedbackButtonDelegate
+        .getButtonsToShow(numberOfFeedbackButtons)
+        .map(
+          (feedback): [Feedback, NextReviewData] => {
+            return [
               feedback as Feedback,
-              true,
-              true,
-            ),
-          ];
-        },
-      ),
+              this.reviewFeedbackDataDelegate.calculateNextReviewData(
+                vocabulary,
+                feedback as Feedback,
+                true,
+                true,
+              ),
+            ];
+          },
+        ),
     );
   }
 }

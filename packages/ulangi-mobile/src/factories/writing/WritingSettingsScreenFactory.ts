@@ -7,6 +7,7 @@
 
 import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
 
+import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { WritingSettingsScreenDelegate } from '../../delegates/writing/WritingSettingsScreenDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
@@ -31,9 +32,12 @@ export class WritingSettingsScreenFactory extends ScreenFactory {
 
     const writingSettingsDelegate = this.createWritingSettingsDelegate();
 
+    const reviewFeedbackButtonDelegate = new ReviewFeedbackButtonDelegate();
+
     return new WritingSettingsScreenDelegate(
       observableScreen,
       writingSettingsDelegate,
+      reviewFeedbackButtonDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

@@ -55,6 +55,10 @@ export class WritingLessonScreenContainer extends Container<
     this.props.passedProps.vocabularyList,
   );
 
+  private writingSettingsDelegate = this.screenFactory.createWritingSettingsDelegate();
+
+  private currentSettings = this.writingSettingsDelegate.getCurrentSettings();
+
   protected observableScreen = new ObservableWritingLessonScreen(
     this.props.passedProps.vocabularyList,
     new ObservableWritingFormState(
@@ -77,6 +81,7 @@ export class WritingLessonScreenContainer extends Container<
     ),
     new ObservableFeedbackListState(observable.map()),
     new ObservableReviewFeedbackBarState(observable.map(), false, false),
+    observable.box(this.currentSettings.feedbackButtons),
     observable.box(false),
     observable.box(false),
     observable.box(ActivityState.INACTIVE),

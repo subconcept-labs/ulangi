@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { Feedback, ScreenName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag, SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -16,23 +16,27 @@ import { WritingSettingsScreenIds } from '../../constants/ids/WritingSettingsScr
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { ReviewFeedbackButtonDelegate } from '../review-feedback/ReviewFeedbackButtonDelegate';
 import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 @boundClass
 export class WritingSettingsScreenDelegate {
   private observableScreen: ObservableWritingSettingsScreen;
   private writingSettingsDelegate: WritingSettingsDelegate;
+  private reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     observableScreen: ObservableWritingSettingsScreen,
     writingSettingsDelegate: WritingSettingsDelegate,
+    reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.writingSettingsDelegate = writingSettingsDelegate;
+    this.reviewFeedbackButtonDelegate = reviewFeedbackButtonDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -42,6 +46,7 @@ export class WritingSettingsScreenDelegate {
       {
         initialInterval: this.observableScreen.selectedInitialInterval,
         limit: this.observableScreen.selectedLimit,
+        feedbackButtons: this.observableScreen.selectedFeedbackButtons,
       },
       {
         onSaving: this.showSavingDialog,
@@ -84,6 +89,42 @@ export class WritingSettingsScreenDelegate {
     );
   }
 
+  public showFeedbackButtonsMenu(
+    valuePairs: readonly [3 | 4 | 5, string][],
+    selectedFeedbackButtons: 3 | 4 | 5,
+    onSelect: (feedbackButtons: 3 | 4 | 5) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([feedbackButtons, feedbackButtonsText]): [
+              number,
+              SelectionItem
+            ] => {
+              return [
+                feedbackButtons,
+                {
+                  testID: WritingSettingsScreenIds.SELECT_FEEDBACK_BUTTONS_BTN_BY_FEEDBACK_BUTTONS(
+                    feedbackButtons,
+                  ),
+                  text: feedbackButtonsText,
+                  onPress: (): void => {
+                    onSelect(feedbackButtons);
+                    this.dialogDelegate.dismiss();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedFeedbackButtons],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
   public showInitialIntervalMenu(
     valuePairs: readonly [number, string][],
     selectedLevel: number,
@@ -117,6 +158,14 @@ export class WritingSettingsScreenDelegate {
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public getButtonsToShow(
+    numberOfFeedbackButtons: 3 | 4 | 5,
+  ): readonly Feedback[] {
+    return this.reviewFeedbackButtonDelegate.getButtonsToShow(
+      numberOfFeedbackButtons,
     );
   }
 

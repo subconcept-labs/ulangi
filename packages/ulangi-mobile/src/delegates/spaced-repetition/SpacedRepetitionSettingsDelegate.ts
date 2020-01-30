@@ -28,6 +28,7 @@ export class SpacedRepetitionSettingsDelegate {
     initialInterval: number;
     limit: number;
     reviewStrategy: ReviewStrategy;
+    feedbackButtons: 3 | 4 | 5;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet
@@ -47,10 +48,17 @@ export class SpacedRepetitionSettingsDelegate {
         ? this.setStore.existingCurrentSet.spacedRepetitionReviewStrategy
         : config.spacedRepetition.defaultReviewStrategy;
 
+    const feedbackButtons =
+      typeof this.setStore.existingCurrentSet
+        .spacedRepetitionFeedbackButtons !== 'undefined'
+        ? this.setStore.existingCurrentSet.spacedRepetitionFeedbackButtons
+        : config.spacedRepetition.defaultFeedbackButtons;
+
     return {
       initialInterval,
       limit,
       reviewStrategy,
+      feedbackButtons,
     };
   }
 
@@ -59,6 +67,7 @@ export class SpacedRepetitionSettingsDelegate {
       initialInterval: number;
       limit: number;
       reviewStrategy: ReviewStrategy;
+      feedbackButtons: 3 | 4 | 5;
     },
     callback: {
       onSaving: () => void;
@@ -90,6 +99,13 @@ export class SpacedRepetitionSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY,
         dataValue: newSettings.reviewStrategy,
+      });
+    }
+
+    if (originalSettings.feedbackButtons !== newSettings.feedbackButtons) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.SPACED_REPETITION_FEEDBACK_BUTTONS,
+        dataValue: newSettings.feedbackButtons,
       });
     }
 
