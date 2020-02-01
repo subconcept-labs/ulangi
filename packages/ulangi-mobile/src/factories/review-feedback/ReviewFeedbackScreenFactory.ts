@@ -106,7 +106,6 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
       feedbackSelectionMenuDelegate,
       reviewFeedbackDataDelegate,
       dialogDelegate,
-      navigatorDelegate,
     );
   }
 }
