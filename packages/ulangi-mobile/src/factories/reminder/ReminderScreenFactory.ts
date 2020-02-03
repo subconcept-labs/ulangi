@@ -24,8 +24,6 @@ export class ReminderScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableReminderScreen,
   ): ReminderScreenDelegate {
-    const navigatorDelegate = this.createNavigatorDelegate();
-
     const dialogDelegate = this.createDialogDelegate(
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
@@ -38,7 +36,6 @@ export class ReminderScreenFactory extends ScreenFactory {
       observableScreen,
       reminderDelegate,
       dialogDelegate,
-      navigatorDelegate,
     );
   }
 }

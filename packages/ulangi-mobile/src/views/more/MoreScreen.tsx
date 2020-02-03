@@ -80,6 +80,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
     return [
       this.renderAccountSection(),
       this.renderToolsAndSettingsSection(),
+      this.renderMiniGamesSection(),
       this.renderGeneralSection(),
       this.renderContactUsSection(),
       this.renderFAQSection(),
@@ -218,6 +219,32 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           rightText=""
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToGoogleSheetsAddOnScreen}
+        />
+      </SectionGroup>
+    );
+  }
+
+  private renderMiniGamesSection(): React.ReactElement<any> {
+    return (
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        key="mini-games"
+        header="MINI GAMES">
+        <SectionRow
+          testID={MoreScreenIds.REFLEX_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Reflex"
+          rightText=""
+          showArrow={true}
+          onPress={this.props.screenDelegate.navigateToReflexScreen}
+        />
+        <SectionRow
+          testID={MoreScreenIds.ATOM_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Atom"
+          rightText=""
+          showArrow={true}
+          onPress={this.props.screenDelegate.navigateToAtomScreen}
         />
       </SectionGroup>
     );

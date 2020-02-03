@@ -27,6 +27,8 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly reviewFeedbackBarState: ObservableReviewFeedbackBarState;
 
+  public readonly numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>;
+
   public readonly shouldShowResult: IObservableValue<boolean>;
 
   public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
@@ -39,6 +41,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     writingResult: ObservableWritingResult,
     feedbackListState: ObservableFeedbackListState,
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
+    numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>,
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     saveState: IObservableValue<ActivityState>,
@@ -51,6 +54,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     this.writingResult = writingResult;
     this.feedbackListState = feedbackListState;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
+    this.numberOfFeedbackButtons = numberOfFeedbackButtons;
     this.shouldShowResult = shouldShowResult;
     this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
     this.saveState = saveState;

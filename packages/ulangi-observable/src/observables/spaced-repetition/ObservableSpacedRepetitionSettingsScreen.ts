@@ -21,10 +21,14 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
   @observable
   public selectedReviewStrategy: ReviewStrategy;
 
+  @observable
+  public selectedFeedbackButtons: 3 | 4 | 5;
+
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
     selectedReviewStrategy: ReviewStrategy,
+    selectedFeedbackButtons: 3 | 4 | 5,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
@@ -32,5 +36,6 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
     this.selectedReviewStrategy = selectedReviewStrategy;
+    this.selectedFeedbackButtons = selectedFeedbackButtons;
   }
 }

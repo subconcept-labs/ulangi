@@ -8,7 +8,6 @@ export class DataSharingScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableDataSharingScreen,
   ): DataSharingScreenDelegate {
-    const navigatorDelegate = this.createNavigatorDelegate();
     const dialogDelegate = this.createDialogDelegate(
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
@@ -17,7 +16,6 @@ export class DataSharingScreenFactory extends ScreenFactory {
       this.eventBus,
       observableScreen,
       dialogDelegate,
-      navigatorDelegate,
     );
   }
 }

@@ -43,6 +43,7 @@ export class WritingSettingsScreenContainer extends Container {
   protected observableScreen = new ObservableWritingSettingsScreen(
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
+    this.originalSettings.feedbackButtons,
     ScreenName.WRITING_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

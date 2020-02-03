@@ -17,7 +17,6 @@ import { boundClass } from 'autobind-decorator';
 import * as _ from 'lodash';
 
 import { DialogDelegate } from '../dialog/DialogDelegate';
-import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReminderDelegate } from './ReminderDelegate';
 
 @boundClass
@@ -27,7 +26,6 @@ export class ReminderScreenDelegate {
   private observableScreen: ObservableReminderScreen;
   private reminderDelegate: ReminderDelegate;
   private dialogDelegate: DialogDelegate;
-  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
@@ -35,14 +33,12 @@ export class ReminderScreenDelegate {
     observableScreen: ObservableReminderScreen,
     reminderDelegate: ReminderDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.notificationStore = notificationStore;
     this.observableScreen = observableScreen;
     this.reminderDelegate = reminderDelegate;
     this.dialogDelegate = dialogDelegate;
-    this.navigatorDelegate = navigatorDelegate;
   }
 
   public toggle(): void {
@@ -93,19 +89,19 @@ export class ReminderScreenDelegate {
         on(
           ActionType.USER__EDITING,
           (): void => {
-            this.showSavingDialog();
+            this.dialogDelegate.showSavingDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
-            this.showSaveSucceededDialog();
+            this.dialogDelegate.showSaveSucceededDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           (errorBag): void => {
-            this.showSaveFailedDialog(errorBag);
+            this.dialogDelegate.showSaveFailedDialog(errorBag);
           },
         ),
       ),
@@ -157,26 +153,5 @@ export class ReminderScreenDelegate {
         title: 'REQUEST PERMISSION FAILED',
       },
     );
-  }
-
-  private showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
-  }
-
-  private showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
-  }
-
-  private showSaveFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
   }
 }

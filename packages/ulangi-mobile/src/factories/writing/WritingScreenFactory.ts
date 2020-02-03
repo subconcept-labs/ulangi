@@ -8,12 +8,19 @@
 import { ObservableWritingScreen } from '@ulangi/ulangi-observable';
 
 import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
+import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { WritingScreenDelegate } from '../../delegates/writing/WritingScreenDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class WritingScreenFactory extends ScreenFactory {
+  public createSetSelectionMenuDelegateWithStyles(): SetSelectionMenuDelegate {
+    return this.createSetSelectionMenuDelegate(
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
   public createScreenDelegate(
     observableScreen: ObservableWritingScreen,
   ): WritingScreenDelegate {

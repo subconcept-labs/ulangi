@@ -369,6 +369,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private showReviewFeedbackBar(): void {
     this.reviewFeedbackBarDelegate.show(
       this.observableScreen.reviewState.vocabulary,
+      this.observableScreen.numberOfFeedbackButtons.get(),
     );
   }
 

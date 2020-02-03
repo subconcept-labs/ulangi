@@ -14,6 +14,7 @@ import { DialogDelegate } from '../delegates/dialog/DialogDelegate';
 import { LinkingDelegate } from '../delegates/linking/LinkingDelegate';
 import { NavigatorDelegate } from '../delegates/navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../delegates/root/RootScreenDelegate';
+import { SetSelectionMenuDelegate } from '../delegates/set/SetSelectionMenuDelegate';
 
 export class ScreenFactory {
   protected props: ContainerProps;
@@ -59,5 +60,17 @@ export class ScreenFactory {
     dark: Options;
   }): LinkingDelegate {
     return new LinkingDelegate(this.createDialogDelegate(styles));
+  }
+
+  public createSetSelectionMenuDelegate(styles: {
+    light: Options;
+    dark: Options;
+  }): SetSelectionMenuDelegate {
+    return new SetSelectionMenuDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+      this.createNavigatorDelegate(),
+      styles,
+    );
   }
 }

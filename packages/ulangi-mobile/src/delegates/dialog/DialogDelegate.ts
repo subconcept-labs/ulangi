@@ -76,4 +76,25 @@ export class DialogDelegate {
   public dismiss(): void {
     this.navigatorDelegate.dismissLightBox();
   }
+
+  public showSavingDialog(): void {
+    this.show({
+      message: 'Saving. Please wait...',
+    });
+  }
+
+  public showSaveSucceededDialog(): void {
+    this.showSuccessDialog({
+      message: 'Saved successfully.',
+      onClose: (): void => {
+        this.navigatorDelegate.pop();
+      },
+    });
+  }
+
+  public showSaveFailedDialog(errorBag: ErrorBag): void {
+    this.showFailedDialog(errorBag, {
+      title: 'SAVE FAILED',
+    });
+  }
 }

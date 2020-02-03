@@ -168,4 +168,20 @@ export class SetSelectionMenuDelegate {
       this.styles,
     );
   }
+
+  public getCurrentSetName(): string {
+    return this.setStore.existingCurrentSet.setName;
+  }
+
+  public getCurrentFlagIcon(): any {
+    return _.has(
+      Images.FLAG_ICONS_BY_LANGUAGE_CODE,
+      this.setStore.existingCurrentSet.learningLanguageCode,
+    )
+      ? _.get(
+          Images.FLAG_ICONS_BY_LANGUAGE_CODE,
+          this.setStore.existingCurrentSet.learningLanguageCode,
+        )
+      : Images.FLAG_ICONS_BY_LANGUAGE_CODE.any;
+  }
 }

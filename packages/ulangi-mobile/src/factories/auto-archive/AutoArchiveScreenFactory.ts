@@ -37,7 +37,6 @@ export class AutoArchiveScreenFactory extends ScreenFactory {
       observableScreen.autoArchiveSettings,
       levelSelectionMenuDelegate,
       dialogDelegate,
-      navigatorDelegate,
     );
   }
 }

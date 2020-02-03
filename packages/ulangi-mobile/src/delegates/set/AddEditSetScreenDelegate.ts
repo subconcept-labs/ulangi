@@ -67,24 +67,15 @@ export class AddEditSetScreenDelegate {
   }
 
   public showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
+    this.dialogDelegate.showSavingDialog();
   }
 
   public showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
+    this.dialogDelegate.showSaveSucceededDialog();
   }
 
   public showSaveFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
+    this.dialogDelegate.showSaveFailedDialog(errorBag);
   }
 
   public readonly submit?: () => void = undefined;

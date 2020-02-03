@@ -18,11 +18,8 @@ import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SearchScreenFactory extends ScreenFactory {
-  public createSetSelectionMenuDelegate(): SetSelectionMenuDelegate {
-    return new SetSelectionMenuDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-      this.createNavigatorDelegate(),
+  public createSetSelectionMenuDelegateWithStyles(): SetSelectionMenuDelegate {
+    return this.createSetSelectionMenuDelegate(
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
@@ -36,7 +33,7 @@ export class SearchScreenFactory extends ScreenFactory {
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const setSelectionMenuDelegate = this.createSetSelectionMenuDelegate();
+    const setSelectionMenuDelegate = this.createSetSelectionMenuDelegateWithStyles();
 
     const searchVocabularyDelegate = new SearchVocabularyDelegate(
       this.eventBus,
