@@ -46,7 +46,14 @@ export class CategoryActionMenuDelegate {
   public show(
     category: ObservableCategory,
     filterType: VocabularyFilterType,
-    hideViewDetailButton: boolean,
+    options: {
+      hideReviewBySpacedRepetitionButton: boolean;
+      hideReviewByWritingButton: boolean;
+      hideQuizButton: boolean;
+      hidePlayReflexButton: boolean;
+      hidePlayAtomButton: boolean;
+      hideViewDetailButton: boolean;
+    },
   ): void {
     const items: SelectionItem[] = [];
 
@@ -54,18 +61,31 @@ export class CategoryActionMenuDelegate {
       items.push(this.getToggleSelectButton(category.categoryName));
     }
 
-    if (hideViewDetailButton === false) {
+    if (options.hideViewDetailButton === false) {
       items.push(this.getViewDetailButton(category, filterType));
     }
 
-    items.push(
-      this.getAddTermsButton(category.categoryName),
-      this.getLearnWithSpacedRepetitionBtn(category.categoryName),
-      this.getLearnWithWritingBtn(category.categoryName),
-      this.getQuizBtn(category.categoryName),
-      this.getPlayWithReflexBtn(category.categoryName),
-      this.getPlayWithAtomBtn(category.categoryName),
-    );
+    items.push(this.getAddTermsButton(category.categoryName));
+
+    if (options.hideReviewBySpacedRepetitionButton === false) {
+      items.push(this.getReviewBySpacedRepetitionBtn(category.categoryName));
+    }
+
+    if (options.hideReviewByWritingButton === false) {
+      items.push(this.getReviewByWritingBtn(category.categoryName));
+    }
+
+    if (options.hideQuizButton === false) {
+      items.push(this.getQuizBtn(category.categoryName));
+    }
+
+    if (options.hidePlayReflexButton === false) {
+      items.push(this.getPlayReflexBtn(category.categoryName));
+    }
+
+    if (options.hidePlayAtomButton === false) {
+      items.push(this.getPlayAtomBtn(category.categoryName));
+    }
 
     this.observableLightBox.actionMenu = {
       testID: CategoryActionMenuIds.ACTION_MENU,
@@ -126,7 +146,7 @@ export class CategoryActionMenuDelegate {
     };
   }
 
-  private getLearnWithSpacedRepetitionBtn(categoryName: string): SelectionItem {
+  private getReviewBySpacedRepetitionBtn(categoryName: string): SelectionItem {
     return {
       testID: CategoryActionMenuIds.LEARN_WITH_SPACED_REPPETITION_BTN,
       text: 'Review by Spaced Repetition',
@@ -139,7 +159,7 @@ export class CategoryActionMenuDelegate {
     };
   }
 
-  private getLearnWithWritingBtn(categoryName: string): SelectionItem {
+  private getReviewByWritingBtn(categoryName: string): SelectionItem {
     return {
       testID: CategoryActionMenuIds.LEARN_WITH_WRITING_BTN,
       text: 'Review by Writing',
@@ -165,7 +185,7 @@ export class CategoryActionMenuDelegate {
     };
   }
 
-  private getPlayWithReflexBtn(categoryName: string): SelectionItem {
+  private getPlayReflexBtn(categoryName: string): SelectionItem {
     return {
       testID: CategoryActionMenuIds.PLAY_WITH_REFLEX,
       text: 'Play Reflex',
@@ -184,7 +204,7 @@ export class CategoryActionMenuDelegate {
     };
   }
 
-  private getPlayWithAtomBtn(categoryName: string): SelectionItem {
+  private getPlayAtomBtn(categoryName: string): SelectionItem {
     return {
       testID: CategoryActionMenuIds.PLAY_WITH_ATOM,
       text: 'Play Atom',

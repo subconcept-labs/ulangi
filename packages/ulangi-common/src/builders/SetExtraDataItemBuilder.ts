@@ -16,7 +16,7 @@ export class SetExtraDataItemBuilder {
     return _.merge(
       {
         dataName: '',
-        dataValue: '',
+        dataValue: null,
         updatedAt: moment.utc().toDate(),
         createdAt: moment.utc().toDate(),
         firstSyncedAt: null,

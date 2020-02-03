@@ -9,13 +9,13 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export interface ManageBarStyles {
-  inner_container: ViewStyle;
+  container: ViewStyle;
   button: ViewStyle;
   button_text: TextStyle;
 }
 
 export const baseStyle: ManageBarStyles = {
-  inner_container: {
+  container: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: 'row',

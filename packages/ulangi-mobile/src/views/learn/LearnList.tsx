@@ -6,26 +6,34 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { FeatureSettings } from '@ulangi/ulangi-common/interfaces';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 
 import { LearnScreenIds } from '../../constants/ids/LearnScreenIds';
 import { QuizTitle } from '../../views/quiz/QuizTitle';
 import { SpacedRepetitionTitle } from '../../views/spaced-repetition/SpacedRepetitionTitle';
 import { WritingTitle } from '../../views/writing/WritingTitle';
+import { AtomTitle } from '../atom/AtomTitle';
+import { ReflexTitle } from '../reflex/ReflexTitle';
 import { LearnListStyles, darkStyles, lightStyles } from './LearnList.style';
 
 export interface LearnListProps {
   theme: Theme;
+  featureSettings: FeatureSettings;
   navigateToSpacedRepetitionScreen: () => void;
   navigateToWritingScreen: () => void;
   navigateToQuizScreen: () => void;
+  navigateToReflexScreen: () => void;
+  navigateToAtomScreen: () => void;
   styles?: {
     light: LearnListStyles;
     dark: LearnListStyles;
   };
 }
 
+@observer
 export class LearnList extends React.Component<LearnListProps> {
   public get styles(): LearnListStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
@@ -38,30 +46,52 @@ export class LearnList extends React.Component<LearnListProps> {
       <ScrollView
         testID={LearnScreenIds.LEARN_LIST}
         contentContainerStyle={this.styles.scroll_view_container}>
-        <TouchableOpacity
-          testID={LearnScreenIds.SPACED_REPETITION_BTN}
-          style={this.styles.learn_item}
-          onPress={this.props.navigateToSpacedRepetitionScreen}>
-          <View style={this.styles.spaced_repetition_title_container}>
+        {this.props.featureSettings.spacedRepetitionEnabled ? (
+          <TouchableOpacity
+            testID={LearnScreenIds.SPACED_REPETITION_BTN}
+            style={[
+              this.styles.learn_item,
+              this.styles.spaced_repetition_title_container,
+            ]}
+            onPress={this.props.navigateToSpacedRepetitionScreen}>
             <SpacedRepetitionTitle theme={this.props.theme} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          testID={LearnScreenIds.WRITING_BTN}
-          style={this.styles.learn_item}
-          onPress={this.props.navigateToWritingScreen}>
-          <View style={this.styles.writing_title_container}>
+          </TouchableOpacity>
+        ) : null}
+        {this.props.featureSettings.writingEnabled ? (
+          <TouchableOpacity
+            testID={LearnScreenIds.WRITING_BTN}
+            style={[
+              this.styles.learn_item,
+              this.styles.writing_title_container,
+            ]}
+            onPress={this.props.navigateToWritingScreen}>
             <WritingTitle theme={this.props.theme} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          testID={LearnScreenIds.QUIZ_BTN}
-          style={this.styles.learn_item}
-          onPress={this.props.navigateToQuizScreen}>
-          <View style={this.styles.quiz_title_container}>
+          </TouchableOpacity>
+        ) : null}
+        {this.props.featureSettings.quizEnabled ? (
+          <TouchableOpacity
+            testID={LearnScreenIds.QUIZ_BTN}
+            style={[this.styles.learn_item, this.styles.quiz_title_container]}
+            onPress={this.props.navigateToQuizScreen}>
             <QuizTitle theme={this.props.theme} />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        ) : null}
+        {this.props.featureSettings.reflexEnabled ? (
+          <TouchableOpacity
+            testID={LearnScreenIds.REFLEX_BTN}
+            style={[this.styles.learn_item, this.styles.reflex_title_container]}
+            onPress={this.props.navigateToReflexScreen}>
+            <ReflexTitle />
+          </TouchableOpacity>
+        ) : null}
+        {this.props.featureSettings.atomEnabled ? (
+          <TouchableOpacity
+            testID={LearnScreenIds.ATOM_BTN}
+            style={[this.styles.learn_item, this.styles.atom_title_container]}
+            onPress={this.props.navigateToAtomScreen}>
+            <AtomTitle />
+          </TouchableOpacity>
+        ) : null}
       </ScrollView>
     );
   }

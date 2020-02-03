@@ -22,7 +22,6 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
-    "@ulangi/resolver": "^2.0.0",
     "@ulangi/ulangi-action": "^3.3.4",
     "@ulangi/ulangi-common": "^3.3.4",
     "@ulangi/ulangi-observable": "^3.3.4",

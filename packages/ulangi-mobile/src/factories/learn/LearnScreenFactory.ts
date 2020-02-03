@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { LearnScreenDelegate } from '../../delegates/learn/LearnScreenDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
@@ -18,6 +19,13 @@ export class LearnScreenFactory extends ScreenFactory {
   }
 
   public createScreenDelegate(): LearnScreenDelegate {
-    return new LearnScreenDelegate(this.createNavigatorDelegate());
+    const featureSettingsDelegate = new FeatureSettingsDelegate(
+      this.props.rootStore.setStore,
+    );
+
+    return new LearnScreenDelegate(
+      featureSettingsDelegate,
+      this.createNavigatorDelegate(),
+    );
   }
 }

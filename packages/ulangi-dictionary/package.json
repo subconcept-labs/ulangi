@@ -16,7 +16,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.3.0",
     "@ulangi/assert": "^1.0.6",
-    "@ulangi/resolver": "^1.0.0",
+    "@ulangi/resolver": "^2.0.3",
     "@ulangi/ulangi-common": "^3.3.4",
     "@ulangi/wiktionary-core": "^1.1.0",
     "aws-es-connection": "^1.0.0",

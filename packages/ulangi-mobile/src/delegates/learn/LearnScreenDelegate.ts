@@ -6,20 +6,31 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { FeatureSettings } from '@ulangi/ulangi-common/interfaces';
 import { boundClass } from 'autobind-decorator';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { FeatureSettingsDelegate } from './FeatureSettingsDelegate';
 
 @boundClass
 export class LearnScreenDelegate {
+  private featureSettingsDelegate: FeatureSettingsDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
-  public constructor(navigatorDelegate: NavigatorDelegate) {
+  public constructor(
+    featureSettingsDelegate: FeatureSettingsDelegate,
+    navigatorDelegate: NavigatorDelegate,
+  ) {
+    this.featureSettingsDelegate = featureSettingsDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public navigateToWhatToUseScreen(): void {
-    this.navigatorDelegate.push(ScreenName.WHAT_TO_USE_SCREEN, {});
+  public getCurrentFeatureSettings(): FeatureSettings {
+    return this.featureSettingsDelegate.getCurrentSettings();
+  }
+
+  public navigateToFeatureManagementScreen(): void {
+    this.navigatorDelegate.push(ScreenName.FEATURE_MANAGEMENT_SCREEN, {});
   }
 
   public navigateToSpacedRepetitionScreen(): void {
@@ -36,6 +47,18 @@ export class LearnScreenDelegate {
 
   public navigateToQuizScreen(): void {
     this.navigatorDelegate.push(ScreenName.QUIZ_SCREEN, {
+      selectedCategoryNames: undefined,
+    });
+  }
+
+  public navigateToAtomScreen(): void {
+    this.navigatorDelegate.push(ScreenName.ATOM_SCREEN, {
+      selectedCategoryNames: undefined,
+    });
+  }
+
+  public navigateToReflexScreen(): void {
+    this.navigatorDelegate.push(ScreenName.REFLEX_SCREEN, {
       selectedCategoryNames: undefined,
     });
   }
