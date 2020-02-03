@@ -116,6 +116,13 @@
       "DELETED": {
         "name": "deleted"
       }
+    },
+    "defaultFeatureSettings": {
+      "spacedRepetitionEnabled": true,
+      "writingEnabled": true,
+      "quizEnabled": true,
+      "reflexEnabled": false,
+      "atomEnabled" : false
     }
   },
 

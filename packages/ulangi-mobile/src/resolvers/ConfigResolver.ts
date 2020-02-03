@@ -9,6 +9,7 @@ import { AbstractResolver } from '@ulangi/resolver';
 import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettingsResolver,
+  FeatureSettingsResolver,
   ReminderSettingsResolver,
   ThemeSettingsResolver,
 } from '@ulangi/ulangi-common/resolvers';
@@ -19,6 +20,7 @@ import { Config } from '../interfaces/Config';
 
 export class ConfigResolver extends AbstractResolver<Config> {
   private autoArchiveSettingsResolver = new AutoArchiveSettingsResolver();
+  private featureSettingsResolver = new FeatureSettingsResolver();
   private reminderSettingsResolver = new ReminderSettingsResolver();
   private themeSettingsResolver = new ThemeSettingsResolver();
 
@@ -102,6 +104,9 @@ export class ConfigResolver extends AbstractResolver<Config> {
         // TODO: Use validation for key
         name: Joi.string(),
       }),
+      defaultFeatureSettings: Joi.object(
+        this.featureSettingsResolver.getRules(),
+      ),
     },
 
     vocabulary: {

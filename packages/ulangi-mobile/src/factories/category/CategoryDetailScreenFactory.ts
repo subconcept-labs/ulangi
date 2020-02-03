@@ -9,6 +9,7 @@ import { ObservableCategoryDetailScreen } from '@ulangi/ulangi-observable';
 
 import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryActionMenuDelegate';
 import { CategoryDetailScreenDelegate } from '../../delegates/category/CategoryDetailScreenDelegate';
+import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
@@ -105,6 +106,10 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       observableScreen.vocabularyListState,
     );
 
+    const featureSettingsDelegate = new FeatureSettingsDelegate(
+      this.props.rootStore.setStore,
+    );
+
     return new CategoryDetailScreenDelegate(
       this.eventBus,
       observableScreen,
@@ -116,6 +121,7 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       vocabularyBulkActionMenuDelegate,
       vocabularyLiveUpdateDelegate,
       vocabularySelectionDelegate,
+      featureSettingsDelegate,
       navigatorDelegate,
     );
   }

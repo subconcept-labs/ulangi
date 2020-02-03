@@ -15,6 +15,7 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettings,
+  FeatureSettings,
   ReminderSettings,
   ThemeSettings,
 } from '@ulangi/ulangi-common/interfaces';
@@ -96,6 +97,7 @@ export interface Config {
         readonly name: string;
       }
     };
+    readonly defaultFeatureSettings: FeatureSettings;
   };
 
   readonly vocabulary: {

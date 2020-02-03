@@ -22,7 +22,6 @@ import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
-import { TopBar } from '../common/TopBar';
 import { ManageBarStyles, darkStyles, lightStyles } from './ManageBar.style';
 
 export interface ManageBarProps {
@@ -47,34 +46,32 @@ export class ManageBar extends React.Component<ManageBarProps> {
 
   public render(): React.ReactElement<any> {
     return (
-      <TopBar theme={this.props.theme}>
-        <View style={this.styles.inner_container}>
-          <TouchableOpacity
-            testID={ManageScreenIds.SHOW_MANAGE_LIST_SELECTION_MENU_BTN}
-            onPress={this.props.showManageListSelectionMenu}
-            hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
-            style={this.styles.button}>
-            <DefaultText
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={this.styles.button_text}>
-              {this.getTitle()}
-            </DefaultText>
-          </TouchableOpacity>
-          <DefaultButton
-            testID={ManageScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
-            text={_.upperFirst(
-              config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-                .shortName,
-            )}
-            onPress={this.props.showVocabularyFilterMenu}
-            styles={FullRoundedButtonStyle.getOutlineStyles(
-              ButtonSize.SMALL,
-              this.getColorByStatus(this.props.selectedFilterType.get()),
-            )}
-          />
-        </View>
-      </TopBar>
+      <View style={this.styles.container}>
+        <TouchableOpacity
+          testID={ManageScreenIds.SHOW_MANAGE_LIST_SELECTION_MENU_BTN}
+          onPress={this.props.showManageListSelectionMenu}
+          hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
+          style={this.styles.button}>
+          <DefaultText
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={this.styles.button_text}>
+            {this.getTitle()}
+          </DefaultText>
+        </TouchableOpacity>
+        <DefaultButton
+          testID={ManageScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
+          text={_.upperFirst(
+            config.vocabulary.filterMap[this.props.selectedFilterType.get()]
+              .shortName,
+          )}
+          onPress={this.props.showVocabularyFilterMenu}
+          styles={FullRoundedButtonStyle.getOutlineStyles(
+            ButtonSize.SMALL,
+            this.getColorByStatus(this.props.selectedFilterType.get()),
+          )}
+        />
+      </View>
     );
   }
 

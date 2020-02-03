@@ -48,7 +48,7 @@
 	},
 	"dependencies": {
 		"@ulangi/assert": "^1.0.0",
-		"@ulangi/resolver": "^1.0.0",
+		"@ulangi/resolver": "^2.0.3",
 		"@ulangi/ulangi-common": "^3.4.0",
 		"@ulangi/ulangi-dictionary": "^3.4.0",
 		"@ulangi/ulangi-library": "^3.4.0",

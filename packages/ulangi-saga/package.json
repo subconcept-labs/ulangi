@@ -20,7 +20,7 @@
   "dependencies": {
     "@ulangi/assert": "^1.6.0",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/resolver": "^2.0.0",
+    "@ulangi/resolver": "^2.0.3",
     "@ulangi/ulangi-action": "^3.4.0",
     "@ulangi/ulangi-common": "^3.4.0",
     "@ulangi/ulangi-local-database": "^3.4.0",

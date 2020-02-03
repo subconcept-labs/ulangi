@@ -46,18 +46,36 @@ export class CategoryBulkActionMenuDelegate {
     this.styles = styles;
   }
 
-  public show(): void {
+  public show(options: {
+    hideReviewBySpacedRepetitionButton: boolean;
+    hideReviewByWritingButton: boolean;
+    hideQuizButton: boolean;
+    hidePlayReflexButton: boolean;
+    hidePlayAtomButton: boolean;
+  }): void {
     const items: SelectionItem[] = [];
 
-    items.push(
-      this.getSelectAllFetchedTermsBtn(),
-      this.getLearnWithSpacedRepetitionBtn(),
-      this.getLearnWithWritingBtn(),
-      this.getQuizBtn(),
-      this.getPlayWithReflex(),
-      this.getPlayWithAtom(),
-      //this.getAutoplayBtn()
-    );
+    items.push(this.getSelectAllFetchedTermsBtn());
+
+    if (options.hideReviewBySpacedRepetitionButton === false) {
+      items.push(this.getReviewBySpacedRepetitionBtn());
+    }
+
+    if (options.hideReviewByWritingButton === false) {
+      items.push(this.getReviewByWritingBtn());
+    }
+
+    if (options.hideQuizButton === false) {
+      items.push(this.getQuizBtn());
+    }
+
+    if (options.hidePlayReflexButton === false) {
+      items.push(this.getPlayReflex());
+    }
+
+    if (options.hidePlayAtomButton === false) {
+      items.push(this.getPlayAtom());
+    }
 
     this.observableLightBox.actionMenu = {
       testID: CategoryBulkActionMenuIds.ACTION_MENU,
@@ -93,7 +111,7 @@ export class CategoryBulkActionMenuDelegate {
     };
   }
 
-  private getLearnWithSpacedRepetitionBtn(): SelectionItem {
+  private getReviewBySpacedRepetitionBtn(): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.LEARN_WITH_SPACED_REPPETITION_BTN,
       text: 'Review by Spaced Repetition',
@@ -106,7 +124,7 @@ export class CategoryBulkActionMenuDelegate {
     };
   }
 
-  private getLearnWithWritingBtn(): SelectionItem {
+  private getReviewByWritingBtn(): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.LEARN_WITH_WRITING_BTN,
       text: 'Review by Writing',
@@ -132,7 +150,7 @@ export class CategoryBulkActionMenuDelegate {
     };
   }
 
-  private getPlayWithReflex(): SelectionItem {
+  private getPlayReflex(): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.PLAY_WITH_REFLEX_BTN,
       text: 'Play Reflex',
@@ -151,7 +169,7 @@ export class CategoryBulkActionMenuDelegate {
     };
   }
 
-  private getPlayWithAtom(): SelectionItem {
+  private getPlayAtom(): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.PLAY_WITH_ATOM_BTN,
       text: 'Play Atom',

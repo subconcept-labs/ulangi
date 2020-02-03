@@ -35,28 +35,53 @@ export class VocabularyFilterMenuDelegate {
   public show(
     selectedFilterType: VocabularyFilterType,
     onSelect: (filterType: VocabularyFilterType) => void,
+    options: {
+      hideDueBySpacedRepetition: boolean;
+      hideDueByWriting: boolean;
+    },
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
         testID: VocabularyFilterMenuIds.FILTER_MENU,
         items: new Map(
-          _.toPairs(config.vocabulary.filterMap).map(
-            ([filterType, { name }]): [VocabularyFilterType, SelectionItem] => {
-              return [
-                filterType as VocabularyFilterType,
-                {
-                  testID: VocabularyFilterMenuIds.FILTER_BTN_BY_FILTER_TYPE(
-                    filterType as VocabularyFilterType,
-                  ),
-                  text: _.upperFirst(name),
-                  onPress: (): void => {
-                    onSelect(filterType as VocabularyFilterType);
-                    this.navigatorDelegate.dismissLightBox();
+          _.toPairs(config.vocabulary.filterMap)
+            .filter(
+              ([filterType]): boolean => {
+                if (
+                  options.hideDueBySpacedRepetition === true &&
+                  filterType === VocabularyFilterType.DUE_BY_SPACED_REPETITION
+                ) {
+                  return false;
+                } else if (
+                  options.hideDueByWriting === true &&
+                  filterType === VocabularyFilterType.DUE_BY_WRITING
+                ) {
+                  return false;
+                } else {
+                  return true;
+                }
+              },
+            )
+            .map(
+              ([filterType, { name }]): [
+                VocabularyFilterType,
+                SelectionItem
+              ] => {
+                return [
+                  filterType as VocabularyFilterType,
+                  {
+                    testID: VocabularyFilterMenuIds.FILTER_BTN_BY_FILTER_TYPE(
+                      filterType as VocabularyFilterType,
+                    ),
+                    text: _.upperFirst(name),
+                    onPress: (): void => {
+                      onSelect(filterType as VocabularyFilterType);
+                      this.navigatorDelegate.dismissLightBox();
+                    },
                   },
-                },
-              ];
-            },
-          ),
+                ];
+              },
+            ),
         ),
         selectedIds: [selectedFilterType],
         title: 'Filter',

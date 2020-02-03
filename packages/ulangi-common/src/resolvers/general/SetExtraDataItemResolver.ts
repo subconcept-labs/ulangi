@@ -12,6 +12,7 @@ import { SetExtraDataItem } from '../../types/SetExtraDataItem';
 import { QuizMultipleChoiceMaxLimitResolver } from './QuizMultipleChoiceMaxLimitResolver';
 import { QuizVocabularyPoolResolver } from './QuizVocabularyPoolResolver';
 import { QuizWritingMaxLimitResolver } from './QuizWritingMaxLimitResolver';
+import { SetFeatureSettingsResolver } from './SetFeatureSettingsResolver';
 import { SpacedRepetitionFeedbackButtonsResolver } from './SpacedRepetitionFeedbackButtonsResolver';
 import { SpacedRepetitionInitialIntervalResolver } from './SpacedRepetitionInitialIntervalResolver';
 import { SpacedRepetitionMaxLimitResolver } from './SpacedRepetitionMaxLimitResolver';
@@ -23,6 +24,7 @@ import { WritingMaxLimitResolver } from './WritingMaxLimitResolver';
 export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   SetExtraDataItem
 > {
+  private setFeatureSettingsResolver = new SetFeatureSettingsResolver();
   private spacedRepetitionInitialIntervalResolver = new SpacedRepetitionInitialIntervalResolver();
   private spacedRepetitionMaxLimitResolver = new SpacedRepetitionMaxLimitResolver();
   private spacedRepetitionReviewStrategyResolver = new SpacedRepetitionReviewStrategyResolver();
@@ -39,6 +41,7 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   public constructor() {
     super();
     this.rules = Joi.alternatives().try(
+      this.setFeatureSettingsResolver.getRules(),
       this.spacedRepetitionInitialIntervalResolver.getRules(),
       this.spacedRepetitionMaxLimitResolver.getRules(),
       this.spacedRepetitionReviewStrategyResolver.getRules(),

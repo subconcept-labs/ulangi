@@ -19,7 +19,6 @@ import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverScreenDelegate } from '../../delegates/discover/DiscoverScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
-import { TopBar } from '../common/TopBar';
 import { DiscoverCenterTitle } from './DiscoverCenterTitle';
 import { DiscoverNavBar } from './DiscoverNavBar';
 import { DiscoverSearch } from './DiscoverSearch';
@@ -66,35 +65,33 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
 
   private renderTopBar(): React.ReactElement<any> {
     return (
-      <TopBar theme={this.props.themeStore.theme}>
-        <>
-          <DiscoverSearch
-            theme={this.props.themeStore.theme}
-            setStore={this.props.setStore}
-            searchInput={this.props.observableScreen.searchInput}
-            searchInputAutoFocus={
-              this.props.observableScreen.searchInputAutoFocus
-            }
-            shouldFocusSearchInput={
-              this.props.observableScreen.shouldFocusSearchInput
-            }
-            clearSearchInput={this.props.screenDelegate.clearSearchInput}
-            onSubmitEditing={this.props.screenDelegate.handleInputEnded}
-          />
-          <DiscoverNavBar
-            theme={this.props.themeStore.theme}
-            listType={this.props.observableScreen.listType}
-            publicSetListState={this.props.observableScreen.publicSetListState}
-            publicVocabularyListState={
-              this.props.observableScreen.publicVocabularyListState
-            }
-            translationListState={
-              this.props.observableScreen.translationListState
-            }
-            setListType={this.props.screenDelegate.setListTypeAndRefresh}
-          />
-        </>
-      </TopBar>
+      <View style={styles.top_container}>
+        <DiscoverSearch
+          theme={this.props.themeStore.theme}
+          setStore={this.props.setStore}
+          searchInput={this.props.observableScreen.searchInput}
+          searchInputAutoFocus={
+            this.props.observableScreen.searchInputAutoFocus
+          }
+          shouldFocusSearchInput={
+            this.props.observableScreen.shouldFocusSearchInput
+          }
+          clearSearchInput={this.props.screenDelegate.clearSearchInput}
+          onSubmitEditing={this.props.screenDelegate.handleInputEnded}
+        />
+        <DiscoverNavBar
+          theme={this.props.themeStore.theme}
+          listType={this.props.observableScreen.listType}
+          publicSetListState={this.props.observableScreen.publicSetListState}
+          publicVocabularyListState={
+            this.props.observableScreen.publicVocabularyListState
+          }
+          translationListState={
+            this.props.observableScreen.translationListState
+          }
+          setListType={this.props.screenDelegate.setListTypeAndRefresh}
+        />
+      </View>
     );
   }
 
@@ -191,6 +188,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+
+  top_container: {},
 
   message_container: {
     flex: 1,

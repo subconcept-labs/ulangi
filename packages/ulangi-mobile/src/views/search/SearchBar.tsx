@@ -9,9 +9,9 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableSearchScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import { SearchInput } from '../../views/search/SearchInput';
-import { TopBar } from '../common/TopBar';
 
 export interface SearchBarProps {
   theme: Theme;
@@ -23,13 +23,17 @@ export interface SearchBarProps {
 export class SearchBar extends React.Component<SearchBarProps> {
   public render(): React.ReactElement<any> {
     return (
-      <TopBar theme={this.props.theme}>
+      <View style={styles.container}>
         <SearchInput
           theme={this.props.theme}
           observableScreen={this.props.observableScreen}
           submit={this.props.handleSearchInputEnd}
         />
-      </TopBar>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {},
+});
