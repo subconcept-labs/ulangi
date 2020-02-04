@@ -6,6 +6,7 @@
  */
 
 export enum SetExtraDataName {
+  SET_FEATURE_SETTINGS = 'setFeatureSettings',
   SPACED_REPETITION_INITIAL_INTERVAL = 'spacedRepetitionInitialInterval',
   SPACED_REPETITION_MAX_LIMIT = 'spacedRepetitionMaxLimit',
   SPACED_REPETITION_REVIEW_STRATEGY = 'spacedRepetitionReviewStrategy',

@@ -12,10 +12,12 @@ import {
   SetStatus,
 } from '@ulangi/ulangi-common/enums';
 import {
+  FeatureSettings,
   QuizMultipleChoiceMaxLimit,
   QuizVocabularyPool,
   QuizWritingMaxLimit,
   Set,
+  SetFeatureSettings,
   SpacedRepetitionFeedbackButtons,
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
@@ -63,6 +65,16 @@ export class ObservableSet {
 
   @observable
   public extraData: readonly SetExtraDataItem[];
+
+  @computed
+  public get featureSettings(): undefined | FeatureSettings {
+    const data = this.extraData.find(
+      (data): data is SetFeatureSettings =>
+        data.dataName === SetExtraDataName.SET_FEATURE_SETTINGS
+    );
+
+    return data ? data.dataValue : undefined;
+  }
 
   @computed
   public get spacedRepetitionInitialInterval(): undefined | number {

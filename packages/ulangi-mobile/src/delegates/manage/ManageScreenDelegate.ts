@@ -24,6 +24,7 @@ import { CategoryActionMenuDelegate } from '../category/CategoryActionMenuDelega
 import { CategoryBulkActionMenuDelegate } from '../category/CategoryBulkActionMenuDelegate';
 import { CategoryListDelegate } from '../category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../category/CategorySelectionDelegate';
+import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../manage/AutorunDelegate';
 import { ManageListSelectionMenuDelegate } from '../manage/ManageListSelectionMenuDelegate';
@@ -53,6 +54,7 @@ export class ManageScreenDelegate {
   private vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate;
   private vocabularySelectionDelegate: VocabularySelectionDelegate;
   private manageListSelectionMenuDelegate: ManageListSelectionMenuDelegate;
+  private featureSettingsDelegate: FeatureSettingsDelegate;
   private autorunDelegate: AutorunDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -72,6 +74,7 @@ export class ManageScreenDelegate {
     vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate,
     vocabularySelectionDelegate: VocabularySelectionDelegate,
     manageListSelectionMenuDelegate: ManageListSelectionMenuDelegate,
+    featureSettingsDelegate: FeatureSettingsDelegate,
     autorunDelegate: AutorunDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -90,6 +93,7 @@ export class ManageScreenDelegate {
     this.vocabularyLiveUpdateDelegate = vocabularyLiveUpdateDelegate;
     this.vocabularySelectionDelegate = vocabularySelectionDelegate;
     this.manageListSelectionMenuDelegate = manageListSelectionMenuDelegate;
+    this.featureSettingsDelegate = featureSettingsDelegate;
     this.autorunDelegate = autorunDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -174,11 +178,28 @@ export class ManageScreenDelegate {
     category: ObservableCategory,
     filterType: VocabularyFilterType,
   ): void {
-    this.categoryActionMenuDelegate.show(category, filterType, false);
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+
+    this.categoryActionMenuDelegate.show(category, filterType, {
+      hideViewDetailButton: false,
+      hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
+      hideReviewByWritingButton: !featureSettings.writingEnabled,
+      hideQuizButton: !featureSettings.quizEnabled,
+      hidePlayReflexButton: !featureSettings.reflexEnabled,
+      hidePlayAtomButton: !featureSettings.atomEnabled,
+    });
   }
 
   public showCategoryBulkActionMenu(): void {
-    this.categoryBulkActionMenuDelegate.show();
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+
+    this.categoryBulkActionMenuDelegate.show({
+      hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
+      hideReviewByWritingButton: !featureSettings.writingEnabled,
+      hideQuizButton: !featureSettings.quizEnabled,
+      hidePlayReflexButton: !featureSettings.reflexEnabled,
+      hidePlayAtomButton: !featureSettings.atomEnabled,
+    });
   }
 
   public showVocabularyActionMenu(vocabulary: ObservableVocabulary): void {
@@ -190,11 +211,17 @@ export class ManageScreenDelegate {
   }
 
   public showVocabularyFilterMenu(): void {
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+
     this.vocabularyFilterMenuDelegate.show(
       this.observableScreen.selectedFilterType.get(),
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
         this.refresh(filterType);
+      },
+      {
+        hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
+        hideDueByWriting: !featureSettings.writingEnabled,
       },
     );
   }
@@ -366,5 +393,15 @@ export class ManageScreenDelegate {
       level7To8Count: category.wrLevel7To8Count,
       level9To10Count: category.wrLevel9To10Count,
     });
+  }
+
+  public shouldShowLevelProgressForSR(): boolean {
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+    return featureSettings.spacedRepetitionEnabled;
+  }
+
+  public shouldShowLevelProgressForWR(): boolean {
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+    return featureSettings.writingEnabled;
   }
 }

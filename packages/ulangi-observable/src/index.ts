@@ -384,3 +384,9 @@ export {
 export {
   ObservableDataSharingScreen,
 } from './observables/data-sharing/ObservableDataSharingScreen';
+export {
+  ObservableFeatureSettings,
+} from './observables/learn/ObservableFeatureSettings';
+export {
+  ObservableFeatureManagementScreen,
+} from './observables/learn/ObservableFeatureManagementScreen';

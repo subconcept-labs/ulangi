@@ -127,6 +127,8 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           showLevelBreakdownForWR={
             this.props.screenDelegate.showLevelBreakdownForWR
           }
+          shouldShowLevelProgressForSR={this.props.screenDelegate.shouldShowLevelProgressForSR()}
+          shouldShowLevelProgressForWR={this.props.screenDelegate.shouldShowLevelProgressForWR()}
         />
       );
     }

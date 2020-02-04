@@ -5,19 +5,48 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-export { ThemeSettingsResolver } from './general/ThemeSettingsResolver';
-export { UserResolver } from './general/UserResolver';
-export { PixabayImageResolver } from './general/PixabayImageResolver';
-export { VocabularyResolver } from './general/VocabularyResolver';
+export { AdConfigResolver } from './general/AdConfigResolver';
+export { AppConfigResolver } from './general/AppConfigResolver';
 export {
-  VocabularyCategoryResolver,
-} from './general/VocabularyCategoryResolver';
-export { VocabularyWritingResolver } from './general/VocabularyWritingResolver';
+  AutoArchiveSettingsResolver,
+} from './general/AutoArchiveSettingsResolver';
+export {
+  AutoShowInAppRatingResolver,
+} from './general/AutoShowInAppRatingResolver';
 export { CategoryResolver } from './general/CategoryResolver';
 export { DefinitionResolver } from './general/DefinitionResolver';
-export { SetResolver } from './general/SetResolver';
-export { RemoteConfigResolver } from './general/RemoteConfigResolver';
 export { DictionaryEntryResolver } from './general/DictionaryEntryResolver';
+export { FeatureSettingsResolver } from './general/FeatureSettingsResolver';
+export { GlobalAutoArchiveResolver } from './general/GlobalAutoArchiveResolver';
+export { GlobalDataSharingResolver } from './general/GlobalDataSharingResolver';
+export { GlobalReminderResolver } from './general/GlobalReminderResolver';
+export { LanguagePairResolver } from './general/LanguagePairResolver';
+export { LanguageResolver } from './general/LanguageResolver';
+export { NativeDefinitionResolver } from './general/NativeDefinitionResolver';
+export { NativeSetResolver } from './general/NativeSetResolver';
+export { NativeVocabularyResolver } from './general/NativeVocabularyResolver';
+export { PixabayImageResolver } from './general/PixabayImageResolver';
+export { PlayStoreReceiptResolver } from './general/PlayStoreReceiptResolver';
+export { PublicDefinitionResolver } from './general/PublicDefinitionResolver';
+export { PublicSetResolver } from './general/PublicSetResolver';
+export { PublicVocabularyResolver } from './general/PublicVocabularyResolver';
+export { PurchaseResolver } from './general/PurchaseResolver';
+export {
+  QuizMultipleChoiceMaxLimitResolver,
+} from './general/QuizMultipleChoiceMaxLimitResolver';
+export {
+  QuizVocabularyPoolResolver,
+} from './general/QuizVocabularyPoolResolver';
+export {
+  QuizWritingMaxLimitResolver,
+} from './general/QuizWritingMaxLimitResolver';
+export { ReminderSettingsResolver } from './general/ReminderSettingsResolver';
+export { RemoteConfigResolver } from './general/RemoteConfigResolver';
+export { SetExtraDataItemResolver } from './general/SetExtraDataItemResolver';
+export {
+  SetFeatureSettingsResolver,
+} from './general/SetFeatureSettingsResolver';
+export { SetResolver } from './general/SetResolver';
 export {
   SpacedRepetitionInitialIntervalResolver,
 } from './general/SpacedRepetitionInitialIntervalResolver';
@@ -27,56 +56,27 @@ export {
 export {
   SpacedRepetitionReviewStrategyResolver,
 } from './general/SpacedRepetitionReviewStrategyResolver';
-export {
-  WritingInitialIntervalResolver,
-} from './general/WritingInitialIntervalResolver';
-export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
-export {
-  WritingFeedbackButtonsResolver,
-} from './general/WritingFeedbackButtonsResolver';
-export {
-  QuizVocabularyPoolResolver,
-} from './general/QuizVocabularyPoolResolver';
-export {
-  QuizWritingMaxLimitResolver,
-} from './general/QuizWritingMaxLimitResolver';
-export {
-  QuizMultipleChoiceMaxLimitResolver,
-} from './general/QuizMultipleChoiceMaxLimitResolver';
-export {
-  AutoArchiveSettingsResolver,
-} from './general/AutoArchiveSettingsResolver';
-export { ReminderSettingsResolver } from './general/ReminderSettingsResolver';
-export { GlobalDataSharingResolver } from './general/GlobalDataSharingResolver';
-export { GlobalAutoArchiveResolver } from './general/GlobalAutoArchiveResolver';
-export { GlobalReminderResolver } from './general/GlobalReminderResolver';
-export {
-  AutoShowInAppRatingResolver,
-} from './general/AutoShowInAppRatingResolver';
-export { SetExtraDataItemResolver } from './general/SetExtraDataItemResolver';
-export { UserExtraDataItemResolver } from './general/UserExtraDataItemResolver';
-export { LanguageResolver } from './general/LanguageResolver';
-export { LanguagePairResolver } from './general/LanguagePairResolver';
 export { SyncConfigResolver } from './general/SyncConfigResolver';
+export { ThemeSettingsResolver } from './general/ThemeSettingsResolver';
 export { TranslationResolver } from './general/TranslationResolver';
 export {
   TranslationWithLanguagesResolver,
 } from './general/TranslationWithLanguagesResolver';
-export { NativeSetResolver } from './general/NativeSetResolver';
-export { NativeVocabularyResolver } from './general/NativeVocabularyResolver';
-export { NativeDefinitionResolver } from './general/NativeDefinitionResolver';
-export { PublicSetResolver } from './general/PublicSetResolver';
-export { PublicVocabularyResolver } from './general/PublicVocabularyResolver';
-export { PublicDefinitionResolver } from './general/PublicDefinitionResolver';
-export { PlayStoreReceiptResolver } from './general/PlayStoreReceiptResolver';
-export { PurchaseResolver } from './general/PurchaseResolver';
-export { AdConfigResolver } from './general/AdConfigResolver';
-export { AppConfigResolver } from './general/AppConfigResolver';
-
-export { ErrorResponseResolver } from './response/ErrorResponseResolver';
+export { UserExtraDataItemResolver } from './general/UserExtraDataItemResolver';
+export { UserResolver } from './general/UserResolver';
 export {
-  SearchPixabayImagesResponseResolver,
-} from './response/SearchPixabayImagesResponseResolver';
+  VocabularyCategoryResolver,
+} from './general/VocabularyCategoryResolver';
+export { VocabularyResolver } from './general/VocabularyResolver';
+export { VocabularyWritingResolver } from './general/VocabularyWritingResolver';
+export {
+  WritingFeedbackButtonsResolver,
+} from './general/WritingFeedbackButtonsResolver';
+export {
+  WritingInitialIntervalResolver,
+} from './general/WritingInitialIntervalResolver';
+export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
+
 export {
   ChangeEmailAndPasswordResponseResolver,
 } from './response/ChangeEmailAndPasswordResponseResolver';
@@ -87,8 +87,14 @@ export {
   ChangePasswordResponseResolver,
 } from './response/ChangePasswordResponseResolver';
 export {
-  DownloadUserResponseResolver,
-} from './response/DownloadUserResponseResolver';
+  CheckAccessTokenResponseResolver,
+} from './response/CheckAccessTokenResponseResolver';
+export {
+  ContactAdminResponseResolver,
+} from './response/ContactAdminResponseResolver';
+export {
+  DeleteApiKeyResponseResolver,
+} from './response/DeleteApiKeyResponseResolver';
 export {
   DownloadSetsResponseResolver,
 } from './response/DownloadSetsResponseResolver';
@@ -96,17 +102,18 @@ export {
   DownloadSpecificSetsResponseResolver,
 } from './response/DownloadSpecificSetsResponseResolver';
 export {
-  DownloadVocabularyResponseResolver,
-} from './response/DownloadVocabularyResponseResolver';
-export {
   DownloadSpecificVocabularyResponseResolver,
 } from './response/DownloadSpecificVocabularyResponseResolver';
 export {
+  DownloadUserResponseResolver,
+} from './response/DownloadUserResponseResolver';
+export {
+  DownloadVocabularyResponseResolver,
+} from './response/DownloadVocabularyResponseResolver';
+export { ErrorResponseResolver } from './response/ErrorResponseResolver';
+export {
   GetApiKeyResponseResolver,
 } from './response/GetApiKeyResponseResolver';
-export {
-  DeleteApiKeyResponseResolver,
-} from './response/DeleteApiKeyResponseResolver';
 export {
   GetDictionaryEntryResponseResolver,
 } from './response/GetDictionaryEntryResponseResolver';
@@ -114,19 +121,14 @@ export {
   GetFirebaseTokenResponseResolver,
 } from './response/GetFirebaseTokenResponseResolver';
 export {
+  GetPublicSetCountResponseResolver,
+} from './response/GetPublicSetCountResponseResolver';
+export {
   GetRemoteConfigResponseResolver,
 } from './response/GetRemoteConfigResponseResolver';
-export { SignInResponseResolver } from './response/SignInResponseResolver';
-export { SignUpResponseResolver } from './response/SignUpResponseResolver';
 export {
-  UploadSetsResponseResolver,
-} from './response/UploadSetsResponseResolver';
-export {
-  UploadVocabularyResponseResolver,
-} from './response/UploadVocabularyResponseResolver';
-export {
-  UploadUserResponseResolver,
-} from './response/UploadUserResponseResolver';
+  ProcessPurchaseResponseResolver,
+} from './response/ProcessPurchaseResponseResolver';
 export {
   RequestPasswordResetResponseResolver,
 } from './response/RequestPasswordResetResponseResolver';
@@ -134,23 +136,14 @@ export {
   ResetPasswordResponseResolver,
 } from './response/ResetPasswordResponseResolver';
 export {
-  CheckAccessTokenResponseResolver,
-} from './response/CheckAccessTokenResponseResolver';
-export {
-  ContactAdminResponseResolver,
-} from './response/ContactAdminResponseResolver';
-export {
-  TranslateResponseResolver,
-} from './response/TranslateResponseResolver';
-export {
-  TranslateBidirectionResponseResolver,
-} from './response/TranslateBidirectionResponseResolver';
-export {
   SearchNativeSetsResponseResolver,
 } from './response/SearchNativeSetsResponseResolver';
 export {
   SearchNativeVocabularyResponseResolver,
 } from './response/SearchNativeVocabularyResponseResolver';
+export {
+  SearchPixabayImagesResponseResolver,
+} from './response/SearchPixabayImagesResponseResolver';
 export {
   SearchPublicSetsResponseResolver,
 } from './response/SearchPublicSetsResponseResolver';
@@ -158,26 +151,29 @@ export {
   SearchPublicVocabularyResponseResolver,
 } from './response/SearchPublicVocabularyResponseResolver';
 export {
-  GetPublicSetCountResponseResolver,
-} from './response/GetPublicSetCountResponseResolver';
-export {
   SendApiKeyResponseResolver,
 } from './response/SendApiKeyResponseResolver';
+export { SignInResponseResolver } from './response/SignInResponseResolver';
+export { SignUpResponseResolver } from './response/SignUpResponseResolver';
 export {
-  ProcessPurchaseResponseResolver,
-} from './response/ProcessPurchaseResponseResolver';
+  TranslateBidirectionResponseResolver,
+} from './response/TranslateBidirectionResponseResolver';
+export {
+  TranslateResponseResolver,
+} from './response/TranslateResponseResolver';
 export {
   UploadPixabayImagesResponseResolver,
 } from './response/UploadPixabayImagesResponseResolver';
+export {
+  UploadSetsResponseResolver,
+} from './response/UploadSetsResponseResolver';
+export {
+  UploadUserResponseResolver,
+} from './response/UploadUserResponseResolver';
+export {
+  UploadVocabularyResponseResolver,
+} from './response/UploadVocabularyResponseResolver';
 
-export { RequestResolver } from './request/RequestResolver';
-export { GetApiKeyRequestResolver } from './request/GetApiKeyRequestResolver';
-export {
-  SearchPixabayImagesRequestResolver,
-} from './request/SearchPixabayImagesRequestResolver';
-export {
-  DeleteApiKeyRequestResolver,
-} from './request/DeleteApiKeyRequestResolver';
 export {
   ChangeEmailAndPasswordRequestResolver,
 } from './request/ChangeEmailAndPasswordRequestResolver';
@@ -188,46 +184,43 @@ export {
   ChangePasswordRequestResolver,
 } from './request/ChangePasswordRequestResolver';
 export {
+  CheckAccessTokenRequestResolver,
+} from './request/CheckAccessTokenRequestResolver';
+export {
+  ContactAdminRequestResolver,
+} from './request/ContactAdminRequestResolver';
+export {
+  DeleteApiKeyRequestResolver,
+} from './request/DeleteApiKeyRequestResolver';
+export {
   DownloadSetsRequestResolver,
 } from './request/DownloadSetsRequestResolver';
 export {
   DownloadSpecificSetsRequestResolver,
 } from './request/DownloadSpecificSetsRequestResolver';
 export {
-  DownloadVocabularyRequestResolver,
-} from './request/DownloadVocabularyRequestResolver';
-export {
   DownloadSpecificVocabularyRequestResolver,
 } from './request/DownloadSpecificVocabularyRequestResolver';
+export {
+  DownloadVocabularyRequestResolver,
+} from './request/DownloadVocabularyRequestResolver';
+export { GetApiKeyRequestResolver } from './request/GetApiKeyRequestResolver';
 export {
   GetDictionaryEntryRequestResolver,
 } from './request/GetDictionaryEntryRequestResolver';
 export {
+  GetPublicSetCountRequestResolver,
+} from './request/GetPublicSetCountRequestResolver';
+export {
+  ProcessPurchaseRequestResolver,
+} from './request/ProcessPurchaseRequestResolver';
+export {
   RequestPasswordResetRequestResolver,
 } from './request/RequestPasswordResetRequestResolver';
+export { RequestResolver } from './request/RequestResolver';
 export {
   ResetPasswordRequestResolver,
 } from './request/ResetPasswordRequestResolver';
-export { SignInRequestResolver } from './request/SignInRequestResolver';
-export { SignUpRequestResolver } from './request/SignUpRequestResolver';
-export {
-  SynthesizeSpeechRequestResolver,
-} from './request/SynthesizeSpeechRequestResolver';
-export { UploadSetsRequestResolver } from './request/UploadSetsRequestResolver';
-export {
-  UploadVocabularyRequestResolver,
-} from './request/UploadVocabularyRequestResolver';
-export { UploadUserRequestResolver } from './request/UploadUserRequestResolver';
-export {
-  CheckAccessTokenRequestResolver,
-} from './request/CheckAccessTokenRequestResolver';
-export {
-  ContactAdminRequestResolver,
-} from './request/ContactAdminRequestResolver';
-export { TranslateRequestResolver } from './request/TranslateRequestResolver';
-export {
-  TranslateBidirectionRequestResolver,
-} from './request/TranslateBidirectionRequestResolver';
 export {
   SearchNativeSetsRequestResolver,
 } from './request/SearchNativeSetsRequestResolver';
@@ -235,18 +228,29 @@ export {
   SearchNativeVocabularyRequestResolver,
 } from './request/SearchNativeVocabularyRequestResolver';
 export {
+  SearchPixabayImagesRequestResolver,
+} from './request/SearchPixabayImagesRequestResolver';
+export {
   SearchPublicSetsRequestResolver,
 } from './request/SearchPublicSetsRequestResolver';
 export {
   SearchPublicVocabularyRequestResolver,
 } from './request/SearchPublicVocabularyRequestResolver';
-export {
-  GetPublicSetCountRequestResolver,
-} from './request/GetPublicSetCountRequestResolver';
 export { SendApiKeyRequestResolver } from './request/SendApiKeyRequestResolver';
+export { SignInRequestResolver } from './request/SignInRequestResolver';
+export { SignUpRequestResolver } from './request/SignUpRequestResolver';
 export {
-  ProcessPurchaseRequestResolver,
-} from './request/ProcessPurchaseRequestResolver';
+  SynthesizeSpeechRequestResolver,
+} from './request/SynthesizeSpeechRequestResolver';
+export {
+  TranslateBidirectionRequestResolver,
+} from './request/TranslateBidirectionRequestResolver';
+export { TranslateRequestResolver } from './request/TranslateRequestResolver';
 export {
   UploadPixabayImagesRequestResolver,
 } from './request/UploadPixabayImagesRequestResolver';
+export { UploadSetsRequestResolver } from './request/UploadSetsRequestResolver';
+export { UploadUserRequestResolver } from './request/UploadUserRequestResolver';
+export {
+  UploadVocabularyRequestResolver,
+} from './request/UploadVocabularyRequestResolver';

@@ -112,7 +112,7 @@ export class AuthenticatorFacade {
               if (error) {
                 resolve(false);
               } else if (
-                this.accessTokenPayloadResolver.canResolve(decoded, true)
+                this.accessTokenPayloadResolver.isValid(decoded, true)
               ) {
                 const payload = this.accessTokenPayloadResolver.resolve(
                   decoded,
@@ -146,10 +146,7 @@ export class AuthenticatorFacade {
                 resolve(false);
               } else {
                 if (
-                  this.resetPasswordTokenPayloadResolver.canResolve(
-                    decoded,
-                    true
-                  )
+                  this.resetPasswordTokenPayloadResolver.isValid(decoded, true)
                 ) {
                   const {
                     userId,

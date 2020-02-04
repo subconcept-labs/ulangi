@@ -15,6 +15,7 @@ import {
 import { boundClass } from 'autobind-decorator';
 
 import { CategoryActionMenuDelegate } from '../category/CategoryActionMenuDelegate';
+import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../vocabulary/VocabularyBulkActionMenuDelegate';
@@ -36,6 +37,7 @@ export class CategoryDetailScreenDelegate {
   private vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate;
   private vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate;
   private vocabularySelectionDelegate: VocabularySelectionDelegate;
+  private featureSettingsDelegate: FeatureSettingsDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
@@ -49,6 +51,7 @@ export class CategoryDetailScreenDelegate {
     vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate,
     vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate,
     vocabularySelectionDelegate: VocabularySelectionDelegate,
+    featureSettingsDelegate: FeatureSettingsDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
@@ -61,6 +64,7 @@ export class CategoryDetailScreenDelegate {
     this.vocabularyBulkActionMenuDelegate = vocabularyBulkActionMenuDelegate;
     this.vocabularyLiveUpdateDelegate = vocabularyLiveUpdateDelegate;
     this.vocabularySelectionDelegate = vocabularySelectionDelegate;
+    this.featureSettingsDelegate = featureSettingsDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -156,19 +160,34 @@ export class CategoryDetailScreenDelegate {
   }
 
   public showCategoryActionMenu(): void {
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+
     this.categoryActionMenuDelegate.show(
       this.observableScreen.category,
       this.observableScreen.selectedFilterType.get(),
-      true,
+      {
+        hideViewDetailButton: false,
+        hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
+        hideReviewByWritingButton: !featureSettings.writingEnabled,
+        hideQuizButton: !featureSettings.quizEnabled,
+        hidePlayReflexButton: !featureSettings.reflexEnabled,
+        hidePlayAtomButton: !featureSettings.atomEnabled,
+      },
     );
   }
 
   public showVocabularyFilterMenu(): void {
+    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
+
     this.vocabularyFilterMenuDelegate.show(
       this.observableScreen.selectedFilterType.get(),
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
         this.refresh(filterType);
+      },
+      {
+        hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
+        hideDueByWriting: !featureSettings.writingEnabled,
       },
     );
   }

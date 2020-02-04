@@ -37,20 +37,16 @@ export class Images {
 
   public static readonly QUICK_TUTORIAL_SCREENS = {
     light: [
-      require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_light.png'),
       require('../../assets/img/quick-tutorial-screens/AddVocabulary_light.png'),
-      require('../../assets/img/quick-tutorial-screens/LearningTechniques_light.png'),
-      require('../../assets/img/quick-tutorial-screens/PlayGames_light.png'),
+      require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_light.png'),
       require('../../assets/img/quick-tutorial-screens/ViewCategory_light.png'),
       require('../../assets/img/quick-tutorial-screens/ViewLevelBreakdown_light.png'),
       require('../../assets/img/quick-tutorial-screens/ChangeSet_light.png'),
       require('../../assets/img/quick-tutorial-screens/FilterVocabulary_light.png'),
     ],
     dark: [
-      require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_dark.png'),
       require('../../assets/img/quick-tutorial-screens/AddVocabulary_dark.png'),
-      require('../../assets/img/quick-tutorial-screens/LearningTechniques_dark.png'),
-      require('../../assets/img/quick-tutorial-screens/PlayGames_dark.png'),
+      require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_dark.png'),
       require('../../assets/img/quick-tutorial-screens/ViewCategory_dark.png'),
       require('../../assets/img/quick-tutorial-screens/ViewLevelBreakdown_dark.png'),
       require('../../assets/img/quick-tutorial-screens/ChangeSet_dark.png'),

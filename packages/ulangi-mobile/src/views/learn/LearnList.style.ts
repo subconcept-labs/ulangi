@@ -8,12 +8,16 @@
 import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
+import { config } from '../../constants/config';
+
 export interface LearnListStyles {
   scroll_view_container: ViewStyle;
   learn_item: ViewStyle;
   spaced_repetition_title_container: ViewStyle;
   writing_title_container: ViewStyle;
   quiz_title_container: ViewStyle;
+  reflex_title_container: ViewStyle;
+  atom_title_container: ViewStyle;
 }
 
 export const baseStyles: LearnListStyles = {
@@ -35,24 +39,40 @@ export const baseStyles: LearnListStyles = {
   },
 
   spaced_repetition_title_container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
   },
 
   writing_title_container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
   },
 
   quiz_title_container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
+  },
+
+  reflex_title_container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00B8A9',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0.5 },
+    shadowRadius: 0.5,
+    shadowOpacity: 0.25,
+    elevation: 0.5,
+  },
+
+  atom_title_container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: config.atom.backgroundColor,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0.5 },
+    shadowRadius: 0.5,
+    shadowOpacity: 0.25,
+    elevation: 0.5,
   },
 };
 

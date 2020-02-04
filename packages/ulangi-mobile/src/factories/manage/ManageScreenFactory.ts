@@ -13,6 +13,7 @@ import { CategoryBulkActionMenuDelegate } from '../../delegates/category/Categor
 import { CategoryListDelegate } from '../../delegates/category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../../delegates/category/CategorySelectionDelegate';
 import { DataSharingDelegate } from '../../delegates/data-sharing/DataSharingDelegate';
+import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../../delegates/level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../../delegates/manage/AutorunDelegate';
 import { ManageListSelectionMenuDelegate } from '../../delegates/manage/ManageListSelectionMenuDelegate';
@@ -157,6 +158,10 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.rootStore.notificationStore,
     );
 
+    const featureSettingsDelegate = new FeatureSettingsDelegate(
+      this.props.rootStore.setStore,
+    );
+
     const dataSharingDelegate = new DataSharingDelegate(
       this.eventBus,
       this.observer,
@@ -197,6 +202,7 @@ export class ManageScreenFactory extends ScreenFactory {
       vocabularyLiveUpdateDelegate,
       vocabularySelectionDelegate,
       manageListSelectionMenuDelegate,
+      featureSettingsDelegate,
       autorunDelegate,
       navigatorDelegate,
     );

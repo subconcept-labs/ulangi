@@ -8,14 +8,19 @@
 import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-export interface TipBarStyles {
-  inner_container: ViewStyle;
+export interface LearnScreenStyles {
+  screen: ViewStyle;
+  top_container: ViewStyle;
   button: ViewStyle;
   button_text: TextStyle;
 }
 
-const baseStyles: TipBarStyles = {
-  inner_container: {
+const baseStyles: LearnScreenStyles = {
+  screen: {
+    flex: 1,
+  },
+
+  top_container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: 'row',
@@ -43,7 +48,7 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     button_text: {
-      color: '#ececec',
+      color: '#aaa',
     },
   }),
 );

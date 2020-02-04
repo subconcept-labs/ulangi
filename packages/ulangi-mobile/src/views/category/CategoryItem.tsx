@@ -43,10 +43,12 @@ export interface CategoryItemProps {
     category: ObservableCategory,
     filterType: VocabularyFilterType,
   ) => void;
-  reviewWithSpacedRepetition: () => void;
-  reviewWithWriting: () => void;
+  reviewBySpacedRepetition: () => void;
+  reviewByWriting: () => void;
   showLevelBreakdownForSR: (category: ObservableCategory) => void;
   showLevelBreakdownForWR: (category: ObservableCategory) => void;
+  shouldShowLevelProgressForSR: boolean;
+  shouldShowLevelProgressForWR: boolean;
   styles?: {
     light: CategoryItemStyles;
     dark: CategoryItemStyles;
@@ -102,79 +104,77 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={this.styles.stats_container}
-          onPress={(): void =>
-            this.props.showLevelBreakdownForSR(this.props.category)
-          }>
-          <View style={this.styles.stats_label_container}>
-            <DefaultText style={this.styles.stats_label}>SR</DefaultText>
-          </View>
-          <LevelBar
-            theme={this.props.theme}
-            percentages={[
-              this.props.category.srLevel0Count /
-                this.props.category.totalCount,
-              this.props.category.srLevel1To3Count /
-                this.props.category.totalCount,
-              this.props.category.srLevel4To6Count /
-                this.props.category.totalCount,
-              this.props.category.srLevel7To8Count /
-                this.props.category.totalCount,
-              this.props.category.srLevel9To10Count /
-                this.props.category.totalCount,
-            ]}
-          />
-          <View style={this.styles.review_btn_container}>
-            <DefaultButton
-              text="Review"
-              onPress={this.props.reviewWithSpacedRepetition}
-              styles={FullRoundedButtonStyle.getOutlineStyles(
-                ButtonSize.X_SMALL,
-                this.props.theme === Theme.LIGHT
-                  ? config.styles.light.secondaryTextColor
-                  : config.styles.dark.primaryTextColor,
-              )}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={this.styles.stats_container}
-          onPress={(): void =>
-            this.props.showLevelBreakdownForWR(this.props.category)
-          }>
-          <View style={this.styles.stats_label_container}>
-            <DefaultText style={this.styles.stats_label}>WR</DefaultText>
-          </View>
-          <LevelBar
-            theme={this.props.theme}
-            percentages={[
-              this.props.category.wrLevel0Count /
-                this.props.category.totalCount,
-              this.props.category.wrLevel1To3Count /
-                this.props.category.totalCount,
-              this.props.category.wrLevel4To6Count /
-                this.props.category.totalCount,
-              this.props.category.wrLevel7To8Count /
-                this.props.category.totalCount,
-              this.props.category.wrLevel9To10Count /
-                this.props.category.totalCount,
-            ]}
-          />
-          <View style={this.styles.review_btn_container}>
-            <DefaultButton
-              text="Review"
-              onPress={this.props.reviewWithWriting}
-              styles={FullRoundedButtonStyle.getOutlineStyles(
-                ButtonSize.X_SMALL,
-                this.props.theme === Theme.LIGHT
-                  ? config.styles.light.secondaryTextColor
-                  : config.styles.dark.primaryTextColor,
-              )}
-            />
-          </View>
-        </TouchableOpacity>
+        {this.props.shouldShowLevelProgressForSR === true
+          ? this.renderLevelProgress(
+              'SR',
+              this.props.category.totalCount,
+              this.props.category.srLevel0Count,
+              this.props.category.srLevel1To3Count,
+              this.props.category.srLevel4To6Count,
+              this.props.category.srLevel7To8Count,
+              this.props.category.srLevel9To10Count,
+              this.props.showLevelBreakdownForSR,
+              this.props.reviewBySpacedRepetition,
+            )
+          : null}
+        {this.props.shouldShowLevelProgressForWR === true
+          ? this.renderLevelProgress(
+              'WR',
+              this.props.category.totalCount,
+              this.props.category.wrLevel0Count,
+              this.props.category.wrLevel1To3Count,
+              this.props.category.wrLevel4To6Count,
+              this.props.category.wrLevel7To8Count,
+              this.props.category.wrLevel9To10Count,
+              this.props.showLevelBreakdownForWR,
+              this.props.reviewByWriting,
+            )
+          : null}
       </View>
+    );
+  }
+
+  private renderLevelProgress(
+    label: string,
+    totalCount: number,
+    level0Count: number,
+    level1To3Count: number,
+    level4To6Count: number,
+    level7To8Count: number,
+    level9To10Count: number,
+    showLevelBreakdown: (category: ObservableCategory) => void,
+    review: () => void,
+  ): React.ReactElement<any> {
+    return (
+      <TouchableOpacity
+        style={this.styles.stats_container}
+        onPress={(): void => showLevelBreakdown(this.props.category)}>
+        <View style={this.styles.stats_label_container}>
+          <DefaultText style={this.styles.stats_label}>{label}</DefaultText>
+        </View>
+        <LevelBar
+          theme={this.props.theme}
+          percentages={[
+            level0Count / totalCount,
+            level1To3Count / totalCount,
+            level4To6Count / totalCount,
+            level7To8Count / totalCount,
+            level9To10Count / totalCount,
+          ]}
+        />
+        <View style={this.styles.review_btn_container}>
+          <DefaultButton
+            text="Review"
+            onPress={(): void => review()}
+            styles={FullRoundedButtonStyle.getOutlineStyles(
+              ButtonSize.X_SMALL,
+              this.props.theme === Theme.LIGHT
+                ? config.styles.light.secondaryTextColor
+                : config.styles.dark.primaryTextColor,
+            )}
+          />
+        </View>
+      </TouchableOpacity>
     );
   }
 

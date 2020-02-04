@@ -34,6 +34,8 @@ export interface CategoryListProps {
   goToWriting: (selectedCategoryNames: string[]) => void;
   showLevelBreakdownForSR: (category: ObservableCategory) => void;
   showLevelBreakdownForWR: (category: ObservableCategory) => void;
+  shouldShowLevelProgressForSR: boolean;
+  shouldShowLevelProgressForWR: boolean;
   refresh: () => void;
   fetchNext: () => void;
 }
@@ -70,14 +72,20 @@ export class CategoryList extends React.Component<CategoryListProps> {
                 toggleSelection={this.props.toggleSelection}
                 showCategoryDetail={this.props.showCategoryDetail}
                 showCategoryActionMenu={this.props.showCategoryActionMenu}
-                reviewWithSpacedRepetition={(): void =>
+                reviewBySpacedRepetition={(): void =>
                   this.props.goToSpacedRepetition([category.categoryName])
                 }
-                reviewWithWriting={(): void =>
+                reviewByWriting={(): void =>
                   this.props.goToWriting([category.categoryName])
                 }
                 showLevelBreakdownForSR={this.props.showLevelBreakdownForSR}
                 showLevelBreakdownForWR={this.props.showLevelBreakdownForWR}
+                shouldShowLevelProgressForSR={
+                  this.props.shouldShowLevelProgressForSR
+                }
+                shouldShowLevelProgressForWR={
+                  this.props.shouldShowLevelProgressForWR
+                }
               />
             );
           }}

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/minhloi/ulangi/compare/v3.4.0...v3.5.0) (2020-02-04)
+
+
+### Bug Fixes
+
+* update resolver ([624d407](https://github.com/minhloi/ulangi/commit/624d407))
+
+
+### Features
+
+* add feature management ([81d12eb](https://github.com/minhloi/ulangi/commit/81d12eb))
+
+
+
+
+
 # [3.4.0](https://github.com/minhloi/ulangi/compare/v3.3.4...v3.4.0) (2020-02-03)
 
 **Note:** Version bump only for package @ulangi/ulangi-server
