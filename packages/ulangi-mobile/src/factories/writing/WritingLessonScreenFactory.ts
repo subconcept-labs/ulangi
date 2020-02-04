@@ -13,6 +13,7 @@ import { AdAfterLessonDelegate } from '../../delegates/ad/AdAfterLessonDelegate'
 import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
+import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
 import { WritingFormDelegate } from '../../delegates/writing/WritingFormDelegate';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
@@ -83,10 +84,13 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       autoArchiveSettingsDelegate,
     );
 
+    const reviewFeedbackButtonDelegate = new ReviewFeedbackButtonDelegate();
+
     const reviewFeedbackBarDelegate = new ReviewFeedbackBarDelegate(
       this.observer,
       observableScreen.reviewFeedbackBarState,
       reviewFeedbackDataDelegate,
+      reviewFeedbackButtonDelegate,
     );
 
     return new WritingLessonScreenDelegate(

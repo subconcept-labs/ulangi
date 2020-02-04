@@ -7,14 +7,12 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { UserExtraDataName } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableAutoArchiveSettings } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
 import { DialogDelegate } from '../dialog/DialogDelegate';
-import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { LevelSelectionMenuDelegate } from '../vocabulary/LevelSelectionMenuDelegate';
 
 @boundClass
@@ -23,20 +21,17 @@ export class AutoArchiveScreenDelegate {
   private autoArchiveSettings: ObservableAutoArchiveSettings;
   private levelSelectionMenuDelegate: LevelSelectionMenuDelegate;
   private dialogDelegate: DialogDelegate;
-  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     autoArchiveSettings: ObservableAutoArchiveSettings,
     levelSelectionMenuDelegate: LevelSelectionMenuDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.autoArchiveSettings = autoArchiveSettings;
     this.levelSelectionMenuDelegate = levelSelectionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
-    this.navigatorDelegate = navigatorDelegate;
   }
 
   public save(): void {
@@ -61,19 +56,19 @@ export class AutoArchiveScreenDelegate {
         on(
           ActionType.USER__EDITING,
           (): void => {
-            this.showSavingDialog();
+            this.dialogDelegate.showSavingDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
-            this.showSaveSucceededDialog();
+            this.dialogDelegate.showSaveSucceededDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           (errorBag): void => {
-            this.showSavaFailedDialog(errorBag);
+            this.dialogDelegate.showSaveFailedDialog(errorBag);
           },
         ),
       ),
@@ -98,26 +93,5 @@ export class AutoArchiveScreenDelegate {
         this.autoArchiveSettings.writingLevelThreshold = level;
       },
     );
-  }
-
-  private showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
-  }
-
-  private showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
-  }
-
-  private showSavaFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
   }
 }

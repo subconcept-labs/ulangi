@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-local-database",
-  "version": "3.3.4",
+  "version": "3.4.0",
   "description": "Ulangi Local Database",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
     "@ulangi/resolver": "^2.0.0",
-    "@ulangi/ulangi-common": "^3.3.4",
+    "@ulangi/ulangi-common": "^3.4.0",
     "eventemitter3": "^3.1.0",
     "joi": "^14.3.1",
     "lodash": "^4.17.4",

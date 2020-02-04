@@ -27,6 +27,7 @@ export class WritingSettingsDelegate {
   public getCurrentSettings(): {
     initialInterval: number;
     limit: number;
+    feedbackButtons: 3 | 4 | 5;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet.writingInitialInterval !==
@@ -39,9 +40,16 @@ export class WritingSettingsDelegate {
         ? this.setStore.existingCurrentSet.writingMaxLimit
         : config.writing.maxPerLesson;
 
+    const feedbackButtons =
+      typeof this.setStore.existingCurrentSet.writingFeedbackButtons !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingFeedbackButtons
+        : config.writing.defaultFeedbackButtons;
+
     return {
       initialInterval,
       limit,
+      feedbackButtons,
     };
   }
 
@@ -49,6 +57,7 @@ export class WritingSettingsDelegate {
     newSettings: {
       initialInterval: number;
       limit: number;
+      feedbackButtons: 3 | 4 | 5;
     },
     callback: {
       onSaving: () => void;
@@ -74,6 +83,13 @@ export class WritingSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.WRITING_MAX_LIMIT,
         dataValue: newSettings.limit,
+      });
+    }
+
+    if (originalSettings.feedbackButtons !== newSettings.feedbackButtons) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_FEEDBACK_BUTTONS,
+        dataValue: newSettings.feedbackButtons,
       });
     }
 

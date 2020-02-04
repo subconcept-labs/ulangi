@@ -12,9 +12,11 @@ import { SetExtraDataItem } from '../../types/SetExtraDataItem';
 import { QuizMultipleChoiceMaxLimitResolver } from './QuizMultipleChoiceMaxLimitResolver';
 import { QuizVocabularyPoolResolver } from './QuizVocabularyPoolResolver';
 import { QuizWritingMaxLimitResolver } from './QuizWritingMaxLimitResolver';
+import { SpacedRepetitionFeedbackButtonsResolver } from './SpacedRepetitionFeedbackButtonsResolver';
 import { SpacedRepetitionInitialIntervalResolver } from './SpacedRepetitionInitialIntervalResolver';
 import { SpacedRepetitionMaxLimitResolver } from './SpacedRepetitionMaxLimitResolver';
 import { SpacedRepetitionReviewStrategyResolver } from './SpacedRepetitionReviewStrategyResolver';
+import { WritingFeedbackButtonsResolver } from './WritingFeedbackButtonsResolver';
 import { WritingInitialIntervalResolver } from './WritingInitialIntervalResolver';
 import { WritingMaxLimitResolver } from './WritingMaxLimitResolver';
 
@@ -24,8 +26,10 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   private spacedRepetitionInitialIntervalResolver = new SpacedRepetitionInitialIntervalResolver();
   private spacedRepetitionMaxLimitResolver = new SpacedRepetitionMaxLimitResolver();
   private spacedRepetitionReviewStrategyResolver = new SpacedRepetitionReviewStrategyResolver();
+  private spacedRepetitionFeedbackButtonsResolver = new SpacedRepetitionFeedbackButtonsResolver();
   private writingInitialIntervalResolver = new WritingInitialIntervalResolver();
   private writingMaxLimitResolver = new WritingMaxLimitResolver();
+  private writingFeedbackButtonsResolver = new WritingFeedbackButtonsResolver();
   private quizVocabularyPoolResolver = new QuizVocabularyPoolResolver();
   private quizWritingMaxLimitResolver = new QuizWritingMaxLimitResolver();
   private quizMultipleChoiceMaxLimitResolver = new QuizMultipleChoiceMaxLimitResolver();
@@ -38,8 +42,10 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
       this.spacedRepetitionInitialIntervalResolver.getRules(),
       this.spacedRepetitionMaxLimitResolver.getRules(),
       this.spacedRepetitionReviewStrategyResolver.getRules(),
+      this.spacedRepetitionFeedbackButtonsResolver.getRules(),
       this.writingInitialIntervalResolver.getRules(),
       this.writingMaxLimitResolver.getRules(),
+      this.writingFeedbackButtonsResolver.getRules(),
       this.quizVocabularyPoolResolver.getRules(),
       this.quizWritingMaxLimitResolver.getRules(),
       this.quizMultipleChoiceMaxLimitResolver.getRules()

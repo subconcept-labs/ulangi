@@ -282,6 +282,18 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN, {});
   }
 
+  public navigateToAtomScreen(): void {
+    this.navigatorDelegate.push(ScreenName.ATOM_SCREEN, {
+      selectedCategoryNames: undefined,
+    });
+  }
+
+  public navigateToReflexScreen(): void {
+    this.navigatorDelegate.push(ScreenName.REFLEX_SCREEN, {
+      selectedCategoryNames: undefined,
+    });
+  }
+
   public navigateToOpenSourceProjectsScreen(): void {
     this.navigatorDelegate.push(ScreenName.OPEN_SOURCE_PROJECTS_SCREEN, {});
   }

@@ -7,11 +7,9 @@
 
 import { assertExists } from '@ulangi/assert';
 import { Feedback } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { ObservableReviewFeedbackScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
-import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { FeedbackSelectionMenuDelegate } from '../review-feedback/FeedbackSelectionMenuDelegate';
 import { SpacedRepetitionSaveResultDelegate } from '../spaced-repetition/SpacedRepetitionSaveResultDelegate';
@@ -27,7 +25,6 @@ export class ReviewFeedbackScreenDelegate {
   private feedbackSelectionMenuDelegate: FeedbackSelectionMenuDelegate;
   private reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate;
   private dialogDelegate: DialogDelegate;
-  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     observableScreen: ObservableReviewFeedbackScreen,
@@ -37,28 +34,27 @@ export class ReviewFeedbackScreenDelegate {
     feedbackSelectionMenuDelegate: FeedbackSelectionMenuDelegate,
     reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate,
   ) {
     this.observableScreen = observableScreen;
     this.saveResultDelegate = saveResultDelegate;
     this.feedbackSelectionMenuDelegate = feedbackSelectionMenuDelegate;
     this.reviewFeedbackDataDelegate = reviewFeedbackDataDelegate;
     this.dialogDelegate = dialogDelegate;
-    this.navigatorDelegate = navigatorDelegate;
   }
 
   public saveResult(callback: {
     onSaveSucceeded: (feedbackList: ReadonlyMap<string, Feedback>) => void;
   }): void {
     this.saveResultDelegate.save(false, {
-      onSaving: this.showSavingDialog,
+      onSaving: (): void => this.dialogDelegate.showSavingDialog(),
       onSaveSucceeded: (): void => {
         callback.onSaveSucceeded(
           this.observableScreen.feedbackListState.feedbackList,
         );
-        this.showSaveSucceededDialog();
+        this.dialogDelegate.showSaveSucceededDialog();
       },
-      onSaveFailed: this.showSaveFailedDialog,
+      onSaveFailed: (errorBag): void =>
+        this.dialogDelegate.showSaveFailedDialog(errorBag),
     });
   }
 
@@ -85,26 +81,5 @@ export class ReviewFeedbackScreenDelegate {
         );
       },
     );
-  }
-
-  private showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
-  }
-
-  private showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
-  }
-
-  private showSaveFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
   }
 }

@@ -35,8 +35,12 @@ export { SpacedRepetitionMaxLimit } from './general/SpacedRepetitionMaxLimit';
 export {
   SpacedRepetitionReviewStrategy,
 } from './general/SpacedRepetitionReviewStrategy';
+export {
+  SpacedRepetitionFeedbackButtons,
+} from './general/SpacedRepetitionFeedbackButtons';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
+export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';
 export { GlobalDataSharing } from './general/GlobalDataSharing';
 export { GlobalReminder } from './general/GlobalReminder';

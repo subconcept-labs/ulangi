@@ -11,11 +11,8 @@ import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class LearnScreenFactory extends ScreenFactory {
-  public createSetSelectionMenuDelegate(): SetSelectionMenuDelegate {
-    return new SetSelectionMenuDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-      this.createNavigatorDelegate(),
+  public createSetSelectionMenuDelegateWithStyles(): SetSelectionMenuDelegate {
+    return this.createSetSelectionMenuDelegate(
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }

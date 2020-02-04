@@ -9,8 +9,8 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableSpacedRepetitionScreen,
-  ObservableTitleTopBar,
   ObservableTopBarButton,
+  ObservableTouchableTopBar,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -42,11 +42,18 @@ export class SpacedRepetitionScreenContainer extends Container<
     this.observer,
   );
 
+  private setSelectionMenuDelegate = this.screenFactory.createSetSelectionMenuDelegateWithStyles();
+
   protected observableScreen = new ObservableSpacedRepetitionScreen(
     this.props.passedProps.selectedCategoryNames,
     ScreenName.SPACED_REPETITION_SCREEN,
-    new ObservableTitleTopBar(
-      '',
+    new ObservableTouchableTopBar(
+      SpacedRepetitionScreenIds.SHOW_SET_SELECTION_MENU_BTN,
+      this.setSelectionMenuDelegate.getCurrentSetName(),
+      this.setSelectionMenuDelegate.getCurrentFlagIcon(),
+      (): void => {
+        this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
+      },
       new ObservableTopBarButton(
         SpacedRepetitionScreenIds.BACK_BTN,
         null,
@@ -73,6 +80,12 @@ export class SpacedRepetitionScreenContainer extends Container<
       theme === Theme.LIGHT
         ? SpacedRepetitionScreenStyle.SCREEN_LIGHT_STYLES_ONLY
         : SpacedRepetitionScreenStyle.SCREEN_DARK_STYLES_ONLY,
+    );
+  }
+
+  public componentDidMount(): void {
+    this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
+      this.observableScreen,
     );
   }
 

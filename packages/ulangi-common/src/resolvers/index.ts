@@ -32,6 +32,9 @@ export {
 } from './general/WritingInitialIntervalResolver';
 export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
 export {
+  WritingFeedbackButtonsResolver,
+} from './general/WritingFeedbackButtonsResolver';
+export {
   QuizVocabularyPoolResolver,
 } from './general/QuizVocabularyPoolResolver';
 export {

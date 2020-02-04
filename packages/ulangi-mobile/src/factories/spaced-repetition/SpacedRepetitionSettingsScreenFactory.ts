@@ -7,6 +7,7 @@
 
 import { ObservableSpacedRepetitionSettingsScreen } from '@ulangi/ulangi-observable';
 
+import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpacedRepetitionSettingsScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsScreenDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
@@ -31,9 +32,12 @@ export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
 
     const spacedRepetitionSettingsDelegate = this.createSpacedRepetitionSettingsDelegate();
 
+    const reviewFeedbackButtonDelegate = new ReviewFeedbackButtonDelegate();
+
     return new SpacedRepetitionSettingsScreenDelegate(
       observableScreen,
       spacedRepetitionSettingsDelegate,
+      reviewFeedbackButtonDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

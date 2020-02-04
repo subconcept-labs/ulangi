@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/minhloi/ulangi/compare/v3.3.4...v3.4.0) (2020-02-03)
+
+
+### Features
+
+* add option to adjust number of feedback buttons ([591d231](https://github.com/minhloi/ulangi/commit/591d231)), closes [#39](https://github.com/minhloi/ulangi/issues/39)
+* allow to change set before review ([d338d65](https://github.com/minhloi/ulangi/commit/d338d65))
+
+
+
+
+
 ## [3.3.4](https://github.com/minhloi/ulangi/compare/v3.3.3...v3.3.4) (2020-01-25)
 
 

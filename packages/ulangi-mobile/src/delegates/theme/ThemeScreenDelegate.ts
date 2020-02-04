@@ -7,13 +7,11 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { UserExtraDataName } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableThemeScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { DialogDelegate } from '../dialog/DialogDelegate';
-import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ThemeSelectionMenuDelegate } from './ThemeSelectionMenuDelegate';
 
 @boundClass
@@ -22,20 +20,17 @@ export class ThemeScreenDelegate {
   private observableScreen: ObservableThemeScreen;
   private themeSelectionMenuDelegate: ThemeSelectionMenuDelegate;
   private dialogDelegate: DialogDelegate;
-  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     observableScreen: ObservableThemeScreen,
     themeSelectionMenuDelegate: ThemeSelectionMenuDelegate,
     dialogDelegate: DialogDelegate,
-    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
     this.themeSelectionMenuDelegate = themeSelectionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
-    this.navigatorDelegate = navigatorDelegate;
   }
 
   public showThemeSelectionMenu(): void {
@@ -65,43 +60,22 @@ export class ThemeScreenDelegate {
         on(
           ActionType.USER__EDITING,
           (): void => {
-            this.showSavingDialog();
+            this.dialogDelegate.showSavingDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_SUCCEEDED,
           (): void => {
-            this.showSaveSucceededDialog();
+            this.dialogDelegate.showSaveSucceededDialog();
           },
         ),
         once(
           ActionType.USER__EDIT_FAILED,
           (errorBag): void => {
-            this.showSaveFailedDialog(errorBag);
+            this.dialogDelegate.showSaveFailedDialog(errorBag);
           },
         ),
       ),
     );
-  }
-
-  private showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
-  }
-
-  private showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
-  }
-
-  private showSaveFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
   }
 }

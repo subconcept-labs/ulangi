@@ -37,7 +37,6 @@ export class ThemeScreenFactory extends ScreenFactory {
       observableScreen,
       themeSelectionMenuDelegate,
       dialogDelegate,
-      navigatorDelegate,
     );
   }
 }

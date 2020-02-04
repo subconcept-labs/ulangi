@@ -46,6 +46,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       ? lightStyles
       : darkStyles;
   }
+
   public render(): React.ReactElement<any> {
     return (
       <ScrollView
@@ -121,6 +122,35 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderLimitDescription()}
+          styles={{
+            light: sectionRowLightStyles,
+            dark: sectionRowDarkStyles,
+          }}
+        />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          leftText="Feedback Buttons"
+          customRight={
+            <DefaultButton
+              testID={SpacedRepetitionSettingsScreenIds.FEEDBACK_BUTTONS_BTN}
+              text={
+                this.props.observableScreen.selectedFeedbackButtons + ' buttons'
+              }
+              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showFeedbackButtonsMenu(
+                  this.getFeedbackButtonsValuePairs(),
+                  this.props.observableScreen.selectedFeedbackButtons,
+                  (feedbackButtons): void => {
+                    this.props.observableScreen.selectedFeedbackButtons = feedbackButtons;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderFeedbackButtonsDescription()}
           styles={{
             light: sectionRowLightStyles,
             dark: sectionRowDarkStyles,
@@ -209,7 +239,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
               </DefaultText>
             </DefaultText>
             <DefaultText>{'- Level 0 - 4: Forward\n'}</DefaultText>
-            <DefaultText>{'- Level 5 - 9: Reversed\n'}</DefaultText>
+            <DefaultText>{'- Level 5 - 9: Reversed'}</DefaultText>
           </DefaultText>
         );
         break;
@@ -261,6 +291,31 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     );
   }
 
+  private renderFeedbackButtonsDescription(): React.ReactElement<any> {
+    let text = '';
+    switch (this.props.observableScreen.selectedFeedbackButtons) {
+      case 3:
+        text = `Use 3 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(3)
+          .join(', ')}`;
+        break;
+
+      case 4:
+        text = `Use 4 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(4)
+          .join(', ')}`;
+        break;
+
+      case 5:
+        text = `Use 5 feedback buttons: ${this.props.screenDelegate
+          .getButtonsToShow(5)
+          .join(', ')}`;
+        break;
+    }
+
+    return <DefaultText style={this.styles.description}>{text}</DefaultText>;
+  }
+
   private getReviewStrategyPairs(): readonly [
     ReviewStrategy,
     ReviewStrategy
@@ -280,6 +335,14 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       limit,
     ): [number, string] {
       return [limit, limit.toString()];
+    });
+  }
+
+  private getFeedbackButtonsValuePairs(): readonly [3 | 4 | 5, string][] {
+    return config.spacedRepetition.selectableFeedbackButtons.map(function(
+      feedbackButtons,
+    ): [3 | 4 | 5, string] {
+      return [feedbackButtons, feedbackButtons + ' buttons'];
     });
   }
 

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ErrorBag, SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableQuizSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
@@ -43,9 +43,11 @@ export class QuizSettingsScreenDelegate {
         writingQuizLimit: this.observableScreen.selectedWritingQuizLimit,
       },
       {
-        onSaving: this.showSavingDialog,
-        onSaveSucceeded: this.showSaveSucceededDialog,
-        onSaveFailed: this.showSaveFailedDialog,
+        onSaving: (): void => this.dialogDelegate.showSavingDialog(),
+        onSaveSucceeded: (): void =>
+          this.dialogDelegate.showSaveSucceededDialog(),
+        onSaveFailed: (errorBag): void =>
+          this.dialogDelegate.showSaveFailedDialog(errorBag),
       },
     );
   }
@@ -147,26 +149,5 @@ export class QuizSettingsScreenDelegate {
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
-  }
-
-  private showSavingDialog(): void {
-    this.dialogDelegate.show({
-      message: 'Saving. Please wait...',
-    });
-  }
-
-  private showSaveSucceededDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
-      message: 'Saved successfully.',
-      onClose: (): void => {
-        this.navigatorDelegate.pop();
-      },
-    });
-  }
-
-  private showSaveFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'SAVE FAILED',
-    });
   }
 }

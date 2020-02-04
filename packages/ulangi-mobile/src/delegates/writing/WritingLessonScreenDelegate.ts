@@ -101,10 +101,7 @@ export class WritingLessonScreenDelegate {
       when(
         (): boolean => this.observableKeyboard.state === 'hidden',
         (): void => {
-          this.reviewFeedbackBarDelegate.show(
-            this.observableScreen.writingFormState.currentQuestion
-              .testingVocabulary,
-          );
+          this.showReviewFeedbackBar();
         },
       );
     }
@@ -260,6 +257,13 @@ export class WritingLessonScreenDelegate {
         },
       ],
     });
+  }
+
+  private showReviewFeedbackBar(): void {
+    this.reviewFeedbackBarDelegate.show(
+      this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
+      this.observableScreen.numberOfFeedbackButtons.get(),
+    );
   }
 
   private nextQuestion(): void {
