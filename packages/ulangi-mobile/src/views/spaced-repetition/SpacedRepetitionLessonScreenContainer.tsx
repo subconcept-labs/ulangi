@@ -120,7 +120,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   }
 
   public componentDidMount(): void {
-    this.screenDelegate.setUpButtons();
+    this.screenDelegate.setUpActionButtons();
     this.screenDelegate.autoUpdateButtons();
     this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
     this.screenDelegate.addBackButtonHandler(

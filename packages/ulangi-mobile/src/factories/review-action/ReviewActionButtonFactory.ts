@@ -87,4 +87,21 @@ export class ReviewActionButtonFactory {
       onPress,
     );
   }
+
+  public createDisableButton(
+    onPress: () => void,
+  ): ObservableReviewActionButton {
+    return new ObservableReviewActionButton(
+      'DISABLE',
+      undefined,
+      ReviewActionBarIds.DISABLE_BTN,
+      {
+        light: Images.CROSS_BLACK_25X25,
+        dark: Images.CROSS_MILK_25X25,
+      },
+      false,
+      false,
+      onPress,
+    );
+  }
 }

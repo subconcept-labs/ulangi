@@ -14,34 +14,37 @@ import { OrderedMap } from 'immutable';
 import * as _ from 'lodash';
 import * as uuid from 'uuid';
 
-import { RandomVocabularyIterator } from './RandomVocabularyIterator';
+import { VocabularyIterator } from './VocabularyIterator';
 
 export class WritingQuestionIterator {
   private numberOfQuestions: number;
 
-  private randomVocabularyIterator: RandomVocabularyIterator<
-    ObservableVocabulary
-  >;
+  private vocabularyIterator: VocabularyIterator<ObservableVocabulary>;
 
   public constructor(vocabularyList?: Map<string, ObservableVocabulary>) {
-    this.randomVocabularyIterator = new RandomVocabularyIterator(
+    this.vocabularyIterator = new VocabularyIterator(
       vocabularyList ? OrderedMap(vocabularyList) : undefined,
     );
 
-    this.numberOfQuestions = this.randomVocabularyIterator.getQueueSize();
+    this.numberOfQuestions = this.vocabularyIterator.getSize();
+  }
+
+  public update(key: string, value: ObservableVocabulary): void {
+    this.vocabularyIterator.update(key, value);
+  }
+
+  public previous(): ObservableWritingQuestion {
+    const previousVocabulary = this.vocabularyIterator.previous();
+    return this.makeQuestion(previousVocabulary);
   }
 
   public next(): ObservableWritingQuestion {
-    const nextVocabulary = this.randomVocabularyIterator.next();
+    const nextVocabulary = this.vocabularyIterator.next();
     return this.makeQuestion(nextVocabulary);
   }
 
   public isDone(): boolean {
-    return this.randomVocabularyIterator.isDone();
-  }
-
-  public shuffleQueue(): void {
-    this.randomVocabularyIterator.shuffleQueue();
+    return this.vocabularyIterator.isDone();
   }
 
   public getNumberOfQuestions(): number {
@@ -49,7 +52,7 @@ export class WritingQuestionIterator {
   }
 
   public getNumberOfQuestionsLeft(): number {
-    return this.randomVocabularyIterator.getQueueSize();
+    return this.vocabularyIterator.getRemainingSize();
   }
 
   private makeQuestion(

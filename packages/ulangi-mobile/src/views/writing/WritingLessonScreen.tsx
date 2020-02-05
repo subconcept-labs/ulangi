@@ -18,8 +18,8 @@ import { SafeAreaView, ScrollView } from 'react-native';
 import { WritingLessonScreenIds } from '../../constants/ids/WritingLessonScreenIds';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
 import { SmartScrollView } from '../common/SmartScrollView';
-import { ReviewFeedbackBar } from '../review-feedback/ReviewFeedbackBar';
 import { WritingForm } from './WritingForm';
+import { WritingFormBottom } from './WritingFormBottom';
 import { WritingFormTop } from './WritingFormTop';
 import { WritingLessonResult } from './WritingLessonResult';
 import {
@@ -92,11 +92,13 @@ export class WritingLessonScreen extends React.Component<
               setAnswer={this.props.screenDelegate.setAnswer}
               showHint={this.props.screenDelegate.showHint}
               next={_.noop}
-              disable={this.props.screenDelegate.disable}
             />
           </SmartScrollView>
-          <ReviewFeedbackBar
+          <WritingFormBottom
             theme={this.props.themeStore.theme}
+            reviewActionBarState={
+              this.props.observableScreen.reviewActionBarState
+            }
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }

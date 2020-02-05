@@ -8,6 +8,7 @@
 import { ActivityState, ScreenName } from '@ulangi/ulangi-common/enums';
 import { IObservableValue, ObservableMap } from 'mobx';
 
+import { ObservableReviewActionBarState } from '../review-action/ObservableReviewActionBarState';
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
 import { ObservableReviewFeedbackBarState } from '../review-feedback/ObservableReviewFeedbackBarState';
 import { ObservableScreen } from '../screen/ObservableScreen';
@@ -25,6 +26,8 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly feedbackListState: ObservableFeedbackListState;
 
+  public readonly reviewActionBarState: ObservableReviewActionBarState;
+
   public readonly reviewFeedbackBarState: ObservableReviewFeedbackBarState;
 
   public readonly numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>;
@@ -33,6 +36,8 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
 
+  public readonly speakState: IObservableValue<ActivityState>;
+
   public readonly saveState: IObservableValue<ActivityState>;
 
   public constructor(
@@ -40,10 +45,12 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     writingFormState: ObservableWritingFormState,
     writingResult: ObservableWritingResult,
     feedbackListState: ObservableFeedbackListState,
+    reviewActionBarState: ObservableReviewActionBarState,
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
     numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>,
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
+    speakState: IObservableValue<ActivityState>,
     saveState: IObservableValue<ActivityState>,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
@@ -53,10 +60,12 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;
     this.feedbackListState = feedbackListState;
+    this.reviewActionBarState = reviewActionBarState;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
     this.numberOfFeedbackButtons = numberOfFeedbackButtons;
     this.shouldShowResult = shouldShowResult;
     this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
+    this.speakState = speakState;
     this.saveState = saveState;
   }
 }

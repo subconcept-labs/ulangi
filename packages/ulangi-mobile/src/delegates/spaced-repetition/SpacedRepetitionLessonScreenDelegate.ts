@@ -90,7 +90,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     );
   }
 
-  public setUpButtons(): void {
+  public setUpActionButtons(): void {
     const {
       vocabulary,
       currentQuestionType,
@@ -294,7 +294,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           const previousItem = this.reviewIterator.previous();
           this.reviewFeedbackBarDelegate.showShowAnswerButton();
           this.observableScreen.reviewState.setUpPreviousItem(previousItem);
-          this.setUpButtons();
+          this.setUpActionButtons();
         },
       );
     }
@@ -318,7 +318,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           const nextItem = this.reviewIterator.next();
           this.observableScreen.reviewState.setUpNextItem(nextItem);
           this.reviewFeedbackBarDelegate.showShowAnswerButton();
-          this.setUpButtons();
+          this.setUpActionButtons();
         },
       );
     }
