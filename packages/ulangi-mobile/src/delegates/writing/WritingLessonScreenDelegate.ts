@@ -107,17 +107,20 @@ export class WritingLessonScreenDelegate {
     }
   }
 
+  public showAnswer(): void {
+    this.observableScreen.writingFormState.currentAnswer = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
+  }
+
   public setFeedback(feedback: Feedback): void {
     this.observableScreen.feedbackListState.feedbackList.set(
       this.observableScreen.writingFormState.currentQuestion.testingVocabulary
         .vocabularyId,
       feedback,
     );
-    this.reviewFeedbackBarDelegate.hide(
-      (): void => {
-        this.nextQuestion();
-      },
-    );
+
+    this.reviewFeedbackBarDelegate.hide();
+
+    this.nextQuestion();
   }
 
   public disable(): void {
@@ -260,7 +263,7 @@ export class WritingLessonScreenDelegate {
   }
 
   private showReviewFeedbackBar(): void {
-    this.reviewFeedbackBarDelegate.show(
+    this.reviewFeedbackBarDelegate.showFeedbackButtons(
       this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
       this.observableScreen.numberOfFeedbackButtons.get(),
     );

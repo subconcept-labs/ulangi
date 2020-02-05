@@ -71,7 +71,10 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
       false,
     ),
     new ObservableReviewActionBarState(observable.array([])),
-    new ObservableReviewFeedbackBarState(observable.map(), false, false),
+    new ObservableReviewFeedbackBarState(
+      observable.map(),
+      'SHOW_ANSWER_BUTTON',
+    ),
     new ObservableFeedbackListState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
     observable.box(ActivityState.INACTIVE),

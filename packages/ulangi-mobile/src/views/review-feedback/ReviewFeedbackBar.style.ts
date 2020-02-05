@@ -12,6 +12,7 @@ import { config } from '../../constants/config';
 
 export interface ReviewFeedbackBarStyles {
   container: ViewStyle;
+  show_answer_button_container: ViewStyle;
   title_container: ViewStyle;
   title: TextStyle;
   subtitle: TextStyle;
@@ -23,9 +24,11 @@ export interface ReviewFeedbackBarStyles {
 }
 
 export const baseStyles: ReviewFeedbackBarStyles = {
-  container: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  container: {},
+
+  show_answer_button_container: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
 
   title_container: {
@@ -53,7 +56,7 @@ export const baseStyles: ReviewFeedbackBarStyles = {
 
   feedback_btn: {
     flex: 1,
-    borderRadius: 10,
+    borderRadius: 6,
     marginHorizontal: 3,
     paddingVertical: 7,
   },
@@ -82,12 +85,6 @@ export const baseStyles: ReviewFeedbackBarStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
-
     title: {
       color: config.styles.light.primaryTextColor,
     },
@@ -100,12 +97,6 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
-
     title: {
       color: config.styles.dark.primaryTextColor,
     },

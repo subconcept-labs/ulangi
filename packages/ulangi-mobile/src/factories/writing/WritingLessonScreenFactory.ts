@@ -87,7 +87,6 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     const reviewFeedbackButtonDelegate = new ReviewFeedbackButtonDelegate();
 
     const reviewFeedbackBarDelegate = new ReviewFeedbackBarDelegate(
-      this.observer,
       observableScreen.reviewFeedbackBarState,
       reviewFeedbackDataDelegate,
       reviewFeedbackButtonDelegate,

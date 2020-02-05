@@ -13,18 +13,13 @@ export class ObservableReviewFeedbackBarState {
   public readonly nextReviewByFeedback: ObservableMap<Feedback, NextReviewData>;
 
   @observable
-  public shouldShow: boolean;
-
-  @observable
-  public shouldRunCloseAnimation: boolean;
+  public buttonType: null | 'SHOW_ANSWER_BUTTON' | 'FEEDBACK_BUTTONS';
 
   public constructor(
     nextReviewByFeedback: ObservableMap<Feedback, NextReviewData>,
-    shouldShow: boolean,
-    shouldRunCloseAnimation: boolean
+    buttonType: null | 'SHOW_ANSWER_BUTTON' | 'FEEDBACK_BUTTONS'
   ) {
     this.nextReviewByFeedback = nextReviewByFeedback;
-    this.shouldShow = shouldShow;
-    this.shouldRunCloseAnimation = shouldRunCloseAnimation;
+    this.buttonType = buttonType;
   }
 }

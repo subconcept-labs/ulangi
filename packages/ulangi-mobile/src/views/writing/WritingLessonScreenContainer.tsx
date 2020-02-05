@@ -80,7 +80,7 @@ export class WritingLessonScreenContainer extends Container<
       observable.array([]),
     ),
     new ObservableFeedbackListState(observable.map()),
-    new ObservableReviewFeedbackBarState(observable.map(), false, false),
+    new ObservableReviewFeedbackBarState(observable.map(), null),
     observable.box(this.currentSettings.feedbackButtons),
     observable.box(false),
     observable.box(false),

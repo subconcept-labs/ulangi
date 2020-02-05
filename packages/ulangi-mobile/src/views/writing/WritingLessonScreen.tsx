@@ -100,6 +100,7 @@ export class WritingLessonScreen extends React.Component<
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }
+            showAnswer={this.props.screenDelegate.showAnswer}
             setFeedback={this.props.screenDelegate.setFeedback}
           />
         </React.Fragment>
