@@ -51,6 +51,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
         limit: this.observableScreen.selectedLimit,
         reviewStrategy: this.observableScreen.selectedReviewStrategy,
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
+        autoplayAudio: this.observableScreen.selectedAutoplayAudio,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),
@@ -197,6 +198,39 @@ export class SpacedRepetitionSettingsScreenDelegate {
           ),
         ),
         selectedIds: [selectedLevel],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showAutoplayAudioMenu(
+    valuePairs: readonly [boolean, string][],
+    selectedAutoplayAudioMenu: boolean,
+    onSelect: (autoplayAudio: boolean) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([autoplayAudio, autoplayAudioText]): [boolean, SelectionItem] => {
+              return [
+                autoplayAudio,
+                {
+                  testID: SpacedRepetitionSettingsScreenIds.SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO(
+                    autoplayAudio,
+                  ),
+                  text: autoplayAudioText,
+                  onPress: (): void => {
+                    onSelect(autoplayAudio);
+                    this.dialogDelegate.dismiss();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedAutoplayAudioMenu],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,

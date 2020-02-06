@@ -17,19 +17,17 @@ import { observable } from 'mobx';
 import * as uuid from 'uuid';
 
 import { DefinitionPool } from '../pools/DefinitionPool';
-import { RandomVocabularyIterator } from './RandomVocabularyIterator';
+import { VocabularyIterator } from './VocabularyIterator';
 
 export class MultipleChoiceQuestionIterator {
   private numberOfQuestions: number;
 
-  private randomVocabularyIterator: RandomVocabularyIterator<
-    ObservableVocabulary
-  >;
+  private vocabularyIterator: VocabularyIterator<ObservableVocabulary>;
 
   private definitionPool: DefinitionPool<ObservableDefinition>;
 
   public constructor(vocabularyList?: Map<string, ObservableVocabulary>) {
-    this.randomVocabularyIterator = new RandomVocabularyIterator(
+    this.vocabularyIterator = new VocabularyIterator(
       vocabularyList ? OrderedMap(vocabularyList) : undefined,
     );
     this.definitionPool = new DefinitionPool(
@@ -49,21 +47,25 @@ export class MultipleChoiceQuestionIterator {
       ),
     );
 
-    this.numberOfQuestions = this.randomVocabularyIterator.getQueueSize();
-    this.randomVocabularyIterator.shuffleQueue();
+    this.numberOfQuestions = this.vocabularyIterator.getSize();
+    this.vocabularyIterator.shuffle();
+  }
+
+  public current(): ObservableMultipleChoiceQuestion {
+    return this.makeQuestion(this.vocabularyIterator.current());
   }
 
   public next(): ObservableMultipleChoiceQuestion {
-    const nextVocabulary = this.randomVocabularyIterator.next();
+    const nextVocabulary = this.vocabularyIterator.next();
     return this.makeQuestion(nextVocabulary);
   }
 
   public isDone(): boolean {
-    return this.randomVocabularyIterator.isDone();
+    return this.vocabularyIterator.isDone();
   }
 
   public shuffleQueue(): void {
-    return this.randomVocabularyIterator.shuffleQueue();
+    return this.vocabularyIterator.shuffle();
   }
 
   public getNumberOfQuestions(): number {
@@ -71,7 +73,7 @@ export class MultipleChoiceQuestionIterator {
   }
 
   public getNumberOfQuestionsLeft(): number {
-    return this.randomVocabularyIterator.getQueueSize();
+    return this.vocabularyIterator.getRemainingSize();
   }
 
   private makeQuestion(

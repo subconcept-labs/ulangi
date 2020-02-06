@@ -182,6 +182,7 @@ export interface Config {
     readonly defaultInitialInterval: number;
     readonly defaultReviewStrategy: ReviewStrategy;
     readonly defaultFeedbackButtons: 3 | 4 | 5;
+    readonly defaultAutoplayAudio: boolean;
     readonly selectableInitialIntervals: readonly number[];
     readonly selectableFeedbackButtons: readonly (3 | 4 | 5)[];
     readonly gradeScale: { [P in string]: [number, number] };
@@ -194,6 +195,7 @@ export interface Config {
     readonly selectableLimits: readonly number[];
     readonly defaultInitialInterval: number;
     readonly defaultFeedbackButtons: 3 | 4 | 5;
+    readonly defaultAutoplayAudio: boolean;
     readonly selectableInitialIntervals: readonly number[];
     readonly selectableFeedbackButtons: readonly (3 | 4 | 5)[];
     readonly gradeScale: { [P in string]: [number, number] };

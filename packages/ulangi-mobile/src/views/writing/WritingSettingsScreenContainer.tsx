@@ -44,6 +44,7 @@ export class WritingSettingsScreenContainer extends Container {
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
     this.originalSettings.feedbackButtons,
+    this.originalSettings.autoplayAudio,
     ScreenName.WRITING_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

@@ -55,7 +55,7 @@ export class QuizMultipleChoiceScreenContainer extends Container<
 
   protected observableScreen = new ObservableQuizMultipleChoiceScreen(
     new ObservableMultipleChoiceFormState(
-      this.questionIterator.next(),
+      this.questionIterator.current(),
       0,
       this.questionIterator.getNumberOfQuestions(),
       [],

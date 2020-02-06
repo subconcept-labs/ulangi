@@ -10,6 +10,7 @@ import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { shuffleImmutableMap } from '@ulangi/ulangi-common/utils';
 import { OrderedMap } from 'immutable';
 
+// TODO: Use VocabularyIterator instead
 export class RandomVocabularyIterator<V extends Vocabulary = Vocabulary> {
   private vocabularyQueue: OrderedMap<string, V>;
   private currentVocabulary?: V;

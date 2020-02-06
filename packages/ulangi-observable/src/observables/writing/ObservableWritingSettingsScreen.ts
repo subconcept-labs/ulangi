@@ -21,10 +21,14 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
   @observable
   public selectedFeedbackButtons: 3 | 4 | 5;
 
+  @observable
+  public selectedAutoplayAudio: boolean;
+
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
     selectedFeedbackButtons: 3 | 4 | 5,
+    selectedAutoplayAudio: boolean,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
@@ -32,5 +36,6 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
     this.selectedFeedbackButtons = selectedFeedbackButtons;
+    this.selectedAutoplayAudio = selectedAutoplayAudio;
   }
 }

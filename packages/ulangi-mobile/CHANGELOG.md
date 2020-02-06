@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/minhloi/ulangi/compare/v3.5.0...v3.6.0) (2020-02-06)
+
+
+### Bug Fixes
+
+* add review action bar to Writing lesson ([7ab79fc](https://github.com/minhloi/ulangi/commit/7ab79fc)), closes [#22](https://github.com/minhloi/ulangi/issues/22)
+* increase offline access, do not clear audio cache ([6bc5445](https://github.com/minhloi/ulangi/commit/6bc5445))
+* iterator out of bounds ([9b8a6c5](https://github.com/minhloi/ulangi/commit/9b8a6c5))
+* redesign review action bar and review feedback bar ([0936021](https://github.com/minhloi/ulangi/commit/0936021)), closes [#48](https://github.com/minhloi/ulangi/issues/48)
+* reset action buttons after edit ([ffadc76](https://github.com/minhloi/ulangi/commit/ffadc76))
+* show the term under PLAY_AUDIO button during review ([ec796ee](https://github.com/minhloi/ulangi/commit/ec796ee))
+
+
+### Features
+
+* autoplay audio ([8bf9ab7](https://github.com/minhloi/ulangi/commit/8bf9ab7)), closes [#40](https://github.com/minhloi/ulangi/issues/40)
+
+
+
+
+
 # [3.5.0](https://github.com/minhloi/ulangi/compare/v3.4.0...v3.5.0) (2020-02-04)
 
 

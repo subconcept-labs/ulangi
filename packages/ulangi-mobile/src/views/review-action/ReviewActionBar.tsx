@@ -10,13 +10,7 @@ import { ObservableReviewActionBarState } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import { SmartScrollView } from '../common/SmartScrollView';
@@ -44,71 +38,54 @@ export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
   }
 
   public render(): React.ReactElement<any> {
-    const chunks = _.chunk(this.props.reviewActionBarState.buttons, 3);
     return (
-      <View style={this.styles.container}>
-        {chunks.length > 1 ? (
-          <DefaultText style={this.styles.message}>
-            Swipe for more actions
-          </DefaultText>
-        ) : null}
-        <SmartScrollView
-          scrollEventThrottle={16}
-          pagingEnabled={false}
-          decelerationRate="fast"
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          snapToAlignment="start"
-          snapToInterval={Dimensions.get('window').width}>
-          {chunks.map(
-            (chunk, index): React.ReactElement<any> => {
-              return (
-                <View key={index} style={this.styles.page}>
-                  {chunk.map(
-                    (button): React.ReactElement<any> => {
-                      const disabledStyle = button.disabled
-                        ? { opacity: 0.3 }
-                        : {};
-                      return (
-                        <TouchableOpacity
-                          key={button.testID}
-                          testID={button.testID}
-                          style={[this.styles.action_btn, disabledStyle]}
-                          onPress={button.onPress}
-                          disabled={button.disabled}>
-                          <View style={this.styles.icon_container}>
-                            {button.loading === true ? (
-                              <ActivityIndicator size="small" />
-                            ) : (
-                              <Image
-                                source={
-                                  this.props.theme === Theme.LIGHT
-                                    ? button.icon.light
-                                    : button.icon.dark
-                                }
-                              />
-                            )}
-                          </View>
-                          <DefaultText style={this.styles.action_title}>
-                            {button.title}
-                          </DefaultText>
-                          <DefaultText
-                            style={this.styles.action_subtitle}
-                            numberOfLines={1}
-                            ellipsizeMode="middle">
-                            {button.subtitle}
-                          </DefaultText>
-                        </TouchableOpacity>
-                      );
-                    },
+      <SmartScrollView
+        pagingEnabled={false}
+        horizontal={true}
+        decelerationRate="fast"
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
+        {this.props.reviewActionBarState.buttons.map(
+          (button): React.ReactElement<any> => {
+            const disabledStyle = button.disabled ? { opacity: 0.3 } : {};
+            return (
+              <TouchableOpacity
+                key={button.testID}
+                testID={button.testID}
+                style={[this.styles.action_btn, disabledStyle]}
+                onPress={button.onPress}
+                disabled={button.disabled}>
+                <View style={this.styles.icon_container}>
+                  {button.loading === true ? (
+                    <ActivityIndicator size="small" />
+                  ) : (
+                    <Image
+                      source={
+                        this.props.theme === Theme.LIGHT
+                          ? button.icon.light
+                          : button.icon.dark
+                      }
+                    />
                   )}
                 </View>
-              );
-            },
-          )}
-        </SmartScrollView>
-      </View>
+                <View style={this.styles.title_container}>
+                  <DefaultText style={this.styles.action_title}>
+                    {button.title}
+                  </DefaultText>
+                  {!_.isEmpty(button.subtitle) ? (
+                    <DefaultText
+                      style={this.styles.action_subtitle}
+                      numberOfLines={1}
+                      ellipsizeMode="middle">
+                      {button.subtitle}
+                    </DefaultText>
+                  ) : null}
+                </View>
+              </TouchableOpacity>
+            );
+          },
+        )}
+      </SmartScrollView>
     );
   }
 }

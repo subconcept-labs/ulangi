@@ -6,47 +6,29 @@
  */
 
 import * as _ from 'lodash';
-import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
 export interface ReviewActionBarStyles {
   container: ViewStyle;
-  message: TextStyle;
-  page: ViewStyle;
   action_btn: ViewStyle;
   icon_container: ViewStyle;
+  title_container: ViewStyle;
   action_title: TextStyle;
   action_subtitle: TextStyle;
 }
 
 export const baseStyles: ReviewActionBarStyles = {
-  container: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-
-  message: {
-    paddingTop: 7,
-    textAlign: 'center',
-    letterSpacing: -0.5,
-  },
-
-  page: {
-    width: Dimensions.get('window').width,
-    paddingHorizontal: 3,
-    paddingVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
+  container: {},
 
   action_btn: {
-    alignSelf: 'stretch',
-    flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    maxWidth: 150,
     alignItems: 'center',
-    marginHorizontal: 3,
-    paddingVertical: 5,
+    paddingVertical: 12,
+    overflow: 'hidden',
   },
 
   icon_container: {
@@ -56,33 +38,27 @@ export const baseStyles: ReviewActionBarStyles = {
     alignItems: 'center',
   },
 
+  title_container: {
+    flexShrink: 1,
+    marginLeft: 6,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+
   action_title: {
-    paddingTop: 6,
-    paddingBottom: 2,
     fontWeight: 'bold',
-    textAlign: 'center',
     fontSize: 11,
     letterSpacing: -0.5,
   },
 
   action_subtitle: {
-    textAlign: 'center',
     letterSpacing: -0.5,
+    fontSize: 11,
   },
 };
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
-
-    message: {
-      color: config.styles.light.secondaryTextColor,
-    },
-
     action_title: {
       color: config.styles.light.primaryTextColor,
     },
@@ -95,16 +71,6 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
-
-    message: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-
     action_title: {
       color: config.styles.dark.primaryTextColor,
     },

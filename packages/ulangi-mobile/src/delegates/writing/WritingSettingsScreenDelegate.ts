@@ -46,6 +46,7 @@ export class WritingSettingsScreenDelegate {
         initialInterval: this.observableScreen.selectedInitialInterval,
         limit: this.observableScreen.selectedLimit,
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
+        autoplayAudio: this.observableScreen.selectedAutoplayAudio,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),
@@ -167,6 +168,39 @@ export class WritingSettingsScreenDelegate {
   ): readonly Feedback[] {
     return this.reviewFeedbackButtonDelegate.getButtonsToShow(
       numberOfFeedbackButtons,
+    );
+  }
+
+  public showAutoplayAudioMenu(
+    valuePairs: readonly [boolean, string][],
+    selectedAutoplayAudioMenu: boolean,
+    onSelect: (autoplayAudio: boolean) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([autoplayAudio, autoplayAudioText]): [boolean, SelectionItem] => {
+              return [
+                autoplayAudio,
+                {
+                  testID: WritingSettingsScreenIds.SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO(
+                    autoplayAudio,
+                  ),
+                  text: autoplayAudioText,
+                  onPress: (): void => {
+                    onSelect(autoplayAudio);
+                    this.dialogDelegate.dismiss();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedAutoplayAudioMenu],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

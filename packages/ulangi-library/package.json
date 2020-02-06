@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-library",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "Ulangi Library",
   "main": "dist/index.js",
   "scripts": {
@@ -17,8 +17,8 @@
     "@elastic/elasticsearch": "^7.3.0",
     "@ulangi/assert": "^1.0.6",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/ulangi-common": "^3.5.0",
-    "@ulangi/ulangi-dictionary": "^3.5.0",
+    "@ulangi/ulangi-common": "^3.6.0",
+    "@ulangi/ulangi-dictionary": "^3.6.0",
     "@ulangi/wiktionary-core": "^1.1.0",
     "aws-es-connection": "^1.0.0",
     "aws-sdk": "^2.254.1",

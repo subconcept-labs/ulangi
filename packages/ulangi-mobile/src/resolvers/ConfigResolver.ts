@@ -160,6 +160,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultInitialInterval: Joi.number(),
       defaultReviewStrategy: Joi.string().valid(_.values(ReviewStrategy)),
       defaultFeedbackButtons: Joi.number().valid([3, 4, 5]),
+      defaultAutoplayAudio: Joi.boolean(),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       selectableFeedbackButtons: Joi.array().items(
         Joi.number().valid([3, 4, 5]),
@@ -177,6 +178,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       selectableLimits: Joi.array().items(Joi.number()),
       defaultInitialInterval: Joi.number(),
       defaultFeedbackButtons: Joi.number(),
+      defaultAutoplayAudio: Joi.boolean(),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       selectableFeedbackButtons: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
