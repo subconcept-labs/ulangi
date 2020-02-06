@@ -69,7 +69,6 @@ export class AutorunDelegate {
     this.autoFetchUserOnDownloadSucceeded();
     this.autoFetchAllSetsOnDownloadSucceeded();
     this.autoObserveLocalUpdates();
-    this.autoClearAudioCache();
   }
 
   private autoInitIap(): void {
@@ -176,12 +175,6 @@ export class AutorunDelegate {
 
   private autoUpdateRemoteConfig(): void {
     this.eventBus.publish(createAction(ActionType.REMOTE_CONFIG__UPDATE, null));
-  }
-
-  private autoClearAudioCache(): void {
-    this.eventBus.publish(
-      createAction(ActionType.AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE, null),
-    );
   }
 
   private autoCheckPermissionAndSetUpReminder(): void {
