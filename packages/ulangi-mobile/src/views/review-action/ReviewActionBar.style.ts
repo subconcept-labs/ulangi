@@ -39,6 +39,7 @@ export const baseStyles: ReviewActionBarStyles = {
   },
 
   title_container: {
+    flexShrink: 1,
     marginLeft: 6,
     alignSelf: 'stretch',
     justifyContent: 'center',

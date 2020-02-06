@@ -126,10 +126,13 @@ export class SpacedRepetitionLessonScreenDelegate {
                 observableVocabulary.vocabularyId,
                 observableVocabulary,
               );
+
               this.reviewIterator.update(
                 observableVocabulary.vocabularyId,
                 observableVocabulary,
               );
+
+              this.setUpActionButtons();
             },
           });
         },

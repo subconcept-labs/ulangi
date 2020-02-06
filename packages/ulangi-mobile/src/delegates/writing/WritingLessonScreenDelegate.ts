@@ -172,6 +172,8 @@ export class WritingLessonScreenDelegate {
                 observableVocabulary.vocabularyId,
                 observableVocabulary,
               );
+
+              this.setUpActionButtons();
             },
           });
         },
