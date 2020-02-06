@@ -16,8 +16,7 @@ import { SafeAreaView, ScrollView } from 'react-native';
 
 import { SpacedRepetitionLessonScreenIds } from '../../constants/ids/SpacedRepetitionLessonScreenIds';
 import { SpacedRepetitionLessonScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionLessonScreenDelegate';
-import { ReviewActionBar } from '../review-action/ReviewActionBar';
-import { ReviewFeedbackBar } from '../review-feedback/ReviewFeedbackBar';
+import { ReviewBottom } from './ReviewBottom';
 import { ReviewItem } from './ReviewItem';
 import { ReviewTop } from './ReviewTop';
 import {
@@ -86,33 +85,18 @@ export class SpacedRepetitionLessonScreen extends React.Component<
               reviewState={this.props.observableScreen.reviewState}
             />
           </ScrollView>
-          {this.renderBottomBar()}
+          <ReviewBottom
+            theme={this.props.themeStore.theme}
+            reviewActionBarState={
+              this.props.observableScreen.reviewActionBarState
+            }
+            reviewFeedbackBarState={
+              this.props.observableScreen.reviewFeedbackBarState
+            }
+            showAnswer={this.props.screenDelegate.showAnswer}
+            setFeedback={this.props.screenDelegate.setFeedback}
+          />
         </React.Fragment>
-      );
-    }
-  }
-
-  private renderBottomBar(): React.ReactElement<any> {
-    if (
-      this.props.observableScreen.reviewFeedbackBarState.shouldShow === true
-    ) {
-      return (
-        <ReviewFeedbackBar
-          theme={this.props.themeStore.theme}
-          reviewFeedbackBarState={
-            this.props.observableScreen.reviewFeedbackBarState
-          }
-          setFeedback={this.props.screenDelegate.setFeedback}
-        />
-      );
-    } else {
-      return (
-        <ReviewActionBar
-          theme={this.props.themeStore.theme}
-          reviewActionBarState={
-            this.props.observableScreen.reviewActionBarState
-          }
-        />
       );
     }
   }

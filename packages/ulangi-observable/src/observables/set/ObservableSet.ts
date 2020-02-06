@@ -18,10 +18,12 @@ import {
   QuizWritingMaxLimit,
   Set,
   SetFeatureSettings,
+  SpacedRepetitionAutoplayAudio,
   SpacedRepetitionFeedbackButtons,
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
   SpacedRepetitionReviewStrategy,
+  WritingAutoplayAudio,
   WritingFeedbackButtons,
   WritingInitialInterval,
   WritingMaxLimit,
@@ -77,6 +79,15 @@ export class ObservableSet {
   }
 
   @computed
+  public get spacedRepetitionAutoplayAudio(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is SpacedRepetitionAutoplayAudio =>
+        data.dataName === SetExtraDataName.SPACED_REPETITION_AUTOPLAY_AUDIO
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
   public get spacedRepetitionInitialInterval(): undefined | number {
     const data = this.extraData.find(
       (data): data is SpacedRepetitionInitialInterval =>
@@ -109,6 +120,15 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is SpacedRepetitionFeedbackButtons =>
         data.dataName === SetExtraDataName.SPACED_REPETITION_FEEDBACK_BUTTONS
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get writingAutoplayAudio(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is WritingAutoplayAudio =>
+        data.dataName === SetExtraDataName.WRITING_AUTOPLAY_AUDIO
     );
     return data ? data.dataValue : undefined;
   }

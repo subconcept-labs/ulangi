@@ -5,9 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Feedback, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, Feedback, Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableReviewFeedbackBarState } from '@ulangi/ulangi-observable';
-import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -15,6 +14,8 @@ import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
 import { ReviewFeedbackBarIds } from '../../constants/ids/ReviewFeedbackBarIds';
+import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
+import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import {
   ReviewFeedbackBarStyles,
@@ -26,6 +27,7 @@ export interface ReviewFeedbackBarProps {
   theme: Theme;
   reviewFeedbackBarState: ObservableReviewFeedbackBarState;
   setFeedback: (feedback: Feedback) => void;
+  showAnswer: () => void;
   styles?: {
     light: ReviewFeedbackBarStyles;
     dark: ReviewFeedbackBarStyles;
@@ -34,33 +36,6 @@ export interface ReviewFeedbackBarProps {
 
 @observer
 export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
-  private animationContainerRef?: any;
-  private unsubscribeAnimation?: () => void;
-
-  public componentDidMount(): void {
-    this.unsubscribeAnimation = autorun(
-      (): void => {
-        if (
-          this.props.reviewFeedbackBarState.shouldRunCloseAnimation &&
-          this.animationContainerRef
-        ) {
-          this.animationContainerRef.fadeOutDown(200).then(
-            (): void => {
-              this.props.reviewFeedbackBarState.shouldShow = false;
-              this.props.reviewFeedbackBarState.shouldRunCloseAnimation = false;
-            },
-          );
-        }
-      },
-    );
-  }
-
-  public componentWillUnmount(): void {
-    if (this.unsubscribeAnimation) {
-      this.unsubscribeAnimation();
-    }
-  }
-
   public get styles(): ReviewFeedbackBarStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
     const dark = this.props.styles ? this.props.styles.dark : darkStyles;
@@ -68,24 +43,37 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
   }
 
   public render(): null | React.ReactElement<any> {
-    if (this.props.reviewFeedbackBarState.shouldShow === false) {
-      return null;
-    } else {
+    if (this.props.reviewFeedbackBarState.buttonType === 'SHOW_ANSWER_BUTTON') {
       return (
         <Animatable.View
-          style={this.styles.container}
-          ref={(ref: any): void => {
-            this.animationContainerRef = ref;
-          }}
-          animation="slideInUp"
+          animation="fadeIn"
           duration={config.general.animationDuration}
-          useNativeDriver={true}>
+          useNativeDriver
+          style={this.styles.show_answer_button_container}>
+          <DefaultButton
+            text="Show Answer"
+            styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+              ButtonSize.LARGE,
+              4,
+              config.styles.primaryColor,
+              '#fff',
+            )}
+            onPress={this.props.showAnswer}
+          />
+        </Animatable.View>
+      );
+    } else if (
+      this.props.reviewFeedbackBarState.buttonType === 'FEEDBACK_BUTTONS'
+    ) {
+      return (
+        <Animatable.View
+          animation="fadeIn"
+          useNativeDriver
+          duration={config.general.animationDuration}
+          style={this.styles.container}>
           <View style={this.styles.title_container}>
             <DefaultText style={this.styles.title}>
               How well do you memorize it?
-            </DefaultText>
-            <DefaultText style={this.styles.subtitle}>
-              Select the next review time for this term.
             </DefaultText>
           </View>
           <View style={this.styles.feedback_container}>
@@ -136,6 +124,8 @@ export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
           </View>
         </Animatable.View>
       );
+    } else {
+      return null;
     }
   }
 }

@@ -28,6 +28,7 @@ export class WritingSettingsDelegate {
     initialInterval: number;
     limit: number;
     feedbackButtons: 3 | 4 | 5;
+    autoplayAudio: boolean;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet.writingInitialInterval !==
@@ -46,10 +47,17 @@ export class WritingSettingsDelegate {
         ? this.setStore.existingCurrentSet.writingFeedbackButtons
         : config.writing.defaultFeedbackButtons;
 
+    const autoplayAudio =
+      typeof this.setStore.existingCurrentSet.writingAutoplayAudio !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingAutoplayAudio
+        : config.writing.defaultAutoplayAudio;
+
     return {
       initialInterval,
       limit,
       feedbackButtons,
+      autoplayAudio,
     };
   }
 
@@ -58,6 +66,7 @@ export class WritingSettingsDelegate {
       initialInterval: number;
       limit: number;
       feedbackButtons: 3 | 4 | 5;
+      autoplayAudio: boolean;
     },
     callback: {
       onSaving: () => void;
@@ -90,6 +99,13 @@ export class WritingSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.WRITING_FEEDBACK_BUTTONS,
         dataValue: newSettings.feedbackButtons,
+      });
+    }
+
+    if (originalSettings.autoplayAudio !== newSettings.autoplayAudio) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_AUTOPLAY_AUDIO,
+        dataValue: newSettings.autoplayAudio,
       });
     }
 

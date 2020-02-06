@@ -15,7 +15,9 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
+  ObservableConverter,
   ObservableKeyboard,
+  ObservableSetStore,
   ObservableWritingLessonScreen,
   Observer,
 } from '@ulangi/ulangi-observable';
@@ -24,7 +26,9 @@ import { when } from 'mobx';
 import { BackHandler, Keyboard } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
+import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { WritingFormIds } from '../../constants/ids/WritingFormIds';
+import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
@@ -32,19 +36,25 @@ import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
+import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
 import { WritingFormDelegate } from './WritingFormDelegate';
 import { WritingSaveResultDelegate } from './WritingSaveResultDelegate';
 
 @boundClass
 export class WritingLessonScreenDelegate {
+  private reviewActionButtonFactory = new ReviewActionButtonFactory();
+
   private eventBus: EventBus;
   private observer: Observer;
+  private observableConverter: ObservableConverter;
   private observableKeyboard: ObservableKeyboard;
+  private setStore: ObservableSetStore;
   private observableScreen: ObservableWritingLessonScreen;
   private questionIterator: WritingQuestionIterator;
   private saveResultDelegate: WritingSaveResultDelegate;
   private writingFormDelegate: WritingFormDelegate;
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
+  private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
   private dialogDelegate: DialogDelegate;
@@ -55,11 +65,14 @@ export class WritingLessonScreenDelegate {
     eventBus: EventBus,
     observer: Observer,
     observableKeyboard: ObservableKeyboard,
+    observableConverter: ObservableConverter,
+    setStore: ObservableSetStore,
     observableScreen: ObservableWritingLessonScreen,
     questionIterator: WritingQuestionIterator,
     saveResultDelegate: WritingSaveResultDelegate,
     writingFormDelegate: WritingFormDelegate,
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
+    speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
     dialogDelegate: DialogDelegate,
@@ -68,12 +81,15 @@ export class WritingLessonScreenDelegate {
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
+    this.observableConverter = observableConverter;
     this.observableKeyboard = observableKeyboard;
+    this.setStore = setStore;
     this.observableScreen = observableScreen;
     this.questionIterator = questionIterator;
     this.saveResultDelegate = saveResultDelegate;
     this.writingFormDelegate = writingFormDelegate;
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
+    this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
     this.dialogDelegate = dialogDelegate;
@@ -102,9 +118,111 @@ export class WritingLessonScreenDelegate {
         (): boolean => this.observableKeyboard.state === 'hidden',
         (): void => {
           this.showReviewFeedbackBar();
+
+          if (this.observableScreen.autoplayAudio.get() === true) {
+            this.synthesizeAndSpeak(
+              this.observableScreen.writingFormState.currentQuestion
+                .testingVocabulary.vocabularyTerm,
+              true,
+            );
+          }
         },
       );
     }
+  }
+
+  public showAnswer(): void {
+    this.observableScreen.writingFormState.currentAnswer = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
+  }
+
+  public setUpActionButtons(): void {
+    const {
+      testingVocabulary,
+    } = this.observableScreen.writingFormState.currentQuestion;
+
+    this.observableScreen.reviewActionBarState.buttons.replace([
+      this.reviewActionButtonFactory.createPreviousButton(
+        this.observableScreen.writingFormState.currentQuestionIndex === 0,
+        (): void => this.previousQuestion(),
+      ),
+      this.reviewActionButtonFactory.createPlayAudioButton(
+        this.observableScreen.writingFormState.isCurrentAnswerCorrect === true
+          ? testingVocabulary.vocabularyTerm
+          : '',
+        (): void => {
+          this.synthesizeAndSpeak(testingVocabulary.vocabularyTerm, false);
+        },
+      ),
+      this.reviewActionButtonFactory.createEditButton(
+        (): void => {
+          this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
+            originalVocabulary: testingVocabulary.toRaw(),
+            onSave: (newVocabulary): void => {
+              const observableVocabulary = this.observableConverter.convertToObservableVocabulary(
+                newVocabulary,
+              );
+
+              this.observableScreen.writingFormState.currentQuestion.testingVocabulary = observableVocabulary;
+
+              this.observableScreen.vocabularyList.set(
+                observableVocabulary.vocabularyId,
+                observableVocabulary,
+              );
+              this.questionIterator.update(
+                observableVocabulary.vocabularyId,
+                observableVocabulary,
+              );
+            },
+          });
+        },
+      ),
+      this.reviewActionButtonFactory.createDisableButton(
+        (): void => {
+          this.disable();
+        },
+      ),
+    ]);
+  }
+
+  public disableAllButtons(): void {
+    this.observableScreen.reviewActionBarState.buttons.forEach(
+      (button): void => {
+        button.disabled = true;
+      },
+    );
+  }
+
+  public autoUpdateButtons(): void {
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.speakState.get() === ActivityState.ACTIVE,
+      (isSpeaking): void => {
+        this.observableScreen.reviewActionBarState.buttons.forEach(
+          (button): void => {
+            if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+              button.loading = isSpeaking;
+              button.disabled = isSpeaking;
+            }
+          },
+        );
+      },
+    );
+
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.writingFormState.isCurrentAnswerCorrect,
+      (isCurrentAnswerCorrect): void => {
+        if (isCurrentAnswerCorrect === true) {
+          this.observableScreen.reviewActionBarState.buttons.forEach(
+            (button): void => {
+              if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+                button.subtitle = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
+              }
+            },
+          );
+        }
+      },
+    );
   }
 
   public setFeedback(feedback: Feedback): void {
@@ -113,17 +231,16 @@ export class WritingLessonScreenDelegate {
         .vocabularyId,
       feedback,
     );
-    this.reviewFeedbackBarDelegate.hide(
-      (): void => {
-        this.nextQuestion();
-      },
-    );
+
+    this.reviewFeedbackBarDelegate.hide();
+
+    this.nextQuestion();
   }
 
   public disable(): void {
-    this.dialogDelegate.showSuccessDialog({
+    this.dialogDelegate.show({
       message:
-        'Are you sure you want to disable writing this vocabulary term permanently?',
+        'Do you want to disable writing for this term? You will no longer write it again but you will still see it in other lesson types.',
       onBackgroundPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
       },
@@ -260,19 +377,31 @@ export class WritingLessonScreenDelegate {
   }
 
   private showReviewFeedbackBar(): void {
-    this.reviewFeedbackBarDelegate.show(
+    this.reviewFeedbackBarDelegate.showFeedbackButtons(
       this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
       this.observableScreen.numberOfFeedbackButtons.get(),
     );
   }
 
+  private previousQuestion(): void {
+    this.writingFormDelegate.fadeOut(
+      (): void => {
+        this.observableScreen.writingFormState.setUpNextQuestion(
+          this.questionIterator.previous(),
+        );
+      },
+    );
+  }
+
   private nextQuestion(): void {
     if (this.questionIterator.isDone() === false) {
+      this.disableAllButtons();
       this.writingFormDelegate.fadeOut(
         (): void => {
           this.observableScreen.writingFormState.setUpNextQuestion(
             this.questionIterator.next(),
           );
+          this.setUpActionButtons();
         },
       );
     } else {
@@ -303,5 +432,40 @@ export class WritingLessonScreenDelegate {
     feedbackList: ReadonlyMap<string, Feedback>,
   ): void {
     this.observableScreen.feedbackListState.feedbackList.replace(feedbackList);
+  }
+
+  private synthesizeAndSpeak(text: string, autoplayed: boolean): void {
+    this.speakDelegate.synthesize(
+      text,
+      this.setStore.existingCurrentSet.learningLanguageCode,
+      {
+        onSynthesizing: (): void => {
+          this.observableScreen.speakState.set(ActivityState.ACTIVE);
+        },
+        onSynthesizeSucceeded: (filePath): void => {
+          this.speak(filePath);
+        },
+        onSynthesizeFailed: (errorBag): void => {
+          this.observableScreen.speakState.set(ActivityState.INACTIVE);
+          if (autoplayed === false) {
+            this.dialogDelegate.showFailedDialog(errorBag);
+          }
+        },
+      },
+    );
+  }
+
+  private speak(filePath: string): void {
+    this.speakDelegate.speak(filePath, {
+      onSpeaking: (): void => {
+        this.observableScreen.speakState.set(ActivityState.ACTIVE);
+      },
+      onSpeakSucceeded: (): void => {
+        this.observableScreen.speakState.set(ActivityState.INACTIVE);
+      },
+      onSpeakFailed: (): void => {
+        this.observableScreen.speakState.set(ActivityState.INACTIVE);
+      },
+    });
   }
 }

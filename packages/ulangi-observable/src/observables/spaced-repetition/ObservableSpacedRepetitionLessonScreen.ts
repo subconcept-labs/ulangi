@@ -29,6 +29,8 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
 
   public readonly numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>;
 
+  public readonly autoplayAudio: IObservableValue<boolean>;
+
   public readonly saveState: IObservableValue<ActivityState>;
 
   public readonly speakState: IObservableValue<ActivityState>;
@@ -44,6 +46,7 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
     feedbackListState: ObservableFeedbackListState,
     numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>,
+    autoplayAudio: IObservableValue<boolean>,
     saveState: IObservableValue<ActivityState>,
     speakState: IObservableValue<ActivityState>,
     shouldShowResult: IObservableValue<boolean>,
@@ -58,6 +61,7 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     this.reviewFeedbackBarState = reviewFeedbackBarState;
     this.feedbackListState = feedbackListState;
     this.numberOfFeedbackButtons = numberOfFeedbackButtons;
+    this.autoplayAudio = autoplayAudio;
     this.saveState = saveState;
     this.speakState = speakState;
     this.shouldShowResult = shouldShowResult;

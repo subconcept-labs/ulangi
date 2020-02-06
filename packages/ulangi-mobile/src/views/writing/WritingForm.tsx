@@ -11,13 +11,7 @@ import * as _ from 'lodash';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { ScrollView, TextInput, View, ViewStyle } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
@@ -40,7 +34,6 @@ export interface WritingFormProps {
   setAnswer: (text: string) => void;
   showHint: () => void;
   next: () => void;
-  disable?: () => void;
   styles?: {
     light: WritingFormStyles;
     dark: WritingFormStyles;
@@ -201,31 +194,8 @@ export class WritingForm extends React.Component<WritingFormProps> {
             </View>
           </View>
         </View>
-        {this.renderDisableButton()}
       </Animatable.View>
     );
-  }
-
-  private renderDisableButton(): null | React.ReactElement<any> {
-    if (typeof this.props.disable !== 'undefined') {
-      return (
-        <TouchableOpacity
-          testID={WritingFormIds.DISABLE_BTN}
-          onPress={this.props.disable}
-          style={this.styles.disable_btn}>
-          <DefaultText style={this.styles.message}>
-            <DefaultText>
-              {'To disable writing this term permanently, '}
-            </DefaultText>
-            <DefaultText style={this.styles.message_highlighted}>
-              press here.
-            </DefaultText>
-          </DefaultText>
-        </TouchableOpacity>
-      );
-    } else {
-      return null;
-    }
   }
 
   private getUnderlineColorForAnswer(): ViewStyle {

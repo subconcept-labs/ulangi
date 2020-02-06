@@ -9,6 +9,7 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableFeedbackListState,
+  ObservableReviewActionBarState,
   ObservableReviewFeedbackBarState,
   ObservableTitleTopBar,
   ObservableTopBarButton,
@@ -80,10 +81,13 @@ export class WritingLessonScreenContainer extends Container<
       observable.array([]),
     ),
     new ObservableFeedbackListState(observable.map()),
-    new ObservableReviewFeedbackBarState(observable.map(), false, false),
+    new ObservableReviewActionBarState(observable.array([])),
+    new ObservableReviewFeedbackBarState(observable.map(), null),
     observable.box(this.currentSettings.feedbackButtons),
+    observable.box(this.currentSettings.autoplayAudio),
     observable.box(false),
     observable.box(false),
+    observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
     ScreenName.WRITING_LESSON_SCREEN,
     new ObservableTitleTopBar(
@@ -124,6 +128,8 @@ export class WritingLessonScreenContainer extends Container<
     this.screenDelegate.addBackButtonHandler(
       this.screenDelegate.handleBackButton,
     );
+    this.screenDelegate.setUpActionButtons();
+    this.screenDelegate.autoUpdateButtons();
 
     if (this.screenDelegate.shouldLoadAd()) {
       this.screenDelegate.loadAd();

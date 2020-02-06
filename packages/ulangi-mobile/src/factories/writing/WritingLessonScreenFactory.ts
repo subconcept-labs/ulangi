@@ -15,6 +15,7 @@ import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoAr
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
+import { SpeakDelegate } from '../../delegates/vocabulary/SpeakDelegate';
 import { WritingFormDelegate } from '../../delegates/writing/WritingFormDelegate';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
 import { WritingSaveResultDelegate } from '../../delegates/writing/WritingSaveResultDelegate';
@@ -87,21 +88,25 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     const reviewFeedbackButtonDelegate = new ReviewFeedbackButtonDelegate();
 
     const reviewFeedbackBarDelegate = new ReviewFeedbackBarDelegate(
-      this.observer,
       observableScreen.reviewFeedbackBarState,
       reviewFeedbackDataDelegate,
       reviewFeedbackButtonDelegate,
     );
 
+    const speakDelegate = new SpeakDelegate(this.eventBus);
+
     return new WritingLessonScreenDelegate(
       this.eventBus,
       this.observer,
       this.props.observableKeyboard,
+      this.props.observableConverter,
+      this.props.rootStore.setStore,
       observableScreen,
       questionIterator,
       saveResultDelegate,
       writingFormDelegate,
       reviewFeedbackBarDelegate,
+      speakDelegate,
       adDelegate,
       adAfterLessonDelegate,
       dialogDelegate,

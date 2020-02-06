@@ -102,6 +102,8 @@ export class Images {
   public static readonly ARROW_RIGHT_MILK_25X25 = require('../../assets/img/mobile-icons/arrow_right_milk_25x25.png');
   public static readonly EDIT_BLACK_25X25 = require('../../assets/img/mobile-icons/edit_black_25x25.png');
   public static readonly EDIT_MILK_25X25 = require('../../assets/img/mobile-icons/edit_milk_25x25.png');
+  public static readonly CROSS_BLACK_25X25 = require('../../assets/img/mobile-icons/cross_black_25x25.png');
+  public static readonly CROSS_MILK_25X25 = require('../../assets/img/mobile-icons/cross_milk_25x25.png');
 
   // 22x22
   public static readonly ADD_WHITE_22X22 = require('../../assets/img/mobile-icons/add_white_22x22.png');

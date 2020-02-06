@@ -71,9 +71,13 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
       false,
     ),
     new ObservableReviewActionBarState(observable.array([])),
-    new ObservableReviewFeedbackBarState(observable.map(), false, false),
+    new ObservableReviewFeedbackBarState(
+      observable.map(),
+      'SHOW_ANSWER_BUTTON',
+    ),
     new ObservableFeedbackListState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
+    observable.box(this.currentSettings.autoplayAudio),
     observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
     observable.box(false),
@@ -117,7 +121,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   }
 
   public componentDidMount(): void {
-    this.screenDelegate.setUpButtons();
+    this.screenDelegate.setUpActionButtons();
     this.screenDelegate.autoUpdateButtons();
     this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
     this.screenDelegate.addBackButtonHandler(

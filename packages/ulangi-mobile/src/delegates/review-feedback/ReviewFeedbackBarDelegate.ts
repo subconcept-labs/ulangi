@@ -7,55 +7,41 @@
 
 import { Feedback } from '@ulangi/ulangi-common/enums';
 import { NextReviewData, Vocabulary } from '@ulangi/ulangi-common/interfaces';
-import {
-  ObservableReviewFeedbackBarState,
-  Observer,
-} from '@ulangi/ulangi-observable';
+import { ObservableReviewFeedbackBarState } from '@ulangi/ulangi-observable';
 
 import { ReviewFeedbackButtonDelegate } from './ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from './ReviewFeedbackDataDelegate';
 
 export class ReviewFeedbackBarDelegate {
-  private observer: Observer;
   private reviewFeedbackBarState: ObservableReviewFeedbackBarState;
   private reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate;
   private reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate;
 
   public constructor(
-    observer: Observer,
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
     reviewFeedbackDataDelegate: ReviewFeedbackDataDelegate,
     reviewFeedbackButtonDelegate: ReviewFeedbackButtonDelegate,
   ) {
-    this.observer = observer;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
     this.reviewFeedbackDataDelegate = reviewFeedbackDataDelegate;
     this.reviewFeedbackButtonDelegate = reviewFeedbackButtonDelegate;
   }
 
-  public show(
+  public showShowAnswerButton(): void {
+    this.reviewFeedbackBarState.buttonType = 'SHOW_ANSWER_BUTTON';
+  }
+
+  public showFeedbackButtons(
     vocabulary: Vocabulary,
     numberOfFeedbackButtons: 3 | 4 | 5,
   ): void {
     this.calculateNextReviewData(vocabulary, numberOfFeedbackButtons);
 
-    if (this.reviewFeedbackBarState.shouldShow === false) {
-      this.reviewFeedbackBarState.shouldShow = true;
-    }
+    this.reviewFeedbackBarState.buttonType = 'FEEDBACK_BUTTONS';
   }
 
-  public hide(callback: () => void): void {
-    // Avoid calling hide multiple times
-    if (
-      this.reviewFeedbackBarState.shouldShow === true &&
-      this.reviewFeedbackBarState.shouldRunCloseAnimation === false
-    ) {
-      this.reviewFeedbackBarState.shouldRunCloseAnimation = true;
-      this.observer.when(
-        (): boolean => this.reviewFeedbackBarState.shouldShow === false,
-        callback,
-      );
-    }
+  public hide(): void {
+    this.reviewFeedbackBarState.buttonType = null;
   }
 
   private calculateNextReviewData(

@@ -24,11 +24,15 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
   @observable
   public selectedFeedbackButtons: 3 | 4 | 5;
 
+  @observable
+  public selectedAutoplayAudio: boolean;
+
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
     selectedReviewStrategy: ReviewStrategy,
     selectedFeedbackButtons: 3 | 4 | 5,
+    selectedAutoplayAudio: boolean,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
@@ -37,5 +41,6 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
     this.selectedLimit = selectedLimit;
     this.selectedReviewStrategy = selectedReviewStrategy;
     this.selectedFeedbackButtons = selectedFeedbackButtons;
+    this.selectedAutoplayAudio = selectedAutoplayAudio;
   }
 }

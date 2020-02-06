@@ -9,20 +9,24 @@ import { QuizMultipleChoiceMaxLimit } from '../interfaces/general/QuizMultipleCh
 import { QuizVocabularyPool } from '../interfaces/general/QuizVocabularyPool';
 import { QuizWritingMaxLimit } from '../interfaces/general/QuizWritingMaxLimit';
 import { SetFeatureSettings } from '../interfaces/general/SetFeatureSettings';
+import { SpacedRepetitionAutoplayAudio } from '../interfaces/general/SpacedRepetitionAutoplayAudio';
 import { SpacedRepetitionFeedbackButtons } from '../interfaces/general/SpacedRepetitionFeedbackButtons';
 import { SpacedRepetitionInitialInterval } from '../interfaces/general/SpacedRepetitionInitialInterval';
 import { SpacedRepetitionMaxLimit } from '../interfaces/general/SpacedRepetitionMaxLimit';
 import { SpacedRepetitionReviewStrategy } from '../interfaces/general/SpacedRepetitionReviewStrategy';
+import { WritingAutoplayAudio } from '../interfaces/general/WritingAutoplayAudio';
 import { WritingFeedbackButtons } from '../interfaces/general/WritingFeedbackButtons';
 import { WritingInitialInterval } from '../interfaces/general/WritingInitialInterval';
 import { WritingMaxLimit } from '../interfaces/general/WritingMaxLimit';
 
 export type SetExtraDataItem =
   | SetFeatureSettings
+  | SpacedRepetitionAutoplayAudio
   | SpacedRepetitionInitialInterval
   | SpacedRepetitionMaxLimit
   | SpacedRepetitionReviewStrategy
   | SpacedRepetitionFeedbackButtons
+  | WritingAutoplayAudio
   | WritingInitialInterval
   | WritingMaxLimit
   | WritingFeedbackButtons
