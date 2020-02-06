@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/minhloi/ulangi/compare/v3.5.0...v3.6.0) (2020-02-06)
+
+
+### Features
+
+* autoplay audio ([8bf9ab7](https://github.com/minhloi/ulangi/commit/8bf9ab7)), closes [#40](https://github.com/minhloi/ulangi/issues/40)
+
+
+
+
+
 # [3.5.0](https://github.com/minhloi/ulangi/compare/v3.4.0...v3.5.0) (2020-02-04)
 
 
