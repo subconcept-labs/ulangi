@@ -48,6 +48,9 @@ export {
 } from './general/SetFeatureSettingsResolver';
 export { SetResolver } from './general/SetResolver';
 export {
+  SpacedRepetitionAutoplayAudioResolver,
+} from './general/SpacedRepetitionAutoplayAudioResolver';
+export {
   SpacedRepetitionInitialIntervalResolver,
 } from './general/SpacedRepetitionInitialIntervalResolver';
 export {
@@ -69,6 +72,9 @@ export {
 } from './general/VocabularyCategoryResolver';
 export { VocabularyResolver } from './general/VocabularyResolver';
 export { VocabularyWritingResolver } from './general/VocabularyWritingResolver';
+export {
+  WritingAutoplayAudioResolver,
+} from './general/WritingAutoplayAudioResolver';
 export {
   WritingFeedbackButtonsResolver,
 } from './general/WritingFeedbackButtonsResolver';

@@ -43,6 +43,9 @@ export { Set } from './general/Set';
 export { SetFeatureSettings } from './general/SetFeatureSettings';
 export { SetSelectionMenuOptions } from './general/SetSelectionMenuOptions';
 export {
+  SpacedRepetitionAutoplayAudio,
+} from './general/SpacedRepetitionAutoplayAudio';
+export {
   SpacedRepetitionFeedbackButtons,
 } from './general/SpacedRepetitionFeedbackButtons';
 export {
@@ -59,6 +62,7 @@ export { Vocabulary } from './general/Vocabulary';
 export { VocabularyCategory } from './general/VocabularyCategory';
 export { VocabularyExtraFields } from './general/VocabularyExtraFields';
 export { VocabularyWriting } from './general/VocabularyWriting';
+export { WritingAutoplayAudio } from './general/WritingAutoplayAudio';
 export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';

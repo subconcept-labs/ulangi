@@ -118,6 +118,14 @@ export class WritingLessonScreenDelegate {
         (): boolean => this.observableKeyboard.state === 'hidden',
         (): void => {
           this.showReviewFeedbackBar();
+
+          if (this.observableScreen.autoplayAudio.get() === true) {
+            this.synthesizeAndSpeak(
+              this.observableScreen.writingFormState.currentQuestion
+                .testingVocabulary.vocabularyTerm,
+              true,
+            );
+          }
         },
       );
     }
@@ -142,7 +150,7 @@ export class WritingLessonScreenDelegate {
           ? testingVocabulary.vocabularyTerm
           : '',
         (): void => {
-          this.synthesizeAndSpeak(testingVocabulary.vocabularyTerm);
+          this.synthesizeAndSpeak(testingVocabulary.vocabularyTerm, false);
         },
       ),
       this.reviewActionButtonFactory.createEditButton(
@@ -426,7 +434,7 @@ export class WritingLessonScreenDelegate {
     this.observableScreen.feedbackListState.feedbackList.replace(feedbackList);
   }
 
-  private synthesizeAndSpeak(text: string): void {
+  private synthesizeAndSpeak(text: string, autoplayed: boolean): void {
     this.speakDelegate.synthesize(
       text,
       this.setStore.existingCurrentSet.learningLanguageCode,
@@ -439,7 +447,9 @@ export class WritingLessonScreenDelegate {
         },
         onSynthesizeFailed: (errorBag): void => {
           this.observableScreen.speakState.set(ActivityState.INACTIVE);
-          this.dialogDelegate.showFailedDialog(errorBag);
+          if (autoplayed === false) {
+            this.dialogDelegate.showFailedDialog(errorBag);
+          }
         },
       },
     );

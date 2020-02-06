@@ -156,6 +156,35 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             dark: sectionRowDarkStyles,
           }}
         />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          leftText="Autoplay Audio"
+          customRight={
+            <DefaultButton
+              testID={SpacedRepetitionSettingsScreenIds.AUTOPLAY_AUDIO_BTN}
+              text={
+                this.props.observableScreen.selectedAutoplayAudio ? 'Yes' : 'No'
+              }
+              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showAutoplayAudioMenu(
+                  this.getAutoplayAudioValuePairs(),
+                  this.props.observableScreen.selectedAutoplayAudio,
+                  (autoplayAudio): void => {
+                    this.props.observableScreen.selectedAutoplayAudio = autoplayAudio;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderAutoplayAudioDescription()}
+          styles={{
+            light: sectionRowLightStyles,
+            dark: sectionRowDarkStyles,
+          }}
+        />
       </SectionGroup>
     );
   }
@@ -316,6 +345,14 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     return <DefaultText style={this.styles.description}>{text}</DefaultText>;
   }
 
+  private renderAutoplayAudioDescription(): React.ReactElement<any> {
+    return (
+      <DefaultText style={this.styles.description}>
+        Automatically play audio once after showing answer.
+      </DefaultText>
+    );
+  }
+
   private getReviewStrategyPairs(): readonly [
     ReviewStrategy,
     ReviewStrategy
@@ -352,5 +389,9 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     ): [number, string] {
       return [initialInterval, initialInterval + ' hours'];
     });
+  }
+
+  private getAutoplayAudioValuePairs(): readonly [boolean, string][] {
+    return [[true, 'Yes'], [false, 'No']];
   }
 }

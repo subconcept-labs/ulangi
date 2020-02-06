@@ -7,10 +7,12 @@
 
 export enum SetExtraDataName {
   SET_FEATURE_SETTINGS = 'setFeatureSettings',
+  SPACED_REPETITION_AUTOPLAY_AUDIO = 'spacedRepetitionAutoplayAudio',
   SPACED_REPETITION_INITIAL_INTERVAL = 'spacedRepetitionInitialInterval',
   SPACED_REPETITION_MAX_LIMIT = 'spacedRepetitionMaxLimit',
   SPACED_REPETITION_REVIEW_STRATEGY = 'spacedRepetitionReviewStrategy',
   SPACED_REPETITION_FEEDBACK_BUTTONS = 'spacedRepetitionFeedbackButtons',
+  WRITING_AUTOPLAY_AUDIO = 'writingAutoplayAudio',
   WRITING_INITIAL_INTERVAL = 'writingInitialInterval',
   WRITING_MAX_LIMIT = 'writingMaxLimit',
   WRITING_FEEDBACK_BUTTONS = 'writingFeedbackButtons',

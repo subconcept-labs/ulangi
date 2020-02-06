@@ -108,7 +108,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           ? vocabulary.vocabularyTerm
           : '',
         (): void => {
-          this.synthesizeAndSpeak(vocabulary.vocabularyTerm);
+          this.synthesizeAndSpeak(vocabulary.vocabularyTerm, false);
         },
       ),
       this.reviewActionButtonFactory.createEditButton(
@@ -140,6 +140,13 @@ export class SpacedRepetitionLessonScreenDelegate {
   public showAnswer(): void {
     this.observableScreen.reviewState.shouldShowAnswer = true;
     this.showReviewFeedbackBar();
+
+    if (this.observableScreen.autoplayAudio.get() === true) {
+      this.synthesizeAndSpeak(
+        this.observableScreen.reviewState.vocabulary.vocabularyTerm,
+        true,
+      );
+    }
   }
 
   public autoUpdateButtons(): void {
@@ -346,7 +353,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     );
   }
 
-  private synthesizeAndSpeak(text: string): void {
+  private synthesizeAndSpeak(text: string, autoplayed: boolean): void {
     this.speakDelegate.synthesize(
       text,
       this.setStore.existingCurrentSet.learningLanguageCode,
@@ -359,7 +366,9 @@ export class SpacedRepetitionLessonScreenDelegate {
         },
         onSynthesizeFailed: (errorBag): void => {
           this.observableScreen.speakState.set(ActivityState.INACTIVE);
-          this.showSynthesizeErrorDialog(errorBag);
+          if (autoplayed === false) {
+            this.showSynthesizeErrorDialog(errorBag);
+          }
         },
       },
     );

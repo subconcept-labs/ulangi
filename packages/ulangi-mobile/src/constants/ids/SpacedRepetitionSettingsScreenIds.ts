@@ -13,6 +13,7 @@ export const SpacedRepetitionSettingsScreenIds = {
   LIMIT_BTN: 'LIMIT_BTN',
   FEEDBACK_BUTTONS_BTN: 'FEEDBACK_BUTTONS_BTN',
   INITIAL_INTERVAL_BTN: 'INITIAL_INTERVAL_BTN',
+  AUTOPLAY_AUDIO_BTN: 'AUTOPLAY_AUDIO_BTN',
   SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY: (
     reviewStrategy: ReviewStrategy,
   ): string =>
@@ -27,7 +28,9 @@ export const SpacedRepetitionSettingsScreenIds = {
     initialInterval: number,
   ): string =>
     'SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL_' + initialInterval,
-  SHOW_DEFINITIONS_SIDE_EFFECT_BTN: 'SHOW_DEFINITIONS_SIDE_EFFECT_BTN',
+  SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO: (
+    autoplayAudio: boolean,
+  ): string => 'SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO_' + autoplayAudio,
   BACK_BTN: 'BACK_BTN',
   SAVE_BTN: 'SAVE_BTN',
 };

@@ -77,6 +77,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     ),
     new ObservableFeedbackListState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
+    observable.box(this.currentSettings.autoplayAudio),
     observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
     observable.box(false),

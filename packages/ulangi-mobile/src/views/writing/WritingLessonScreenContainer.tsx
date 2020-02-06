@@ -84,6 +84,7 @@ export class WritingLessonScreenContainer extends Container<
     new ObservableReviewActionBarState(observable.array([])),
     new ObservableReviewFeedbackBarState(observable.map(), null),
     observable.box(this.currentSettings.feedbackButtons),
+    observable.box(this.currentSettings.autoplayAudio),
     observable.box(false),
     observable.box(false),
     observable.box(ActivityState.INACTIVE),

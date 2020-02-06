@@ -29,6 +29,7 @@ export class SpacedRepetitionSettingsDelegate {
     limit: number;
     reviewStrategy: ReviewStrategy;
     feedbackButtons: 3 | 4 | 5;
+    autoplayAudio: boolean;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet
@@ -54,11 +55,18 @@ export class SpacedRepetitionSettingsDelegate {
         ? this.setStore.existingCurrentSet.spacedRepetitionFeedbackButtons
         : config.spacedRepetition.defaultFeedbackButtons;
 
+    const autoplayAudio =
+      typeof this.setStore.existingCurrentSet.spacedRepetitionAutoplayAudio !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.spacedRepetitionAutoplayAudio
+        : config.spacedRepetition.defaultAutoplayAudio;
+
     return {
       initialInterval,
       limit,
       reviewStrategy,
       feedbackButtons,
+      autoplayAudio,
     };
   }
 
@@ -68,6 +76,7 @@ export class SpacedRepetitionSettingsDelegate {
       limit: number;
       reviewStrategy: ReviewStrategy;
       feedbackButtons: 3 | 4 | 5;
+      autoplayAudio: boolean;
     },
     callback: {
       onSaving: () => void;
@@ -106,6 +115,13 @@ export class SpacedRepetitionSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.SPACED_REPETITION_FEEDBACK_BUTTONS,
         dataValue: newSettings.feedbackButtons,
+      });
+    }
+
+    if (originalSettings.autoplayAudio !== newSettings.autoplayAudio) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.SPACED_REPETITION_AUTOPLAY_AUDIO,
+        dataValue: newSettings.autoplayAudio,
       });
     }
 
