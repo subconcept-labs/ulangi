@@ -64,7 +64,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.props.passedProps.vocabularyList,
     new ObservableReviewState(
       this.currentSettings.reviewStrategy,
-      this.reviewIterator.next(),
+      this.reviewIterator.current(),
       false,
       0,
       this.reviewIterator.getSize(),

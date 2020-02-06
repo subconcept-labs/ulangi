@@ -33,6 +33,10 @@ export class WritingQuestionIterator {
     this.vocabularyIterator.update(key, value);
   }
 
+  public current(): ObservableWritingQuestion {
+    return this.makeQuestion(this.vocabularyIterator.current());
+  }
+
   public previous(): ObservableWritingQuestion {
     const previousVocabulary = this.vocabularyIterator.previous();
     return this.makeQuestion(previousVocabulary);

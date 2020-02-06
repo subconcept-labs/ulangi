@@ -65,7 +65,7 @@ export class WritingLessonScreenContainer extends Container<
     new ObservableWritingFormState(
       true,
       null,
-      this.questionIterator.next(),
+      this.questionIterator.current(),
       '',
       '',
       0,
