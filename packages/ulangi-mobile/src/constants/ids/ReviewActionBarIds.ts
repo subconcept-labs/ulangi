@@ -9,8 +9,7 @@ export const ReviewActionBarIds = {
   PREVIOUS_BTN: 'PREVIOUS_BTN',
   NEXT_BTN: 'NEXT_BTN',
   SHOW_ANSWER_BTN: 'SHOW_ANSWER_BTN',
-  PLAY_AUDIO_BTN_BY_VALUE: (value: string): string =>
-    'PLAY_AUDIO_BTN_BY_VALUE_' + value,
+  PLAY_AUDIO_BTN: 'PLAY_AUDIO_BTN',
   EDIT_BTN: 'EDIT_BTN',
   DISABLE_BTN: 'DISABLE_BTN',
 };

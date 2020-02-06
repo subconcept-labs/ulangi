@@ -23,6 +23,7 @@ import { boundClass } from 'autobind-decorator';
 import { BackHandler } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
+import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -106,7 +107,6 @@ export class SpacedRepetitionLessonScreenDelegate {
         shouldShowAnswer === true || currentQuestionType === 'forward'
           ? vocabulary.vocabularyTerm
           : '',
-        vocabulary.vocabularyTerm,
         (): void => {
           this.synthesizeAndSpeak(vocabulary.vocabularyTerm);
         },
@@ -149,12 +149,27 @@ export class SpacedRepetitionLessonScreenDelegate {
       (isSpeaking): void => {
         this.observableScreen.reviewActionBarState.buttons.forEach(
           (button): void => {
-            if (button.title === 'PLAY AUDIO') {
+            if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
               button.loading = isSpeaking;
               button.disabled = isSpeaking;
             }
           },
         );
+      },
+    );
+
+    this.observer.reaction(
+      (): boolean => this.observableScreen.reviewState.shouldShowAnswer,
+      (shouldShowAnswer): void => {
+        if (shouldShowAnswer === true) {
+          this.observableScreen.reviewActionBarState.buttons.forEach(
+            (button): void => {
+              if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+                button.subtitle = this.observableScreen.reviewState.vocabulary.vocabularyTerm;
+              }
+            },
+          );
+        }
       },
     );
   }

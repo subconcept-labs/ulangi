@@ -56,13 +56,12 @@ export class ReviewActionButtonFactory {
 
   public createPlayAudioButton(
     subtitle: string,
-    testIDSuffix: string,
     onPress: () => void,
   ): ObservableReviewActionButton {
     return new ObservableReviewActionButton(
       'PLAY AUDIO',
       subtitle,
-      ReviewActionBarIds.PLAY_AUDIO_BTN_BY_VALUE(testIDSuffix),
+      ReviewActionBarIds.PLAY_AUDIO_BTN,
       {
         light: Images.SPEAKER_BLACK_25X25,
         dark: Images.SPEAKER_MILK_25X25,

@@ -26,6 +26,7 @@ import { when } from 'mobx';
 import { BackHandler, Keyboard } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
+import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { WritingFormIds } from '../../constants/ids/WritingFormIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
@@ -140,7 +141,6 @@ export class WritingLessonScreenDelegate {
         this.observableScreen.writingFormState.isCurrentAnswerCorrect === true
           ? testingVocabulary.vocabularyTerm
           : '',
-        testingVocabulary.vocabularyTerm,
         (): void => {
           this.synthesizeAndSpeak(testingVocabulary.vocabularyTerm);
         },
@@ -191,12 +191,28 @@ export class WritingLessonScreenDelegate {
       (isSpeaking): void => {
         this.observableScreen.reviewActionBarState.buttons.forEach(
           (button): void => {
-            if (button.title === 'PLAY AUDIO') {
+            if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
               button.loading = isSpeaking;
               button.disabled = isSpeaking;
             }
           },
         );
+      },
+    );
+
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.writingFormState.isCurrentAnswerCorrect,
+      (isCurrentAnswerCorrect): void => {
+        if (isCurrentAnswerCorrect === true) {
+          this.observableScreen.reviewActionBarState.buttons.forEach(
+            (button): void => {
+              if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+                button.subtitle = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
+              }
+            },
+          );
+        }
       },
     );
   }
