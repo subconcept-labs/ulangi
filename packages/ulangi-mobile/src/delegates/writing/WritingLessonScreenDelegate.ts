@@ -417,7 +417,7 @@ export class WritingLessonScreenDelegate {
   }
 
   private saveResult(): void {
-    this.saveResultDelegate.save(true, {
+    this.saveResultDelegate.save({
       onSaving: (): void => {
         this.observableScreen.saveState.set(ActivityState.ACTIVE);
       },

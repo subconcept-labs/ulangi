@@ -22,17 +22,13 @@ import {
   mockCurrentTime,
   mockTransaction,
 } from '@ulangi/ulangi-common/testing-utils';
-import {
-  SessionModel,
-  VocabularyModel,
-  WritingModel,
-} from '@ulangi/ulangi-local-database';
+import { VocabularyModel, WritingModel } from '@ulangi/ulangi-local-database';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
+import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { WritingSaga } from './WritingSaga';
 
 const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
@@ -40,17 +36,14 @@ const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
 );
 
 const {
-  SessionModel: SessionModelMock,
   VocabularyModel: VocabularyModelMock,
   WritingModel: WritingModelMock,
 } = jest.genMockFromModule('@ulangi/ulangi-local-database');
 
 describe('WritingSaga', (): void => {
   describe('Test starts with all mocked modules', (): void => {
-    let mockedSharedDatabase: jest.Mocked<SQLiteDatabase>;
     let mockedUserDatabase: jest.Mocked<SQLiteDatabase>;
     let mockedTransaction: jest.Mocked<Transaction>;
-    let mockedSessionModel: jest.Mocked<SessionModel>;
     let mockedVocabularyModel: jest.Mocked<VocabularyModel>;
     let mockedWritingModel: jest.Mocked<WritingModel>;
     let writingSaga: WritingSaga;
@@ -58,34 +51,27 @@ describe('WritingSaga', (): void => {
 
     beforeEach(
       (): void => {
-        mockedSharedDatabase = new SQLiteDatabaseMock();
         mockedUserDatabase = new SQLiteDatabaseMock();
-        mockedSharedDatabase.transaction = mockTransaction(mockedTransaction);
         mockedUserDatabase.transaction = mockTransaction(mockedTransaction);
 
-        mockedSessionModel = new SessionModelMock();
         mockedVocabularyModel = new VocabularyModelMock();
         mockedWritingModel = new WritingModelMock();
 
         writingSaga = new WritingSaga(
-          mockedSharedDatabase,
           mockedUserDatabase,
-          mockedSessionModel,
           mockedVocabularyModel,
           mockedWritingModel
         );
       }
     );
 
-    describe('Test allowFetchVocabulary with maxLevel = 10, minPerLesson = 3', (): void => {
-      const maxLevel = 10;
+    describe('Test allowFetchVocabulary with minPerLesson = 3', (): void => {
       const minPerLesson = 3;
 
       beforeEach(
         (): void => {
           saga = expectSaga(
             writingSaga.allowFetchVocabulary.bind(writingSaga),
-            maxLevel,
             minPerLesson
           );
         }
@@ -100,7 +86,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 5;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(limit)
@@ -113,17 +98,12 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          const levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           await saga
             .provide([
-              [
-                matchers.call.fn(mockedSessionModel.getWritingTermPosition),
-                termPosition,
-              ],
               [
                 matchers.call.fn(
                   mockedWritingModel.getDueVocabularyListByLevel
@@ -169,7 +149,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(3)
@@ -182,9 +161,8 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -249,7 +227,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(2)
@@ -262,9 +239,8 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -332,7 +308,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(3)
@@ -343,9 +318,8 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -415,7 +389,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(2)
@@ -428,9 +401,8 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -513,7 +485,6 @@ describe('WritingSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 5;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(1)
@@ -526,9 +497,8 @@ describe('WritingSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -645,7 +615,6 @@ describe('WritingSaga', (): void => {
       test('update levels correctly based on feedback', async (): Promise<
         void
       > => {
-        const setId = 'setId';
         const feedbackList = new Map(
           _.values(Feedback).map(
             (feedback, index): [string, Feedback] => {
@@ -657,7 +626,6 @@ describe('WritingSaga', (): void => {
         await saga
           .dispatch(
             createAction(ActionType.WRITING__SAVE_RESULT, {
-              setId,
               vocabularyList: new Map(
                 vocabularyList.map(
                   (vocabulary): [string, Vocabulary] => [
@@ -672,7 +640,6 @@ describe('WritingSaga', (): void => {
                 spacedRepetitionLevelThreshold: 0,
                 writingLevelThreshold: 10,
               },
-              incrementTermPosition: true,
             })
           )
           .put(createAction(ActionType.WRITING__SAVING_RESULT, null))
@@ -713,7 +680,6 @@ describe('WritingSaga', (): void => {
       test('archive vocabulary based on vocabulary level', async (): Promise<
         void
       > => {
-        const setId = 'setId';
         const feedbackList = new Map(
           _.values(Feedback).map(
             (feedback, index): [string, Feedback] => {
@@ -725,7 +691,6 @@ describe('WritingSaga', (): void => {
         await saga
           .dispatch(
             createAction(ActionType.WRITING__SAVE_RESULT, {
-              setId,
               vocabularyList: new Map(
                 vocabularyList.map(
                   (vocabulary): [string, Vocabulary] => [
@@ -740,7 +705,6 @@ describe('WritingSaga', (): void => {
                 spacedRepetitionLevelThreshold: 0,
                 writingLevelThreshold: 6,
               },
-              incrementTermPosition: true,
             })
           )
           .put(createAction(ActionType.WRITING__SAVING_RESULT, null))
@@ -789,71 +753,6 @@ describe('WritingSaga', (): void => {
           ),
           'local'
         );
-      });
-
-      test('increment term position', async (): Promise<void> => {
-        const setId = 'setId';
-        const currentTermPosition = 2;
-
-        await saga
-          .provide([
-            [
-              matchers.call.fn(mockedSessionModel.getWritingTermPosition),
-              currentTermPosition,
-            ],
-          ])
-          .dispatch(
-            createAction(ActionType.WRITING__SAVE_RESULT, {
-              setId,
-              vocabularyList: new Map(),
-              feedbackList: new Map(),
-              autoArchiveSettings: {
-                autoArchiveEnabled: true,
-                spacedRepetitionLevelThreshold: 0,
-                writingLevelThreshold: 6,
-              },
-              incrementTermPosition: true,
-            })
-          )
-          .put(createAction(ActionType.WRITING__SAVING_RESULT, null))
-          .call.fn(mockedUserDatabase.transaction)
-          .put(createAction(ActionType.WRITING__SAVE_RESULT_SUCCEEDED, null))
-          .silentRun();
-
-        expect(
-          mockedSessionModel.upsertWritingTermPosition
-        ).toHaveBeenCalledWith(
-          mockedTransaction,
-          setId,
-          currentTermPosition + 1
-        );
-      });
-
-      test('does not increment term position', async (): Promise<void> => {
-        const setId = 'setId';
-
-        await saga
-          .dispatch(
-            createAction(ActionType.WRITING__SAVE_RESULT, {
-              setId,
-              vocabularyList: new Map(),
-              feedbackList: new Map(),
-              autoArchiveSettings: {
-                autoArchiveEnabled: true,
-                spacedRepetitionLevelThreshold: 0,
-                writingLevelThreshold: 6,
-              },
-              incrementTermPosition: false,
-            })
-          )
-          .put(createAction(ActionType.WRITING__SAVING_RESULT, null))
-          .call.fn(mockedUserDatabase.transaction)
-          .put(createAction(ActionType.WRITING__SAVE_RESULT_SUCCEEDED, null))
-          .silentRun();
-
-        expect(
-          mockedSessionModel.upsertWritingTermPosition
-        ).not.toHaveBeenCalled();
       });
     });
   });
