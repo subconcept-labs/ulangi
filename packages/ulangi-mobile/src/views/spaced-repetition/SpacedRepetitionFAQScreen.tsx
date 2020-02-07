@@ -58,7 +58,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
         ),
       },
       {
-        title: 'How does this work?',
+        title: 'How does Spaced repetition work?',
         content:
           'In each review session, you will be asked to review a certain number of terms then provide feedback of how well you memorize them. The system will adjust level and schedule review time based on your feedback.',
       },
@@ -77,6 +77,11 @@ export class SpacedRepetitionFAQScreen extends React.Component<
             again.
           </DefaultText>
         ),
+      },
+      {
+        title: 'Can I review without Internet connection?',
+        content:
+          'Once assets (audios or images) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
       },
     ],
   };
