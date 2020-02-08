@@ -62,7 +62,6 @@ export class WritingLessonScreenFactory extends ScreenFactory {
 
     const saveResultDelegate = new WritingSaveResultDelegate(
       this.eventBus,
-      this.props.rootStore.setStore,
       observableScreen.vocabularyList,
       observableScreen.feedbackListState.feedbackList,
       autoArchiveSettingsDelegate,

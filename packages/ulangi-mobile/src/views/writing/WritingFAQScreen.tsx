@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableThemeStore } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -22,6 +23,7 @@ export interface WritingFAQScreenProps {
   themeStore: ObservableThemeStore;
 }
 
+@observer
 export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
   public get styles(): WritingFAQScreenStyles {
     return this.props.themeStore.theme === Theme.LIGHT
@@ -40,6 +42,11 @@ export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
         title: 'What algorithm are we using for scheduling?',
         content:
           'We are using the Leitner system algorithm. Each of your vocabulary term has a WR level. The higher the level is, the more time you have to wait to write it again.',
+      },
+      {
+        title: 'Can I review without Internet connection?',
+        content:
+          'Once assets (audios or images) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
       },
     ],
   };

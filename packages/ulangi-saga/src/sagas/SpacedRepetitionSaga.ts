@@ -13,11 +13,9 @@ import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
 import { ErrorCode, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
-  SessionModel,
   SpacedRepetitionModel,
   VocabularyModel,
 } from '@ulangi/ulangi-local-database';
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
@@ -25,30 +23,24 @@ import { PromiseType } from 'utility-types';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
-import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
+import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class SpacedRepetitionSaga extends ProtectedSaga {
-  private sequenceStrategy = new ModSequenceStrategy();
+  private sequenceStrategy = new LevelSequenceStrategy();
   private spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
-  private sharedDb: SQLiteDatabase;
   private userDb: SQLiteDatabase;
-  private sessionModel: SessionModel;
   private vocabularyModel: VocabularyModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
 
   public constructor(
-    sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase,
-    sessionModel: SessionModel,
     vocabularyModel: VocabularyModel,
     spacedRepetitionModel: SpacedRepetitionModel
   ) {
     super();
-    this.sharedDb = sharedDb;
     this.userDb = userDb;
-    this.sessionModel = sessionModel;
     this.vocabularyModel = vocabularyModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
   }
@@ -56,16 +48,12 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowFetchVocabulary],
-      config.spacedRepetition.maxLevel,
       config.spacedRepetition.minPerLesson
     );
     yield fork([this, this.allowSaveResult], config.spacedRepetition.maxLevel);
   }
 
-  public *allowFetchVocabulary(
-    maxLevel: number,
-    minPerLesson: number
-  ): IterableIterator<any> {
+  public *allowFetchVocabulary(minPerLesson: number): IterableIterator<any> {
     while (true) {
       const action: Action<
         ActionType.SPACED_REPETITION__FETCH_VOCABULARY
@@ -85,15 +73,8 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
           })
         );
 
-        const termPosition = yield call(
-          [this, this.getCurrentTermPosition],
-          setId,
-          maxLevel
-        );
-
-        const orderedLevels = this.sequenceStrategy.getLevelsByTermPosition(
-          termPosition,
-          maxLevel
+        const levelSequence = this.sequenceStrategy.getLevelSequence(
+          'PRIORITIZE_LEARNED_TERMS'
         );
 
         const vocabularyList: Vocabulary[] = yield call(
@@ -102,7 +83,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
           initialInterval,
           selectedCategoryNames,
           undefined,
-          orderedLevels,
+          levelSequence,
           limit
         );
 
@@ -118,7 +99,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
             initialInterval,
             undefined,
             selectedCategoryNames, // exclude selected categories
-            orderedLevels,
+            levelSequence,
             limit
           );
           vocabularyList.push(...newList);
@@ -155,11 +136,9 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         ActionType.SPACED_REPETITION__SAVE_RESULT
       > = yield take(ActionType.SPACED_REPETITION__SAVE_RESULT);
       const {
-        setId,
         vocabularyList,
         feedbackList,
         autoArchiveSettings,
-        incrementTermPosition,
       } = action.payload;
 
       try {
@@ -212,10 +191,6 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
           }
         );
 
-        if (incrementTermPosition === true) {
-          yield call([this, this.incrementTermPosition], setId, maxLevel);
-        }
-
         yield put(
           createAction(
             ActionType.SPACED_REPETITION__SAVE_RESULT_SUCCEEDED,
@@ -238,12 +213,12 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     initialInterval: number,
     selectedCategoryNames: undefined | string[],
     excludedCategoryNames: undefined | string[],
-    orderedLevels: readonly number[],
+    levelSequence: readonly number[],
     limit: number
   ): IterableIterator<any> {
     let vocabularyList: Vocabulary[] = [];
 
-    const levels = orderedLevels.slice();
+    const levels = levelSequence.slice();
     // Fetch vocabulary by each level in order until the limit is reached
     while (levels.length > 0 && vocabularyList.length < limit) {
       const currentLevel = assertExists(levels.shift());
@@ -274,44 +249,5 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     }
 
     return vocabularyList;
-  }
-
-  private *getCurrentTermPosition(
-    setId: string,
-    maxLevel: number
-  ): IterableIterator<any> {
-    const termPosition: PromiseType<
-      ReturnType<SessionModel['getSpacedRepetitionTermPosition']>
-    > = yield call(
-      [this.sessionModel, 'getSpacedRepetitionTermPosition'],
-      this.sharedDb,
-      setId
-    );
-    // If there is no termPosition, generate a random one
-    return termPosition === null ? _.random(0, maxLevel - 1) : termPosition;
-  }
-
-  private *incrementTermPosition(
-    setId: string,
-    maxLevel: number
-  ): IterableIterator<any> {
-    const termPosition = yield call(
-      [this, this.getCurrentTermPosition],
-      setId,
-      maxLevel
-    );
-
-    const nextTermPosition = (termPosition + 1) % maxLevel;
-
-    yield call(
-      [this.sharedDb, 'transaction'],
-      (tx: Transaction): void => {
-        this.sessionModel.upsertSpacedRepetitionTermPosition(
-          tx,
-          setId,
-          nextTermPosition
-        );
-      }
-    );
   }
 }

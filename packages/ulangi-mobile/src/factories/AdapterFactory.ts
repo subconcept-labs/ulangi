@@ -13,6 +13,7 @@ import {
   NotificationsAdapter,
   SystemThemeAdapter,
 } from '@ulangi/ulangi-saga';
+import { Platform } from 'react-native';
 import * as RNDarkMode from 'react-native-dark-mode';
 import * as RNFileSystem from 'react-native-fs';
 import * as RNSqlite from 'react-native-sqlite-storage';
@@ -38,7 +39,10 @@ export class AdapterFactory {
   public createAdapters(): AdapterList {
     const adMob = null;
     const analytics = null;
-    const audioPlayer = new AudioPlayerAdapter(RNAudioPlayer);
+    const audioPlayer = new AudioPlayerAdapter(
+      Platform.OS === 'ios' ? 'ios' : 'other',
+      RNAudioPlayer,
+    );
     const crashlytics = null;
     const facebook = null;
     const fileSystem = new FileSystemAdapter(RNFileSystem);

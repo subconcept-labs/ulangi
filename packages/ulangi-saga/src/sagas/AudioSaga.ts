@@ -12,7 +12,6 @@ import { SessionModel } from '@ulangi/ulangi-local-database';
 import * as querystring from 'query-string';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
-import * as uuid from 'uuid';
 
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { FileSystem, FileSystemAdapter } from '../adapters/FileSystemAdapter';
@@ -21,13 +20,15 @@ import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
+import sanitizeFileName = require('sanitize-filename');
+
 export class AudioSaga extends ProtectedSaga {
   private sharedDb: SQLiteDatabase;
   private sessionModel: SessionModel;
   private fileSystem: FileSystemAdapter;
   private audioPlayer: AudioPlayerAdapter;
 
-  private synthesizedMap: Map<string, string>;
+  private rootFolderPath: string;
 
   public constructor(
     sharedDb: SQLiteDatabase,
@@ -40,8 +41,7 @@ export class AudioSaga extends ProtectedSaga {
     this.sessionModel = sessionModel;
     this.fileSystem = fileSystem;
     this.audioPlayer = audioPlayer;
-
-    this.synthesizedMap = new Map();
+    this.rootFolderPath = this.fileSystem.DocumentDirectoryPath;
   }
 
   public *run(env: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -59,7 +59,7 @@ export class AudioSaga extends ProtectedSaga {
 
   public *allowSynthesizeSpeech(
     apiUrl: string,
-    cacheFolderName: string
+    cacheFolder: string
   ): IterableIterator<any> {
     while (true) {
       const action: Action<ActionType.AUDIO__SYNTHESIZE_SPEECH> = yield take(
@@ -74,23 +74,18 @@ export class AudioSaga extends ProtectedSaga {
           ReturnType<SessionModel['getAccessToken']>
         > = yield call([this.sessionModel, 'getAccessToken'], this.sharedDb);
 
-        yield call([this, this.createCacheFolderIfNotExists], cacheFolderName);
+        const folderPath =
+          this.rootFolderPath + '/' + cacheFolder + '/' + languageCode;
 
-        let audioKey = languageCode + '-' + text;
-        let audioFilePath = yield call(
-          [this, this.getSynthesizedAudioFile],
-          audioKey
-        );
+        yield call([this, this.createFolderIfNotExists], folderPath);
 
-        if (typeof audioFilePath === 'undefined') {
-          audioFilePath =
-            this.fileSystem.CachesDirectoryPath +
-            '/' +
-            cacheFolderName +
-            '/' +
-            uuid.v4() +
-            '.mp3';
+        const sanitizedFileName = sanitizeFileName(text);
 
+        const audioFilePath = folderPath + '/' + sanitizedFileName + '.mp3';
+
+        const exists = yield call([this.fileSystem, 'exists'], audioFilePath);
+
+        if (exists === false) {
           const { promise } = this.fileSystem.downloadFile({
             fromUrl:
               apiUrl +
@@ -109,9 +104,7 @@ export class AudioSaga extends ProtectedSaga {
 
           const response: FileSystem.DownloadResult = yield promise;
 
-          if (response.statusCode === 200) {
-            this.synthesizedMap.set(audioKey, audioFilePath);
-          } else {
+          if (response.statusCode !== 200) {
             throw new Error(ErrorCode.GENERAL__UNKNOWN_ERROR);
           }
         }
@@ -134,7 +127,7 @@ export class AudioSaga extends ProtectedSaga {
   }
 
   public *allowClearSynthesizedSpeechCache(
-    cacheFolderName: string
+    cacheFolder: string
   ): IterableIterator<any> {
     while (true) {
       yield take(ActionType.AUDIO__CLEAR_SYNTHESIZED_SPEECH_CACHE);
@@ -147,7 +140,9 @@ export class AudioSaga extends ProtectedSaga {
           )
         );
 
-        yield call([this, this.deleteCacheFolderIfExists], cacheFolderName);
+        const folderPath = this.rootFolderPath + '/' + cacheFolder;
+
+        yield call([this, this.deleteFolderIfExists], folderPath);
 
         yield put(
           createAction(
@@ -198,44 +193,19 @@ export class AudioSaga extends ProtectedSaga {
     }
   }
 
-  private *getSynthesizedAudioFile(key: string): IterableIterator<any> {
-    let audioFilePath = this.synthesizedMap.get(key);
-
-    if (typeof audioFilePath !== 'undefined') {
-      const exists = yield call([this.fileSystem, 'exists'], audioFilePath);
-      return exists ? audioFilePath : undefined;
-    } else {
-      return undefined;
-    }
-  }
-
-  private *createCacheFolderIfNotExists(
-    folderName: string
-  ): IterableIterator<any> {
-    const cacheFolder = this.fileSystem.CachesDirectoryPath + '/' + folderName;
-
-    const exists = yield call([this.fileSystem, 'exists'], cacheFolder);
+  private *createFolderIfNotExists(folderPath: string): IterableIterator<any> {
+    const exists = yield call([this.fileSystem, 'exists'], folderPath);
 
     if (!exists) {
-      yield call(
-        [this.fileSystem, 'mkdir'],
-        this.fileSystem.CachesDirectoryPath + '/' + folderName
-      );
+      yield call([this.fileSystem, 'mkdir'], folderPath);
     }
   }
 
-  private *deleteCacheFolderIfExists(
-    folderName: string
-  ): IterableIterator<any> {
-    const cacheFolder = this.fileSystem.CachesDirectoryPath + '/' + folderName;
-
-    const exists = yield call([this.fileSystem, 'exists'], cacheFolder);
+  private *deleteFolderIfExists(folderPath: string): IterableIterator<any> {
+    const exists = yield call([this.fileSystem, 'exists'], folderPath);
 
     if (exists) {
-      yield call(
-        [this.fileSystem, 'unlink'],
-        this.fileSystem.CachesDirectoryPath + '/' + folderName
-      );
+      yield call([this.fileSystem, 'unlink'], folderPath);
     }
   }
 }

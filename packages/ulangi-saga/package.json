@@ -24,6 +24,7 @@
     "@ulangi/ulangi-action": "^3.6.0",
     "@ulangi/ulangi-common": "^3.6.0",
     "@ulangi/ulangi-local-database": "^3.6.0",
+    "sanitize-filename": "^1.6.3",
     "autobind-decorator": "^2.1.0",
     "axios": "^0.18.0",
     "eventemitter3": "^3.1.0",

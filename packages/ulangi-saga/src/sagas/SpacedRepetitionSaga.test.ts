@@ -23,7 +23,6 @@ import {
   mockTransaction,
 } from '@ulangi/ulangi-common/testing-utils';
 import {
-  SessionModel,
   SpacedRepetitionModel,
   VocabularyModel,
 } from '@ulangi/ulangi-local-database';
@@ -32,7 +31,7 @@ import * as moment from 'moment';
 import { ExpectApi, expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
+import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { SpacedRepetitionSaga } from './SpacedRepetitionSaga';
 
 const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
@@ -40,7 +39,6 @@ const { SQLiteDatabase: SQLiteDatabaseMock } = jest.genMockFromModule(
 );
 
 const {
-  SessionModel: SessionModelMock,
   VocabularyModel: VocabularyModelMock,
   SpacedRepetitionModel: SpacedRepetitionModelMock,
 } = jest.genMockFromModule('@ulangi/ulangi-local-database');
@@ -50,7 +48,6 @@ describe('SpacedRepetitionSaga', (): void => {
     let mockedSharedDatabase: jest.Mocked<SQLiteDatabase>;
     let mockedUserDatabase: jest.Mocked<SQLiteDatabase>;
     let mockedTransaction: jest.Mocked<Transaction>;
-    let mockedSessionModel: jest.Mocked<SessionModel>;
     let mockedVocabularyModel: jest.Mocked<VocabularyModel>;
     let mockedSpacedRepetitionModel: jest.Mocked<SpacedRepetitionModel>;
     let spacedRepetitionSaga: SpacedRepetitionSaga;
@@ -58,27 +55,22 @@ describe('SpacedRepetitionSaga', (): void => {
 
     beforeEach(
       (): void => {
-        mockedSharedDatabase = new SQLiteDatabaseMock();
         mockedUserDatabase = new SQLiteDatabaseMock();
         mockedSharedDatabase.transaction = mockTransaction(mockedTransaction);
         mockedUserDatabase.transaction = mockTransaction(mockedTransaction);
 
-        mockedSessionModel = new SessionModelMock();
         mockedVocabularyModel = new VocabularyModelMock();
         mockedSpacedRepetitionModel = new SpacedRepetitionModelMock();
 
         spacedRepetitionSaga = new SpacedRepetitionSaga(
-          mockedSharedDatabase,
           mockedUserDatabase,
-          mockedSessionModel,
           mockedVocabularyModel,
           mockedSpacedRepetitionModel
         );
       }
     );
 
-    describe('Test allowFetchVocabulary with maxLevel = 10, minPerLesson = 3', (): void => {
-      const maxLevel = 10;
+    describe('Test allowFetchVocabulary with minPerLesson = 3', (): void => {
       const minPerLesson = 3;
 
       beforeEach(
@@ -87,7 +79,6 @@ describe('SpacedRepetitionSaga', (): void => {
             spacedRepetitionSaga.allowFetchVocabulary.bind(
               spacedRepetitionSaga
             ),
-            maxLevel,
             minPerLesson
           );
         }
@@ -102,7 +93,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 5;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(10)
@@ -115,19 +105,12 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          const levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           await saga
             .provide([
-              [
-                matchers.call.fn(
-                  mockedSessionModel.getSpacedRepetitionTermPosition
-                ),
-                termPosition,
-              ],
               [
                 matchers.call.fn(
                   mockedSpacedRepetitionModel.getDueVocabularyListByLevel
@@ -148,11 +131,6 @@ describe('SpacedRepetitionSaga', (): void => {
               createAction(ActionType.SPACED_REPETITION__FETCHING_VOCABULARY, {
                 setId,
               })
-            )
-            .call(
-              [mockedSessionModel, 'getSpacedRepetitionTermPosition'],
-              mockedSharedDatabase,
-              setId
             )
             .call(
               [mockedSpacedRepetitionModel, 'getDueVocabularyListByLevel'],
@@ -183,7 +161,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(3)
@@ -196,9 +173,8 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -270,7 +246,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(2)
@@ -283,9 +258,8 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -358,7 +332,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(3)
@@ -369,9 +342,8 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -448,7 +420,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(2)
@@ -461,9 +432,8 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -553,7 +523,6 @@ describe('SpacedRepetitionSaga', (): void => {
           const setId = 'setId';
           const initialInterval = 12;
           const limit = 10;
-          const termPosition = 0;
           const selectedCategoryNames = ['category'];
 
           const vocabularyList = Array(1)
@@ -566,9 +535,8 @@ describe('SpacedRepetitionSaga', (): void => {
               }
             );
 
-          let levels = new ModSequenceStrategy().getLevelsByTermPosition(
-            termPosition,
-            maxLevel
+          let levels = new LevelSequenceStrategy().getLevelSequence(
+            'PRIORITIZE_LEARNED_TERMS'
           );
 
           saga
@@ -688,7 +656,6 @@ describe('SpacedRepetitionSaga', (): void => {
       test('update levels correctly based on feedback', async (): Promise<
         void
       > => {
-        const setId = 'setId';
         const feedbackList = new Map([
           [vocabularyList[0].vocabularyId, Feedback.POOR],
           [vocabularyList[1].vocabularyId, Feedback.FAIR],
@@ -700,7 +667,6 @@ describe('SpacedRepetitionSaga', (): void => {
         await saga
           .dispatch(
             createAction(ActionType.SPACED_REPETITION__SAVE_RESULT, {
-              setId,
               vocabularyList: new Map(
                 vocabularyList.map(
                   (vocabulary): [string, Vocabulary] => [
@@ -715,7 +681,6 @@ describe('SpacedRepetitionSaga', (): void => {
                 spacedRepetitionLevelThreshold: 10,
                 writingLevelThreshold: 0,
               },
-              incrementTermPosition: true,
             })
           )
           .put(createAction(ActionType.SPACED_REPETITION__SAVING_RESULT, null))
@@ -773,7 +738,6 @@ describe('SpacedRepetitionSaga', (): void => {
       test('archive vocabulary based on vocabulary level', async (): Promise<
         void
       > => {
-        const setId = 'setId';
         const feedbackList = new Map([
           [vocabularyList[0].vocabularyId, Feedback.POOR],
           [vocabularyList[1].vocabularyId, Feedback.FAIR],
@@ -785,7 +749,6 @@ describe('SpacedRepetitionSaga', (): void => {
         await saga
           .dispatch(
             createAction(ActionType.SPACED_REPETITION__SAVE_RESULT, {
-              setId,
               vocabularyList: new Map(
                 vocabularyList.map(
                   (vocabulary): [string, Vocabulary] => [
@@ -800,7 +763,6 @@ describe('SpacedRepetitionSaga', (): void => {
                 spacedRepetitionLevelThreshold: 6,
                 writingLevelThreshold: 0,
               },
-              incrementTermPosition: true,
             })
           )
           .put(createAction(ActionType.SPACED_REPETITION__SAVING_RESULT, null))
@@ -856,83 +818,6 @@ describe('SpacedRepetitionSaga', (): void => {
           ),
           'local'
         );
-      });
-
-      test('increment term position', async (): Promise<void> => {
-        const setId = 'setId';
-        const currentTermPosition = 2;
-
-        await saga
-          .provide([
-            [
-              matchers.call.fn(
-                mockedSessionModel.getSpacedRepetitionTermPosition
-              ),
-              currentTermPosition,
-            ],
-          ])
-          .dispatch(
-            createAction(ActionType.SPACED_REPETITION__SAVE_RESULT, {
-              setId,
-              vocabularyList: new Map(),
-              feedbackList: new Map(),
-              autoArchiveSettings: {
-                autoArchiveEnabled: true,
-                spacedRepetitionLevelThreshold: 6,
-                writingLevelThreshold: 0,
-              },
-              incrementTermPosition: true,
-            })
-          )
-          .put(createAction(ActionType.SPACED_REPETITION__SAVING_RESULT, null))
-          .call.fn(mockedUserDatabase.transaction)
-          .put(
-            createAction(
-              ActionType.SPACED_REPETITION__SAVE_RESULT_SUCCEEDED,
-              null
-            )
-          )
-          .silentRun();
-
-        expect(
-          mockedSessionModel.upsertSpacedRepetitionTermPosition
-        ).toHaveBeenCalledWith(
-          mockedTransaction,
-          setId,
-          currentTermPosition + 1
-        );
-      });
-
-      test('does not increment term position', async (): Promise<void> => {
-        const setId = 'setId';
-
-        await saga
-          .dispatch(
-            createAction(ActionType.SPACED_REPETITION__SAVE_RESULT, {
-              setId,
-              vocabularyList: new Map(),
-              feedbackList: new Map(),
-              autoArchiveSettings: {
-                autoArchiveEnabled: true,
-                spacedRepetitionLevelThreshold: 6,
-                writingLevelThreshold: 0,
-              },
-              incrementTermPosition: false,
-            })
-          )
-          .put(createAction(ActionType.SPACED_REPETITION__SAVING_RESULT, null))
-          .call.fn(mockedUserDatabase.transaction)
-          .put(
-            createAction(
-              ActionType.SPACED_REPETITION__SAVE_RESULT_SUCCEEDED,
-              null
-            )
-          )
-          .silentRun();
-
-        expect(
-          mockedSessionModel.upsertSpacedRepetitionTermPosition
-        ).not.toHaveBeenCalled();
       });
     });
   });

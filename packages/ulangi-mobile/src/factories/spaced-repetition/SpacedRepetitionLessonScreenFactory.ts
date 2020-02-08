@@ -52,7 +52,6 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
 
     const saveResultDelegate = new SpacedRepetitionSaveResultDelegate(
       this.eventBus,
-      this.props.rootStore.setStore,
       observableScreen.vocabularyList,
       observableScreen.feedbackListState.feedbackList,
       autoArchiveSettingsDelegate,

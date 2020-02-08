@@ -105,7 +105,7 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     title_text: {
-      color: config.styles.dark.primaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
     },
 
     content_container: {
@@ -117,7 +117,7 @@ export const darkStyles = StyleSheet.create(
     },
 
     index_container: {
-      backgroundColor: config.styles.dark.primaryTextColor,
+      backgroundColor: config.styles.dark.secondaryTextColor,
     },
 
     index: {

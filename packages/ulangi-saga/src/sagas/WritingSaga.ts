@@ -12,12 +12,7 @@ import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
 import { ErrorCode, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
-import {
-  SessionModel,
-  VocabularyModel,
-  WritingModel,
-} from '@ulangi/ulangi-local-database';
-import * as _ from 'lodash';
+import { VocabularyModel, WritingModel } from '@ulangi/ulangi-local-database';
 import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
@@ -25,47 +20,34 @@ import { PromiseType } from 'utility-types';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
-import { ModSequenceStrategy } from '../strategies/ModSequenceStrategy';
+import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class WritingSaga extends ProtectedSaga {
-  private sequenceStrategy = new ModSequenceStrategy();
+  private sequenceStrategy = new LevelSequenceStrategy();
   private writingScheduler = new WritingScheduler();
 
-  private sharedDb: SQLiteDatabase;
   private userDb: SQLiteDatabase;
-  private sessionModel: SessionModel;
   private vocabularyModel: VocabularyModel;
   private writingModel: WritingModel;
 
   public constructor(
-    sharedDb: SQLiteDatabase,
     userDb: SQLiteDatabase,
-    sessionModel: SessionModel,
     vocabularyModel: VocabularyModel,
     writingModel: WritingModel
   ) {
     super();
-    this.sharedDb = sharedDb;
     this.userDb = userDb;
-    this.sessionModel = sessionModel;
     this.vocabularyModel = vocabularyModel;
     this.writingModel = writingModel;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
-    yield fork(
-      [this, this.allowFetchVocabulary],
-      config.writing.maxLevel,
-      config.writing.minPerLesson
-    );
+    yield fork([this, this.allowFetchVocabulary], config.writing.minPerLesson);
     yield fork([this, this.allowSaveResult], config.writing.maxLevel);
   }
 
-  public *allowFetchVocabulary(
-    maxLevel: number,
-    minPerLesson: number
-  ): IterableIterator<any> {
+  public *allowFetchVocabulary(minPerLesson: number): IterableIterator<any> {
     while (true) {
       const action: Action<ActionType.WRITING__FETCH_VOCABULARY> = yield take(
         ActionType.WRITING__FETCH_VOCABULARY
@@ -83,15 +65,8 @@ export class WritingSaga extends ProtectedSaga {
           createAction(ActionType.WRITING__FETCHING_VOCABULARY, { setId })
         );
 
-        const termPosition = yield call(
-          [this, this.getCurrentTermPosition],
-          setId,
-          maxLevel
-        );
-
-        const orderedLevels = this.sequenceStrategy.getLevelsByTermPosition(
-          termPosition,
-          maxLevel
+        const levelSequence = this.sequenceStrategy.getLevelSequence(
+          'PRIORITIZE_LEARNED_TERMS'
         );
 
         const vocabularyList = yield call(
@@ -100,7 +75,7 @@ export class WritingSaga extends ProtectedSaga {
           initialInterval,
           selectedCategoryNames,
           undefined,
-          orderedLevels,
+          levelSequence,
           limit
         );
 
@@ -115,7 +90,7 @@ export class WritingSaga extends ProtectedSaga {
             initialInterval,
             undefined,
             selectedCategoryNames,
-            orderedLevels,
+            levelSequence,
             limit
           );
           vocabularyList.push(...newList);
@@ -149,11 +124,9 @@ export class WritingSaga extends ProtectedSaga {
         ActionType.WRITING__SAVE_RESULT
       );
       const {
-        setId,
         vocabularyList,
         feedbackList,
         autoArchiveSettings,
-        incrementTermPosition,
       } = action.payload;
 
       try {
@@ -205,10 +178,6 @@ export class WritingSaga extends ProtectedSaga {
           }
         );
 
-        if (incrementTermPosition === true) {
-          yield call([this, this.incrementTermPosition], setId, maxLevel);
-        }
-
         yield put(
           createAction(ActionType.WRITING__SAVE_RESULT_SUCCEEDED, null)
         );
@@ -228,12 +197,12 @@ export class WritingSaga extends ProtectedSaga {
     initialInterval: number,
     selectedCategoryNames: undefined | string[],
     excludedCategoryNames: undefined | string[],
-    orderedLevel: readonly number[],
+    levelSequence: readonly number[],
     limit: number
   ): IterableIterator<any> {
     let vocabularyList: Vocabulary[] = [];
 
-    const levels = orderedLevel.slice();
+    const levels = levelSequence.slice();
     // Fetch vocabulary by each level until the limit is reached
 
     while (levels.length > 0 && vocabularyList.length < limit) {
@@ -265,43 +234,5 @@ export class WritingSaga extends ProtectedSaga {
     }
 
     return vocabularyList;
-  }
-
-  private *getCurrentTermPosition(
-    setId: string,
-    maxLevel: number
-  ): IterableIterator<any> {
-    const termPosition: PromiseType<
-      ReturnType<SessionModel['getWritingTermPosition']>
-    > = yield call(
-      [this.sessionModel, 'getWritingTermPosition'],
-      this.sharedDb,
-      setId
-    );
-    return termPosition === null ? _.random(0, maxLevel - 1) : termPosition;
-  }
-
-  private *incrementTermPosition(
-    setId: string,
-    maxLevel: number
-  ): IterableIterator<any> {
-    const termPosition = yield call(
-      [this, this.getCurrentTermPosition],
-      setId,
-      maxLevel
-    );
-
-    const nextTermPosition = (termPosition + 1) % maxLevel;
-
-    yield call(
-      [this.sharedDb, 'transaction'],
-      (tx: Transaction): void => {
-        this.sessionModel.upsertWritingTermPosition(
-          tx,
-          setId,
-          nextTermPosition
-        );
-      }
-    );
   }
 }
