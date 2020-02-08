@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
 import {
   ObservableWritingFormState,
   ObservableWritingResult,
@@ -13,8 +12,6 @@ import {
 } from '@ulangi/ulangi-observable';
 
 export class WritingFormDelegate {
-  private vocabularyExtraFieldParser = new VocabularyExtraFieldParser();
-
   private observer: Observer;
   private writingFormState: ObservableWritingFormState;
   private writingResult: ObservableWritingResult;
@@ -52,9 +49,8 @@ export class WritingFormDelegate {
       .map((_, index): number => index + 1)
       .reduce((sum, current): number => sum + current);
 
-    const vocabularyTerm = this.vocabularyExtraFieldParser.parse(
-      this.writingFormState.currentQuestion.testingVocabulary.vocabularyText,
-    ).vocabularyTerm;
+    const vocabularyTerm = this.writingFormState.currentQuestion
+      .testingVocabulary.vocabularyTerm;
 
     this.writingFormState.currentHint = vocabularyTerm.substring(
       0,

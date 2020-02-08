@@ -28,7 +28,6 @@ export interface WritingFormStyles {
   hint_text: TextStyle;
   underline: ViewStyle;
   button_container: ViewStyle;
-  disable_btn: ViewStyle;
   message: TextStyle;
   message_highlighted: TextStyle;
 }
@@ -97,13 +96,6 @@ export const baseStyles: WritingFormStyles = {
     marginLeft: 5,
   },
 
-  disable_btn: {
-    borderRadius: 10,
-    marginTop: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-
   message: {
     flexShrink: 1,
     fontSize: 15,
@@ -135,10 +127,6 @@ export const lightStyles = StyleSheet.create(
       backgroundColor: config.styles.light.secondaryBackgroundColor,
     },
 
-    disable_btn: {
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
-
     hint_text: {
       color: config.styles.light.primaryTextColor,
     },
@@ -164,10 +152,6 @@ export const darkStyles = StyleSheet.create(
     },
 
     underline: {
-      backgroundColor: config.styles.dark.primaryTextColor,
-    },
-
-    disable_btn: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
 

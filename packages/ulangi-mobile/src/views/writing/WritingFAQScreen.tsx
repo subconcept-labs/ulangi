@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableThemeStore } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -22,6 +23,7 @@ export interface WritingFAQScreenProps {
   themeStore: ObservableThemeStore;
 }
 
+@observer
 export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
   public get styles(): WritingFAQScreenStyles {
     return this.props.themeStore.theme === Theme.LIGHT
