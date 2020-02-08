@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/minhloi/ulangi/compare/v3.6.0...v3.7.0) (2020-02-08)
+
+
+### Bug Fixes
+
+* make DismissKeyboardView not to close on scroll ([85ac8d4](https://github.com/minhloi/ulangi/commit/85ac8d4))
+* small UI fixes for Writing ([7650c8e](https://github.com/minhloi/ulangi/commit/7650c8e))
+* store audio files locally for offline access ([c3dac19](https://github.com/minhloi/ulangi/commit/c3dac19))
+
+
+### Features
+
+* allow to skip in Writing lesson ([55abc17](https://github.com/minhloi/ulangi/commit/55abc17)), closes [#50](https://github.com/minhloi/ulangi/issues/50)
+
+
+
+
+
 # [3.6.0](https://github.com/minhloi/ulangi/compare/v3.5.0...v3.6.0) (2020-02-06)
 
 
