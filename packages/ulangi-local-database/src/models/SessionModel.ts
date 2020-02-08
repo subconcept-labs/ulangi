@@ -19,82 +19,12 @@ export class SessionModel {
     return this.getValueFromSession(db, 'accessToken');
   }
 
-  public getSpacedRepetitionTermPosition(
-    db: SQLiteDatabase,
-    setId: string
-  ): Promise<null | number> {
-    return new Promise(
-      async (resolve, reject): Promise<void> => {
-        try {
-          const termPosition = await this.getValueFromSession(
-            db,
-            'spacedRepetitionTermPosition_for_set_' + setId
-          );
-          if (termPosition === null) {
-            resolve(null);
-          } else {
-            resolve(parseInt(termPosition));
-          }
-        } catch (error) {
-          reject(error);
-        }
-      }
-    );
-  }
-
-  public getWritingTermPosition(
-    db: SQLiteDatabase,
-    setId: string
-  ): Promise<null | number> {
-    return new Promise(
-      async (resolve, reject): Promise<void> => {
-        try {
-          const termPosition = await this.getValueFromSession(
-            db,
-            'writingTermPosition_for_set_' + setId
-          );
-          if (termPosition === null) {
-            resolve(null);
-          } else {
-            resolve(parseInt(termPosition));
-          }
-        } catch (error) {
-          reject(error);
-        }
-      }
-    );
-  }
-
   public upsertUserId(tx: Transaction, userId: string): void {
     return this.upsertSession(tx, 'userId', userId);
   }
 
   public upsertAccessToken(tx: Transaction, accessToken: string): void {
     return this.upsertSession(tx, 'accessToken', accessToken);
-  }
-
-  public upsertSpacedRepetitionTermPosition(
-    tx: Transaction,
-    setId: string,
-    termPosition: number
-  ): void {
-    return this.upsertSession(
-      tx,
-      'spacedRepetitionTermPosition_for_set_' + setId,
-      termPosition.toString()
-    );
-  }
-
-  public upsertWritingTermPosition(
-    tx: Transaction,
-    setId: string,
-    termPosition: number
-  ): void {
-    return this.upsertSession(
-      tx,
-      'writingTermPosition_for_set_' + setId,
-      termPosition.toString()
-    );
   }
 
   public deleteAllSessionValues(tx: Transaction): void {

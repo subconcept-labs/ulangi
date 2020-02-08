@@ -45,7 +45,7 @@ export class ReviewFeedbackScreenDelegate {
   public saveResult(callback: {
     onSaveSucceeded: (feedbackList: ReadonlyMap<string, Feedback>) => void;
   }): void {
-    this.saveResultDelegate.save(false, {
+    this.saveResultDelegate.save({
       onSaving: (): void => this.dialogDelegate.showSavingDialog(),
       onSaveSucceeded: (): void => {
         callback.onSaveSucceeded(

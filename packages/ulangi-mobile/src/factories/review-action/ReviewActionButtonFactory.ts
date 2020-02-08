@@ -22,16 +22,19 @@ export class ReviewActionButtonFactory {
     );
   }
 
-  public createNextButton(onPress: () => void): ObservableReviewActionButton {
+  public createSkipButton(
+    isDisabled: boolean,
+    onPress: () => void,
+  ): ObservableReviewActionButton {
     return new ObservableReviewActionButton(
-      'NEXT',
+      'SKIP',
       undefined,
-      ReviewActionBarIds.NEXT_BTN,
+      ReviewActionBarIds.SKIP_BTN,
       {
         light: Images.ARROW_RIGHT_BLACK_25X25,
         dark: Images.ARROW_RIGHT_MILK_25X25,
       },
-      false,
+      isDisabled,
       false,
       onPress,
     );

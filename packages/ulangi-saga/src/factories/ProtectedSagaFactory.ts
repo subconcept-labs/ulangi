@@ -111,16 +111,12 @@ export class ProtectedSagaFactory {
       ),
       new LibrarySaga(this.sharedDb, this.modelList.sessionModel),
       new SpacedRepetitionSaga(
-        this.sharedDb,
         this.userDb,
-        this.modelList.sessionModel,
         this.modelList.vocabularyModel,
         this.modelList.spacedRepetitionModel
       ),
       new WritingSaga(
-        this.sharedDb,
         this.userDb,
-        this.modelList.sessionModel,
         this.modelList.vocabularyModel,
         this.modelList.writingModel
       ),

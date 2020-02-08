@@ -153,6 +153,15 @@ export class WritingLessonScreenDelegate {
           this.synthesizeAndSpeak(testingVocabulary.vocabularyTerm, false);
         },
       ),
+      this.reviewActionButtonFactory.createSkipButton(
+        this.observableScreen.writingFormState.isCurrentAnswerCorrect === true,
+        (): void => {
+          this.setAnswer(
+            this.observableScreen.writingFormState.currentQuestion
+              .testingVocabulary.vocabularyTerm,
+          );
+        },
+      ),
       this.reviewActionButtonFactory.createEditButton(
         (): void => {
           this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
@@ -219,6 +228,9 @@ export class WritingLessonScreenDelegate {
             (button): void => {
               if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
                 button.subtitle = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
+              }
+              if (button.testID === ReviewActionBarIds.SKIP_BTN) {
+                button.disabled = true;
               }
             },
           );
@@ -417,7 +429,7 @@ export class WritingLessonScreenDelegate {
   }
 
   private saveResult(): void {
-    this.saveResultDelegate.save(true, {
+    this.saveResultDelegate.save({
       onSaving: (): void => {
         this.observableScreen.saveState.set(ActivityState.ACTIVE);
       },

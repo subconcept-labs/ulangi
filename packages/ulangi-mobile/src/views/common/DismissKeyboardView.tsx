@@ -6,7 +6,6 @@
  */
 
 import { boundMethod } from 'autobind-decorator';
-import * as _ from 'lodash';
 import * as React from 'react';
 import {
   GestureResponderEvent,
@@ -16,29 +15,34 @@ import {
 } from 'react-native';
 
 export class DismissKeyboardView extends React.Component<ViewProperties> {
+  // Dismiss keyboard on touch
   @boundMethod
   private onStartShouldSetResponder(): boolean {
     return true;
   }
 
+  // Do not dismiss keyboard on move (when scrolling)
   @boundMethod
-  private onResponderGrant(event: GestureResponderEvent): void {
+  private onMoveShouldSetResponder(): boolean {
+    return false;
+  }
+
+  @boundMethod
+  private onResponderRelease(event: GestureResponderEvent): void {
     Keyboard.dismiss();
-    if (typeof this.props.onResponderGrant !== 'undefined') {
-      this.props.onResponderGrant(event);
+    console.log(event.nativeEvent.touches);
+    if (typeof this.props.onResponderRelease !== 'undefined') {
+      this.props.onResponderRelease(event);
     }
   }
 
   public render(): React.ReactElement<any> {
-    const rest = _.omitBy(this.props, [
-      'onStartShouldSetResponder',
-      'onResponderGrant',
-    ]);
     return (
       <View
+        {...this.props}
         onStartShouldSetResponder={this.onStartShouldSetResponder}
-        onResponderGrant={this.onResponderGrant}
-        {...rest}>
+        onMoveShouldSetResponder={this.onMoveShouldSetResponder}
+        onResponderRelease={this.onResponderRelease}>
         {this.props.children}
       </View>
     );

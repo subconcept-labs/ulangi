@@ -455,11 +455,9 @@ export interface ActionPayload {
     setId: string;
   };
   readonly SPACED_REPETITION__SAVE_RESULT: {
-    setId: string;
     vocabularyList: ReadonlyMap<string, Vocabulary>;
     feedbackList: ReadonlyMap<string, Feedback>;
     autoArchiveSettings: AutoArchiveSettings;
-    incrementTermPosition: boolean;
   };
   readonly SPACED_REPETITION__SAVING_RESULT: null;
   readonly SPACED_REPETITION__SAVE_RESULT_SUCCEEDED: null;
@@ -684,11 +682,9 @@ export interface ActionPayload {
     setId: string;
   };
   readonly WRITING__SAVE_RESULT: {
-    setId: string;
     vocabularyList: ReadonlyMap<string, Vocabulary>;
     feedbackList: ReadonlyMap<string, Feedback>;
     autoArchiveSettings: AutoArchiveSettings;
-    incrementTermPosition: boolean;
   };
   readonly WRITING__SAVING_RESULT: null;
   readonly WRITING__SAVE_RESULT_SUCCEEDED: null;

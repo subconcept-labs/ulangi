@@ -9,6 +9,7 @@ export class FileSystemAdapter {
   private fileSystem: typeof RNFileSystem;
 
   public readonly CachesDirectoryPath = RNFileSystem.CachesDirectoryPath;
+  public readonly DocumentDirectoryPath = RNFileSystem.DocumentDirectoryPath;
 
   public constructor(fileSystem: typeof RNFileSystem) {
     this.fileSystem = fileSystem;

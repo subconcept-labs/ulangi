@@ -17,6 +17,7 @@ import { SafeAreaView, ScrollView } from 'react-native';
 
 import { WritingLessonScreenIds } from '../../constants/ids/WritingLessonScreenIds';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
+import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { WritingForm } from './WritingForm';
 import { WritingFormBottom } from './WritingFormBottom';
@@ -73,26 +74,28 @@ export class WritingLessonScreen extends React.Component<
       );
     } else {
       return (
-        <React.Fragment>
+        <>
           <SmartScrollView
             keyboardAware={true}
             keyboardShouldPersistTaps="handled">
-            <WritingFormTop
-              theme={this.props.themeStore.theme}
-              writingFormState={this.props.observableScreen.writingFormState}
-              showLastWritten={true}
-            />
-            <WritingForm
-              key={
-                this.props.observableScreen.writingFormState.currentQuestion
-                  .questionId
-              }
-              theme={this.props.themeStore.theme}
-              writingFormState={this.props.observableScreen.writingFormState}
-              setAnswer={this.props.screenDelegate.setAnswer}
-              showHint={this.props.screenDelegate.showHint}
-              next={_.noop}
-            />
+            <DismissKeyboardView style={this.styles.dismiss_keyboard_view}>
+              <WritingFormTop
+                theme={this.props.themeStore.theme}
+                writingFormState={this.props.observableScreen.writingFormState}
+                showLastWritten={true}
+              />
+              <WritingForm
+                key={
+                  this.props.observableScreen.writingFormState.currentQuestion
+                    .questionId
+                }
+                theme={this.props.themeStore.theme}
+                writingFormState={this.props.observableScreen.writingFormState}
+                setAnswer={this.props.screenDelegate.setAnswer}
+                showHint={this.props.screenDelegate.showHint}
+                next={_.noop}
+              />
+            </DismissKeyboardView>
           </SmartScrollView>
           <WritingFormBottom
             theme={this.props.themeStore.theme}
@@ -105,7 +108,7 @@ export class WritingLessonScreen extends React.Component<
             showAnswer={this.props.screenDelegate.showAnswer}
             setFeedback={this.props.screenDelegate.setFeedback}
           />
-        </React.Fragment>
+        </>
       );
     }
   }

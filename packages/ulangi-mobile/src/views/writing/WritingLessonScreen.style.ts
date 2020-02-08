@@ -12,12 +12,17 @@ import { config } from '../../constants/config';
 
 export interface WritingLessonScreenStyles {
   screen: ViewStyle;
+  dismiss_keyboard_view: ViewStyle;
 }
 
 export const baseStyles: WritingLessonScreenStyles = {
   screen: {
     flex: 1,
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+
+  dismiss_keyboard_view: {
+    flex: 1,
   },
 };
 
