@@ -15,6 +15,7 @@ import {
   ObservableSetStore,
   mergeList,
 } from '@ulangi/ulangi-observable';
+import { runInAction } from 'mobx';
 
 import { RemoteLogger } from '../../RemoteLogger';
 
@@ -131,8 +132,12 @@ export class PublicVocabularyListDelegate {
   }
 
   public refresh(searchTerm: string): void {
-    this.clearSearch();
-    this.vocabularyListState.isRefreshing.set(true);
-    this.prepareAndSearch(searchTerm);
+    runInAction(
+      (): void => {
+        this.clearSearch();
+        this.vocabularyListState.isRefreshing.set(true);
+        this.prepareAndSearch(searchTerm);
+      },
+    );
   }
 }

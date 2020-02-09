@@ -73,16 +73,40 @@ export class DiscoverScreenDelegate {
   }
 
   public handleInputEnded(): void {
-    this.clearAndSearch();
+    this.clearAllList();
+    this.setListTypeByCurrentInput();
+    this.refreshCurrentList();
   }
 
-  public clearAndSearch(term?: string): void {
-    if (typeof term !== 'undefined') {
-      this.observableScreen.searchInput.set(term);
+  public setInputAndRefresh(term: string): void {
+    this.observableScreen.searchInput.set(term);
+    this.setListTypeByCurrentInput();
+    this.refreshCurrentList();
+  }
+
+  public prepareAndSearch(): void {
+    if (
+      this.observableScreen.listType.get() ===
+      DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST
+    ) {
+      this.translationListDelegate.translateBidrection(
+        this.observableScreen.searchInput.get(),
+      );
+      this.publicVocabularyListDelegate.prepareAndSearch(
+        this.observableScreen.searchInput.get(),
+      );
+    } else if (
+      this.observableScreen.listType.get() ===
+        DiscoverListType.PREMADE_SET_LIST ||
+      this.observableScreen.listType.get() === DiscoverListType.PUBLIC_SET_LIST
+    ) {
+      this.publicSetListDelegate.prepareAndSearch(
+        this.observableScreen.searchInput.get(),
+      );
     }
+  }
 
-    this.clearAllList();
-
+  public setListTypeByCurrentInput(): void {
     let listType;
     if (this.observableScreen.searchInput.get() === '') {
       if (
@@ -96,16 +120,16 @@ export class DiscoverScreenDelegate {
       listType = DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST;
     }
 
-    this.setListTypeAndRefresh(listType);
-  }
-
-  public focusSearchInput(): void {
-    this.observableScreen.shouldFocusSearchInput.set(true);
+    this.observableScreen.listType.set(listType);
   }
 
   public setListTypeAndRefresh(listType: null | DiscoverListType): void {
     this.observableScreen.listType.set(listType);
-    this.refresh();
+    this.refreshCurrentList();
+  }
+
+  public focusSearchInput(): void {
+    this.observableScreen.shouldFocusSearchInput.set(true);
   }
 
   public getPublicSetCount(): void {
@@ -124,7 +148,9 @@ export class DiscoverScreenDelegate {
     this.clearAllList();
     runInAction(
       (): void => {
-        this.clearAndSearch('');
+        this.observableScreen.searchInput.set('');
+        this.setListTypeByCurrentInput();
+        this.refreshCurrentList();
         this.observableScreen.searchInputAutoFocus.set(true);
       },
     );
@@ -136,13 +162,7 @@ export class DiscoverScreenDelegate {
     this.translationListDelegate.clearBidirectionalTranslations();
   }
 
-  public refresh(): void {
-    if (this.observableScreen.listType.get() !== null) {
-      this.refreshCurrentList();
-    }
-  }
-
-  private refreshCurrentList(): void {
+  public refreshCurrentList(): void {
     if (
       this.observableScreen.listType.get() ===
       DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST
@@ -151,13 +171,17 @@ export class DiscoverScreenDelegate {
         this.observableScreen.searchInput.get(),
       );
       if (this.translationListDelegate.canTranslate() === false) {
-        this.translationListDelegate.clearTranslations;
+        this.translationListDelegate.clearTranslations();
       } else {
         this.translationListDelegate.refreshBidirectionalTranslations(
           this.observableScreen.searchInput.get(),
         );
       }
-    } else {
+    } else if (
+      this.observableScreen.listType.get() ===
+        DiscoverListType.PREMADE_SET_LIST ||
+      this.observableScreen.listType.get() === DiscoverListType.PUBLIC_SET_LIST
+    ) {
       this.publicSetListDelegate.refresh(
         this.observableScreen.searchInput.get(),
       );
@@ -209,7 +233,9 @@ export class DiscoverScreenDelegate {
       on(
         ActionType.SET__SELECT,
         (): void => {
-          this.clearAndSearch();
+          this.clearAllList();
+          this.setListTypeByCurrentInput();
+          this.refreshCurrentList();
         },
       ),
     );

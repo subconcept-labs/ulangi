@@ -24,7 +24,13 @@ import {
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SectionList, SectionListData, StyleSheet, View } from 'react-native';
+import {
+  SectionBase,
+  SectionList,
+  SectionListData,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -86,9 +92,9 @@ export class TranslationAndPublicVocabularyList extends React.Component<
         </View>
       );
     } else if (
-      this.props.translationListState.translations !== null &&
+      this.props.translationListState.translationsWithLanguages !== null &&
       this.props.publicVocabularyListState.publicVocabularyList !== null &&
-      this.props.translationListState.translations.length === 0 &&
+      this.props.translationListState.translationsWithLanguages.length === 0 &&
       this.props.publicVocabularyListState.publicVocabularyList.size === 0
     ) {
       return (
@@ -106,7 +112,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
           sections={
             [
               {
-                type: DiscoverSectionType.TRANSLATIONS,
+                key: DiscoverSectionType.TRANSLATIONS,
                 data: this.props.translationListState.translationsWithLanguages
                   ? this.props.translationListState.translationsWithLanguages.slice()
                   : [],
@@ -114,7 +120,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
                 keyExtractor: this.keyExtractorForTranslation,
               },
               {
-                type: DiscoverSectionType.PUBLIC_VOCABULARY_LIST,
+                key: DiscoverSectionType.PUBLIC_VOCABULARY_LIST,
                 data: this.props.publicVocabularyListState.publicVocabularyList
                   ? Array.from(
                       this.props.publicVocabularyListState.publicVocabularyList,
@@ -182,27 +188,25 @@ export class TranslationAndPublicVocabularyList extends React.Component<
   private renderSectionFooter({
     section,
   }: {
-    section: any;
+    section: SectionBase<any>;
   }): React.ReactElement<any> {
-    if (section.sectionType === DiscoverSectionType.TRANSLATIONS) {
-      return (
-        <DefaultActivityIndicator
-          activityState={this.props.translationListState.translateState}
-          isRefreshing={this.props.translationListState.isRefreshing}
-          style={styles.indicator}
-          size="small"
-        />
-      );
-    } else {
-      return (
-        <DefaultActivityIndicator
-          activityState={this.props.publicVocabularyListState.searchState}
-          isRefreshing={this.props.publicVocabularyListState.isRefreshing}
-          style={styles.indicator}
-          size="small"
-        />
-      );
-    }
+    return (
+      <DefaultActivityIndicator
+        key={section.key}
+        activityState={
+          section.key === DiscoverSectionType.TRANSLATIONS
+            ? this.props.translationListState.translateState
+            : this.props.publicVocabularyListState.searchState
+        }
+        isRefreshing={
+          section.key === DiscoverSectionType.TRANSLATIONS
+            ? this.props.translationListState.isRefreshing
+            : this.props.publicVocabularyListState.isRefreshing
+        }
+        style={styles.indicator}
+        size="small"
+      />
+    );
   }
 }
 

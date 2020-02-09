@@ -17,7 +17,7 @@ import { DefaultText } from '../common/DefaultText';
 export interface DiscoverCenterTitleProps {
   setStore: ObservableSetStore;
   publicSetCount: IObservableValue<null | number>;
-  search: (term?: string) => void;
+  search: (term: string) => void;
 }
 
 @observer
