@@ -12,7 +12,7 @@ import {
   ObservableSetStore,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
-import { observable } from 'mobx';
+import { observable, runInAction } from 'mobx';
 
 export class TranslationListDelegate {
   private eventBus: EventBus;
@@ -134,12 +134,16 @@ export class TranslationListDelegate {
           once(
             ActionType.TRANSLATION__TRANSLATE_BIDIRECTION_SUCCEEDED,
             ({ translations }): void => {
-              this.translationListState.isRefreshing.set(false);
-              this.translationListState.translateState.set(
-                ActivityState.INACTIVE,
-              );
-              this.translationListState.translationsWithLanguages = observable(
-                translations.slice(),
+              runInAction(
+                (): void => {
+                  this.translationListState.isRefreshing.set(false);
+                  this.translationListState.translateState.set(
+                    ActivityState.INACTIVE,
+                  );
+                  this.translationListState.translationsWithLanguages = observable(
+                    translations.slice(),
+                  );
+                },
               );
             },
           ),
@@ -169,8 +173,12 @@ export class TranslationListDelegate {
   }
 
   public refreshBidirectionalTranslations(term: string): void {
-    this.clearBidirectionalTranslations();
-    this.translationListState.isRefreshing.set(true);
-    this.translateBidrection(term);
+    runInAction(
+      (): void => {
+        this.clearBidirectionalTranslations();
+        this.translationListState.isRefreshing.set(true);
+        this.translateBidrection(term);
+      },
+    );
   }
 }

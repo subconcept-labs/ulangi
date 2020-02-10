@@ -100,7 +100,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
       <DiscoverCenterTitle
         setStore={this.props.setStore}
         publicSetCount={this.props.observableScreen.publicSetCount}
-        search={this.props.screenDelegate.clearAndSearch}
+        search={this.props.screenDelegate.setInputAndRefresh}
       />
     );
   }
@@ -148,7 +148,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
             this.props.screenDelegate.showTranslationActionMenu
           }
           onEndReached={this.props.screenDelegate.searchPublicVocabulary}
-          refresh={this.props.screenDelegate.refresh}
+          refresh={this.props.screenDelegate.refreshCurrentList}
           openLink={this.props.screenDelegate.openLink}
         />
       );
@@ -162,7 +162,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
           }
           publicSetListState={this.props.observableScreen.publicSetListState}
           showSetDetailModal={this.props.screenDelegate.showSetDetailModal}
-          refresh={this.props.screenDelegate.refresh}
+          refresh={this.props.screenDelegate.refreshCurrentList}
           onEndReached={this.props.screenDelegate.searchPublicSets}
         />
       );

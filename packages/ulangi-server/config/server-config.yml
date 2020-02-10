@@ -46,83 +46,83 @@ languageMap:
 googleTextToSpeech:
   defaultVoices:
     ar:
-      voiceName: "ar-XA-Standard-A"
+      voiceName: "ar-XA-Wavenet-A"
       languageCode: "ar-XA"
 
     cs:
-      voiceName: "cs-CZ-Standard-A"
+      voiceName: "cs-CZ-Wavenet-A"
       languageCode: "cs-CZ"
 
     zh: 
-      voiceName: "cmn-CN-Standard-A"
+      voiceName: "cmn-CN-Wavenet-A"
       languageCode: "cmn-CN"
 
     da: 
-      voiceName: "da-DK-Standard-A"
+      voiceName: "da-DK-Wavenet-A"
       languageCode: "da-DK"
 
     nl:
-      voiceName: "nl-NL-Standard-A"
+      voiceName: "nl-NL-Wavenet-A"
       languageCode: "nl-NL"
 
     en: 
-      voiceName: "en-US-Standard-E"
+      voiceName: "en-US-Wavenet-F"
       languageCode: "en-US"
 
     fr: 
-      voiceName: "fr-FR-Standard-A"
+      voiceName: "fr-FR-Wavenet-A"
       languageCode: "fr-FR"
 
     de: 
-      voiceName: "de-DE-Standard-A"
+      voiceName: "de-DE-Wavenet-A"
       languageCode: "de-DE"
 
     el:
-      voiceName: "el-GR-Standard-A"
+      voiceName: "el-GR-Wavenet-A"
       languageCode: "el-GR"
 
     hi: 
-      voiceName: "hi-IN-Standard-A"
+      voiceName: "hi-IN-Wavenet-A"
       languageCode: "hi-IN"
 
     hu:
-      voiceName: "hu-HU-Standard-A"
+      voiceName: "hu-HU-Wavenet-A"
       languageCode: "hu-HU"
 
     id:
-      voiceName: "id-ID-Standard-A"
+      voiceName: "id-ID-Wavenet-A"
       languageCode: "id-ID"
 
     it: 
-      voiceName: "it-IT-Standard-A"
+      voiceName: "it-IT-Wavenet-A"
       languageCode: "it-IT"
 
     ja: 
-      voiceName: "ja-JP-Standard-A"
+      voiceName: "ja-JP-Wavenet-B"
       languageCode: "ja-JP"
 
     ko: 
-      voiceName: "ko-KR-Standard-A"
+      voiceName: "ko-KR-Wavenet-B"
       languageCode: "ko-KR"
 
     nb:
-      voiceName: "nb-NO-Standard-A"
+      voiceName: "nb-NO-Wavenet-C"
       languageCode: "nb-NO"
 
     pl: 
-      voiceName: "pl-PL-Standard-A"
+      voiceName: "pl-PL-Wavenet-A"
       languageCode: "pl-PL"
 
     pt: 
-      voiceName: "pt-BR-Standard-A"
+      voiceName: "pt-BR-Wavenet-A"
       languageCode: "pt-BR"
 
     ru: 
-      voiceName: "ru-RU-Standard-A"
+      voiceName: "ru-RU-Wavenet-A"
       languageCode: "ru-RU"
 
     sk:
-      voiceName: "sk-SK-Standard-A"
+      voiceName: "sk-SK-Wavenet-A"
       languageCode: "sk-SK"
 
     es: 
@@ -130,19 +130,19 @@ googleTextToSpeech:
       languageCode: "es-ES"
 
     sv: 
-      voiceName: "sv-SE-Standard-A"
+      voiceName: "sv-SE-Wavenet-A"
       languageCode: "sv-SE"
 
     tr: 
-      voiceName: "tr-TR-Standard-A"
+      voiceName: "tr-TR-Wavenet-A"
       languageCode: "tr-TR"
 
     uk: 
-      voiceName: "uk-UA-Standard-A"
+      voiceName: "uk-UA-Wavenet-A"
       languageCode: "uk-UA"
 
     vi: 
-      voiceName: "vi-VN-Standard-A"
+      voiceName: "vi-VN-Wavenet-C"
       languageCode: "vi-VN"
 
 polly:

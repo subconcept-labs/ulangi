@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.1](https://github.com/minhloi/ulangi/compare/v3.7.0...v3.7.1) (2020-02-09)
+
+
+### Bug Fixes
+
+* use WaveNet voices instead of standard voices ([458f47a](https://github.com/minhloi/ulangi/commit/458f47a)), closes [#55](https://github.com/minhloi/ulangi/issues/55)
+
+
+
+
+
 # [3.7.0](https://github.com/minhloi/ulangi/compare/v3.6.0...v3.7.0) (2020-02-08)
 
 **Note:** Version bump only for package @ulangi/ulangi-server

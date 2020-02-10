@@ -6,7 +6,12 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
-import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ActivityState,
+  DiscoverListType,
+  ScreenName,
+  Theme,
+} from '@ulangi/ulangi-common/enums';
 import {
   ObservableDiscoverScreen,
   ObservablePublicSetListState,
@@ -107,7 +112,8 @@ export class DiscoverScreenContainer extends Container {
       this.props.rootStore.setStore.existingCurrentSet
         .shouldShowPremadeFlashcards
     ) {
-      this.screenDelegate.clearAndSearch();
+      this.observableScreen.listType.set(DiscoverListType.PREMADE_SET_LIST);
+      this.screenDelegate.prepareAndSearch();
     }
   }
 
