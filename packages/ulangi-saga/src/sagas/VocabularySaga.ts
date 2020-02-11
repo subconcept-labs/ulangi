@@ -444,7 +444,7 @@ export class VocabularySaga extends ProtectedSaga {
         }
 
         const { vocabularyList } = result;
-        offset = vocabularyList.length + offset;
+        offset += limit;
 
         let noMore = false;
         if (vocabularyList.length === 0) {

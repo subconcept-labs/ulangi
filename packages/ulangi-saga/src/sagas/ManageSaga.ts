@@ -222,7 +222,7 @@ export class ManageSaga extends ProtectedSaga {
         }
 
         const { vocabularyList } = result;
-        offset = vocabularyList.length + offset;
+        offset += limit;
 
         let noMore = false;
         if (vocabularyList.length === 0) {
@@ -408,8 +408,7 @@ export class ManageSaga extends ProtectedSaga {
           categoryListWithoutUncategorized.length === 0 ? true : false;
         // Should not include Uncategorized in the next fetch
         shouldIncludeUncategorized = false;
-        offsetOfCategorized =
-          categoryListWithoutUncategorized.length + offsetOfCategorized;
+        offsetOfCategorized += limitOfCategorized;
 
         yield put(
           createAction(ActionType.MANAGE__FETCH_CATEGORY_SUCCEEDED, {

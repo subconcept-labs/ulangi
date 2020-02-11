@@ -179,7 +179,7 @@ export class SearchSaga extends ProtectedSaga {
           }
 
           if (result.vocabularyList.length > 0) {
-            offset = offset + result.vocabularyList.length;
+            offset += remain;
             vocabularyList = vocabularyList.concat(result.vocabularyList);
           } else {
             currentSearchType = searchTypes.shift();

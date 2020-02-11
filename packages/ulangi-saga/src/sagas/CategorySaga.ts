@@ -116,7 +116,7 @@ export class CategorySaga extends ProtectedSaga {
 
         const { categoryNames } = result;
 
-        offset += categoryNames.length;
+        offset += limit;
 
         const noMore = categoryNames.length === 0 ? true : false;
 
