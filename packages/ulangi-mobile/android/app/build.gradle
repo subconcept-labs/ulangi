@@ -158,7 +158,7 @@ android {
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
         //multiDexEnabled true
         versionCode 65
-        versionName "3.7.1"
+        versionName "3.7.2"
 
         // For react-native-config
         resValue "string", "build_config_package", "com.ulangi"
