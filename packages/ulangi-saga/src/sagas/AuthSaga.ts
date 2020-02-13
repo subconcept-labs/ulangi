@@ -29,7 +29,7 @@ import {
 } from '@ulangi/ulangi-local-database';
 import axios, { AxiosResponse } from 'axios';
 import * as Joi from 'joi';
-import { call, delay, fork, put, spawn, take } from 'redux-saga/effects';
+import { call, delay, fork, put, take } from 'redux-saga/effects';
 import * as shortuuid from 'short-uuid';
 import { PromiseType } from 'utility-types';
 
@@ -76,6 +76,7 @@ export class AuthSaga extends PublicSaga {
       config.user.passwordMinLength,
       config.general.guestEmailDomain
     );
+    yield fork([this, this.allowSignOut]);
     yield fork([this, this.allowRequestPasswordReset], env.API_URL);
   }
 
@@ -368,6 +369,45 @@ export class AuthSaga extends PublicSaga {
       }
     }
   }
+
+  public *allowSignOut(): IterableIterator<any> {
+    yield take(ActionType.USER__SIGN_OUT);
+
+    try {
+      yield put(createAction(ActionType.USER__SIGNING_OUT, null));
+
+      yield put(createAction(ActionType.ROOT__CANCEL_PROTECTED_SAGAS, null));
+      yield take(ActionType.ROOT__CANCEL_PROTECTED_SAGAS_SUCCEEDED);
+
+      // Sometimes we cannot close the db because some transactions are in progress
+      let databaseClosed = false;
+      while (databaseClosed === false) {
+        try {
+          // Try closing user database
+          yield call([this.database, 'close'], 'user');
+          databaseClosed = true;
+        } catch (error) {
+          yield delay(500);
+        }
+      }
+
+      const sharedDb = this.database.getDb('shared');
+      yield call(
+        [sharedDb, 'transaction'],
+        (tx: Transaction): void => this.sessionModel.deleteAllSessionValues(tx)
+      );
+
+      yield put(createAction(ActionType.USER__SIGN_OUT_SUCCEEDED, null));
+    } catch (error) {
+      yield put(
+        createAction(ActionType.USER__SIGN_OUT_FAILED, {
+          errorCode: errorConverter.getErrorCode(error),
+          error,
+        })
+      );
+    }
+  }
+
   public *allowRequestPasswordReset(apiUrl: string): IterableIterator<any> {
     while (true) {
       try {
@@ -414,43 +454,6 @@ export class AuthSaga extends PublicSaga {
     }
   }
 
-  private *allowSignOut(): IterableIterator<any> {
-    yield take(ActionType.USER__SIGN_OUT);
-    try {
-      yield put(createAction(ActionType.USER__SIGNING_OUT, null));
-
-      yield put(createAction(ActionType.ROOT__CANCEL_PROTECTED_SAGAS, null));
-      yield take(ActionType.ROOT__CANCEL_PROTECTED_SAGAS_SUCCEEDED);
-
-      // Sometimes we cannot close the db because some transactions are in progress
-      let databaseClosed = false;
-      while (databaseClosed === false) {
-        try {
-          // Try closing user database
-          yield call([this.database, 'close'], 'user');
-          databaseClosed = true;
-        } catch (error) {
-          yield delay(500);
-        }
-      }
-
-      const sharedDb = this.database.getDb('shared');
-      yield call(
-        [sharedDb, 'transaction'],
-        (tx: Transaction): void => this.sessionModel.deleteAllSessionValues(tx)
-      );
-
-      yield put(createAction(ActionType.USER__SIGN_OUT_SUCCEEDED, null));
-    } catch (error) {
-      yield put(
-        createAction(ActionType.USER__SIGN_OUT_FAILED, {
-          errorCode: errorConverter.getErrorCode(error),
-          error,
-        })
-      );
-    }
-  }
-
   private *setUpAfterAuthenticated(
     userId: string,
     accessToken: string
@@ -475,9 +478,6 @@ export class AuthSaga extends PublicSaga {
     );
 
     yield take(ActionType.ROOT__FORK_PROTECTED_SAGAS_SUCCEEDED);
-
-    // Use spawn here instead of fork to prevent it to be cancel
-    yield spawn([this, this.allowSignOut]);
   }
 
   private *insertUserAndSessionIntoDatabase(

@@ -12,7 +12,10 @@ import {
   ModelFactory,
   ModelList,
 } from '@ulangi/ulangi-local-database';
-import sagaMiddlewareFactory, { SagaMiddleware } from 'redux-saga';
+import createSagaMiddleware, {
+  SagaMiddleware,
+  SagaMiddlewareOptions,
+} from 'redux-saga';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
@@ -30,7 +33,7 @@ import { SagaEnv } from '../interfaces/SagaEnv';
 import { RootSaga } from '../sagas/RootSaga';
 
 export class SagaFacade {
-  private sagaMiddlware = sagaMiddlewareFactory();
+  private sagaMiddleware: SagaMiddleware<{}>;
 
   private env: SagaEnv;
   private config: SagaConfig;
@@ -64,7 +67,8 @@ export class SagaFacade {
     netInfo: NetInfoAdapter,
     notifications: null | NotificationsAdapter,
     sqliteDatabase: SQLiteDatabaseAdapter,
-    systemTheme: SystemThemeAdapter
+    systemTheme: SystemThemeAdapter,
+    sagaMiddlewareOptions: SagaMiddlewareOptions
   ) {
     this.env = env;
     this.config = config;
@@ -84,10 +88,12 @@ export class SagaFacade {
     this.database = new DatabaseFacade(sqliteDatabase);
     this.databaseEventBus = new DatabaseEventBus();
     this.modelList = new ModelFactory(this.databaseEventBus).createAllModels();
+
+    this.sagaMiddleware = createSagaMiddleware(sagaMiddlewareOptions);
   }
 
   public getMiddleware(): SagaMiddleware<{}> {
-    return this.sagaMiddlware;
+    return this.sagaMiddleware;
   }
 
   public run(): void {
@@ -108,7 +114,7 @@ export class SagaFacade {
       this.systemTheme
     );
 
-    this.sagaMiddlware.run(
+    this.sagaMiddleware.run(
       (): IterableIterator<any> => root.run(this.env, this.config)
     );
   }
