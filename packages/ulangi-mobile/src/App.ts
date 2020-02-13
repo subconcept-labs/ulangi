@@ -75,6 +75,19 @@ export class App {
       adapters.notifications,
       adapters.sqliteDatabase,
       adapters.systemTheme,
+      {
+        onError: (error): void => {
+          RemoteLogger.logError(error);
+
+          // setImmediate is required for the app to terminate
+          // if error is propagated to the root saga
+          setImmediate(
+            (): void => {
+              throw error;
+            },
+          );
+        },
+      },
     );
 
     const eventFacade = new EventFacade();

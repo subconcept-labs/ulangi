@@ -13,7 +13,7 @@ import {
   ModelList,
 } from '@ulangi/ulangi-local-database';
 import { Task } from 'redux-saga';
-import { call, cancel, fork, put, spawn, take } from 'redux-saga/effects';
+import { call, cancel, fork, put, take } from 'redux-saga/effects';
 
 import { AdMobAdapter } from '../adapters/AdMobAdapter';
 import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
@@ -122,7 +122,7 @@ export class RootSaga {
 
       yield put(createAction(ActionType.ROOT__FORKING_PROTECTED_SAGAS, null));
 
-      this.forkedProtectedSagasTask = yield spawn(
+      this.forkedProtectedSagasTask = yield fork(
         [this, this.forkProtectedSagas],
         env,
         config,
