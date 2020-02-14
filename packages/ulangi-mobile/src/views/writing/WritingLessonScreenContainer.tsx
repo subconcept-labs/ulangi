@@ -82,7 +82,7 @@ export class WritingLessonScreenContainer extends Container<
     ),
     new ObservableFeedbackListState(observable.map()),
     new ObservableReviewActionBarState(observable.array([])),
-    new ObservableReviewFeedbackBarState(observable.map(), null),
+    new ObservableReviewFeedbackBarState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
     observable.box(this.currentSettings.autoplayAudio),
     observable.box(false),
@@ -124,22 +124,11 @@ export class WritingLessonScreenContainer extends Container<
   }
 
   public componentDidMount(): void {
-    this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-    this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
-    this.screenDelegate.setUpActionButtons();
-    this.screenDelegate.autoUpdateButtons();
-
-    if (this.screenDelegate.shouldLoadAd()) {
-      this.screenDelegate.loadAd();
-    }
+    this.screenDelegate.setUp();
   }
 
   public componentWillUnmount(): void {
-    this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
+    this.screenDelegate.cleanUp();
   }
 
   public render(): React.ReactElement<any> {

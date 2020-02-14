@@ -71,10 +71,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
       false,
     ),
     new ObservableReviewActionBarState(observable.array([])),
-    new ObservableReviewFeedbackBarState(
-      observable.map(),
-      'SHOW_ANSWER_BUTTON',
-    ),
+    new ObservableReviewFeedbackBarState(observable.map()),
     new ObservableFeedbackListState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
     observable.box(this.currentSettings.autoplayAudio),
@@ -93,7 +90,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
           dark: Images.ARROW_LEFT_MILK_22X22,
         },
         (): void => {
-          this.back();
+          this.screenDelegate.handleBackPressed();
         },
       ),
       null,
@@ -106,37 +103,12 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     this.props.passedProps.startLesson,
   );
 
-  private back(): void {
-    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
-      this.screenDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.pop(),
-      );
-    } else if (this.observableScreen.saveState.get() === ActivityState.ACTIVE) {
-      this.screenDelegate.showSavingInProgressDialog();
-    } else if (this.observableScreen.shouldShowResult.get() === false) {
-      this.screenDelegate.showConfirmQuitLessonDialog();
-    } else {
-      this.navigatorDelegate.pop();
-    }
-  }
-
   public componentDidMount(): void {
-    this.screenDelegate.setUpActionButtons();
-    this.screenDelegate.autoUpdateButtons();
-    this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-    this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
-
-    if (this.screenDelegate.shouldLoadAd()) {
-      this.screenDelegate.loadAd();
-    }
+    this.screenDelegate.setUp();
   }
 
   public componentWillUnmount(): void {
-    this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
+    this.screenDelegate.cleanUp();
   }
 
   protected onThemeChanged(theme: Theme): void {

@@ -99,12 +99,14 @@ export class WritingLessonScreen extends React.Component<
           </SmartScrollView>
           <WritingFormBottom
             theme={this.props.themeStore.theme}
+            writingFormState={this.props.observableScreen.writingFormState}
             reviewActionBarState={
               this.props.observableScreen.reviewActionBarState
             }
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }
+            next={this.props.screenDelegate.nextQuestion}
             showAnswer={this.props.screenDelegate.showAnswer}
             setFeedback={this.props.screenDelegate.setFeedback}
           />

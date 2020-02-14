@@ -92,6 +92,8 @@ export class Images {
   public static readonly PLAY_BLUE_25X25 = require('../../assets/img/mobile-icons/play_blue_25x25.png');
   public static readonly MORE_GREY_25X25 = require('../../assets/img/mobile-icons/more_grey_25x25.png');
   public static readonly MORE_BLUE_25X25 = require('../../assets/img/mobile-icons/more_blue_25x25.png');
+  public static readonly MORE_BLACK_25X25 = require('../../assets/img/mobile-icons/more_black_25x25.png');
+  public static readonly MORE_MILK_25X25 = require('../../assets/img/mobile-icons/more_milk_25x25.png');
   public static readonly EYE_BLACK_25X25 = require('../../assets/img/mobile-icons/eye_black_25x25.png');
   public static readonly EYE_MILK_25X25 = require('../../assets/img/mobile-icons/eye_milk_25x25.png');
   public static readonly SPEAKER_BLACK_25X25 = require('../../assets/img/mobile-icons/speaker_black_25x25.png');

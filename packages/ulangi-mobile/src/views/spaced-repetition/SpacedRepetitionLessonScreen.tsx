@@ -87,12 +87,14 @@ export class SpacedRepetitionLessonScreen extends React.Component<
           </ScrollView>
           <ReviewBottom
             theme={this.props.themeStore.theme}
+            reviewState={this.props.observableScreen.reviewState}
             reviewActionBarState={
               this.props.observableScreen.reviewActionBarState
             }
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }
+            next={this.props.screenDelegate.nextItem}
             showAnswer={this.props.screenDelegate.showAnswer}
             setFeedback={this.props.screenDelegate.setFeedback}
           />

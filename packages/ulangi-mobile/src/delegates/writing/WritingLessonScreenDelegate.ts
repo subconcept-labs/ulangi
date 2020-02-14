@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActionType, createAction } from '@ulangi/ulangi-action';
 import {
   ActivityState,
   ButtonSize,
@@ -13,21 +12,18 @@ import {
   ScreenName,
   ScreenState,
 } from '@ulangi/ulangi-common/enums';
-import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
-  ObservableKeyboard,
   ObservableSetStore,
+  ObservableVocabulary,
   ObservableWritingLessonScreen,
   Observer,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
-import { when } from 'mobx';
 import { BackHandler, Keyboard } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
-import { WritingFormIds } from '../../constants/ids/WritingFormIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
@@ -35,6 +31,7 @@ import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
 import { WritingFormDelegate } from './WritingFormDelegate';
@@ -44,10 +41,8 @@ import { WritingSaveResultDelegate } from './WritingSaveResultDelegate';
 export class WritingLessonScreenDelegate {
   private reviewActionButtonFactory = new ReviewActionButtonFactory();
 
-  private eventBus: EventBus;
   private observer: Observer;
   private observableConverter: ObservableConverter;
-  private observableKeyboard: ObservableKeyboard;
   private setStore: ObservableSetStore;
   private observableScreen: ObservableWritingLessonScreen;
   private questionIterator: WritingQuestionIterator;
@@ -57,14 +52,13 @@ export class WritingLessonScreenDelegate {
   private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
+  private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private startLesson: () => void;
 
   public constructor(
-    eventBus: EventBus,
     observer: Observer,
-    observableKeyboard: ObservableKeyboard,
     observableConverter: ObservableConverter,
     setStore: ObservableSetStore,
     observableScreen: ObservableWritingLessonScreen,
@@ -75,14 +69,13 @@ export class WritingLessonScreenDelegate {
     speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
+    reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     startLesson: () => void,
   ) {
-    this.eventBus = eventBus;
     this.observer = observer;
     this.observableConverter = observableConverter;
-    this.observableKeyboard = observableKeyboard;
     this.setStore = setStore;
     this.observableScreen = observableScreen;
     this.questionIterator = questionIterator;
@@ -92,9 +85,26 @@ export class WritingLessonScreenDelegate {
     this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
+    this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.startLesson = startLesson;
+  }
+
+  public setUp(): void {
+    this.autoDisablePopGestureWhenAdRequiredToShow();
+    this.addBackButtonHandler(this.handleBackButton);
+    this.setUpActionButtons();
+    this.calculateNextReviewData();
+    this.autoUpdateButtons();
+
+    if (this.shouldLoadAd()) {
+      this.loadAd();
+    }
+  }
+
+  public cleanUp(): void {
+    this.removeBackButtonHandler(this.handleBackButton);
   }
 
   public showHint(): void {
@@ -114,20 +124,14 @@ export class WritingLessonScreenDelegate {
     if (this.observableScreen.writingFormState.isCurrentAnswerCorrect) {
       this.writingFormDelegate.recordWhetherHintUsed();
       Keyboard.dismiss();
-      when(
-        (): boolean => this.observableKeyboard.state === 'hidden',
-        (): void => {
-          this.showReviewFeedbackBar();
 
-          if (this.observableScreen.autoplayAudio.get() === true) {
-            this.synthesizeAndSpeak(
-              this.observableScreen.writingFormState.currentQuestion
-                .testingVocabulary.vocabularyTerm,
-              true,
-            );
-          }
-        },
-      );
+      if (this.observableScreen.autoplayAudio.get() === true) {
+        this.synthesizeAndSpeak(
+          this.observableScreen.writingFormState.currentQuestion
+            .testingVocabulary.vocabularyTerm,
+          true,
+        );
+      }
     }
   }
 
@@ -167,30 +171,18 @@ export class WritingLessonScreenDelegate {
           this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
             originalVocabulary: testingVocabulary.toRaw(),
             onSave: (newVocabulary): void => {
-              const observableVocabulary = this.observableConverter.convertToObservableVocabulary(
-                newVocabulary,
+              this.replaceCurrentVocabulary(
+                this.observableConverter.convertToObservableVocabulary(
+                  newVocabulary,
+                ),
               );
-
-              this.observableScreen.writingFormState.currentQuestion.testingVocabulary = observableVocabulary;
-
-              this.observableScreen.vocabularyList.set(
-                observableVocabulary.vocabularyId,
-                observableVocabulary,
-              );
-              this.questionIterator.update(
-                observableVocabulary.vocabularyId,
-                observableVocabulary,
-              );
-
               this.setUpActionButtons();
             },
           });
         },
       ),
-      this.reviewActionButtonFactory.createDisableButton(
-        (): void => {
-          this.disable();
-        },
+      this.reviewActionButtonFactory.createMoreButton(
+        (): void => this.showReviewActionMenu(),
       ),
     ]);
   }
@@ -246,58 +238,7 @@ export class WritingLessonScreenDelegate {
       feedback,
     );
 
-    this.reviewFeedbackBarDelegate.hide();
-
     this.nextQuestion();
-  }
-
-  public disable(): void {
-    this.dialogDelegate.show({
-      message:
-        'Do you want to disable writing for this term? You will no longer write it again but you will still see it in other lesson types.',
-      onBackgroundPress: (): void => {
-        this.navigatorDelegate.dismissLightBox();
-      },
-      buttonList: [
-        {
-          testID: WritingFormIds.CANCEL_DISABLE_BTN,
-          text: 'NO',
-          onPress: (): void => {
-            this.navigatorDelegate.dismissLightBox();
-          },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
-        },
-        {
-          testID: WritingFormIds.CONFIRM_DISABLE_BTN,
-          text: 'YES',
-          onPress: (): void => {
-            const vocabularyId = this.observableScreen.writingFormState
-              .currentQuestion.testingVocabulary.vocabularyId;
-            const editedVocabulary = {
-              vocabularyId,
-              writing: { disabled: true },
-            };
-            this.eventBus.publish(
-              createAction(ActionType.VOCABULARY__EDIT, {
-                vocabulary: editedVocabulary,
-                setId: undefined,
-              }),
-            );
-
-            this.observableScreen.writingResult.disabledVocabularyIds.push(
-              vocabularyId,
-            );
-            this.nextQuestion();
-            this.navigatorDelegate.dismissLightBox();
-          },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
-        },
-      ],
-    });
   }
 
   public autoDisablePopGestureWhenAdRequiredToShow(): void {
@@ -390,31 +331,27 @@ export class WritingLessonScreenDelegate {
     });
   }
 
-  private showReviewFeedbackBar(): void {
-    this.reviewFeedbackBarDelegate.showFeedbackButtons(
-      this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
-      this.observableScreen.numberOfFeedbackButtons.get(),
-    );
-  }
-
-  private previousQuestion(): void {
+  public previousQuestion(): void {
     this.writingFormDelegate.fadeOut(
       (): void => {
-        this.observableScreen.writingFormState.setUpNextQuestion(
+        this.observableScreen.writingFormState.setUpQuestion(
           this.questionIterator.previous(),
         );
+        this.calculateNextReviewData();
+        this.setUpActionButtons();
       },
     );
   }
 
-  private nextQuestion(): void {
+  public nextQuestion(): void {
     if (this.questionIterator.isDone() === false) {
       this.disableAllButtons();
       this.writingFormDelegate.fadeOut(
         (): void => {
-          this.observableScreen.writingFormState.setUpNextQuestion(
+          this.observableScreen.writingFormState.setUpQuestion(
             this.questionIterator.next(),
           );
+          this.calculateNextReviewData();
           this.setUpActionButtons();
         },
       );
@@ -426,6 +363,13 @@ export class WritingLessonScreenDelegate {
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
     }
+  }
+
+  private calculateNextReviewData(): void {
+    this.reviewFeedbackBarDelegate.calculateNextReviewData(
+      this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
+      this.observableScreen.numberOfFeedbackButtons.get(),
+    );
   }
 
   private saveResult(): void {
@@ -481,5 +425,21 @@ export class WritingLessonScreenDelegate {
         this.observableScreen.speakState.set(ActivityState.INACTIVE);
       },
     });
+  }
+
+  private showReviewActionMenu(): void {
+    this.reviewActionMenuDelegate.show(
+      this.observableScreen.writingFormState.currentQuestion.testingVocabulary,
+    );
+  }
+
+  private replaceCurrentVocabulary(newVocabulary: ObservableVocabulary): void {
+    this.observableScreen.writingFormState.currentQuestion.testingVocabulary = newVocabulary;
+
+    this.observableScreen.vocabularyList.set(
+      newVocabulary.vocabularyId,
+      newVocabulary,
+    );
+    this.questionIterator.update(newVocabulary.vocabularyId, newVocabulary);
   }
 }
