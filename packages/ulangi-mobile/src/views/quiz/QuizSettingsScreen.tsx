@@ -22,6 +22,7 @@ import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
+import { QuizMultipleChoiceSettings } from './QuizMultipleChoiceSettings';
 import {
   QuizSettingsScreenStyles,
   darkStyles,
@@ -29,6 +30,7 @@ import {
   sectionRowDarkStyles,
   sectionRowLightStyles,
 } from './QuizSettingsScreen.style';
+import { QuizWritingSettings } from './QuizWritingSettings';
 
 export interface QuizSettingsScreenProps {
   themeStore: ObservableThemeStore;
@@ -61,8 +63,25 @@ export class QuizSettingsScreen extends React.Component<
     return (
       <React.Fragment>
         {this.renderQuizSettingsSection()}
-        {this.renderMultipleChoiceQuizSection()}
-        {this.renderWritingQuizSection()}
+        <QuizMultipleChoiceSettings
+          theme={this.props.themeStore.theme}
+          multipleChoiceSettings={
+            this.props.observableScreen.multipleChoiceSettings
+          }
+          showMultipleChoiceQuizSizeMenu={
+            this.props.screenDelegate.showMultipleChoiceQuizSizeMenu
+          }
+        />
+        <QuizWritingSettings
+          theme={this.props.themeStore.theme}
+          writingSettings={this.props.observableScreen.writingSettings}
+          showWritingQuizSizeMenu={
+            this.props.screenDelegate.showWritingQuizSizeMenu
+          }
+          showWritingAutoShowKeyboardMenu={
+            this.props.screenDelegate.showWritingAutoShowKeyboardMenu
+          }
+        />
       </React.Fragment>
     );
   }
@@ -104,98 +123,6 @@ export class QuizSettingsScreen extends React.Component<
         />
       </SectionGroup>
     );
-  }
-
-  private renderMultipleChoiceQuizSection(): React.ReactElement<any> {
-    return (
-      <SectionGroup
-        theme={this.props.themeStore.theme}
-        key="multiple-choice-quiz"
-        header="MULTIPLE CHOICE QUIZ">
-        <SectionRow
-          theme={this.props.themeStore.theme}
-          leftText="Quiz Size"
-          shrink="left"
-          description="Number of questions per multiple choice quiz"
-          customRight={
-            <DefaultButton
-              testID={QuizSettingsScreenIds.MULTIPLE_CHOICE_QUIZ_LIMIT_BTN}
-              text={this.props.observableScreen.selectedMultipleChoiceQuizLimit.toString()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL,
-              )}
-              onPress={(): void => {
-                this.props.screenDelegate.showMultipleChoiceQuizLimitMenu(
-                  this.getMultipleChoiceQuizLimitValuePairs(),
-                  this.props.observableScreen.selectedMultipleChoiceQuizLimit,
-                  (limit): void => {
-                    this.props.observableScreen.selectedMultipleChoiceQuizLimit = limit;
-                  },
-                );
-              }}
-            />
-          }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
-        />
-      </SectionGroup>
-    );
-  }
-
-  private renderWritingQuizSection(): React.ReactElement<any> {
-    return (
-      <SectionGroup
-        theme={this.props.themeStore.theme}
-        key="writing-quiz"
-        header="WRITING QUIZ">
-        <SectionRow
-          theme={this.props.themeStore.theme}
-          leftText="Quiz Size"
-          description="Number of questions per writing quiz"
-          shrink="left"
-          customRight={
-            <DefaultButton
-              testID={QuizSettingsScreenIds.WRITING_QUIZ_LIMIT_BTN}
-              text={this.props.observableScreen.selectedWritingQuizLimit.toString()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
-                ButtonSize.SMALL,
-              )}
-              onPress={(): void => {
-                this.props.screenDelegate.showWritingQuizLimitMenu(
-                  this.getWritingQuizLimitValuePairs(),
-                  this.props.observableScreen.selectedWritingQuizLimit,
-                  (limit): void => {
-                    this.props.observableScreen.selectedWritingQuizLimit = limit;
-                  },
-                );
-              }}
-            />
-          }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
-        />
-      </SectionGroup>
-    );
-  }
-
-  private getMultipleChoiceQuizLimitValuePairs(): readonly [number, string][] {
-    return config.quiz.selectableMultipleChoiceQuizLimits.map(function(
-      limit,
-    ): [number, string] {
-      return [limit, limit.toString()];
-    });
-  }
-
-  private getWritingQuizLimitValuePairs(): readonly [number, string][] {
-    return config.quiz.selectableWritingQuizLimits.map(function(
-      limit,
-    ): [number, string] {
-      return [limit, limit.toString()];
-    });
   }
 
   private getVocabularyPoolValuePairs(): readonly [

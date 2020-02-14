@@ -63,7 +63,7 @@ export class WritingLessonScreenContainer extends Container<
   protected observableScreen = new ObservableWritingLessonScreen(
     this.props.passedProps.vocabularyList,
     new ObservableWritingFormState(
-      true,
+      this.currentSettings.autoShowKeyboard,
       null,
       this.questionIterator.current(),
       '',

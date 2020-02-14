@@ -40,6 +40,9 @@ export {
 export {
   QuizWritingMaxLimitResolver,
 } from './general/QuizWritingMaxLimitResolver';
+export {
+  QuizWritingAutoShowKeyboardResolver,
+} from './general/QuizWritingAutoShowKeyboardResolver';
 export { ReminderSettingsResolver } from './general/ReminderSettingsResolver';
 export { RemoteConfigResolver } from './general/RemoteConfigResolver';
 export { SetExtraDataItemResolver } from './general/SetExtraDataItemResolver';
@@ -82,6 +85,9 @@ export {
   WritingInitialIntervalResolver,
 } from './general/WritingInitialIntervalResolver';
 export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
+export {
+  WritingAutoShowKeyboardResolver,
+} from './general/WritingAutoShowKeyboardResolver';
 
 export {
   ChangeEmailAndPasswordResponseResolver,

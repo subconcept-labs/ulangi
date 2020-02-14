@@ -196,20 +196,26 @@ export interface Config {
     readonly defaultInitialInterval: number;
     readonly defaultFeedbackButtons: 3 | 4 | 5;
     readonly defaultAutoplayAudio: boolean;
+    readonly defaultAutoShowKeyboard: boolean;
     readonly selectableInitialIntervals: readonly number[];
     readonly selectableFeedbackButtons: readonly (3 | 4 | 5)[];
     readonly gradeScale: { [P in string]: [number, number] };
   };
 
   readonly quiz: {
-    readonly minPerWritingQuiz: number;
-    readonly maxPerWritingQuiz: number;
-    readonly minPerMultipleChoiceQuiz: number;
-    readonly maxPerMultipleChoiceQuiz: number;
-    readonly selectableWritingQuizLimits: readonly number[];
-    readonly selectableMultipleChoiceQuizLimits: readonly number[];
-    readonly selectableVocabularyPool: readonly ('learned' | 'active')[];
     readonly defaultVocabularyPool: 'learned' | 'active';
+    readonly selectableVocabularyPool: readonly ('learned' | 'active')[];
+    readonly multipleChoice: {
+      readonly minPerQuiz: number;
+      readonly defaultQuizSize: number;
+      readonly selectableQuizSizes: readonly number[];
+    };
+    readonly writing: {
+      readonly minPerQuiz: number;
+      readonly defaultQuizSize: number;
+      readonly selectableQuizSizes: readonly number[];
+      readonly defaultAutoShowKeyboard: boolean;
+    };
     readonly gradeScale: { [P in string]: [number, number] };
   };
 
