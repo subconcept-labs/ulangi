@@ -58,7 +58,13 @@ export class QuizSettingsScreen extends React.Component<
   }
 
   private renderSections(): React.ReactElement<any> {
-    return <React.Fragment>{this.renderQuizSettingsSection()}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {this.renderQuizSettingsSection()}
+        {this.renderMultipleChoiceQuizSection()}
+        {this.renderWritingQuizSection()}
+      </React.Fragment>
+    );
   }
 
   private renderQuizSettingsSection(): React.ReactElement<any> {
@@ -96,9 +102,19 @@ export class QuizSettingsScreen extends React.Component<
             dark: sectionRowDarkStyles,
           }}
         />
+      </SectionGroup>
+    );
+  }
+
+  private renderMultipleChoiceQuizSection(): React.ReactElement<any> {
+    return (
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        key="multiple-choice-quiz"
+        header="MULTIPLE CHOICE QUIZ">
         <SectionRow
           theme={this.props.themeStore.theme}
-          leftText="Multiple Choice Quiz Size"
+          leftText="Quiz Size"
           shrink="left"
           description="Number of questions per multiple choice quiz"
           customRight={
@@ -124,9 +140,19 @@ export class QuizSettingsScreen extends React.Component<
             dark: sectionRowDarkStyles,
           }}
         />
+      </SectionGroup>
+    );
+  }
+
+  private renderWritingQuizSection(): React.ReactElement<any> {
+    return (
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        key="writing-quiz"
+        header="WRITING QUIZ">
         <SectionRow
           theme={this.props.themeStore.theme}
-          leftText="Writing Quiz Size"
+          leftText="Quiz Size"
           description="Number of questions per writing quiz"
           shrink="left"
           customRight={
