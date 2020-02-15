@@ -25,7 +25,7 @@
     "@react-native-community/netinfo": "^4.7.0",
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/react-native-navigation": "^4.0.9-patch.6",
+    "@ulangi/react-native-navigation": "^4.8.4-patch.2",
     "@ulangi/resolver": "^2.0.3",
     "@ulangi/sqlite-adapter": "^1.1.1",
     "autobind-decorator": "^2.4.0",
