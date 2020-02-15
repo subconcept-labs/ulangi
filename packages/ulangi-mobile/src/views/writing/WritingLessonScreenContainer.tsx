@@ -100,10 +100,17 @@ export class WritingLessonScreenContainer extends Container<
           dark: Images.ARROW_LEFT_MILK_22X22,
         },
         (): void => {
-          this.screenDelegate.quit();
+          this.screenDelegate.handleBackPressed();
         },
       ),
-      null,
+      new ObservableTopBarButton(
+        WritingLessonScreenIds.END_BTN,
+        'End',
+        null,
+        (): void => {
+          this.screenDelegate.endLesson();
+        },
+      ),
     ),
   );
 

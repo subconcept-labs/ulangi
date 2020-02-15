@@ -68,7 +68,7 @@ export class WritingLessonScreen extends React.Component<
               this.props.observableScreen.shouldShowAdOrGoogleConsentForm
             }
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
-            quit={this.props.screenDelegate.quit}
+            quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
           />
         </ScrollView>
       );

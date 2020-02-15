@@ -93,7 +93,14 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
           this.screenDelegate.handleBackPressed();
         },
       ),
-      null,
+      new ObservableTopBarButton(
+        SpacedRepetitionLessonScreenIds.END_BTN,
+        'End',
+        null,
+        (): void => {
+          this.screenDelegate.endLesson();
+        },
+      ),
     ),
   );
 

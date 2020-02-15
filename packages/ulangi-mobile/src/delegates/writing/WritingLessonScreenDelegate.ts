@@ -93,7 +93,7 @@ export class WritingLessonScreenDelegate {
 
   public setUp(): void {
     this.autoDisablePopGestureWhenAdRequiredToShow();
-    this.addBackButtonHandler(this.handleBackButton);
+    this.addBackButtonHandler(this.handleBackPressed);
     this.setUpActionButtons();
     this.calculateNextReviewData();
     this.autoUpdateButtons();
@@ -104,7 +104,20 @@ export class WritingLessonScreenDelegate {
   }
 
   public cleanUp(): void {
-    this.removeBackButtonHandler(this.handleBackButton);
+    this.removeBackButtonHandler(this.handleBackPressed);
+  }
+
+  public handleBackPressed(): boolean {
+    if (this.observableScreen.saveState.get() === ActivityState.ACTIVE) {
+      this.showSavingInProgressDialog();
+      return true;
+    } else if (this.observableScreen.shouldShowResult.get() === false) {
+      this.showConfirmQuitLessonDialog();
+      return true;
+    } else {
+      this.showAdIfRequiredThenQuit();
+      return true;
+    }
   }
 
   public showHint(): void {
@@ -139,7 +152,58 @@ export class WritingLessonScreenDelegate {
     this.observableScreen.writingFormState.currentAnswer = this.observableScreen.writingFormState.currentQuestion.testingVocabulary.vocabularyTerm;
   }
 
-  public setUpActionButtons(): void {
+  public setFeedback(feedback: Feedback): void {
+    this.observableScreen.feedbackListState.feedbackList.set(
+      this.observableScreen.writingFormState.currentQuestion.testingVocabulary
+        .vocabularyId,
+      feedback,
+    );
+
+    this.nextQuestion();
+  }
+
+  public endLesson(): void {
+    // Check if lesson ended
+    if (this.observableScreen.shouldShowResult.get() === false) {
+      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
+      );
+
+      this.observableScreen.shouldShowResult.set(true);
+      this.saveResult();
+    }
+  }
+
+  public takeAnotherLesson(): void {
+    this.showAdIfRequiredThenQuit();
+    this.observer.when(
+      (): boolean =>
+        this.observableScreen.screenState === ScreenState.UNMOUNTED,
+      (): void => this.startLesson(),
+    );
+  }
+
+  public showAdIfRequiredThenQuit(): void {
+    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
+      this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
+        (): void => this.navigatorDelegate.pop(),
+      );
+    } else {
+      this.navigatorDelegate.pop();
+    }
+  }
+
+  public showReviewFeedback(): void {
+    this.navigatorDelegate.push(ScreenName.REVIEW_FEEDBACK_SCREEN, {
+      lessonType: 'writing',
+      vocabularyList: this.observableScreen.vocabularyList.toJS(),
+      originalFeedbackList: this.observableScreen.feedbackListState
+        .feedbackList,
+      onSaveSucceeded: this.updateFeedbackList,
+    });
+  }
+
+  private setUpActionButtons(): void {
     const {
       testingVocabulary,
     } = this.observableScreen.writingFormState.currentQuestion;
@@ -187,7 +251,7 @@ export class WritingLessonScreenDelegate {
     ]);
   }
 
-  public disableAllButtons(): void {
+  private disableAllButtons(): void {
     this.observableScreen.reviewActionBarState.buttons.forEach(
       (button): void => {
         button.disabled = true;
@@ -195,7 +259,7 @@ export class WritingLessonScreenDelegate {
     );
   }
 
-  public autoUpdateButtons(): void {
+  private autoUpdateButtons(): void {
     this.observer.reaction(
       (): boolean =>
         this.observableScreen.speakState.get() === ActivityState.ACTIVE,
@@ -231,77 +295,39 @@ export class WritingLessonScreenDelegate {
     );
   }
 
-  public setFeedback(feedback: Feedback): void {
-    this.observableScreen.feedbackListState.feedbackList.set(
-      this.observableScreen.writingFormState.currentQuestion.testingVocabulary
-        .vocabularyId,
-      feedback,
-    );
-
-    this.nextQuestion();
-  }
-
-  public autoDisablePopGestureWhenAdRequiredToShow(): void {
+  private autoDisablePopGestureWhenAdRequiredToShow(): void {
     this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
   }
 
-  public shouldLoadAd(): boolean {
+  private shouldLoadAd(): boolean {
     return this.adDelegate.shouldLoadAd();
   }
 
-  public loadAd(): void {
+  private loadAd(): void {
     this.adDelegate.loadAd();
   }
 
-  public handleBackButton(): boolean {
-    return this.adAfterLessonDelegate.handleShowAdOrGoogleConsentForm();
-  }
-
-  public addBackButtonHandler(handler: () => void): void {
+  private addBackButtonHandler(handler: () => void): void {
     BackHandler.addEventListener('hardwareBackPress', handler);
   }
 
-  public removeBackButtonHandler(handler: () => void): void {
+  private removeBackButtonHandler(handler: () => void): void {
     BackHandler.removeEventListener('hardwareBackPress', handler);
   }
 
-  public showAdOrGoogleConsentForm(onClose: () => void): void {
-    this.adAfterLessonDelegate.showAdOrGoogleConsentForm(onClose);
-  }
-
-  public takeAnotherLesson(): void {
-    this.quit();
-    this.observer.when(
-      (): boolean =>
-        this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startLesson(),
-    );
-  }
-
-  public quit(): void {
-    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
-      this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.pop(),
-      );
-    } else {
-      this.navigatorDelegate.pop();
-    }
-  }
-
-  public showReviewFeedback(): void {
-    this.navigatorDelegate.push(ScreenName.REVIEW_FEEDBACK_SCREEN, {
-      lessonType: 'writing',
-      vocabularyList: this.observableScreen.vocabularyList.toJS(),
-      originalFeedbackList: this.observableScreen.feedbackListState
-        .feedbackList,
-      onSaveSucceeded: this.updateFeedbackList,
+  private showSavingInProgressDialog(): void {
+    this.dialogDelegate.show({
+      message:
+        'Saving in progress. Please wait until save is completed then try again.',
+      showCloseButton: true,
+      closeOnTouchOutside: true,
     });
   }
 
-  public showConfirmQuitLessonDialog(): void {
-    this.dialogDelegate.showSuccessDialog({
+  private showConfirmQuitLessonDialog(): void {
+    this.dialogDelegate.show({
       message:
-        'The lesson result is not yet saved. Are you sure you want to quit?',
+        'Do you want to quit without saving? To save result and end this lesson, please use End instead.',
       onBackgroundPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
       },
@@ -344,7 +370,9 @@ export class WritingLessonScreenDelegate {
   }
 
   public nextQuestion(): void {
-    if (this.questionIterator.isDone() === false) {
+    if (this.questionIterator.isDone() === true) {
+      this.endLesson();
+    } else {
       this.disableAllButtons();
       this.writingFormDelegate.fadeOut(
         (): void => {
@@ -355,13 +383,6 @@ export class WritingLessonScreenDelegate {
           this.setUpActionButtons();
         },
       );
-    } else {
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
-
-      this.observableScreen.shouldShowResult.set(true);
-      this.saveResult();
     }
   }
 

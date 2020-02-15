@@ -94,7 +94,7 @@ export class SpacedRepetitionLessonScreenDelegate {
 
     this.autoUpdateButtons();
     this.autoDisablePopGestureWhenAdRequiredToShow();
-    this.addBackButtonHandler(this.handleBackButton);
+    this.addBackButtonHandler(this.handleBackPressed);
 
     if (this.shouldLoadAd()) {
       this.loadAd();
@@ -102,16 +102,19 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public cleanUp(): void {
-    this.removeBackButtonHandler(this.handleBackButton);
+    this.removeBackButtonHandler(this.handleBackPressed);
   }
 
-  public handleBackPressed(): void {
+  public handleBackPressed(): boolean {
     if (this.observableScreen.saveState.get() === ActivityState.ACTIVE) {
       this.showSavingInProgressDialog();
+      return true;
     } else if (this.observableScreen.shouldShowResult.get() === false) {
       this.showConfirmQuitLessonDialog();
+      return true;
     } else {
-      this.quit();
+      this.showAdIfRequiredThenQuit();
+      return true;
     }
   }
 
@@ -143,14 +146,21 @@ export class SpacedRepetitionLessonScreenDelegate {
     }
   }
 
-  public nextItem(): void {
-    if (this.reviewIterator.isDone()) {
+  public endLesson(): void {
+    // Check if lesson ended
+    if (this.observableScreen.shouldShowResult.get() === false) {
       this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
         this.adDelegate.shouldShowAdOrGoogleConsentForm(),
       );
 
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
+    }
+  }
+
+  public nextItem(): void {
+    if (this.reviewIterator.isDone()) {
+      this.endLesson();
     } else {
       this.disableAllButtons();
       this.observableScreen.reviewState.shouldRunFadeOutAnimation = true;
@@ -177,7 +187,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public takeAnotherLesson(): void {
-    this.quit();
+    this.showAdIfRequiredThenQuit();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
@@ -185,7 +195,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     );
   }
 
-  public quit(): void {
+  public showAdIfRequiredThenQuit(): void {
     if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
       this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
         (): void => this.navigatorDelegate.pop(),
@@ -231,10 +241,6 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.adDelegate.loadAd();
   }
 
-  private handleBackButton(): boolean {
-    return this.adAfterLessonDelegate.handleShowAdOrGoogleConsentForm();
-  }
-
   private addBackButtonHandler(handler: () => void): void {
     BackHandler.addEventListener('hardwareBackPress', handler);
   }
@@ -247,7 +253,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.dialogDelegate.show({
       testID: LightBoxDialogIds.DIALOG,
       message:
-        'The lesson result is not yet saved. Are you sure you want to quit?',
+        'Do you want to quit without saving? To save result and end this lesson, please use End instead.',
       onBackgroundPress: (): void => {
         this.dialogDelegate.dismiss();
       },

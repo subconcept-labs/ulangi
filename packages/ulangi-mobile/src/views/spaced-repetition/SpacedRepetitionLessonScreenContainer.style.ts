@@ -17,6 +17,7 @@ export class SpacedRepetitionLessonScreenStyle {
     {},
     LessonScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
+      popGesture: false,
       topBar: useCustomTopBar({
         testID: SpacedRepetitionLessonScreenIds.TOP_BAR,
         screenName: ScreenName.SPACED_REPETITION_LESSON_SCREEN,

@@ -65,7 +65,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
             }
             showReviewFeedback={this.props.screenDelegate.showReviewFeedback}
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
-            quit={this.props.screenDelegate.quit}
+            quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
           />
         </ScrollView>
       );
