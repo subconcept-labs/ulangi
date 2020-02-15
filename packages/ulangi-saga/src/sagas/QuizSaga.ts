@@ -47,11 +47,11 @@ export class QuizSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowFetchVocabularyForWriting],
-      config.quiz.minPerWritingQuiz
+      config.quiz.writing.minPerQuiz
     );
     yield fork(
       [this, this.allowFetchVocabularyForMultipleChoice],
-      config.quiz.minPerMultipleChoiceQuiz
+      config.quiz.multipleChoice.minPerQuiz
     );
   }
 

@@ -63,7 +63,7 @@ export class WritingLessonScreenContainer extends Container<
   protected observableScreen = new ObservableWritingLessonScreen(
     this.props.passedProps.vocabularyList,
     new ObservableWritingFormState(
-      true,
+      this.currentSettings.autoShowKeyboard,
       null,
       this.questionIterator.current(),
       '',
@@ -82,7 +82,7 @@ export class WritingLessonScreenContainer extends Container<
     ),
     new ObservableFeedbackListState(observable.map()),
     new ObservableReviewActionBarState(observable.array([])),
-    new ObservableReviewFeedbackBarState(observable.map(), null),
+    new ObservableReviewFeedbackBarState(observable.map()),
     observable.box(this.currentSettings.feedbackButtons),
     observable.box(this.currentSettings.autoplayAudio),
     observable.box(false),
@@ -100,10 +100,17 @@ export class WritingLessonScreenContainer extends Container<
           dark: Images.ARROW_LEFT_MILK_22X22,
         },
         (): void => {
-          this.screenDelegate.quit();
+          this.screenDelegate.handleBackPressed();
         },
       ),
-      null,
+      new ObservableTopBarButton(
+        WritingLessonScreenIds.END_BTN,
+        'End',
+        null,
+        (): void => {
+          this.screenDelegate.endLesson();
+        },
+      ),
     ),
   );
 
@@ -124,22 +131,11 @@ export class WritingLessonScreenContainer extends Container<
   }
 
   public componentDidMount(): void {
-    this.screenDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-    this.screenDelegate.addBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
-    this.screenDelegate.setUpActionButtons();
-    this.screenDelegate.autoUpdateButtons();
-
-    if (this.screenDelegate.shouldLoadAd()) {
-      this.screenDelegate.loadAd();
-    }
+    this.screenDelegate.setUp();
   }
 
   public componentWillUnmount(): void {
-    this.screenDelegate.removeBackButtonHandler(
-      this.screenDelegate.handleBackButton,
-    );
+    this.screenDelegate.cleanUp();
   }
 
   public render(): React.ReactElement<any> {

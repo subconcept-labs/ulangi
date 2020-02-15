@@ -68,7 +68,7 @@ export class WritingLessonScreen extends React.Component<
               this.props.observableScreen.shouldShowAdOrGoogleConsentForm
             }
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
-            quit={this.props.screenDelegate.quit}
+            quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
           />
         </ScrollView>
       );
@@ -99,12 +99,14 @@ export class WritingLessonScreen extends React.Component<
           </SmartScrollView>
           <WritingFormBottom
             theme={this.props.themeStore.theme}
+            writingFormState={this.props.observableScreen.writingFormState}
             reviewActionBarState={
               this.props.observableScreen.reviewActionBarState
             }
             reviewFeedbackBarState={
               this.props.observableScreen.reviewFeedbackBarState
             }
+            next={this.props.screenDelegate.nextQuestion}
             showAnswer={this.props.screenDelegate.showAnswer}
             setFeedback={this.props.screenDelegate.setFeedback}
           />

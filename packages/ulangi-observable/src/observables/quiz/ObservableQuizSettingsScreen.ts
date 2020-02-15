@@ -16,21 +16,31 @@ export class ObservableQuizSettingsScreen extends ObservableScreen {
   public selectedVocabularyPool: 'learned' | 'active';
 
   @observable
-  public selectedMultipleChoiceQuizLimit: number;
+  public multipleChoiceSettings: {
+    selectedQuizSize: number;
+  };
 
   @observable
-  public selectedWritingQuizLimit: number;
+  public writingSettings: {
+    selectedQuizSize: number;
+    selectedAutoShowKeyboard: boolean;
+  };
 
   public constructor(
     quizPool: 'learned' | 'active',
-    selectedMultipleChoiceQuizLimit: number,
-    selectedWritingQuizLimit: number,
+    multipleChoiceSettings: {
+      selectedQuizSize: number;
+    },
+    writingSettings: {
+      selectedQuizSize: number;
+      selectedAutoShowKeyboard: boolean;
+    },
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
     this.selectedVocabularyPool = quizPool;
-    this.selectedMultipleChoiceQuizLimit = selectedMultipleChoiceQuizLimit;
-    this.selectedWritingQuizLimit = selectedWritingQuizLimit;
+    this.multipleChoiceSettings = multipleChoiceSettings;
+    this.writingSettings = writingSettings;
   }
 }

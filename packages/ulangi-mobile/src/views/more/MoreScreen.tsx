@@ -261,8 +261,8 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
-        key="about"
-        header="ABOUT">
+        key="info"
+        header="INFO">
         <SectionRow
           testID={MoreScreenIds.VERSION_BTN}
           theme={this.props.themeStore.theme}
@@ -308,6 +308,13 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           rightText=""
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToPrivacyPolicyScreen}
+        />
+        <SectionRow
+          testID={MoreScreenIds.EVENT_LOGS_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Event Logs"
+          showArrow={true}
+          onPress={this.props.screenDelegate.navigateToEventLogsScreen}
         />
       </SectionGroup>
     );

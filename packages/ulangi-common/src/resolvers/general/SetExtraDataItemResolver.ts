@@ -11,6 +11,7 @@ import * as Joi from 'joi';
 import { SetExtraDataItem } from '../../types/SetExtraDataItem';
 import { QuizMultipleChoiceMaxLimitResolver } from './QuizMultipleChoiceMaxLimitResolver';
 import { QuizVocabularyPoolResolver } from './QuizVocabularyPoolResolver';
+import { QuizWritingAutoShowKeyboardResolver } from './QuizWritingAutoShowKeyboardResolver';
 import { QuizWritingMaxLimitResolver } from './QuizWritingMaxLimitResolver';
 import { SetFeatureSettingsResolver } from './SetFeatureSettingsResolver';
 import { SpacedRepetitionAutoplayAudioResolver } from './SpacedRepetitionAutoplayAudioResolver';
@@ -18,6 +19,7 @@ import { SpacedRepetitionFeedbackButtonsResolver } from './SpacedRepetitionFeedb
 import { SpacedRepetitionInitialIntervalResolver } from './SpacedRepetitionInitialIntervalResolver';
 import { SpacedRepetitionMaxLimitResolver } from './SpacedRepetitionMaxLimitResolver';
 import { SpacedRepetitionReviewStrategyResolver } from './SpacedRepetitionReviewStrategyResolver';
+import { WritingAutoShowKeyboardResolver } from './WritingAutoShowKeyboardResolver';
 import { WritingAutoplayAudioResolver } from './WritingAutoplayAudioResolver';
 import { WritingFeedbackButtonsResolver } from './WritingFeedbackButtonsResolver';
 import { WritingInitialIntervalResolver } from './WritingInitialIntervalResolver';
@@ -36,9 +38,11 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   private writingInitialIntervalResolver = new WritingInitialIntervalResolver();
   private writingMaxLimitResolver = new WritingMaxLimitResolver();
   private writingFeedbackButtonsResolver = new WritingFeedbackButtonsResolver();
+  private writingAutoShowKeyboardResolver = new WritingAutoShowKeyboardResolver();
   private quizVocabularyPoolResolver = new QuizVocabularyPoolResolver();
   private quizWritingMaxLimitResolver = new QuizWritingMaxLimitResolver();
   private quizMultipleChoiceMaxLimitResolver = new QuizMultipleChoiceMaxLimitResolver();
+  private quizWritingAutoShowKeyboardResolver = new QuizWritingAutoShowKeyboardResolver();
 
   protected rules: Joi.AlternativesSchema;
 
@@ -55,9 +59,11 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
       this.writingInitialIntervalResolver.getRules(),
       this.writingMaxLimitResolver.getRules(),
       this.writingFeedbackButtonsResolver.getRules(),
+      this.writingAutoShowKeyboardResolver.getRules(),
       this.quizVocabularyPoolResolver.getRules(),
       this.quizWritingMaxLimitResolver.getRules(),
-      this.quizMultipleChoiceMaxLimitResolver.getRules()
+      this.quizMultipleChoiceMaxLimitResolver.getRules(),
+      this.quizWritingAutoShowKeyboardResolver.getRules()
     );
   }
 }

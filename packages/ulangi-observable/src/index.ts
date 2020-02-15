@@ -235,6 +235,9 @@ export { ObservableRootStore } from './observables/stores/ObservableRootStore';
 export {
   ObservableThemeStore,
 } from './observables/stores/ObservableThemeStore';
+export {
+  ObservableEventStore,
+} from './observables/stores/ObservableEventStore';
 export { ObservableUserStore } from './observables/stores/ObservableUserStore';
 export { ObservableSetStore } from './observables/stores/ObservableSetStore';
 export {

@@ -74,7 +74,7 @@ export class QuizWritingScreenDelegate {
     if (this.questionIterator.isDone() === false) {
       this.writingFormDelegate.fadeOut(
         (): void => {
-          this.observableScreen.writingFormState.setUpNextQuestion(
+          this.observableScreen.writingFormState.setUpQuestion(
             this.questionIterator.next(),
           );
         },

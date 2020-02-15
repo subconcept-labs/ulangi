@@ -29,6 +29,7 @@ import { ContactUsScreenContainer } from '../views/contact-us/ContactUsScreenCon
 import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
+import { EventLogsScreenContainer } from '../views/event/EventLogsScreenContainer';
 import { FlashcardPlayerScreenContainer } from '../views/flashcard-player/FlashcardPlayerScreenContainer';
 import { FollowUsScreenContainer } from '../views/follow-us/FollowUsScreenContainer';
 import { GoogleSheetsAddOnScreenContainer } from '../views/google-sheets/GoogleSheetsAddOnScreenContainer';
@@ -151,4 +152,5 @@ export const ScreenContainers = {
   WRITING_LESSON_SCREEN: WritingLessonScreenContainer,
   WRITING_SCREEN: WritingScreenContainer,
   WRITING_SETTINGS_SCREEN: WritingSettingsScreenContainer,
+  EVENT_LOGS_SCREEN: EventLogsScreenContainer,
 };

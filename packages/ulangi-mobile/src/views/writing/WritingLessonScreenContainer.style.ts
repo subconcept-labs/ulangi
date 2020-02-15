@@ -17,6 +17,7 @@ export class WritingLessonScreenStyle {
     {},
     LessonScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
+      popGesture: false,
       topBar: useCustomTopBar({
         testID: WritingLessonScreenIds.TOP_BAR,
         screenName: ScreenName.WRITING_LESSON_SCREEN,

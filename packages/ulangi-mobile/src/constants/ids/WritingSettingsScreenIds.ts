@@ -12,6 +12,7 @@ export const WritingSettingsScreenIds = {
   INITIAL_INTERVAL_BTN: 'INTERVAL_INTERVAL_BTN',
   FEEDBACK_BUTTONS_BTN: 'FEEDBACK_BUTTONSL_BTN',
   AUTOPLAY_AUDIO_BTN: 'AUTOPLAY_AUDIO_BTN',
+  AUTO_SHOW_KEYBOARD_BTN: 'AUTO_SHOW_KEYBOARD_BTN',
   SELECT_LIMIT_BTN_BY_LIMIT: (limit: number): string =>
     'SELECT_LIMIT_BTN_BY_LIMIT_' + limit,
   SELECT_FEEDBACK_BUTTONS_BTN_BY_FEEDBACK_BUTTONS: (
@@ -25,6 +26,8 @@ export const WritingSettingsScreenIds = {
   SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO: (
     autoplayAudio: boolean,
   ): string => 'SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO_' + autoplayAudio,
+  SELECT_AUTO_SHOW_KEYBOARD_BTN: (autoShowKeyboard: boolean): string =>
+    'SELECT_AUTO_SHOW_KEYBOARD_BTN_' + autoShowKeyboard,
   BACK_BTN: 'BACK_BTN',
   SAVE_BTN: 'SAVE_BTN',
 };

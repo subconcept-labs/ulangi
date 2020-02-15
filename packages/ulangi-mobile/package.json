@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-mobile",
-  "version": "3.7.2",
+  "version": "3.8.0",
   "scripts": {
     "postbootstrap": "cd ios && pod install",
     "android": "react-native run-android --variant devDebug",
@@ -27,7 +27,7 @@
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/react-native-ad-consent": "^2.0.2-patch.1",
     "@ulangi/react-native-firebase": "^5.5.6-patch.10",
-    "@ulangi/react-native-navigation": "^4.0.9-patch.6",
+    "@ulangi/react-native-navigation": "^4.8.4-patch.4",
     "@ulangi/resolver": "^2.0.3",
     "@ulangi/sqlite-adapter": "^1.1.1",
     "autobind-decorator": "^2.4.0",

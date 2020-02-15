@@ -328,6 +328,10 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.DATA_SHARING_SCREEN, {});
   }
 
+  public navigateToEventLogsScreen(): void {
+    this.navigatorDelegate.push(ScreenName.EVENT_LOGS_SCREEN, {});
+  }
+
   public showGoogleConsentForm(): void {
     this.adDelegate.showGoogleConsentForm();
   }

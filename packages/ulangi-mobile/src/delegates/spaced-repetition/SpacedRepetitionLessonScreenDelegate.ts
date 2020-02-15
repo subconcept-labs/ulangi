@@ -17,6 +17,7 @@ import {
   ObservableConverter,
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
+  ObservableVocabulary,
   Observer,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -31,6 +32,7 @@ import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
 import { SpacedRepetitionSaveResultDelegate } from './SpacedRepetitionSaveResultDelegate';
@@ -49,6 +51,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
+  private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private startLesson: () => void;
@@ -64,6 +67,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
+    reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     startLesson: () => void,
@@ -78,71 +82,44 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
+    this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.startLesson = startLesson;
   }
 
-  public disableAllButtons(): void {
-    this.observableScreen.reviewActionBarState.buttons.forEach(
-      (button): void => {
-        button.disabled = true;
-      },
-    );
+  public setUp(): void {
+    this.setUpActionButtons();
+    this.calculateNextReviewData();
+
+    this.autoUpdateButtons();
+    this.autoDisablePopGestureWhenAdRequiredToShow();
+    this.addBackButtonHandler(this.handleBackPressed);
+
+    if (this.shouldLoadAd()) {
+      this.loadAd();
+    }
   }
 
-  public setUpActionButtons(): void {
-    const {
-      vocabulary,
-      currentQuestionType,
-      shouldShowAnswer,
-    } = this.observableScreen.reviewState;
+  public cleanUp(): void {
+    this.removeBackButtonHandler(this.handleBackPressed);
+  }
 
-    this.observableScreen.reviewActionBarState.buttons.replace([
-      this.reviewActionButtonFactory.createPreviousButton(
-        this.observableScreen.reviewState.currentIndex === 0,
-        (): void => this.previousItem(),
-      ),
-      this.reviewActionButtonFactory.createPlayAudioButton(
-        shouldShowAnswer === true || currentQuestionType === 'forward'
-          ? vocabulary.vocabularyTerm
-          : '',
-        (): void => {
-          this.synthesizeAndSpeak(vocabulary.vocabularyTerm, false);
-        },
-      ),
-      this.reviewActionButtonFactory.createEditButton(
-        (): void => {
-          this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
-            originalVocabulary: this.observableScreen.reviewState.vocabulary.toRaw(),
-            onSave: (newVocabulary): void => {
-              const observableVocabulary = this.observableConverter.convertToObservableVocabulary(
-                newVocabulary,
-              );
-
-              this.observableScreen.reviewState.vocabulary = observableVocabulary;
-
-              this.observableScreen.vocabularyList.set(
-                observableVocabulary.vocabularyId,
-                observableVocabulary,
-              );
-
-              this.reviewIterator.update(
-                observableVocabulary.vocabularyId,
-                observableVocabulary,
-              );
-
-              this.setUpActionButtons();
-            },
-          });
-        },
-      ),
-    ]);
+  public handleBackPressed(): boolean {
+    if (this.observableScreen.saveState.get() === ActivityState.ACTIVE) {
+      this.showSavingInProgressDialog();
+      return true;
+    } else if (this.observableScreen.shouldShowResult.get() === false) {
+      this.showConfirmQuitLessonDialog();
+      return true;
+    } else {
+      this.showAdIfRequiredThenQuit();
+      return true;
+    }
   }
 
   public showAnswer(): void {
     this.observableScreen.reviewState.shouldShowAnswer = true;
-    this.showReviewFeedbackBar();
 
     if (this.observableScreen.autoplayAudio.get() === true) {
       this.synthesizeAndSpeak(
@@ -152,36 +129,52 @@ export class SpacedRepetitionLessonScreenDelegate {
     }
   }
 
-  public autoUpdateButtons(): void {
-    this.observer.reaction(
-      (): boolean =>
-        this.observableScreen.speakState.get() === ActivityState.ACTIVE,
-      (isSpeaking): void => {
-        this.observableScreen.reviewActionBarState.buttons.forEach(
-          (button): void => {
-            if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
-              button.loading = isSpeaking;
-              button.disabled = isSpeaking;
-            }
-          },
-        );
-      },
-    );
+  public previousItem(): void {
+    if (this.observableScreen.reviewState.currentIndex > 0) {
+      this.disableAllButtons();
+      this.observableScreen.reviewState.shouldRunFadeOutAnimation = true;
+      this.observer.when(
+        (): boolean =>
+          this.observableScreen.reviewState.shouldRunFadeOutAnimation === false,
+        (): void => {
+          const previousItem = this.reviewIterator.previous();
+          this.observableScreen.reviewState.setUpPreviousItem(previousItem);
+          this.calculateNextReviewData();
+          this.setUpActionButtons();
+        },
+      );
+    }
+  }
 
-    this.observer.reaction(
-      (): boolean => this.observableScreen.reviewState.shouldShowAnswer,
-      (shouldShowAnswer): void => {
-        if (shouldShowAnswer === true) {
-          this.observableScreen.reviewActionBarState.buttons.forEach(
-            (button): void => {
-              if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
-                button.subtitle = this.observableScreen.reviewState.vocabulary.vocabularyTerm;
-              }
-            },
-          );
-        }
-      },
-    );
+  public endLesson(): void {
+    // Check if lesson ended
+    if (this.observableScreen.shouldShowResult.get() === false) {
+      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
+      );
+
+      this.observableScreen.shouldShowResult.set(true);
+      this.saveResult();
+    }
+  }
+
+  public nextItem(): void {
+    if (this.reviewIterator.isDone()) {
+      this.endLesson();
+    } else {
+      this.disableAllButtons();
+      this.observableScreen.reviewState.shouldRunFadeOutAnimation = true;
+      this.observer.when(
+        (): boolean =>
+          this.observableScreen.reviewState.shouldRunFadeOutAnimation === false,
+        (): void => {
+          const nextItem = this.reviewIterator.next();
+          this.observableScreen.reviewState.setUpNextItem(nextItem);
+          this.calculateNextReviewData();
+          this.setUpActionButtons();
+        },
+      );
+    }
   }
 
   public setFeedback(feedback: Feedback): void {
@@ -190,12 +183,11 @@ export class SpacedRepetitionLessonScreenDelegate {
       feedback,
     );
 
-    this.reviewFeedbackBarDelegate.hide();
     this.nextItem();
   }
 
   public takeAnotherLesson(): void {
-    this.quit();
+    this.showAdIfRequiredThenQuit();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
@@ -203,7 +195,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     );
   }
 
-  public quit(): void {
+  public showAdIfRequiredThenQuit(): void {
     if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
       this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
         (): void => this.navigatorDelegate.pop(),
@@ -237,39 +229,31 @@ export class SpacedRepetitionLessonScreenDelegate {
     });
   }
 
-  public autoDisablePopGestureWhenAdRequiredToShow(): void {
+  private autoDisablePopGestureWhenAdRequiredToShow(): void {
     this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
   }
 
-  public shouldLoadAd(): boolean {
+  private shouldLoadAd(): boolean {
     return this.adDelegate.shouldLoadAd();
   }
 
-  public loadAd(): void {
+  private loadAd(): void {
     this.adDelegate.loadAd();
   }
 
-  public handleBackButton(): boolean {
-    return this.adAfterLessonDelegate.handleShowAdOrGoogleConsentForm();
-  }
-
-  public addBackButtonHandler(handler: () => void): void {
+  private addBackButtonHandler(handler: () => void): void {
     BackHandler.addEventListener('hardwareBackPress', handler);
   }
 
-  public removeBackButtonHandler(handler: () => void): void {
+  private removeBackButtonHandler(handler: () => void): void {
     BackHandler.removeEventListener('hardwareBackPress', handler);
   }
 
-  public showAdOrGoogleConsentForm(onClose: () => void): void {
-    this.adAfterLessonDelegate.showAdOrGoogleConsentForm(onClose);
-  }
-
-  public showConfirmQuitLessonDialog(): void {
+  private showConfirmQuitLessonDialog(): void {
     this.dialogDelegate.show({
       testID: LightBoxDialogIds.DIALOG,
       message:
-        'The lesson result is not yet saved. Are you sure you want to quit?',
+        'Do you want to quit without saving? To save result and end this lesson, please use End instead.',
       onBackgroundPress: (): void => {
         this.dialogDelegate.dismiss();
       },
@@ -299,7 +283,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     });
   }
 
-  public showSavingInProgressDialog(): void {
+  private showSavingInProgressDialog(): void {
     this.dialogDelegate.show({
       message:
         'Saving in progress. Please wait until save is completed then try again.',
@@ -308,49 +292,90 @@ export class SpacedRepetitionLessonScreenDelegate {
     });
   }
 
-  private previousItem(): void {
-    if (this.observableScreen.reviewState.currentIndex > 0) {
-      this.disableAllButtons();
-      this.observableScreen.reviewState.shouldRunFadeOutAnimation = true;
-      this.observer.when(
-        (): boolean =>
-          this.observableScreen.reviewState.shouldRunFadeOutAnimation === false,
-        (): void => {
-          const previousItem = this.reviewIterator.previous();
-          this.reviewFeedbackBarDelegate.showShowAnswerButton();
-          this.observableScreen.reviewState.setUpPreviousItem(previousItem);
-          this.setUpActionButtons();
-        },
-      );
-    }
+  private autoUpdateButtons(): void {
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.speakState.get() === ActivityState.ACTIVE,
+      (isSpeaking): void => {
+        this.observableScreen.reviewActionBarState.buttons.forEach(
+          (button): void => {
+            if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+              button.loading = isSpeaking;
+              button.disabled = isSpeaking;
+            }
+          },
+        );
+      },
+    );
+
+    this.observer.reaction(
+      (): boolean => this.observableScreen.reviewState.shouldShowAnswer,
+      (shouldShowAnswer): void => {
+        if (shouldShowAnswer === true) {
+          this.observableScreen.reviewActionBarState.buttons.forEach(
+            (button): void => {
+              if (button.testID === ReviewActionBarIds.PLAY_AUDIO_BTN) {
+                button.subtitle = this.observableScreen.reviewState.vocabulary.vocabularyTerm;
+              }
+            },
+          );
+        }
+      },
+    );
   }
 
-  private nextItem(): void {
-    if (this.reviewIterator.isDone()) {
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
-
-      this.observableScreen.shouldShowResult.set(true);
-      this.saveResult();
-    } else {
-      this.disableAllButtons();
-      this.observableScreen.reviewState.shouldRunFadeOutAnimation = true;
-      this.observer.when(
-        (): boolean =>
-          this.observableScreen.reviewState.shouldRunFadeOutAnimation === false,
-        (): void => {
-          const nextItem = this.reviewIterator.next();
-          this.observableScreen.reviewState.setUpNextItem(nextItem);
-          this.reviewFeedbackBarDelegate.showShowAnswerButton();
-          this.setUpActionButtons();
-        },
-      );
-    }
+  private disableAllButtons(): void {
+    this.observableScreen.reviewActionBarState.buttons.forEach(
+      (button): void => {
+        button.disabled = true;
+      },
+    );
   }
 
-  private showReviewFeedbackBar(): void {
-    this.reviewFeedbackBarDelegate.showFeedbackButtons(
+  private setUpActionButtons(): void {
+    const {
+      vocabulary,
+      currentQuestionType,
+      shouldShowAnswer,
+    } = this.observableScreen.reviewState;
+
+    this.observableScreen.reviewActionBarState.buttons.replace([
+      this.reviewActionButtonFactory.createPreviousButton(
+        this.observableScreen.reviewState.currentIndex === 0,
+        (): void => this.previousItem(),
+      ),
+      this.reviewActionButtonFactory.createPlayAudioButton(
+        shouldShowAnswer === true || currentQuestionType === 'forward'
+          ? vocabulary.vocabularyTerm
+          : '',
+        (): void => {
+          this.synthesizeAndSpeak(vocabulary.vocabularyTerm, false);
+        },
+      ),
+      this.reviewActionButtonFactory.createEditButton(
+        (): void => {
+          this.navigatorDelegate.push(ScreenName.EDIT_VOCABULARY_SCREEN, {
+            originalVocabulary: this.observableScreen.reviewState.vocabulary.toRaw(),
+            onSave: (newVocabulary): void => {
+              this.replaceCurrentVocabulary(
+                this.observableConverter.convertToObservableVocabulary(
+                  newVocabulary,
+                ),
+              );
+
+              this.setUpActionButtons();
+            },
+          });
+        },
+      ),
+      this.reviewActionButtonFactory.createMoreButton(
+        (): void => this.showReviewActionMenu(),
+      ),
+    ]);
+  }
+
+  private calculateNextReviewData(): void {
+    this.reviewFeedbackBarDelegate.calculateNextReviewData(
       this.observableScreen.reviewState.vocabulary,
       this.observableScreen.numberOfFeedbackButtons.get(),
     );
@@ -399,5 +424,20 @@ export class SpacedRepetitionLessonScreenDelegate {
     feedbackList: ReadonlyMap<string, Feedback>,
   ): void {
     this.observableScreen.feedbackListState.feedbackList.replace(feedbackList);
+  }
+
+  private showReviewActionMenu(): void {
+    this.reviewActionMenuDelegate.show(
+      this.observableScreen.reviewState.vocabulary,
+    );
+  }
+
+  private replaceCurrentVocabulary(newVocabulary: ObservableVocabulary): void {
+    this.observableScreen.vocabularyList.set(
+      newVocabulary.vocabularyId,
+      newVocabulary,
+    );
+
+    this.reviewIterator.update(newVocabulary.vocabularyId, newVocabulary);
   }
 }

@@ -7,12 +7,20 @@
 
 import { ObservableQuizWritingScreen } from '@ulangi/ulangi-observable';
 
+import { QuizSettingsDelegate } from '../../delegates/quiz/QuizSettingsDelegate';
 import { QuizWritingScreenDelegate } from '../../delegates/quiz/QuizWritingScreenDelegate';
 import { WritingFormDelegate } from '../../delegates/writing/WritingFormDelegate';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class QuizWritingScreenFactory extends ScreenFactory {
+  public createQuizSettingsDelegate(): QuizSettingsDelegate {
+    return new QuizSettingsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+    );
+  }
+
   public createScreenDelegate(
     questionIterator: WritingQuestionIterator,
     observableScreen: ObservableQuizWritingScreen,

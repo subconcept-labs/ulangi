@@ -157,6 +157,37 @@ export class WritingSettingsScreen extends React.Component<
             dark: sectionRowDarkStyles,
           }}
         />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          leftText="Auto-Show Keyboard"
+          customRight={
+            <DefaultButton
+              testID={WritingSettingsScreenIds.AUTO_SHOW_KEYBOARD_BTN}
+              text={
+                this.props.observableScreen.selectedAutoShowKeyboard
+                  ? 'Yes'
+                  : 'No'
+              }
+              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showAutoShowKeyboardMenu(
+                  this.getAutoShowKeyboardValuePairs(),
+                  this.props.observableScreen.selectedAutoShowKeyboard,
+                  (autoShowKeyboard): void => {
+                    this.props.observableScreen.selectedAutoShowKeyboard = autoShowKeyboard;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderAutoShowKeyboardDescription()}
+          styles={{
+            light: sectionRowLightStyles,
+            dark: sectionRowDarkStyles,
+          }}
+        />
       </SectionGroup>
     );
   }
@@ -258,6 +289,14 @@ export class WritingSettingsScreen extends React.Component<
     );
   }
 
+  private renderAutoShowKeyboardDescription(): React.ReactElement<any> {
+    return (
+      <DefaultText style={this.styles.description}>
+        Automatically show keyboard for each term.
+      </DefaultText>
+    );
+  }
+
   private getLimitValuePairs(): readonly [number, string][] {
     return config.writing.selectableLimits.map(function(
       limit,
@@ -283,6 +322,10 @@ export class WritingSettingsScreen extends React.Component<
   }
 
   private getAutoplayAudioValuePairs(): readonly [boolean, string][] {
+    return [[true, 'Yes'], [false, 'No']];
+  }
+
+  private getAutoShowKeyboardValuePairs(): readonly [boolean, string][] {
     return [[true, 'Yes'], [false, 'No']];
   }
 }

@@ -90,16 +90,14 @@ export class ReviewActionButtonFactory {
     );
   }
 
-  public createDisableButton(
-    onPress: () => void,
-  ): ObservableReviewActionButton {
+  public createMoreButton(onPress: () => void): ObservableReviewActionButton {
     return new ObservableReviewActionButton(
-      'DISABLE',
+      'MORE',
       undefined,
-      ReviewActionBarIds.DISABLE_BTN,
+      ReviewActionBarIds.MORE_BTN,
       {
-        light: Images.CROSS_BLACK_25X25,
-        dark: Images.CROSS_MILK_25X25,
+        light: Images.MORE_BLACK_25X25,
+        dark: Images.MORE_MILK_25X25,
       },
       false,
       false,

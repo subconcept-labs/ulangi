@@ -179,6 +179,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultInitialInterval: Joi.number(),
       defaultFeedbackButtons: Joi.number(),
       defaultAutoplayAudio: Joi.boolean(),
+      defaultAutoShowKeyboard: Joi.boolean(),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       selectableFeedbackButtons: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(
@@ -188,18 +189,23 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     quiz: {
-      minPerWritingQuiz: Joi.number(),
-      maxPerWritingQuiz: Joi.number(),
-      minPerMultipleChoiceQuiz: Joi.number(),
-      maxPerMultipleChoiceQuiz: Joi.number(),
-      selectableWritingQuizLimits: Joi.array().items(Joi.number()),
-      selectableMultipleChoiceQuizLimits: Joi.array().items(Joi.number()),
+      defaultVocabularyPool: Joi.string().valid(['learned', 'active']),
+      selectableVocabularyPool: Joi.array().items(Joi.string()),
+      multipleChoice: {
+        minPerQuiz: Joi.number(),
+        defaultQuizSize: Joi.number(),
+        selectableQuizSizes: Joi.array().items(Joi.number()),
+      },
+      writing: {
+        minPerQuiz: Joi.number(),
+        defaultQuizSize: Joi.number(),
+        selectableQuizSizes: Joi.array().items(Joi.number()),
+        defaultAutoShowKeyboard: Joi.boolean(),
+      },
       gradeScale: Joi.object().pattern(
         /^/,
         Joi.array().ordered(Joi.number(), Joi.number()),
       ),
-      selectableVocabularyPool: Joi.array().items(Joi.string()),
-      defaultVocabularyPool: Joi.string().valid(['learned', 'active']),
     },
 
     builtInWordClass: {

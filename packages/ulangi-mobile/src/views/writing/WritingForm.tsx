@@ -7,7 +7,6 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableWritingFormState } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -43,9 +42,7 @@ export interface WritingFormProps {
 @observer
 export class WritingForm extends React.Component<WritingFormProps> {
   private animationContainerRef?: any;
-  private textInputRef?: any;
   private unsubscribeAnimation?: () => void;
-  private unsubscribeAutoFocus?: () => void;
 
   public componentDidMount(): void {
     this.unsubscribeAnimation = autorun(
@@ -62,25 +59,11 @@ export class WritingForm extends React.Component<WritingFormProps> {
         }
       },
     );
-
-    this.unsubscribeAutoFocus = autorun(
-      (): void => {
-        if (
-          this.props.writingFormState.shouldAutoFocus === true &&
-          this.textInputRef
-        ) {
-          _.delay(this.textInputRef.focus, 500);
-        }
-      },
-    );
   }
 
   public componentWillUnmount(): void {
     if (this.unsubscribeAnimation) {
       this.unsubscribeAnimation();
-    }
-    if (this.unsubscribeAutoFocus) {
-      this.unsubscribeAutoFocus();
     }
   }
 
@@ -122,9 +105,6 @@ export class WritingForm extends React.Component<WritingFormProps> {
           <View style={this.styles.answer_container}>
             <View style={this.styles.answer}>
               <TextInput
-                ref={(ref: any): void => {
-                  this.textInputRef = ref;
-                }}
                 testID={WritingFormIds.ANSWER_INPUT}
                 // We need key otherwise textInput does not update on skip/next
                 key={this.props.writingFormState.currentQuestion.questionId}
@@ -132,6 +112,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
                 style={this.styles.input}
                 autoCapitalize="none"
                 autoCorrect={false}
+                autoFocus={this.props.writingFormState.shouldAutoFocus}
                 value={this.props.writingFormState.currentAnswer}
                 onChangeText={this.props.setAnswer}
               />

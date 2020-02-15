@@ -80,9 +80,9 @@ export class ObservableWritingFormState {
   }
 
   @action
-  public setUpNextQuestion(nextQuestion: ObservableWritingQuestion): void {
+  public setUpQuestion(question: ObservableWritingQuestion): void {
     this.nextButtonType = null;
-    this.currentQuestion = nextQuestion;
+    this.currentQuestion = question;
     this.currentQuestionIndex++;
     this.currentAnswer = '';
     this.currentHint = '';

@@ -33,6 +33,11 @@ export class RemoteLogger {
     ) {
       if (error instanceof Error) {
         RemoteLogger.crashlytics.recordCustomError(error.name, error.message);
+      } else if (_.has(error, 'name') && _.has(error, 'message')) {
+        RemoteLogger.crashlytics.recordCustomError(
+          _.get(error, 'name').toString(),
+          _.get(error, 'message').toString(),
+        );
       } else {
         try {
           RemoteLogger.crashlytics.recordCustomError(

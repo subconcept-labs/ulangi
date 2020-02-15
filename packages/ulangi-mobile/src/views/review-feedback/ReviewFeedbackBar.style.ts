@@ -12,7 +12,6 @@ import { config } from '../../constants/config';
 
 export interface ReviewFeedbackBarStyles {
   container: ViewStyle;
-  show_answer_button_container: ViewStyle;
   title_container: ViewStyle;
   title: TextStyle;
   subtitle: TextStyle;
@@ -25,11 +24,6 @@ export interface ReviewFeedbackBarStyles {
 
 export const baseStyles: ReviewFeedbackBarStyles = {
   container: {},
-
-  show_answer_button_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
 
   title_container: {
     paddingVertical: 10,

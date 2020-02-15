@@ -12,6 +12,7 @@ import { config } from '../../constants/config';
 import { AdAfterLessonDelegate } from '../../delegates/ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
+import { ReviewActionMenuDelegate } from '../../delegates/review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
@@ -77,6 +78,13 @@ export class WritingLessonScreenFactory extends ScreenFactory {
 
     const writingSettingsDelegate = this.createWritingSettingsDelegate();
 
+    const reviewActionMenuDelegate = new ReviewActionMenuDelegate(
+      this.eventBus,
+      this.props.observableLightBox,
+      navigatorDelegate,
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const reviewFeedbackDataDelegate = new ReviewFeedbackDataDelegate(
       config.writing.maxLevel,
       writingScheduler,
@@ -95,9 +103,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     const speakDelegate = new SpeakDelegate(this.eventBus);
 
     return new WritingLessonScreenDelegate(
-      this.eventBus,
       this.observer,
-      this.props.observableKeyboard,
       this.props.observableConverter,
       this.props.rootStore.setStore,
       observableScreen,
@@ -108,6 +114,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       speakDelegate,
       adDelegate,
       adAfterLessonDelegate,
+      reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,
       startLesson,

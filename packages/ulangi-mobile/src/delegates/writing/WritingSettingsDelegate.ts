@@ -29,6 +29,7 @@ export class WritingSettingsDelegate {
     limit: number;
     feedbackButtons: 3 | 4 | 5;
     autoplayAudio: boolean;
+    autoShowKeyboard: boolean;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet.writingInitialInterval !==
@@ -53,11 +54,18 @@ export class WritingSettingsDelegate {
         ? this.setStore.existingCurrentSet.writingAutoplayAudio
         : config.writing.defaultAutoplayAudio;
 
+    const autoShowKeyboard =
+      typeof this.setStore.existingCurrentSet.writingAutoShowKeyboard !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingAutoShowKeyboard
+        : config.writing.defaultAutoShowKeyboard;
+
     return {
       initialInterval,
       limit,
       feedbackButtons,
       autoplayAudio,
+      autoShowKeyboard,
     };
   }
 
@@ -67,6 +75,7 @@ export class WritingSettingsDelegate {
       limit: number;
       feedbackButtons: 3 | 4 | 5;
       autoplayAudio: boolean;
+      autoShowKeyboard: boolean;
     },
     callback: {
       onSaving: () => void;
@@ -106,6 +115,13 @@ export class WritingSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.WRITING_AUTOPLAY_AUDIO,
         dataValue: newSettings.autoplayAudio,
+      });
+    }
+
+    if (originalSettings.autoShowKeyboard !== newSettings.autoShowKeyboard) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_AUTO_SHOW_KEYBOARD,
+        dataValue: newSettings.autoShowKeyboard,
       });
     }
 

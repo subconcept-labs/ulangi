@@ -26,35 +26,47 @@ export class QuizSettingsDelegate {
 
   public getCurrentSettings(): {
     vocabularyPool: 'active' | 'learned';
-    multipleChoiceQuizLimit: number;
-    writingQuizLimit: number;
+    multipleChoiceQuizSize: number;
+    writingQuizSize: number;
+    writingAutoShowKeyboard: boolean;
   } {
-    const vocabularyPool = this.setStore.existingCurrentSet.quizVocabularyPool
-      ? this.setStore.existingCurrentSet.quizVocabularyPool
-      : config.quiz.defaultVocabularyPool;
+    const vocabularyPool =
+      typeof this.setStore.existingCurrentSet.quizVocabularyPool !== 'undefined'
+        ? this.setStore.existingCurrentSet.quizVocabularyPool
+        : config.quiz.defaultVocabularyPool;
 
-    const multipleChoiceQuizLimit = this.setStore.existingCurrentSet
-      .quizMultipleChoiceMaxLimit
-      ? this.setStore.existingCurrentSet.quizMultipleChoiceMaxLimit
-      : config.quiz.maxPerMultipleChoiceQuiz;
+    const multipleChoiceQuizSize =
+      typeof this.setStore.existingCurrentSet.quizMultipleChoiceMaxLimit !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.quizMultipleChoiceMaxLimit
+        : config.quiz.multipleChoice.defaultQuizSize;
 
-    const writingQuizLimit = this.setStore.existingCurrentSet
-      .quizWritingMaxLimit
-      ? this.setStore.existingCurrentSet.quizWritingMaxLimit
-      : config.quiz.maxPerWritingQuiz;
+    const writingQuizSize =
+      typeof this.setStore.existingCurrentSet.quizWritingMaxLimit !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.quizWritingMaxLimit
+        : config.quiz.writing.defaultQuizSize;
+
+    const writingAutoShowKeyboard =
+      typeof this.setStore.existingCurrentSet.quizWritingAutoShowKeyboard !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.quizWritingAutoShowKeyboard
+        : config.quiz.writing.defaultAutoShowKeyboard;
 
     return {
       vocabularyPool,
-      multipleChoiceQuizLimit,
-      writingQuizLimit,
+      multipleChoiceQuizSize,
+      writingQuizSize,
+      writingAutoShowKeyboard,
     };
   }
 
   public saveSettings(
     newSettings: {
       vocabularyPool: 'learned' | 'active';
-      multipleChoiceQuizLimit: number;
-      writingQuizLimit: number;
+      multipleChoiceQuizSize: number;
+      writingQuizSize: number;
+      writingAutoShowKeyboard: boolean;
     },
     callback: {
       onSaving: () => void;
@@ -77,19 +89,29 @@ export class QuizSettingsDelegate {
     }
 
     if (
-      originalSettings.multipleChoiceQuizLimit !==
-      newSettings.multipleChoiceQuizLimit
+      originalSettings.multipleChoiceQuizSize !==
+      newSettings.multipleChoiceQuizSize
     ) {
       editedExtraData.push({
         dataName: SetExtraDataName.QUIZ_MULTIPLE_CHOICE_MAX_LIMIT,
-        dataValue: newSettings.multipleChoiceQuizLimit,
+        dataValue: newSettings.multipleChoiceQuizSize,
       });
     }
 
-    if (originalSettings.writingQuizLimit !== newSettings.writingQuizLimit) {
+    if (originalSettings.writingQuizSize !== newSettings.writingQuizSize) {
       editedExtraData.push({
         dataName: SetExtraDataName.QUIZ_WRITING_MAX_LIMIT,
-        dataValue: newSettings.writingQuizLimit,
+        dataValue: newSettings.writingQuizSize,
+      });
+    }
+
+    if (
+      originalSettings.writingAutoShowKeyboard !==
+      newSettings.writingAutoShowKeyboard
+    ) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.QUIZ_WRITING_AUTO_SHOW_KEYBOARD,
+        dataValue: newSettings.writingAutoShowKeyboard,
       });
     }
 

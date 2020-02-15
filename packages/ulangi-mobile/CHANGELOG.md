@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://github.com/minhloi/ulangi/compare/v3.7.2...v3.8.0) (2020-02-15)
+
+
+### Bug Fixes
+
+* redesign quiz settings ([016d5b8](https://github.com/minhloi/ulangi/commit/016d5b8))
+* setting popGesture to false freezes app ([c541dc4](https://github.com/minhloi/ulangi/commit/c541dc4))
+
+
+### Features
+
+* add an option to enable/disable auto show keyboard ([cd34fb6](https://github.com/minhloi/ulangi/commit/cd34fb6))
+* allow to archive/delete terms during review ([669d458](https://github.com/minhloi/ulangi/commit/669d458)), closes [#51](https://github.com/minhloi/ulangi/issues/51)
+* allow to end lessons ([e548781](https://github.com/minhloi/ulangi/commit/e548781))
+* allow users to event logs to developers ([6a2fb5d](https://github.com/minhloi/ulangi/commit/6a2fb5d))
+
+
+
+
+
 ## [3.7.2](https://github.com/minhloi/ulangi/compare/v3.7.1...v3.7.2) (2020-02-13)
 
 
