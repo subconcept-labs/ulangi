@@ -12,6 +12,7 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
+  ObservableEventStore,
   ObservableNetworkStore,
   ObservableNotificationStore,
   ObservablePurchaseStore,
@@ -22,6 +23,7 @@ import {
   ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
+import { observable } from 'mobx';
 import { Platform } from 'react-native';
 import * as RNDarkMode from 'react-native-dark-mode';
 
@@ -56,6 +58,7 @@ export function makeInitialState(): ObservableRootStore {
     config.user.defaultThemeSettings,
     RNDarkMode.initialMode === 'dark' ? Theme.DARK : Theme.LIGHT,
   );
+  const eventStore = new ObservableEventStore(observable.array([]));
 
   return new ObservableRootStore(
     userStore,
@@ -67,5 +70,6 @@ export function makeInitialState(): ObservableRootStore {
     adStore,
     notificationStore,
     themeStore,
+    eventStore,
   );
 }

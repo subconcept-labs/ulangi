@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { action } from 'mobx';
 
 import { ObservableAdStore } from './ObservableAdStore';
+import { ObservableEventStore } from './ObservableEventStore';
 import { ObservableNetworkStore } from './ObservableNetworkStore';
 import { ObservableNotificationStore } from './ObservableNotificationStore';
 import { ObservablePurchaseStore } from './ObservablePurchaseStore';
@@ -29,6 +30,7 @@ export class ObservableRootStore extends ObservableStore {
   public readonly adStore: ObservableAdStore;
   public readonly notificationStore: ObservableNotificationStore;
   public readonly themeStore: ObservableThemeStore;
+  public readonly eventStore: ObservableEventStore;
 
   @action
   public reset(newRootStore: ObservableRootStore): void {
@@ -55,7 +57,8 @@ export class ObservableRootStore extends ObservableStore {
     purchaseStore: ObservablePurchaseStore,
     adStore: ObservableAdStore,
     notificationStore: ObservableNotificationStore,
-    themeStore: ObservableThemeStore
+    themeStore: ObservableThemeStore,
+    eventStore: ObservableEventStore
   ) {
     super();
     this.userStore = userStore;
@@ -67,5 +70,6 @@ export class ObservableRootStore extends ObservableStore {
     this.adStore = adStore;
     this.notificationStore = notificationStore;
     this.themeStore = themeStore;
+    this.eventStore = eventStore;
   }
 }
