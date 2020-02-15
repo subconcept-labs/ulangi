@@ -61,14 +61,14 @@ export class QuizScreenDelegate {
     RemoteLogger.logEvent('start_writing_quiz');
     const {
       vocabularyPool,
-      writingQuizLimit,
+      writingQuizSize,
     } = this.quizSettingsDelegate.getCurrentSettings();
 
     this.eventBus.pubsub(
       createAction(ActionType.QUIZ__FETCH_VOCABULARY_FOR_WRITING, {
         setId: this.setStore.existingCurrentSetId,
         vocabularyPool,
-        limit: writingQuizLimit,
+        limit: writingQuizSize,
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,
         ),
@@ -103,14 +103,14 @@ export class QuizScreenDelegate {
     RemoteLogger.logEvent('start_multiple_choice_quiz');
     const {
       vocabularyPool,
-      multipleChoiceQuizLimit,
+      multipleChoiceQuizSize,
     } = this.quizSettingsDelegate.getCurrentSettings();
 
     this.eventBus.pubsub(
       createAction(ActionType.QUIZ__FETCH_VOCABULARY_FOR_MULTIPLE_CHOICE, {
         setId: this.setStore.existingCurrentSetId,
         vocabularyPool,
-        limit: multipleChoiceQuizLimit,
+        limit: multipleChoiceQuizSize,
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,
         ),
@@ -197,8 +197,8 @@ export class QuizScreenDelegate {
   ): void {
     const minRequired =
       quizType === 'writing-quiz'
-        ? config.quiz.minPerWritingQuiz
-        : config.quiz.minPerMultipleChoiceQuiz;
+        ? config.quiz.writing.minPerQuiz
+        : config.quiz.multipleChoice.minPerQuiz;
 
     const message =
       vocabularyPool === 'learned'

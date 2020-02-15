@@ -7,19 +7,14 @@
 
 import { Feedback } from '@ulangi/ulangi-common/enums';
 import { NextReviewData } from '@ulangi/ulangi-common/interfaces';
-import { ObservableMap, observable } from 'mobx';
+import { ObservableMap } from 'mobx';
 
 export class ObservableReviewFeedbackBarState {
   public readonly nextReviewByFeedback: ObservableMap<Feedback, NextReviewData>;
 
-  @observable
-  public buttonType: null | 'SHOW_ANSWER_BUTTON' | 'FEEDBACK_BUTTONS';
-
   public constructor(
-    nextReviewByFeedback: ObservableMap<Feedback, NextReviewData>,
-    buttonType: null | 'SHOW_ANSWER_BUTTON' | 'FEEDBACK_BUTTONS'
+    nextReviewByFeedback: ObservableMap<Feedback, NextReviewData>
   ) {
     this.nextReviewByFeedback = nextReviewByFeedback;
-    this.buttonType = buttonType;
   }
 }

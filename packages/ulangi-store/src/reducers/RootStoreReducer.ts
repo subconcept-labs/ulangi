@@ -12,6 +12,7 @@ import {
 } from '@ulangi/ulangi-observable';
 
 import { AdStoreReducer } from './AdStoreReducer';
+import { EventStoreReducer } from './EventStoreReducer';
 import { NetworkStoreReducer } from './NetworkStoreReducer';
 import { NotificationStoreReducer } from './NotificationStoreReducer';
 import { PurchaseStoreReducer } from './PurchaseStoreReducer';
@@ -42,6 +43,7 @@ export class RootStoreReducer extends Reducer {
       new AdStoreReducer(rootStore.adStore),
       new NotificationStoreReducer(rootStore.notificationStore),
       new ThemeStoreReducer(rootStore.themeStore),
+      new EventStoreReducer(rootStore.eventStore),
     ];
   }
 

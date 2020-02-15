@@ -15,6 +15,7 @@ import {
   FeatureSettings,
   QuizMultipleChoiceMaxLimit,
   QuizVocabularyPool,
+  QuizWritingAutoShowKeyboard,
   QuizWritingMaxLimit,
   Set,
   SetFeatureSettings,
@@ -23,6 +24,7 @@ import {
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
   SpacedRepetitionReviewStrategy,
+  WritingAutoShowKeyboard,
   WritingAutoplayAudio,
   WritingFeedbackButtons,
   WritingInitialInterval,
@@ -152,6 +154,15 @@ export class ObservableSet {
   }
 
   @computed
+  public get writingAutoShowKeyboard(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is WritingAutoShowKeyboard =>
+        data.dataName === SetExtraDataName.WRITING_AUTO_SHOW_KEYBOARD
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
   public get writingFeedbackButtons(): undefined | 3 | 4 | 5 {
     const data = this.extraData.find(
       (data): data is WritingFeedbackButtons =>
@@ -183,6 +194,15 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is QuizMultipleChoiceMaxLimit =>
         data.dataName === SetExtraDataName.QUIZ_MULTIPLE_CHOICE_MAX_LIMIT
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get quizWritingAutoShowKeyboard(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is QuizWritingAutoShowKeyboard =>
+        data.dataName === SetExtraDataName.QUIZ_WRITING_AUTO_SHOW_KEYBOARD
     );
     return data ? data.dataValue : undefined;
   }

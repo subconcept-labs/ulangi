@@ -16,7 +16,9 @@ export enum SetExtraDataName {
   WRITING_INITIAL_INTERVAL = 'writingInitialInterval',
   WRITING_MAX_LIMIT = 'writingMaxLimit',
   WRITING_FEEDBACK_BUTTONS = 'writingFeedbackButtons',
+  WRITING_AUTO_SHOW_KEYBOARD = 'writingAutoShowKeyboard',
   QUIZ_VOCABULARY_POOL = 'quizVocabularyPool',
   QUIZ_MULTIPLE_CHOICE_MAX_LIMIT = 'quizMultipleChoiceMaxLimit',
   QUIZ_WRITING_MAX_LIMIT = 'quizWritingMaxLimit',
+  QUIZ_WRITING_AUTO_SHOW_KEYBOARD = 'quizWritingAutoShowKeyboard',
 }

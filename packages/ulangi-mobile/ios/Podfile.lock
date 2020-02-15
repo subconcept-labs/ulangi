@@ -348,7 +348,7 @@ PODS:
     - React
   - ReactNativeDarkMode (0.2.1):
     - React
-  - ReactNativeNavigation (4.0.9-patch.6):
+  - ReactNativeNavigation (4.8.4-patch.2):
     - React
   - RNFastImage (7.0.2):
     - React
@@ -597,7 +597,7 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   ReactNativeAudioToolkit: 8febb6c0664cf03fdf83eafaf7f645029b66bd62
   ReactNativeDarkMode: 0e6e7bdbd387eb949fa7ff238a48f6d6431a428d
-  ReactNativeNavigation: fd2de12123e368b33c3cc234f029f6c7102acc26
+  ReactNativeNavigation: f927b48d42c0e4c768e469f51f84fba0bfe016f6
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
   RNRate: d44a8bca6ee08f5d890ecccddaec2810955ffbb3

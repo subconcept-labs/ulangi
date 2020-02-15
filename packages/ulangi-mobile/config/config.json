@@ -363,6 +363,7 @@
     "defaultInitialInterval": 12,
     "defaultFeedbackButtons": 4,
     "defaultAutoplayAudio": true,
+    "defaultAutoShowKeyboard": false,
     "selectableLimits": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     "selectableInitialIntervals": [ 6, 12, 18, 24, 36, 48 ],
     "selectableFeedbackButtons": [ 3, 4, 5 ],
@@ -379,21 +380,26 @@
   },
 
   "quiz": {
-    "minPerWritingQuiz": 1,
-    "maxPerWritingQuiz": 5,
-    "minPerMultipleChoiceQuiz": 3,
-    "maxPerMultipleChoiceQuiz": 10,
-    "selectableWritingQuizLimits": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "selectableMultipleChoiceQuizLimits": [ 4, 6, 8, 10, 12, 14, 16, 18, 20],
+    "selectableVocabularyPool": [ "learned", "active" ],
+    "defaultVocabularyPool": "learned",
+    "multipleChoice": {
+      "minPerQuiz": 3,
+      "defaultQuizSize": 10,
+      "selectableQuizSizes": [ 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    },
+    "writing": {
+      "minPerQuiz": 1,
+      "defaultQuizSize": 5,
+      "selectableQuizSizes": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "defaultAutoShowKeyboard": true
+    },
     "gradeScale": { 
       "A": [ 90, 100 ],
       "B": [ 80, 89 ],
       "C": [ 70, 79 ],
       "D": [ 60, 69 ],
       "F": [ 0, 59 ]
-    },
-    "selectableVocabularyPool": [ "learned", "active" ],
-    "defaultVocabularyPool": "learned"
+    }
   },
 
   "reflex": {

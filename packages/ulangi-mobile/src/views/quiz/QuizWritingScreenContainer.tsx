@@ -53,9 +53,13 @@ export class QuizWritingScreenContainer extends Container<
     this.props.passedProps.vocabularyList,
   );
 
+  private quizSettingsDelegate = this.screenFactory.createQuizSettingsDelegate();
+
+  private currentSettings = this.quizSettingsDelegate.getCurrentSettings();
+
   protected observableScreen = new ObservableQuizWritingScreen(
     new ObservableWritingFormState(
-      true,
+      this.currentSettings.writingAutoShowKeyboard,
       null,
       this.questionIterator.current(),
       '',

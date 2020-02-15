@@ -47,6 +47,7 @@ export class WritingSettingsScreenDelegate {
         limit: this.observableScreen.selectedLimit,
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
         autoplayAudio: this.observableScreen.selectedAutoplayAudio,
+        autoShowKeyboard: this.observableScreen.selectedAutoShowKeyboard,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),
@@ -198,6 +199,42 @@ export class WritingSettingsScreenDelegate {
           ),
         ),
         selectedIds: [selectedAutoplayAudioMenu],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showAutoShowKeyboardMenu(
+    valuePairs: readonly [boolean, string][],
+    selectedAutoShowKeyboard: boolean,
+    onSelect: (autoShowKeyboard: boolean) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([autoShowKeyboard, autoShowKeyboardText]): [
+              boolean,
+              SelectionItem
+            ] => {
+              return [
+                autoShowKeyboard,
+                {
+                  testID: WritingSettingsScreenIds.SELECT_AUTO_SHOW_KEYBOARD_BTN(
+                    autoShowKeyboard,
+                  ),
+                  text: autoShowKeyboardText,
+                  onPress: (): void => {
+                    onSelect(autoShowKeyboard);
+                    this.dialogDelegate.dismiss();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedAutoShowKeyboard],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,

@@ -65,8 +65,12 @@ export interface SagaConfig {
   };
 
   readonly quiz: {
-    readonly minPerWritingQuiz: number;
-    readonly minPerMultipleChoiceQuiz: number;
+    readonly writing: {
+      readonly minPerQuiz: number;
+    };
+    readonly multipleChoice: {
+      readonly minPerQuiz: number;
+    };
   };
 
   readonly audio: {

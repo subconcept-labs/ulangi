@@ -27,24 +27,7 @@ export class ReviewFeedbackBarDelegate {
     this.reviewFeedbackButtonDelegate = reviewFeedbackButtonDelegate;
   }
 
-  public showShowAnswerButton(): void {
-    this.reviewFeedbackBarState.buttonType = 'SHOW_ANSWER_BUTTON';
-  }
-
-  public showFeedbackButtons(
-    vocabulary: Vocabulary,
-    numberOfFeedbackButtons: 3 | 4 | 5,
-  ): void {
-    this.calculateNextReviewData(vocabulary, numberOfFeedbackButtons);
-
-    this.reviewFeedbackBarState.buttonType = 'FEEDBACK_BUTTONS';
-  }
-
-  public hide(): void {
-    this.reviewFeedbackBarState.buttonType = null;
-  }
-
-  private calculateNextReviewData(
+  public calculateNextReviewData(
     vocabulary: Vocabulary,
     numberOfFeedbackButtons: 3 | 4 | 5,
   ): void {
@@ -65,5 +48,6 @@ export class ReviewFeedbackBarDelegate {
           },
         ),
     );
+    console.log(this.reviewFeedbackBarState.nextReviewByFeedback);
   }
 }

@@ -42,8 +42,13 @@ export class QuizSettingsScreenContainer extends Container {
 
   protected observableScreen = new ObservableQuizSettingsScreen(
     this.originalSettings.vocabularyPool,
-    this.originalSettings.multipleChoiceQuizLimit,
-    this.originalSettings.writingQuizLimit,
+    {
+      selectedQuizSize: this.originalSettings.multipleChoiceQuizSize,
+    },
+    {
+      selectedQuizSize: this.originalSettings.writingQuizSize,
+      selectedAutoShowKeyboard: this.originalSettings.writingAutoShowKeyboard,
+    },
     ScreenName.QUIZ_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

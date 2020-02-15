@@ -38,6 +38,9 @@ export {
 } from './general/QuizMultipleChoiceMaxLimit';
 export { QuizVocabularyPool } from './general/QuizVocabularyPool';
 export { QuizWritingMaxLimit } from './general/QuizWritingMaxLimit';
+export {
+  QuizWritingAutoShowKeyboard,
+} from './general/QuizWritingAutoShowKeyboard';
 export { RemoteConfig } from './general/RemoteConfig';
 export { Set } from './general/Set';
 export { SetFeatureSettings } from './general/SetFeatureSettings';
@@ -66,6 +69,7 @@ export { WritingAutoplayAudio } from './general/WritingAutoplayAudio';
 export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
+export { WritingAutoShowKeyboard } from './general/WritingAutoShowKeyboard';
 
 export { ActionItem } from './light-box/ActionItem';
 export { ActionMenu } from './light-box/ActionMenu';

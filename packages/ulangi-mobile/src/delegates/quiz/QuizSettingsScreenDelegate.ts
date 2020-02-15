@@ -38,9 +38,11 @@ export class QuizSettingsScreenDelegate {
     this.quizSettingsDelegate.saveSettings(
       {
         vocabularyPool: this.observableScreen.selectedVocabularyPool,
-        multipleChoiceQuizLimit: this.observableScreen
-          .selectedMultipleChoiceQuizLimit,
-        writingQuizLimit: this.observableScreen.selectedWritingQuizLimit,
+        multipleChoiceQuizSize: this.observableScreen.multipleChoiceSettings
+          .selectedQuizSize,
+        writingQuizSize: this.observableScreen.writingSettings.selectedQuizSize,
+        writingAutoShowKeyboard: this.observableScreen.writingSettings
+          .selectedAutoShowKeyboard,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),
@@ -52,25 +54,25 @@ export class QuizSettingsScreenDelegate {
     );
   }
 
-  public showMultipleChoiceQuizLimitMenu(
+  public showMultipleChoiceQuizSizeMenu(
     valuePairs: readonly [number, string][],
-    selectedLimit: number,
-    onSelect: (limit: number) => void,
+    selectedQuizSize: number,
+    onSelect: (size: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
         items: new Map(
           valuePairs.map(
-            ([limit, limitText]): [number, SelectionItem] => {
+            ([size, sizeText]): [number, SelectionItem] => {
               return [
-                limit,
+                size,
                 {
-                  testID: QuizSettingsScreenIds.SELECT_MULTIPLE_CHOICE_QUIZ_LIMIT_BTN_BY_LIMIT(
-                    limit,
+                  testID: QuizSettingsScreenIds.SELECT_MULTIPLE_CHOICE_QUIZ_SIZE_BTN(
+                    size,
                   ),
-                  text: limitText,
+                  text: sizeText,
                   onPress: (): void => {
-                    onSelect(limit);
+                    onSelect(size);
                     this.navigatorDelegate.dismissLightBox();
                   },
                 },
@@ -78,32 +80,32 @@ export class QuizSettingsScreenDelegate {
             },
           ),
         ),
-        selectedIds: [selectedLimit],
+        selectedIds: [selectedQuizSize],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 
-  public showWritingQuizLimitMenu(
+  public showWritingQuizSizeMenu(
     valuePairs: readonly [number, string][],
-    selectedLimit: number,
-    onSelect: (limit: number) => void,
+    selectedQuizSize: number,
+    onSelect: (size: number) => void,
   ): void {
     this.navigatorDelegate.showSelectionMenu(
       {
         items: new Map(
           valuePairs.map(
-            ([limit, limitText]): [number, SelectionItem] => {
+            ([size, sizeText]): [number, SelectionItem] => {
               return [
-                limit,
+                size,
                 {
-                  testID: QuizSettingsScreenIds.SELECT_WRITING_QUIZ_LIMIT_BTN_BY_LIMIT(
-                    limit,
+                  testID: QuizSettingsScreenIds.SELECT_WRITING_QUIZ_SIZE_BTN(
+                    size,
                   ),
-                  text: limitText,
+                  text: sizeText,
                   onPress: (): void => {
-                    onSelect(limit);
+                    onSelect(size);
                     this.navigatorDelegate.dismissLightBox();
                   },
                 },
@@ -111,7 +113,43 @@ export class QuizSettingsScreenDelegate {
             },
           ),
         ),
-        selectedIds: [selectedLimit],
+        selectedIds: [selectedQuizSize],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showWritingAutoShowKeyboardMenu(
+    valuePairs: readonly [boolean, string][],
+    selectedAutoShowKeyboard: boolean,
+    onSelect: (autoShowKeyboard: boolean) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([autoShowKeyboard, autoShowKeyboardText]): [
+              boolean,
+              SelectionItem
+            ] => {
+              return [
+                autoShowKeyboard,
+                {
+                  testID: QuizSettingsScreenIds.SELECT_WRITING_AUTO_SHOW_KEYBOARD_BTN(
+                    autoShowKeyboard,
+                  ),
+                  text: autoShowKeyboardText,
+                  onPress: (): void => {
+                    onSelect(autoShowKeyboard);
+                    this.navigatorDelegate.dismissLightBox();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedAutoShowKeyboard],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
@@ -131,7 +169,7 @@ export class QuizSettingsScreenDelegate {
               return [
                 vocabularyPool,
                 {
-                  testID: QuizSettingsScreenIds.SELECT_VOCABULARY_POOL_BTN_BY_VOCABULARY_POOL_NAME(
+                  testID: QuizSettingsScreenIds.SELECT_VOCABULARY_POOL_BTN(
                     vocabularyPoolName,
                   ),
                   text: vocabularyPoolName,

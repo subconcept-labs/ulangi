@@ -8,6 +8,7 @@
 import { ActivityState } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
+  ObservableEventStore,
   ObservableNetworkStore,
   ObservableNotificationStore,
   ObservablePurchaseStore,
@@ -18,6 +19,7 @@ import {
   ObservableThemeStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
+import { observable } from 'mobx';
 
 import { config } from '../constants/config';
 
@@ -48,6 +50,7 @@ export function resetState(currentState: ObservableRootStore): void {
     config.user.defaultThemeSettings,
     currentState.themeStore.systemMode,
   );
+  const eventStore = new ObservableEventStore(observable.array([]));
 
   currentState.reset(
     new ObservableRootStore(
@@ -60,6 +63,7 @@ export function resetState(currentState: ObservableRootStore): void {
       adStore,
       notificationStore,
       themeStore,
+      eventStore,
     ),
   );
 }
