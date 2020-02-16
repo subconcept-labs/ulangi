@@ -13,3 +13,4 @@ export { notEndsWith } from './notEndsWith';
 export { tuple } from './tuple';
 export { isVocabularyStatus } from './isVocabularyStatus';
 export { isVocabularyDueType } from './isVocabularyDueType';
+export { getJSONCircularReplacer } from './getJSONCircularReplacer';

@@ -1,3 +1,4 @@
+import { getJSONCircularReplacer } from '@ulangi/ulangi-common/utils';
 import {
   ObservableEventStore,
   ObservableUserStore,
@@ -26,15 +27,17 @@ export class EventLogsScreenDelegate {
   public sendLogsToDevelopers(): void {
     RemoteLogger.logError({
       name: 'Event logs from ' + this.userStore.existingCurrentUser.email,
-      message: JSON.stringify(
-        this.eventStore.eventList
-          .map(
-            (action): string => {
-              return action.type + '\n' + JSON.stringify(action.payload);
-            },
-          )
-          .join('\n'),
-      ),
+      message: this.eventStore.eventList
+        .map(
+          (action): string => {
+            return (
+              action.type +
+              '\n' +
+              JSON.stringify(action.payload, getJSONCircularReplacer)
+            );
+          },
+        )
+        .join('\n'),
     });
 
     this.dialogDelegate.showSuccessDialog({
