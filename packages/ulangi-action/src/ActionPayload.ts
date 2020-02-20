@@ -33,6 +33,10 @@ import {
   User,
   Vocabulary,
 } from '@ulangi/ulangi-common/interfaces';
+import {
+  VocabularyBulkEdit,
+  VocabularyFilterCondition,
+} from '@ulangi/ulangi-common/types';
 
 export interface ActionPayload {
   [P: string]: null | object;
@@ -624,6 +628,15 @@ export interface ActionPayload {
   readonly VOCABULARY__EDIT_MULTIPLE_FAILED: ErrorBag & {
     vocabularyList: readonly DeepPartial<Vocabulary>[];
   };
+  readonly VOCABULARY__BULK_EDIT: {
+    condition: VocabularyFilterCondition;
+    edit: VocabularyBulkEdit;
+  };
+  readonly VOCABULARY__BULK_EDITING: {
+    updatedCount: number;
+  };
+  readonly VOCABULARY__BULK_EDIT_SUCCEEDED: { totalCount: number };
+  readonly VOCABULARY__BULK_EDIT_FAILED: ErrorBag;
   readonly VOCABULARY__UPLOADING_VOCABULARY: {
     vocabularyList: readonly DeepPartial<Vocabulary>[];
   };
@@ -640,20 +653,7 @@ export interface ActionPayload {
     vocabularyList: readonly Vocabulary[];
   };
   readonly VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_FAILED: ErrorBag;
-  readonly VOCABULARY__PREPARE_FETCH:
-  | {
-    filterBy: 'VocabularyStatus';
-    setId: string;
-    vocabularyStatus: VocabularyStatus;
-    categoryName?: string;
-  }
-  | {
-    filterBy: 'VocabularyDueType';
-    setId: string;
-    initialInterval: number;
-    dueType: VocabularyDueType;
-    categoryName?: string;
-  };
+  readonly VOCABULARY__PREPARE_FETCH: VocabularyFilterCondition;
   readonly VOCABULARY__PREPARING_FETCH: null;
   readonly VOCABULARY__PREPARE_FETCH_SUCCEEDED: null;
   readonly VOCABULARY__PREPARE_FETCH_FAILED: ErrorBag;

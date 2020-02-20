@@ -94,6 +94,7 @@ export class SpacedRepetitionLessonScreenDelegate {
 
     this.autoUpdateButtons();
     this.autoDisablePopGestureWhenAdRequiredToShow();
+    this.autoUpdateShouldShowAdOrConsentForm();
     this.addBackButtonHandler(this.handleBackPressed);
 
     if (this.shouldLoadAd()) {
@@ -149,10 +150,6 @@ export class SpacedRepetitionLessonScreenDelegate {
   public endLesson(): void {
     // Check if lesson ended
     if (this.observableScreen.shouldShowResult.get() === false) {
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
-
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
     }
@@ -227,6 +224,10 @@ export class SpacedRepetitionLessonScreenDelegate {
         this.observableScreen.saveState.set(ActivityState.ERROR);
       },
     });
+  }
+
+  public goToAccountTypeScreen(): void {
+    this.navigatorDelegate.push(ScreenName.MEMBERSHIP_SCREEN, {});
   }
 
   private autoDisablePopGestureWhenAdRequiredToShow(): void {
@@ -320,6 +321,19 @@ export class SpacedRepetitionLessonScreenDelegate {
             },
           );
         }
+      },
+    );
+  }
+
+  private autoUpdateShouldShowAdOrConsentForm(): void {
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.shouldShowResult.get() &&
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
+      (shouldShowAdOrGoogleConsentForm): void => {
+        this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
+          shouldShowAdOrGoogleConsentForm,
+        );
       },
     );
   }

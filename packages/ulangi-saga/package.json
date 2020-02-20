@@ -80,7 +80,7 @@
     "tmp-promise": "^1.0.5",
     "ts-jest": "^23.10.5",
     "ts-node": "^4.0.1",
-    "typescript": "^3.5.2",
+    "typescript": "^3.7.0",
     "utility-types": "^3.7.0"
   }
 }

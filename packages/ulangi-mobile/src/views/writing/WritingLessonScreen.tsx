@@ -69,6 +69,7 @@ export class WritingLessonScreen extends React.Component<
             }
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
             quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
+            upgradeToPremium={this.props.screenDelegate.goToAccountTypeScreen}
           />
         </ScrollView>
       );
