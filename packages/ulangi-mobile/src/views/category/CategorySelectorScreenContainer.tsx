@@ -26,6 +26,7 @@ import { CategorySelectorScreen } from './CategorySelectorScreen';
 import { CategorySelectorScreenStyle } from './CategorySelectorScreenContainer.style';
 
 export interface CategorySelectorScreenPassedProps {
+  screenTitle?: string;
   initialCategoryName: undefined | string;
   onSelect: (categoryName: string) => void;
 }
@@ -55,7 +56,9 @@ export class CategorySelectorScreenContainer extends Container<
     ),
     ScreenName.CATEGORY_SELECTOR_SCREEN,
     new ObservableTitleTopBar(
-      'Select Category',
+      typeof this.props.passedProps.screenTitle !== 'undefined'
+        ? this.props.passedProps.screenTitle
+        : 'Select Category',
       new ObservableTopBarButton(
         CategorySelectorScreenIds.BACK_BTN,
         null,
