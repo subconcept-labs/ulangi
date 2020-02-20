@@ -50,21 +50,7 @@ export class NavigatorDelegate {
     // On iOS, we use push
     // On Android, we use showModal because it has better animation
     if (Platform.OS === 'ios') {
-      Navigation.push(this.componentId, {
-        component: {
-          name: screenName,
-          passProps: {
-            theme: this.themeStore.theme,
-            // WORKAROUND FOR BUG:
-            // We wrap passedProps inside a getter because
-            // react-native-navigation cannot pass observables directly.
-            get passedProps(): ExtractPassedProps<typeof ScreenContainers[T]> {
-              return passProps;
-            },
-          },
-          options,
-        },
-      });
+      this.debouncedPush(screenName, passProps, options);
     } else {
       this.debouncedShowModal(screenName, passProps, options);
     }
@@ -213,7 +199,29 @@ export class NavigatorDelegate {
     );
   }
 
-  // Used by Android only to prevent showing screen multiple times
+  @debounce(500, { leading: true, trailing: false })
+  private debouncedPush<T extends keyof typeof ScreenContainers>(
+    screenName: T,
+    passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
+    options?: Options,
+  ): void {
+    Navigation.push(this.componentId, {
+      component: {
+        name: screenName,
+        passProps: {
+          theme: this.themeStore.theme,
+          // WORKAROUND FOR BUG:
+          // We wrap passedProps inside a getter because
+          // react-native-navigation cannot pass observables directly.
+          get passedProps(): ExtractPassedProps<typeof ScreenContainers[T]> {
+            return passProps;
+          },
+        },
+        options,
+      },
+    });
+  }
+
   @debounce(500, { leading: true, trailing: false })
   private debouncedShowModal<T extends keyof typeof ScreenContainers>(
     screenName: T,
