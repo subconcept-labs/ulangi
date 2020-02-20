@@ -37,7 +37,6 @@ export class ScreenFactory {
 
   public createNavigatorDelegate(): NavigatorDelegate {
     return new NavigatorDelegate(
-      this.observer,
       this.props.componentId,
       this.props.observableLightBox,
       this.props.rootStore.themeStore,
