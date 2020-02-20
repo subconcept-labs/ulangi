@@ -24,6 +24,7 @@ import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDe
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
+import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
 import { VocabularyEventDelegate } from '../../delegates/vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
@@ -112,16 +113,33 @@ export class ManageScreenFactory extends ScreenFactory {
       observableScreen.categoryListState,
     );
 
+    const vocabularyBulkEditDelegate = new VocabularyBulkEditDelegate(
+      this.eventBus,
+    );
+
     const categoryActionMenuDelegate = new CategoryActionMenuDelegate(
+      this.props.rootStore.setStore,
+      this.observer,
       this.props.observableLightBox,
       categorySelectionDelegate,
+      setSelectionMenuDelegate,
+      vocabularyBulkEditDelegate,
+      spacedRepetitionSettingsDelegate,
+      writingSettingsDelegate,
+      dialogDelegate,
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categoryBulkActionMenuDelegate = new CategoryBulkActionMenuDelegate(
+      this.observer,
+      this.props.rootStore.setStore,
       this.props.observableLightBox,
-      observableScreen.categoryListState,
+      vocabularyBulkEditDelegate,
+      setSelectionMenuDelegate,
+      spacedRepetitionSettingsDelegate,
+      writingSettingsDelegate,
+      dialogDelegate,
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );

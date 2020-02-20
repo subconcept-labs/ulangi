@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/minhloi/ulangi/compare/v3.8.0...v3.9.0) (2020-02-20)
+
+
+### Features
+
+* add more bulk category actions ([7f2d2ed](https://github.com/minhloi/ulangi/commit/7f2d2ed))
+
+
+
+
+
 # [3.8.0](https://github.com/minhloi/ulangi/compare/v3.7.2...v3.8.0) (2020-02-15)
 
 

@@ -12,7 +12,6 @@ import { SelectionMenu } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableLightBox,
   ObservableThemeStore,
-  Observer,
 } from '@ulangi/ulangi-observable';
 import { debounce } from 'lodash-decorators';
 import { when } from 'mobx';
@@ -22,18 +21,18 @@ import { ScreenContainers } from '../../constants/ScreenContainers';
 import { ExtractPassedProps } from '../../types/ExtractPassedProps';
 
 export class NavigatorDelegate {
-  private observer: Observer;
+  private static isWaitingToShowLightBox: boolean = false;
+  private static isWaitingToDismissLightBox: boolean = false;
+
   private componentId: string;
   private observableLightBox: ObservableLightBox;
   private themeStore: ObservableThemeStore;
 
   public constructor(
-    observer: Observer,
     componentId: string,
     observableLightBox: ObservableLightBox,
     themeStore: ObservableThemeStore,
   ) {
-    this.observer = observer;
     this.componentId = componentId;
     this.observableLightBox = observableLightBox;
     this.themeStore = themeStore;
@@ -51,21 +50,7 @@ export class NavigatorDelegate {
     // On iOS, we use push
     // On Android, we use showModal because it has better animation
     if (Platform.OS === 'ios') {
-      Navigation.push(this.componentId, {
-        component: {
-          name: screenName,
-          passProps: {
-            theme: this.themeStore.theme,
-            // WORKAROUND FOR BUG:
-            // We wrap passedProps inside a getter because
-            // react-native-navigation cannot pass observables directly.
-            get passedProps(): ExtractPassedProps<typeof ScreenContainers[T]> {
-              return passProps;
-            },
-          },
-          options,
-        },
-      });
+      this.debouncedPush(screenName, passProps, options);
     } else {
       this.debouncedShowModal(screenName, passProps, options);
     }
@@ -107,35 +92,37 @@ export class NavigatorDelegate {
     },
   ): void {
     if (
-      this.observableLightBox.state === LightBoxState.UNMOUNTED ||
-      this.observableLightBox.state === LightBoxState.WILL_DISMISS
+      NavigatorDelegate.isWaitingToShowLightBox === false &&
+      (this.observableLightBox.state === LightBoxState.UNMOUNTED ||
+        this.observableLightBox.state === LightBoxState.WILL_DISMISS)
     ) {
-      // The light box will show only when it's completely unmounted
-      this.observer.when(
+      NavigatorDelegate.isWaitingToShowLightBox =
+        this.observableLightBox.state === LightBoxState.WILL_DISMISS;
+
+      when(
         (): boolean =>
+          NavigatorDelegate.isWaitingToShowLightBox === false ||
           this.observableLightBox.state === LightBoxState.UNMOUNTED,
         (): void => {
-          // Do not allow showing multiple light box at the same time
-          if (this.observableLightBox.state !== LightBoxState.WILL_SHOW) {
-            this.observableLightBox.state = LightBoxState.WILL_SHOW;
+          NavigatorDelegate.isWaitingToShowLightBox = false;
+          this.observableLightBox.state = LightBoxState.WILL_SHOW;
 
-            this.handleLightBoxBackButton();
+          this.handleLightBoxBackButton();
 
-            Navigation.showOverlay({
-              component: {
-                name: screenName,
-                passProps: {
-                  theme: this.themeStore.theme,
-                  styles,
-                  get passedProps(): ExtractPassedProps<
-                    typeof ScreenContainers[T]
-                  > {
-                    return passProps;
-                  },
+          Navigation.showOverlay({
+            component: {
+              name: screenName,
+              passProps: {
+                theme: this.themeStore.theme,
+                styles,
+                get passedProps(): ExtractPassedProps<
+                  typeof ScreenContainers[T]
+                > {
+                  return passProps;
                 },
               },
-            });
-          }
+            },
+          });
         },
       );
     }
@@ -143,31 +130,36 @@ export class NavigatorDelegate {
 
   public dismissLightBox(): void {
     if (
-      this.observableLightBox.state === LightBoxState.WILL_SHOW ||
-      this.observableLightBox.state === LightBoxState.MOUNTED
+      NavigatorDelegate.isWaitingToDismissLightBox === false &&
+      (this.observableLightBox.state === LightBoxState.WILL_SHOW ||
+        this.observableLightBox.state === LightBoxState.MOUNTED)
     ) {
-      // Do not use observer.when here
+      NavigatorDelegate.isWaitingToDismissLightBox =
+        this.observableLightBox.state === LightBoxState.WILL_SHOW;
+
+      // Use when here instead of observer.when
       // because light box will never be dismissed
       // if screen is unmounted right after that
       when(
         // The light box will be dismissed when it's completely mounted
-        (): boolean => this.observableLightBox.state === LightBoxState.MOUNTED,
+        (): boolean =>
+          NavigatorDelegate.isWaitingToDismissLightBox === false ||
+          this.observableLightBox.state === LightBoxState.MOUNTED,
         (): void => {
-          if (this.observableLightBox.state !== LightBoxState.WILL_DISMISS) {
-            this.observableLightBox.state = LightBoxState.WILL_DISMISS;
-            when(
-              // Dismiss only when animation has completed
-              (): boolean =>
-                this.observableLightBox.pendingAnimations.length === 0,
-              (): void => {
-                const componentId = assertExists(
-                  this.observableLightBox.componentId,
-                  'The componentId of the light box should not be null when it is mounted.',
-                );
-                Navigation.dismissOverlay(componentId);
-              },
-            );
-          }
+          NavigatorDelegate.isWaitingToDismissLightBox = false;
+          this.observableLightBox.state = LightBoxState.WILL_DISMISS;
+          when(
+            // Dismiss only when animation has completed
+            (): boolean =>
+              this.observableLightBox.pendingAnimations.length === 0,
+            (): void => {
+              const componentId = assertExists(
+                this.observableLightBox.componentId,
+                'The componentId of the light box should not be null when it is mounted.',
+              );
+              Navigation.dismissOverlay(componentId);
+            },
+          );
         },
       );
     }
@@ -207,7 +199,29 @@ export class NavigatorDelegate {
     );
   }
 
-  // Used by Android only to prevent showing screen multiple times
+  @debounce(500, { leading: true, trailing: false })
+  private debouncedPush<T extends keyof typeof ScreenContainers>(
+    screenName: T,
+    passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
+    options?: Options,
+  ): void {
+    Navigation.push(this.componentId, {
+      component: {
+        name: screenName,
+        passProps: {
+          theme: this.themeStore.theme,
+          // WORKAROUND FOR BUG:
+          // We wrap passedProps inside a getter because
+          // react-native-navigation cannot pass observables directly.
+          get passedProps(): ExtractPassedProps<typeof ScreenContainers[T]> {
+            return passProps;
+          },
+        },
+        options,
+      },
+    });
+  }
+
   @debounce(500, { leading: true, trailing: false })
   private debouncedShowModal<T extends keyof typeof ScreenContainers>(
     screenName: T,

@@ -14,6 +14,7 @@ import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDe
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
+import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
 import { VocabularyEventDelegate } from '../../delegates/vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
@@ -40,17 +41,8 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const categoryActionMenuDelegate = new CategoryActionMenuDelegate(
-      this.props.observableLightBox,
-      undefined,
-      navigatorDelegate,
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
-
-    const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
-
-    const vocabularySelectionDelegate = new VocabularySelectionDelegate(
-      observableScreen.vocabularyListState,
+    const vocabularyBulkEditDelegate = new VocabularyBulkEditDelegate(
+      this.eventBus,
     );
 
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
@@ -61,6 +53,26 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+    );
+
+    const categoryActionMenuDelegate = new CategoryActionMenuDelegate(
+      this.props.rootStore.setStore,
+      this.observer,
+      this.props.observableLightBox,
+      undefined,
+      setSelectionMenuDelegate,
+      vocabularyBulkEditDelegate,
+      spacedRepetitionSettingsDelegate,
+      writingSettingsDelegate,
+      dialogDelegate,
+      navigatorDelegate,
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
+    const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
+
+    const vocabularySelectionDelegate = new VocabularySelectionDelegate(
+      observableScreen.vocabularyListState,
     );
 
     const vocabularyListDelegate = new VocabularyListDelegate(

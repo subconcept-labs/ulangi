@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-saga",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "description": "Ulangi Saga",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,9 +21,9 @@
     "@ulangi/assert": "^1.6.0",
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/ulangi-action": "^3.8.0",
-    "@ulangi/ulangi-common": "^3.8.0",
-    "@ulangi/ulangi-local-database": "^3.8.0",
+    "@ulangi/ulangi-action": "^3.9.0",
+    "@ulangi/ulangi-common": "^3.9.0",
+    "@ulangi/ulangi-local-database": "^3.9.0",
     "autobind-decorator": "^2.1.0",
     "axios": "^0.18.0",
     "eventemitter3": "^3.1.0",
@@ -80,7 +80,7 @@
     "tmp-promise": "^1.0.5",
     "ts-jest": "^23.10.5",
     "ts-node": "^4.0.1",
-    "typescript": "^3.5.2",
+    "typescript": "^3.7.0",
     "utility-types": "^3.7.0"
   }
 }

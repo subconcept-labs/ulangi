@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-google-sheets",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "description": "Ulangi Google Sheets Add-on",
   "author": "Minh Loi",
   "license": "GPL-3.0",
   "devDependencies": {
     "@types/google-apps-script": "0.0.54",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/ulangi-common": "^3.8.0"
+    "@ulangi/ulangi-common": "^3.9.0"
   }
 }

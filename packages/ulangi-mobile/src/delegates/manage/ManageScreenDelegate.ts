@@ -193,13 +193,18 @@ export class ManageScreenDelegate {
   public showCategoryBulkActionMenu(): void {
     const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
 
-    this.categoryBulkActionMenuDelegate.show({
-      hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
-      hideReviewByWritingButton: !featureSettings.writingEnabled,
-      hideQuizButton: !featureSettings.quizEnabled,
-      hidePlayReflexButton: !featureSettings.reflexEnabled,
-      hidePlayAtomButton: !featureSettings.atomEnabled,
-    });
+    this.categoryBulkActionMenuDelegate.show(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.categoryListState.categoryList,
+      this.observableScreen.categoryListState.selectedCategoryNames,
+      {
+        hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
+        hideReviewByWritingButton: !featureSettings.writingEnabled,
+        hideQuizButton: !featureSettings.quizEnabled,
+        hidePlayReflexButton: !featureSettings.reflexEnabled,
+        hidePlayAtomButton: !featureSettings.atomEnabled,
+      },
+    );
   }
 
   public showVocabularyActionMenu(vocabulary: ObservableVocabulary): void {
@@ -250,6 +255,7 @@ export class ManageScreenDelegate {
         [
           ActionType.VOCABULARY__ADD_MULTIPLE_SUCCEEDED,
           ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
+          ActionType.VOCABULARY__BULK_EDIT_SUCCEEDED,
         ],
         (): void => {
           this.refreshCurrentList();

@@ -21,7 +21,7 @@ import {
   WritingModel,
 } from '@ulangi/ulangi-local-database';
 import * as _ from 'lodash';
-import { Task } from 'redux-saga';
+import { SagaIterator, Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
@@ -55,6 +55,11 @@ export class VocabularySaga extends ProtectedSaga {
     yield fork([this, this.allowAddMultiple]);
     yield fork([this, this.allowEdit]);
     yield fork([this, this.allowEditMultiple]);
+    yield fork(
+      [this, this.allowBulkEdit],
+      config.spacedRepetition.maxLevel,
+      config.writing.maxLevel
+    );
     yield fork(
       [this, this.allowPrepareAndClearFetch],
       config.vocabulary.fetchLimit,
@@ -294,6 +299,132 @@ export class VocabularySaga extends ProtectedSaga {
     }
   }
 
+  public *allowBulkEdit(
+    spacedRepetitionMaxLevel: number,
+    writingMaxLevel: number
+  ): IterableIterator<any> {
+    while (true) {
+      const action: Action<ActionType.VOCABULARY__BULK_EDIT> = yield take(
+        ActionType.VOCABULARY__BULK_EDIT
+      );
+      const { condition, edit } = action.payload;
+
+      try {
+        let updatedCount = 0;
+
+        yield put(
+          createAction(ActionType.VOCABULARY__BULK_EDITING, {
+            updatedCount,
+          })
+        );
+
+        let done = false;
+        while (!done) {
+          if (edit.type === 'moveToSet' && condition.setId === edit.newSetId) {
+            done = true;
+          } else if (
+            edit.type === 'changeStatus' &&
+            condition.filterBy === 'VocabularyStatus' &&
+            condition.vocabularyStatus === edit.newVocabularyStatus
+          ) {
+            done = true;
+          } else if (
+            edit.type === 'recategorize' &&
+            _.difference(condition.categoryNames, [edit.newCategoryName])
+              .length === 0
+          ) {
+            done = true;
+          } else {
+            const result: {
+              vocabularyList: readonly Vocabulary[];
+            } = yield call(
+              [this, this.getVocabularyListByFilterType],
+              {
+                ...condition,
+                categoryNames:
+                  edit.type === 'recategorize'
+                    ? _.difference(
+                        condition.categoryNames,
+                        edit.newCategoryName
+                      )
+                    : condition.categoryNames,
+              },
+              100,
+              0,
+              spacedRepetitionMaxLevel,
+              writingMaxLevel
+            );
+
+            const { vocabularyList } = result;
+
+            updatedCount += vocabularyList.length;
+
+            yield put(
+              createAction(ActionType.VOCABULARY__BULK_EDITING, {
+                updatedCount,
+              })
+            );
+
+            yield call(
+              [this.userDb, 'transaction'],
+              (tx: Transaction): void => {
+                this.vocabularyModel.updateMultipleVocabulary(
+                  tx,
+                  vocabularyList.map(
+                    (
+                      vocabulary
+                    ): [DeepPartial<Vocabulary>, undefined | string] => {
+                      const vocabularyId = vocabulary.vocabularyId;
+                      if (edit.type === 'moveToSet') {
+                        return [{ vocabularyId }, edit.newSetId];
+                      } else if (edit.type === 'changeStatus') {
+                        return [
+                          {
+                            vocabularyId,
+                            vocabularyStatus: edit.newVocabularyStatus,
+                          },
+                          undefined,
+                        ];
+                      } else if (edit.type === 'recategorize') {
+                        return [
+                          {
+                            vocabularyId,
+                            category: {
+                              categoryName: edit.newCategoryName,
+                            },
+                          },
+                          undefined,
+                        ];
+                      } else {
+                        throw new Error('Unknown bulk action.');
+                      }
+                    }
+                  ),
+                  'local'
+                );
+              }
+            );
+
+            done = vocabularyList.length === 0;
+          }
+        }
+
+        yield put(
+          createAction(ActionType.VOCABULARY__BULK_EDIT_SUCCEEDED, {
+            totalCount: updatedCount,
+          })
+        );
+      } catch (error) {
+        yield put(
+          createAction(ActionType.VOCABULARY__BULK_EDIT_FAILED, {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          })
+        );
+      }
+    }
+  }
+
   public *allowPrepareAndClearFetch(
     limit: number,
     spacedRepetitionMaxLevel: number,
@@ -391,57 +522,14 @@ export class VocabularySaga extends ProtectedSaga {
       try {
         yield put(createAction(ActionType.VOCABULARY__FETCHING, null));
 
-        let result: PromiseType<
-          ReturnType<
-            | VocabularyModel['getVocabularyList']
-            | SpacedRepetitionModel['getDueVocabularyList']
-            | WritingModel['getDueVocabularyList']
-          >
-        >;
-        if (payload.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus, categoryName } = payload;
-
-          result = yield call(
-            [this.vocabularyModel, 'getVocabularyList'],
-            this.userDb,
-            setId,
-            vocabularyStatus,
-            typeof categoryName !== 'undefined' ? [categoryName] : undefined,
-            limit,
-            offset,
-            true
-          );
-        } else {
-          const { setId, initialInterval, dueType, categoryName } = payload;
-
-          if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
-            result = yield call(
-              [this.spacedRepetitionModel, 'getDueVocabularyList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              spacedRepetitionMaxLevel,
-              typeof categoryName !== 'undefined' ? [categoryName] : undefined,
-              limit,
-              offset,
-              true
-            );
-          } else if (dueType === VocabularyDueType.DUE_BY_WRITING) {
-            result = yield call(
-              [this.writingModel, 'getDueVocabularyList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              writingMaxLevel,
-              typeof categoryName !== 'undefined' ? [categoryName] : undefined,
-              limit,
-              offset,
-              true
-            );
-          } else {
-            throw new Error('Unsupported due type');
-          }
-        }
+        const result = yield call(
+          [this, this.getVocabularyListByFilterType],
+          payload,
+          limit,
+          offset,
+          spacedRepetitionMaxLevel,
+          writingMaxLevel
+        );
 
         const { vocabularyList } = result;
         offset += limit;
@@ -466,5 +554,88 @@ export class VocabularySaga extends ProtectedSaga {
         );
       }
     }
+  }
+
+  protected *getVocabularyListByFilterType(
+    condition:
+      | {
+          filterBy: 'VocabularyStatus';
+          setId: string;
+          vocabularyStatus: VocabularyStatus;
+          categoryNames?: string[];
+        }
+      | {
+          filterBy: 'VocabularyDueType';
+          setId: string;
+          initialInterval: number;
+          dueType: VocabularyDueType;
+          categoryNames?: string[];
+        },
+    limit: number,
+    offset: number,
+    spacedRepetitionMaxLevel: number,
+    writingMaxLevel: number
+  ): SagaIterator<
+    PromiseType<
+      ReturnType<
+        | VocabularyModel['getVocabularyList']
+        | SpacedRepetitionModel['getDueVocabularyList']
+        | WritingModel['getDueVocabularyList']
+      >
+    >
+  > {
+    let result: PromiseType<
+      ReturnType<
+        | VocabularyModel['getVocabularyList']
+        | SpacedRepetitionModel['getDueVocabularyList']
+        | WritingModel['getDueVocabularyList']
+      >
+    >;
+    if (condition.filterBy === 'VocabularyStatus') {
+      const { setId, vocabularyStatus, categoryNames } = condition;
+
+      result = yield call(
+        [this.vocabularyModel, 'getVocabularyList'],
+        this.userDb,
+        setId,
+        vocabularyStatus,
+        typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+        limit,
+        offset,
+        true
+      );
+    } else {
+      const { setId, initialInterval, dueType, categoryNames } = condition;
+
+      if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
+        result = yield call(
+          [this.spacedRepetitionModel, 'getDueVocabularyList'],
+          this.userDb,
+          setId,
+          initialInterval,
+          spacedRepetitionMaxLevel,
+          typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+          limit,
+          offset,
+          true
+        );
+      } else if (dueType === VocabularyDueType.DUE_BY_WRITING) {
+        result = yield call(
+          [this.writingModel, 'getDueVocabularyList'],
+          this.userDb,
+          setId,
+          initialInterval,
+          writingMaxLevel,
+          typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+          limit,
+          offset,
+          true
+        );
+      } else {
+        throw new Error('Unsupported due type');
+      }
+    }
+
+    return result;
   }
 }
