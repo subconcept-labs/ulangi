@@ -170,7 +170,7 @@ export class MembershipScreenDelegate {
   public showAdsDialog(): void {
     this.dialogDelegate.show({
       message:
-        "We've have been crafting this app with love. To keep it clean and less intrusive, we don't put any banner ads. We only show interstitial ads between several review sessions.",
+        'To keep the app clean and less intrusive, we only show interstitial ads in between several review sessions.',
       showCloseButton: true,
       closeOnTouchOutside: true,
     });

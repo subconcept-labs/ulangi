@@ -66,7 +66,7 @@ export class PremiumMembership extends React.Component<PremiumMembershipProps> {
             </View>
             <View style={styles.note_container}>
               <DefaultText style={styles.note}>
-                This upgrade will apply to the current Ulangi account only.
+                This upgrade will apply to the current Ulangi account.
               </DefaultText>
             </View>
           </>

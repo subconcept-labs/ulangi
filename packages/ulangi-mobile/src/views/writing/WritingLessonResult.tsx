@@ -34,6 +34,7 @@ export interface WritingLessonResultProps {
   showReviewFeedback: () => void;
   takeAnotherLesson: () => void;
   quit: () => void;
+  upgradeToPremium: () => void;
   styles?: {
     light: WritingLessonResultStyles;
     dark: WritingLessonResultStyles;
@@ -63,7 +64,7 @@ export class WritingLessonResult extends React.Component<
         {this.renderSaveText()}
         {this.props.shouldShowAdOrGoogleConsentForm.get() ? (
           <View style={this.styles.ad_notice_container}>
-            <AdNotice />
+            <AdNotice upgradeToPremium={this.props.upgradeToPremium} />
           </View>
         ) : null}
         {this.renderButtons()}

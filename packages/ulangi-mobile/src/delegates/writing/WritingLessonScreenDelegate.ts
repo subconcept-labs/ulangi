@@ -93,6 +93,7 @@ export class WritingLessonScreenDelegate {
 
   public setUp(): void {
     this.autoDisablePopGestureWhenAdRequiredToShow();
+    this.autoUpdateShouldShowAdOrConsentForm();
     this.addBackButtonHandler(this.handleBackPressed);
     this.setUpActionButtons();
     this.calculateNextReviewData();
@@ -165,10 +166,6 @@ export class WritingLessonScreenDelegate {
   public endLesson(): void {
     // Check if lesson ended
     if (this.observableScreen.shouldShowResult.get() === false) {
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
-
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
     }
@@ -201,6 +198,10 @@ export class WritingLessonScreenDelegate {
         .feedbackList,
       onSaveSucceeded: this.updateFeedbackList,
     });
+  }
+
+  public goToAccountTypeScreen(): void {
+    this.navigatorDelegate.push(ScreenName.MEMBERSHIP_SCREEN, {});
   }
 
   private setUpActionButtons(): void {
@@ -297,6 +298,19 @@ export class WritingLessonScreenDelegate {
 
   private autoDisablePopGestureWhenAdRequiredToShow(): void {
     this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
+  }
+
+  private autoUpdateShouldShowAdOrConsentForm(): void {
+    this.observer.reaction(
+      (): boolean =>
+        this.observableScreen.shouldShowResult.get() &&
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
+      (shouldShowAdOrGoogleConsentForm): void => {
+        this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
+          shouldShowAdOrGoogleConsentForm,
+        );
+      },
+    );
   }
 
   private shouldLoadAd(): boolean {
