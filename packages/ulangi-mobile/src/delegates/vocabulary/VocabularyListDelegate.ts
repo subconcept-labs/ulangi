@@ -10,8 +10,8 @@ import {
   ActivityState,
   VocabularyDueType,
   VocabularyFilterType,
-  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
+import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   isVocabularyDueType,
   isVocabularyStatus,
@@ -57,14 +57,14 @@ export class VocabularyListDelegate {
 
   public prepareAndFetch(
     filterType: VocabularyFilterType,
-    categoryName?: string,
+    categoryNames?: undefined | string[],
   ): void {
     this.eventBus.pubsub(
       createAction(
         this.forManageScreen
           ? ActionType.MANAGE__PREPARE_FETCH_VOCABULARY
           : ActionType.VOCABULARY__PREPARE_FETCH,
-        this.createPrepareFetchPayload(filterType, categoryName),
+        this.createPrepareFetchPayload(filterType, categoryNames),
       ),
       group(
         on(
@@ -98,12 +98,12 @@ export class VocabularyListDelegate {
 
   public refresh(
     filterType: VocabularyFilterType,
-    categoryName?: string,
+    categoryNames?: undefined | string[],
   ): void {
     this.vocabularyListState.isRefreshing.set(true);
     this.vocabularyListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
-    this.prepareAndFetch(filterType, categoryName);
+    this.prepareAndFetch(filterType, categoryNames);
   }
 
   public fetch(): void {
@@ -171,39 +171,26 @@ export class VocabularyListDelegate {
 
   public refreshIfEmpty(
     filterType: VocabularyFilterType,
-    categoryName?: string,
+    categoryNames?: undefined | string[],
   ): void {
     if (
       this.vocabularyListState.vocabularyList !== null &&
       this.vocabularyListState.vocabularyList.size === 0
     ) {
-      this.refresh(filterType, categoryName);
+      this.refresh(filterType, categoryNames);
     }
   }
 
   private createPrepareFetchPayload(
     filterType: VocabularyFilterType,
-    categoryName?: string,
-  ):
-    | {
-        filterBy: 'VocabularyStatus';
-        setId: string;
-        vocabularyStatus: VocabularyStatus;
-        categoryName: undefined | string;
-      }
-    | {
-        filterBy: 'VocabularyDueType';
-        setId: string;
-        initialInterval: number;
-        dueType: VocabularyDueType;
-        categoryName: undefined | string;
-      } {
+    categoryNames?: undefined | string[],
+  ): VocabularyFilterCondition {
     if (isVocabularyStatus(filterType)) {
       return {
         filterBy: 'VocabularyStatus',
         setId: this.setStore.existingCurrentSetId,
         vocabularyStatus: filterType,
-        categoryName,
+        categoryNames,
       };
     } else if (isVocabularyDueType(filterType)) {
       return {
@@ -215,7 +202,7 @@ export class VocabularyListDelegate {
                 .initialInterval
             : this.writingSettingsDelegate.getCurrentSettings().initialInterval,
         dueType: filterType,
-        categoryName,
+        categoryNames,
       };
     } else {
       throw new Error('Invalid filter type');

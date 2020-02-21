@@ -69,10 +69,9 @@ export class CategoryDetailScreenDelegate {
   }
 
   public prepareAndFetch(filterType: VocabularyFilterType): void {
-    this.vocabularyListDelegate.prepareAndFetch(
-      filterType,
+    this.vocabularyListDelegate.prepareAndFetch(filterType, [
       this.observableScreen.category.categoryName,
-    );
+    ]);
   }
 
   public fetch(): void {
@@ -84,10 +83,9 @@ export class CategoryDetailScreenDelegate {
   }
 
   public refresh(filterType: VocabularyFilterType): void {
-    this.vocabularyListDelegate.refresh(
-      filterType,
+    this.vocabularyListDelegate.refresh(filterType, [
       this.observableScreen.category.categoryName,
-    );
+    ]);
   }
 
   public refreshCurrentList(): void {
