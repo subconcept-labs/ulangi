@@ -10,8 +10,8 @@ import {
   ActivityState,
   VocabularyDueType,
   VocabularyFilterType,
-  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
+import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   isVocabularyDueType,
   isVocabularyStatus,
@@ -151,23 +151,13 @@ export class CategoryListDelegate {
 
   private createPrepareFetchPayload(
     filterType: VocabularyFilterType,
-  ):
-    | {
-        filterBy: 'VocabularyStatus';
-        setId: string;
-        vocabularyStatus: VocabularyStatus;
-      }
-    | {
-        filterBy: 'VocabularyDueType';
-        setId: string;
-        initialInterval: number;
-        dueType: VocabularyDueType;
-      } {
+  ): VocabularyFilterCondition {
     if (isVocabularyStatus(filterType)) {
       return {
         filterBy: 'VocabularyStatus',
         setId: this.setStore.existingCurrentSetId,
         vocabularyStatus: filterType,
+        categoryNames: undefined,
       };
     } else if (isVocabularyDueType(filterType)) {
       return {
@@ -179,6 +169,7 @@ export class CategoryListDelegate {
                 .initialInterval
             : this.writingSettingsDelegate.getCurrentSettings().initialInterval,
         dueType: filterType,
+        categoryNames: undefined,
       };
     } else {
       throw new Error('Invalid filter type');

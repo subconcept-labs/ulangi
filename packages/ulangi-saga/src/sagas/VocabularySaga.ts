@@ -9,12 +9,9 @@ import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
-import {
-  ErrorCode,
-  VocabularyDueType,
-  VocabularyStatus,
-} from '@ulangi/ulangi-common/enums';
+import { ErrorCode, VocabularyDueType } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   SpacedRepetitionModel,
   VocabularyModel,
@@ -498,20 +495,7 @@ export class VocabularySaga extends ProtectedSaga {
   }
 
   private *allowFetchVocabulary(
-    payload:
-      | {
-          filterBy: 'VocabularyStatus';
-          setId: string;
-          vocabularyStatus: VocabularyStatus;
-          categoryName?: string;
-        }
-      | {
-          filterBy: 'VocabularyDueType';
-          setId: string;
-          initialInterval: number;
-          dueType: VocabularyDueType;
-          categoryName?: string;
-        },
+    condition: VocabularyFilterCondition,
     limit: number,
     spacedRepetitionMaxLevel: number,
     writingMaxLevel: number
@@ -524,7 +508,7 @@ export class VocabularySaga extends ProtectedSaga {
 
         const result = yield call(
           [this, this.getVocabularyListByFilterType],
-          payload,
+          condition,
           limit,
           offset,
           spacedRepetitionMaxLevel,
@@ -557,20 +541,7 @@ export class VocabularySaga extends ProtectedSaga {
   }
 
   protected *getVocabularyListByFilterType(
-    condition:
-      | {
-          filterBy: 'VocabularyStatus';
-          setId: string;
-          vocabularyStatus: VocabularyStatus;
-          categoryNames?: string[];
-        }
-      | {
-          filterBy: 'VocabularyDueType';
-          setId: string;
-          initialInterval: number;
-          dueType: VocabularyDueType;
-          categoryNames?: string[];
-        },
+    condition: VocabularyFilterCondition,
     limit: number,
     offset: number,
     spacedRepetitionMaxLevel: number,

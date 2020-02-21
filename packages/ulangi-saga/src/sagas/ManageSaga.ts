@@ -7,11 +7,9 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
-import {
-  VocabularyDueType,
-  VocabularyStatus,
-} from '@ulangi/ulangi-common/enums';
+import { VocabularyDueType } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
+import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   CategoryModel,
   SpacedRepetitionModel,
@@ -145,20 +143,7 @@ export class ManageSaga extends ProtectedSaga {
   }
 
   private *allowFetchVocabulary(
-    payload:
-      | {
-          filterBy: 'VocabularyStatus';
-          setId: string;
-          vocabularyStatus: VocabularyStatus;
-          categoryName?: string;
-        }
-      | {
-          filterBy: 'VocabularyDueType';
-          setId: string;
-          initialInterval: number;
-          dueType: VocabularyDueType;
-          categoryName?: string;
-        },
+    payload: VocabularyFilterCondition,
     limit: number,
     spacedRepetitionMaxLevel: number,
     writingMaxLevel: number
@@ -177,20 +162,20 @@ export class ManageSaga extends ProtectedSaga {
           >
         >;
         if (payload.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus, categoryName } = payload;
+          const { setId, vocabularyStatus, categoryNames } = payload;
 
           result = yield call(
             [this.vocabularyModel, 'getVocabularyList'],
             this.userDb,
             setId,
             vocabularyStatus,
-            typeof categoryName !== 'undefined' ? [categoryName] : undefined,
+            typeof categoryNames !== 'undefined' ? categoryNames : undefined,
             limit,
             offset,
             true
           );
         } else {
-          const { setId, initialInterval, dueType, categoryName } = payload;
+          const { setId, initialInterval, dueType, categoryNames } = payload;
 
           if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
             result = yield call(
@@ -199,7 +184,7 @@ export class ManageSaga extends ProtectedSaga {
               setId,
               initialInterval,
               spacedRepetitionMaxLevel,
-              typeof categoryName !== 'undefined' ? [categoryName] : undefined,
+              typeof categoryNames !== 'undefined' ? categoryNames : undefined,
               limit,
               offset,
               true
@@ -211,7 +196,7 @@ export class ManageSaga extends ProtectedSaga {
               setId,
               initialInterval,
               writingMaxLevel,
-              typeof categoryName !== 'undefined' ? [categoryName] : undefined,
+              typeof categoryNames !== 'undefined' ? categoryNames : undefined,
               limit,
               offset,
               true
@@ -321,18 +306,7 @@ export class ManageSaga extends ProtectedSaga {
   }
 
   private *allowFetchCategory(
-    payload:
-      | {
-          filterBy: 'VocabularyStatus';
-          setId: string;
-          vocabularyStatus: VocabularyStatus;
-        }
-      | {
-          filterBy: 'VocabularyDueType';
-          setId: string;
-          initialInterval: number;
-          dueType: VocabularyDueType;
-        },
+    condition: VocabularyFilterCondition,
     limitOfCategorized: number,
     spacedRepetitionMaxLevel: number,
     writingMaxLevel: number
@@ -346,8 +320,8 @@ export class ManageSaga extends ProtectedSaga {
         yield put(createAction(ActionType.MANAGE__FETCHING_CATEGORY, null));
 
         let categoryList;
-        if (payload.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus } = payload;
+        if (condition.filterBy === 'VocabularyStatus') {
+          const { setId, vocabularyStatus } = condition;
 
           const result: PromiseType<
             ReturnType<CategoryModel['getCategoryListByVocabularyStatus']>
@@ -363,7 +337,7 @@ export class ManageSaga extends ProtectedSaga {
 
           categoryList = result.categoryList;
         } else {
-          const { setId, initialInterval, dueType } = payload;
+          const { setId, initialInterval, dueType } = condition;
           if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
             const result: PromiseType<
               ReturnType<SpacedRepetitionModel['getDueCategoryList']>
