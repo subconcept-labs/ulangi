@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://github.com/minhloi/ulangi/compare/v3.9.0...v3.9.1) (2020-02-22)
+
+
+### Bug Fixes
+
+* fetch vocabulary for each category ([da05992](https://github.com/minhloi/ulangi/commit/da05992))
+* syncing can block JS thread ([190108b](https://github.com/minhloi/ulangi/commit/190108b))
+
+
+
+
+
 # [3.9.0](https://github.com/minhloi/ulangi/compare/v3.8.0...v3.9.0) (2020-02-20)
 
 
