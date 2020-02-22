@@ -271,8 +271,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     sync: {
-      transactionChunkSize: Joi.number(),
-      delayBetweenChunks: Joi.number(),
+      delayBetweenTransactions: Joi.number(),
     },
   };
 }

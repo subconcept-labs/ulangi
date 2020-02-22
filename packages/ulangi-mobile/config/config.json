@@ -442,8 +442,7 @@
   },
 
   "sync": {
-    "transactionChunkSize": 5,
-    "delayBetweenChunks": 500
+    "delayBetweenTransactions": 250
   },
 
   "reminder": {

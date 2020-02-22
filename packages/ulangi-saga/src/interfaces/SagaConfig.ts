@@ -78,7 +78,6 @@ export interface SagaConfig {
   };
 
   readonly sync: {
-    readonly transactionChunkSize: number;
-    readonly delayBetweenChunks: number;
+    readonly delayBetweenTransactions: number;
   };
 }

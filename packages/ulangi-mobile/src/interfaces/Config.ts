@@ -259,7 +259,6 @@ export interface Config {
   };
 
   readonly sync: {
-    readonly transactionChunkSize: number;
-    readonly delayBetweenChunks: number;
+    readonly delayBetweenTransactions: number;
   };
 }
