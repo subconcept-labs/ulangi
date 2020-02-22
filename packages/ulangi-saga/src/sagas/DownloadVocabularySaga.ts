@@ -6,14 +6,10 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { currentComparableCommonVersion } from '@ulangi/ulangi-common';
-import {
-  DownloadVocabularyRequest,
-  Vocabulary,
-} from '@ulangi/ulangi-common/interfaces';
+import { DownloadVocabularyRequest } from '@ulangi/ulangi-common/interfaces';
 import {
   DownloadVocabularyResponseResolver,
   VocabularyResolver,
@@ -58,8 +54,7 @@ export class DownloadVocabularySaga {
   public *downloadVocabulary(
     apiUrl: string,
     downloadLimit: number,
-    transactionChunkSize: number,
-    delayBetweenChunks: number
+    delayBetweenTransactions: number
   ): IterableIterator<any> {
     let success, noMore;
     try {
@@ -117,81 +112,63 @@ export class DownloadVocabularySaga {
         vocabularyList.map((vocabulary): string => vocabulary.vocabularyId)
       );
 
-      const chunks = _.chunk(vocabularyList, transactionChunkSize);
-
-      for (const chunk of chunks) {
-        const incompatibleVocabularyIds: readonly string[] = response.data.vocabularyList
-          .filter(
-            (vocabulary: any): vocabulary is { vocabularyId: string } => {
-              return (
-                _.has(vocabulary, 'vocabularyId') &&
-                _.isString(vocabulary.vocabularyId)
-              );
-            }
-          )
-          .filter(
-            (vocabulary: { vocabularyId: string }): boolean => {
-              return _.includes(
-                chunk.map((vocabulary): string => vocabulary.vocabularyId),
-                vocabulary.vocabularyId
-              );
-            }
-          )
-          .filter(
-            (vocabulary: { vocabularyId: string }): boolean => {
-              return !this.vocabularyResolver.isValid(vocabulary, false);
-            }
-          )
-          .map(
-            (vocabulary: { vocabularyId: string }): string => {
-              return vocabulary.vocabularyId;
-            }
-          );
+      for (const vocabulary of vocabularyList) {
+        // If there are too many definitions, the app will become slow
+        // Split definitions into chunks
+        const definitionChunks = _.chunk(vocabulary.definitions, 10);
 
         yield call(
           [this.userDb, 'transaction'],
           (tx: Transaction): void => {
-            this.vocabularyModel.insertMultipleVocabulary(
-              tx,
-              chunk
-                .filter(
-                  (vocabulary): boolean =>
-                    !_.includes(existingVocabularyIds, vocabulary.vocabularyId)
+            !_.includes(existingVocabularyIds, vocabulary.vocabularyId)
+              ? this.vocabularyModel.insertVocabulary(
+                  tx,
+                  {
+                    ...vocabulary,
+                    definitions: definitionChunks.shift() || [],
+                  },
+                  vocabularySetIdMap[vocabulary.vocabularyId],
+                  'remote'
                 )
-                .map(
-                  (vocabulary): [Vocabulary, string] => [
-                    vocabulary,
-                    vocabularySetIdMap[vocabulary.vocabularyId],
-                  ]
-                ),
-              'remote'
-            );
-
-            this.vocabularyModel.updateMultipleVocabulary(
-              tx,
-              chunk
-                .filter(
-                  (vocabulary): boolean =>
-                    _.includes(existingVocabularyIds, vocabulary.vocabularyId)
+              : this.vocabularyModel.updateVocabulary(
+                  tx,
+                  {
+                    ...vocabulary,
+                    definitions: definitionChunks.shift() || [],
+                  },
+                  vocabularySetIdMap[vocabulary.vocabularyId],
+                  'remote'
+                );
+            !this.vocabularyResolver.isValid(vocabulary, false)
+              ? this.incompatibleVocabularyModel.upsertIncompatibleVocabulary(
+                  tx,
+                  vocabulary.vocabularyId,
+                  currentComparableCommonVersion
                 )
-                .map(
-                  (vocabulary): [DeepPartial<Vocabulary>, string] => [
-                    vocabulary,
-                    vocabularySetIdMap[vocabulary.vocabularyId],
-                  ]
-                ),
-              'remote'
-            );
-
-            this.incompatibleVocabularyModel.upsertMultipleIncompatibleVocabulary(
-              tx,
-              incompatibleVocabularyIds,
-              currentComparableCommonVersion
-            );
+              : _.noop();
           }
         );
 
-        yield delay(delayBetweenChunks);
+        yield delay(delayBetweenTransactions);
+
+        for (const definitionChunk of definitionChunks) {
+          yield call(
+            [this.userDb, 'transaction'],
+            (tx: Transaction): void => {
+              this.vocabularyModel.updateVocabulary(
+                tx,
+                {
+                  vocabularyId: vocabulary.vocabularyId,
+                  definitions: definitionChunk || [],
+                },
+                vocabularySetIdMap[vocabulary.vocabularyId],
+                'remote'
+              );
+            }
+          );
+
+          yield delay(delayBetweenTransactions);
+        }
       }
 
       yield put(

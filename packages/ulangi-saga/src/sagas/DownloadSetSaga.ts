@@ -54,8 +54,7 @@ export class DownloadSetSaga {
   public *downloadSets(
     apiUrl: string,
     downloadLimit: number,
-    transactionChunkSize: number,
-    delayBetweenChunks: number
+    delayBetweenTransactions: number
   ): IterableIterator<any> {
     let success, noMore;
     try {
@@ -104,60 +103,24 @@ export class DownloadSetSaga {
         setList.map((set): string => set.setId)
       );
 
-      const chunks = _.chunk(setList, transactionChunkSize);
-
-      for (const chunk of chunks) {
-        const incompatibleSetIds: readonly string[] = response.data.setList
-          .filter(
-            (set: any): set is { setId: string } => {
-              return _.has(set, 'setId') && _.isString(set.setId);
-            }
-          )
-          .filter(
-            (set: { setId: string }): boolean => {
-              return _.includes(
-                chunk.map((set): string => set.setId),
-                set.setId
-              );
-            }
-          )
-          .filter(
-            (set: { setId: string }): boolean => {
-              return !this.setResolver.isValid(set, false);
-            }
-          )
-          .map(
-            (set: { setId: string }): string => {
-              return set.setId;
-            }
-          );
-
+      for (const set of setList) {
         yield call(
           [this.userDb, 'transaction'],
           (tx: Transaction): void => {
-            this.setModel.insertSets(
-              tx,
-              chunk.filter(
-                (set): boolean => !_.includes(existingSetIds, set.setId)
-              ),
-              'remote'
-            );
-            this.setModel.updateSets(
-              tx,
-              chunk.filter(
-                (set): boolean => _.includes(existingSetIds, set.setId)
-              ),
-              'remote'
-            );
-            this.incompatibleSetModel.upsertIncompatibleSets(
-              tx,
-              incompatibleSetIds,
-              currentComparableCommonVersion
-            );
+            !_.includes(existingSetIds, set.setId)
+              ? this.setModel.insertSet(tx, set, 'remote')
+              : this.setModel.updateSet(tx, set, 'remote'),
+              !this.setResolver.isValid(set, false)
+                ? this.incompatibleSetModel.upsertIncompatibleSet(
+                    tx,
+                    set.setId,
+                    currentComparableCommonVersion
+                  )
+                : _.noop();
           }
         );
 
-        yield delay(delayBetweenChunks);
+        yield delay(delayBetweenTransactions);
       }
 
       yield put(

@@ -76,8 +76,7 @@ export class SyncSaga extends ProtectedSaga {
     yield fork(
       [this, this.allowAddSyncTask],
       env.API_URL,
-      config.sync.transactionChunkSize,
-      config.sync.delayBetweenChunks,
+      config.sync.delayBetweenTransactions,
       remoteConfig.sync.uploadLimit,
       remoteConfig.sync.downloadLimit,
       remoteConfig.sync.minDelay,
@@ -88,8 +87,7 @@ export class SyncSaga extends ProtectedSaga {
 
   public *allowAddSyncTask(
     apiUrl: string,
-    transactionChunkSize: number,
-    delayBetweenChunks: number,
+    delayBetweenTransactions: number,
     uploadLimit: number,
     downloadLimit: number,
     minDelay: number,
@@ -113,8 +111,7 @@ export class SyncSaga extends ProtectedSaga {
         this.syncWorker = yield fork(
           [this, this.sync],
           apiUrl,
-          transactionChunkSize,
-          delayBetweenChunks,
+          delayBetweenTransactions,
           uploadLimit,
           downloadLimit,
           minDelay,
@@ -127,8 +124,7 @@ export class SyncSaga extends ProtectedSaga {
 
   private *sync(
     apiUrl: string,
-    transactionChunkSize: number,
-    delayBetweenChunks: number,
+    delayBetweenTransactions: number,
     uploadLimit: number,
     downloadLimit: number,
     minDelay: number,
@@ -157,16 +153,14 @@ export class SyncSaga extends ProtectedSaga {
           [this.downloadSetSaga, 'downloadSets'],
           apiUrl,
           downloadLimit,
-          transactionChunkSize,
-          delayBetweenChunks
+          delayBetweenTransactions
         );
       } else if (syncTask === SyncTask.DOWNLOAD_INCOMPATIBLE_SETS) {
         result = yield call(
           [this.downloadIncompatibleSetSaga, 'downloadIncompatibleSets'],
           apiUrl,
           downloadLimit,
-          transactionChunkSize,
-          delayBetweenChunks
+          delayBetweenTransactions
         );
       } else if (syncTask === SyncTask.UPLOAD_VOCABULARY) {
         result = yield call(
@@ -179,8 +173,7 @@ export class SyncSaga extends ProtectedSaga {
           [this.downloadVocabularySaga, 'downloadVocabulary'],
           apiUrl,
           downloadLimit,
-          transactionChunkSize,
-          delayBetweenChunks
+          delayBetweenTransactions
         );
       } else if (syncTask === SyncTask.DOWNLOAD_INCOMPATIBLE_VOCABULARY) {
         result = yield call(
@@ -190,8 +183,7 @@ export class SyncSaga extends ProtectedSaga {
           ],
           apiUrl,
           downloadLimit,
-          transactionChunkSize,
-          delayBetweenChunks
+          delayBetweenTransactions
         );
       } else {
         throw new Error('syncTask is invalid');
