@@ -39,4 +39,4 @@ If you want to set up another set for syncing, create a new document and repeat 
 {: .text-red-200}
 - The API key is stored with the document. If you share the document with someone else, they will have the ability to edit your flashcards.
 
-- This add-on is optimized to sync with one Ulangi account. Please do not set API key from multiple accounts within the same document. **Sharing flashcards and collaboration between multiple users are not yet supportted.**{: .text-red-200}
+- This add-on is optimized to sync with one Ulangi account only. Please do not set API key from multiple accounts within the same document. **Sharing and collaborating between multiple users are not yet supported by this add-on.**{: .text-red-200}

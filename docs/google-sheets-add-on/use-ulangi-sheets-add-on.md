@@ -10,9 +10,13 @@ permalink: /google-sheets-add-on/use-ulangi-sheets-add-on
 ## Inserting terms
 To insert a new term, just fill in the last empty row. The add-on will also automatically fill in default values for that row. Press **PUSH** to upload the term.
 
+![New term](./assets/images/new-term.png)
+
 ---
 ## Deleting terms
 To delete terms, you must set **vocabularyStatus** to **DELETED**. Deleting the rows directly will not have any effects.
+
+![Delete term](./assets/images/delete-term.png)
 
 ---
 ## Inserting multiple definitions
@@ -23,6 +27,15 @@ To insert multiple definitions, put three consecutive hyphens (```---```) in bet
 #### TIP: How to go to a new line in a cell:
 - On **Windows/Linux/Chrome OS**, press ```Ctrl + Enter```
 - On **Mac**, press ```Command + Enter```
+
+---
+## Sorting and filtering
+You can sort and filter data however you like by choosing **Data > Filter views > Create new filter view.**
+
+{: .text-red-200}
+**To prevent conflicts, make sure syncing (PUSH/PULL) is stopped before sorting or filtering data.**
+
+![Sort and filter](./assets/images/sort-and-filter.png)
 
 ---
 ## Viewing original values or edit history.
