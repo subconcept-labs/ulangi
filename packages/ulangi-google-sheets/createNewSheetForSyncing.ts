@@ -15,7 +15,6 @@ import { parseSetNameWithId } from "./parseSetNameWithId"
 import { highlightUneditableColumns } from "./highlightUneditableColumns"
 import { hideOriginalColumns } from "./hideOriginalColumns"
 import { toggleHighlightEditedCells } from "./toggleHighlightEditedCells"
-import { toggleProtectUneditableColumns } from "./toggleProtectUneditableColumns"
 import { isHighlightEditedCellsEnabled } from "./isHighlightEditedCellsEnabled"
 import { areAllUneditableColumnsProtected } from "./areAllUneditableColumnsProtected"
 import { enableDataValidations } from "./enableDataValidations"
@@ -53,8 +52,10 @@ export function createNewSheetForSyncing(formObject: any) {
     toggleHighlightEditedCells()
   }
 
+  /*
   if (areAllUneditableColumnsProtected() === false){
     toggleProtectUneditableColumns(sheet)
   }
+  */
 
 }
