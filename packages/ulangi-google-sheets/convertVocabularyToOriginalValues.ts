@@ -14,14 +14,14 @@ export function convertVocabularyToOriginalValues(vocabulary: DeepPartial<Vocabu
     vocabularyId: vocabulary.vocabularyId,
     originalDefinitionIds: typeof vocabulary.definitions !== "undefined"
       ? vocabulary.definitions
-        .filter((definition: any): boolean => definition.definitionStatus === "ACTIVE")
+        .filter((definition: any): boolean => definition.definitionStatus !== "DELETED")
         .map((definition: any): string => definition.definitionId).join("\n---\n")
       : undefined,
     originalVocabularyText: vocabulary.vocabularyText,
     originalVocabularyStatus: vocabulary.vocabularyStatus,
     originalDefinitions: typeof vocabulary.definitions !== "undefined"
       ? vocabulary.definitions
-        .filter((definition: any): boolean => definition.definitionStatus === "ACTIVE")
+        .filter((definition: any): boolean => definition.definitionStatus !== "DELETED")
         .map((definition: any): string => unparseDefinition(definition)).join("\n---\n")
       : undefined,
     originalCategory: typeof vocabulary.category !== "undefined" && typeof vocabulary.category.categoryName !== "undefined"

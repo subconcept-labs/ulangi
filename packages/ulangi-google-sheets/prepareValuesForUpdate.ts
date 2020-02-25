@@ -26,17 +26,20 @@ export function prepareValuesForUpdate(valueByName: {[P in string]: any }): [ De
   }
 
   if (valueByName.definitions !== valueByName.originalDefinitions){
-    vocabulary.definitions = [
-      ...valueByName.definitions.split("\n---\n")
-        .filter((meaning: string): boolean => {
-          return meaning.trim() !== ""
-        })
-        .map((meaning: string): Definition => {
-          return {
+    const currentMeanings: string[] = valueByName.definitions.split("\n---\n");
+    const originalMeanings: string[] = valueByName.originalDefinitions.split("\n---\n");
+    const originalDefinitionIds: string[] = valueByName.originalDefinitionIds.split("\n---\n");
+
+    vocabulary.definitions = []
+
+    for(let i = 0; i < currentMeanings.length || i < originalMeanings.length; i++) {
+      if (typeof currentMeanings[i] !== 'undefined') {
+        if (typeof originalDefinitionIds[i] === 'undefined' || originalDefinitionIds[i].trim() === "") {
+          vocabulary.definitions.push({
             definitionId: Utilities.getUuid(),
             definitionStatus: "ACTIVE" as DefinitionStatus,
             source: "user",
-            meaning: meaning.trim(),
+            meaning: currentMeanings[i].trim(),
             wordClasses: [],
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -44,17 +47,25 @@ export function prepareValuesForUpdate(valueByName: {[P in string]: any }): [ De
             firstSyncedAt: null,
             lastSyncedAt: null,
             extraData: []
-          }
-        }),
-      ...valueByName.originalDefinitionIds.split("\n---\n").map((definitionId: string) => {
-        return {
-          definitionId,
+          })
+        }
+        else {
+          vocabulary.definitions.push({
+            definitionId: originalDefinitionIds[i],
+            meaning: currentMeanings[i].trim(),
+            updatedAt: new Date(),
+          })
+        }
+      } 
+      else if (typeof currentMeanings[i] === "undefined" && typeof originalDefinitionIds !== 'undefined') {
+        vocabulary.definitions.push({
+          definitionId: originalDefinitionIds[i],
           definitionStatus: "DELETED" as DefinitionStatus,
           updatedAt: new Date(),
           updatedStatusAt: new Date()
-        }
-      })
-    ]
+        })
+      }
+    }
   }
 
   if (valueByName.category !== valueByName.originalCategory){
