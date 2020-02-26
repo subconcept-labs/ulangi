@@ -77,9 +77,9 @@ export class NavigatorDelegate {
 
   public pop(): void {
     if (Platform.OS === 'ios') {
-      Navigation.pop(this.componentId);
+      this.debouncedPop();
     } else {
-      Navigation.dismissModal(this.componentId);
+      this.debouncedDismissModel();
     }
   }
 
@@ -248,5 +248,15 @@ export class NavigatorDelegate {
         ],
       },
     });
+  }
+
+  @debounce(500, { leading: true, trailing: false })
+  private debouncedPop(): void {
+    Navigation.pop(this.componentId);
+  }
+
+  @debounce(500, { leading: true, trailing: false })
+  private debouncedDismissModel(): void {
+    Navigation.dismissModal(this.componentId);
   }
 }
