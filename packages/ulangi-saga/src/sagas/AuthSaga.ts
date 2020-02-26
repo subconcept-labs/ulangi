@@ -371,40 +371,43 @@ export class AuthSaga extends PublicSaga {
   }
 
   public *allowSignOut(): IterableIterator<any> {
-    yield take(ActionType.USER__SIGN_OUT);
+    while (true) {
+      yield take(ActionType.USER__SIGN_OUT);
 
-    try {
-      yield put(createAction(ActionType.USER__SIGNING_OUT, null));
+      try {
+        yield put(createAction(ActionType.USER__SIGNING_OUT, null));
 
-      yield put(createAction(ActionType.ROOT__CANCEL_PROTECTED_SAGAS, null));
-      yield take(ActionType.ROOT__CANCEL_PROTECTED_SAGAS_SUCCEEDED);
+        yield put(createAction(ActionType.ROOT__CANCEL_PROTECTED_SAGAS, null));
+        yield take(ActionType.ROOT__CANCEL_PROTECTED_SAGAS_SUCCEEDED);
 
-      // Sometimes we cannot close the db because some transactions are in progress
-      let databaseClosed = false;
-      while (databaseClosed === false) {
-        try {
-          // Try closing user database
-          yield call([this.database, 'close'], 'user');
-          databaseClosed = true;
-        } catch (error) {
-          yield delay(500);
+        // Sometimes we cannot close the db because some transactions are in progress
+        let databaseClosed = false;
+        while (databaseClosed === false) {
+          try {
+            // Try closing user database
+            yield call([this.database, 'close'], 'user');
+            databaseClosed = true;
+          } catch (error) {
+            yield delay(500);
+          }
         }
+
+        const sharedDb = this.database.getDb('shared');
+        yield call(
+          [sharedDb, 'transaction'],
+          (tx: Transaction): void =>
+            this.sessionModel.deleteAllSessionValues(tx)
+        );
+
+        yield put(createAction(ActionType.USER__SIGN_OUT_SUCCEEDED, null));
+      } catch (error) {
+        yield put(
+          createAction(ActionType.USER__SIGN_OUT_FAILED, {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          })
+        );
       }
-
-      const sharedDb = this.database.getDb('shared');
-      yield call(
-        [sharedDb, 'transaction'],
-        (tx: Transaction): void => this.sessionModel.deleteAllSessionValues(tx)
-      );
-
-      yield put(createAction(ActionType.USER__SIGN_OUT_SUCCEEDED, null));
-    } catch (error) {
-      yield put(
-        createAction(ActionType.USER__SIGN_OUT_FAILED, {
-          errorCode: errorConverter.getErrorCode(error),
-          error,
-        })
-      );
     }
   }
 
