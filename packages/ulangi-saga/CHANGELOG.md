@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.2](https://github.com/minhloi/ulangi/compare/v3.9.1...v3.9.2) (2020-02-26)
+
+
+### Bug Fixes
+
+* cannot sign out second time ([042981f](https://github.com/minhloi/ulangi/commit/042981f))
+
+
+
+
+
 ## [3.9.1](https://github.com/minhloi/ulangi/compare/v3.9.0...v3.9.1) (2020-02-22)
 
 

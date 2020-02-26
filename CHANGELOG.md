@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.2](https://github.com/minhloi/ulangi/compare/v3.9.1...v3.9.2) (2020-02-26)
+
+
+### Bug Fixes
+
+* avoid popping same screen multiple times ([1153dfb](https://github.com/minhloi/ulangi/commit/1153dfb))
+* cannot sign out second time ([042981f](https://github.com/minhloi/ulangi/commit/042981f))
+* disable column protection by default ([11fcfb2](https://github.com/minhloi/ulangi/commit/11fcfb2))
+* remove screen state by componentId instead of screenName ([b6fa658](https://github.com/minhloi/ulangi/commit/b6fa658))
+* reuse definitions from Google Sheets add-on ([7aa15e6](https://github.com/minhloi/ulangi/commit/7aa15e6)), closes [#61](https://github.com/minhloi/ulangi/issues/61)
+* show keyboard after screen appears (instead of mounting) ([61b2c95](https://github.com/minhloi/ulangi/commit/61b2c95)), closes [#27](https://github.com/minhloi/ulangi/issues/27)
+
+
+
+
+
 ## [3.9.1](https://github.com/minhloi/ulangi/compare/v3.9.0...v3.9.1) (2020-02-22)
 
 
