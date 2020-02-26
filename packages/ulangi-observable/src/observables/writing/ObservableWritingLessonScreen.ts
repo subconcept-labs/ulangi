@@ -6,7 +6,7 @@
  */
 
 import { ActivityState, ScreenName } from '@ulangi/ulangi-common/enums';
-import { IObservableValue, ObservableMap } from 'mobx';
+import { IObservableValue, ObservableMap, observable } from 'mobx';
 
 import { ObservableReviewActionBarState } from '../review-action/ObservableReviewActionBarState';
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
@@ -18,6 +18,9 @@ import { ObservableWritingFormState } from './ObservableWritingFormState';
 import { ObservableWritingResult } from './ObservableWritingResult';
 
 export class ObservableWritingLessonScreen extends ObservableScreen {
+  @observable
+  public screenAppearedTimes: number;
+
   public readonly vocabularyList: ObservableMap<string, ObservableVocabulary>;
 
   public readonly writingFormState: ObservableWritingFormState;
@@ -43,6 +46,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
   public readonly saveState: IObservableValue<ActivityState>;
 
   public constructor(
+    screenAppearedTimes: number,
     vocabularyList: ObservableMap<string, ObservableVocabulary>,
     writingFormState: ObservableWritingFormState,
     writingResult: ObservableWritingResult,
@@ -59,6 +63,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.vocabularyList = vocabularyList;
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;

@@ -58,8 +58,9 @@ export class QuizWritingScreenContainer extends Container<
   private currentSettings = this.quizSettingsDelegate.getCurrentSettings();
 
   protected observableScreen = new ObservableQuizWritingScreen(
+    0,
     new ObservableWritingFormState(
-      this.currentSettings.writingAutoShowKeyboard,
+      false,
       null,
       this.questionIterator.current(),
       '',
@@ -102,6 +103,14 @@ export class QuizWritingScreenContainer extends Container<
     this.observableScreen,
     this.props.passedProps.startWritingQuiz,
   );
+
+  public componentDidAppear(): void {
+    this.observableScreen.screenAppearedTimes += 1;
+
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.observableScreen.writingFormState.shouldAutoFocus = this.currentSettings.writingAutoShowKeyboard;
+    }
+  }
 
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(

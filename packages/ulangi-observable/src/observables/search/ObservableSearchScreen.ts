@@ -14,18 +14,28 @@ import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabular
 
 export class ObservableSearchScreen extends ObservableScreen {
   @observable
+  public screenAppearedTimes: number;
+
+  @observable
   public searchInput: string;
+
+  @observable
+  public shouldFocusInput: boolean;
 
   public readonly vocabularyListState: ObservableVocabularyListState;
 
   public constructor(
+    screenAppearedTimes: number,
     searchInput: string,
+    shouldFocusInput: boolean,
     vocabularyListState: ObservableVocabularyListState,
     screenName: ScreenName,
     topBar: ObservableTouchableTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.searchInput = searchInput;
+    this.shouldFocusInput = shouldFocusInput;
     this.vocabularyListState = vocabularyListState;
   }
 }

@@ -14,7 +14,13 @@ import { ObservablePixabayImage } from './ObservablePixabayImage';
 
 export class ObservableImageSelectorScreen extends ObservableScreen {
   @observable
+  public screenAppearedTimes: number;
+
+  @observable
   public input: IObservableValue<string>;
+
+  @observable
+  public shouldFocusInput: IObservableValue<boolean>;
 
   @observable
   public searchState: IObservableValue<ActivityState>;
@@ -29,7 +35,9 @@ export class ObservableImageSelectorScreen extends ObservableScreen {
   public isRefreshing: IObservableValue<boolean>;
 
   public constructor(
+    screenAppearedTimes: number,
     input: IObservableValue<string>,
+    shouldFocusInput: IObservableValue<boolean>,
     searchState: IObservableValue<ActivityState>,
     images: null | IObservableArray<ObservablePixabayImage>,
     noMore: IObservableValue<boolean>,
@@ -38,7 +46,9 @@ export class ObservableImageSelectorScreen extends ObservableScreen {
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.input = input;
+    this.shouldFocusInput = shouldFocusInput;
     this.searchState = searchState;
     this.images = images;
     this.noMore = noMore;

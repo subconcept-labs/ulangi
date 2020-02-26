@@ -6,7 +6,7 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { IObservableValue } from 'mobx';
+import { IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
 import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
@@ -14,6 +14,9 @@ import { ObservableWritingFormState } from '../writing/ObservableWritingFormStat
 import { ObservableWritingResult } from '../writing/ObservableWritingResult';
 
 export class ObservableQuizWritingScreen extends ObservableScreen {
+  @observable
+  public screenAppearedTimes: number;
+
   public readonly writingFormState: ObservableWritingFormState;
 
   public readonly writingResult: ObservableWritingResult;
@@ -21,6 +24,7 @@ export class ObservableQuizWritingScreen extends ObservableScreen {
   public readonly shouldShowResult: IObservableValue<boolean>;
 
   public constructor(
+    screenAppearedTimes: number,
     writingFormState: ObservableWritingFormState,
     writingResult: ObservableWritingResult,
     shouldShowResult: IObservableValue<boolean>,
@@ -28,6 +32,7 @@ export class ObservableQuizWritingScreen extends ObservableScreen {
     topBar: ObservableTitleTopBar
   ) {
     super(screenName, topBar);
+    this.screenAppearedTimes = screenAppearedTimes;
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;
     this.shouldShowResult = shouldShowResult;

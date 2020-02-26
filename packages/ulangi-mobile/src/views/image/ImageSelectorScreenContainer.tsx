@@ -39,7 +39,9 @@ export class ImageSelectorScreenContainer extends Container<
   }
 
   protected observableScreen = new ObservableImageSelectorScreen(
+    0,
     observable.box(''),
+    observable.box(false),
     observable.box(ActivityState.INACTIVE),
     null,
     observable.box(false),
@@ -88,6 +90,14 @@ export class ImageSelectorScreenContainer extends Container<
         ? ImageSelectorScreenStyle.SCREEN_LIGHT_STYLES_ONLY
         : ImageSelectorScreenStyle.SCREEN_DARK_STYLES_ONLY,
     );
+  }
+
+  public componentDidAppear(): void {
+    this.observableScreen.screenAppearedTimes += 1;
+
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.observableScreen.shouldFocusInput.set(true);
+    }
   }
 
   public render(): React.ReactElement<any> {
