@@ -25,10 +25,11 @@ export class ObservableGoogleSheetsAddOnScreen extends ObservableScreen {
     password: string,
     apiKey: undefined | string,
     expiredAt: undefined | null | Date,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.password = password;
     this.apiKey = apiKey;
     this.expiredAt = expiredAt;

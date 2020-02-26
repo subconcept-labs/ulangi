@@ -24,6 +24,7 @@ export class OpenSourceProjectsScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.OPEN_SOURCE_PROJECTS_SCREEN,
     new ObservableTitleTopBar(
       'Open-Source Projects',

@@ -31,6 +31,7 @@ export class TermsOfServiceScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.TERMS_OF_SERVICE_SCREEN,
     new ObservableTitleTopBar(
       'Terms of Service',

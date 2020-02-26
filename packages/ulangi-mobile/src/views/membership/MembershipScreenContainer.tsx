@@ -34,6 +34,7 @@ export class MembershipScreenContainer extends Container {
   protected observableScreen = new ObservableMembershipScreen(
     null,
     new ObservableUpgradeButtonState('Fetching product... '),
+    this.props.componentId,
     ScreenName.MEMBERSHIP_SCREEN,
     new ObservableTitleTopBar(
       'Account Type',

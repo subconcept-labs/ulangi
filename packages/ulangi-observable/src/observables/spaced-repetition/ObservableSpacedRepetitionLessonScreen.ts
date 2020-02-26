@@ -51,10 +51,11 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     speakState: IObservableValue<ActivityState>,
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.vocabularyList = vocabularyList;
     this.reviewState = reviewState;
     this.reviewActionBarState = reviewActionBarState;

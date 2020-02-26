@@ -33,10 +33,11 @@ export class ObservableSpacedRepetitionSettingsScreen extends ObservableScreen {
     selectedReviewStrategy: ReviewStrategy,
     selectedFeedbackButtons: 3 | 4 | 5,
     selectedAutoplayAudio: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
     this.selectedReviewStrategy = selectedReviewStrategy;

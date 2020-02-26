@@ -16,10 +16,11 @@ export class ObservableAddEditSetScreen extends ObservableScreen {
 
   public constructor(
     setFormState: ObservableSetFormState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.setFormState = setFormState;
   }
 }

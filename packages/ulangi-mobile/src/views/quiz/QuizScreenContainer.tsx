@@ -44,6 +44,7 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
 
   protected observableScreen = new ObservableQuizScreen(
     this.props.passedProps.selectedCategoryNames,
+    this.props.componentId,
     ScreenName.QUIZ_SCREEN,
     new ObservableTouchableTopBar(
       QuizScreenIds.SHOW_SET_SELECTION_MENU_BTN,

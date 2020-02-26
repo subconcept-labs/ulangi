@@ -40,10 +40,11 @@ export class ObservableDiscoverScreen extends ObservableScreen {
     publicSetListState: ObservablePublicSetListState,
     publicVocabularyListState: ObservablePublicVocabularyListState,
     translationListState: ObservableTranslationListState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.searchInput = searchInput;
     this.searchInputAutoFocus = searchInputAutoFocus;
     this.shouldFocusSearchInput = shouldFocusSearchInput;

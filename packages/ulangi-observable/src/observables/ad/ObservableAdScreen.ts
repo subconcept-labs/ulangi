@@ -17,10 +17,11 @@ export class ObservableAdScreen extends ObservableScreen {
 
   public constructor(
     closable: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.closable = closable;
   }
 }

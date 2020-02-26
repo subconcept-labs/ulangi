@@ -71,6 +71,7 @@ export class ManageScreenContainer extends Container {
       observable.box(false),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.MANAGE_SCREEN,
     new ObservableTouchableTopBar(
       ManageScreenIds.SHOW_SET_SELECTION_MENU_BTN,

@@ -55,6 +55,7 @@ export class SearchScreenContainer extends Container {
       observable.box(false),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.SEARCH_SCREEN,
     new ObservableTouchableTopBar(
       SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,

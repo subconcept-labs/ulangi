@@ -37,6 +37,7 @@ export class FollowUsScreenContainer extends Container {
   );
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.FOLLOW_US_SCREEN,
     new ObservableTitleTopBar(
       'Follow Us',

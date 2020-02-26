@@ -35,10 +35,11 @@ export class ObservableManageScreen extends ObservableScreen {
     selectedFilterType: IObservableValue<VocabularyFilterType>,
     vocabularyListState: ObservableVocabularyListState,
     categoryListState: ObservableCategoryListState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.manageListType = manageListType;
     this.selectedFilterType = selectedFilterType;

@@ -31,6 +31,7 @@ export class WritingFAQScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.WRITING_FAQ_SCREEN,
     new ObservableTitleTopBar(
       'FAQ',

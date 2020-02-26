@@ -24,10 +24,11 @@ export class ObservableQuizMultipleChoiceScreen extends ObservableScreen {
     multipleChoiceFormState: ObservableMultipleChoiceFormState,
     multipleChoiceResult: ObservableMultipleChoiceResult,
     shouldShowResult: IObservableValue<boolean>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.multipleChoiceFormState = multipleChoiceFormState;
     this.multipleChoiceResult = multipleChoiceResult;
     this.shouldShowResult = shouldShowResult;

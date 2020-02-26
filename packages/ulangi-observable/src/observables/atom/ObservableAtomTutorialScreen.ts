@@ -31,6 +31,7 @@ export class ObservableAtomTutorialScreen extends ObservableAtomPlayScreen {
     arcs: readonly ObservableArc[],
     particles: readonly ObservableParticle[],
     shells: readonly ObservableShell[],
+    componentId: string,
     screenName: ScreenName
   ) {
     super(
@@ -42,6 +43,7 @@ export class ObservableAtomTutorialScreen extends ObservableAtomPlayScreen {
       arcs,
       particles,
       shells,
+      componentId,
       screenName
     );
     this.currentStep = currentStep;

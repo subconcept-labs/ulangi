@@ -39,6 +39,7 @@ export class LearnScreenContainer extends Container {
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.LEARN_SCREEN,
     new ObservableTouchableTopBar(
       LearnScreenIds.SHOW_SET_SELECTION_MENU_BTN,

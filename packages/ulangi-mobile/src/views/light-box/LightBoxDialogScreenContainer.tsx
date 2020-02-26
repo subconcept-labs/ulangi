@@ -29,6 +29,7 @@ export class LightBoxDialogScreenContainer extends Container {
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.LIGHT_BOX_DIALOG_SCREEN,
     null,
   );

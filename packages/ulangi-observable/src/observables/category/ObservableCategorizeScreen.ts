@@ -16,10 +16,11 @@ export class ObservableCategorizeScreen extends ObservableScreen {
 
   public constructor(
     categoryFormState: ObservableCategoryFormState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.categoryFormState = categoryFormState;
   }
 }

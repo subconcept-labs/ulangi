@@ -23,10 +23,11 @@ export class ObservableMembershipScreen extends ObservableScreen {
   public constructor(
     premiumLifetimeProduct: null | Product,
     upgradeButtonState: ObservableUpgradeButtonState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.premiumLifetimeProduct = premiumLifetimeProduct;
     this.upgradeButtonState = upgradeButtonState;
   }

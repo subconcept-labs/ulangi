@@ -37,6 +37,7 @@ export class SignInScreenContainer extends Container {
     '',
     '',
     false,
+    this.props.componentId,
     ScreenName.SIGN_IN_SCREEN,
     new ObservableTitleTopBar('Sign In', null, null),
   );

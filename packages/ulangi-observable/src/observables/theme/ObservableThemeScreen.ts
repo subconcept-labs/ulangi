@@ -18,10 +18,11 @@ export class ObservableThemeScreen extends ObservableScreen {
 
   public constructor(
     settings: ObservableThemeSettings,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.settings = settings;
   }
 }

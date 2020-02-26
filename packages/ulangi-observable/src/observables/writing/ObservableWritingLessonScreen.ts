@@ -59,10 +59,11 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     speakState: IObservableValue<ActivityState>,
     saveState: IObservableValue<ActivityState>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.vocabularyList = vocabularyList;
     this.writingFormState = writingFormState;

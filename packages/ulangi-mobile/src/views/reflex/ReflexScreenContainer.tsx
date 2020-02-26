@@ -49,6 +49,7 @@ export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
     new ObservableReflexGameState(false, config.reflex.timePerQuestion, false),
     new ObservableReflexGameStats(0),
     false,
+    this.props.componentId,
     ScreenName.REFLEX_SCREEN,
   );
 

@@ -34,6 +34,7 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
 
   protected observableScreen = new ObservableAdScreen(
     false,
+    this.props.componentId,
     ScreenName.AD_SCREEN,
     new ObservableTitleTopBar('', null, null),
   );

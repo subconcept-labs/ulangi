@@ -42,6 +42,7 @@ export class FeatureManagementScreenContainer extends Container {
       this.originalSettings.reflexEnabled,
       this.originalSettings.atomEnabled,
     ),
+    this.props.componentId,
     ScreenName.FEATURE_MANAGEMENT_SCREEN,
     new ObservableTitleTopBar(
       'Feature Management',

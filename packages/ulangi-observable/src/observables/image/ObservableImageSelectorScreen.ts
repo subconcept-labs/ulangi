@@ -42,10 +42,11 @@ export class ObservableImageSelectorScreen extends ObservableScreen {
     images: null | IObservableArray<ObservablePixabayImage>,
     noMore: IObservableValue<boolean>,
     isRefreshing: IObservableValue<boolean>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.input = input;
     this.shouldFocusInput = shouldFocusInput;

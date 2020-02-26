@@ -38,6 +38,7 @@ export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
     typeof this.props.passedProps.selectedCategoryNames !== 'undefined'
       ? observable.array(this.props.passedProps.selectedCategoryNames.slice())
       : undefined,
+    this.props.componentId,
     ScreenName.ATOM_SCREEN,
   );
 

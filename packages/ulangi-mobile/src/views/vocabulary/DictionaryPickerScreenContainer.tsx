@@ -55,6 +55,7 @@ export class DictionaryPickerScreenContainer extends Container<
       observable.box(undefined),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.DICTIONARY_PICKER_SCREEN,
   );
 

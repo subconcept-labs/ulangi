@@ -46,6 +46,7 @@ export class ImageSelectorScreenContainer extends Container<
     null,
     observable.box(false),
     observable.box(false),
+    this.props.componentId,
     ScreenName.IMAGE_SELECTOR_SCREEN,
     new ObservableTitleTopBar(
       'Select Images',

@@ -28,6 +28,7 @@ export class LightBoxSelectionMenuScreenContainer extends Container {
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.LIGHT_BOX_SELECTION_MENU_SCREEN,
     null,
   );

@@ -90,6 +90,7 @@ export class WritingLessonScreenContainer extends Container<
     observable.box(false),
     observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
+    this.props.componentId,
     ScreenName.WRITING_LESSON_SCREEN,
     new ObservableTitleTopBar(
       'Writing',

@@ -28,10 +28,11 @@ export class ObservableQuizWritingScreen extends ObservableScreen {
     writingFormState: ObservableWritingFormState,
     writingResult: ObservableWritingResult,
     shouldShowResult: IObservableValue<boolean>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;

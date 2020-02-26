@@ -24,10 +24,11 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
     category: ObservableCategory,
     selectedFilterType: IObservableValue<VocabularyFilterType>,
     vocabularyListState: ObservableVocabularyListState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.category = category;
     this.selectedFilterType = selectedFilterType;
     this.vocabularyListState = vocabularyListState;

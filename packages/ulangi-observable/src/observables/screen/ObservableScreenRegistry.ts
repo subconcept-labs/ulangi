@@ -23,11 +23,11 @@ export class ObservableScreenRegistry {
     );
   }
 
-  public removeByScreenName(screenName: string): void {
-    this.screenList = observable(
+  public removeByComponentId(componentId: string): void {
+    this.screenList.replace(
       this.screenList.filter(
         (screen): boolean => {
-          return screen.screenName !== screenName;
+          return screen.componentId !== componentId;
         }
       )
     );

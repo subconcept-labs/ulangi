@@ -79,6 +79,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
     observable.box(ActivityState.INACTIVE),
     observable.box(false),
     observable.box(false),
+    this.props.componentId,
     ScreenName.SPACED_REPETITION_LESSON_SCREEN,
     new ObservableTitleTopBar(
       'Spaced Repetition',

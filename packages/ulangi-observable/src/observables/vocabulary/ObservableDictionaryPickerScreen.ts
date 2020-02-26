@@ -20,9 +20,10 @@ export class ObservableDictionaryPickerScreen extends ObservableScreen {
     currentTerm: string,
     dictionaryEntryState: ObservableDictionaryEntryState,
     translationListState: ObservableTranslationListState,
+    componentId: string,
     screenName: ScreenName
   ) {
-    super(screenName, null);
+    super(componentId, screenName, null);
     this.currentTerm = currentTerm;
     this.dictionaryEntryState = dictionaryEntryState;
     this.translationListState = translationListState;

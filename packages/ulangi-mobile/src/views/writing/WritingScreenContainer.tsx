@@ -46,6 +46,7 @@ export class WritingScreenContainer extends Container<
 
   protected observableScreen = new ObservableWritingScreen(
     this.props.passedProps.selectedCategoryNames,
+    this.props.componentId,
     ScreenName.WRITING_SCREEN,
     new ObservableTouchableTopBar(
       WritingScreenIds.SHOW_SET_SELECTION_MENU_BTN,

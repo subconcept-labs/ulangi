@@ -32,6 +32,7 @@ export class PreloadScreenContainer extends Container {
 
   protected observableScreen = new ObservablePreloadScreen(
     '',
+    this.props.componentId,
     ScreenName.PRELOAD_SCREEN,
   );
 

@@ -28,6 +28,7 @@ export class WelcomeScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.WELCOME_SCREEN,
     new ObservableTitleTopBar('', null, null),
   );

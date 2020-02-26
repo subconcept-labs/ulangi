@@ -40,6 +40,7 @@ export class AutoArchiveScreenContainer extends Container {
 
   protected observableScreen = new ObservableAutoArchiveScreen(
     this.autoArchiveSettingsDelegate.getCurrentSettings(),
+    this.props.componentId,
     ScreenName.AUTO_ARCHIVE_SCREEN,
     new ObservableTitleTopBar(
       'Auto Archive',

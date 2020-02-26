@@ -53,6 +53,7 @@ export class CreateFirstSetScreenContainer extends Container {
       new ObservableSetPickerState(SetFormPickerType.LEARN, false, false),
       this.props.rootStore.remoteConfigStore,
     ),
+    this.props.componentId,
     ScreenName.CREATE_FIRST_SET_SCREEN,
     new ObservableTitleTopBar(
       '',

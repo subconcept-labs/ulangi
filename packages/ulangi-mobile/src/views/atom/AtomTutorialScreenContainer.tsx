@@ -55,6 +55,7 @@ export class AtomTutorialScreenContainer extends Container {
     [],
     [],
     [],
+    this.props.componentId,
     ScreenName.ATOM_TUTORIAL_SCREEN,
   );
 

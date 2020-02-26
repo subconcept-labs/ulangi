@@ -29,10 +29,11 @@ export class ObservableSearchScreen extends ObservableScreen {
     searchInput: string,
     shouldFocusInput: boolean,
     vocabularyListState: ObservableVocabularyListState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.searchInput = searchInput;
     this.shouldFocusInput = shouldFocusInput;

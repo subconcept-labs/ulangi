@@ -78,6 +78,7 @@ export class QuizWritingScreenContainer extends Container<
       observable.array([]),
     ),
     observable.box(false),
+    this.props.componentId,
     ScreenName.QUIZ_WRITING_SCREEN,
     new ObservableTitleTopBar(
       'Writing',

@@ -40,6 +40,7 @@ export class ChangeEmailScreenContainer extends Container {
   protected observableScreen = new ObservableChangeEmailScreen(
     '',
     '',
+    this.props.componentId,
     ScreenName.CHANGE_EMAIL_SCREEN,
     new ObservableTitleTopBar(
       'Change Email',

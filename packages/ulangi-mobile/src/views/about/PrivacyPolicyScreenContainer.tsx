@@ -31,6 +31,7 @@ export class PrivacyPolicyScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.PRIVACY_POLICY_SCREEN,
     new ObservableTitleTopBar(
       'Privacy Policy',

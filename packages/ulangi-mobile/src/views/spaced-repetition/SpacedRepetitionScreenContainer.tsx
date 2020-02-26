@@ -46,6 +46,7 @@ export class SpacedRepetitionScreenContainer extends Container<
 
   protected observableScreen = new ObservableSpacedRepetitionScreen(
     this.props.passedProps.selectedCategoryNames,
+    this.props.componentId,
     ScreenName.SPACED_REPETITION_SCREEN,
     new ObservableTouchableTopBar(
       SpacedRepetitionScreenIds.SHOW_SET_SELECTION_MENU_BTN,

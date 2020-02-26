@@ -41,6 +41,7 @@ export class ChangePasswordScreenContainer extends Container {
     '',
     '',
     '',
+    this.props.componentId,
     ScreenName.CHANGE_PASSWORD_SCREEN,
     new ObservableTitleTopBar(
       'Change Password',

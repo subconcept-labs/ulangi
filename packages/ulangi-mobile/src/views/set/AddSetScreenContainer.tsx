@@ -50,6 +50,7 @@ export class AddSetScreenContainer extends Container {
       new ObservableSetPickerState(null, false, false),
       this.props.rootStore.remoteConfigStore,
     ),
+    this.props.componentId,
     ScreenName.ADD_SET_SCREEN,
     new ObservableTitleTopBar(
       'Add Set',

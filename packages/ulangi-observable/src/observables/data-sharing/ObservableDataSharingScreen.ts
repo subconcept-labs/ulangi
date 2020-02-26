@@ -10,10 +10,11 @@ export class ObservableDataSharingScreen extends ObservableScreen {
 
   public constructor(
     optedIn: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.optedIn = optedIn;
   }
 }

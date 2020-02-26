@@ -11,10 +11,11 @@ export class ObservableFeatureManagementScreen extends ObservableScreen {
 
   public constructor(
     featureSettings: ObservableFeatureSettings,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.featureSettings = featureSettings;
   }
 }

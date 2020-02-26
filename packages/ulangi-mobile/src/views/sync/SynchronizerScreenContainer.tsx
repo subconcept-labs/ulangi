@@ -31,6 +31,7 @@ export class SynchronizerScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.SYNCHRONIZER_SCREEN,
     new ObservableTitleTopBar(
       'Synchronizer',

@@ -25,10 +25,11 @@ export class ObservableChangePasswordScreen extends ObservableScreen {
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.currentPassword = currentPassword;
     this.newPassword = newPassword;
     this.confirmNewPassword = confirmNewPassword;

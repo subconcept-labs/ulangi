@@ -16,10 +16,11 @@ export class ObservableForgotPasswordScreen extends ObservableScreen {
 
   public constructor(
     email: string,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.email = observable.box(email);
   }
 }

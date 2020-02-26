@@ -21,10 +21,11 @@ export class ObservableQuickTutorialScreen extends ObservableScreen {
   public constructor(
     images: any[],
     currentIndex: number,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.images = images;
     this.currentIndex = currentIndex;
   }

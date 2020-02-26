@@ -17,10 +17,11 @@ export class ObservableWritingScreen extends ObservableScreen {
 
   public constructor(
     selectedCategoryNames: undefined | readonly string[],
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTouchableTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.selectedCategoryNames =
       typeof selectedCategoryNames !== 'undefined'
         ? observable.array(selectedCategoryNames.slice())

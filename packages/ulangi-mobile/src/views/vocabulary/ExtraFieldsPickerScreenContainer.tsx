@@ -42,6 +42,7 @@ export class ExtraFieldsPickerScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.EXTRA_FIELDS_PICKER_SCREEN,
     null,
   );

@@ -35,6 +35,7 @@ export class QuickTutorialScreenContainer extends Container {
       ? Images.QUICK_TUTORIAL_SCREENS.light
       : Images.QUICK_TUTORIAL_SCREENS.dark,
     0,
+    this.props.componentId,
     ScreenName.QUICK_TUTORIAL_SCREEN,
     new ObservableTitleTopBar(
       'Quick Tutorial',
