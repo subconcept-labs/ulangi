@@ -28,6 +28,7 @@ export class LightBoxActionMenuScreenContainer extends Container {
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.LIGHT_BOX_ACTION_MENU_SCREEN,
     null,
   );

@@ -25,10 +25,11 @@ export class ObservableReviewFeedbackScreen extends ObservableScreen {
     vocabularyList: ObservableMap<string, ObservableVocabulary>,
     feedbackListState: ObservableFeedbackListState,
     allNextReviewData: ObservableMap<string, NextReviewData>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.vocabularyList = vocabularyList;
     this.feedbackListState = feedbackListState;
     this.allNextReviewData = allNextReviewData;

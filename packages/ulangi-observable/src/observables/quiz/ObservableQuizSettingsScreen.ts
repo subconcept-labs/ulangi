@@ -35,10 +35,11 @@ export class ObservableQuizSettingsScreen extends ObservableScreen {
       selectedQuizSize: number;
       selectedAutoShowKeyboard: boolean;
     },
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.selectedVocabularyPool = quizPool;
     this.multipleChoiceSettings = multipleChoiceSettings;
     this.writingSettings = writingSettings;

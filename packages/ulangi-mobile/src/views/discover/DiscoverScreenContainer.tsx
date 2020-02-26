@@ -74,6 +74,7 @@ export class DiscoverScreenContainer extends Container {
       observable.box(undefined),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.DISCOVER_SCREEN,
     new ObservableTouchableTopBar(
       DiscoverScreenIds.SHOW_SET_SELECTION_MENU_BTN,

@@ -7,6 +7,7 @@
 
 import { getColumnNames } from "./getColumnNames"
 import { getCurrentValueByColumnName } from "./getCurrentValueByColumnName"
+import { areDefinitionsTheSame } from "./areDefinitionsTheSame"
 
 export function isEdited(valueList: any[][]): string {
   if (valueList.length > 1) {
@@ -19,7 +20,7 @@ export function isEdited(valueList: any[][]): string {
 
     if (valueByName.vocabularyText !== valueByName.originalVocabularyText
       || (valueByName.vocabularyStatus !== valueByName.originalVocabularyStatus)
-      || (valueByName.definitions !== valueByName.originalDefinitions)
+      || (!areDefinitionsTheSame(valueByName.definitions, valueByName.originalDefinitions))
       || (valueByName.category !== valueByName.originalCategory)
       || (valueByName.spacedRepetitionLevel !== valueByName.originalSpacedRepetitionLevel)
       || (valueByName.writingLevel !== valueByName.originalWritingLevel)

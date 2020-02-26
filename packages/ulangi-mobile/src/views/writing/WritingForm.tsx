@@ -7,7 +7,7 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableWritingFormState } from '@ulangi/ulangi-observable';
-import { autorun } from 'mobx';
+import { autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, TextInput, View, ViewStyle } from 'react-native';
@@ -41,10 +41,25 @@ export interface WritingFormProps {
 
 @observer
 export class WritingForm extends React.Component<WritingFormProps> {
+  private textInputRef?: TextInput | null;
   private animationContainerRef?: any;
+  private unsubscribeFocus?: () => void;
   private unsubscribeAnimation?: () => void;
 
   public componentDidMount(): void {
+    this.unsubscribeFocus = reaction(
+      (): boolean => this.props.writingFormState.shouldAutoFocus,
+      (autoFocus): void => {
+        if (
+          autoFocus &&
+          typeof this.textInputRef !== 'undefined' &&
+          this.textInputRef !== null
+        ) {
+          this.textInputRef.focus();
+        }
+      },
+    );
+
     this.unsubscribeAnimation = autorun(
       (): void => {
         if (
@@ -62,6 +77,10 @@ export class WritingForm extends React.Component<WritingFormProps> {
   }
 
   public componentWillUnmount(): void {
+    if (typeof this.unsubscribeFocus !== 'undefined') {
+      this.unsubscribeFocus();
+    }
+
     if (this.unsubscribeAnimation) {
       this.unsubscribeAnimation();
     }
@@ -106,13 +125,16 @@ export class WritingForm extends React.Component<WritingFormProps> {
             <View style={this.styles.answer}>
               <TextInput
                 testID={WritingFormIds.ANSWER_INPUT}
+                ref={(ref): void => {
+                  this.textInputRef = ref;
+                }}
                 // We need key otherwise textInput does not update on skip/next
                 key={this.props.writingFormState.currentQuestion.questionId}
                 editable={!this.props.writingFormState.isCurrentAnswerCorrect}
                 style={this.styles.input}
+                autoFocus={this.props.writingFormState.shouldAutoFocus}
                 autoCapitalize="none"
                 autoCorrect={false}
-                autoFocus={this.props.writingFormState.shouldAutoFocus}
                 value={this.props.writingFormState.currentAnswer}
                 onChangeText={this.props.setAnswer}
               />

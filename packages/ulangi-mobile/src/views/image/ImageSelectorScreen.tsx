@@ -34,6 +34,7 @@ export class ImageSelectorScreen extends React.Component<
         <SearchInput
           theme={this.props.themeStore.theme}
           input={this.props.observableScreen.input}
+          shouldFocusInput={this.props.observableScreen.shouldFocusInput}
           onSubmitEditing={this.props.screenDelegate.resetSearch}
         />
         <ImageList

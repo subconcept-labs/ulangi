@@ -16,9 +16,10 @@ export class ObservableAtomScreen extends ObservableScreen {
 
   public constructor(
     selectedCategoryNames: undefined | IObservableArray<string>,
+    componentId: string,
     screenName: ScreenName
   ) {
-    super(screenName, null);
+    super(componentId, screenName, null);
     this.selectedCategoryNames = selectedCategoryNames;
   }
 }

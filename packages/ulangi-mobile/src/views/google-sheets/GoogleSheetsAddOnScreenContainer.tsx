@@ -34,6 +34,7 @@ export class GoogleSheetsAddOnScreenContainer extends Container {
     '',
     undefined,
     undefined,
+    this.props.componentId,
     ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN,
     new ObservableTitleTopBar(
       'Google Sheets Add-On',

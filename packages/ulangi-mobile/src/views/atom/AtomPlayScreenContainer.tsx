@@ -68,6 +68,7 @@ export class AtomPlayScreenContainer extends Container<
     [],
     [],
     [],
+    this.props.componentId,
     ScreenName.ATOM_PLAY_SCREEN,
   );
 

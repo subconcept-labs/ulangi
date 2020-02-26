@@ -79,8 +79,8 @@ export function extendContainer<T extends Constructor<Container>>(
       if (containerOptions.autoUpdateObservableScreen === true) {
         if (typeof this.observableScreen !== 'undefined') {
           this.observableScreen.screenState = ScreenState.UNMOUNTED;
-          this.props.observableScreenRegistry.removeByScreenName(
-            this.observableScreen.screenName,
+          this.props.observableScreenRegistry.removeByComponentId(
+            this.observableScreen.componentId,
           );
         }
       }

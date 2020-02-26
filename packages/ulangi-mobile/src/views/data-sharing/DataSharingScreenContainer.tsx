@@ -34,6 +34,7 @@ export class DataSharingScreenContainer extends Container {
   protected observableScreen = new ObservableDataSharingScreen(
     this.props.rootStore.userStore.existingCurrentUser.globalDataSharing ||
       false,
+    this.props.componentId,
     ScreenName.DATA_SHARING_SCREEN,
     new ObservableTitleTopBar(
       'Data Sharing',

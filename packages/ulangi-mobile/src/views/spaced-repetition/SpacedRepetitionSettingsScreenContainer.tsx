@@ -46,6 +46,7 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
     this.originalSettings.reviewStrategy,
     this.originalSettings.feedbackButtons,
     this.originalSettings.autoplayAudio,
+    this.props.componentId,
     ScreenName.SPACED_REPETITION_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

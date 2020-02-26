@@ -43,7 +43,9 @@ export class SearchScreenContainer extends Container {
   private navigatorDelegate = this.searchFactory.createNavigatorDelegate();
 
   protected observableScreen = new ObservableSearchScreen(
+    0,
     '',
+    false,
     new ObservableVocabularyListState(
       null,
       false,
@@ -53,6 +55,7 @@ export class SearchScreenContainer extends Container {
       observable.box(false),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.SEARCH_SCREEN,
     new ObservableTouchableTopBar(
       SearchScreenIds.SHOW_SET_SELECTION_MENU_BTN,
@@ -88,6 +91,14 @@ export class SearchScreenContainer extends Container {
     this.screenDelegate.autoRefreshOnMultipleEdit();
     this.screenDelegate.autoShowSyncingInProgress();
     this.screenDelegate.autoShowSyncCompleted();
+  }
+
+  public componentDidAppear(): void {
+    this.observableScreen.screenAppearedTimes += 1;
+
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.observableScreen.shouldFocusInput = true;
+    }
   }
 
   public componentWillUnmount(): void {

@@ -88,6 +88,7 @@ export class AddVocabularyScreenContainer extends Container<
         ? this.props.passedProps.vocabulary.category.categoryName
         : 'Uncategorized',
     ),
+    this.props.componentId,
     ScreenName.ADD_VOCABULARY_SCREEN,
     new ObservableTouchableTopBar(
       AddVocabularyScreenIds.SHOW_SET_SELECTION_MENU_BTN,

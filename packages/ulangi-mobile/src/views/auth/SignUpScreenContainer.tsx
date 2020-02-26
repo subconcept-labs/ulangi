@@ -39,6 +39,7 @@ export class SignUpScreenContainer extends Container {
     '',
     false,
     false,
+    this.props.componentId,
     ScreenName.SIGN_UP_SCREEN,
     new ObservableTitleTopBar('Sign Up', null, null),
   );

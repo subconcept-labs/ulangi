@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-dictionary",
-  "version": "3.9.1",
+  "version": "3.9.2",
   "description": "Ulangi Dictionary",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "@elastic/elasticsearch": "^7.3.0",
     "@ulangi/assert": "^1.0.6",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/ulangi-common": "^3.9.1",
+    "@ulangi/ulangi-common": "^3.9.2",
     "@ulangi/wiktionary-core": "^1.1.0",
     "aws-es-connection": "^1.0.0",
     "aws-sdk": "^2.254.1",

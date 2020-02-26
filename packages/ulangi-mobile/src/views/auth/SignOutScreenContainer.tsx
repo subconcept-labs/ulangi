@@ -31,6 +31,7 @@ export class SignOutScreenContainer extends Container {
   );
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.SIGN_OUT_SCREEN,
     null,
   );

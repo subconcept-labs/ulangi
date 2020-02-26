@@ -54,6 +54,7 @@ export class CategorySelectorScreenContainer extends Container<
       false,
       observable.box(ActivityState.INACTIVE),
     ),
+    this.props.componentId,
     ScreenName.CATEGORY_SELECTOR_SCREEN,
     new ObservableTitleTopBar(
       typeof this.props.passedProps.screenTitle !== 'undefined'

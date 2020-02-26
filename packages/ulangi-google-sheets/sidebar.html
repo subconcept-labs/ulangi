@@ -14,6 +14,9 @@
     .disabled.section a, .disabled.section span {
       color: #ccc
     }
+    .text_bold {
+      font-weight: bold
+    }
     </style>
     <script>
       function showAlert(text){
@@ -77,7 +80,7 @@
         document.getElementById("pullBtn").disabled = false;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pullBtn").value = "Pull";
-        document.getElementById("pullMessage").innerHTML = "Pull updates.";
+        document.getElementById("pullMessage").innerHTML = "Download terms/updates.";
       }
 
       function togglePush(){
@@ -109,7 +112,7 @@
         document.getElementById("pullBtn").disabled = true;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pushBtn").value = "Stop";
-        document.getElementById("pushMessage").innerHTML = "Pushing edits...";
+        document.getElementById("pushMessage").innerHTML = "Pushing updates...";
       }
 
       function onPushSucceeded(){
@@ -126,7 +129,7 @@
         document.getElementById("pullBtn").disabled = false;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pushBtn").value = "Push";
-        document.getElementById("pushMessage").innerHTML = "Push edits.";
+        document.getElementById("pushMessage").innerHTML = "Upload terms/updates.";
       }
     </script>
   </head>
@@ -138,7 +141,7 @@
         </div>
       </div>
       <div class="block">
-        <span>The API key is used to connect with your Ulangi account. It can be retrieved from Ulangi App.</span>
+        <span>The API key is used to connect with your Ulangi account. It can be retrieved from Ulangi mobile app.</span>
       </div>
     </div>
 
@@ -159,7 +162,7 @@
           <input type="button" id="pullBtn" class="action" onclick="togglePull()" value="Pull" />
         </div>
         <div id="pullMessage" class="inline">
-          <span>Pull updates.</span>
+          <span>Download terms/updates.</span>
         </div>
       </div>
 
@@ -168,7 +171,15 @@
           <input type="button" id="pushBtn" class="action" onclick="togglePush()" value="Push" />
         </div>
         <div id="pushMessage" class="inline">
-          <span>Push edits.</span>
+          <span>Upload terms/updates.</span>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="block">
+        <div class="inline">
+          <span class="text_bold">Note: Do not edit columns in gray.</span>
+          <a class="text_bold" href="https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on">See tutorial.</a>
         </div>
       </div>
     </div>

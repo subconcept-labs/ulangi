@@ -6,7 +6,8 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { IObservableValue } from 'mobx';
+import { boundMethod } from 'autobind-decorator';
+import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
@@ -21,6 +22,7 @@ import {
 export interface SearchInputProps {
   theme: Theme;
   input: IObservableValue<string>;
+  shouldFocusInput: IObservableValue<boolean>;
   onSubmitEditing: () => void;
   styles?: {
     light: SearchInputStyles;
@@ -30,10 +32,35 @@ export interface SearchInputProps {
 
 @observer
 export class SearchInput extends React.Component<SearchInputProps> {
+  private textInputRef: any;
+  private unsubscribeFocus?: () => void;
+
   public get styles(): SearchInputStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
     const dark = this.props.styles ? this.props.styles.dark : darkStyles;
     return this.props.theme === Theme.LIGHT ? light : dark;
+  }
+
+  public componentDidMount(): void {
+    this.unsubscribeFocus = autorun(this.handleFocus);
+  }
+
+  public componentWillUnmount(): void {
+    if (typeof this.unsubscribeFocus !== 'undefined') {
+      this.unsubscribeFocus();
+    }
+  }
+
+  @boundMethod
+  private handleFocus(): void {
+    if (
+      this.props.shouldFocusInput.get() === true &&
+      typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null
+    ) {
+      this.textInputRef.focus();
+      this.props.shouldFocusInput.set(false);
+    }
   }
 
   public render(): React.ReactElement<any> {
@@ -41,6 +68,9 @@ export class SearchInput extends React.Component<SearchInputProps> {
       <View style={this.styles.input_container}>
         <TextInput
           placeholder="Type topics to search..."
+          ref={(ref): void => {
+            this.textInputRef = ref;
+          }}
           style={this.styles.input}
           value={this.props.input.get()}
           onChangeText={(text): void => this.props.input.set(text)}

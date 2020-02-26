@@ -21,10 +21,11 @@ export class ObservableContactUsScreen extends ObservableScreen {
   public constructor(
     formType: ContactUsFormType,
     text: string,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.formType = formType;
     this.text = text;
   }

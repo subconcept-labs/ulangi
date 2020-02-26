@@ -20,10 +20,11 @@ export class ObservableVocabularyDetailScreen extends ObservableScreen {
   public constructor(
     vocabulary: ObservableVocabulary,
     speakState: ActivityState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.vocabulary = vocabulary;
     this.speakState = observable.box(speakState);
   }

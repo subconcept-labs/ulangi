@@ -33,10 +33,11 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
     selectedFeedbackButtons: 3 | 4 | 5,
     selectedAutoplayAudio: boolean,
     selectedAutoShowKeyboard: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.selectedInitialInterval = selectedInitialInterval;
     this.selectedLimit = selectedLimit;
     this.selectedFeedbackButtons = selectedFeedbackButtons;

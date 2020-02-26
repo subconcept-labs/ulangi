@@ -21,10 +21,11 @@ export class ObservableReminderScreen extends ObservableScreen {
   public constructor(
     reminderSettings: ObservableReminderSettings,
     shouldShowTimePicker: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.reminderSettings = reminderSettings;
     this.shouldShowTimePicker = shouldShowTimePicker;
   }

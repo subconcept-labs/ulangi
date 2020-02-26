@@ -21,10 +21,11 @@ export class ObservableChangeEmailScreen extends ObservableScreen {
   public constructor(
     email: string,
     password: string,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.email = email;
     this.password = password;
   }

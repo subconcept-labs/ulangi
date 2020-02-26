@@ -34,10 +34,11 @@ export class ObservableSetManagementScreen extends ObservableScreen {
     setList: null | ObservableMap<string, ObservableSet>,
     fetchState: ActivityState,
     refreshing: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.selectedSetStatus = selectedSetStatus;
     this.setList = setList;
     this.fetchState = fetchState;

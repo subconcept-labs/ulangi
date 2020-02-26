@@ -48,6 +48,7 @@ export class ReminderScreenContainer extends Container {
       this.currentSettings.minutes,
     ),
     false,
+    this.props.componentId,
     ScreenName.REMINDER_SCREEN,
     new ObservableTitleTopBar(
       'Reminder',

@@ -26,10 +26,11 @@ export class ObservableAddEditVocabularyScreen extends ObservableScreen {
     screenAppearedTimes: number,
     currentTab: IObservableValue<'Editor' | 'Preview'>,
     vocabularyFormState: ObservableVocabularyFormState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar | ObservableTouchableTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.currentTab = currentTab;
     this.vocabularyFormState = vocabularyFormState;

@@ -41,6 +41,7 @@ export class LevelBreakdownScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.LEVEL_BREAKDOWN_SCREEN,
     null,
   );

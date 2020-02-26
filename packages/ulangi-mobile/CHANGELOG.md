@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.2](https://github.com/minhloi/ulangi/compare/v3.9.1...v3.9.2) (2020-02-26)
+
+
+### Bug Fixes
+
+* avoid popping same screen multiple times ([1153dfb](https://github.com/minhloi/ulangi/commit/1153dfb))
+* remove screen state by componentId instead of screenName ([b6fa658](https://github.com/minhloi/ulangi/commit/b6fa658))
+* show keyboard after screen appears (instead of mounting) ([61b2c95](https://github.com/minhloi/ulangi/commit/61b2c95)), closes [#27](https://github.com/minhloi/ulangi/issues/27)
+
+
+
+
+
 ## [3.9.1](https://github.com/minhloi/ulangi/compare/v3.9.0...v3.9.1) (2020-02-22)
 
 

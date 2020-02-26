@@ -61,9 +61,10 @@ export class WritingLessonScreenContainer extends Container<
   private currentSettings = this.writingSettingsDelegate.getCurrentSettings();
 
   protected observableScreen = new ObservableWritingLessonScreen(
+    0,
     this.props.passedProps.vocabularyList,
     new ObservableWritingFormState(
-      this.currentSettings.autoShowKeyboard,
+      false,
       null,
       this.questionIterator.current(),
       '',
@@ -89,6 +90,7 @@ export class WritingLessonScreenContainer extends Container<
     observable.box(false),
     observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
+    this.props.componentId,
     ScreenName.WRITING_LESSON_SCREEN,
     new ObservableTitleTopBar(
       'Writing',
@@ -136,6 +138,14 @@ export class WritingLessonScreenContainer extends Container<
 
   public componentWillUnmount(): void {
     this.screenDelegate.cleanUp();
+  }
+
+  public componentDidAppear(): void {
+    this.observableScreen.screenAppearedTimes += 1;
+
+    if (this.observableScreen.screenAppearedTimes === 1) {
+      this.observableScreen.writingFormState.shouldAutoFocus = this.currentSettings.autoShowKeyboard;
+    }
   }
 
   public render(): React.ReactElement<any> {

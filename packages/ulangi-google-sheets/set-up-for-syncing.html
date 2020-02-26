@@ -32,10 +32,14 @@
       function updateSelections(sets) {
         document.getElementById('downloading').style.display = "none";
         document.getElementById('setForm').style.display = "block";
-        document.getElementById('setSelection').innerHTML = sets.map((set) => {
-          var setNameWithId = set.setName + " [" + set.setId + "]";
-          return '<option value="' + setNameWithId + '">' + setNameWithId + '</option>';
-        }).join()
+        document.getElementById('setSelection').innerHTML = sets
+          .filter((set) => {
+            return set.setStatus === "ACTIVE"
+          })
+          .map((set) => {
+            var setNameWithId = set.setName + " [" + set.setId + "]";
+            return '<option value="' + setNameWithId + '">' + setNameWithId + '</option>';
+          }).join()
       }
 
       function downloadSetsFailed() {

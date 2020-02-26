@@ -22,10 +22,11 @@ export class ObservableSignInScreen extends ObservableScreen {
     email: string,
     password: string,
     shouldFocusPassword: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.email = observable.box(email);
     this.password = observable.box(password);
     this.shouldFocusPassword = observable.box(shouldFocusPassword);

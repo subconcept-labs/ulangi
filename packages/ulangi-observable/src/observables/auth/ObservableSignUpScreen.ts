@@ -25,10 +25,11 @@ export class ObservableSignUpScreen extends ObservableScreen {
     confirmPassword: string,
     shouldFocusPassword: boolean,
     shouldFocusConfirmPassword: boolean,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
 
     this.email = observable.box(email);
     this.password = observable.box(password);

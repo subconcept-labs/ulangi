@@ -17,10 +17,11 @@ export class ObservableAutoArchiveScreen extends ObservableScreen {
 
   public constructor(
     autoArchiveSettings: AutoArchiveSettings,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.autoArchiveSettings = new ObservableAutoArchiveSettings(
       autoArchiveSettings.autoArchiveEnabled,
       autoArchiveSettings.spacedRepetitionLevelThreshold,

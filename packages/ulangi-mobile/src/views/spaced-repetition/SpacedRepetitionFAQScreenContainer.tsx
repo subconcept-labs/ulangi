@@ -31,6 +31,7 @@ export class SpacedRepetitionFAQScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.SPACED_REPETITION_FAQ_SCREEN,
     new ObservableTitleTopBar(
       'FAQ',

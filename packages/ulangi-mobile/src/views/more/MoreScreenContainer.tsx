@@ -33,6 +33,7 @@ export class MoreScreenContainer extends Container {
     0,
     observable.array(),
     observable.box(0),
+    this.props.componentId,
     ScreenName.MORE_SCREEN,
     new ObservableTitleTopBar('More', null, null),
   );

@@ -37,6 +37,7 @@ export class SecurityScreenContainer extends Container {
   );
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.SECURITY_SCREEN,
     new ObservableTitleTopBar(
       'Security',

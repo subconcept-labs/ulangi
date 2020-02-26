@@ -53,6 +53,7 @@ export class CategorizeScreenContainer extends Container<
       false,
       observable.box(ActivityState.INACTIVE),
     ),
+    this.props.componentId,
     ScreenName.CATEGORIZE_SCREEN,
     new ObservableTitleTopBar(
       'Categorize',

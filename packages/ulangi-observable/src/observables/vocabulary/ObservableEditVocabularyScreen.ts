@@ -21,6 +21,7 @@ export class ObservableEditVocabularyScreen extends ObservableAddEditVocabularyS
     originalEditingVocabulary: Vocabulary,
     currentTab: IObservableValue<'Editor' | 'Preview'>,
     vocabularyFormState: ObservableVocabularyFormState,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
@@ -28,6 +29,7 @@ export class ObservableEditVocabularyScreen extends ObservableAddEditVocabularyS
       screenAppearedTimes,
       currentTab,
       vocabularyFormState,
+      componentId,
       screenName,
       topBar
     );

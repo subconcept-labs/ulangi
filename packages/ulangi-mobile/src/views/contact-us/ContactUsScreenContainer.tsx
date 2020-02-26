@@ -51,6 +51,7 @@ export class ContactUsScreenContainer extends Container<
   protected observableScreen = new ObservableContactUsScreen(
     this.props.passedProps.initialFormType,
     this.props.passedProps.message || '',
+    this.props.componentId,
     ScreenName.CONTACT_US_SCREEN,
     new ObservableTitleTopBar(
       this.props.passedProps.initialFormType,

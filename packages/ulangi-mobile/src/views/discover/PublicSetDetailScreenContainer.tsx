@@ -47,6 +47,7 @@ export class PublicSetDetailScreenContainer extends Container<
     this.props.observableConverter.convertToObservablePublicSet(
       this.props.passedProps.publicSet,
     ),
+    this.props.componentId,
     ScreenName.PUBLIC_SET_DETAIL_SCREEN,
     new ObservableTitleTopBar(
       'Detail',

@@ -75,6 +75,7 @@ export class ReviewFeedbackScreenContainer extends Container<
       this.props.passedProps.vocabularyList,
       this.props.passedProps.originalFeedbackList,
     ),
+    this.props.componentId,
     ScreenName.REVIEW_FEEDBACK_SCREEN,
     new ObservableTitleTopBar(
       'Review Feedback',

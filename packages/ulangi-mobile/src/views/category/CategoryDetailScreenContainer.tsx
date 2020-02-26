@@ -65,6 +65,7 @@ export class CategoryDetailScreenContainer extends Container<
       observable.box(false),
       observable.box(false),
     ),
+    this.props.componentId,
     ScreenName.CATEGORY_DETAIL_SCREEN,
     new ObservableTitleTopBar(
       'Detail',

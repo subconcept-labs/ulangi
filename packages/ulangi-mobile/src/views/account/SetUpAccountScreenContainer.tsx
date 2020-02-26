@@ -40,6 +40,7 @@ export class SetUpAccountScreenContainer extends Container {
     '',
     '',
     '',
+    this.props.componentId,
     ScreenName.SET_UP_ACCOUNT_SCREEN,
     new ObservableTitleTopBar(
       'Set Up Account',

@@ -63,6 +63,7 @@ export class QuizMultipleChoiceScreenContainer extends Container<
     ),
     new ObservableMultipleChoiceResult(config.quiz.gradeScale, 0, 0),
     observable.box(false),
+    this.props.componentId,
     ScreenName.QUIZ_MULTIPLE_CHOICE_SCREEN,
     new ObservableTitleTopBar(
       'Multiple Choice',

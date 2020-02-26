@@ -54,6 +54,7 @@ export class FlashcardPlayerScreenContainer extends Container<
     typeof this.props.passedProps.selectedCategoryNames !== 'undefined'
       ? observable.array(this.props.passedProps.selectedCategoryNames.slice())
       : undefined,
+    this.props.componentId,
     ScreenName.FLASHCARD_PLAYER_SCREEN,
   );
 

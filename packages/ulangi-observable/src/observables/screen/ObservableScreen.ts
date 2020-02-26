@@ -12,6 +12,8 @@ import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
 import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
 
 export class ObservableScreen {
+  public readonly componentId: string;
+
   @observable
   public screenName: ScreenName;
 
@@ -22,9 +24,11 @@ export class ObservableScreen {
   public screenState: ScreenState = ScreenState.UNMOUNTED;
 
   public constructor(
+    componentId: string,
     screenName: ScreenName,
     topBar: null | ObservableTitleTopBar | ObservableTouchableTopBar
   ) {
+    this.componentId = componentId;
     this.screenName = screenName;
     this.topBar = topBar;
   }

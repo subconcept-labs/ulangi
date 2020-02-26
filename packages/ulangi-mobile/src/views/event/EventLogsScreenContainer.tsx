@@ -24,6 +24,7 @@ export class EventLogsScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.EVENT_LOGS_SCREEN,
     new ObservableTitleTopBar(
       'Event Logs',

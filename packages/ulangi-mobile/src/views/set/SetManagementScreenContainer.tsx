@@ -46,6 +46,7 @@ export class SetManagementScreenContainer extends Container {
     null,
     ActivityState.INACTIVE,
     false,
+    this.props.componentId,
     ScreenName.SET_MANAGEMENT_SCREEN,
     new ObservableTitleTopBar(
       'Set Management',

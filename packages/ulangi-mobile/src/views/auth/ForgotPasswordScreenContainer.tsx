@@ -35,6 +35,7 @@ export class ForgotPasswordScreenContainer extends Container {
 
   protected observableScreen = new ObservableForgotPasswordScreen(
     '',
+    this.props.componentId,
     ScreenName.FORGOT_PASSWORD_SCREEN,
     new ObservableTitleTopBar('Forgot Password', null, null),
   );

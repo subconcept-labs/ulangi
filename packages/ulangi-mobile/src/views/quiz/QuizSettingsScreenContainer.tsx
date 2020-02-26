@@ -49,6 +49,7 @@ export class QuizSettingsScreenContainer extends Container {
       selectedQuizSize: this.originalSettings.writingQuizSize,
       selectedAutoShowKeyboard: this.originalSettings.writingAutoShowKeyboard,
     },
+    this.props.componentId,
     ScreenName.QUIZ_SETTINGS_SCREEN,
     new ObservableTitleTopBar(
       'Settings',

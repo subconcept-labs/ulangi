@@ -26,10 +26,11 @@ export class ObservableMoreScreen extends ObservableScreen {
     screenAppearedTimes: number,
     messages: IObservableArray<ObservableCarouselMessage>,
     currentMessageIndex: IObservableValue<number>,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
     this.messages = messages;
     this.currentMessageIndex = currentMessageIndex;

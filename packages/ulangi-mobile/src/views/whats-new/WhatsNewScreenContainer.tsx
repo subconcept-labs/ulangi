@@ -31,6 +31,7 @@ export class WhatsNewScreenContainer extends Container {
   }
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.WHATS_NEW_SCREEN,
     new ObservableTitleTopBar(
       "What's New",

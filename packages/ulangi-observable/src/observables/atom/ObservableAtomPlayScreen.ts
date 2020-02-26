@@ -82,9 +82,10 @@ export class ObservableAtomPlayScreen extends ObservableScreen {
     arcs: readonly ObservableArc[],
     particles: readonly ObservableParticle[],
     shells: readonly ObservableShell[],
+    componentId: string,
     screenName: ScreenName
   ) {
-    super(screenName, null);
+    super(componentId, screenName, null);
     this.gameState = gameState;
     this.gameStats = gameStats;
     this.noMoreVocabulary = noMoreVocabulary;

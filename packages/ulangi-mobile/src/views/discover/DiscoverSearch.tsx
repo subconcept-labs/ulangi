@@ -37,10 +37,10 @@ export interface DiscoverSearchProps {
 @observer
 export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
   private textInputRef: any;
-  private unsubscribe?: () => void;
+  private unsubscribeFocus?: () => void;
 
   public componentDidMount(): void {
-    this.unsubscribe = autorun(
+    this.unsubscribeFocus = autorun(
       (): void => {
         if (
           this.textInputRef &&
@@ -54,8 +54,8 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
   }
 
   public componentWillUnmount(): void {
-    if (typeof this.unsubscribe !== 'undefined') {
-      this.unsubscribe();
+    if (typeof this.unsubscribeFocus !== 'undefined') {
+      this.unsubscribeFocus();
     }
   }
 

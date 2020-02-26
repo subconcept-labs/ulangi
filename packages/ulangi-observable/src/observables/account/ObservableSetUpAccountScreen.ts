@@ -25,10 +25,11 @@ export class ObservableSetUpAccountScreen extends ObservableScreen {
     email: string,
     password: string,
     confirmPassword: string,
+    componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
   ) {
-    super(screenName, topBar);
+    super(componentId, screenName, topBar);
     this.email = email;
     this.password = password;
     this.confirmPassword = confirmPassword;

@@ -7,7 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableSearchScreen } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
+import { boundMethod } from 'autobind-decorator';
+import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TextInput, View } from 'react-native';
@@ -33,18 +34,35 @@ export interface SearchInputProps {
 
 @observer
 export class SearchInput extends React.Component<SearchInputProps> {
-  private textInputRef?: any;
-
-  public componentDidMount(): void {
-    if (this.textInputRef) {
-      _.delay(this.textInputRef.focus, 800);
-    }
-  }
+  private textInputRef?: TextInput | null;
+  private unsubscribeFocus?: () => void;
 
   public get styles(): SearchInputStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
     const dark = this.props.styles ? this.props.styles.dark : darkStyles;
     return this.props.theme === Theme.LIGHT ? light : dark;
+  }
+
+  public componentDidMount(): void {
+    this.unsubscribeFocus = autorun(this.handleFocus);
+  }
+
+  public componentWillUnmount(): void {
+    if (typeof this.unsubscribeFocus !== 'undefined') {
+      this.unsubscribeFocus();
+    }
+  }
+
+  @boundMethod
+  private handleFocus(): void {
+    if (
+      this.props.observableScreen.shouldFocusInput === true &&
+      typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null
+    ) {
+      this.textInputRef.focus();
+      this.props.observableScreen.shouldFocusInput = false;
+    }
   }
 
   public render(): React.ReactElement<any> {
@@ -55,10 +73,10 @@ export class SearchInput extends React.Component<SearchInputProps> {
           source={Images.SEARCH_GREY_14X14}
         />
         <TextInput
+          testID={SearchScreenIds.SEARCH_INPUT}
           ref={(ref): void => {
             this.textInputRef = ref;
           }}
-          testID={SearchScreenIds.SEARCH_INPUT}
           style={this.styles.text_input}
           autoCapitalize="none"
           placeholderTextColor={

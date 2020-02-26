@@ -43,6 +43,7 @@ export class ThemeScreenContainer extends Container {
 
   protected observableScreen = new ObservableThemeScreen(
     new ObservableThemeSettings(this.currentSettings.trigger),
+    this.props.componentId,
     ScreenName.THEME_SCREEN,
     new ObservableTitleTopBar(
       'Theme',

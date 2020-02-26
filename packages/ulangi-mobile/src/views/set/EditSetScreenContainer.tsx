@@ -58,6 +58,7 @@ export class EditSetScreenContainer extends Container<
       new ObservableSetPickerState(null, false, false),
       this.props.rootStore.remoteConfigStore,
     ),
+    this.props.componentId,
     ScreenName.EDIT_SET_SCREEN,
     new ObservableTitleTopBar(
       'Edit Set',

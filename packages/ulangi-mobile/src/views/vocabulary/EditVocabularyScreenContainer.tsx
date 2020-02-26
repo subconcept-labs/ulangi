@@ -84,6 +84,7 @@ export class EditVocabularyScreenContainer extends Container<
         'categoryName',
       ) || 'Uncategorized',
     ),
+    this.props.componentId,
     ScreenName.EDIT_VOCABULARY_SCREEN,
     new ObservableTitleTopBar(
       'Edit Vocabulary',

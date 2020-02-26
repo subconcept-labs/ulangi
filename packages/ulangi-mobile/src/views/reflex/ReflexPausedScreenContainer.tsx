@@ -35,6 +35,7 @@ export class ReflexPausedScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
+    this.props.componentId,
     ScreenName.REFLEX_PAUSED_SCREEN,
     null,
   );

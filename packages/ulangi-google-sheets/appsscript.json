@@ -2,10 +2,7 @@
   "timeZone": "America/New_York",
   "dependencies": {
   },
-  "oauthScopes": [
-    "https://www.googleapis.com/auth/spreadsheets.currentonly",
-    "https://www.googleapis.com/auth/script.external_request",
-    "https://www.googleapis.com/auth/script.container.ui"
-  ],
-  "exceptionLogging": "STACKDRIVER"
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": ["https://www.googleapis.com/auth/spreadsheets.currentonly", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/script.container.ui"],
+  "runtimeVersion": "V8"
 }
