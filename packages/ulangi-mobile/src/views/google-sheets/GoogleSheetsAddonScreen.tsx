@@ -133,7 +133,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
       <SectionRow
         theme={this.props.themeStore.theme}
         customLeft={
-          <DefaultText selectable={true}>
+          <DefaultText style={this.styles.api_key} selectable={true}>
             {this.props.observableScreen.apiKey}
           </DefaultText>
         }
