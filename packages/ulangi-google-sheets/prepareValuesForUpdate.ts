@@ -102,10 +102,27 @@ export function prepareValuesForUpdate(valueByName: {[P in string]: any }): [ De
     setId = valueByName.setId
   }
 
+  if (vocabulary.vocabularyText === "") {
+    throw `Empty vocabularyText is not allowed (please check the row with ${vocabulary.vocabularyId})`
+  }
+
   if (typeof vocabulary.category !== "undefined") {
       if (vocabulary.category.categoryName === "") {
-      throw new Error(`category cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+      throw `Empty category is not allowed (please check the row with vocabularyId ${vocabulary.vocabularyId})`
     }
+  }
+
+  if (typeof vocabulary.definitions !== 'undefined'){
+    if (
+      vocabulary.definitions.length === 0 ||
+      vocabulary.definitions.filter((definition): boolean => definition.meaning === '').length > 0
+    ) {
+      throw `Empty definition is not allowed (please check the row with vocabularyId ${vocabulary.vocabularyId})`
+    }
+  } 
+
+  if (setId === "") {
+    throw `Empty setId is not allowed (please check the row with vocabularyId ${vocabulary.vocabularyId})`
   }
 
   return [ vocabulary, setId ]

@@ -60,21 +60,24 @@ export function prepareValuesForInsert(valueByName: {[P in string]: any }): [ Vo
   }
 
   if (vocabulary.vocabularyText === "") {
-    throw new Error(`vocabularyText cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+    throw `Empty vocabularyText is not allowed (check the row with vocabularyId ${vocabulary.vocabularyId}`
   }
 
   if (typeof vocabulary.category !== "undefined") {
       if (vocabulary.category.categoryName === "") {
-      throw new Error(`category cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+      throw `Empty category is not allowed (check the row with vocabularyId ${vocabulary.vocabularyId})`
     }
   }
 
-  if (vocabulary.definitions.length === 0) {
-    throw new Error(`definitions cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+  if (
+    vocabulary.definitions.length === 0 ||
+    vocabulary.definitions.filter((definition): boolean => definition.meaning === '').length > 0
+  ) {
+    throw `Empty definition is not allowed (check the row with vocabularyId ${vocabulary.vocabularyId})`
   }
 
   if (valueByName.setId === "") {
-    throw new Error(`setId cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+    throw `Empty setId is not allowed (check the row with vocabularyId ${vocabulary.vocabularyId})`
   }
 
   return [ vocabulary, valueByName.setId ]
