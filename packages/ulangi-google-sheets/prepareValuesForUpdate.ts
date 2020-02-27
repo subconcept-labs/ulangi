@@ -69,33 +69,43 @@ export function prepareValuesForUpdate(valueByName: {[P in string]: any }): [ De
   }
 
   if (valueByName.category !== valueByName.originalCategory){
-    vocabulary.category = typeof vocabulary.category !== "undefined" ? vocabulary.category : {}
-    vocabulary.category.categoryName = valueByName.category
-    vocabulary.category.createdAt = new Date()
-    vocabulary.category.updatedAt = new Date()
+    vocabulary.category = {
+      categoryName: valueByName.category,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
   }
 
   if (valueByName.spacedRepetitionLevel !== valueByName.originalSpacedRepetitionLevel){
     vocabulary.level = valueByName.spacedRepetitionLevel
   }
 
-  if (valueByName.writingLevel !== valueByName.originalWritingLevel){
-    vocabulary.writing = typeof vocabulary.writing !== "undefined" ? vocabulary.writing : {}
-    vocabulary.writing.level = valueByName.writingLevel
+  if (valueByName.writingLevel !== valueByName.originalWritingLevel
+    || valueByName.disableWriting !== valueByName.originalDisableWriting
+  ){
+    vocabulary.writing = {}
     vocabulary.writing.createdAt = new Date()
     vocabulary.writing.updatedAt = new Date()
-  }
 
-  if (valueByName.disableWriting !== valueByName.originalDisableWriting){
-    vocabulary.writing = typeof vocabulary.writing !== "undefined" ? vocabulary.writing : {}
-    vocabulary.writing.disabled = valueByName.disableWriting
-    vocabulary.writing.createdAt = new Date()
-    vocabulary.writing.updatedAt = new Date()
+    if (valueByName.writingLevel !== valueByName.originalWritingLevel) {
+      vocabulary.writing.level = valueByName.writingLevel
+    }
+
+    if (valueByName.disableWriting !== valueByName.originalDisableWriting){
+      vocabulary.writing.disabled = valueByName.disableWriting
+    }
   }
 
   let setId: undefined | string = undefined
+
   if (valueByName.setId !== valueByName.originalSetId){
     setId = valueByName.setId
+  }
+
+  if (typeof vocabulary.category !== "undefined") {
+      if (vocabulary.category.categoryName === "") {
+      throw new Error(`category cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+    }
   }
 
   return [ vocabulary, setId ]

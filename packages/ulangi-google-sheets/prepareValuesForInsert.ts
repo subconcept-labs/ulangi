@@ -39,7 +39,7 @@ export function prepareValuesForInsert(valueByName: {[P in string]: any }): [ Vo
         }
       }),
     category : {
-      categoryName: (valueByName.category === "") ? "Uncategorized" : valueByName.category,
+      categoryName: valueByName.category,
       createdAt: new Date(),
       updatedAt: new Date(),
       firstSyncedAt: null,
@@ -60,15 +60,21 @@ export function prepareValuesForInsert(valueByName: {[P in string]: any }): [ Vo
   }
 
   if (vocabulary.vocabularyText === "") {
-    throw new Error(`vocabularyText cannot be empty. Please check term with vocabularyId ${vocabulary.vocabularyId}.`)
+    throw new Error(`vocabularyText cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+  }
+
+  if (typeof vocabulary.category !== "undefined") {
+      if (vocabulary.category.categoryName === "") {
+      throw new Error(`category cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
+    }
   }
 
   if (vocabulary.definitions.length === 0) {
-    throw new Error(`definitions cannot be empty. Please check term with vocabularyId ${vocabulary.vocabularyId}.`)
+    throw new Error(`definitions cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
   }
 
   if (valueByName.setId === "") {
-    throw new Error(`setId cannot be empty. Please check term with vocabularyId ${vocabulary.vocabularyId}.`)
+    throw new Error(`setId cannot be empty. Please check the term with vocabularyId ${vocabulary.vocabularyId}.`)
   }
 
   return [ vocabulary, valueByName.setId ]
