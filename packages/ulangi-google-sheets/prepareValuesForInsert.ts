@@ -64,11 +64,11 @@ export function prepareValuesForInsert(valueByName: {[P in string]: any }): [ Vo
   }
 
   if (vocabulary.definitions.length === 0) {
-    throw new Error(`definitions cannot be empty. Please check term with ${vocabulary.vocabularyId}.`)
+    throw new Error(`definitions cannot be empty. Please check term with vocabularyId ${vocabulary.vocabularyId}.`)
   }
 
   if (valueByName.setId === "") {
-    throw new Error(`setId cannot be empty. Please check term with ${vocabulary.vocabularyId}.`)
+    throw new Error(`setId cannot be empty. Please check term with vocabularyId ${vocabulary.vocabularyId}.`)
   }
 
   return [ vocabulary, valueByName.setId ]

@@ -9,15 +9,15 @@ import { getColumnLetterByName } from "./getColumnLetterByName"
 import { getColumnPositionByName } from "./getColumnPositionByName"
 import { getColumnNames } from "./getColumnNames"
 
-export function getEditedRows(fromRowIndex: number, toRowIndex: number, limit: number, sheet: GoogleAppsScript.Spreadsheet.Sheet): GoogleAppsScript.Spreadsheet.Range[] {
+export function getEditedRows(fromRowIndex: number, toRowIndex: number, sheet: GoogleAppsScript.Spreadsheet.Sheet): GoogleAppsScript.Spreadsheet.Range[] {
   const editedColumnLetter = getColumnLetterByName("edited")
-  const editedColumn = sheet.getRange(fromRowIndex, getColumnPositionByName("edited"), toRowIndex)
+  const editedColumn = sheet.getRange(fromRowIndex, getColumnPositionByName("edited"), toRowIndex, 1)
 
   const textFinder = editedColumn
     .createTextFinder("^YES|NEW$")
     .useRegularExpression(true)
 
-  const matches = textFinder.findAll().splice(0, limit)
+  const matches = textFinder.findAll();
 
   const rows = matches.map((match) => {
     return sheet.getRange(
