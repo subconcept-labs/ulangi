@@ -186,9 +186,9 @@ export class DownloadIncompatibleVocabularySaga {
                 tx,
                 {
                   vocabularyId: vocabulary.vocabularyId,
-                  definitions: definitionChunk || [],
+                  definitions: definitionChunk,
                 },
-                vocabularySetIdMap[vocabulary.vocabularyId],
+                undefined,
                 'remote'
               );
             }
