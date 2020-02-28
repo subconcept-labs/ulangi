@@ -25,7 +25,7 @@
 ---
 
 ## Introduction
-**Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memormize them, such as spaced repetition, writing, quiz and more...
+**Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memorize them, such as spaced repetition, writing, quiz and more...
 
 ---
 
