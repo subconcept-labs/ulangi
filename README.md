@@ -24,10 +24,8 @@
 
 ---
 
-## Development principles
-- Write type-safe code
-- Use design patterns
-- Make it easy to build/customize tools
+## Introduction
+**Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memormize them, such as spaced repetition, writing, quiz and more...
 
 ---
 
@@ -39,6 +37,13 @@
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
 | Mac | *To be developed* |
 | Window | *To be developed* |
+
+---
+
+## Development principles
+- Write type-safe code
+- Use design patterns
+- Make it easy to build/customize tools
 
 ---
 
