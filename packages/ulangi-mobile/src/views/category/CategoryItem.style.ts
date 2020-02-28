@@ -84,7 +84,6 @@ const baseStyles: CategoryItemStyles = {
 
   right: {
     flexDirection: 'row',
-    borderLeftWidth: 1,
     paddingLeft: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -138,10 +137,6 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.secondaryTextColor,
     },
 
-    right: {
-      borderLeftColor: config.styles.light.secondaryBorderColor,
-    },
-
     count: {
       color: config.styles.light.primaryTextColor,
     },
@@ -172,10 +167,6 @@ export const darkStyles = StyleSheet.create(
 
     category_meta: {
       color: config.styles.dark.secondaryTextColor,
-    },
-
-    right: {
-      borderLeftColor: config.styles.dark.secondaryBorderColor,
     },
 
     count: {

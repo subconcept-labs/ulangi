@@ -21,7 +21,6 @@ export const baseStyles: CategoryDetailHeaderStyles = {
   container: {
     marginHorizontal: 16,
     paddingVertical: 20,
-    borderBottomWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -46,10 +45,6 @@ export const baseStyles: CategoryDetailHeaderStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
-
     title: {
       color: config.styles.light.primaryTextColor,
     },
@@ -58,10 +53,6 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
-
     title: {
       color: config.styles.dark.primaryTextColor,
     },

@@ -54,7 +54,7 @@ export class PrimaryScreenStyle {
     },
     topBar: {
       background: {
-        color: '#202020',
+        color: '#191919',
       },
     },
     layout: {
