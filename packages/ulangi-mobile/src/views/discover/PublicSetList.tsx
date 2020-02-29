@@ -28,7 +28,6 @@ import {
 
 export interface PublicSetListProps {
   theme: Theme;
-  isPremadeSetList: boolean;
   publicSetListState: ObservablePublicSetListState;
   showSetDetailModal: (set: ObservablePublicSet) => void;
   onEndReached: () => void;
@@ -37,6 +36,7 @@ export interface PublicSetListProps {
     light: PublicSetListStyles;
     dark: PublicSetListStyles;
   };
+  headerComponent?: null | React.ReactElement<any>;
 }
 
 @observer
@@ -114,7 +114,7 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
           onEndReached={this.props.onEndReached}
           onRefresh={this.props.refresh}
           refreshing={this.props.publicSetListState.isRefreshing.get()}
-          ListHeaderComponent={this.renderHeader()}
+          ListHeaderComponent={this.props.headerComponent}
           ListFooterComponent={
             <DefaultActivityIndicator
               activityState={this.props.publicSetListState.searchState}
@@ -124,18 +124,6 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
           }
         />
       );
-    }
-  }
-
-  private renderHeader(): null | React.ReactElement<any> {
-    if (this.props.isPremadeSetList) {
-      return (
-        <DefaultText style={this.styles.header_text}>
-          {'Here are some pre-made flashcards for you.'}
-        </DefaultText>
-      );
-    } else {
-      return null;
     }
   }
 }

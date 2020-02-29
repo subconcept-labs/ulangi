@@ -52,9 +52,17 @@ export class GoogleSheetsAddOnScreen extends React.Component<
         testID={GoogleSheetsAddOnScreenIds.SCREEN}>
         <View style={this.styles.intro_container}>
           <DefaultText style={this.styles.intro_text}>
-            With this add-on, you can easily manage terms through Google Sheets.
-            You can perform bulk edits, import multiple terms or export them
-            directly on your desktop.
+            You can easily synchronize (import/export) words from within a
+            Google Sheets document.{' '}
+            <DefaultText
+              style={this.styles.highlighted}
+              onPress={(): void =>
+                this.props.screenDelegate.goToLink(
+                  config.links.youtubeDemoForUlangiSheets,
+                )
+              }>
+              See demo video.
+            </DefaultText>
           </DefaultText>
         </View>
         <View style={this.styles.section_container}>
@@ -66,7 +74,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
           <SectionGroup theme={this.props.themeStore.theme} header="TUTORIALS">
             <SectionRow
               theme={this.props.themeStore.theme}
-              leftText="How to install add-on"
+              leftText="How to install the add-on"
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
@@ -76,7 +84,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
             />
             <SectionRow
               theme={this.props.themeStore.theme}
-              leftText="How to use add-on"
+              leftText="How to use the add-on"
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(

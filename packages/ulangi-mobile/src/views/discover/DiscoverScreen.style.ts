@@ -10,40 +10,57 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
-export interface PublicSetListStyles {
-  list_container: ViewStyle;
-  center_container: ViewStyle;
+export interface DiscoverScreenStyles {
+  screen: ViewStyle;
+  top_container: ViewStyle;
+  message_container: ViewStyle;
   message: TextStyle;
-  button_container: ViewStyle;
+  floating_button_container: ViewStyle;
+  header_text: TextStyle;
+  highlighted: TextStyle;
 }
 
-export const baseStyles: PublicSetListStyles = {
-  list_container: {
-    paddingBottom: 74,
-    paddingTop: 8,
+export const baseStyles: DiscoverScreenStyles = {
+  screen: {
+    flex: 1,
   },
 
-  center_container: {
+  top_container: {},
+
+  message_container: {
     flex: 1,
-    paddingHorizontal: 16,
-    marginTop: 8,
+    marginHorizontal: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   message: {
+    color: '#888',
+    fontSize: 15,
+  },
+
+  floating_button_container: {
+    position: 'absolute',
+    right: 14,
+    bottom: 14,
+  },
+
+  header_text: {
+    paddingVertical: 20,
+    paddingHorizontal: 50,
     fontSize: 15,
     textAlign: 'center',
   },
 
-  button_container: {
-    marginTop: 8,
+  highlighted: {
+    color: config.styles.primaryColor,
+    fontWeight: 'bold',
   },
 };
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    message: {
+    header_text: {
       color: config.styles.light.secondaryTextColor,
     },
   }),
@@ -51,7 +68,7 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    message: {
+    header_text: {
       color: config.styles.dark.secondaryTextColor,
     },
   }),

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DiscoverListType } from '@ulangi/ulangi-common/enums';
+import { DiscoverListType, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDiscoverScreen,
   ObservableSetStore,
@@ -13,7 +13,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverScreenDelegate } from '../../delegates/discover/DiscoverScreenDelegate';
@@ -21,6 +21,11 @@ import { DefaultText } from '../common/DefaultText';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { DiscoverCenterTitle } from './DiscoverCenterTitle';
 import { DiscoverNavBar } from './DiscoverNavBar';
+import {
+  DiscoverScreenStyles,
+  darkStyles,
+  lightStyles,
+} from './DiscoverScreen.style';
 import { DiscoverSearch } from './DiscoverSearch';
 import { PublicSetList } from './PublicSetList';
 import { SearchFloatingButton } from './SearchFloatingButton';
@@ -35,6 +40,12 @@ export interface DiscoverScreenProps {
 
 @observer
 export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
+  private get styles(): DiscoverScreenStyles {
+    return this.props.themeStore.theme === Theme.LIGHT
+      ? lightStyles
+      : darkStyles;
+  }
+
   private isSupported(): boolean {
     const currentSet = this.props.setStore.existingCurrentSet;
     return (
@@ -46,7 +57,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
   public render(): React.ReactElement<any> {
     return (
       <DismissKeyboardView
-        style={styles.screen}
+        style={this.styles.screen}
         testID={DiscoverScreenIds.SCREEN}>
         {this.isSupported() ? (
           <React.Fragment>
@@ -65,7 +76,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
 
   private renderTopBar(): React.ReactElement<any> {
     return (
-      <View style={styles.top_container}>
+      <View style={this.styles.top_container}>
         <DiscoverSearch
           theme={this.props.themeStore.theme}
           setStore={this.props.setStore}
@@ -107,7 +118,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
 
   private renderFloatingButton(): null | React.ReactElement<any> {
     return (
-      <View style={styles.floating_button_container}>
+      <View style={this.styles.floating_button_container}>
         <SearchFloatingButton
           focusSearchInput={this.props.screenDelegate.focusSearchInput}
         />
@@ -156,14 +167,26 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
       return (
         <PublicSetList
           theme={this.props.themeStore.theme}
-          isPremadeSetList={
-            this.props.observableScreen.listType.get() ===
-            DiscoverListType.PREMADE_SET_LIST
-          }
           publicSetListState={this.props.observableScreen.publicSetListState}
           showSetDetailModal={this.props.screenDelegate.showSetDetailModal}
           refresh={this.props.screenDelegate.refreshCurrentList}
           onEndReached={this.props.screenDelegate.searchPublicSets}
+          headerComponent={
+            this.props.observableScreen.listType.get() ===
+            DiscoverListType.PREMADE_SET_LIST ? (
+              <DefaultText style={this.styles.header_text}>
+                You can search dictionary for words or categories. Try{' '}
+                <DefaultText
+                  style={this.styles.highlighted}
+                  onPress={(): void =>
+                    this.props.screenDelegate.setInputAndRefresh('cat')
+                  }>
+                  cat
+                </DefaultText>
+                .
+              </DefaultText>
+            ) : null
+          }
         />
       );
     }
@@ -173,8 +196,8 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     return (
       <View
         testID={DiscoverScreenIds.UNSUPPORTED_SECTION}
-        style={styles.message_container}>
-        <DefaultText style={styles.message}>
+        style={this.styles.message_container}>
+        <DefaultText style={this.styles.message}>
           {
             'This section is not supported because you select "Any Language". You can go to Set Management and change it to a specific language.'
           }
@@ -183,29 +206,3 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  top_container: {},
-
-  message_container: {
-    flex: 1,
-    marginHorizontal: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  message: {
-    color: '#888',
-    fontSize: 15,
-  },
-
-  floating_button_container: {
-    position: 'absolute',
-    right: 14,
-    bottom: 14,
-  },
-});

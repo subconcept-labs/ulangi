@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ManageListType } from '@ulangi/ulangi-common/enums';
+import {
+  ManageListType,
+  VocabularyFilterType,
+} from '@ulangi/ulangi-common/enums';
 import {
   ObservableManageScreen,
   ObservableSetStore,
@@ -25,6 +28,7 @@ import { NoVocabulary } from '../vocabulary/NoVocabulary';
 import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
 import { VocabularyList } from '../vocabulary/VocabularyList';
 import { ManageBar } from './ManageBar';
+import { QuickTutorialButton } from './QuickTutorialButton';
 
 export interface ManageScreenProps {
   setStore: ObservableSetStore;
@@ -66,13 +70,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       this.props.observableScreen.vocabularyListState.noMore === true &&
       this.props.observableScreen.vocabularyListState.vocabularyList.size === 0
     ) {
-      return (
-        <NoVocabulary
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
-          refresh={this.props.screenDelegate.refreshCurrentList}
-          showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
-        />
-      );
+      return this.renderEmptyComponent();
     } else {
       return (
         <VocabularyList
@@ -98,13 +96,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       this.props.observableScreen.categoryListState.noMore === true &&
       this.props.observableScreen.categoryListState.categoryList.size === 0
     ) {
-      return (
-        <NoVocabulary
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
-          refresh={this.props.screenDelegate.refreshCurrentList}
-          showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
-        />
-      );
+      return this.renderEmptyComponent();
     } else {
       return (
         <CategoryList
@@ -130,6 +122,27 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           shouldShowLevelProgressForSR={this.props.screenDelegate.shouldShowLevelProgressForSR()}
           shouldShowLevelProgressForWR={this.props.screenDelegate.shouldShowLevelProgressForWR()}
         />
+      );
+    }
+  }
+
+  private renderEmptyComponent(): React.ReactElement<any> {
+    if (
+      this.props.observableScreen.selectedFilterType.get() ===
+      VocabularyFilterType.ACTIVE
+    ) {
+      return (
+        <QuickTutorialButton
+          refresh={this.props.screenDelegate.refreshCurrentList}
+          goToGoogleSheetsAddOnScreen={
+            this.props.screenDelegate.goToGoogleSheetsAddOnScreen
+          }
+          showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
+        />
+      );
+    } else {
+      return (
+        <NoVocabulary refresh={this.props.screenDelegate.refreshCurrentList} />
       );
     }
   }

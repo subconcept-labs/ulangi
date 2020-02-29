@@ -23,6 +23,7 @@ export interface GoogleSheetsAddOnScreenStyles {
   primary_text: TextStyle;
   invalidate_text: TextStyle;
   dot: TextStyle;
+  highlighted: TextStyle;
 }
 
 export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
@@ -74,6 +75,10 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
   dot: {
     paddingHorizontal: 8,
     fontSize: 17,
+  },
+
+  highlighted: {
+    color: config.styles.primaryColor,
   },
 });
 
