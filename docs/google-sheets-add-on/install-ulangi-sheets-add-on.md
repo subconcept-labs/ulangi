@@ -9,11 +9,12 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 # How to install Ulangi Sheets Add-on
 
 #### Difficulty: Easy
+It takes only a minute to install and set up this add-on.
 
 ## I. Installation
-1. Once you open a Google Sheet document, choose *Add-on > Get add-ons*.
+1. Open a Google Sheets document and go to **Add-on > Get add-ons**.
 
-2. On G Suite Marketplace dialog, search **Ulangi Sheets** and install the add-on.
+2. Search **Ulangi Sheets** and install it.
 
 3. On Permission dialog, click **Allow** button.
   ![Permission dialog](./assets/images/permission-dialog.png)
@@ -22,13 +23,13 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 ---
 ## II. Setup
 
-1. Choose *Add-on > Ulangi Sheets > Show sidebar.*
+1. Once installed, go to **Add-on > Ulangi Sheets > Show sidebar.**
 
-2. Click on **Set API key**. You can retrieve the API key from the mobile app (by navigating to **More > Sync with Google Sheets**.)
+2. Click on **Set API key**, copy and parse your API key from Ulangi mobile app.
 
-3. Click on **Set up for syncing** and select a set you want to sync.
+3. Click on **Set up for syncing** and select a set to sync.
 
-4. Click on the **PULL** button to start downloading data.
+4. You're done! To download your words, click on **Pull**. To upload, click on **Push**.
 
 
 #### TIP:
