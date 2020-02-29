@@ -281,15 +281,9 @@ export class DiscoverScreenDelegate {
     );
   }
 
-  public showTip(): void {
-    RemoteLogger.logEvent('show_search_set_tip');
-    this.dialogDelegate.show({
-      title: 'TIP',
-      message:
-        'You can search dictionary or search for categories. For example, type hello to know what it is in your learning language, or type Animals to search all animal related categories.',
-      closeOnTouchOutside: true,
-      showCloseButton: true,
-    });
+  public showTipScreen(): void {
+    RemoteLogger.logEvent('show_discover_tip');
+    this.navigatorDelegate.push(ScreenName.DISCOVER_FAQ_SCREEN, {});
   }
 
   public showPublicVocabularyActionMenu(vocabulary: PublicVocabulary): void {
