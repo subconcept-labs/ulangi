@@ -9,11 +9,13 @@ import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
+import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
 import { ErrorCode, VocabularyDueType } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   SpacedRepetitionModel,
+  VocabularyLocalDataModel,
   VocabularyModel,
   WritingModel,
 } from '@ulangi/ulangi-local-database';
@@ -28,21 +30,26 @@ import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class VocabularySaga extends ProtectedSaga {
+  private vocabularyExtraFieldParser = new VocabularyExtraFieldParser();
+
   private fetchTask?: Task;
   private userDb: SQLiteDatabase;
   private vocabularyModel: VocabularyModel;
+  private vocabularyLocalDataModel: VocabularyLocalDataModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
   private writingModel: WritingModel;
 
   public constructor(
     userDb: SQLiteDatabase,
     vocabularyModel: VocabularyModel,
+    vocabularyLocalDataModel: VocabularyLocalDataModel,
     spacedRepetitionModel: SpacedRepetitionModel,
     writingModel: WritingModel
   ) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
+    this.vocabularyLocalDataModel = vocabularyLocalDataModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
     this.writingModel = writingModel;
   }
@@ -70,7 +77,7 @@ export class VocabularySaga extends ProtectedSaga {
       const action: Action<ActionType.VOCABULARY__ADD> = yield take(
         ActionType.VOCABULARY__ADD
       );
-      const { setId, vocabulary } = action.payload;
+      const { setId, vocabulary, checkDuplicate } = action.payload;
 
       try {
         if (vocabulary.definitions.length === 0) {
@@ -79,6 +86,22 @@ export class VocabularySaga extends ProtectedSaga {
           yield put(
             createAction(ActionType.VOCABULARY__ADDING, { vocabulary })
           );
+
+          const vocabularyTerm = this.vocabularyExtraFieldParser.parse(
+            vocabulary.vocabularyText
+          ).vocabularyTerm;
+
+          if (checkDuplicate === true) {
+            const existingVocabularyTerms = yield call(
+              [this.vocabularyLocalDataModel, 'vocabularyTermsExist'],
+              this.userDb,
+              [vocabularyTerm]
+            );
+
+            if (_.includes(existingVocabularyTerms, vocabularyTerm)) {
+              throw new Error(ErrorCode.VOCABULARY__DUPLICATE_TERM);
+            }
+          }
 
           yield call(
             [this.userDb, 'transaction'],
@@ -113,7 +136,7 @@ export class VocabularySaga extends ProtectedSaga {
       const action: Action<ActionType.VOCABULARY__ADD_MULTIPLE> = yield take(
         ActionType.VOCABULARY__ADD_MULTIPLE
       );
-      const { setId, vocabularyList } = action.payload;
+      const { setId, vocabularyList, ignoreDuplicates } = action.payload;
 
       try {
         yield put(
@@ -122,12 +145,38 @@ export class VocabularySaga extends ProtectedSaga {
           })
         );
 
+        let vocabularyListToInsert: readonly Vocabulary[] = vocabularyList;
+
+        if (ignoreDuplicates === true) {
+          const existingVocabularyTerms = yield call(
+            [this.vocabularyLocalDataModel, 'vocabularyTermsExist'],
+            this.userDb,
+            vocabularyList.map(
+              (vocabulary): string => {
+                return this.vocabularyExtraFieldParser.parse(
+                  vocabulary.vocabularyText
+                ).vocabularyTerm;
+              }
+            )
+          );
+
+          vocabularyListToInsert = vocabularyList.filter(
+            (vocabulary): boolean => {
+              return !_.includes(
+                existingVocabularyTerms,
+                this.vocabularyExtraFieldParser.parse(vocabulary.vocabularyText)
+                  .vocabularyTerm
+              );
+            }
+          );
+        }
+
         yield call(
           [this.userDb, 'transaction'],
           (tx: Transaction): void => {
             this.vocabularyModel.insertMultipleVocabulary(
               tx,
-              vocabularyList.map(
+              vocabularyListToInsert.map(
                 (vocabulary): [Vocabulary, string] => [vocabulary, setId]
               ),
               'local'
@@ -137,7 +186,7 @@ export class VocabularySaga extends ProtectedSaga {
 
         yield put(
           createAction(ActionType.VOCABULARY__ADD_MULTIPLE_SUCCEEDED, {
-            vocabularyList,
+            vocabularyList: vocabularyListToInsert,
           })
         );
       } catch (error) {

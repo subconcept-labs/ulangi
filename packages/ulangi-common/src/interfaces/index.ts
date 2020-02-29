@@ -64,6 +64,7 @@ export { User } from './general/User';
 export { Vocabulary } from './general/Vocabulary';
 export { VocabularyCategory } from './general/VocabularyCategory';
 export { VocabularyExtraFields } from './general/VocabularyExtraFields';
+export { VocabularyLocalData } from './general/VocabularyLocalData';
 export { VocabularyWriting } from './general/VocabularyWriting';
 export { WritingAutoplayAudio } from './general/WritingAutoplayAudio';
 export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';

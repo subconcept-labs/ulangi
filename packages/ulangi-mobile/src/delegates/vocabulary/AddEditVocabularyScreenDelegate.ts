@@ -64,15 +64,15 @@ export abstract class AddEditVocabularyScreenDelegate {
     this.vocabularyFormDelegate.editCategory();
   }
 
-  public showSavingDialog(): void {
+  protected showSavingDialog(): void {
     this.dialogDelegate.showSavingDialog();
   }
 
-  public showSaveSucceededDialog(): void {
+  protected showSaveSucceededDialog(): void {
     this.dialogDelegate.showSaveSucceededDialog();
   }
 
-  public showSaveFailedDialog(errorBag: ErrorBag): void {
+  protected showSaveFailedDialog(errorBag: ErrorBag): void {
     this.dialogDelegate.showSaveFailedDialog(errorBag);
   }
 }

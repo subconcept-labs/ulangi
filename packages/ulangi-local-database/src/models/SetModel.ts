@@ -187,13 +187,13 @@ export class SetModel {
             .where('setId IN ?', setIds)
             .toParam();
           const result = await db.executeSql(query.text, query.values);
-          const existedSetIds = [];
+          const existingSetIds = [];
           for (let i = 0; i < result.rows.length; ++i) {
             const { setId } = result.rows[i];
-            existedSetIds.push(setId);
+            existingSetIds.push(setId);
           }
 
-          resolve(existedSetIds);
+          resolve(existingSetIds);
         } catch (error) {
           reject(error);
         }

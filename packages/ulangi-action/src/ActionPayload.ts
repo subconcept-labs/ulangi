@@ -559,7 +559,11 @@ export interface ActionPayload {
   readonly USER__CONTACT_ADMIN_SUCCEEDED: null;
   readonly USER__CONTACT_ADMIN_FAILED: ErrorBag;
 
-  readonly VOCABULARY__ADD: { vocabulary: Vocabulary; setId: string };
+  readonly VOCABULARY__ADD: {
+    vocabulary: Vocabulary;
+    setId: string;
+    checkDuplicate: boolean;
+  };
   readonly VOCABULARY__ADDING: { vocabulary: Vocabulary };
   readonly VOCABULARY__ADD_SUCCEEDED: { vocabulary: Vocabulary };
   readonly VOCABULARY__ADD_FAILED: ErrorBag & {
@@ -568,6 +572,7 @@ export interface ActionPayload {
   readonly VOCABULARY__ADD_MULTIPLE: {
     vocabularyList: readonly Vocabulary[];
     setId: string;
+    ignoreDuplicates: boolean;
   };
   readonly VOCABULARY__ADDING_MULTIPLE: {
     vocabularyList: readonly Vocabulary[];

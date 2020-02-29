@@ -103,7 +103,7 @@ export class VocabularyWritingModel {
           ])
         : _.omit(vocabularyWritingRow, ['vocabularyId', 'createdAt']);
 
-    const insertOrIngoreQuery = squel
+    const insertOrIgnoreQuery = squel
       .insertOrIgnore()
       .into(TableName.VOCABULARY_WRITING)
       .setFields(vocabularyWritingRow)
@@ -136,7 +136,7 @@ export class VocabularyWritingModel {
           tx.executeSql(query.text, query.values);
         }
       );
-      tx.executeSql(insertOrIngoreQuery.text, insertOrIngoreQuery.values);
+      tx.executeSql(insertOrIgnoreQuery.text, insertOrIgnoreQuery.values);
     } else {
       const updateQuery = squel
         .update()
@@ -146,7 +146,7 @@ export class VocabularyWritingModel {
         .toParam();
 
       tx.executeSql(updateQuery.text, updateQuery.values);
-      tx.executeSql(insertOrIngoreQuery.text, insertOrIngoreQuery.values);
+      tx.executeSql(insertOrIgnoreQuery.text, insertOrIgnoreQuery.values);
 
       // Mark fields as dirty
       this.dirtyVocabularyWritingModel.insertOrReplaceDirtyFields(

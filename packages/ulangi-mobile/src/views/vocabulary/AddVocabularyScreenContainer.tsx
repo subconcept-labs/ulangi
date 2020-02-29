@@ -124,6 +124,7 @@ export class AddVocabularyScreenContainer extends Container<
         (): void => {
           Keyboard.dismiss();
           this.screenDelegate.saveAdd(
+            true,
             this.props.passedProps.closeOnSaveSucceeded,
           );
         },
