@@ -19,7 +19,6 @@ import { DefaultText } from '../common/DefaultText';
 
 export interface QuickTutorialButtonProps {
   refresh: () => void;
-  goToGoogleSheetsAddOnScreen: () => void;
   showQuickTutorial: () => void;
 }
 
@@ -49,13 +48,7 @@ export class QuickTutorialButton extends React.Component<
   private renderText(): null | React.ReactElement<any> {
     return (
       <DefaultText style={styles.add_text}>
-        Start collecting words you want to memorize (or{' '}
-        <DefaultText
-          onPress={this.props.goToGoogleSheetsAddOnScreen}
-          style={styles.highlighted}>
-          sync with Google Sheets
-        </DefaultText>
-        .)
+        Start collecting words you want to memorize.
       </DefaultText>
     );
   }
@@ -97,7 +90,8 @@ const styles = StyleSheet.create({
   },
 
   quick_tutorial: {
-    fontSize: 14,
+    fontSize: 15,
+    lineHeight: 19,
     fontWeight: '700',
     color: 'white',
   },

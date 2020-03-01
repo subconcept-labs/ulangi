@@ -36,21 +36,18 @@ export interface Config {
     readonly showAdTimeout: number;
   };
 
-  readonly openSourceProjects: readonly {
-    name: string;
-    description: string;
-    gitHubLink: string;
-  }[];
-
   readonly links: {
     readonly reddit: string;
     readonly twitter: string;
     readonly instagram: string;
     readonly facebookPage: string;
     readonly facebookPageFallback: string;
-    readonly youtubeDemoForUlangiSheets: string;
-    readonly installUlangiSheetsAddOnTutorial: string;
-    readonly useUlangiSheetsAddOnTutorial: string;
+    readonly github: string;
+    readonly ulangiSheetsAddOn: {
+      readonly youtubeDemo: string;
+      readonly installTutorial: string;
+      readonly useTutorial: string;
+    };
   };
 
   readonly styles: {

@@ -1,5 +1,5 @@
 app:
-  showInAppRatingAfterDays: 7
+  showInAppRatingAfterDays: 15
 
 ad: 
   numOfTermsToReviewBeforeShowingAds: 10

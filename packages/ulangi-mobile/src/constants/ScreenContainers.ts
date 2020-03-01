@@ -45,7 +45,6 @@ import { LightBoxSelectionMenuScreenContainer } from '../views/light-box/LightBo
 import { ManageScreenContainer } from '../views/manage/ManageScreenContainer';
 import { MembershipScreenContainer } from '../views/membership/MembershipScreenContainer';
 import { MoreScreenContainer } from '../views/more/MoreScreenContainer';
-import { OpenSourceProjectsScreenContainer } from '../views/open-source/OpenSourceProjectsScreenContainer';
 import { PreloadScreenContainer } from '../views/preload/PreloadScreenContainer';
 import { QuizMultipleChoiceScreenContainer } from '../views/quiz/QuizMultipleChoiceScreenContainer';
 import { QuizScreenContainer } from '../views/quiz/QuizScreenContainer';
@@ -119,7 +118,6 @@ export const ScreenContainers = {
   MANAGE_SCREEN: ManageScreenContainer,
   MEMBERSHIP_SCREEN: MembershipScreenContainer,
   MORE_SCREEN: MoreScreenContainer,
-  OPEN_SOURCE_PROJECTS_SCREEN: OpenSourceProjectsScreenContainer,
   PRELOAD_SCREEN: PreloadScreenContainer,
   PRIVACY_POLICY_SCREEN: PrivacyPolicyScreenContainer,
   PUBLIC_SET_DETAIL_SCREEN: PublicSetDetailScreenContainer,

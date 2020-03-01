@@ -64,7 +64,7 @@ export class PublicSetDetailScreenDelegate {
   public showAddAllDialog(ignoreDuplicates: boolean = true): void {
     this.dialogDelegate.show({
       message: ignoreDuplicates
-        ? 'This will prevent adding duplicates (only new terms will be added). Do you want to continue?'
+        ? 'To prevent duplicates, any added terms will be ignored. Do you want to continue?'
         : 'Do you want to add all terms?',
       closeOnTouchOutside: true,
       onBackgroundPress: (): void => {

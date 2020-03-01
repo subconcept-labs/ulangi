@@ -271,6 +271,15 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToWhatsNewScreen}
         />
+        <SectionRow
+          testID={MoreScreenIds.SOURCE_CODE_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Source Code"
+          showArrow={true}
+          onPress={(): void => {
+            this.props.screenDelegate.goToGitHub();
+          }}
+        />
         {env.OPEN_SOURCE_ONLY === false &&
         this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
           <SectionRow
@@ -327,19 +336,11 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         key="general"
         header="GENERAL">
         <SectionRow
-          testID={MoreScreenIds.OPEN_SOURCE_PROJECTS_BTN}
-          theme={this.props.themeStore.theme}
-          leftText="Open-Source Projects"
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.navigateToOpenSourceProjectsScreen();
-          }}
-        />
-        <SectionRow
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
           theme={this.props.themeStore.theme}
           leftText="Rate This App"
           showArrow={true}
+          description="Please give us feedback or suggestions to make this app better."
           onPress={(): void => {
             this.props.screenDelegate.rateThisApp();
           }}

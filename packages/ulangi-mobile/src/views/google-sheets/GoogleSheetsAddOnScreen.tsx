@@ -52,13 +52,13 @@ export class GoogleSheetsAddOnScreen extends React.Component<
         testID={GoogleSheetsAddOnScreenIds.SCREEN}>
         <View style={this.styles.intro_container}>
           <DefaultText style={this.styles.intro_text}>
-            You can easily synchronize (import/export) words from within a
-            Google Sheets document.{' '}
+            You can synchronize (import/export) words from within a Google
+            Sheets document.{' '}
             <DefaultText
               style={this.styles.highlighted}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
-                  config.links.youtubeDemoForUlangiSheets,
+                  config.links.ulangiSheetsAddOn.youtubeDemo,
                 )
               }>
               See demo video.
@@ -78,7 +78,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
-                  config.links.installUlangiSheetsAddOnTutorial,
+                  config.links.ulangiSheetsAddOn.installTutorial,
                 )
               }
             />
@@ -88,7 +88,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               showArrow={true}
               onPress={(): void =>
                 this.props.screenDelegate.goToLink(
-                  config.links.useUlangiSheetsAddOnTutorial,
+                  config.links.ulangiSheetsAddOn.useTutorial,
                 )
               }
             />

@@ -134,9 +134,6 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       return (
         <QuickTutorialButton
           refresh={this.props.screenDelegate.refreshCurrentList}
-          goToGoogleSheetsAddOnScreen={
-            this.props.screenDelegate.goToGoogleSheetsAddOnScreen
-          }
           showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
         />
       );

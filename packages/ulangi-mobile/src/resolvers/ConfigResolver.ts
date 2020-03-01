@@ -40,21 +40,18 @@ export class ConfigResolver extends AbstractResolver<Config> {
       showAdTimeout: Joi.number(),
     },
 
-    openSourceProjects: Joi.array().items({
-      name: Joi.string(),
-      description: Joi.string(),
-      gitHubLink: Joi.string(),
-    }),
-
     links: {
       reddit: Joi.string(),
       twitter: Joi.string(),
       instagram: Joi.string(),
       facebookPage: Joi.string(),
       facebookPageFallback: Joi.string(),
-      youtubeDemoForUlangiSheets: Joi.string(),
-      installUlangiSheetsAddOnTutorial: Joi.string(),
-      useUlangiSheetsAddOnTutorial: Joi.string(),
+      github: Joi.string(),
+      ulangiSheetsAddOn: {
+        youtubeDemo: Joi.string(),
+        installTutorial: Joi.string(),
+        useTutorial: Joi.string(),
+      },
     },
 
     styles: {

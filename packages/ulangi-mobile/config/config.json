@@ -14,43 +14,18 @@
     "showAdTimeout": 5000
   },
 
-  "openSourceProjects": [
-    {
-      "name": "@ulangi/ulangi",
-      "description": "A complete Ulangi project with packages ranging from front-end to back-end.",
-      "gitHubLink": "https://github.com/ulangi/ulangi"
-    },
-    {
-      "name": "@ulangi/typescript-libs",
-      "description": "Some TypeScript libraries that are extensively used in Ulangi project for type safety.",
-      "gitHubLink": "https://github.com/ulangi/typescript-libs"
-    },
-    {
-      "name": "@ulangi/react-native-navigation",
-      "description": "Forked from @wix/react-native-navigation with hot-fixes and optimizations to handle navigation.",
-      "gitHubLink": "https://github.com/ulangi/react-native-navigation"
-    },
-    {
-      "name": "@ulangi/react-native-firebase",
-      "description": "Forked from @invertase/react-native-firebase with some minor changes.",
-      "gitHubLink": "https://github.com/ulangi/react-native-firebase"
-    },
-    {
-      "name": "@ulangi/react-native-ad-consent",
-      "description": "Forked from @birgernass/react-native-ad-consent to handle GDPR compliance.",
-      "gitHubLink": "https://github.com/ulangi/react-native-ad-consent"
-    }
-  ],
-
   "links": {
     "reddit": "https://www.reddit.com/r/Ulangi/",
     "twitter": "https://twitter.com/UlangiApp",
     "instagram": "https://www.instagram.com/ulangi.app/",
     "facebookPage": "fb://page?id=393649531152390",
     "facebookPageFallback": "https://www.facebook.com/ulangi.flashcards/",
-    "youtubeDemoForUlangiSheets": "https://www.youtube.com/watch?v=EWlkzAW8s9w",
-    "installUlangiSheetsAddOnTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/install-ulangi-sheets-add-on",
-    "useUlangiSheetsAddOnTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on"
+    "github": "https://github.com/ulangi/ulangi",
+    "ulangiSheetsAddOn": {
+      "youtubeDemo": "https://www.youtube.com/watch?v=EWlkzAW8s9w",
+      "installTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/install-ulangi-sheets-add-on",
+      "useTutorial": "https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on"
+    }
   },
 
   "styles": {

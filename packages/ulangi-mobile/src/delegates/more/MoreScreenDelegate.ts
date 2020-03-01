@@ -138,13 +138,13 @@ export class MoreScreenDelegate {
 
             this.observableScreen.messages.push(
               new ObservableCarouselMessage(
-                'open-source-projects',
+                'sync-with-google-sheets',
                 'DID YOU KNOW',
-                'Ulangi is an open-source project. You can build more tools and features for it.',
-                '#1E88E5',
-                'See open-source projects',
-                '#1565C0',
-                this.navigateToOpenSourceProjectsScreen,
+                'You can import, export and manage your data via a spreadsheet document.',
+                '#43A047',
+                'Sync with Google Sheets',
+                '#2E7D32',
+                this.navigateToGoogleSheetsAddOnScreen,
               ),
             );
 
@@ -153,10 +153,10 @@ export class MoreScreenDelegate {
                 new ObservableCarouselMessage(
                   'set-up-reminder',
                   'TIP',
-                  'Set up daily reminder so you will not forget to review your flashcards.',
-                  '#43A047',
+                  'Set up daily reminder so you will not forget to review your words.',
+                  '#1E88E5',
                   'Set up reminder',
-                  '#2E7D32',
+                  '#1565C0',
                   this.navigateToReminderScreen,
                 ),
               );
@@ -246,6 +246,10 @@ export class MoreScreenDelegate {
     this.linkingDelegate.openLink(config.links.reddit);
   }
 
+  public goToGitHub(): void {
+    this.linkingDelegate.openLink(config.links.github);
+  }
+
   public navigateToSetUpAccountScreen(): void {
     this.navigatorDelegate.push(ScreenName.SET_UP_ACCOUNT_SCREEN, {});
   }
@@ -280,10 +284,6 @@ export class MoreScreenDelegate {
 
   public navigateToGoogleSheetsAddOnScreen(): void {
     this.navigatorDelegate.push(ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN, {});
-  }
-
-  public navigateToOpenSourceProjectsScreen(): void {
-    this.navigatorDelegate.push(ScreenName.OPEN_SOURCE_PROJECTS_SCREEN, {});
   }
 
   public navigateToWhatsNewScreen(): void {
