@@ -32,10 +32,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
       animationDuration: Joi.number(),
     },
 
-    app: {
-      showInAppRatingInMoreScreen: Joi.boolean(),
-    },
-
     ad: {
       showAdTimeout: Joi.number(),
     },

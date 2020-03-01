@@ -31,6 +31,7 @@ import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
@@ -52,6 +53,7 @@ export class WritingLessonScreenDelegate {
   private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
+  private inAppRatingDelegate: InAppRatingDelegate;
   private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -69,6 +71,7 @@ export class WritingLessonScreenDelegate {
     speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
+    inAppRatingDelegate: InAppRatingDelegate,
     reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
@@ -85,6 +88,7 @@ export class WritingLessonScreenDelegate {
     this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
+    this.inAppRatingDelegate = inAppRatingDelegate;
     this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
@@ -93,7 +97,6 @@ export class WritingLessonScreenDelegate {
 
   public setUp(): void {
     this.autoDisablePopGestureWhenAdRequiredToShow();
-    this.autoUpdateShouldShowAdOrConsentForm();
     this.addBackButtonHandler(this.handleBackPressed);
     this.setUpActionButtons();
     this.calculateNextReviewData();
@@ -168,6 +171,16 @@ export class WritingLessonScreenDelegate {
     if (this.observableScreen.shouldShowResult.get() === false) {
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
+
+      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
+        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
+      );
+
+      if (
+        this.observableScreen.shouldShowAdOrGoogleConsentForm.get() === false
+      ) {
+        this.inAppRatingDelegate.autoShowInAppRating();
+      }
     }
   }
 
@@ -298,19 +311,6 @@ export class WritingLessonScreenDelegate {
 
   private autoDisablePopGestureWhenAdRequiredToShow(): void {
     this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-  }
-
-  private autoUpdateShouldShowAdOrConsentForm(): void {
-    this.observer.reaction(
-      (): boolean =>
-        this.observableScreen.shouldShowResult.get() &&
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      (shouldShowAdOrGoogleConsentForm): void => {
-        this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-          shouldShowAdOrGoogleConsentForm,
-        );
-      },
-    );
   }
 
   private shouldLoadAd(): boolean {

@@ -6,10 +6,6 @@
     "checkDatabaseTimeout": 3000
   },
 
-  "app": {
-    "showInAppRatingInMoreScreen": true
-  },
-
   "ad": {
     "showAdTimeout": 5000
   },

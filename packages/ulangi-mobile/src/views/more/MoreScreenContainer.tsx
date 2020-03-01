@@ -16,7 +16,6 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
-import { config } from '../../constants/config';
 import { MoreScreenFactory } from '../../factories/more/MoreScreenFactory';
 import { MoreScreen } from './MoreScreen';
 import { MoreScreenStyle } from './MoreScreenContainer.style';
@@ -58,10 +57,6 @@ export class MoreScreenContainer extends Container {
     this.observableScreen.screenAppearedTimes += 1;
 
     if (this.observableScreen.screenAppearedTimes === 1) {
-      if (config.app.showInAppRatingInMoreScreen === true) {
-        this.screenDelegate.autoShowInAppRating();
-      }
-
       this.screenDelegate.autoUpdateCarouselMessages();
     }
   }

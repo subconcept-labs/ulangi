@@ -28,10 +28,6 @@ export interface Config {
     readonly checkDatabaseTimeout: number;
   };
 
-  readonly app: {
-    readonly showInAppRatingInMoreScreen: boolean;
-  };
-
   readonly ad: {
     readonly showAdTimeout: number;
   };

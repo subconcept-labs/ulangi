@@ -88,10 +88,6 @@ export class MoreScreenDelegate {
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public autoShowInAppRating(): void {
-    this.inAppRatingDelegate.autoShowInAppRating();
-  }
-
   public autoUpdateBottomTabs(): void {
     this.observer.reaction(
       (): Theme => this.themeStore.theme,
