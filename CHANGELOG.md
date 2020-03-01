@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](https://github.com/minhloi/ulangi/compare/v3.9.2...v3.10.0) (2020-03-01)
+
+
+### Bug Fixes
+
+* minor fixes (syncing) ([fe98162](https://github.com/minhloi/ulangi/commit/fe98162))
+* minor UI theme fixes ([c2430bf](https://github.com/minhloi/ulangi/commit/c2430bf))
+* redesign Discover tip screen ([904f9cc](https://github.com/minhloi/ulangi/commit/904f9cc))
+* service error occurs while syncing too many edits ([caadeb3](https://github.com/minhloi/ulangi/commit/caadeb3)), closes [#45](https://github.com/minhloi/ulangi/issues/45)
+* service error when pushing empty category ([bfc1813](https://github.com/minhloi/ulangi/commit/bfc1813))
+* small UI fixes ([1d5d0f6](https://github.com/minhloi/ulangi/commit/1d5d0f6))
+* small UI fixes ([d719cdc](https://github.com/minhloi/ulangi/commit/d719cdc))
+* update tutorial images ([9e23990](https://github.com/minhloi/ulangi/commit/9e23990))
+* validate vocabulary before pushing updates ([4619f3c](https://github.com/minhloi/ulangi/commit/4619f3c))
+
+
+### Features
+
+* add duplicate checking ([ecbccbd](https://github.com/minhloi/ulangi/commit/ecbccbd))
+
+
+
+
+
 ## [3.9.2](https://github.com/minhloi/ulangi/compare/v3.9.1...v3.9.2) (2020-02-26)
 
 

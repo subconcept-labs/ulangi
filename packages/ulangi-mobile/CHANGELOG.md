@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](https://github.com/minhloi/ulangi/compare/v3.9.2...v3.10.0) (2020-03-01)
+
+
+### Bug Fixes
+
+* minor UI theme fixes ([c2430bf](https://github.com/minhloi/ulangi/commit/c2430bf))
+* redesign Discover tip screen ([904f9cc](https://github.com/minhloi/ulangi/commit/904f9cc))
+* small UI fixes ([1d5d0f6](https://github.com/minhloi/ulangi/commit/1d5d0f6))
+* small UI fixes ([d719cdc](https://github.com/minhloi/ulangi/commit/d719cdc))
+* update tutorial images ([9e23990](https://github.com/minhloi/ulangi/commit/9e23990))
+
+
+### Features
+
+* add duplicate checking ([ecbccbd](https://github.com/minhloi/ulangi/commit/ecbccbd))
+
+
+
+
+
 ## [3.9.2](https://github.com/minhloi/ulangi/compare/v3.9.1...v3.9.2) (2020-02-26)
 
 
