@@ -13,7 +13,6 @@ import { config } from '../../constants/config';
 export interface PublicSetListStyles {
   list_container: ViewStyle;
   center_container: ViewStyle;
-  header_text: TextStyle;
   message: TextStyle;
   button_container: ViewStyle;
 }
@@ -32,13 +31,6 @@ export const baseStyles: PublicSetListStyles = {
     alignItems: 'center',
   },
 
-  header_text: {
-    paddingVertical: 20,
-    paddingHorizontal: 50,
-    fontSize: 16,
-    textAlign: 'center',
-  },
-
   message: {
     fontSize: 15,
     textAlign: 'center',
@@ -51,10 +43,6 @@ export const baseStyles: PublicSetListStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    header_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
-
     message: {
       color: config.styles.light.secondaryTextColor,
     },
@@ -63,10 +51,6 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    header_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-
     message: {
       color: config.styles.dark.secondaryTextColor,
     },

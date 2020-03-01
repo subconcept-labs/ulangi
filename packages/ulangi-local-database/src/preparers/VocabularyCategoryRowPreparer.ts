@@ -72,9 +72,9 @@ export class VocabularyCategoryRowPreparer extends AbstractPreparer<
         source === 'remote' ? FieldState.SYNCED : FieldState.TO_BE_SYNCED,
     };
 
-    return this.validateData(
-      vocabularyCategoryRow,
-      this.upsertRules
+    return _.omitBy(
+      this.validateData(vocabularyCategoryRow, this.upsertRules),
+      _.isUndefined
     ) as VocabularyCategoryRowForUpsert;
   }
 }

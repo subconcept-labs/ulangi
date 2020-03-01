@@ -92,7 +92,7 @@ export class DiscoverScreenContainer extends Container {
           dark: Images.INFO_MILK_22X22,
         },
         (): void => {
-          this.screenDelegate.showTip();
+          this.screenDelegate.showTipScreen();
         },
       ),
     ),

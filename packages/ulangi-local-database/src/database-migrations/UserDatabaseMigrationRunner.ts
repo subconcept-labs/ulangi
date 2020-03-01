@@ -13,6 +13,7 @@ import { migration_02 } from './user-db-migrations/migration_02';
 import { migration_03 } from './user-db-migrations/migration_03';
 import { migration_04 } from './user-db-migrations/migration_04';
 import { migration_05 } from './user-db-migrations/migration_05';
+import { migration_06 } from './user-db-migrations/migration_06';
 import { optional_migration } from './user-db-migrations/optional_migration';
 
 export class UserDatabaseMigrationRunner {
@@ -22,6 +23,7 @@ export class UserDatabaseMigrationRunner {
     [3, migration_03],
     [4, migration_04],
     [5, migration_05],
+    [6, migration_06],
   ];
 
   private userDb: SQLiteDatabase;

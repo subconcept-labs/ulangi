@@ -28,14 +28,13 @@ export class DiscoverCenterTitle extends React.Component<
     return (
       <View style={styles.container}>
         <DefaultText style={styles.title}>
-          Search dictionary. Type{' '}
+          You can search dictionary for words or categories. Try{' '}
           <DefaultText
             style={styles.highlighted}
-            onPress={(): void => this.props.search('hello')}>
-            hello
-          </DefaultText>{' '}
-          to find out what it is in{' '}
-          {this.props.setStore.existingCurrentSet.learningLanguage.fullName}.
+            onPress={(): void => this.props.search('cat')}>
+            cat
+          </DefaultText>
+          .
         </DefaultText>
       </View>
     );

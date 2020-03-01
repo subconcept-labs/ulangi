@@ -6,7 +6,8 @@
  */
 
 import { DefinitionBuilder } from '@ulangi/ulangi-common/builders';
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ErrorCode } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -48,14 +49,22 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
     this.vocabularyFormState = vocabularyFormState;
   }
 
-  public saveAdd(closeOnSaveSucceeded: boolean): void {
+  public saveAdd(checkDuplicate: boolean, closeOnSaveSucceeded: boolean): void {
     RemoteLogger.logEvent('add_vocabulary');
-    this.addVocabularyDelegate.saveAdd({
+
+    this.addVocabularyDelegate.saveAdd(checkDuplicate, {
       onSaving: this.showSavingDialog,
       onSaveSucceeded: closeOnSaveSucceeded
         ? this.showSaveSucceededDialog
         : this.showWhatToDoNextDialog,
-      onSaveFailed: this.showSaveFailedDialog,
+      onSaveFailed: (errorBag): void => {
+        this.showSaveFailedDialogWithRetry(
+          errorBag,
+          (shouldCheckDuplicate: boolean): void => {
+            this.saveAdd(shouldCheckDuplicate, closeOnSaveSucceeded);
+          },
+        );
+      },
     });
   }
 
@@ -63,12 +72,52 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
     return this.addVocabularyDelegate.createPreview();
   }
 
+  private showSaveFailedDialogWithRetry(
+    errorBag: ErrorBag,
+    retry: (checkDuplicate: boolean) => void,
+  ): void {
+    if (errorBag.errorCode === ErrorCode.VOCABULARY__DUPLICATE_TERM) {
+      this.dialogDelegate.show({
+        testID: LightBoxDialogIds.SUCCESS_DIALOG,
+        message:
+          'You have added this term before. Do you want to add it again?',
+        onBackgroundPress: (): void => {
+          this.dialogDelegate.dismiss();
+        },
+        buttonList: [
+          {
+            testID: LightBoxDialogIds.CANCEL_BTN,
+            text: 'NO',
+            onPress: (): void => {
+              this.dialogDelegate.dismiss();
+            },
+            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+          {
+            testID: LightBoxDialogIds.OKAY_BTN,
+            text: 'YES',
+            onPress: (): void => {
+              retry(false);
+            },
+            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+        ],
+      });
+    } else {
+      this.showSaveFailedDialog(errorBag);
+    }
+  }
+
   private showWhatToDoNextDialog(): void {
     this.dialogDelegate.show({
       testID: LightBoxDialogIds.SUCCESS_DIALOG,
       message: 'Saved successfully. What do you want to do next?',
       onBackgroundPress: (): void => {
-        this.navigatorDelegate.dismissLightBox();
+        this.dialogDelegate.dismiss();
         this.navigatorDelegate.pop();
       },
       buttonList: [
@@ -76,7 +125,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
           testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
           text: 'CLOSE',
           onPress: (): void => {
-            this.navigatorDelegate.dismissLightBox();
+            this.dialogDelegate.dismiss();
             this.navigatorDelegate.pop();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
@@ -88,7 +137,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
           text: 'ADD MORE',
           onPress: (): void => {
             this.resetForms();
-            this.navigatorDelegate.dismissLightBox();
+            this.dialogDelegate.dismiss();
           },
           styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
             ButtonSize.SMALL,

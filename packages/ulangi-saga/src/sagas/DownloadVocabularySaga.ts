@@ -161,7 +161,7 @@ export class DownloadVocabularySaga {
                   vocabularyId: vocabulary.vocabularyId,
                   definitions: definitionChunk || [],
                 },
-                vocabularySetIdMap[vocabulary.vocabularyId],
+                undefined,
                 'remote'
               );
             }

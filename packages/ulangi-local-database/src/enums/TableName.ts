@@ -15,6 +15,7 @@ export enum TableName {
   VOCABULARY_CATEGORY = 'ulangi_vocabulary_category',
   VOCABULARY_WRITING = 'ulangi_vocabulary_writing',
   DEFINITION = 'ulangi_definition',
+  VOCABULARY_LOCAL_DATA = 'ulangi_vocabulary_local_data',
   VOCABULARY_FTS4 = 'ulangi_vocabulary_fts4',
   DEFINITION_FTS4 = 'ulangi_definition_fts4',
   DIRTY_USER_FIELD = 'ulangi_dirty_user_field',

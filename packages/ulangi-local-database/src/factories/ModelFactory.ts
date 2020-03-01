@@ -29,6 +29,7 @@ import { SpacedRepetitionModel } from '../models/SpacedRepetitionModel';
 import { UserExtraDataModel } from '../models/UserExtraDataModel';
 import { UserModel } from '../models/UserModel';
 import { VocabularyCategoryModel } from '../models/VocabularyCategoryModel';
+import { VocabularyLocalDataModel } from '../models/VocabularyLocalDataModel';
 import { VocabularyModel } from '../models/VocabularyModel';
 import { VocabularyWritingModel } from '../models/VocabularyWritingModel';
 import { WritingModel } from '../models/WritingModel';
@@ -47,6 +48,7 @@ export class ModelFactory {
       setModel: this.createModel('setModel'),
       setExtraDataModel: this.createModel('setExtraDataModel'),
       vocabularyCategoryModel: this.createModel('vocabularyCategoryModel'),
+      vocabularyLocalDataModel: this.createModel('vocabularyLocalDataModel'),
       vocabularyWritingModel: this.createModel('vocabularyWritingModel'),
       categoryModel: this.createModel('categoryModel'),
       definitionModel: this.createModel('definitionModel'),
@@ -98,12 +100,15 @@ export class ModelFactory {
       model = new VocabularyModel(
         this.createModel('definitionModel'),
         this.createModel('vocabularyCategoryModel'),
+        this.createModel('vocabularyLocalDataModel'),
         this.createModel('vocabularyWritingModel'),
         this.createModel('dirtyVocabularyModel'),
         this.databaseEventBus
       );
     } else if (modelName === 'vocabularyCategoryModel') {
       model = new VocabularyCategoryModel();
+    } else if (modelName === 'vocabularyLocalDataModel') {
+      model = new VocabularyLocalDataModel();
     } else if (modelName === 'vocabularyWritingModel') {
       model = new VocabularyWritingModel(
         this.createModel('dirtyVocabularyWritingModel')

@@ -101,6 +101,7 @@ export class CategoryDetailScreenDelegate {
       on(
         [
           ActionType.VOCABULARY__ADD_MULTIPLE_SUCCEEDED,
+          ActionType.VOCABULARY__BULK_EDIT_SUCCEEDED,
           ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
         ],
         (): void => {

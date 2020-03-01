@@ -9,6 +9,6 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 
 export class BottomTabsStyle {
   public static getBackgroundColor(theme: Theme): string {
-    return theme === Theme.LIGHT ? '#f7f7f7' : '#414141';
+    return theme === Theme.LIGHT ? '#f7f7f7' : '#212121';
   }
 }

@@ -166,12 +166,16 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           <DefaultButton
             text="Review"
             onPress={(): void => review()}
-            styles={FullRoundedButtonStyle.getOutlineStyles(
-              ButtonSize.X_SMALL,
+            styles={
               this.props.theme === Theme.LIGHT
-                ? config.styles.light.secondaryTextColor
-                : config.styles.dark.primaryTextColor,
-            )}
+                ? FullRoundedButtonStyle.getOutlineStyles(
+                    ButtonSize.X_SMALL,
+                    config.styles.light.secondaryTextColor,
+                  )
+                : FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+                    ButtonSize.X_SMALL,
+                  )
+            }
           />
         </View>
       </TouchableOpacity>

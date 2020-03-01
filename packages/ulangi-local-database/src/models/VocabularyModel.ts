@@ -8,6 +8,7 @@
 import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
+import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
 import {
   DefinitionStatus,
   VocabularyStatus,
@@ -27,15 +28,18 @@ import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
 import { DefinitionModel } from './DefinitionModel';
 import { DirtyVocabularyModel } from './DirtyVocabularyModel';
 import { VocabularyCategoryModel } from './VocabularyCategoryModel';
+import { VocabularyLocalDataModel } from './VocabularyLocalDataModel';
 import { VocabularyWritingModel } from './VocabularyWritingModel';
 
 export class VocabularyModel {
   private vocabularyRowPreparer = new VocabularyRowPreparer();
   private vocabularyRowResolver = new VocabularyRowResolver();
   private vocabularyRowConverter = new VocabularyRowConverter();
+  private vocabularyExtraFieldParser = new VocabularyExtraFieldParser();
 
   private definitionModel: DefinitionModel;
   private vocabularyCategoryModel: VocabularyCategoryModel;
+  private vocabularyLocalDataModel: VocabularyLocalDataModel;
   private vocabularyWritingModel: VocabularyWritingModel;
   private dirtyVocabularyModel: DirtyVocabularyModel;
   private databaseEventBus: DatabaseEventBus;
@@ -43,12 +47,14 @@ export class VocabularyModel {
   public constructor(
     definitionModel: DefinitionModel,
     vocabularyCategoryModel: VocabularyCategoryModel,
+    vocabularyLocalDataModel: VocabularyLocalDataModel,
     vocabularyWritingModel: VocabularyWritingModel,
     dirtyVocabularyModel: DirtyVocabularyModel,
     databaseEventBus: DatabaseEventBus
   ) {
     this.definitionModel = definitionModel;
     this.vocabularyCategoryModel = vocabularyCategoryModel;
+    this.vocabularyLocalDataModel = vocabularyLocalDataModel;
     this.vocabularyWritingModel = vocabularyWritingModel;
     this.dirtyVocabularyModel = dirtyVocabularyModel;
     this.databaseEventBus = databaseEventBus;
@@ -393,13 +399,13 @@ export class VocabularyModel {
             .where('vocabularyId IN ?', vocabularyIds)
             .toParam();
           const result = await db.executeSql(query.text, query.values);
-          const existedVocabularyIds = [];
+          const existingVocabularyIds = [];
           for (let i = 0; i < result.rows.length; ++i) {
             const { vocabularyId } = result.rows[i];
-            existedVocabularyIds.push(vocabularyId);
+            existingVocabularyIds.push(vocabularyId);
           }
 
-          resolve(existedVocabularyIds);
+          resolve(existingVocabularyIds);
         } catch (error) {
           reject(error);
         }
@@ -500,6 +506,17 @@ export class VocabularyModel {
         source
       );
     }
+
+    this.vocabularyLocalDataModel.upsertVocabularyLocalData(
+      tx,
+      {
+        vocabularyTerm: this.vocabularyExtraFieldParser.parse(
+          vocabulary.vocabularyText
+        ).vocabularyTerm,
+      },
+      vocabulary.vocabularyId,
+      source
+    );
   }
 
   public insertMultipleVocabulary(
@@ -688,6 +705,19 @@ export class VocabularyModel {
       this.vocabularyCategoryModel.upsertVocabularyCategory(
         tx,
         vocabulary.category,
+        vocabularyId,
+        source
+      );
+    }
+
+    if (typeof vocabulary.vocabularyText !== 'undefined') {
+      this.vocabularyLocalDataModel.upsertVocabularyLocalData(
+        tx,
+        {
+          vocabularyTerm: this.vocabularyExtraFieldParser.parse(
+            vocabulary.vocabularyText
+          ).vocabularyTerm,
+        },
         vocabularyId,
         source
       );

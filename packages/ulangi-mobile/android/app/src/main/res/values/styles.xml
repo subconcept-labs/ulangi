@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
+      <item name="android:navigationBarColor" tools:targetApi="o_mr1">#212121</item>
+      <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 
     <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">

@@ -61,7 +61,7 @@ export class IncompatibleVocabularyModel {
       vocabularyId,
       currentCommonVersion
     );
-    // Omit all fields shouldn't be updated if the record already existed
+    // Omit all fields shouldn't be updated
     const updateFields = _.omit(incompatibleVocabularyRow, ['vocabularyId']);
 
     const insertOrIgnoreQuery = squel

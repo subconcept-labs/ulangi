@@ -17,11 +17,13 @@ export interface GoogleSheetsAddOnScreenStyles {
   tutorial_text: TextStyle;
   section_container: ViewStyle;
   password_input: TextStyle;
+  api_key: TextStyle;
   expired_text: TextStyle;
   action_container: ViewStyle;
   primary_text: TextStyle;
   invalidate_text: TextStyle;
   dot: TextStyle;
+  highlighted: TextStyle;
 }
 
 export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
@@ -31,6 +33,10 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
 
   intro_container: {
     paddingHorizontal: 16,
+  },
+
+  api_key: {
+    fontSize: 15,
   },
 
   intro_text: {
@@ -70,11 +76,19 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
     paddingHorizontal: 8,
     fontSize: 17,
   },
+
+  highlighted: {
+    color: config.styles.primaryColor,
+  },
 });
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     intro_text: {
+      color: config.styles.light.primaryTextColor,
+    },
+
+    api_key: {
       color: config.styles.light.primaryTextColor,
     },
 
@@ -91,6 +105,10 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     intro_text: {
+      color: config.styles.dark.primaryTextColor,
+    },
+
+    api_key: {
       color: config.styles.dark.primaryTextColor,
     },
 

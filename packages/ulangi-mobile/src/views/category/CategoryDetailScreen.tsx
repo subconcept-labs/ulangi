@@ -70,10 +70,7 @@ export class CategoryDetailScreen extends React.Component<
       this.props.observableScreen.vocabularyListState.vocabularyList.size === 0
     ) {
       return (
-        <NoVocabulary
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
-          refresh={this.props.screenDelegate.refreshCurrentList}
-        />
+        <NoVocabulary refresh={this.props.screenDelegate.refreshCurrentList} />
       );
     } else {
       return (

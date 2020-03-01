@@ -10,6 +10,7 @@ export { SessionModel } from './models/SessionModel';
 export { UserModel } from './models/UserModel';
 export { SetModel } from './models/SetModel';
 export { VocabularyModel } from './models/VocabularyModel';
+export { VocabularyLocalDataModel } from './models/VocabularyLocalDataModel';
 export { CategoryModel } from './models/CategoryModel';
 export { SpacedRepetitionModel } from './models/SpacedRepetitionModel';
 export { WritingModel } from './models/WritingModel';

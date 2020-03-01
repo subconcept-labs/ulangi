@@ -42,11 +42,14 @@ export class AddVocabularyDelegate {
     this.vocabularyFormState = vocabularyFormState;
   }
 
-  public saveAdd(callback: {
-    onSaving: () => void;
-    onSaveSucceeded: () => void;
-    onSaveFailed: (errorBag: ErrorBag) => void;
-  }): void {
+  public saveAdd(
+    checkDuplicate: boolean,
+    callback: {
+      onSaving: () => void;
+      onSaveSucceeded: () => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
+    },
+  ): void {
     const currentSetId = assertExists(
       this.setStore.currentSetId,
       'currentSetId should not be null or undefined',
@@ -58,6 +61,7 @@ export class AddVocabularyDelegate {
       createAction(ActionType.VOCABULARY__ADD, {
         vocabulary,
         setId: currentSetId,
+        checkDuplicate,
       }),
       group(
         on(ActionType.VOCABULARY__ADDING, callback.onSaving),
