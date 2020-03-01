@@ -36,6 +36,7 @@ export class AddVocabularyDelegate {
   public addVocabularyFromPublicVocabulary(
     publicVocabulary: PublicVocabulary,
     categoryName: undefined | string,
+    checkDuplicate: boolean,
     callback: {
       onAdding: () => void;
       onAddSucceeded: () => void;
@@ -51,6 +52,7 @@ export class AddVocabularyDelegate {
       createAction(ActionType.VOCABULARY__ADD, {
         vocabulary,
         setId: this.setStore.existingCurrentSetId,
+        checkDuplicate,
       }),
       group(
         on(ActionType.VOCABULARY__ADDING, callback.onAdding),
@@ -66,6 +68,7 @@ export class AddVocabularyDelegate {
   public addVocabularyFromPublicVocabularyList(
     vocabularyList: readonly PublicVocabulary[],
     categoryName: undefined | string,
+    ignoreDuplicates: boolean,
     callback: {
       onAddingAll: () => void;
       onAddAllSucceeded: () => void;
@@ -87,6 +90,7 @@ export class AddVocabularyDelegate {
       createAction(ActionType.VOCABULARY__ADD_MULTIPLE, {
         vocabularyList: newVocabularyList,
         setId: this.setStore.existingCurrentSetId,
+        ignoreDuplicates,
       }),
       group(
         on(ActionType.VOCABULARY__ADDING_MULTIPLE, callback.onAddingAll),
@@ -104,6 +108,7 @@ export class AddVocabularyDelegate {
 
   public addVocabularyFromTranslation(
     translationWithLanguages: TranslationWithLanguages,
+    checkDuplicate: boolean,
     callback: {
       onAdding: () => void;
       onAddSucceeded: () => void;
@@ -125,6 +130,7 @@ export class AddVocabularyDelegate {
       createAction(ActionType.VOCABULARY__ADD, {
         vocabulary: newVocabulary,
         setId: this.setStore.existingCurrentSetId,
+        checkDuplicate,
       }),
       group(
         on(ActionType.VOCABULARY__ADDING, callback.onAdding),

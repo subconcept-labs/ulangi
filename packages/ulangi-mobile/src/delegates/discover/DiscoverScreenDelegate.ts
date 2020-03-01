@@ -6,7 +6,12 @@
  */
 
 import { ActionType } from '@ulangi/ulangi-action';
-import { DiscoverListType, ScreenName } from '@ulangi/ulangi-common/enums';
+import {
+  ButtonSize,
+  DiscoverListType,
+  ErrorCode,
+  ScreenName,
+} from '@ulangi/ulangi-common/enums';
 import {
   ErrorBag,
   PublicVocabulary,
@@ -23,6 +28,8 @@ import { runInAction } from 'mobx';
 import { Linking } from 'react-native';
 
 import { RemoteLogger } from '../../RemoteLogger';
+import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
+import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { TranslationListDelegate } from '../translation/TranslationListDelegate';
@@ -190,26 +197,53 @@ export class DiscoverScreenDelegate {
 
   public addVocabularyFromPublicVocabulary(
     publicVocabulary: PublicVocabulary,
+    checkDuplicate: boolean = true,
   ): void {
     this.addVocabularyDelegate.addVocabularyFromPublicVocabulary(
       publicVocabulary,
       undefined,
+      checkDuplicate,
       {
         onAdding: this.showAddingDialog,
         onAddSucceeded: this.showAddSucceededDialog,
-        onAddFailed: this.showAddFailedDialog,
+        onAddFailed: (errorBag): void => {
+          this.showAddFailedDialogWithRetry(
+            errorBag,
+            (shouldCheckDuplicate: boolean): void => {
+              this.addVocabularyFromPublicVocabulary(
+                publicVocabulary,
+                shouldCheckDuplicate,
+              );
+            },
+          );
+        },
       },
     );
   }
 
   public addVocabularyFromTranslation(
     translation: TranslationWithLanguages,
+    checkDuplicate: boolean = true,
   ): void {
-    this.addVocabularyDelegate.addVocabularyFromTranslation(translation, {
-      onAdding: this.showAddingDialog,
-      onAddSucceeded: this.showAddSucceededDialog,
-      onAddFailed: this.showAddFailedDialog,
-    });
+    this.addVocabularyDelegate.addVocabularyFromTranslation(
+      translation,
+      checkDuplicate,
+      {
+        onAdding: this.showAddingDialog,
+        onAddSucceeded: this.showAddSucceededDialog,
+        onAddFailed: (errorBag): void => {
+          this.showAddFailedDialogWithRetry(
+            errorBag,
+            (shouldCheckDuplicate: boolean): void => {
+              this.addVocabularyFromTranslation(
+                translation,
+                shouldCheckDuplicate,
+              );
+            },
+          );
+        },
+      },
+    );
   }
 
   public showSetDetailModal(publicSet: ObservablePublicSet): void {
@@ -247,15 +281,9 @@ export class DiscoverScreenDelegate {
     );
   }
 
-  public showTip(): void {
-    RemoteLogger.logEvent('show_search_set_tip');
-    this.dialogDelegate.show({
-      title: 'TIP',
-      message:
-        'You can search dictionary or search for categories. For example, type hello to know what it is in your learning language, or type Animals to search all animal related categories.',
-      closeOnTouchOutside: true,
-      showCloseButton: true,
-    });
+  public showTipScreen(): void {
+    RemoteLogger.logEvent('show_discover_tip');
+    this.navigatorDelegate.push(ScreenName.DISCOVER_FAQ_SCREEN, {});
   }
 
   public showPublicVocabularyActionMenu(vocabulary: PublicVocabulary): void {
@@ -280,9 +308,45 @@ export class DiscoverScreenDelegate {
     });
   }
 
-  private showAddFailedDialog(errorBag: ErrorBag): void {
-    this.dialogDelegate.showFailedDialog(errorBag, {
-      title: 'ADD FAILED',
-    });
+  private showAddFailedDialogWithRetry(
+    errorBag: ErrorBag,
+    retry: (checkDuplicate: boolean) => void,
+  ): void {
+    if (errorBag.errorCode === ErrorCode.VOCABULARY__DUPLICATE_TERM) {
+      this.dialogDelegate.show({
+        testID: LightBoxDialogIds.SUCCESS_DIALOG,
+        message:
+          'You have added this term before. Do you want to add it again?',
+        onBackgroundPress: (): void => {
+          this.dialogDelegate.dismiss();
+        },
+        buttonList: [
+          {
+            testID: LightBoxDialogIds.CANCEL_BTN,
+            text: 'NO',
+            onPress: (): void => {
+              this.dialogDelegate.dismiss();
+            },
+            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+          {
+            testID: LightBoxDialogIds.OKAY_BTN,
+            text: 'YES',
+            onPress: (): void => {
+              retry(false);
+            },
+            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+        ],
+      });
+    } else {
+      this.dialogDelegate.showFailedDialog(errorBag, {
+        title: 'ADD FAILED',
+      });
+    }
   }
 }

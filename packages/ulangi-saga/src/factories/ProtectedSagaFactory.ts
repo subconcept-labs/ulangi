@@ -91,6 +91,7 @@ export class ProtectedSagaFactory {
       new VocabularySaga(
         this.userDb,
         this.modelList.vocabularyModel,
+        this.modelList.vocabularyLocalDataModel,
         this.modelList.spacedRepetitionModel,
         this.modelList.writingModel
       ),

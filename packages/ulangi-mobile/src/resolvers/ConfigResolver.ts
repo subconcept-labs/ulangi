@@ -52,6 +52,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       instagram: Joi.string(),
       facebookPage: Joi.string(),
       facebookPageFallback: Joi.string(),
+      youtubeDemoForUlangiSheets: Joi.string(),
       installUlangiSheetsAddOnTutorial: Joi.string(),
       useUlangiSheetsAddOnTutorial: Joi.string(),
     },

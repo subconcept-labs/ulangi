@@ -33,7 +33,6 @@ const baseStyles: VocabularyItemStyles = {
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
     shadowOpacity: 0.25,
-    elevation: 1,
   },
 
   vocabulary_container: {
@@ -94,6 +93,7 @@ export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     item_container: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
+      elevation: 1,
     },
     term: {
       color: config.styles.light.primaryTextColor,
@@ -117,6 +117,7 @@ export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     item_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
+      elevation: 3,
     },
 
     term: {

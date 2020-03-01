@@ -37,7 +37,6 @@ const baseStyles: CategoryItemStyles = {
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
     shadowOpacity: 0.2,
-    elevation: 1,
   },
 
   top_container: {
@@ -151,6 +150,7 @@ export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     item_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
+      elevation: 3,
     },
 
     stats_container: {

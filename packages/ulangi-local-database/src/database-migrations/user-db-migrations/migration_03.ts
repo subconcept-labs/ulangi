@@ -22,9 +22,9 @@ function createVocabularyWritingTableIfNotExists(tx: Transaction): void {
     CREATE TABLE IF NOT EXISTS ${TableName.VOCABULARY_WRITING} (
       vocabularyWritingLocalId INTEGER PRIMARY KEY NOT NULL,
       vocabularyId VARCHAR(60) UNIQUE NOT NULL,
-      lastWrittenAt DATETIME default NULL,
-      level INTEGER NOT NULL default 0,
-      disabled INTEGER NOT NULL default 0,
+      lastWrittenAt DATETIME DEFAULT NULL,
+      level INTEGER NOT NULL DEFAULT 0,
+      disabled INTEGER NOT NULL DEFAULT 0,
       createdAt DATETIME NOT NULL,
       updatedAt DATETIME NOT NULL,
       firstSyncedAt DATETIME,

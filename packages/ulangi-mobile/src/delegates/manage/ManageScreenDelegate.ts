@@ -353,6 +353,10 @@ export class ManageScreenDelegate {
     this.navigatorDelegate.push(ScreenName.QUICK_TUTORIAL_SCREEN, {});
   }
 
+  public goToGoogleSheetsAddOnScreen(): void {
+    this.navigatorDelegate.push(ScreenName.GOOGLE_SHEETS_ADD_ON_SCREEN, {});
+  }
+
   public goToAddVocabulary(): void {
     this.navigatorDelegate.push(ScreenName.ADD_VOCABULARY_SCREEN, {
       closeOnSaveSucceeded: false,

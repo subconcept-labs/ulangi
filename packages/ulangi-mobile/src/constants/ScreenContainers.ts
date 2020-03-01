@@ -27,6 +27,7 @@ import { CategoryDetailScreenContainer } from '../views/category/CategoryDetailS
 import { CategorySelectorScreenContainer } from '../views/category/CategorySelectorScreenContainer';
 import { ContactUsScreenContainer } from '../views/contact-us/ContactUsScreenContainer';
 import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScreenContainer';
+import { DiscoverFAQScreenContainer } from '../views/discover/DiscoverFAQScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
 import { EventLogsScreenContainer } from '../views/event/EventLogsScreenContainer';
@@ -99,6 +100,7 @@ export const ScreenContainers = {
   DATA_SHARING_SCREEN: DataSharingScreenContainer,
   DICTIONARY_PICKER_SCREEN: DictionaryPickerScreenContainer,
   DISCOVER_SCREEN: DiscoverScreenContainer,
+  DISCOVER_FAQ_SCREEN: DiscoverFAQScreenContainer,
   EDIT_SET_SCREEN: EditSetScreenContainer,
   EDIT_VOCABULARY_SCREEN: EditVocabularyScreenContainer,
   EXTRA_FIELDS_PICKER_SCREEN: ExtraFieldsPickerScreenContainer,

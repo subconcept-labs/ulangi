@@ -35,7 +35,6 @@ export const baseStyles: LearnListStyles = {
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
     shadowOpacity: 0.18,
-    elevation: 0.75,
   },
 
   spaced_repetition_title_container: {
@@ -79,7 +78,8 @@ export const baseStyles: LearnListStyles = {
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     learn_item: {
-      backgroundColor: '#fff',
+      backgroundColor: config.styles.light.primaryBackgroundColor,
+      elevation: 1,
     },
   }),
 );
@@ -87,7 +87,8 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     learn_item: {
-      backgroundColor: '#494949',
+      backgroundColor: config.styles.dark.primaryBackgroundColor,
+      elevation: 3,
     },
   }),
 );

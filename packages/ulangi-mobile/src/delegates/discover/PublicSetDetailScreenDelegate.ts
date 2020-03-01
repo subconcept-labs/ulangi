@@ -5,13 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ErrorCode } from '@ulangi/ulangi-common/enums';
 import { ErrorBag, PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
 import { ObservablePublicSet } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import * as _ from 'lodash';
 import { Linking } from 'react-native';
 
+import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
@@ -37,21 +38,34 @@ export class PublicSetDetailScreenDelegate {
     this.dialogDelegate = dialogDelegate;
   }
 
-  public addVocabulary(publicVocabulary: PublicVocabulary): void {
+  public addVocabulary(
+    publicVocabulary: PublicVocabulary,
+    checkDuplicate: boolean = true,
+  ): void {
     this.addVocabularyDelegate.addVocabularyFromPublicVocabulary(
       publicVocabulary,
       this.publicSet.title,
+      checkDuplicate,
       {
         onAdding: this.showAddingDialog,
         onAddSucceeded: this.showAddSucceededDialog,
-        onAddFailed: this.showAddFailedDialog,
+        onAddFailed: (errorBag): void => {
+          this.showAddFailedDialogWithRetry(
+            errorBag,
+            (shouldCheckDuplicate: boolean): void => {
+              this.addVocabulary(publicVocabulary, shouldCheckDuplicate);
+            },
+          );
+        },
       },
     );
   }
 
-  public showAddAllDialog(): void {
+  public showAddAllDialog(ignoreDuplicates: boolean = true): void {
     this.dialogDelegate.show({
-      message: 'Are you sure you want to add all the terms?',
+      message: ignoreDuplicates
+        ? 'This will prevent adding duplicates (only new terms will be added). Do you want to continue?'
+        : 'Do you want to add all terms?',
       closeOnTouchOutside: true,
       onBackgroundPress: (): void => {
         this.dialogDelegate.dismiss();
@@ -59,7 +73,7 @@ export class PublicSetDetailScreenDelegate {
       buttonList: [
         {
           testID: PublicSetDetailScreenIds.CANCEL_BTN,
-          text: 'CANCEL',
+          text: 'NO',
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
@@ -69,7 +83,7 @@ export class PublicSetDetailScreenDelegate {
         },
         {
           testID: PublicSetDetailScreenIds.CONFIRM_ADD_ALL_BTN,
-          text: 'ADD ALL',
+          text: 'YES',
           onPress: (): void => {
             // Show adding dialog first
             this.showAddingDialog();
@@ -78,6 +92,7 @@ export class PublicSetDetailScreenDelegate {
               this.addVocabularyDelegate.addVocabularyFromPublicVocabularyList(
                 this.publicSet.vocabularyList,
                 this.publicSet.title,
+                true,
                 {
                   onAddingAll: this.showAddingDialog,
                   onAddAllSucceeded: this.showAddSucceededDialog,
@@ -120,5 +135,47 @@ export class PublicSetDetailScreenDelegate {
     this.dialogDelegate.showFailedDialog(errorBag, {
       title: 'ADD FAILED',
     });
+  }
+
+  private showAddFailedDialogWithRetry(
+    errorBag: ErrorBag,
+    retry: (checkDuplicate: boolean) => void,
+  ): void {
+    if (errorBag.errorCode === ErrorCode.VOCABULARY__DUPLICATE_TERM) {
+      this.dialogDelegate.show({
+        testID: LightBoxDialogIds.SUCCESS_DIALOG,
+        message:
+          'You have added this term before. Do you want to add it again?',
+        onBackgroundPress: (): void => {
+          this.dialogDelegate.dismiss();
+        },
+        buttonList: [
+          {
+            testID: LightBoxDialogIds.CANCEL_BTN,
+            text: 'NO',
+            onPress: (): void => {
+              this.dialogDelegate.dismiss();
+            },
+            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+          {
+            testID: LightBoxDialogIds.OKAY_BTN,
+            text: 'YES',
+            onPress: (): void => {
+              retry(false);
+            },
+            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+              ButtonSize.SMALL,
+            ),
+          },
+        ],
+      });
+    } else {
+      this.dialogDelegate.showFailedDialog(errorBag, {
+        title: 'ADD FAILED',
+      });
+    }
   }
 }

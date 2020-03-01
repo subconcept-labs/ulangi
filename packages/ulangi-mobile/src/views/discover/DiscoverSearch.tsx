@@ -13,6 +13,7 @@ import * as React from 'react';
 import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
+import { config } from '../../constants/config';
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import {
   DiscoverSearchStyles,
@@ -67,11 +68,6 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
   }
 
   public render(): React.ReactElement<any> {
-    const learningLanguageName = this.props.setStore.existingCurrentSet
-      .learningLanguage.fullName;
-    const translatedToLanguageName = this.props.setStore.existingCurrentSet
-      .translatedToLanguage.fullName;
-
     return (
       <View style={this.styles.search_container}>
         <Image
@@ -86,12 +82,12 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
           autoFocus={this.props.searchInputAutoFocus.get()}
           style={this.styles.search_input}
           value={this.props.searchInput.get()}
-          placeholder={
-            learningLanguageName === translatedToLanguageName
-              ? `Type ${learningLanguageName} to search`
-              : `Type ${translatedToLanguageName} or ${learningLanguageName} to search`
+          placeholder="e.g. cat, dog, animals..."
+          placeholderTextColor={
+            this.props.theme === Theme.LIGHT
+              ? config.styles.light.secondaryTextColor
+              : config.styles.dark.secondaryTextColor
           }
-          placeholderTextColor="#aaa"
           autoCapitalize="none"
           returnKeyType="search"
           onChangeText={(text): void => {

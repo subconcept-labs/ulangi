@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
+import { config } from '../../constants/config';
+
 export interface DiscoverSearchStyles {
   search_container: ViewStyle;
 
@@ -52,7 +54,7 @@ const baseStyles: DiscoverSearchStyles = {
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     search_container: {
-      backgroundColor: '#fff',
+      backgroundColor: config.styles.light.primaryBackgroundColor,
       shadowColor: '#000000',
       shadowOffset: { width: 0, height: 0.3 },
       shadowRadius: 0.75,
@@ -69,7 +71,7 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     search_container: {
-      backgroundColor: '#494949',
+      backgroundColor: config.styles.dark.primaryBackgroundColor,
       shadowColor: '#000000',
       shadowOffset: { width: 0, height: 0.5 },
       shadowRadius: 0.75,

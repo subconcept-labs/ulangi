@@ -27,6 +27,7 @@ import { SpacedRepetitionModel } from '../models/SpacedRepetitionModel';
 import { UserExtraDataModel } from '../models/UserExtraDataModel';
 import { UserModel } from '../models/UserModel';
 import { VocabularyCategoryModel } from '../models/VocabularyCategoryModel';
+import { VocabularyLocalDataModel } from '../models/VocabularyLocalDataModel';
 import { VocabularyModel } from '../models/VocabularyModel';
 import { VocabularyWritingModel } from '../models/VocabularyWritingModel';
 import { WritingModel } from '../models/WritingModel';
@@ -39,6 +40,7 @@ export interface ModelList {
   readonly categoryModel: CategoryModel;
   readonly vocabularyModel: VocabularyModel;
   readonly vocabularyCategoryModel: VocabularyCategoryModel;
+  readonly vocabularyLocalDataModel: VocabularyLocalDataModel;
   readonly vocabularyWritingModel: VocabularyWritingModel;
   readonly definitionModel: DefinitionModel;
   readonly spacedRepetitionModel: SpacedRepetitionModel;

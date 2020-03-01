@@ -48,6 +48,7 @@ export interface Config {
     readonly instagram: string;
     readonly facebookPage: string;
     readonly facebookPageFallback: string;
+    readonly youtubeDemoForUlangiSheets: string;
     readonly installUlangiSheetsAddOnTutorial: string;
     readonly useUlangiSheetsAddOnTutorial: string;
   };
