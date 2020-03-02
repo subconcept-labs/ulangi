@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.1](https://github.com/minhloi/ulangi/compare/v3.10.0...v3.10.1) (2020-03-02)
+
+
+### Bug Fixes
+
+* small UI fixes ([6fb0623](https://github.com/minhloi/ulangi/commit/6fb0623))
+
+
+
+
+
 # [3.10.0](https://github.com/minhloi/ulangi/compare/v3.9.2...v3.10.0) (2020-03-01)
 
 

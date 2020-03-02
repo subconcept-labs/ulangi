@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.1](https://github.com/minhloi/ulangi/compare/v3.10.0...v3.10.1) (2020-03-02)
+
+
+### Bug Fixes
+
+* move in app rating to after review session ([818941c](https://github.com/minhloi/ulangi/commit/818941c))
+* show in-app rating only when online ([da1b0ac](https://github.com/minhloi/ulangi/commit/da1b0ac))
+* small UI fixes ([6fb0623](https://github.com/minhloi/ulangi/commit/6fb0623))
+
+
+
+
+
 # [3.10.0](https://github.com/minhloi/ulangi/compare/v3.9.2...v3.10.0) (2020-03-01)
 
 
