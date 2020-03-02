@@ -1,4 +1,6 @@
 import RNNetInfo from '@react-native-community/netinfo';
+import RNAdConsent from '@ulangi/react-native-ad-consent';
+import RNFirebase from '@ulangi/react-native-firebase';
 import { SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import {
   AdMobAdapter,
@@ -15,7 +17,9 @@ import {
 } from '@ulangi/ulangi-saga';
 import { Platform } from 'react-native';
 import * as RNDarkMode from 'react-native-dark-mode';
+import * as RNFacebook from 'react-native-fbsdk';
 import * as RNFileSystem from 'react-native-fs';
+import * as RNIap from 'react-native-iap';
 import * as RNSqlite from 'react-native-sqlite-storage';
 
 import RNAudioPlayer = require('react-native-sound');
@@ -37,19 +41,23 @@ export interface AdapterList {
 
 export class AdapterFactory {
   public createAdapters(): AdapterList {
-    const adMob = null;
-    const analytics = null;
+    const adMob = new AdMobAdapter((RNFirebase as any).admob, RNAdConsent);
+    const analytics = new AnalyticsAdapter(RNFirebase.analytics());
     const audioPlayer = new AudioPlayerAdapter(
       Platform.OS === 'ios' ? 'ios' : 'other',
       RNAudioPlayer,
     );
-    const crashlytics = null;
-    const facebook = null;
+    const crashlytics = new CrashlyticsAdapter(RNFirebase.crashlytics());
+    const facebook = new FacebookAdapter(RNFacebook);
     const fileSystem = new FileSystemAdapter(RNFileSystem);
-    const firebase = null;
-    const iap = null;
+    const firebase = new FirebaseAdapter(RNFirebase);
+    const iap = new IapAdapter(RNIap);
     const netInfo = new NetInfoAdapter(RNNetInfo);
-    const notifications = null;
+    const notifications = new NotificationsAdapter(
+      RNFirebase.notifications(),
+      RNFirebase.messaging(),
+      RNFirebase.notifications,
+    );
     const sqliteDatabase = new SQLiteDatabaseAdapter(RNSqlite);
     const systemTheme = new SystemThemeAdapter(RNDarkMode);
 

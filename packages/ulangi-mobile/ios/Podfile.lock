@@ -12,6 +12,20 @@ PODS:
     - React-Core (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/turbomodule/core (= 0.61.5)
+  - FBSDKCoreKit (5.8.0):
+    - FBSDKCoreKit/Basics (= 5.8.0)
+    - FBSDKCoreKit/Core (= 5.8.0)
+  - FBSDKCoreKit/Basics (5.8.0)
+  - FBSDKCoreKit/Core (5.8.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.8.0):
+    - FBSDKLoginKit/Login (= 5.8.0)
+  - FBSDKLoginKit/Login (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
+  - FBSDKShareKit (5.8.0):
+    - FBSDKShareKit/Share (= 5.8.0)
+  - FBSDKShareKit/Share (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
   - Firebase/AdMob (6.14.0):
     - Firebase/CoreOnly
     - Google-Mobile-Ads-SDK (~> 7.50)
@@ -297,7 +311,25 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
+  - react-native-ad-consent (2.0.2-patch.1):
+    - Google-Mobile-Ads-SDK
+    - PersonalizedAdConsent
+    - React
   - react-native-config (0.12.0):
+    - React
+  - react-native-fbsdk (1.1.1):
+    - React
+    - react-native-fbsdk/Core (= 1.1.1)
+    - react-native-fbsdk/Login (= 1.1.1)
+    - react-native-fbsdk/Share (= 1.1.1)
+  - react-native-fbsdk/Core (1.1.1):
+    - FBSDKCoreKit (= 5.8)
+    - React
+  - react-native-fbsdk/Login (1.1.1):
+    - FBSDKLoginKit (= 5.8)
+    - React
+  - react-native-fbsdk/Share (1.1.1):
+    - FBSDKShareKit (= 5.8)
     - React
   - react-native-netinfo (4.7.0):
     - React
@@ -354,7 +386,18 @@ PODS:
     - React
     - SDWebImage (~> 5.0)
     - SDWebImageWebPCoder (~> 0.2.3)
+  - RNFirebase (5.5.6-patch.10):
+    - Firebase/Core
+    - React
+    - RNFirebase/Crashlytics (= 5.5.6-patch.10)
+  - RNFirebase/Crashlytics (5.5.6-patch.10):
+    - Crashlytics
+    - Fabric
+    - Firebase/Core
+    - React
   - RNFS (2.16.2):
+    - React
+  - RNIap (4.4.0):
     - React
   - RNRate (1.1.10):
     - React
@@ -400,7 +443,9 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - "react-native-ad-consent (from `../node_modules/@ulangi/react-native-ad-consent`)"
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
@@ -421,7 +466,9 @@ DEPENDENCIES:
   - ReactNativeDarkMode (from `../node_modules/react-native-dark-mode`)
   - "ReactNativeNavigation (from `../node_modules/@ulangi/react-native-navigation/ReactNativeNavigation.podspec`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
+  - "RNFirebase (from `../node_modules/@ulangi/react-native-firebase/ios`)"
   - RNFS (from `../node_modules/react-native-fs`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNRate (from `../node_modules/react-native-rate`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -432,6 +479,9 @@ SPEC REPOS:
     - boost-for-react-native
     - Crashlytics
     - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -487,8 +537,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-ad-consent:
+    :path: "../node_modules/@ulangi/react-native-ad-consent"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-fbsdk:
+    :path: "../node_modules/react-native-fbsdk"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-splash-screen:
@@ -527,8 +581,12 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/@ulangi/react-native-navigation/ReactNativeNavigation.podspec"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
+  RNFirebase:
+    :path: "../node_modules/@ulangi/react-native-firebase/ios"
   RNFS:
     :path: "../node_modules/react-native-fs"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNRate:
     :path: "../node_modules/react-native-rate"
   RNSound:
@@ -545,6 +603,9 @@ SPEC CHECKSUMS:
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
+  FBSDKCoreKit: e7dcac0aabcfb09d0166998edd95fe3b05a0ce5d
+  FBSDKLoginKit: 1b0cf04df0370b37404213157b060d6666ede814
+  FBSDKShareKit: abc29e1bb4f9f59f679adf1ae191006d68455f96
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
   FirebaseAnalytics: f68b9f3f1241385129ae0a83b63627fc420c05e5
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -579,7 +640,9 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
+  react-native-ad-consent: 87326f56a9b70e03b755e56798f8d470f4b2ab50
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
+  react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-sqlite-storage: bb10beb2407e5fc21f3f1bcd86bacbfd6edcc818
@@ -599,7 +662,9 @@ SPEC CHECKSUMS:
   ReactNativeDarkMode: 0e6e7bdbd387eb949fa7ff238a48f6d6431a428d
   ReactNativeNavigation: 628f343140579563bf5382d52f075ae7d32aab81
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
+  RNFirebase: 909a993573ab3e79d9b0dc9690265d5ba379f15b
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
+  RNIap: 9b6e92869de716305ecc6cac8c413321210e33c7
   RNRate: d44a8bca6ee08f5d890ecccddaec2810955ffbb3
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f

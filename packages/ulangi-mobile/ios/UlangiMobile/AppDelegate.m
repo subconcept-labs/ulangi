@@ -21,12 +21,18 @@
 
 #import "ReactNativeConfig.h"
 
+#import "RNFirebaseNotifications.h"
+
+#import <Firebase.h>
+
 #import <AdSupport/AdSupport.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+  [RNFirebaseNotifications configure];
   
   //NSLog(@"Advertising ID: %@",
         //ASIdentifierManager.sharedManager.advertisingIdentifier.UUIDString);
@@ -58,6 +64,10 @@
    */
   
   return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  [[RNFirebaseNotifications instance] didReceiveLocalNotification:notification];
 }
 
 @end
