@@ -9,6 +9,7 @@ import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, UserExtraDataName } from '@ulangi/ulangi-common/enums';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
+  ObservableNetworkStore,
   ObservableRemoteConfigStore,
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
@@ -24,17 +25,20 @@ import { DialogDelegate } from '../dialog/DialogDelegate';
 export class InAppRatingDelegate {
   private eventBus: EventBus;
   private userStore: ObservableUserStore;
+  private networkStore: ObservableNetworkStore;
   private remoteConfigStore: ObservableRemoteConfigStore;
   private dialogDelegate: DialogDelegate;
 
   public constructor(
     eventBus: EventBus,
     userStore: ObservableUserStore,
+    networkStore: ObservableNetworkStore,
     remoteConfigStore: ObservableRemoteConfigStore,
     dialogDelegate: DialogDelegate,
   ) {
     this.eventBus = eventBus;
     this.userStore = userStore;
+    this.networkStore = networkStore;
     this.remoteConfigStore = remoteConfigStore;
     this.dialogDelegate = dialogDelegate;
   }
@@ -117,7 +121,9 @@ export class InAppRatingDelegate {
 
   private shouldAutoShowInAppRating(): boolean {
     return (
-      this.isAutoShowInAppRatingEnabled() && this.isAutoShowInAppRatingDue()
+      this.networkStore.isConnected === true &&
+      this.isAutoShowInAppRatingEnabled() &&
+      this.isAutoShowInAppRatingDue()
     );
   }
 

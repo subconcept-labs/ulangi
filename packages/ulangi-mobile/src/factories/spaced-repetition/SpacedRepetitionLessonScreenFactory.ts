@@ -99,6 +99,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     const inAppRatingDelegate = new InAppRatingDelegate(
       this.eventBus,
       this.props.rootStore.userStore,
+      this.props.rootStore.networkStore,
       this.props.rootStore.remoteConfigStore,
       dialogDelegate,
     );
