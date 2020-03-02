@@ -23,9 +23,9 @@ It takes only a minute to install and set up this add-on.
 ---
 ## II. Setup
 
-1. Once installed, go to **Add-on > Ulangi Sheets > Show sidebar.**
+1. Go to **Add-on > Ulangi Sheets > Show sidebar.**
 
-2. Click on **Set API key**, copy and parse your API key from Ulangi mobile app.
+2. Click on **Set API key**. Copy and parse your API key from Ulangi app.
 
 3. Click on **Set up for syncing** and select a set to sync.
 
