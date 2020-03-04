@@ -14,9 +14,8 @@ import { boundMethod } from 'autobind-decorator';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, TextInput, TouchableOpacity, View } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 
-import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultText } from '../common/DefaultText';
@@ -113,24 +112,8 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
     return (
       <View style={this.styles.vocabulary_container}>
         <View style={this.styles.header}>
-          <View style={this.styles.left}>
-            <DefaultText style={this.styles.left_text}>TERM</DefaultText>
-          </View>
-          <View style={this.styles.right}>
-            <TouchableOpacity
-              testID={VocabularyFormIds.LOOK_UP_BTN}
-              onPress={this.props.lookUp}
-              style={this.styles.button}>
-              <DefaultText style={this.styles.button_text}>LOOK UP</DefaultText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              testID={VocabularyFormIds.VOCABULARY_EXTRA_FIELDS_BTN}
-              onPress={this.props.showVocabularyExtraFieldsPicker}
-              style={this.styles.button}>
-              <DefaultText style={this.styles.button_text}>
-                EXTRA FIELDS
-              </DefaultText>
-            </TouchableOpacity>
+          <View style={this.styles.title_container}>
+            <DefaultText style={this.styles.title}>Term</DefaultText>
           </View>
         </View>
         <View style={this.styles.vocabulary_input_container}>
@@ -158,6 +141,25 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
             value={this.props.vocabularyFormState.vocabularyText}
           />
         </View>
+        <View style={this.styles.button_list}>
+          <TouchableOpacity
+            testID={VocabularyFormIds.LOOK_UP_BTN}
+            onPress={this.props.lookUp}
+            style={[this.styles.button, this.styles.button_green]}>
+            <DefaultText
+              style={[this.styles.button_text, this.styles.button_green_text]}>
+              DICTIONARY
+            </DefaultText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            testID={VocabularyFormIds.VOCABULARY_EXTRA_FIELDS_BTN}
+            onPress={this.props.showVocabularyExtraFieldsPicker}
+            style={this.styles.button}>
+            <DefaultText style={this.styles.button_text}>
+              EXTRA FIELDS
+            </DefaultText>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -170,34 +172,10 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
             return (
               <View key={index} style={this.styles.definition_container}>
                 <View style={this.styles.header}>
-                  <View style={this.styles.left}>
-                    <DefaultText style={this.styles.left_text}>
-                      DEFINITION {index + 1}
+                  <View style={this.styles.title_container}>
+                    <DefaultText style={this.styles.title}>
+                      Definition {index + 1}
                     </DefaultText>
-                  </View>
-                  <View style={this.styles.right}>
-                    <TouchableOpacity
-                      testID={VocabularyFormIds.DELETE_DEFINITION_BTN_BY_INDEX(
-                        index,
-                      )}
-                      onPress={(): void => this.props.deleteDefinition(index)}
-                      style={this.styles.button}>
-                      <DefaultText style={this.styles.button_text}>
-                        DELETE
-                      </DefaultText>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      testID={VocabularyFormIds.DEFINITION_EXTRA_FIELDS_BTN_BY_INDEX(
-                        index,
-                      )}
-                      onPress={(): void =>
-                        this.props.showDefinitionExtraFieldsPicker(index)
-                      }
-                      style={this.styles.button}>
-                      <DefaultText style={this.styles.button_text}>
-                        EXTRA FIELDS
-                      </DefaultText>
-                    </TouchableOpacity>
                   </View>
                 </View>
                 <DefinitionInput
@@ -216,6 +194,34 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
                       .shouldMoveCursorOfDefinitionInput
                   }
                 />
+                <View style={this.styles.button_list}>
+                  <TouchableOpacity
+                    testID={VocabularyFormIds.DELETE_DEFINITION_BTN_BY_INDEX(
+                      index,
+                    )}
+                    onPress={(): void => this.props.deleteDefinition(index)}
+                    style={[this.styles.button, this.styles.button_red]}>
+                    <DefaultText
+                      style={[
+                        this.styles.button_text,
+                        this.styles.button_red_text,
+                      ]}>
+                      DELETE
+                    </DefaultText>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    testID={VocabularyFormIds.DEFINITION_EXTRA_FIELDS_BTN_BY_INDEX(
+                      index,
+                    )}
+                    onPress={(): void =>
+                      this.props.showDefinitionExtraFieldsPicker(index)
+                    }
+                    style={this.styles.button}>
+                    <DefaultText style={this.styles.button_text}>
+                      EXTRA FIELDS
+                    </DefaultText>
+                  </TouchableOpacity>
+                </View>
               </View>
             );
           },
@@ -232,8 +238,11 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
           testID={VocabularyFormIds.ADD_DEFINITION_BTN}
           onPress={this.props.addDefinitionSlot}
           style={[this.styles.button, this.styles.add_definition_btn]}>
-          <Image source={Images.PLUS_BLUE_22X22} />
-          <DefaultText style={this.styles.add_definition_btn_text}>
+          <DefaultText
+            style={[
+              this.styles.button_text,
+              this.styles.add_definition_btn_text,
+            ]}>
             ADD DEFINITION
           </DefaultText>
         </TouchableOpacity>
@@ -245,22 +254,20 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
     return (
       <View style={this.styles.category_container}>
         <View style={this.styles.header}>
-          <View style={this.styles.left}>
-            <DefaultText style={this.styles.left_text}>CATEGORY</DefaultText>
-          </View>
-          <View style={this.styles.right}>
-            <TouchableOpacity
-              testID={VocabularyFormIds.EDIT_CATEGORY_BTN}
-              onPress={this.props.editCategory}
-              style={this.styles.button}>
-              <DefaultText style={this.styles.button_text}>EDIT</DefaultText>
-            </TouchableOpacity>
+          <View style={this.styles.title_container}>
+            <DefaultText style={this.styles.title}>Category</DefaultText>
           </View>
         </View>
         <View style={this.styles.category_name_container}>
           <DefaultText style={this.styles.category_name}>
             {this.props.vocabularyFormState.categoryName}
           </DefaultText>
+          <TouchableOpacity
+            testID={VocabularyFormIds.EDIT_CATEGORY_BTN}
+            onPress={this.props.editCategory}
+            style={this.styles.button}>
+            <DefaultText style={this.styles.button_text}>EDIT</DefaultText>
+          </TouchableOpacity>
         </View>
       </View>
     );

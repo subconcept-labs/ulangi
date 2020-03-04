@@ -47,25 +47,25 @@ export class DictionaryDefinitionList extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <React.Fragment>
-        <View style={this.styles.source_container}>
-          <View style={this.styles.source_left}>
-            <DefaultText style={this.styles.source_text}>
-              <DefaultText>From </DefaultText>
-              <DefaultText
-                onPress={(): void => {
-                  if (
-                    typeof this.props.attribution.sourceLink !== 'undefined'
-                  ) {
-                    this.props.openLink(this.props.attribution.sourceLink);
-                  }
-                }}
-                style={
-                  this.props.attribution.sourceLink
-                    ? this.styles.hightlighted
-                    : null
-                }>
-                {this.props.attribution.sourceName}
-              </DefaultText>
+        <View style={this.styles.title_container}>
+          <DefaultText style={this.styles.title}>
+            <DefaultText>Found </DefaultText>
+            <DefaultText style={this.styles.term}>
+              {this.props.term}
+            </DefaultText>
+            <DefaultText> from </DefaultText>
+            <DefaultText
+              onPress={(): void => {
+                if (typeof this.props.attribution.sourceLink !== 'undefined') {
+                  this.props.openLink(this.props.attribution.sourceLink);
+                }
+              }}
+              style={
+                this.props.attribution.sourceLink
+                  ? this.styles.hightlighted
+                  : null
+              }>
+              {this.props.attribution.sourceName}
             </DefaultText>
             {typeof this.props.attribution.license !== 'undefined' ? (
               <DefaultText style={this.styles.license_text}>
@@ -83,7 +83,7 @@ export class DictionaryDefinitionList extends React.Component<
                 </DefaultText>
               </DefaultText>
             ) : null}
-          </View>
+          </DefaultText>
         </View>
         {this.props.definitions.map(
           (definition, index): React.ReactElement<any> => {
