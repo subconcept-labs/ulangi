@@ -8,8 +8,12 @@
 import { DictionaryDefinition } from './DictionaryDefinition';
 
 export interface DictionaryEntry {
-  readonly vocabularyText: string;
+  readonly vocabularyTerm: string;
   readonly definitions: readonly DictionaryDefinition[];
   readonly categories: string[];
   readonly tags: string[];
+  readonly ipa?: string[];
+  readonly pinyin?: string[];
+  readonly romaji?: string[];
+  readonly romanization?: string[];
 }

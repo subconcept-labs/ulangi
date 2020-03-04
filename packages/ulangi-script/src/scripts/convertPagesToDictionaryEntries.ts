@@ -28,11 +28,16 @@ function run(): void {
     if (!_.isEmpty(line)) {
       const page: WiktionaryPage = JSON.parse(line);
 
-      const dictionaryEntry = wiktionaryPageConverter.convertToDictionaryEntry(
-        page
-      );
+      page.languages.forEach(
+        (language): void => {
+          const dictionaryEntry = wiktionaryPageConverter.convertToDictionaryEntry(
+            page.title,
+            language
+          );
 
-      console.log(JSON.stringify(dictionaryEntry));
+          console.log(JSON.stringify(dictionaryEntry));
+        }
+      );
     }
   });
 }

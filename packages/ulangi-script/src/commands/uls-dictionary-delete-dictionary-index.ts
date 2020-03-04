@@ -36,7 +36,7 @@ async function exec(): Promise<void> {
     {
       type: 'input',
       name: 'languageCodePairsStr',
-      message: 'Enter index name (e.g., en_zh_wiktionary):',
+      message: 'Enter index name (e.g., ja-en, ko-en):',
       default:
         commander.languageCodePairs ||
         config.dictionary.defaultLanguageCodePairs.join(', '),

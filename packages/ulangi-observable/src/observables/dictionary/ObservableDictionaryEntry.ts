@@ -16,7 +16,7 @@ export class ObservableDictionaryEntry {
   private attributionHelper = new AttributionHelper();
 
   @observable
-  public vocabularyText: string;
+  public vocabularyTerm: string;
 
   @observable
   public definitions: readonly ObservableDictionaryDefinition[];
@@ -44,7 +44,7 @@ export class ObservableDictionaryEntry {
       } => {
         const sourceName = this.attributionHelper.formatSource(source);
         const sourceLink = this.attributionHelper.generateLinkBySource(source, {
-          term: this.vocabularyText,
+          term: this.vocabularyTerm,
         });
         const license = this.attributionHelper.getLicenseBySource(source);
         const licenseLink = this.attributionHelper.getLinkByLicense(
@@ -65,10 +65,10 @@ export class ObservableDictionaryEntry {
   }
 
   public constructor(
-    vocabularyText: string,
+    vocabularyTerm: string,
     definitions: readonly ObservableDictionaryDefinition[]
   ) {
-    this.vocabularyText = vocabularyText;
+    this.vocabularyTerm = vocabularyTerm;
     this.definitions = definitions;
   }
 }

@@ -71,7 +71,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
                 <DictionaryDefinitionList
                   key={attribution.sourceName}
                   theme={this.props.theme}
-                  term={dictionaryEntry.vocabularyText}
+                  term={dictionaryEntry.vocabularyTerm}
                   attribution={attribution}
                   definitions={definitions}
                   onPick={this.props.onPick}
@@ -132,7 +132,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
                 <DefaultText style={this.styles.bold}>
                   {
                     this.props.dictionaryEntryState.dictionaryEntry
-                      .vocabularyText
+                      .vocabularyTerm
                   }
                 </DefaultText>
                 <DefaultText>.</DefaultText>

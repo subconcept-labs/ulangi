@@ -7,6 +7,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { DictionaryEntryConverter } from '@ulangi/ulangi-common/converters';
 import { PublicSet, PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
 import { WiktionaryPage } from '@ulangi/wiktionary-core';
 import * as _ from 'lodash';
@@ -15,6 +16,11 @@ import * as uuid from 'uuid';
 
 import { WiktionaryPageConverter } from '../converters/WiktionaryPageConverter';
 import { loadConfig } from '../setup/loadConfig';
+
+export interface Author {
+  name: string;
+  link?: string;
+}
 
 run();
 
@@ -28,6 +34,7 @@ function run(): void {
   });
 
   const wiktionaryPageConverter = new WiktionaryPageConverter();
+  const dictionaryEntryConverter = new DictionaryEntryConverter();
 
   rl.on('line', function(line): void {
     if (!_.isEmpty(line)) {
@@ -48,23 +55,42 @@ function run(): void {
                 : categorized.category,
             difficulty: 'N/A',
             tags: [],
-            vocabularyList: chunk.map(
-              (page): PublicVocabulary => {
-                return {
-                  publicVocabularyId: uuid.v4(),
-                  vocabularyText: page.title,
-                  definitions: wiktionaryPageConverter.extractDefinitions(page),
-                  categories: wiktionaryPageConverter.extractCategories(page),
-                };
+            vocabularyList: _.flatMap(
+              chunk,
+              (page): PublicVocabulary[] => {
+                return page.languages.map(
+                  (language): PublicVocabulary => {
+                    const dictionaryEntry = wiktionaryPageConverter.convertToDictionaryEntry(
+                      page.title,
+                      language
+                    );
+
+                    return dictionaryEntryConverter.convertDictionaryEntryToPublicVocabulary(
+                      dictionaryEntry
+                    );
+                  }
+                );
               }
             ),
-            authors: wiktionaryPageConverter.extractSources(chunk).map(
-              (source): { name: string; link?: string } => {
-                return {
-                  name: source,
-                  link: '',
-                };
-              }
+            authors: _.uniqBy(
+              _.flatMap(
+                chunk,
+                (page): Author[] => {
+                  return _.flatMap(
+                    page.languages,
+                    (language): Author[] => {
+                      return wiktionaryPageConverter
+                        .extractSources(language.children)
+                        .map(
+                          (source): Author => {
+                            return { name: source, link: '' };
+                          }
+                        );
+                    }
+                  );
+                }
+              ),
+              ['name', 'link']
             ),
           };
         }

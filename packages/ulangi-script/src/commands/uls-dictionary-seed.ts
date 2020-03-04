@@ -12,11 +12,11 @@ import { DictionaryFacade } from '@ulangi/ulangi-dictionary';
 import * as appRoot from 'app-root-path';
 import * as AWS from 'aws-sdk';
 import chalk from 'chalk';
+import { ChildProcess } from 'child_process';
 import * as commander from 'commander';
 import * as fs from 'fs';
 import * as inquirer from 'inquirer';
 import * as path from 'path';
-import { Readable } from 'stream';
 import * as URL from 'url';
 
 import { spawnProcess } from '../utils/spawnProcess';
@@ -142,19 +142,18 @@ async function exec(): Promise<void> {
         );
 
         const fileStream = fs.createReadStream(inputFile);
-
-        const dictionaryEntryStream = convertPagesToDictionaryEntries(
-          fileStream
-        );
-
-        await uploadDictionaryEntries(
-          dictionaryEntryStream,
+        const converter = createDictionaryEntryConverter();
+        const uploader = createLogstashUploader(
           assertExists(host),
           region,
           dictionary.getIndexNameByLanguageCodePair(languageCodePair),
           assertExists(awsConfig.credentials)
         );
 
+        fileStream.pipe(converter.stdin);
+        converter.stdout.pipe(uploader.stdin);
+
+        await waitForProcessToEnd(uploader);
         console.log(`Upload ${path.basename(inputFile)} completed.`);
       }
     } catch (error) {
@@ -164,7 +163,7 @@ async function exec(): Promise<void> {
   }
 }
 
-function convertPagesToDictionaryEntries(fileStream: Readable): Readable {
+function createDictionaryEntryConverter(): ChildProcess {
   const childProcess = spawnProcess(
     path.join(
       appRoot.path,
@@ -176,17 +175,15 @@ function convertPagesToDictionaryEntries(fileStream: Readable): Readable {
     { verbose: false, autoKillOnExit: true }
   );
 
-  fileStream.pipe(childProcess.stdin);
-  return childProcess.stdout;
+  return childProcess;
 }
 
-async function uploadDictionaryEntries(
-  dictionaryEntryStream: Readable,
+function createLogstashUploader(
   host: string,
   region: string,
   indexName: string,
   awsCredentials: { accessKeyId: string; secretAccessKey: string }
-): Promise<void> {
+): ChildProcess {
   const args = [
     '--config.string',
     `
@@ -208,7 +205,7 @@ async function uploadDictionaryEntries(
         aws_access_key_id => "${awsCredentials.accessKeyId}"
         aws_secret_access_key => "${awsCredentials.secretAccessKey}"
         index => "${indexName}"
-        document_id => "%{vocabularyText}"
+        document_id => "%{vocabularyTerm}"
       }
       stdout { codec => rubydebug }
     }
@@ -220,7 +217,5 @@ async function uploadDictionaryEntries(
     autoKillOnExit: true,
   });
 
-  dictionaryEntryStream.pipe(uploadProcess.stdin);
-
-  await waitForProcessToEnd(uploadProcess);
+  return uploadProcess;
 }

@@ -13,16 +13,17 @@ import { CSVParser, LibraryFacade } from '@ulangi/ulangi-library';
 import * as appRoot from 'app-root-path';
 import * as AWS from 'aws-sdk';
 import chalk from 'chalk';
+import { ChildProcess } from 'child_process';
 import * as commander from 'commander';
 import * as fs from 'fs';
 import * as inquirer from 'inquirer';
 import * as path from 'path';
-import * as stream from 'stream';
+import { Readable } from 'stream';
 import * as streamBuffers from 'stream-buffers';
 import * as URL from 'url';
 
 import { spawnProcess } from '../utils/spawnProcess';
-import { waitForStreamToFinish } from '../utils/waitForStreamToFinish';
+import { waitForProcessToEnd } from '../utils/waitForProcessToEnd';
 
 exec();
 
@@ -157,24 +158,24 @@ async function exec(): Promise<void> {
           chalk.green(`Running logstash. This may take some time...\n`)
         );
 
-        const uploader = createUploader(
+        const uploader = createLogstashUploader(
           assertExists(host),
           region,
           library.getIndexNameByLanguageCodePair(languageCodePair),
           assertExists(awsConfig.credentials)
         );
 
-        let stream: stream.Writable;
         if (fileType === FileType.WIKTIONARY_JSON_FILE) {
-          stream = fs
-            .createReadStream(inputFile)
-            .pipe(createWiktionaryPageConverter())
-            .pipe(uploader);
+          const fileStream = fs.createReadStream(inputFile);
+          const converter = createWiktionaryPageConverter();
+
+          fileStream.pipe(converter.stdin);
+          converter.stdout.pipe(uploader.stdin);
         } else {
-          stream = parseCSVFile(inputFile).pipe(uploader);
+          parseCSVFile(inputFile).pipe(uploader.stdin);
         }
 
-        await waitForStreamToFinish(stream);
+        await waitForProcessToEnd(uploader);
         console.log(`Upload ${path.basename(inputFile)} completed.`);
       }
     } catch (error) {
@@ -184,7 +185,7 @@ async function exec(): Promise<void> {
   }
 }
 
-function createWiktionaryPageConverter(): stream.Writable {
+function createWiktionaryPageConverter(): ChildProcess {
   const childProcess = spawnProcess(
     path.join(
       appRoot.path,
@@ -196,10 +197,10 @@ function createWiktionaryPageConverter(): stream.Writable {
     { verbose: false, autoKillOnExit: true }
   );
 
-  return childProcess.stdin;
+  return childProcess;
 }
 
-function parseCSVFile(filePath: string): stream.Readable {
+function parseCSVFile(filePath: string): Readable {
   const content = fs.readFileSync(filePath);
   const csvParser = new CSVParser();
   const publicSets = csvParser.parse(content.toString());
@@ -215,12 +216,12 @@ function parseCSVFile(filePath: string): stream.Readable {
   return stream;
 }
 
-function createUploader(
+function createLogstashUploader(
   host: string,
   region: string,
   indexName: string,
   awsCredentials: { accessKeyId: string; secretAccessKey: string }
-): stream.Writable {
+): ChildProcess {
   const args = [
     '--config.string',
     `
@@ -254,5 +255,5 @@ function createUploader(
     autoKillOnExit: true,
   });
 
-  return uploadProcess.stdin;
+  return uploadProcess;
 }

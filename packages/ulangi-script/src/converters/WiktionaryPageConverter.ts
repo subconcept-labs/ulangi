@@ -15,7 +15,7 @@ import {
   WiktionaryDefinition,
   WiktionaryEtymology,
   WiktionaryExample,
-  WiktionaryPage,
+  WiktionaryLanguage,
   WiktionaryPronunciation,
   WiktionaryQuotation,
   WiktionaryWordClass,
@@ -33,33 +33,191 @@ type WiktionarySection =
 export class WiktionaryPageConverter {
   private wordClassConverter = new WordClassConverter();
 
-  public convertToDictionaryEntry(page: WiktionaryPage): DictionaryEntry {
+  private excludeIPA = ['Vietnamese'];
+  public convertToDictionaryEntry(
+    pageTitle: string,
+    language: WiktionaryLanguage
+  ): DictionaryEntry {
     return {
-      vocabularyText: page.title,
-      definitions: this.extractDefinitions(page),
-      categories: this.extractCategories(page),
+      vocabularyTerm: pageTitle,
+      definitions: this.extractDefinitions(language.children),
+      categories: this.extractCategories(language),
       tags: [],
+      ipa: !_.includes(this.excludeIPA, language.languageName)
+        ? this.extractIPA(language.children)
+        : undefined,
+      pinyin: this.extractPinyin(language.children),
+      romaji: this.extractRomaji(language.children),
+      romanization: this.extractRomanization(language.children),
     };
   }
 
-  public extractDefinitions(
-    pageOrSections: WiktionaryPage | WiktionarySection[]
-  ): PublicDefinition[] {
-    const sections: WiktionarySection[] = [];
+  public extractIPA(
+    _sections: readonly WiktionarySection[]
+  ): undefined | string[] {
+    const ipa: string[] = [];
 
-    if (_.isArray(pageOrSections)) {
-      sections.push(...pageOrSections);
-    } else {
-      sections.push(
-        ..._.flatMap(
-          pageOrSections.languages,
-          (language): WiktionarySection[] => {
-            return language.children.slice();
+    const sections = _sections.slice();
+
+    while (sections.length > 0) {
+      const section = assertExists(sections.shift());
+
+      if (section.kind === 'pronunciation') {
+        const reg = /((?:\([^\)]*\))?\s?IPA\(key\): .*)/;
+
+        const pronunciations = _.flatMap(
+          section.pronunciations,
+          (pronunication): string[] => {
+            return pronunication.split('\n');
           }
-        )
-      );
+        );
+
+        pronunciations
+          .filter(
+            (pronunication): boolean => {
+              return reg.test(pronunication);
+            }
+          )
+          .forEach(
+            (pronunication): void => {
+              const matches = reg.exec(pronunication);
+              if (matches !== null) {
+                matches.shift();
+                ipa.push(
+                  matches
+                    .filter((match): boolean => !_.isEmpty(match))
+                    .map((match): string => match.replace(/IPA\(key\):\s/g, ''))
+                    .map(_.trim)
+                    .join(' ')
+                );
+              }
+            }
+          );
+
+        sections.push(...section.children);
+      } else if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
+      }
     }
 
+    return ipa.length > 0 ? ipa : undefined;
+  }
+
+  public extractPinyin(
+    _sections: readonly WiktionarySection[]
+  ): undefined | string[] {
+    const pinyin: string[] = [];
+
+    const sections = _sections.slice();
+
+    while (sections.length > 0) {
+      const section = assertExists(sections.shift());
+
+      if (section.kind === 'pronunciation') {
+        const reg = /\(Pinyin\): ([^\r\n]*)/;
+
+        section.pronunciations
+          .filter(
+            (pronunication): boolean => {
+              return reg.test(pronunication);
+            }
+          )
+          .forEach(
+            (pronunication): void => {
+              const matches = reg.exec(pronunication);
+              if (matches !== null && typeof matches[1] !== 'undefined') {
+                pinyin.push(
+                  ...matches[1]
+                    .replace(/\s*\([^)]*\)*/, '')
+                    .split(',')
+                    .map(_.trim)
+                    .filter((pinyin): boolean => !_.isEmpty(pinyin))
+                );
+              }
+            }
+          );
+
+        sections.push(...section.children);
+      } else if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
+      }
+    }
+
+    return pinyin.length > 0 ? pinyin : undefined;
+  }
+
+  public extractRomaji(
+    _sections: readonly WiktionarySection[]
+  ): undefined | string[] {
+    const romaji: string[] = [];
+
+    const sections = _sections.slice();
+
+    while (sections.length > 0) {
+      const section = assertExists(sections.shift());
+
+      if (section.kind === 'wordClass') {
+        const reg = /rōmaji ([^\},]*)[\)|,]/;
+
+        if (typeof section.headword !== 'undefined') {
+          const matches = reg.exec(section.headword);
+
+          if (matches !== null && typeof matches[1] !== 'undefined') {
+            romaji.push(matches[1].trim());
+          }
+        }
+
+        sections.push(...section.children);
+      } else if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
+      }
+    }
+
+    return romaji.length > 0 ? romaji : undefined;
+  }
+
+  public extractRomanization(
+    _sections: readonly WiktionarySection[]
+  ): undefined | string[] {
+    const romanization: string[] = [];
+
+    const sections = _sections.slice();
+
+    while (sections.length > 0) {
+      const section = assertExists(sections.shift());
+
+      if (section.kind === 'pronunciation') {
+        const reg = /Revised\sRomanization\?\n(.*)\n/;
+
+        if (typeof section.pronunciations !== 'undefined') {
+          section.pronunciations
+            .filter(
+              (pronunication): boolean => {
+                return reg.test(pronunication);
+              }
+            )
+            .forEach(
+              (pronunication): void => {
+                const matches = reg.exec(pronunication);
+                if (matches !== null && typeof matches[1] !== 'undefined') {
+                  romanization.push(matches[1].trim());
+                }
+              }
+            );
+        }
+
+        sections.push(...section.children);
+      } else if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
+      }
+    }
+
+    return romanization.length > 0 ? romanization : undefined;
+  }
+
+  public extractDefinitions(
+    sections: readonly WiktionarySection[]
+  ): PublicDefinition[] {
     return _.flatMap(
       sections,
       (section): PublicDefinition[] => {
@@ -110,67 +268,45 @@ export class WiktionaryPageConverter {
     );
   }
 
-  public extractCategories(page: WiktionaryPage): string[] {
-    const categories = _.flatMap(
-      page.languages,
-      (language): string[] => {
-        return language.categories;
-      }
-    );
-
-    const nodes: WiktionarySection[] = _.flatMap(
-      page.languages,
-      (language): WiktionarySection[] => {
-        return language.children.slice();
-      }
-    );
-
-    while (nodes.length > 0) {
-      const node = assertExists(nodes.pop());
-
-      if (node.kind === 'wordClass') {
-        categories.push(...node.categories);
-      }
-
-      if (node.kind !== 'example' && node.kind !== 'quotation') {
-        nodes.push(...node.children);
-      }
-    }
-
-    return _.uniq(categories);
-  }
-
-  public extractSources(pages: WiktionaryPage[]): string[] {
+  public extractSources(_sections: readonly WiktionarySection[]): string[] {
     const sources = [];
 
-    const nodes: WiktionarySection[] = _.flatMap(
-      pages,
-      (page): WiktionarySection[] => {
-        return _.flatMap(
-          page.languages,
-          (language): WiktionarySection[] => {
-            return language.children.slice();
-          }
-        );
-      }
-    );
+    const sections = _sections.slice();
 
-    while (nodes.length > 0) {
-      const node = assertExists(nodes.pop());
+    while (sections.length > 0) {
+      const section = assertExists(sections.shift());
 
       if (
-        node.kind === 'definition' ||
-        node.kind === 'example' ||
-        node.kind === 'quotation'
+        section.kind === 'definition' ||
+        section.kind === 'example' ||
+        section.kind === 'quotation'
       ) {
-        sources.push(node.source);
+        sources.push(section.source);
       }
 
-      if (node.kind !== 'example' && node.kind !== 'quotation') {
-        nodes.push(...node.children);
+      if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
       }
     }
 
     return _.uniq(sources);
+  }
+
+  public extractCategories(language: WiktionaryLanguage): string[] {
+    const categories = language.categories;
+
+    const sections: WiktionarySection[] = language.children.slice();
+
+    while (sections.length > 0) {
+      const section = assertExists(sections.pop());
+
+      if (section.kind === 'wordClass') {
+        categories.push(...section.categories);
+      } else if (section.kind !== 'example' && section.kind !== 'quotation') {
+        sections.push(...section.children);
+      }
+    }
+
+    return _.uniq(categories);
   }
 }
