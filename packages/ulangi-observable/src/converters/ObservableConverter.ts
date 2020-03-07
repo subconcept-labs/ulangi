@@ -186,7 +186,7 @@ export class ObservableConverter {
     dictionaryEntry: DictionaryEntry
   ): ObservableDictionaryEntry {
     return new ObservableDictionaryEntry(
-      dictionaryEntry.vocabularyText,
+      dictionaryEntry.vocabularyTerm,
       dictionaryEntry.definitions
     );
   }

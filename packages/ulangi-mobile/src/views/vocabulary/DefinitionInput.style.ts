@@ -23,7 +23,7 @@ export const baseStyles: DefinitionInputStyles = {
 
   meaning_input: {
     paddingHorizontal: 0,
-    paddingVertical: 10,
+    paddingVertical: 16,
     fontSize: 16,
     textAlignVertical: 'top',
   },

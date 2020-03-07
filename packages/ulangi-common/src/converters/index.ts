@@ -9,3 +9,4 @@ export { LanguageConverter } from './LanguageConverter';
 export { WordClassConverter } from './WordClassConverter';
 export { PublicVocabularyConverter } from './PublicVocabularyConverter';
 export { TranslationConverter } from './TranslationConverter';
+export { DictionaryEntryConverter } from './DictionaryEntryConverter';

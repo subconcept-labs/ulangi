@@ -20,11 +20,16 @@ export interface VocabularyFormStyles {
   category_name_container: ViewStyle;
   category_name: TextStyle;
   header: ViewStyle;
-  left: ViewStyle;
-  left_text: TextStyle;
-  right: ViewStyle;
+  title_container: ViewStyle;
+  title: TextStyle;
+  title_button_container: ViewStyle;
+  button_list: ViewStyle;
   button: ViewStyle;
+  button_red: ViewStyle;
+  button_green: ViewStyle;
   button_text: TextStyle;
+  button_red_text: TextStyle;
+  button_green_text: TextStyle;
   add_definition_btn_container: ViewStyle;
   add_definition_btn: ViewStyle;
   add_definition_btn_text: TextStyle;
@@ -44,7 +49,7 @@ export const baseStyles: VocabularyFormStyles = {
 
   vocabulary_input: {
     paddingHorizontal: 0,
-    paddingVertical: 10,
+    paddingVertical: 16,
     fontSize: 16,
     textAlignVertical: 'top',
   },
@@ -58,11 +63,16 @@ export const baseStyles: VocabularyFormStyles = {
   },
 
   category_name_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingBottom: 16,
     paddingHorizontal: 16,
   },
 
   category_name: {
+    //paddingTop: 8,
+    flex: 1,
+    flexWrap: 'wrap',
     fontSize: 16,
   },
 
@@ -73,54 +83,80 @@ export const baseStyles: VocabularyFormStyles = {
     justifyContent: 'space-between',
   },
 
-  left: {
+  title_container: {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     paddingLeft: 16,
+    paddingTop: 8,
   },
 
-  left_text: {
-    fontSize: 12,
+  title: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
 
-  right: {
+  title_button_container: {
+    paddingHorizontal: 12,
+  },
+
+  button_list: {
     flexDirection: 'row',
-    paddingRight: 8,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 12,
+    paddingBottom: 12,
   },
 
   button: {
+    marginHorizontal: 4,
     paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingVertical: 7,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 3,
+  },
+
+  button_green: {
+    backgroundColor: '#C5E1A5',
+  },
+
+  button_red: {
+    backgroundColor: '#FFCDD2',
   },
 
   button_text: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    color: config.styles.primaryColor,
+    color: '#424242',
     letterSpacing: -0.25,
+  },
+
+  button_red_text: {
+    color: '#C62828',
+  },
+
+  button_green_text: {
+    color: '#33691E',
   },
 
   add_definition_btn_container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
 
   add_definition_btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flex: 1,
+    paddingVertical: 9,
+    paddingHorizontal: 10,
+    marginHorizontal: 4,
   },
 
   add_definition_btn_text: {
-    paddingLeft: 4,
     fontSize: 12,
-    fontWeight: '700',
-    color: config.styles.primaryColor,
+    textAlign: 'center',
   },
 };
 
@@ -148,7 +184,7 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.primaryTextColor,
     },
 
-    left_text: {
+    title: {
       color: config.styles.light.primaryTextColor,
     },
 
@@ -182,7 +218,7 @@ export const darkStyles = StyleSheet.create(
       color: config.styles.dark.primaryTextColor,
     },
 
-    left_text: {
+    title: {
       color: config.styles.dark.primaryTextColor,
     },
 

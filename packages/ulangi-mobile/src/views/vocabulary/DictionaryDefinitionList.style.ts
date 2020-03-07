@@ -11,31 +11,27 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { config } from '../../constants/config';
 
 export interface DictionaryDefinitionListStyles {
-  source_container: ViewStyle;
-  source_left: ViewStyle;
-  source_text: TextStyle;
+  title_container: ViewStyle;
+  title: TextStyle;
+  term: TextStyle;
   license_text: TextStyle;
   hightlighted: TextStyle;
 }
 
 export const baseStyles: DictionaryDefinitionListStyles = {
-  source_container: {
+  title_container: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
-  source_left: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  title: {
+    fontSize: 14,
   },
 
-  source_text: {
-    fontSize: 14,
+  term: {
+    fontWeight: 'bold',
   },
 
   license_text: {
@@ -49,14 +45,18 @@ export const baseStyles: DictionaryDefinitionListStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    source_container: {
+    title_container: {
       backgroundColor: config.styles.light.secondaryBackgroundColor,
       borderTopColor: config.styles.light.primaryBorderColor,
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
 
-    source_text: {
+    title: {
       color: config.styles.light.secondaryTextColor,
+    },
+
+    term: {
+      color: config.styles.light.primaryTextColor,
     },
 
     license_text: {
@@ -67,14 +67,18 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    source_container: {
+    title_container: {
       backgroundColor: config.styles.dark.secondaryBackgroundColor,
       borderTopColor: config.styles.dark.primaryBorderColor,
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
 
-    source_text: {
+    title: {
       color: config.styles.dark.secondaryTextColor,
+    },
+
+    term: {
+      color: config.styles.dark.primaryTextColor,
     },
 
     license_text: {

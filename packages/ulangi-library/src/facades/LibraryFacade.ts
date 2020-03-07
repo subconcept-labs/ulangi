@@ -6,14 +6,13 @@
  */
 
 import * as elasticsearch from '@elastic/elasticsearch';
+import { DictionaryEntryConverter } from '@ulangi/ulangi-common/converters';
 import { PublicSet, PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
 import { PublicSetResolver } from '@ulangi/ulangi-common/resolvers';
 import { DictionaryFacade } from '@ulangi/ulangi-dictionary';
 import { createConnectionClass } from 'aws-es-connection';
 import * as AWS from 'aws-sdk';
 import * as _ from 'lodash';
-
-import { DictionaryEntryConverter } from '../converters/DictionaryEntryConverter';
 
 export class LibraryFacade {
   private client: elasticsearch.Client;

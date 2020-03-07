@@ -15,11 +15,23 @@ export class DictionaryEntryResolver extends AbstractResolver<DictionaryEntry> {
   private dictionaryDefinitionResolver = new DictionaryDefinitionResolver();
 
   protected rules = {
-    vocabularyText: Joi.string(),
+    vocabularyTerm: Joi.string(),
     definitions: Joi.array().items(
       Joi.object(this.dictionaryDefinitionResolver.getRules())
     ),
     categories: Joi.array().items(Joi.string()),
     tags: Joi.array().items(Joi.string()),
+    ipa: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    pinyin: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    romaji: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    romanization: Joi.array()
+      .items(Joi.string())
+      .optional(),
   };
 }

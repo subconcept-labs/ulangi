@@ -12,6 +12,8 @@ import {
 } from '@ulangi/ulangi-common/interfaces';
 import { GetDictionaryEntryRequestResolver } from '@ulangi/ulangi-common/resolvers';
 import { DictionaryFacade } from '@ulangi/ulangi-dictionary';
+import * as _ from 'lodash';
+import * as stopword from 'stopword';
 
 import { AuthenticationStrategy } from '../../enums/AuthenticationStrategy';
 import { ControllerOptions } from '../../interfaces/ControllerOptions';
@@ -58,16 +60,30 @@ export class GetDictionaryEntryController extends ApiController<
       searchTerm
     );
 
+    // Try it again without stop words
+    if (dictionaryEntry === null && _.has(stopword, searchTermLanguageCode)) {
+      const delimiter = _.includes(['zh', 'ja', 'ko'], searchTermLanguageCode)
+        ? ''
+        : ' ';
+
+      dictionaryEntry = await this.dictionary.getDictionaryEntry(
+        languageCodePair,
+        stopword
+          .removeStopwords(
+            searchTerm.split(delimiter),
+            _.get(stopword, searchTermLanguageCode)
+          )
+          .join(delimiter)
+          .trim()
+      );
+    }
+
     if (dictionaryEntry === null) {
       res.error(404, { errorCode: ErrorCode.DICTIONARY__NO_RESULTS });
     } else {
-      if (dictionaryEntry === null) {
-        res.error(404, { errorCode: ErrorCode.DICTIONARY__NO_RESULTS });
-      } else {
-        dictionaryEntry = removePointlessMeanings(dictionaryEntry);
+      dictionaryEntry = removePointlessMeanings(dictionaryEntry);
 
-        res.json({ dictionaryEntry });
-      }
+      res.json({ dictionaryEntry });
     }
   }
 }

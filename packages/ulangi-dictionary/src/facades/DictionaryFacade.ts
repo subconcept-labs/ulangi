@@ -80,9 +80,8 @@ export class DictionaryFacade {
         },
         mappings: {
           properties: {
-            vocabularyText: {
+            vocabularyTerm: {
               type: 'text',
-              copy_to: ['tags'],
               fields: {
                 keyword: {
                   type: 'keyword',
@@ -98,8 +97,6 @@ export class DictionaryFacade {
               properties: {
                 meaning: {
                   type: 'text',
-                  index: false,
-                  copy_to: ['tags'],
                 },
                 wordClasses: {
                   type: 'keyword',
@@ -134,7 +131,7 @@ export class DictionaryFacade {
 
   public getDictionaryEntry(
     languageCodePair: string,
-    vocabularyText: string
+    vocabularyTerm: string
   ): Promise<null | DictionaryEntry> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
@@ -146,7 +143,7 @@ export class DictionaryFacade {
               query: {
                 bool: {
                   must: [
-                    { term: { 'vocabularyText.keyword': vocabularyText } },
+                    { term: { 'vocabularyTerm.keyword': vocabularyTerm } },
                   ],
                 },
               },
@@ -184,11 +181,9 @@ export class DictionaryFacade {
               from: offset,
               size: limit,
               query: {
-                bool: {
-                  should: {
-                    match: { tags: searchTerm },
-                  },
-                  minimum_should_match: 1,
+                multi_match: {
+                  query: searchTerm,
+                  fields: ['vocabularyTerm^3', 'definitions.meaning'],
                 },
               },
             },

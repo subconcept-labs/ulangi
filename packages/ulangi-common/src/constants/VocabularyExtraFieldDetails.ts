@@ -21,6 +21,7 @@ import { PluralExtraFieldDetail } from '../core/extra-field-details/PluralExtraF
 import { PresentExtraFieldDetail } from '../core/extra-field-details/PresentExtraFieldDetail';
 import { PronunciationExtraFieldDetail } from '../core/extra-field-details/PronunicationExtraFieldDetail';
 import { RomajiExtraFieldDetail } from '../core/extra-field-details/RomajiExtraFieldDetail';
+import { RomanizationExtraFieldDetail } from '../core/extra-field-details/RomanizationExtraFieldDetail';
 import { SimplifiedExtraFieldDetail } from '../core/extra-field-details/SimplifiedExtraFieldDetail';
 import { SingularExtraFieldDetail } from '../core/extra-field-details/SingularExtraFieldDetail';
 import { TraditionalExtraFieldDetail } from '../core/extra-field-details/TraditionalExtraFieldDetail';
@@ -43,6 +44,7 @@ export const VocabularyExtraFieldDetails: {
   hiragana: new HiraganaExtraFieldDetail(),
   katakana: new KatakanaExtraFieldDetail(),
   romaji: new RomajiExtraFieldDetail(),
+  romanization: new RomanizationExtraFieldDetail(),
   pinyin: new PinyinExtraFieldDetail(),
   gender: new GenderExtraFieldDetail(),
   female: new FemaleExtraFieldDetail(),

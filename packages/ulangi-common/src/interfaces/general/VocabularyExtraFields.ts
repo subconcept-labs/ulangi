@@ -24,6 +24,9 @@ export interface VocabularyExtraFields {
   readonly katakana: readonly string[][];
   readonly romaji: readonly string[][];
 
+  // Korean
+  readonly romanization: readonly string[][];
+
   // Chinese
   readonly pinyin: readonly string[][];
   readonly simplified: readonly string[][];
