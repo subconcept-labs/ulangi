@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0](https://github.com/minhloi/ulangi/compare/v3.10.1...v3.11.0) (2020-03-07)
+
+
+### Bug Fixes
+
+* redesign vocabulary form ([10d4275](https://github.com/minhloi/ulangi/commit/10d4275))
+* remove stopword while getting dictionary entry ([7956c3f](https://github.com/minhloi/ulangi/commit/7956c3f))
+
+
+### Features
+
+* show IPA, pinyin, romaji ([dc639a0](https://github.com/minhloi/ulangi/commit/dc639a0))
+
+
+
+
+
 ## [3.10.1](https://github.com/minhloi/ulangi/compare/v3.10.0...v3.10.1) (2020-03-02)
 
 
