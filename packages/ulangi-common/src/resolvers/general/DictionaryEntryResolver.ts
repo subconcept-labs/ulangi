@@ -33,5 +33,6 @@ export class DictionaryEntryResolver extends AbstractResolver<DictionaryEntry> {
     romanization: Joi.array()
       .items(Joi.string())
       .optional(),
+    vocabularyText: Joi.string().optional(),
   };
 }

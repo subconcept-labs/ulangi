@@ -49,6 +49,9 @@ export class WiktionaryPageConverter {
       pinyin: this.extractPinyin(language.children),
       romaji: this.extractRomaji(language.children),
       romanization: this.extractRomanization(language.children),
+
+      // Only used prior to v3.10.0
+      vocabularyText: pageTitle,
     };
   }
 

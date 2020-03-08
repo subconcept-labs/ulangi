@@ -16,4 +16,8 @@ export interface DictionaryEntry {
   readonly pinyin?: string[];
   readonly romaji?: string[];
   readonly romanization?: string[];
+
+  // Deprecated (only used prior to v3.10.0)
+  // Use vocabularyTerm instead
+  readonly vocabularyText: undefined | string;
 }

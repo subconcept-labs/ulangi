@@ -157,7 +157,11 @@ export class DictionaryFacade {
               hit._source,
               true
             );
-            resolve(dictionaryEntry);
+            resolve({
+              ...dictionaryEntry,
+              // vocabularyText is used only on v3.10.0 and below
+              vocabularyText: dictionaryEntry.vocabularyTerm,
+            });
           }
         } catch (error) {
           reject(error);
