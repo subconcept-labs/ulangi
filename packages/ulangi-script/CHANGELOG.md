@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.1](https://github.com/ulangi/ulangi/compare/v3.11.0...v3.11.1) (2020-03-08)
+
+
+### Bug Fixes
+
+* get dictionary entry (backward-compatible to v3.10.0) ([4050d43](https://github.com/ulangi/ulangi/commit/4050d43))
+
+
+
+
+
 # [3.11.0](https://github.com/minhloi/ulangi/compare/v3.10.1...v3.11.0) (2020-03-07)
 
 
