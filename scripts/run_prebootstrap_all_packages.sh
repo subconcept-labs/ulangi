@@ -8,6 +8,6 @@ cd packages
 echo "Executing prebootstrap script of each package..."
 for d in */ ; do
   cd ${PROJECT_DIR}/packages/$d
-  npm run prebootstrap --if-present
+  npm run prebootstrap --if-present || exit 1
 done
 echo "Executed prebootstrap script of each package."
