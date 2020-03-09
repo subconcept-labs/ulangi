@@ -20,7 +20,7 @@ function createIncompatibleSetTableIfNotExists(tx: Transaction): void {
   tx.executeSql(`
     CREATE TABLE IF NOT EXISTS ${TableName.INCOMPATIBLE_SET} (
       setId VARCHAR(60) NOT NULL,
-      lastTriedCommonVersion INTEGER NOT NULL,
+      lastTriedCommonVersion VARCHAR(255) NOT NULL,
       lastTriedAt INTEGER NOT NULL,
       PRIMARY KEY(setId)
     ) WITHOUT ROWID;

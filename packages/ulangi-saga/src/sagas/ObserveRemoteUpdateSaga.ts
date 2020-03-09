@@ -107,10 +107,20 @@ export class ObserveRemoteUpdateSaga extends ProtectedSaga {
               syncTask: SyncTask.DOWNLOAD_SETS,
             })
           );
+          yield put(
+            createAction(ActionType.SYNC__ADD_SYNC_TASK, {
+              syncTask: SyncTask.DOWNLOAD_INCOMPATIBLE_SETS,
+            })
+          );
         } else if (_.has(payload, `users/${userId}/vocabularyLatestSyncTime`)) {
           yield put(
             createAction(ActionType.SYNC__ADD_SYNC_TASK, {
               syncTask: SyncTask.DOWNLOAD_VOCABULARY,
+            })
+          );
+          yield put(
+            createAction(ActionType.SYNC__ADD_SYNC_TASK, {
+              syncTask: SyncTask.DOWNLOAD_INCOMPATIBLE_VOCABULARY,
             })
           );
         }
