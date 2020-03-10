@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.2](https://github.com/ulangi/ulangi/compare/v3.11.1...v3.11.2) (2020-03-10)
+
+
+### Bug Fixes
+
+* don't need to record error before throw a saga error ([3d17cdf](https://github.com/ulangi/ulangi/commit/3d17cdf))
+* download incompatible sets/vocabulary on remote changes ([b17f004](https://github.com/ulangi/ulangi/commit/b17f004))
+* make sure MainActivity only created once ([4c577bc](https://github.com/ulangi/ulangi/commit/4c577bc))
+
+
+
+
+
 ## [3.11.1](https://github.com/ulangi/ulangi/compare/v3.11.0...v3.11.1) (2020-03-08)
 
 
