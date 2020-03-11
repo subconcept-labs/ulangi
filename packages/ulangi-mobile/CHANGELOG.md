@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.3](https://github.com/ulangi/ulangi/compare/v3.11.2...v3.11.3) (2020-03-11)
+
+
+### Bug Fixes
+
+* minor changes for Google Sheets add-on ([cc03342](https://github.com/ulangi/ulangi/commit/cc03342))
+* use custom build sqlite for Android ([26d0fa7](https://github.com/ulangi/ulangi/commit/26d0fa7))
+
+
+
+
+
 ## [3.11.2](https://github.com/ulangi/ulangi/compare/v3.11.1...v3.11.2) (2020-03-10)
 
 
