@@ -28,10 +28,10 @@ export class DatabaseFacade {
       async (resolve, reject): Promise<void> => {
         try {
           this.sharedDb = this.databaseAdapter.createDatabase();
-          await this.sharedDb.open(databaseFilePath, {
-            // eslint-disable-next-line
-            enable_foreign_keys: true,
-          });
+          await this.sharedDb.open(databaseFilePath);
+          await this.sharedDb.executeSql('PRAGMA foreign_keys = ON;');
+          await this.sharedDb.executeSql('PRAGMA journal_mode = DELETE;');
+
           resolve();
         } catch (error) {
           reject(error);
@@ -45,10 +45,10 @@ export class DatabaseFacade {
       async (resolve, reject): Promise<void> => {
         try {
           this.userDb = this.databaseAdapter.createDatabase();
-          await this.userDb.open(databaseFilePath, {
-            // eslint-disable-next-line
-            enable_foreign_keys: true,
-          });
+          await this.userDb.open(databaseFilePath);
+          await this.userDb.executeSql('PRAGMA foreign_keys = ON;');
+          await this.userDb.executeSql('PRAGMA journal_mode = DELETE;');
+
           resolve();
         } catch (error) {
           reject(error);
