@@ -14,14 +14,7 @@ import {
 } from '@ulangi/ulangi-common/interfaces';
 import { SessionModel } from '@ulangi/ulangi-local-database';
 import axios, { AxiosResponse } from 'axios';
-import {
-  call,
-  cancelled,
-  fork,
-  put,
-  take,
-  takeEvery,
-} from 'redux-saga/effects';
+import { call, cancelled, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 
 import { Iap, IapAdapter } from '../adapters/IapAdapter';
@@ -212,11 +205,12 @@ export class IapSaga extends ProtectedSaga {
 
     try {
       while (true) {
-        yield takeEvery(
-          channel,
-          (purchase): IterableIterator<any> => {
-            return this.processPurchase(purchase, apiUrl, googlePackageName);
-          }
+        const purchase = yield take(channel);
+        yield fork(
+          [this, this.processPurchase],
+          purchase,
+          apiUrl,
+          googlePackageName
         );
       }
     } finally {
