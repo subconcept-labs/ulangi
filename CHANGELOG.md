@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.4](https://github.com/ulangi/ulangi/compare/v3.11.3...v3.11.4) (2020-03-13)
+
+
+### Bug Fixes
+
+* a minor bug fix ([7b32a80](https://github.com/ulangi/ulangi/commit/7b32a80))
+* possible infinite loop when observing purchase events ([bca62ec](https://github.com/ulangi/ulangi/commit/bca62ec))
+
+
+
+
+
 ## [3.11.3](https://github.com/ulangi/ulangi/compare/v3.11.2...v3.11.3) (2020-03-11)
 
 
