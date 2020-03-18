@@ -6,8 +6,10 @@
  */
 
 import * as elasticsearch from '@elastic/elasticsearch';
-import { DictionaryEntry } from '@ulangi/ulangi-common/interfaces';
-import { DictionaryEntryResolver } from '@ulangi/ulangi-common/resolvers';
+import {
+  DictionaryEntry,
+  DictionaryEntryResolver,
+} from '@ulangi/wiktionary-core';
 import { createConnectionClass } from 'aws-es-connection';
 import * as AWS from 'aws-sdk';
 import * as _ from 'lodash';

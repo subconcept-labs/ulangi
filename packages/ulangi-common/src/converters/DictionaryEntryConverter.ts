@@ -5,9 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { DictionaryEntry } from '@ulangi/wiktionary-core';
 import * as uuid from 'uuid';
 
-import { DictionaryEntry } from '../interfaces/general/DictionaryEntry';
 import { PublicVocabulary } from '../interfaces/general/PublicVocabulary';
 
 export class DictionaryEntryConverter {

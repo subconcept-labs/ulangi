@@ -8,7 +8,6 @@
 import {
   Category,
   Definition,
-  DictionaryEntry,
   LanguagePair,
   PixabayImage,
   PublicDefinition,
@@ -20,6 +19,7 @@ import {
   VocabularyCategory,
   VocabularyWriting,
 } from '@ulangi/ulangi-common/interfaces';
+import { DictionaryEntry } from '@ulangi/wiktionary-core';
 import { observable } from 'mobx';
 
 import { ObservableCategory } from '../observables/category/ObservableCategory';

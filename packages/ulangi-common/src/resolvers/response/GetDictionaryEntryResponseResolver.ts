@@ -6,9 +6,9 @@
  */
 
 import { AbstractResolver } from '@ulangi/resolver';
+import { DictionaryEntryResolver } from '@ulangi/wiktionary-core';
 
 import { GetDictionaryEntryResponse } from '../../interfaces/response/GetDictionaryEntryResponse';
-import { DictionaryEntryResolver } from '../general/DictionaryEntryResolver';
 
 export class GetDictionaryEntryResponseResolver extends AbstractResolver<
   GetDictionaryEntryResponse

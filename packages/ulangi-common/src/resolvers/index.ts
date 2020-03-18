@@ -15,7 +15,6 @@ export {
 } from './general/AutoShowInAppRatingResolver';
 export { CategoryResolver } from './general/CategoryResolver';
 export { DefinitionResolver } from './general/DefinitionResolver';
-export { DictionaryEntryResolver } from './general/DictionaryEntryResolver';
 export { FeatureSettingsResolver } from './general/FeatureSettingsResolver';
 export { GlobalAutoArchiveResolver } from './general/GlobalAutoArchiveResolver';
 export { GlobalDataSharingResolver } from './general/GlobalDataSharingResolver';
