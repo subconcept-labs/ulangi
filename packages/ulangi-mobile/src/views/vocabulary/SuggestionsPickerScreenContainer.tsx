@@ -5,10 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Options } from '@ulangi/react-native-navigation';
 import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableSuggestionListState,
   ObservableSuggestionsPickerScreen,
@@ -23,7 +21,7 @@ import { SuggestionsPickerScreen } from './SuggestionsPickerScreen';
 
 export interface SuggestionsPickerScreenPassedProps {
   readonly currentVocabularyText: string;
-  readonly onPick: (definition: DeepPartial<Definition>) => void;
+  readonly updateVocabularyText: (vocabularyText: string) => void;
 }
 
 @observer
@@ -41,8 +39,8 @@ export class SuggestionsPickerScreenContainer extends Container<
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableSuggestionsPickerScreen(
-    this.props.passedProps.currentVocabularyText,
     new ObservableSuggestionListState(
+      this.props.passedProps.currentVocabularyText,
       null,
       null,
       observable.box(ActivityState.INACTIVE),
@@ -62,15 +60,15 @@ export class SuggestionsPickerScreenContainer extends Container<
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
+    this.props.passedProps.updateVocabularyText,
   );
 
   public componentDidMount(): void {
-    this.screenDelegate.getSuggestionsEntry();
+    this.screenDelegate.getSuggestions();
   }
 
   public componentWillUnmount(): void {
-    this.screenDelegate.clearSuggestionsEntry();
-    this.screenDelegate.clearTranslations();
+    this.screenDelegate.clearSuggestions();
   }
 
   protected onThemeChanged(theme: Theme): void {
@@ -93,7 +91,6 @@ export class SuggestionsPickerScreenContainer extends Container<
         themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}
         screenDelegate={this.screenDelegate}
-        onPick={this.props.passedProps.onPick}
       />
     );
   }

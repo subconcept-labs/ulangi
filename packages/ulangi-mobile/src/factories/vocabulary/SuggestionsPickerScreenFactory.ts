@@ -7,18 +7,28 @@
 
 import { ObservableSuggestionsPickerScreen } from '@ulangi/ulangi-observable';
 
+import { SuggestionListDelegate } from '../../delegates/vocabulary/SuggestionListDelegate';
 import { SuggestionsPickerScreenDelegate } from '../../delegates/vocabulary/SuggestionsPickerScreenDelegate';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SuggestionsPickerScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableSuggestionsPickerScreen,
+    updateVocabularyText: (vocabularyText: string) => void,
   ): SuggestionsPickerScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
+    const suggestionListDelegate = new SuggestionListDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+      this.props.observableConverter,
+      observableScreen.suggestionListState,
+    );
+
     return new SuggestionsPickerScreenDelegate(
-      observableScreen,
+      suggestionListDelegate,
       navigatorDelegate,
+      updateVocabularyText,
     );
   }
 }

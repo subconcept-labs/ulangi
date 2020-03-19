@@ -174,6 +174,28 @@ export class VocabularyFormDelegate {
     }
   }
 
+  public showSuggestions(): void {
+    Keyboard.dismiss();
+    if (this.vocabularyFormState.vocabularyTerm === '') {
+      this.dialogDelegate.show({
+        message: 'To see suggestions, please enter the term first.',
+        showCloseButton: true,
+        closeOnTouchOutside: true,
+      });
+    } else {
+      this.navigatorDelegate.showLightBox(
+        ScreenName.SUGGESTIONS_PICKER_SCREEN,
+        {
+          currentVocabularyText: this.vocabularyFormState.vocabularyText,
+          updateVocabularyText: (vocabularyText): void => {
+            this.vocabularyFormState.vocabularyText = vocabularyText;
+          },
+        },
+        SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+      );
+    }
+  }
+
   public showVocabularyExtraFieldsPicker(): void {
     Keyboard.dismiss();
     this.navigatorDelegate.showLightBox(

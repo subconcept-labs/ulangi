@@ -53,7 +53,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
       return (
         <PickerLoading
           theme={this.props.theme}
-          message="Searching dictionary"
+          message="Searching dictionary..."
         />
       );
     } else if (
@@ -112,7 +112,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
           theme={this.props.theme}
           testID={VocabularyFormIds.DICTIONARY_SPECIFIC_LANGUAGE_REQUIRED}
           errorMessage={
-            'Dictionary is not available because either the source or the target language is selected as "Any Language"'
+            "We couldn't search dictionary because the language of your current set is ambiguous (Any Language.)"
           }
         />
       );
@@ -165,7 +165,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
                 onPress={this.props.getDictionaryEntry}
                 style={this.styles.highlighted_text}>
                 {' '}
-                Please try again.
+                Please check internet connection and try again.
               </DefaultText>
               <DefaultText>
                 {' '}

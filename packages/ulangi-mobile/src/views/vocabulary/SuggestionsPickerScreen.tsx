@@ -5,46 +5,43 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
-  ObservableDictionaryPickerScreen,
   ObservableLightBox,
   ObservableSetStore,
+  ObservableSuggestionsPickerScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
-import { DictionaryPickerScreenIds } from '../../constants/ids/DictionaryPickerScreenIds';
+import { SuggestionsPickerScreenIds } from '../../constants/ids/SuggestionsPickerScreenIds';
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
-import { DictionaryPickerScreenDelegate } from '../../delegates/vocabulary/DictionaryPickerScreenDelegate';
+import { SuggestionsPickerScreenDelegate } from '../../delegates/vocabulary/SuggestionsPickerScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackground';
-import { DictionaryPickerContent } from './DictionaryPickerContent';
+import { SuggestionsPickerContent } from './SuggestionsPickerContent';
 import {
-  DictionaryPickerScreenStyles,
+  SuggestionsPickerScreenStyles,
   darkStyles,
   lightStyles,
-} from './DictionaryPickerScreen.style';
+} from './SuggestionsPickerScreen.style';
 
-export interface DictionaryPickerScreenProps {
+export interface SuggestionsPickerScreenProps {
   observableLightBox: ObservableLightBox;
-  observableScreen: ObservableDictionaryPickerScreen;
+  observableScreen: ObservableSuggestionsPickerScreen;
   themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
-  screenDelegate: DictionaryPickerScreenDelegate;
-  onPick: (definition: DeepPartial<Definition>) => void;
+  screenDelegate: SuggestionsPickerScreenDelegate;
 }
 
 @observer
-export class DictionaryPickerScreen extends React.Component<
-  DictionaryPickerScreenProps
+export class SuggestionsPickerScreen extends React.Component<
+  SuggestionsPickerScreenProps
 > {
-  public get styles(): DictionaryPickerScreenStyles {
+  public get styles(): SuggestionsPickerScreenStyles {
     return this.props.themeStore.theme === Theme.LIGHT
       ? lightStyles
       : darkStyles;
@@ -52,14 +49,14 @@ export class DictionaryPickerScreen extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <LightBoxTouchableBackground
-        testID={DictionaryPickerScreenIds.SCREEN}
+        testID={SuggestionsPickerScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
         style={this.styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
         onPress={this.props.screenDelegate.close}>
         <LightBoxAnimatableView
-          testID={DictionaryPickerScreenIds.CONTAINER}
+          testID={SuggestionsPickerScreenIds.CONTAINER}
           observableLightBox={this.props.observableLightBox}>
           <View style={this.styles.inner_container}>
             {this.renderPickerHeader()}
@@ -77,7 +74,7 @@ export class DictionaryPickerScreen extends React.Component<
       <View style={this.styles.picker_header}>
         <View style={this.styles.header_item_left}>
           <DefaultText style={this.styles.header_text_left}>
-            Dictionary
+            Suggestions
           </DefaultText>
         </View>
         <TouchableOpacity
@@ -93,7 +90,7 @@ export class DictionaryPickerScreen extends React.Component<
 
   private renderPickerContent(): React.ReactElement<any> {
     return (
-      <DictionaryPickerContent
+      <SuggestionsPickerContent
         theme={this.props.themeStore.theme}
         learningLanguageName={
           this.props.setStore.existingCurrentSet.learningLanguage.fullName
@@ -101,12 +98,9 @@ export class DictionaryPickerScreen extends React.Component<
         translatedToLanguageName={
           this.props.setStore.existingCurrentSet.translatedToLanguage.fullName
         }
-        dictionaryEntryState={this.props.observableScreen.dictionaryEntryState}
-        translationListState={this.props.observableScreen.translationListState}
-        getDictionaryEntry={this.props.screenDelegate.getDictionaryEntry}
-        translate={this.props.screenDelegate.translate}
+        suggestionListState={this.props.observableScreen.suggestionListState}
+        getSuggestions={this.props.screenDelegate.getSuggestions}
         openLink={this.props.screenDelegate.openLink}
-        onPick={this.props.onPick}
       />
     );
   }

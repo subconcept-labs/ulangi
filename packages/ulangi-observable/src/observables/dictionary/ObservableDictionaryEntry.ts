@@ -64,6 +64,40 @@ export class ObservableDictionaryEntry {
     );
   }
 
+  @computed
+  public get attributions(): Attribution[] {
+    return this.sources.map(
+      (source): Attribution => {
+        const sourceName = this.attributionHelper.formatSource(source);
+        const sourceLink = this.attributionHelper.generateLinkBySource(source, {
+          term: this.vocabularyTerm,
+        });
+        const license = this.attributionHelper.getLicenseBySource(source);
+        const licenseLink = this.attributionHelper.getLinkByLicense(
+          license || ''
+        );
+
+        return {
+          sourceName,
+          sourceLink,
+          license,
+          licenseLink,
+        };
+      }
+    );
+  }
+
+  @computed
+  public get sources(): string[] {
+    return _.uniq(
+      this.definitions.map(
+        (definition): string => {
+          return definition.source;
+        }
+      )
+    );
+  }
+
   public constructor(
     vocabularyTerm: string,
     definitions: readonly ObservableDictionaryDefinition[]

@@ -64,6 +64,7 @@ export class AddEditVocabularyScreen extends React.Component<
                 this.props.observableScreen.vocabularyFormState
               }
               lookUp={this.props.screenDelegate.lookUp}
+              showSuggestions={this.props.screenDelegate.showSuggestions}
               showVocabularyExtraFieldsPicker={
                 this.props.screenDelegate.showVocabularyExtraFieldsPicker
               }

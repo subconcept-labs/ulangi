@@ -7,21 +7,18 @@
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 
-import { ObservableSuggestionListState } from '../vocabulary/ObservableSuggestionListState';
 import { ObservableScreen } from '../screen/ObservableScreen';
+import { ObservableSuggestionListState } from '../vocabulary/ObservableSuggestionListState';
 
 export class ObservableSuggestionsPickerScreen extends ObservableScreen {
-  public readonly currentVocabularyText: string;
   public readonly suggestionListState: ObservableSuggestionListState;
 
   public constructor(
-    currentVocabularyText: string,
     suggestionListState: ObservableSuggestionListState,
     componentId: string,
     screenName: ScreenName
   ) {
     super(componentId, screenName, null);
-    this.currentVocabularyText = currentVocabularyText;
     this.suggestionListState = suggestionListState;
   }
 }

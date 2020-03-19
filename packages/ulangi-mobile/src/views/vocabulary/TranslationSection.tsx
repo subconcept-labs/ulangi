@@ -110,7 +110,7 @@ export class TranslationSection extends React.Component<
           theme={this.props.theme}
           testID={VocabularyFormIds.TRANSLATION_SPECIFIC_LANGUAGE_REQUIRED}
           errorMessage={
-            'Translation is not supported because either the source or the target language is selected as "Any Language"'
+            "We couldn't translate it because the language of your current set is ambiguous (Any Language.)"
           }
         />
       );

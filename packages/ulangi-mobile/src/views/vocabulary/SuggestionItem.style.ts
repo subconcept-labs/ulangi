@@ -1,60 +1,52 @@
-/*
- * Copyright (c) Minh Loi.
- *
- * This file is part of Ulangi which is released under GPL v3.0.
- * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
- */
-
 import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
-export interface ExtraFieldsPickerContentStyles {
-  picker_content: ViewStyle;
-  row: ViewStyle;
-  left: ViewStyle;
-  right: ViewStyle;
-  description: TextStyle;
-  name: TextStyle;
-  btn_container: ViewStyle;
-  btn: ViewStyle;
-  btn_text: TextStyle;
-  note: TextStyle;
+export interface SuggestionItemStyles {
+  item_container: ViewStyle;
+  text: TextStyle;
+  importance: TextStyle;
+  dot: TextStyle;
+  message: TextStyle;
+  button_list: ViewStyle;
+  button: ViewStyle;
+  button_text: TextStyle;
 }
 
-export const baseStyles: ExtraFieldsPickerContentStyles = {
-  picker_content: {},
-
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+export const baseStyles: SuggestionItemStyles = {
+  item_container: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
-  left: {},
+  text: {},
 
-  right: {
-    flexShrink: 1,
+  importance: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    letterSpacing: -0.5,
+    textAlignVertical: 'center',
   },
 
-  description: {},
-
-  name: {
-    fontSize: 15,
-    fontWeight: '700',
+  dot: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 
-  btn_container: {
-    flexWrap: 'wrap',
+  message: {
+    fontSize: 16,
+  },
+
+  button_list: {
+    marginTop: 4,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'flex-end',
   },
 
-  btn: {
+  button: {
     borderRadius: 3,
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 8,
@@ -68,69 +60,65 @@ export const baseStyles: ExtraFieldsPickerContentStyles = {
     elevation: 0.75,
   },
 
-  btn_text: {
+  button_text: {
     fontSize: 15,
-  },
-
-  note: {
-    fontSize: 12,
   },
 };
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    row: {
+    item_container: {
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
 
-    description: {
+    importance: {
       color: config.styles.light.secondaryTextColor,
     },
 
-    name: {
+    dot: {
+      color: config.styles.light.secondaryTextColor,
+    },
+
+    message: {
       color: config.styles.light.primaryTextColor,
     },
 
-    btn: {
+    button: {
       borderColor: config.styles.light.primaryBorderColor,
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
 
-    btn_text: {
+    button_text: {
       color: config.styles.light.primaryTextColor,
-    },
-
-    note: {
-      color: config.styles.light.secondaryTextColor,
     },
   }),
 );
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    row: {
+    item_container: {
       borderBottomColor: config.styles.dark.primaryBorderColor,
     },
 
-    description: {
+    importance: {
       color: config.styles.dark.secondaryTextColor,
     },
 
-    name: {
+    dot: {
+      color: config.styles.dark.secondaryTextColor,
+    },
+
+    message: {
       color: config.styles.dark.primaryTextColor,
     },
 
-    btn: {
+    button: {
       borderColor: config.styles.dark.primaryBorderColor,
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
 
-    btn_text: {
+    button_text: {
       color: config.styles.dark.primaryTextColor,
-    },
-
-    note: {
-      color: config.styles.dark.secondaryTextColor,
     },
   }),
 );
