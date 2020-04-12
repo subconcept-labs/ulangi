@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-common",
-  "version": "3.11.3",
+  "version": "3.11.5",
   "description": "Ulangi Common",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,7 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "@ulangi/sqlite-adapter": "^1.2.0",
-		"@ulangi/wiktionary-core": "^1.5.1",
+    "@ulangi/wiktionary-core": "^1.5.1",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jest": "^22.4.1",

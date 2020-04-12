@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-observable",
-  "version": "3.11.3",
+  "version": "3.11.5",
   "description": "Ulangi Observable",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,19 +20,19 @@
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/ulangi-action": "^3.11.3",
-    "@ulangi/ulangi-common": "^3.11.3",
+    "@ulangi/ulangi-action": "^3.11.5",
+    "@ulangi/ulangi-common": "^3.11.5",
     "change-case": "^3.0.2",
     "lodash": "^4.17.4",
     "moment": "^2.22.2"
   },
   "devDependencies": {
-    "@ulangi/wiktionary-core": "^1.5.1",
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.118",
     "@types/uuid": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
+    "@ulangi/wiktionary-core": "^1.5.1",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jest": "^22.5.1",
