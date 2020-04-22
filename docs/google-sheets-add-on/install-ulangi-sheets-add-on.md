@@ -11,6 +11,8 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 #### Difficulty: Easy
 
 ## I. Installation
+0. Note that this add-on only works on Google Sheets web version.
+
 1. Create a Google Sheets document by visiting [https://sheets.google.com](https://sheets.google.com)
 
 2. On the menu, select **Add-on > Get add-ons**.
@@ -19,7 +21,6 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 
 4. On Permission dialog, click **Allow** button.
   ![Permission dialog](./assets/images/permission-dialog.png)
-
 
 ---
 ## II. Setup
