@@ -29,6 +29,16 @@ To insert multiple definitions, put three consecutive hyphens (```---```) in bet
 - On **Mac**, press ```Command + Enter```
 
 ---
+## Inserting extra fields
+To insert extra fields, you can just type them below each definitions
+
+![Inserting extra fields](./assets/images/extra_fields.png)
+
+#### TIP: How to go to a new line in a cell:
+- On **Windows/Linux/Chrome OS**, press ```Ctrl + Enter```
+- On **Mac**, press ```Command + Enter```
+
+---
 ## Sorting and filtering
 You can sort and filter data however you like by choosing **Data > Filter views > Create new filter view.**
 
