@@ -19,7 +19,7 @@
     "@ulangi/resolver": "^2.0.3",
     "@ulangi/ulangi-common": "^3.11.5",
     "@ulangi/ulangi-dictionary": "^3.11.5",
-    "@ulangi/wiktionary-core": "^1.5.1",
+		"@ulangi/wiktionary-core": "^2.1.5",
     "aws-es-connection": "^1.0.0",
     "aws-sdk": "^2.254.1",
     "joi": "^14.3.1",

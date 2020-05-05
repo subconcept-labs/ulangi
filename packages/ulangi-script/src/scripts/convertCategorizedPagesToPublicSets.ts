@@ -82,7 +82,7 @@ function run(): void {
                     page.languages,
                     (language): Author[] => {
                       return wiktionaryPageConverter
-                        .extractSources(language.children)
+                        .extractSources(language)
                         .map(
                           (source): Author => {
                             return { name: source, link: '' };
