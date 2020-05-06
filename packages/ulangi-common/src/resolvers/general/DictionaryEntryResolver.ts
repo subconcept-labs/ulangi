@@ -24,7 +24,34 @@ export class DictionaryEntryResolver extends AbstractResolver<DictionaryEntry> {
     ipa: Joi.array()
       .items(Joi.string())
       .optional(),
+    gender: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    plural: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    feminine: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    masculine: Joi.array()
+      .items(Joi.string())
+      .optional(),
     pinyin: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    zhuyin: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    simplified: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    traditional: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    hiragana: Joi.array()
+      .items(Joi.string())
+      .optional(),
+    reading: Joi.array()
       .items(Joi.string())
       .optional(),
     romaji: Joi.array()

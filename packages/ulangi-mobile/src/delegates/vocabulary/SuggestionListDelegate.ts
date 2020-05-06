@@ -1,6 +1,10 @@
+import { assertExists } from '@ulangi/assert';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
-import { DictionaryEntry } from '@ulangi/ulangi-common/interfaces';
+import {
+  DictionaryEntry,
+  VocabularyExtraFields,
+} from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -102,114 +106,121 @@ export class SuggestionListDelegate {
   ): void {
     const suggestions: ObservableSuggestion[] = [];
 
-    if (typeof dictionaryEntry.pinyin !== 'undefined') {
-      const suggestedPinyin = _.difference(
-        dictionaryEntry.pinyin,
-        this.suggestionListState.currentVocabularyExtraFields.pinyin
-          .map(_.first)
-          .filter((pinyin): pinyin is string => _.isUndefined(pinyin)),
-      );
-
-      if (suggestedPinyin.length > 0) {
-        suggestions.push(
-          this.createPinyinSuggestion(
-            suggestedPinyin,
-            (pinyin: string): void => {
-              this.suggestionListState.currentVocabularyText +=
-                '\n' + `[pinyin: ${pinyin}]`;
-
-              updateVocabularyText(
-                this.suggestionListState.currentVocabularyText,
-              );
-
-              this.updateSuggestions(dictionaryEntry, updateVocabularyText);
-            },
-          ),
-        );
+    const mapping: {
+      [P in keyof Partial<DictionaryEntry>]: {
+        fieldName: keyof VocabularyExtraFields;
+        message: string;
+        importance: 'OPTIONAL' | 'RECOMMENDED';
       }
-    }
+    } = {
+      reading: {
+        fieldName: 'reading',
+        message: 'Add kanji reading to know how to read it.',
+        importance: 'OPTIONAL',
+      },
+      hiragana: {
+        fieldName: 'hiragana',
+        message: 'Add hiragana to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      romaji: {
+        fieldName: 'romaji',
+        message: 'Add romaji to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      pinyin: {
+        fieldName: 'pinyin',
+        message: 'Add pinyin to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      zhuyin: {
+        fieldName: 'zhuyin',
+        message: 'Add zhuyin to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      simplified: {
+        fieldName: 'simplified',
+        message: 'Add simplified to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      traditional: {
+        fieldName: 'traditional',
+        message: 'Add traditional to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      romanization: {
+        fieldName: 'romanization',
+        message: 'Add romanization to know how to pronounce it.',
+        importance: 'OPTIONAL',
+      },
+      ipa: {
+        fieldName: 'ipa',
+        message: 'Add IPA for pronunciation.',
+        importance: 'OPTIONAL',
+      },
+      gender: {
+        fieldName: 'gender',
+        message: 'Add gender.',
+        importance: 'OPTIONAL',
+      },
+      plural: {
+        fieldName: 'plural',
+        message: 'Add plural form.',
+        importance: 'OPTIONAL',
+      },
+      feminine: {
+        fieldName: 'female',
+        message: 'Add feminine form.',
+        importance: 'OPTIONAL',
+      },
+      masculine: {
+        fieldName: 'male',
+        message: 'Add masculine form.',
+        importance: 'OPTIONAL',
+      },
+    };
 
-    if (typeof dictionaryEntry.romaji !== 'undefined') {
-      const suggestedRomaji = _.difference(
-        dictionaryEntry.romaji,
-        this.suggestionListState.currentVocabularyExtraFields.romaji
-          .map(_.first)
-          .filter((romaji): romaji is string => _.isUndefined(romaji)),
-      );
+    for (const key of Object.keys(mapping) as (keyof DictionaryEntry)[]) {
+      if (typeof dictionaryEntry[key] !== 'undefined') {
+        const { fieldName, message, importance } = assertExists(mapping[key]);
 
-      if (suggestedRomaji.length > 0) {
-        suggestions.push(
-          this.createRomajiSuggestion(
-            suggestedRomaji,
-            (romaji: string): void => {
-              this.suggestionListState.currentVocabularyText +=
-                '\n' + `[romaji: ${romaji}]`;
-
-              updateVocabularyText(
-                this.suggestionListState.currentVocabularyText,
-              );
-
-              this.updateSuggestions(dictionaryEntry, updateVocabularyText);
-            },
-          ),
+        const suggestedValues = _.difference(
+          dictionaryEntry[key] as string[],
+          this.suggestionListState.currentVocabularyExtraFields[fieldName]
+            .map(_.first)
+            .filter((value): value is string => _.isUndefined(value)),
         );
-      }
-    }
 
-    if (typeof dictionaryEntry.romanization !== 'undefined') {
-      const suggestedRomanization = _.difference(
-        dictionaryEntry.romanization,
-        this.suggestionListState.currentVocabularyExtraFields.romanization
-          .map(_.first)
-          .filter(
-            (romanization): romanization is string =>
-              _.isUndefined(romanization),
-          ),
-      );
+        if (suggestedValues.length > 0) {
+          suggestions.push(
+            new ObservableSuggestion(
+              importance,
+              message,
+              observable.array(
+                suggestedValues.map(
+                  (value): { text: string; onPress: () => void } => {
+                    return {
+                      text: `+ [${fieldName}: ${value}]`,
+                      onPress: (): void => {
+                        this.suggestionListState.currentVocabularyText +=
+                          '\n' + `[${fieldName}: ${value}]`;
 
-      if (suggestedRomanization.length > 0) {
-        suggestions.push(
-          this.createRomanizationSuggestion(
-            suggestedRomanization,
-            (romanization: string): void => {
-              this.suggestionListState.currentVocabularyText +=
-                '\n' + `[romanization: ${romanization}]`;
+                        updateVocabularyText(
+                          this.suggestionListState.currentVocabularyText,
+                        );
 
-              updateVocabularyText(
-                this.suggestionListState.currentVocabularyText,
-              );
-
-              this.updateSuggestions(dictionaryEntry, updateVocabularyText);
-            },
-          ),
-        );
-      }
-    }
-
-    if (typeof dictionaryEntry.ipa !== 'undefined') {
-      const suggestedIpa = _.difference(
-        dictionaryEntry.ipa,
-        this.suggestionListState.currentVocabularyExtraFields.ipa
-          .map(_.first)
-          .filter((ipa): ipa is string => _.isUndefined(ipa)),
-      );
-
-      if (suggestedIpa.length > 0) {
-        suggestions.push(
-          this.createIPASuggestion(
-            suggestedIpa,
-            (ipa: string): void => {
-              this.suggestionListState.currentVocabularyText +=
-                '\n' + `[ipa: ${ipa}]`;
-
-              updateVocabularyText(
-                this.suggestionListState.currentVocabularyText,
-              );
-
-              this.updateSuggestions(dictionaryEntry, updateVocabularyText);
-            },
-          ),
-        );
+                        this.updateSuggestions(
+                          dictionaryEntry,
+                          updateVocabularyText,
+                        );
+                      },
+                    };
+                  },
+                ),
+              ),
+            ),
+          );
+        }
       }
     }
 
@@ -221,94 +232,6 @@ export class SuggestionListDelegate {
 
     this.suggestionListState.attributions = observable.array(
       observableDictionaryEntry.attributions,
-    );
-  }
-
-  private createIPASuggestion(
-    suggestedIpa: string[],
-    onSelect: (ipa: string) => void,
-  ): ObservableSuggestion {
-    return new ObservableSuggestion(
-      'OPTIONAL',
-      'Add IPA to know how to pronounce it.',
-      observable.array(
-        suggestedIpa.map(
-          (ipa): { text: string; onPress: () => void } => {
-            return {
-              text: `+ [ipa: ${ipa}]`,
-              onPress: (): void => {
-                onSelect(ipa);
-              },
-            };
-          },
-        ),
-      ),
-    );
-  }
-
-  private createPinyinSuggestion(
-    suggestedPinyin: string[],
-    onSelect: (pinyin: string) => void,
-  ): ObservableSuggestion {
-    return new ObservableSuggestion(
-      'OPTIONAL',
-      'Add pinyin to know how to pronounce it.',
-      observable.array(
-        suggestedPinyin.map(
-          (pinyin): { text: string; onPress: () => void } => {
-            return {
-              text: `+ [pinyin: ${pinyin}]`,
-              onPress: (): void => {
-                onSelect(pinyin);
-              },
-            };
-          },
-        ),
-      ),
-    );
-  }
-
-  private createRomajiSuggestion(
-    suggestedRomaji: string[],
-    onSelect: (pinyin: string) => void,
-  ): ObservableSuggestion {
-    return new ObservableSuggestion(
-      'OPTIONAL',
-      'Add romaji to know how to pronounce it.',
-      observable.array(
-        suggestedRomaji.map(
-          (romaji): { text: string; onPress: () => void } => {
-            return {
-              text: `+ [romaji: ${romaji}]`,
-              onPress: (): void => {
-                onSelect(romaji);
-              },
-            };
-          },
-        ),
-      ),
-    );
-  }
-
-  private createRomanizationSuggestion(
-    suggestedRomanization: string[],
-    onSelect: (pinyin: string) => void,
-  ): ObservableSuggestion {
-    return new ObservableSuggestion(
-      'OPTIONAL',
-      'Add romanization to know how to pronounce it.',
-      observable.array(
-        suggestedRomanization.map(
-          (romanization): { text: string; onPress: () => void } => {
-            return {
-              text: `+ [romanization: ${romanization}]`,
-              onPress: (): void => {
-                onSelect(romanization);
-              },
-            };
-          },
-        ),
-      ),
     );
   }
 }

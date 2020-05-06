@@ -13,7 +13,16 @@ export interface DictionaryEntry {
   readonly categories: string[];
   readonly tags: string[];
   readonly ipa?: string[];
+  readonly gender?: string[];
+  readonly plural?: string[];
   readonly pinyin?: string[];
+  readonly zhuyin?: string[];
+  readonly simplified?: string[];
+  readonly traditional?: string[];
+  readonly hiragana?: string[];
+  readonly reading?: string[];
   readonly romaji?: string[];
   readonly romanization?: string[];
+  readonly feminine?: string[];
+  readonly masculine?: string[];
 }

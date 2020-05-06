@@ -20,11 +20,13 @@ import { PinyinExtraFieldDetail } from '../core/extra-field-details/PinyinExtraF
 import { PluralExtraFieldDetail } from '../core/extra-field-details/PluralExtraFieldDetail';
 import { PresentExtraFieldDetail } from '../core/extra-field-details/PresentExtraFieldDetail';
 import { PronunciationExtraFieldDetail } from '../core/extra-field-details/PronunicationExtraFieldDetail';
+import { ReadingExtraFieldDetail } from '../core/extra-field-details/ReadingExtraFieldDetail';
 import { RomajiExtraFieldDetail } from '../core/extra-field-details/RomajiExtraFieldDetail';
 import { RomanizationExtraFieldDetail } from '../core/extra-field-details/RomanizationExtraFieldDetail';
 import { SimplifiedExtraFieldDetail } from '../core/extra-field-details/SimplifiedExtraFieldDetail';
 import { SingularExtraFieldDetail } from '../core/extra-field-details/SingularExtraFieldDetail';
 import { TraditionalExtraFieldDetail } from '../core/extra-field-details/TraditionalExtraFieldDetail';
+import { ZhuyinExtraFieldDetail } from '../core/extra-field-details/ZhuyinExtraFieldDetail';
 import { VocabularyExtraFields } from '../interfaces/general/VocabularyExtraFields';
 
 export const VocabularyExtraFieldDetails: {
@@ -40,12 +42,14 @@ export const VocabularyExtraFieldDetails: {
   present: new PresentExtraFieldDetail(),
   past: new PastExtraFieldDetail(),
   pastParticiple: new PastParticipleExtraFieldDetail(),
+  reading: new ReadingExtraFieldDetail(),
   kanji: new KanjiExtraFieldDetail(),
   hiragana: new HiraganaExtraFieldDetail(),
   katakana: new KatakanaExtraFieldDetail(),
   romaji: new RomajiExtraFieldDetail(),
   romanization: new RomanizationExtraFieldDetail(),
   pinyin: new PinyinExtraFieldDetail(),
+  zhuyin: new ZhuyinExtraFieldDetail(),
   gender: new GenderExtraFieldDetail(),
   female: new FemaleExtraFieldDetail(),
   male: new MaleExtraFieldDetail(),
