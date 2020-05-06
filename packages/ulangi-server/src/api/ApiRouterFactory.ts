@@ -63,7 +63,7 @@ export class ApiRouterFactory {
                       await controller.handleRequest(req, res);
                     }
                   } catch (error) {
-                    console.log(error)
+                    console.log(error);
                     if (res.headersSent() === false) {
                       res.error(500, {
                         errorCode: ErrorCode.GENERAL__SERVER_ERROR,
