@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { assertExists } from '@ulangi/assert';
 import * as uuid from 'uuid';
 
 import { DictionaryEntry } from '../interfaces/general/DictionaryEntry';
@@ -37,28 +38,35 @@ export class DictionaryEntryConverter {
 
   private getExtraFields(entry: DictionaryEntry): string[] {
     const extraFields: string[] = [];
-    if (typeof entry.ipa !== 'undefined') {
-      extraFields.push(...entry.ipa.map((ipa): string => `[ipa: ${ipa}]`));
-    }
 
-    if (typeof entry.pinyin !== 'undefined') {
-      extraFields.push(
-        ...entry.pinyin.map((pinyin): string => `[pinyin: ${pinyin}]`)
-      );
-    }
+    const mapping: { [P in keyof Partial<DictionaryEntry>]: string } = {
+      reading: 'reading',
+      hiragana: 'hiragana',
+      romaji: 'romaji',
+      pinyin: 'pinyin',
+      zhuyin: 'zhuyin',
+      simplified: 'simplified',
+      traditional: 'traditional',
+      romanization: 'romanization',
+      ipa: 'ipa',
+      gender: 'gender',
+      plural: 'plural',
+      feminine: 'female',
+      masculine: 'male',
+    };
 
-    if (typeof entry.romanization !== 'undefined') {
-      extraFields.push(
-        ...entry.romanization.map(
-          (romanization): string => `[romanization: ${romanization}]`
-        )
-      );
-    }
+    for (const key of Object.keys(mapping) as (keyof DictionaryEntry)[]) {
+      if (typeof entry[key] !== 'undefined' && Array.isArray(entry[key])) {
+        const fieldName = assertExists(mapping[key]);
 
-    if (typeof entry.romaji !== 'undefined') {
-      extraFields.push(
-        ...entry.romaji.map((romaji): string => `[romaji: ${romaji}]`)
-      );
+        const values = entry[key] as string[];
+
+        extraFields.push(
+          ...assertExists(
+            values.map((value): string => `[${fieldName}: ${value}]`)
+          )
+        );
+      }
     }
 
     return extraFields;

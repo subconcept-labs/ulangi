@@ -31,9 +31,6 @@ export class SuggestionItem extends React.Component<SuggestionItemProps> {
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.item_container}>
-        <DefaultText style={this.styles.importance}>
-          {this.props.suggestion.importance}
-        </DefaultText>
         <DefaultText style={this.styles.message}>
           {this.props.suggestion.message}
         </DefaultText>

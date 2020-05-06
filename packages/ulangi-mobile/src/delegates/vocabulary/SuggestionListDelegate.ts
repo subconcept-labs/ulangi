@@ -68,15 +68,7 @@ export class SuggestionListDelegate {
           once(
             ActionType.DICTIONARY__GET_ENTRY_SUCCEEDED,
             ({ dictionaryEntry }): void => {
-              if (dictionaryEntry.definitions.length === 0) {
-                this.suggestionListState.fetchState.set(ActivityState.ERROR);
-                this.suggestionListState.fetchError.set(
-                  ErrorCode.SUGGESTION__NO_RESULTS,
-                );
-              } else {
-                this.suggestionListState.fetchState.set(ActivityState.INACTIVE);
-              }
-
+              this.suggestionListState.fetchState.set(ActivityState.INACTIVE);
               this.updateSuggestions(dictionaryEntry, updateVocabularyText);
             },
           ),
@@ -115,67 +107,67 @@ export class SuggestionListDelegate {
     } = {
       reading: {
         fieldName: 'reading',
-        message: 'Add kanji reading to know how to read it.',
+        message: 'Suggested kanji reading(s):',
         importance: 'OPTIONAL',
       },
       hiragana: {
         fieldName: 'hiragana',
-        message: 'Add hiragana to know how to pronounce it.',
+        message: 'Suggested hiragana form(s):',
         importance: 'OPTIONAL',
       },
       romaji: {
         fieldName: 'romaji',
-        message: 'Add romaji to know how to pronounce it.',
+        message: 'Suggested romaji:',
         importance: 'OPTIONAL',
       },
       pinyin: {
         fieldName: 'pinyin',
-        message: 'Add pinyin to know how to pronounce it.',
+        message: 'Suggested pinyin:',
         importance: 'OPTIONAL',
       },
       zhuyin: {
         fieldName: 'zhuyin',
-        message: 'Add zhuyin to know how to pronounce it.',
+        message: 'Suggested zhuyin:',
         importance: 'OPTIONAL',
       },
       simplified: {
         fieldName: 'simplified',
-        message: 'Add simplified to know how to pronounce it.',
+        message: 'Suggested simplified form:',
         importance: 'OPTIONAL',
       },
       traditional: {
         fieldName: 'traditional',
-        message: 'Add traditional to know how to pronounce it.',
+        message: 'Suggested traditional form:',
         importance: 'OPTIONAL',
       },
       romanization: {
         fieldName: 'romanization',
-        message: 'Add romanization to know how to pronounce it.',
+        message: 'Suggested romanization:',
         importance: 'OPTIONAL',
       },
       ipa: {
         fieldName: 'ipa',
-        message: 'Add IPA for pronunciation.',
+        message: 'Suggested IPA:',
         importance: 'OPTIONAL',
       },
       gender: {
         fieldName: 'gender',
-        message: 'Add gender.',
+        message: 'Suggested gender:',
         importance: 'OPTIONAL',
       },
       plural: {
         fieldName: 'plural',
-        message: 'Add plural form.',
+        message: 'Suggested plural form(s):',
         importance: 'OPTIONAL',
       },
       feminine: {
         fieldName: 'female',
-        message: 'Add feminine form.',
+        message: 'Suggested feminine form:',
         importance: 'OPTIONAL',
       },
       masculine: {
         fieldName: 'male',
-        message: 'Add masculine form.',
+        message: 'Suggested masculine form:',
         importance: 'OPTIONAL',
       },
     };

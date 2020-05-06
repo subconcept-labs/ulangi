@@ -65,16 +65,7 @@ export class DictionaryEntryDelegate {
           once(
             ActionType.DICTIONARY__GET_ENTRY_SUCCEEDED,
             ({ dictionaryEntry }): void => {
-              if (dictionaryEntry.definitions.length === 0) {
-                this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
-                this.dictionaryEntryState.fetchError.set(
-                  ErrorCode.DICTIONARY__NO_RESULTS,
-                );
-              } else {
-                this.dictionaryEntryState.fetchState.set(
-                  ActivityState.INACTIVE,
-                );
-              }
+              this.dictionaryEntryState.fetchState.set(ActivityState.INACTIVE);
               this.dictionaryEntryState.dictionaryEntry = this.observableConverter.convertToObservableDictionaryEntry(
                 dictionaryEntry,
               );

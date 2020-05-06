@@ -24,7 +24,7 @@ export const baseStyles: SuggestionItemStyles = {
   text: {},
 
   importance: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: 'bold',
     letterSpacing: -0.5,
     textAlignVertical: 'center',
