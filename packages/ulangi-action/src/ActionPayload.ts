@@ -17,7 +17,6 @@ import {
 import {
   AutoArchiveSettings,
   Category,
-  DictionaryEntry,
   ErrorBag,
   PixabayImage,
   Product,
@@ -35,6 +34,7 @@ import {
   VocabularyBulkEdit,
   VocabularyFilterCondition,
 } from '@ulangi/ulangi-common/types';
+import { DictionaryEntry } from '@ulangi/wiktionary-core';
 
 export interface ActionPayload {
   [P: string]: null | object;

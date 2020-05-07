@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-server",
-  "version": "3.11.0",
+  "version": "3.11.5",
   "description": "Ulangi Server",
   "main": "dist/index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "@google-cloud/translate": "^2.1.2",
     "@ulangi/assert": "^1.0.6",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/wiktionary-core": "^1.1.0",
+    "@ulangi/wiktionary-core": "^1.5.1",
     "app-root-path": "^2.0.1",
     "autobind-decorator": "^2.1.0",
     "aws-sdk": "^2.242.1",

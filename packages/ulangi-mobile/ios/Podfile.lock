@@ -645,7 +645,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-sqlite-storage: bb10beb2407e5fc21f3f1bcd86bacbfd6edcc818
+  react-native-sqlite-storage: b17fedb4d5120f105589c2d1bd82708661c00d30
   react-native-version-info: daadd78b8fc93cf2764cb5aa52ec995961b62201
   react-native-webview: b1ea98894c474b27c4080779939959e1f3653147
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76

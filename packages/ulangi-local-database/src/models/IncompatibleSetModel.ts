@@ -31,7 +31,7 @@ export class IncompatibleSetModel {
           const query = squel
             .select()
             .from(TableName.INCOMPATIBLE_SET)
-            .where('lastTriedCommonVersion < ?', currentCommonVersion)
+            .where('lastTriedCommonVersion != ?', currentCommonVersion)
             .limit(limit)
             .toParam();
 

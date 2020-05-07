@@ -7,11 +7,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { WiktionaryPage } from '@ulangi/wiktionary-core';
+import {
+  WiktionaryPage,
+  WiktionaryPageConverter,
+} from '@ulangi/wiktionary-core';
 import * as _ from 'lodash';
 import * as readline from 'readline';
-
-import { WiktionaryPageConverter } from '../converters/WiktionaryPageConverter';
 
 run();
 

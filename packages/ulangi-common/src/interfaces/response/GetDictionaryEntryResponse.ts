@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DictionaryEntry } from '../general/DictionaryEntry';
+import { DictionaryEntry } from '@ulangi/wiktionary-core';
 
 export interface GetDictionaryEntryResponse {
   readonly dictionaryEntry: DictionaryEntry;

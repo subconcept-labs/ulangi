@@ -6,8 +6,10 @@
  */
 
 import * as elasticsearch from '@elastic/elasticsearch';
-import { DictionaryEntry } from '@ulangi/ulangi-common/interfaces';
-import { DictionaryEntryResolver } from '@ulangi/ulangi-common/resolvers';
+import {
+  DictionaryEntry,
+  DictionaryEntryResolver,
+} from '@ulangi/wiktionary-core';
 import { createConnectionClass } from 'aws-es-connection';
 import * as AWS from 'aws-sdk';
 import * as _ from 'lodash';
@@ -157,7 +159,11 @@ export class DictionaryFacade {
               hit._source,
               true
             );
-            resolve(dictionaryEntry);
+            resolve({
+              ...dictionaryEntry,
+              // vocabularyText is used only on v3.10.0 and below
+              vocabularyText: dictionaryEntry.vocabularyTerm,
+            });
           }
         } catch (error) {
           reject(error);

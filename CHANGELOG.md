@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.5](https://github.com/ulangi/ulangi/compare/v3.11.4...v3.11.5) (2020-04-12)
+
+**Note:** Version bump only for package root
+
+
+
+
+
+## [3.11.4](https://github.com/ulangi/ulangi/compare/v3.11.3...v3.11.4) (2020-03-13)
+
+
+### Bug Fixes
+
+* a minor bug fix ([7b32a80](https://github.com/ulangi/ulangi/commit/7b32a80))
+* possible infinite loop when observing purchase events ([bca62ec](https://github.com/ulangi/ulangi/commit/bca62ec))
+
+
+
+
+
+## [3.11.3](https://github.com/ulangi/ulangi/compare/v3.11.2...v3.11.3) (2020-03-11)
+
+
+### Bug Fixes
+
+* minor changes for Google Sheets add-on ([cc03342](https://github.com/ulangi/ulangi/commit/cc03342))
+* use custom build sqlite for Android ([26d0fa7](https://github.com/ulangi/ulangi/commit/26d0fa7))
+* use journal_mode DELETE by default ([2af60ab](https://github.com/ulangi/ulangi/commit/2af60ab))
+
+
+
+
+
+## [3.11.2](https://github.com/ulangi/ulangi/compare/v3.11.1...v3.11.2) (2020-03-10)
+
+
+### Bug Fixes
+
+* don't need to record error before throw a saga error ([3d17cdf](https://github.com/ulangi/ulangi/commit/3d17cdf))
+* download incompatible sets/vocabulary on remote changes ([b17f004](https://github.com/ulangi/ulangi/commit/b17f004))
+* make sure MainActivity only created once ([4c577bc](https://github.com/ulangi/ulangi/commit/4c577bc))
+
+
+
+
+
+## [3.11.1](https://github.com/ulangi/ulangi/compare/v3.11.0...v3.11.1) (2020-03-08)
+
+
+### Bug Fixes
+
+* get dictionary entry (backward-compatible to v3.10.0) ([4050d43](https://github.com/ulangi/ulangi/commit/4050d43))
+
+
+
+
+
 # [3.11.0](https://github.com/minhloi/ulangi/compare/v3.10.1...v3.11.0) (2020-03-07)
 
 

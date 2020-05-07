@@ -31,7 +31,7 @@ export class IncompatibleVocabularyModel {
           const query = squel
             .select()
             .from(TableName.INCOMPATIBLE_VOCABULARY)
-            .where('lastTriedCommonVersion < ?', currentCommonVersion)
+            .where('lastTriedCommonVersion != ?', currentCommonVersion)
             .limit(limit)
             .toParam();
 

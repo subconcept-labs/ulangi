@@ -9,12 +9,14 @@
 
 import { DictionaryEntryConverter } from '@ulangi/ulangi-common/converters';
 import { PublicSet, PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
-import { WiktionaryPage } from '@ulangi/wiktionary-core';
+import {
+  WiktionaryPage,
+  WiktionaryPageConverter,
+} from '@ulangi/wiktionary-core';
 import * as _ from 'lodash';
 import * as readline from 'readline';
 import * as uuid from 'uuid';
 
-import { WiktionaryPageConverter } from '../converters/WiktionaryPageConverter';
 import { loadConfig } from '../setup/loadConfig';
 
 export interface Author {
@@ -80,7 +82,7 @@ function run(): void {
                     page.languages,
                     (language): Author[] => {
                       return wiktionaryPageConverter
-                        .extractSources(language.children)
+                        .extractSources(language)
                         .map(
                           (source): Author => {
                             return { name: source, link: '' };

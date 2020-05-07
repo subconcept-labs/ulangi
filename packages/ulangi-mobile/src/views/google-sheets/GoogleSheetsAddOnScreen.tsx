@@ -20,6 +20,7 @@ import { config } from '../../constants/config';
 import { GoogleSheetsAddOnScreenIds } from '../../constants/ids/GoogleSheetsAddOnScreenIds';
 import { GoogleSheetsAddOnScreenDelegate } from '../../delegates/google-sheets/GoogleSheetsAddOnScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
+import { SmartScrollView } from '../common/SmartScrollView';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
@@ -47,30 +48,16 @@ export class GoogleSheetsAddOnScreen extends React.Component<
 
   public render(): React.ReactElement<any> {
     return (
-      <View
+      <SmartScrollView
         style={this.styles.screen}
         testID={GoogleSheetsAddOnScreenIds.SCREEN}>
         <View style={this.styles.intro_container}>
           <DefaultText style={this.styles.intro_text}>
-            You can synchronize (import/export) words from within a Google
-            Sheets document.{' '}
-            <DefaultText
-              style={this.styles.highlighted}
-              onPress={(): void =>
-                this.props.screenDelegate.goToLink(
-                  config.links.ulangiSheetsAddOn.youtubeDemo,
-                )
-              }>
-              See demo video.
-            </DefaultText>
+            We developed a Google Sheets add-on so that you can directly
+            import/export your data from a Google Sheets document.
           </DefaultText>
         </View>
         <View style={this.styles.section_container}>
-          <SectionGroup theme={this.props.themeStore.theme} header="API KEY">
-            {typeof this.props.observableScreen.apiKey === 'undefined'
-              ? this.renderPasswordInput()
-              : this.renderApiKey()}
-          </SectionGroup>
           <SectionGroup theme={this.props.themeStore.theme} header="TUTORIALS">
             <SectionRow
               theme={this.props.themeStore.theme}
@@ -93,8 +80,15 @@ export class GoogleSheetsAddOnScreen extends React.Component<
               }
             />
           </SectionGroup>
+          <SectionGroup
+            theme={this.props.themeStore.theme}
+            header="API KEY FOR GOOGLE SHEETS">
+            {typeof this.props.observableScreen.apiKey === 'undefined'
+              ? this.renderPasswordInput()
+              : this.renderApiKey()}
+          </SectionGroup>
         </View>
-      </View>
+      </SmartScrollView>
     );
   }
 
@@ -107,7 +101,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
       return (
         <SectionRow
           theme={this.props.themeStore.theme}
-          leftText="To get API key, please set up your account first."
+          leftText="To get API key, please set up the Ulangi account first."
         />
       );
     } else {

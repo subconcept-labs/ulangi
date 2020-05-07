@@ -9,23 +9,25 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 # How to install Ulangi Sheets Add-on
 
 #### Difficulty: Easy
-It takes only a minute to install and set up this add-on.
 
 ## I. Installation
-1. Open a Google Sheets document and go to **Add-on > Get add-ons**.
+0. Note that this add-on only works on Google Sheets web version.
 
-2. Search **Ulangi Sheets** and install it.
+1. Create a Google Sheets document by visiting [https://sheets.google.com](https://sheets.google.com)
 
-3. On Permission dialog, click **Allow** button.
+2. On the menu, select **Add-on > Get add-ons**.
+
+3. Search **Ulangi Sheets** and install it.
+
+4. On Permission dialog, click **Allow** button.
   ![Permission dialog](./assets/images/permission-dialog.png)
-
 
 ---
 ## II. Setup
 
 1. Go to **Add-on > Ulangi Sheets > Show sidebar.**
 
-2. Click on **Set API key**. Copy and parse your API key from Ulangi app.
+2. Click on **Set API key**. Copy and paste your API key from Ulangi app.
 
 3. Click on **Set up for syncing** and select a set to sync.
 

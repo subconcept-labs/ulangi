@@ -8,7 +8,7 @@ declare -a packages=("ulangi-common" "ulangi-action" "ulangi-local-database" "ul
 for i in "${packages[@]}"
 do
   cd ${PROJECT_DIR}/packages/"$i"
-  npm run compile
+  npm run compile || exit 1
 done
 
 # declare packages that requires to install local packaages before compiling
@@ -16,6 +16,6 @@ declare -a packages=("ulangi-server" "ulangi-mobile")
 for i in "${packages[@]}"
 do
   cd ${PROJECT_DIR}/packages/"$i"
-  npm run install-local
-  npm run compile
+  npm run install-local || exit 1
+  npm run compile || exit 1
 done

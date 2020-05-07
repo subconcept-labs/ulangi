@@ -6,9 +6,9 @@
  */
 
 import { assertExists } from '@ulangi/assert';
+import { DictionaryEntry } from '@ulangi/wiktionary-core';
 import * as uuid from 'uuid';
 
-import { DictionaryEntry } from '../interfaces/general/DictionaryEntry';
 import { PublicVocabulary } from '../interfaces/general/PublicVocabulary';
 
 export class DictionaryEntryConverter {

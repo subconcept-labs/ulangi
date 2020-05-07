@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.5](https://github.com/ulangi/ulangi/compare/v3.11.4...v3.11.5) (2020-04-12)
+
+**Note:** Version bump only for package @ulangi/ulangi-common
+
+
+
+
+
+## [3.11.3](https://github.com/ulangi/ulangi/compare/v3.11.2...v3.11.3) (2020-03-11)
+
+
+### Bug Fixes
+
+* use custom build sqlite for Android ([26d0fa7](https://github.com/ulangi/ulangi/commit/26d0fa7))
+
+
+
+
+
+## [3.11.1](https://github.com/ulangi/ulangi/compare/v3.11.0...v3.11.1) (2020-03-08)
+
+
+### Bug Fixes
+
+* get dictionary entry (backward-compatible to v3.10.0) ([4050d43](https://github.com/ulangi/ulangi/commit/4050d43))
+
+
+
+
+
 # [3.11.0](https://github.com/minhloi/ulangi/compare/v3.10.1...v3.11.0) (2020-03-07)
 
 

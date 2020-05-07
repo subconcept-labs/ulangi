@@ -1,8 +1,8 @@
 import { assertExists } from '@ulangi/assert';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
+import { DictionaryEntry } from "@ulangi/wiktionary-core"
 import {
-  DictionaryEntry,
   VocabularyExtraFields,
 } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';

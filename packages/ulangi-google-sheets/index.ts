@@ -7,7 +7,6 @@
 
 import { renderMenu } from "./renderMenu"
 import { unsetSyncingAction } from "./unsetSyncingAction"
-import { setApiUrl } from "./setApiUrl"
 import { getColumnNames } from "./getColumnNames"
 import { getColumnPositionByName } from "./getColumnPositionByName"
 import { getDefaultValues } from "./getDefaultValues"
@@ -17,7 +16,6 @@ import { emptyOriginalValues } from "./emptyOriginalValues"
 
 function onInstall(e: GoogleAppsScript.Events.AddonOnInstall) {
   renderMenu()
-  setApiUrl()
 }
 
 function onOpen(e: GoogleAppsScript.Events.SheetsOnOpen) {

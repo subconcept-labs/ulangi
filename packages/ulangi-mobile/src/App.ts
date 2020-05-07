@@ -77,8 +77,6 @@ export class App {
       adapters.systemTheme,
       {
         onError: (error): void => {
-          RemoteLogger.logError(error);
-
           // setImmediate is required for the app to terminate
           // if error is propagated to the root saga
           setImmediate(

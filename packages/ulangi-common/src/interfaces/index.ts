@@ -12,8 +12,6 @@ export { ButtonStyles } from './general/ButtonStyles';
 export { Category } from './general/Category';
 export { Definition } from './general/Definition';
 export { DefinitionExtraFields } from './general/DefinitionExtraFields';
-export { DictionaryDefinition } from './general/DictionaryDefinition';
-export { DictionaryEntry } from './general/DictionaryEntry';
 export { ErrorBag } from './general/ErrorBag';
 export { FeatureSettings } from './general/FeatureSettings';
 export { GlobalAutoArchive } from './general/GlobalAutoArchive';

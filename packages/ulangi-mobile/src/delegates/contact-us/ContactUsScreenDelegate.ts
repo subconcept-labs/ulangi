@@ -180,7 +180,7 @@ export class ContactUsScreenDelegate {
         message,
       }),
       group(
-        on(ActionType.USER__CONTACT_ADMIN, callback.onContactingAdmin),
+        on(ActionType.USER__CONTACTING_ADMIN, callback.onContactingAdmin),
         once(
           ActionType.USER__CONTACT_ADMIN_SUCCEEDED,
           callback.onContactAdminSucceeded,
