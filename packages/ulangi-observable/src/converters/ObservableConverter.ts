@@ -187,7 +187,23 @@ export class ObservableConverter {
   ): ObservableDictionaryEntry {
     return new ObservableDictionaryEntry(
       dictionaryEntry.vocabularyTerm,
-      dictionaryEntry.definitions
+      dictionaryEntry.definitions,
+      dictionaryEntry.categories,
+      dictionaryEntry.tags,
+      dictionaryEntry.ipa,
+      dictionaryEntry.gender,
+      dictionaryEntry.plural,
+      dictionaryEntry.pinyin,
+      dictionaryEntry.zhuyin,
+      dictionaryEntry.simplified,
+      dictionaryEntry.traditional,
+      dictionaryEntry.hiragana,
+      dictionaryEntry.reading,
+      dictionaryEntry.romaji,
+      dictionaryEntry.romanization,
+      dictionaryEntry.feminine,
+      dictionaryEntry.masculine,
+      dictionaryEntry.sources
     );
   }
 

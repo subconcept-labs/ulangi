@@ -22,7 +22,7 @@
   "dependencies": {
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/ulangi-common": "^3.11.5",
-    "@ulangi/wiktionary-core": "^2.2.0"
+    "@ulangi/wiktionary-core": "^2.2.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",

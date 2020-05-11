@@ -12,4 +12,5 @@ export interface PublicVocabulary {
   readonly vocabularyText: string;
   readonly definitions: readonly PublicDefinition[];
   readonly categories: readonly string[];
+  readonly sources?: readonly string[];
 }

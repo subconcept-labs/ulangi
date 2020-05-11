@@ -81,9 +81,45 @@ export class GetDictionaryEntryController extends ApiController<
     if (dictionaryEntry === null) {
       res.error(404, { errorCode: ErrorCode.DICTIONARY__NO_RESULTS });
     } else {
+      let traditionalEntry, masculineEntry;
+
+      if (
+        typeof dictionaryEntry.traditional !== 'undefined' &&
+        dictionaryEntry.traditional.length > 0
+      ) {
+        traditionalEntry =
+          (await this.dictionary.getDictionaryEntry(
+            languageCodePair,
+            dictionaryEntry.traditional[0]
+          )) || undefined;
+
+        traditionalEntry =
+          typeof traditionalEntry !== 'undefined'
+            ? removePointlessMeanings(traditionalEntry)
+            : undefined;
+      } else if (
+        typeof dictionaryEntry.masculine !== 'undefined' &&
+        dictionaryEntry.masculine.length > 0
+      ) {
+        masculineEntry =
+          (await this.dictionary.getDictionaryEntry(
+            languageCodePair,
+            dictionaryEntry.masculine[0]
+          )) || undefined;
+
+        masculineEntry =
+          typeof masculineEntry !== 'undefined'
+            ? removePointlessMeanings(masculineEntry)
+            : undefined;
+      }
+
       dictionaryEntry = removePointlessMeanings(dictionaryEntry);
 
-      res.json({ dictionaryEntry });
+      res.json({
+        dictionaryEntry,
+        masculineEntry,
+        traditionalEntry,
+      });
     }
   }
 }

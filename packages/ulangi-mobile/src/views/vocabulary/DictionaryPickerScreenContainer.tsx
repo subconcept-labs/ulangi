@@ -45,6 +45,8 @@ export class DictionaryPickerScreenContainer extends Container<
     this.props.passedProps.currentTerm,
     new ObservableDictionaryEntryState(
       null,
+      null,
+      null,
       observable.box(ActivityState.INACTIVE),
       observable.box(undefined),
     ),

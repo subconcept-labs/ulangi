@@ -9,7 +9,6 @@ import { DeepPartial } from '@ulangi/extended-types';
 import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
 import { Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableDictionaryEntryState } from '@ulangi/ulangi-observable';
-import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -61,25 +60,45 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
     ) {
       return this.renderPickerError();
     } else if (this.props.dictionaryEntryState.dictionaryEntry !== null) {
-      const dictionaryEntry = this.props.dictionaryEntryState.dictionaryEntry;
+      const {
+        dictionaryEntry,
+        traditionalEntry,
+        masculineEntry,
+      } = this.props.dictionaryEntryState;
       return (
         <React.Fragment>
-          {_.map(
-            dictionaryEntry.definitionsBySource,
-            ({ definitions, attribution }): React.ReactElement<any> => {
-              return (
-                <DictionaryDefinitionList
-                  key={attribution.sourceName}
-                  theme={this.props.theme}
-                  term={dictionaryEntry.vocabularyTerm}
-                  attribution={attribution}
-                  definitions={definitions}
-                  onPick={this.props.onPick}
-                  openLink={this.props.openLink}
-                />
-              );
-            },
-          )}
+          {dictionaryEntry.definitions.length > 0 ? (
+            <DictionaryDefinitionList
+              theme={this.props.theme}
+              term={dictionaryEntry.vocabularyTerm}
+              attributions={dictionaryEntry.attributions}
+              definitions={dictionaryEntry.definitions}
+              onPick={this.props.onPick}
+              openLink={this.props.openLink}
+            />
+          ) : null}
+          {traditionalEntry !== null ? (
+            <DictionaryDefinitionList
+              theme={this.props.theme}
+              term={traditionalEntry.vocabularyTerm}
+              label="traditional"
+              attributions={traditionalEntry.attributions}
+              definitions={traditionalEntry.definitions}
+              onPick={this.props.onPick}
+              openLink={this.props.openLink}
+            />
+          ) : null}
+          {masculineEntry !== null ? (
+            <DictionaryDefinitionList
+              theme={this.props.theme}
+              term={masculineEntry.vocabularyTerm}
+              label="masculine"
+              attributions={masculineEntry.attributions}
+              definitions={masculineEntry.definitions}
+              onPick={this.props.onPick}
+              openLink={this.props.openLink}
+            />
+          ) : null}
         </React.Fragment>
       );
     } else {

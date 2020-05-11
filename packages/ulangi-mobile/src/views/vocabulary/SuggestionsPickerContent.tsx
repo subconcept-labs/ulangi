@@ -5,23 +5,19 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { assertExists } from '@ulangi/assert';
 import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
-import { Attribution } from '@ulangi/ulangi-common/interfaces';
-import {
-  ObservableSuggestion,
-  ObservableSuggestionListState,
-} from '@ulangi/ulangi-observable';
-import { IObservableArray } from 'mobx';
+import { ObservableSuggestionListState } from '@ulangi/ulangi-observable';
+import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultText } from '../common/DefaultText';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { PickerError } from './PickerError';
 import { PickerLoading } from './PickerLoading';
-import { SuggestionItem } from './SuggestionItem';
+import { SuggestionList, SuggestionListProps } from './SuggestionList';
 import {
   SuggestionsPickerContentStyles,
   darkStyles,
@@ -51,9 +47,10 @@ export class SuggestionsPickerContent extends React.Component<
     return this.props.theme === Theme.LIGHT ? light : dark;
   }
 
-  public render(): null | React.ReactElement<any> {
+  public render(): React.ReactElement<any> {
     if (
-      this.props.suggestionListState.fetchState.get() === ActivityState.ACTIVE
+      this.props.suggestionListState.dictionaryEntryState.fetchState.get() ===
+      ActivityState.ACTIVE
     ) {
       return (
         <PickerLoading
@@ -62,19 +59,18 @@ export class SuggestionsPickerContent extends React.Component<
         />
       );
     } else if (
-      this.props.suggestionListState.fetchState.get() === ActivityState.ERROR
+      this.props.suggestionListState.dictionaryEntryState.fetchState.get() ===
+      ActivityState.ERROR
     ) {
       return this.renderPickerError();
-    } else if (this.props.suggestionListState.suggestionList !== null) {
-      return this.renderList(this.props.suggestionListState.suggestionList);
     } else {
-      return null;
+      return this.renderSuggestions();
     }
   }
 
   private renderPickerError(): React.ReactElement<any> {
     if (
-      this.props.suggestionListState.fetchError.get() ===
+      this.props.suggestionListState.dictionaryEntryState.fetchError.get() ===
       ErrorCode.DICTIONARY__UNSUPPORTED
     ) {
       return (
@@ -90,7 +86,7 @@ export class SuggestionsPickerContent extends React.Component<
         />
       );
     } else if (
-      this.props.suggestionListState.fetchError.get() ===
+      this.props.suggestionListState.dictionaryEntryState.fetchError.get() ===
       ErrorCode.DICTIONARY__SPECIFIC_LANAGUAGE_REQUIRED
     ) {
       return (
@@ -103,7 +99,7 @@ export class SuggestionsPickerContent extends React.Component<
         />
       );
     } else if (
-      this.props.suggestionListState.fetchError.get() ===
+      this.props.suggestionListState.dictionaryEntryState.fetchError.get() ===
       ErrorCode.DICTIONARY__NO_RESULTS
     ) {
       return (
@@ -146,95 +142,87 @@ export class SuggestionsPickerContent extends React.Component<
     }
   }
 
-  private renderList(
-    suggestions: IObservableArray<ObservableSuggestion>,
-  ): React.ReactElement<any> {
+  private renderSuggestions(): React.ReactElement<any> {
+    const { suggestionListState } = this.props;
+
+    const allSuggestionLists: (null | Omit<
+      SuggestionListProps,
+      'theme' | 'openLink'
+    >)[] = [
+      suggestionListState.dictionaryEntryState.dictionaryEntry !== null
+        ? {
+            term:
+              suggestionListState.dictionaryEntryState.dictionaryEntry
+                .vocabularyTerm,
+            label: undefined,
+            attributions:
+              suggestionListState.dictionaryEntryState.dictionaryEntry
+                .attributions,
+            suggestions: assertExists(
+              suggestionListState.suggestionsFromDictionaryEntry,
+            ),
+          }
+        : null,
+      suggestionListState.dictionaryEntryState.traditionalEntry !== null
+        ? {
+            term:
+              suggestionListState.dictionaryEntryState.traditionalEntry
+                .vocabularyTerm,
+            label: 'traditional',
+            attributions:
+              suggestionListState.dictionaryEntryState.traditionalEntry
+                .attributions,
+            suggestions: assertExists(
+              suggestionListState.suggestionsFromTraditionalEntry,
+            ),
+          }
+        : null,
+      suggestionListState.dictionaryEntryState.masculineEntry !== null
+        ? {
+            term:
+              suggestionListState.dictionaryEntryState.masculineEntry
+                .vocabularyTerm,
+            label: 'masculine',
+            attributions:
+              suggestionListState.dictionaryEntryState.masculineEntry
+                .attributions,
+            suggestions: assertExists(
+              suggestionListState.suggestionsFromMasculineEntry,
+            ),
+          }
+        : null,
+    ];
+
     return (
       <SmartScrollView
         testID={VocabularyFormIds.SUGGESTION_LIST}
         showsVerticalScrollIndicator={true}
         style={this.styles.picker_content}>
-        {this.renderListHeader()}
-        {suggestions.length > 0 ? (
-          suggestions.map(
-            (suggestion, index): React.ReactElement<any> => {
-              return (
-                <SuggestionItem
-                  key={index}
-                  theme={this.props.theme}
-                  suggestion={suggestion}
-                />
-              );
-            },
-          )
-        ) : (
+        {_.every(allSuggestionLists, _.isNull) ? (
           <DefaultText style={this.styles.no_suggestions_text}>
-            We don't have any other suggestions.
+            `We couldn't for any suggestions for $
+            {this.props.suggestionListState.currentVocabularyTerm}.`
           </DefaultText>
+        ) : (
+          allSuggestionLists
+            .filter((list): list is SuggestionListProps => list !== null)
+            .map(
+              (list): React.ReactElement<any> => {
+                return (
+                  <SuggestionList
+                    key={list.term + '-' + list.label}
+                    theme={this.props.theme}
+                    term={list.term}
+                    label={list.label}
+                    attributions={list.attributions}
+                    suggestions={list.suggestions}
+                    openLink={this.props.openLink}
+                  />
+                );
+              },
+            )
         )}
       </SmartScrollView>
-    );
-  }
-
-  private renderListHeader(): React.ReactElement<any> {
-    return (
-      <View style={this.styles.title_container}>
-        <DefaultText style={this.styles.title}>
-          <DefaultText>Suggestions for </DefaultText>
-          <DefaultText style={this.styles.term}>
-            {this.props.suggestionListState.currentVocabularyTerm}
-          </DefaultText>
-          {this.props.suggestionListState.attributions !== null
-            ? this.renderAttributions(
-                this.props.suggestionListState.attributions,
-              )
-            : null}
-        </DefaultText>
-      </View>
-    );
-  }
-
-  private renderAttributions(
-    attributions: Attribution[],
-  ): React.ReactElement<any> {
-    return (
-      <React.Fragment>
-        <DefaultText> from </DefaultText>
-        {attributions.map(
-          (attribution, index): React.ReactElement<any> => {
-            return (
-              <React.Fragment key={index}>
-                {index > 0 ? <DefaultText>, </DefaultText> : null}
-                <DefaultText
-                  onPress={(): void => {
-                    if (typeof attribution.sourceLink !== 'undefined') {
-                      this.props.openLink(attribution.sourceLink);
-                    }
-                  }}
-                  style={
-                    attribution.sourceLink ? this.styles.highlighted_text : null
-                  }>
-                  {attribution.sourceName}
-                </DefaultText>
-                {typeof attribution.license !== 'undefined' ? (
-                  <DefaultText style={this.styles.license_text}>
-                    <DefaultText>, under </DefaultText>
-                    <DefaultText
-                      style={this.styles.highlighted_text}
-                      onPress={(): void => {
-                        if (typeof attribution.licenseLink !== 'undefined') {
-                          this.props.openLink(attribution.licenseLink);
-                        }
-                      }}>
-                      {attribution.license}
-                    </DefaultText>
-                  </DefaultText>
-                ) : null}
-              </React.Fragment>
-            );
-          },
-        )}
-      </React.Fragment>
     );
   }
 }

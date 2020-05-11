@@ -7,6 +7,7 @@
 
 import { AbstractResolver } from '@ulangi/resolver';
 import { DictionaryEntryResolver } from '@ulangi/wiktionary-core';
+import * as Joi from 'joi';
 
 import { GetDictionaryEntryResponse } from '../../interfaces/response/GetDictionaryEntryResponse';
 
@@ -17,5 +18,11 @@ export class GetDictionaryEntryResponseResolver extends AbstractResolver<
 
   protected rules = {
     dictionaryEntry: this.dictionaryEntryResolver.getRules(),
+    traditionalEntry: Joi.object(
+      this.dictionaryEntryResolver.getRules()
+    ).optional(),
+    masculineEntry: Joi.object(
+      this.dictionaryEntryResolver.getRules()
+    ).optional(),
   };
 }

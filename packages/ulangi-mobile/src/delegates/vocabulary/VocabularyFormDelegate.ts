@@ -187,8 +187,10 @@ export class VocabularyFormDelegate {
         ScreenName.SUGGESTIONS_PICKER_SCREEN,
         {
           currentVocabularyText: this.vocabularyFormState.vocabularyText,
-          updateVocabularyText: (vocabularyText): void => {
-            this.vocabularyFormState.vocabularyText = vocabularyText;
+          onSelect: (fieldName, value): string => {
+            this.vocabularyFormState.vocabularyText +=
+              '\n' + `[${fieldName}: ${value}]`;
+            return this.vocabularyFormState.vocabularyText;
           },
         },
         SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,

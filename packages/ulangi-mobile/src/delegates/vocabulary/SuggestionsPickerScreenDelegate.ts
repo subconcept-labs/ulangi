@@ -15,24 +15,25 @@ import { SuggestionListDelegate } from '../vocabulary/SuggestionListDelegate';
 export class SuggestionsPickerScreenDelegate {
   private suggestionListDelegate: SuggestionListDelegate;
   private navigatorDelegate: NavigatorDelegate;
-  private updateVocabularyText: (vocabularyText: string) => void;
 
   public constructor(
     suggestionListDelegate: SuggestionListDelegate,
     navigatorDelegate: NavigatorDelegate,
-    updateVocabularyText: (vocabularyText: string) => void,
   ) {
     this.suggestionListDelegate = suggestionListDelegate;
     this.navigatorDelegate = navigatorDelegate;
-    this.updateVocabularyText = updateVocabularyText;
   }
 
   public getSuggestions(): void {
-    this.suggestionListDelegate.getSuggestions(this.updateVocabularyText);
+    this.suggestionListDelegate.getSuggestions();
   }
 
   public clearSuggestions(): void {
     this.suggestionListDelegate.clearSuggestions();
+  }
+
+  public onSelectSuggestion(fieldName: string, value: string): void {
+    this.suggestionListDelegate.onSelectSuggestion(fieldName, value);
   }
 
   public openLink(link: string): void {

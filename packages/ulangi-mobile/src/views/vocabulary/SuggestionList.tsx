@@ -1,45 +1,34 @@
-/*
- * Copyright (c) Minh Loi.
- *
- * This file is part of Ulangi which is released under GPL v3.0.
- * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
- */
-
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Attribution, Definition } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
+import { Attribution } from '@ulangi/ulangi-common/interfaces';
+import { ObservableSuggestion } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
-import { DictionaryDefinition } from './DictionaryDefinition';
+import { SuggestionItem } from './SuggestionItem';
 import {
-  DictionaryDefinitionListStyles,
+  SuggestionListStyles,
   darkStyles,
   lightStyles,
-} from './DictionaryDefinitionList.style';
+} from './SuggestionList.style';
 
-export interface DictionaryDefinitionListProps {
+export interface SuggestionListProps {
   theme: Theme;
   term: string;
-  label?: string;
+  label: undefined | string;
   attributions: undefined | Attribution[];
-  definitions: readonly ObservableDictionaryDefinition[];
-  onPick: (definition: DeepPartial<Definition>) => void;
+  suggestions: ObservableSuggestion[];
   openLink: (link: string) => void;
   styles?: {
-    light: DictionaryDefinitionListStyles;
-    dark: DictionaryDefinitionListStyles;
+    light: SuggestionListStyles;
+    dark: SuggestionListStyles;
   };
 }
 
 @observer
-export class DictionaryDefinitionList extends React.Component<
-  DictionaryDefinitionListProps
-> {
-  public get styles(): DictionaryDefinitionListStyles {
+export class SuggestionList extends React.Component<SuggestionListProps> {
+  public get styles(): SuggestionListStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
     const dark = this.props.styles ? this.props.styles.dark : darkStyles;
     return this.props.theme === Theme.LIGHT ? light : dark;
@@ -48,29 +37,14 @@ export class DictionaryDefinitionList extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <React.Fragment>
-        <View style={this.styles.title_container}>
-          <DefaultText style={this.styles.title}>
-            <DefaultText>Found </DefaultText>
-            <DefaultText style={this.styles.term}>
-              {this.props.term +
-                (typeof this.props.label !== 'undefined'
-                  ? ` (${this.props.label})`
-                  : '')}
-            </DefaultText>
-            {typeof this.props.attributions !== 'undefined'
-              ? this.renderAttributions(this.props.attributions)
-              : null}
-          </DefaultText>
-        </View>
-        {this.props.definitions.map(
-          (definition, index): React.ReactElement<any> => {
+        {this.renderListHeader()}
+        {this.props.suggestions.map(
+          (suggestion, index): React.ReactElement<any> => {
             return (
-              <DictionaryDefinition
+              <SuggestionItem
                 key={index}
                 theme={this.props.theme}
-                index={index}
-                definition={definition}
-                onPick={this.props.onPick}
+                suggestion={suggestion}
               />
             );
           },
@@ -79,16 +53,30 @@ export class DictionaryDefinitionList extends React.Component<
     );
   }
 
+  private renderListHeader(): React.ReactElement<any> {
+    return (
+      <View style={this.styles.title_container}>
+        <DefaultText style={this.styles.title}>
+          <DefaultText>Suggestions for </DefaultText>
+          <DefaultText style={this.styles.term}>{this.props.term}</DefaultText>
+          {typeof this.props.attributions !== 'undefined'
+            ? this.renderAttributions(this.props.attributions)
+            : null}
+        </DefaultText>
+      </View>
+    );
+  }
+
   private renderAttributions(
     attributions: Attribution[],
   ): React.ReactElement<any> {
     return (
-      <DefaultText>
+      <React.Fragment>
         <DefaultText> from </DefaultText>
         {attributions.map(
           (attribution, index): React.ReactElement<any> => {
             return (
-              <DefaultText key={attribution.sourceName}>
+              <React.Fragment key={index}>
                 {index > 0 ? <DefaultText>, </DefaultText> : null}
                 <DefaultText
                   onPress={(): void => {
@@ -97,7 +85,7 @@ export class DictionaryDefinitionList extends React.Component<
                     }
                   }}
                   style={
-                    attribution.sourceLink ? this.styles.hightlighted : null
+                    attribution.sourceLink ? this.styles.highlighted_text : null
                   }>
                   {attribution.sourceName}
                 </DefaultText>
@@ -105,7 +93,7 @@ export class DictionaryDefinitionList extends React.Component<
                   <DefaultText style={this.styles.license_text}>
                     <DefaultText>, under </DefaultText>
                     <DefaultText
-                      style={this.styles.hightlighted}
+                      style={this.styles.highlighted_text}
                       onPress={(): void => {
                         if (typeof attribution.licenseLink !== 'undefined') {
                           this.props.openLink(attribution.licenseLink);
@@ -115,11 +103,11 @@ export class DictionaryDefinitionList extends React.Component<
                     </DefaultText>
                   </DefaultText>
                 ) : null}
-              </DefaultText>
+              </React.Fragment>
             );
           },
         )}
-      </DefaultText>
+      </React.Fragment>
     );
   }
 }

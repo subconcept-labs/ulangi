@@ -41,6 +41,7 @@ export const baseStyles: SuggestionItemStyles = {
 
   button_list: {
     marginTop: 4,
+    flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',

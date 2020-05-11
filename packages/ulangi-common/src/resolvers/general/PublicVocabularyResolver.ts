@@ -23,5 +23,8 @@ export class PublicVocabularyResolver extends AbstractResolver<
       this.discoveredDefinitionResolver.getRules()
     ),
     categories: Joi.array().items(Joi.string()),
+    sources: Joi.array()
+      .items(Joi.string())
+      .optional(),
   };
 }

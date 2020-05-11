@@ -215,6 +215,8 @@ export interface ActionPayload {
   readonly DICTIONARY__GETTING_ENTRY: null;
   readonly DICTIONARY__GET_ENTRY_SUCCEEDED: {
     dictionaryEntry: DictionaryEntry;
+    traditionalEntry?: DictionaryEntry;
+    masculineEntry?: DictionaryEntry;
   };
   readonly DICTIONARY__GET_ENTRY_FAILED: ErrorBag & {
     searchTerm: string;

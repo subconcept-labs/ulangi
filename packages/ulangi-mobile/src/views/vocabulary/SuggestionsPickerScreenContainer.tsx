@@ -8,6 +8,7 @@
 import { Options } from '@ulangi/react-native-navigation';
 import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDictionaryEntryState,
   ObservableSuggestionListState,
   ObservableSuggestionsPickerScreen,
 } from '@ulangi/ulangi-observable';
@@ -21,7 +22,7 @@ import { SuggestionsPickerScreen } from './SuggestionsPickerScreen';
 
 export interface SuggestionsPickerScreenPassedProps {
   readonly currentVocabularyText: string;
-  readonly updateVocabularyText: (vocabularyText: string) => void;
+  readonly onSelect: (fieldName: string, value: string) => string;
 }
 
 @observer
@@ -41,10 +42,15 @@ export class SuggestionsPickerScreenContainer extends Container<
   protected observableScreen = new ObservableSuggestionsPickerScreen(
     new ObservableSuggestionListState(
       this.props.passedProps.currentVocabularyText,
-      null,
-      null,
-      observable.box(ActivityState.INACTIVE),
-      observable.box(undefined),
+      new ObservableDictionaryEntryState(
+        null,
+        null,
+        null,
+        observable.box(ActivityState.INACTIVE),
+        observable.box(undefined),
+      ),
+      (fieldName: string, value): void =>
+        this.screenDelegate.onSelectSuggestion(fieldName, value),
     ),
     this.props.componentId,
     ScreenName.SUGGESTIONS_PICKER_SCREEN,
@@ -60,7 +66,7 @@ export class SuggestionsPickerScreenContainer extends Container<
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
-    this.props.passedProps.updateVocabularyText,
+    this.props.passedProps.onSelect,
   );
 
   public componentDidMount(): void {

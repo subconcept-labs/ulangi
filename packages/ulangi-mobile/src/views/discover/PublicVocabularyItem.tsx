@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
+import {
+  Attribution,
+  PublicVocabulary,
+} from '@ulangi/ulangi-common/interfaces';
 import {
   ObservablePublicDefinition,
   ObservablePublicVocabulary,
@@ -80,18 +83,22 @@ export class PublicVocabularyItem extends React.Component<
                 this.renderDefintion(definition, index),
             )}
           </View>
-          {this.renderSources()}
+          {typeof this.props.vocabulary.attributions !== 'undefined'
+            ? this.renderAttributions(this.props.vocabulary.attributions)
+            : null}
         </View>
       </FixedTouchableWithoutFeedback>
     );
   }
 
-  private renderSources(): React.ReactElement<any> {
+  private renderAttributions(
+    attributions: Attribution[],
+  ): React.ReactElement<any> {
     return (
       <View style={this.styles.attribution_container}>
         <DefaultText style={this.styles.attribution}>
           <DefaultText>by </DefaultText>
-          {this.props.vocabulary.attributions.map(
+          {attributions.map(
             (attribution, index): React.ReactElement<any> => {
               return (
                 <DefaultText key={attribution.sourceName}>

@@ -33,6 +33,7 @@ export class DictionaryEntryConverter {
       ].join('\n'),
       definitions: entry.definitions,
       categories: entry.categories,
+      sources: entry.sources,
     };
   }
 
@@ -61,11 +62,12 @@ export class DictionaryEntryConverter {
 
         const values = entry[key] as string[];
 
-        extraFields.push(
-          ...assertExists(
-            values.map((value): string => `[${fieldName}: ${value}]`)
-          )
-        );
+        if (fieldName === 'ipa')
+          extraFields.push(
+            ...assertExists(
+              values.map((value): string => `[${fieldName}: ${value}]`)
+            )
+          );
       }
     }
 
