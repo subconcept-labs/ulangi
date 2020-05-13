@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0](https://github.com/ulangi/ulangi/compare/v3.11.5...v3.12.0) (2020-05-13)
+
+
+### Bug Fixes
+
+* fix create and delete dictionary index scripts ([7c8b9ce](https://github.com/ulangi/ulangi/commit/7c8b9ce))
+* no need to setApiUrl on install ([2bff756](https://github.com/ulangi/ulangi/commit/2bff756))
+* rename uls scripts to ulangi ([ae8dfa9](https://github.com/ulangi/ulangi/commit/ae8dfa9)), closes [#70](https://github.com/ulangi/ulangi/issues/70)
+* show more extra fields on suggestion list ([8e74bd0](https://github.com/ulangi/ulangi/commit/8e74bd0))
+* update wiktionary-core to v2 ([e36dacf](https://github.com/ulangi/ulangi/commit/e36dacf))
+* use title as public set id ([06b58e7](https://github.com/ulangi/ulangi/commit/06b58e7))
+
+
+### Features
+
+* add suggestion picker ([96c9087](https://github.com/ulangi/ulangi/commit/96c9087))
+* add zhuyin, reading extra fields ([3c92af8](https://github.com/ulangi/ulangi/commit/3c92af8))
+* show traditional, masculine entries and suggestions ([e18aebb](https://github.com/ulangi/ulangi/commit/e18aebb))
+
+
+
+
+
 ## [3.11.5](https://github.com/ulangi/ulangi/compare/v3.11.4...v3.11.5) (2020-04-12)
 
 **Note:** Version bump only for package root

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0](https://github.com/ulangi/ulangi/compare/v3.11.5...v3.12.0) (2020-05-13)
+
+
+### Bug Fixes
+
+* no need to setApiUrl on install ([2bff756](https://github.com/ulangi/ulangi/commit/2bff756))
+
+
+
+
+
 ## [3.11.5](https://github.com/ulangi/ulangi/compare/v3.11.4...v3.11.5) (2020-04-12)
 
 **Note:** Version bump only for package @ulangi/ulangi-google-sheets
