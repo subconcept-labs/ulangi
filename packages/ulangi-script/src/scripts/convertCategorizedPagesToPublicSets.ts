@@ -15,14 +15,8 @@ import {
 } from '@ulangi/wiktionary-core';
 import * as _ from 'lodash';
 import * as readline from 'readline';
-import * as uuid from 'uuid';
 
 import { loadConfig } from '../setup/loadConfig';
-
-export interface Author {
-  name: string;
-  link?: string;
-}
 
 run();
 
@@ -48,13 +42,15 @@ function run(): void {
       const chunks = _.chunk(categorized.pages, config.library.maxPerSet);
       const publicSets = chunks.map(
         (chunk, index): PublicSet => {
+          const title =
+            chunks.length > 1
+              ? categorized.category +
+                ` (part ${_.padStart((index + 1).toString(), 2, '0')})`
+              : categorized.category;
+
           return {
-            publicSetId: uuid.v4(),
-            title:
-              chunks.length > 1
-                ? categorized.category +
-                  ` (part ${_.padStart((index + 1).toString(), 2, '0')})`
-                : categorized.category,
+            publicSetId: title,
+            title,
             difficulty: 'N/A',
             tags: [],
             vocabularyList: _.flatMap(
@@ -74,26 +70,11 @@ function run(): void {
                 );
               }
             ),
-            authors: _.uniqBy(
-              _.flatMap(
-                chunk,
-                (page): Author[] => {
-                  return _.flatMap(
-                    page.languages,
-                    (language): Author[] => {
-                      return wiktionaryPageConverter
-                        .extractSources(language)
-                        .map(
-                          (source): Author => {
-                            return { name: source, link: '' };
-                          }
-                        );
-                    }
-                  );
-                }
-              ),
-              ['name', 'link']
-            ),
+            authors: [
+              {
+                name: 'wiktionary',
+              },
+            ],
           };
         }
       );

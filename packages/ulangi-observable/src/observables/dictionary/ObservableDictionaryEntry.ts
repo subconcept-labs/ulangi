@@ -21,54 +21,119 @@ export class ObservableDictionaryEntry {
   @observable
   public definitions: readonly ObservableDictionaryDefinition[];
 
+  @observable
+  public categories: string[];
+
+  @observable
+  public tags: string[];
+
+  @observable
+  public ipa?: string[];
+
+  @observable
+  public gender?: string[];
+
+  @observable
+  public plural?: string[];
+
+  @observable
+  public pinyin?: string[];
+
+  @observable
+  public zhuyin?: string[];
+
+  @observable
+  public simplified?: string[];
+
+  @observable
+  public traditional?: string[];
+
+  @observable
+  public hiragana?: string[];
+
+  @observable
+  public reading?: string[];
+
+  @observable
+  public romaji?: string[];
+
+  @observable
+  public romanization?: string[];
+
+  @observable
+  public feminine?: string[];
+
+  @observable
+  public masculine?: string[];
+
+  @observable
+  public sources?: string[];
+
   @computed
-  public get definitionsBySource(): {
-    attribution: Attribution;
-    definitions: readonly ObservableDictionaryDefinition[];
-  }[] {
-    const groupBySource = _.groupBy(
-      this.definitions,
-      (definition: ObservableDictionaryDefinition): string => {
-        return definition.source;
-      }
-    );
+  public get attributions(): undefined | Attribution[] {
+    return typeof this.sources !== 'undefined'
+      ? this.sources.map(
+          (source): Attribution => {
+            const sourceName = this.attributionHelper.formatSource(source);
+            const sourceLink = this.attributionHelper.generateLinkBySource(
+              source,
+              {
+                term: this.vocabularyTerm,
+              }
+            );
+            const license = this.attributionHelper.getLicenseBySource(source);
+            const licenseLink = this.attributionHelper.getLinkByLicense(
+              license || ''
+            );
 
-    return _.map(
-      groupBySource,
-      (
-        definitions,
-        source
-      ): {
-        attribution: Attribution;
-        definitions: readonly ObservableDictionaryDefinition[];
-      } => {
-        const sourceName = this.attributionHelper.formatSource(source);
-        const sourceLink = this.attributionHelper.generateLinkBySource(source, {
-          term: this.vocabularyTerm,
-        });
-        const license = this.attributionHelper.getLicenseBySource(source);
-        const licenseLink = this.attributionHelper.getLinkByLicense(
-          license || ''
-        );
-
-        return {
-          attribution: {
-            sourceName,
-            sourceLink,
-            license,
-            licenseLink,
-          },
-          definitions,
-        };
-      }
-    );
+            return {
+              sourceName,
+              sourceLink,
+              license,
+              licenseLink,
+            };
+          }
+        )
+      : undefined;
   }
 
   public constructor(
     vocabularyTerm: string,
-    definitions: readonly ObservableDictionaryDefinition[]
+    definitions: readonly ObservableDictionaryDefinition[],
+    categories: string[],
+    tags: string[],
+    ipa?: string[],
+    gender?: string[],
+    plural?: string[],
+    pinyin?: string[],
+    zhuyin?: string[],
+    simplified?: string[],
+    traditional?: string[],
+    hiragana?: string[],
+    reading?: string[],
+    romaji?: string[],
+    romanization?: string[],
+    feminine?: string[],
+    masculine?: string[],
+    sources?: string[]
   ) {
     this.vocabularyTerm = vocabularyTerm;
     this.definitions = definitions;
+    this.categories = categories;
+    this.tags = tags;
+    this.ipa = ipa;
+    this.gender = gender;
+    this.plural = plural;
+    this.pinyin = pinyin;
+    this.zhuyin = zhuyin;
+    this.simplified = simplified;
+    this.traditional = traditional;
+    this.hiragana = hiragana;
+    this.reading = reading;
+    this.romaji = romaji;
+    this.romanization = romanization;
+    this.feminine = feminine;
+    this.masculine = masculine;
+    this.sources = sources;
   }
 }

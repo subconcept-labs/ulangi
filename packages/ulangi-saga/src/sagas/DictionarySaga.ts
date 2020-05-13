@@ -93,6 +93,8 @@ export class DictionarySaga extends ProtectedSaga {
 
         const {
           dictionaryEntry,
+          traditionalEntry,
+          masculineEntry,
         } = this.getDictionaryEntryResponseResolver.resolve(
           response.data,
           true
@@ -100,6 +102,8 @@ export class DictionarySaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.DICTIONARY__GET_ENTRY_SUCCEEDED, {
             dictionaryEntry,
+            traditionalEntry,
+            masculineEntry,
           })
         );
       } catch (error) {

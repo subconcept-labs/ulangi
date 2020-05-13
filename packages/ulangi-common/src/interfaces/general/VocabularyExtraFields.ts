@@ -19,6 +19,7 @@ export interface VocabularyExtraFields {
   readonly plural: readonly string[][];
 
   // Japanese
+  readonly reading: readonly string[][];
   readonly kanji: readonly string[][];
   readonly hiragana: readonly string[][];
   readonly katakana: readonly string[][];
@@ -29,6 +30,7 @@ export interface VocabularyExtraFields {
 
   // Chinese
   readonly pinyin: readonly string[][];
+  readonly zhuyin: readonly string[][];
   readonly simplified: readonly string[][];
   readonly traditional: readonly string[][];
 

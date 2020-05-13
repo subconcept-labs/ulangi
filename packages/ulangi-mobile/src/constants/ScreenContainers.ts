@@ -71,6 +71,7 @@ import { AddVocabularyScreenContainer } from '../views/vocabulary/AddVocabularyS
 import { DictionaryPickerScreenContainer } from '../views/vocabulary/DictionaryPickerScreenContainer';
 import { EditVocabularyScreenContainer } from '../views/vocabulary/EditVocabularyScreenContainer';
 import { ExtraFieldsPickerScreenContainer } from '../views/vocabulary/ExtraFieldsPickerScreenContainer';
+import { SuggestionsPickerScreenContainer } from '../views/vocabulary/SuggestionsPickerScreenContainer';
 import { VocabularyDetailScreenContainer } from '../views/vocabulary/VocabularyDetailScreenContainer';
 import { WelcomeScreenContainer } from '../views/welcome/WelcomeScreenContainer';
 import { WhatsNewScreenContainer } from '../views/whats-new/WhatsNewScreenContainer';
@@ -98,6 +99,7 @@ export const ScreenContainers = {
   CREATE_FIRST_SET_SCREEN: CreateFirstSetScreenContainer,
   DATA_SHARING_SCREEN: DataSharingScreenContainer,
   DICTIONARY_PICKER_SCREEN: DictionaryPickerScreenContainer,
+  SUGGESTIONS_PICKER_SCREEN: SuggestionsPickerScreenContainer,
   DISCOVER_SCREEN: DiscoverScreenContainer,
   DISCOVER_FAQ_SCREEN: DiscoverFAQScreenContainer,
   EDIT_SET_SCREEN: EditSetScreenContainer,

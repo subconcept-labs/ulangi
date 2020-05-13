@@ -123,6 +123,15 @@ export {
 export {
   ObservableDictionaryEntry,
 } from './observables/dictionary/ObservableDictionaryEntry';
+export {
+  ObservableSuggestionListState,
+} from './observables/vocabulary/ObservableSuggestionListState';
+export {
+  ObservableSuggestion,
+} from './observables/vocabulary/ObservableSuggestion';
+export {
+  ObservableSuggestionsPickerScreen,
+} from './observables/vocabulary/ObservableSuggestionsPickerScreen';
 
 export {
   ObservableDiscoverScreen,

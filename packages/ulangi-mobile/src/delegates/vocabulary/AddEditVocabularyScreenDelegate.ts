@@ -52,6 +52,10 @@ export abstract class AddEditVocabularyScreenDelegate {
     this.vocabularyFormDelegate.lookUp();
   }
 
+  public showSuggestions(): void {
+    this.vocabularyFormDelegate.showSuggestions();
+  }
+
   public showVocabularyExtraFieldsPicker(): void {
     this.vocabularyFormDelegate.showVocabularyExtraFieldsPicker();
   }

@@ -20,6 +20,7 @@
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
     "@ulangi/resolver": "^2.0.3",
+    "@ulangi/wiktionary-core": "^2.2.1",
     "autobind-decorator": "^2.4.0",
     "immutable": "^4.0.0-rc.9",
     "lodash": "^4.17.5",

@@ -9,4 +9,6 @@ import { DictionaryEntry } from '@ulangi/wiktionary-core';
 
 export interface GetDictionaryEntryResponse {
   readonly dictionaryEntry: DictionaryEntry;
+  readonly traditionalEntry?: DictionaryEntry;
+  readonly masculineEntry?: DictionaryEntry;
 }

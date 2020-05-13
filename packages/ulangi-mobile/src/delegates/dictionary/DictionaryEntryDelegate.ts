@@ -64,20 +64,23 @@ export class DictionaryEntryDelegate {
           ),
           once(
             ActionType.DICTIONARY__GET_ENTRY_SUCCEEDED,
-            ({ dictionaryEntry }): void => {
-              if (dictionaryEntry.definitions.length === 0) {
-                this.dictionaryEntryState.fetchState.set(ActivityState.ERROR);
-                this.dictionaryEntryState.fetchError.set(
-                  ErrorCode.DICTIONARY__NO_RESULTS,
-                );
-              } else {
-                this.dictionaryEntryState.fetchState.set(
-                  ActivityState.INACTIVE,
-                );
-              }
+            ({ dictionaryEntry, traditionalEntry, masculineEntry }): void => {
+              this.dictionaryEntryState.fetchState.set(ActivityState.INACTIVE);
               this.dictionaryEntryState.dictionaryEntry = this.observableConverter.convertToObservableDictionaryEntry(
                 dictionaryEntry,
               );
+              this.dictionaryEntryState.traditionalEntry =
+                typeof traditionalEntry !== 'undefined'
+                  ? this.observableConverter.convertToObservableDictionaryEntry(
+                      traditionalEntry,
+                    )
+                  : null;
+              this.dictionaryEntryState.masculineEntry =
+                typeof masculineEntry !== 'undefined'
+                  ? (this.dictionaryEntryState.masculineEntry = this.observableConverter.convertToObservableDictionaryEntry(
+                      masculineEntry,
+                    ))
+                  : null;
             },
           ),
           once(
@@ -95,6 +98,8 @@ export class DictionaryEntryDelegate {
   public clearDictionaryEntry(): void {
     this.dictionaryEntryState.fetchState.set(ActivityState.INACTIVE);
     this.dictionaryEntryState.dictionaryEntry = null;
+    this.dictionaryEntryState.traditionalEntry = null;
+    this.dictionaryEntryState.masculineEntry = null;
     this.eventBus.publish(
       createAction(ActionType.DICTIONARY__CLEAR_ENTRY, null),
     );

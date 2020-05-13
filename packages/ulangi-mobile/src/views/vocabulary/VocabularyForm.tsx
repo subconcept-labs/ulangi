@@ -32,6 +32,7 @@ export interface VocabularyFormProps {
   translatedToLanguage: ObservableLanguage;
   vocabularyFormState: ObservableVocabularyFormState;
   lookUp: () => void;
+  showSuggestions: () => void;
   showVocabularyExtraFieldsPicker: () => void;
   showDefinitionExtraFieldsPicker: (index: number) => void;
   addDefinitionSlot: () => void;
@@ -143,12 +144,21 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
         </View>
         <View style={this.styles.button_list}>
           <TouchableOpacity
-            testID={VocabularyFormIds.LOOK_UP_BTN}
+            testID={VocabularyFormIds.DICTIONARY_BTN}
             onPress={this.props.lookUp}
             style={[this.styles.button, this.styles.button_green]}>
             <DefaultText
               style={[this.styles.button_text, this.styles.button_green_text]}>
               DICTIONARY
+            </DefaultText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            testID={VocabularyFormIds.SUGGESTIONS_BTN}
+            onPress={this.props.showSuggestions}
+            style={[this.styles.button, this.styles.button_blue]}>
+            <DefaultText
+              style={[this.styles.button_text, this.styles.button_blue_text]}>
+              SUGGESTIONS
             </DefaultText>
           </TouchableOpacity>
           <TouchableOpacity

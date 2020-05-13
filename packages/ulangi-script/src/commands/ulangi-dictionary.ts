@@ -10,7 +10,7 @@
 import * as program from 'commander';
 
 program
-  .command('create-page-index', 'Create page index')
-  .command('delete-page-index', 'Delete page index')
+  .command('create-dictionary-index', 'Create dictionary index')
+  .command('delete-dictionary-index', 'Delete dictionary index')
   .command('seed', 'Seed data to elastic server')
   .parse(process.argv);

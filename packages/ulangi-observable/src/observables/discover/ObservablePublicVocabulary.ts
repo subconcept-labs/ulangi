@@ -34,6 +34,9 @@ export class ObservablePublicVocabulary {
   @observable
   public categories: IObservableArray<string>;
 
+  @observable
+  public sources?: IObservableArray<string>;
+
   @computed
   public get vocabularyTerm(): string {
     return this.vocabularyExtraFieldParser.parse(this.vocabularyText)
@@ -47,48 +50,44 @@ export class ObservablePublicVocabulary {
   }
 
   @computed
-  public get attributions(): Attribution[] {
-    return this.sources.map(
-      (source): Attribution => {
-        const sourceName = this.attributionHelper.formatSource(source);
-        const sourceLink = this.attributionHelper.generateLinkBySource(source, {
-          term: this.vocabularyTerm,
-        });
-        const license = this.attributionHelper.getLicenseBySource(source);
-        const licenseLink = this.attributionHelper.getLinkByLicense(
-          license || ''
-        );
+  public get attributions(): undefined | Attribution[] {
+    return typeof this.sources !== 'undefined'
+      ? this.sources.map(
+          (source): Attribution => {
+            const sourceName = this.attributionHelper.formatSource(source);
+            const sourceLink = this.attributionHelper.generateLinkBySource(
+              source,
+              {
+                term: this.vocabularyTerm,
+              }
+            );
+            const license = this.attributionHelper.getLicenseBySource(source);
+            const licenseLink = this.attributionHelper.getLinkByLicense(
+              license || ''
+            );
 
-        return {
-          sourceName,
-          sourceLink,
-          license,
-          licenseLink,
-        };
-      }
-    );
-  }
-
-  @computed
-  public get sources(): string[] {
-    return _.uniq(
-      this.definitions.map(
-        (definition): string => {
-          return definition.source;
-        }
-      )
-    );
+            return {
+              sourceName,
+              sourceLink,
+              license,
+              licenseLink,
+            };
+          }
+        )
+      : undefined;
   }
 
   public constructor(
     publicVocabularyId: string,
     vocabularyText: string,
     definitions: IObservableArray<ObservablePublicDefinition>,
-    categories: IObservableArray<string>
+    categories: IObservableArray<string>,
+    sources?: IObservableArray<string>
   ) {
     this.publicVocabularyId = publicVocabularyId;
     this.vocabularyText = vocabularyText;
     this.definitions = definitions;
     this.categories = categories;
+    this.sources = sources;
   }
 }

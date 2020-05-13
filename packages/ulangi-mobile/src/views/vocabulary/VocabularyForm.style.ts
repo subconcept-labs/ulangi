@@ -27,9 +27,11 @@ export interface VocabularyFormStyles {
   button: ViewStyle;
   button_red: ViewStyle;
   button_green: ViewStyle;
+  button_blue: ViewStyle;
   button_text: TextStyle;
   button_red_text: TextStyle;
   button_green_text: TextStyle;
+  button_blue_text: TextStyle;
   add_definition_btn_container: ViewStyle;
   add_definition_btn: ViewStyle;
   add_definition_btn_text: TextStyle;
@@ -120,6 +122,10 @@ export const baseStyles: VocabularyFormStyles = {
     backgroundColor: '#C5E1A5',
   },
 
+  button_blue: {
+    backgroundColor: '#81D4FA',
+  },
+
   button_red: {
     backgroundColor: '#FFCDD2',
   },
@@ -128,7 +134,7 @@ export const baseStyles: VocabularyFormStyles = {
     fontSize: 11,
     fontWeight: '700',
     color: '#424242',
-    letterSpacing: -0.25,
+    letterSpacing: -0.5,
   },
 
   button_red_text: {
@@ -137,6 +143,10 @@ export const baseStyles: VocabularyFormStyles = {
 
   button_green_text: {
     color: '#33691E',
+  },
+
+  button_blue_text: {
+    color: '#01579B',
   },
 
   add_definition_btn_container: {
