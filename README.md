@@ -36,7 +36,7 @@
 | iOS | [Download on App Store](https://itunes.apple.com/us/app/id1435524341?mt=8) |
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
 | Mac | *To be developed* |
-| Window | *To be developed* |
+| Windows | *To be developed* |
 
 ---
 
