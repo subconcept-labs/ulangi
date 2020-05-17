@@ -62,12 +62,11 @@ export class DictionaryEntryConverter {
 
         const values = entry[key] as string[];
 
-        if (fieldName === 'ipa')
-          extraFields.push(
-            ...assertExists(
-              values.map((value): string => `[${fieldName}: ${value}]`)
-            )
-          );
+        extraFields.push(
+          ...assertExists(
+            values.map((value): string => `[${fieldName}: ${value}]`)
+          )
+        );
       }
     }
 

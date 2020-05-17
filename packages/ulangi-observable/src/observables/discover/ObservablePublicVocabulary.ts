@@ -82,7 +82,7 @@ export class ObservablePublicVocabulary {
     vocabularyText: string,
     definitions: IObservableArray<ObservablePublicDefinition>,
     categories: IObservableArray<string>,
-    sources?: IObservableArray<string>
+    sources: undefined | IObservableArray<string>
   ) {
     this.publicVocabularyId = publicVocabularyId;
     this.vocabularyText = vocabularyText;
