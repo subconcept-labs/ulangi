@@ -241,7 +241,10 @@ export class ObservableConverter {
           }
         )
       ),
-      observable.array(publicVocabulary.categories.slice())
+      observable.array(publicVocabulary.categories.slice()),
+      typeof publicVocabulary.sources !== 'undefined'
+        ? observable.array(publicVocabulary.sources.slice())
+        : undefined
     );
   }
 
