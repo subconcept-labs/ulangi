@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.1](https://github.com/ulangi/ulangi/compare/v3.12.0...v3.12.1) (2020-05-17)
+
+
+### Bug Fixes
+
+* attributions not shown up ([bed6af0](https://github.com/ulangi/ulangi/commit/bed6af0))
+* extra fields not shown up ([df3c158](https://github.com/ulangi/ulangi/commit/df3c158))
+
+
+
+
+
 # [3.12.0](https://github.com/ulangi/ulangi/compare/v3.11.5...v3.12.0) (2020-05-13)
 
 
