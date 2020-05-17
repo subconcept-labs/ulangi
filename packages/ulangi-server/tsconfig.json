@@ -11,7 +11,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./node_modules/@types", "./node_modules/@minhloi/ul-common/@types"]
+    "typeRoots": ["./node_modules/@types", "./node_modules/@ulangi/ulangi-common/@types"]
   },
   "compileOnSave": true,
   "include": [

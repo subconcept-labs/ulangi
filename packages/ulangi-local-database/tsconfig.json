@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "experimentalDecorators": true,
-    "typeRoots": ["./node_modules/@types", "./node_modules/@minhloi/ul-common/@types", "./@types"]
+    "typeRoots": ["./node_modules/@types", "./node_modules/@ulangi/ulangi-common/@types", "./@types"]
   },
   "include": [
     "src/**/*.ts"

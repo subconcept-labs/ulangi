@@ -11,7 +11,7 @@
     "sourceRoot": "src",
     "outDir": "dist",
     "noImplicitThis": true,
-    "typeRoots": ["./node_modules/@types", "./node_modules/@minhloi/ul-common/@types"],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@ulangi/ulangi-common/@types"],
     "skipLibCheck": true,
     "experimentalDecorators": true
   },
