@@ -1,7 +1,6 @@
 .env
 .env.*
 
-src
 node_modules
 npm-debug.log
 
