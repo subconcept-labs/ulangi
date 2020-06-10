@@ -29,7 +29,7 @@
     "@ulangi/react-native-firebase": "^5.5.6-patch.10",
     "@ulangi/react-native-navigation": "^4.8.4-patch.4",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/sqlite-adapter": "^1.2.0",
+    "@ulangi/sqlite-adapter": "^1.3.2",
     "@ulangi/wiktionary-core": "^2.2.1",
     "autobind-decorator": "^2.4.0",
     "change-case": "^3.0.2",
