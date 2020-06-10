@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.2](https://github.com/ulangi/ulangi/compare/v3.12.1...v3.12.2) (2020-06-10)
+
+
+### Bug Fixes
+
+* do not ignore src in dockerignore ([515f951](https://github.com/ulangi/ulangi/commit/515f951))
+
+
+
+
+
 ## [3.12.1](https://github.com/ulangi/ulangi/compare/v3.12.0...v3.12.1) (2020-05-17)
 
 **Note:** Version bump only for package @ulangi/ulangi-server
