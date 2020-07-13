@@ -18,8 +18,6 @@ import * as commander from 'commander';
 import * as fs from 'fs';
 import * as inquirer from 'inquirer';
 import * as path from 'path';
-import { Readable } from 'stream';
-import * as streamBuffers from 'stream-buffers';
 import * as URL from 'url';
 
 import { spawnProcess } from '../utils/spawnProcess';
@@ -172,7 +170,8 @@ async function exec(): Promise<void> {
           fileStream.pipe(converter.stdin);
           converter.stdout.pipe(uploader.stdin);
         } else {
-          parseCSVFile(inputFile).pipe(uploader.stdin);
+          uploader.stdin.write(parseCSVFile(inputFile));
+          uploader.stdin.end();
         }
 
         await waitForProcessToEnd(uploader);
@@ -200,20 +199,14 @@ function createWiktionaryPageConverter(): ChildProcess {
   return childProcess;
 }
 
-function parseCSVFile(filePath: string): Readable {
+function parseCSVFile(filePath: string): string {
   const content = fs.readFileSync(filePath);
   const csvParser = new CSVParser();
   const publicSets = csvParser.parse(content.toString());
 
-  const buffer = Buffer.from(
-    publicSets.map((set): string => JSON.stringify(set)).join('\n')
+  return (
+    publicSets.map((set): string => JSON.stringify(set)).join('\r\n') + '\r\n'
   );
-
-  const stream = new streamBuffers.ReadableStreamBuffer();
-  stream.put(buffer);
-  stream.stop();
-
-  return stream;
 }
 
 function createLogstashUploader(
