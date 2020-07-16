@@ -116,7 +116,10 @@ export class Server {
 
     this.dictionary =
       typeof this.env.DICTIONARY_SERVER_URL !== 'undefined'
-        ? new DictionaryFacade(this.env.DICTIONARY_SERVER_URL, AWS.config)
+        ? new DictionaryFacade(
+            this.env.DICTIONARY_SERVER_URL,
+            this.env.DICTIONARY_USE_AWS === true ? AWS.config : undefined
+          )
         : null;
 
     this.library =
@@ -125,7 +128,7 @@ export class Server {
         ? new LibraryFacade(
             this.env.LIBRARY_SERVER_URL,
             this.dictionary,
-            AWS.config
+            this.env.LIBRARY_USE_AWS === true ? AWS.config : undefined
           )
         : null;
 

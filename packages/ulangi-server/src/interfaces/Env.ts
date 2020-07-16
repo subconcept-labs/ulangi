@@ -38,7 +38,9 @@ export interface Env {
   readonly ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: undefined | string;
 
   readonly LIBRARY_SERVER_URL: undefined | string;
+  readonly LIBRARY_USE_AWS: undefined | boolean;
   readonly DICTIONARY_SERVER_URL: undefined | string;
+  readonly DICTIONARY_USE_AWS: undefined | boolean;
 
   readonly PUBLIC_FOLDER_NAME: undefined | string;
 }

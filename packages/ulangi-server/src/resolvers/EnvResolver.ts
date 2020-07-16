@@ -51,7 +51,9 @@ export class EnvResolver extends AbstractResolver<Env> {
     ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
 
     LIBRARY_SERVER_URL: Joi.string().optional(),
+    LIBRARY_USE_AWS: Joi.boolean().optional(),
     DICTIONARY_SERVER_URL: Joi.string().optional(),
+    DICTIONARY_USE_AWS: Joi.boolean().optional(),
 
     PUBLIC_FOLDER_NAME: Joi.string().optional(),
   };
