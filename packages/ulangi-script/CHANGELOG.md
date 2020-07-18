@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.12.3](https://github.com/ulangi/ulangi/compare/v3.12.2...v3.12.3) (2020-07-18)
+
+
+### Bug Fixes
+
+* not seeding public sets from csv files ([756a53e](https://github.com/ulangi/ulangi/commit/756a53e))
+
+
+
+
+
 ## [3.12.1](https://github.com/ulangi/ulangi/compare/v3.12.0...v3.12.1) (2020-05-17)
 
 **Note:** Version bump only for package @ulangi/ulangi-script
