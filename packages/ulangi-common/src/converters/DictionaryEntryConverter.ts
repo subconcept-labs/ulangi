@@ -72,4 +72,22 @@ export class DictionaryEntryConverter {
 
     return extraFields;
   }
+
+  public convertToSimplifiedFirst(
+    dictionaryEntry: DictionaryEntry
+  ): DictionaryEntry {
+    if (
+      typeof dictionaryEntry.simplified !== 'undefined' &&
+      dictionaryEntry.simplified.length > 0
+    ) {
+      return {
+        ...dictionaryEntry,
+        vocabularyTerm: dictionaryEntry.simplified[0],
+        traditional: [dictionaryEntry.vocabularyTerm],
+        simplified: undefined,
+      };
+    } else {
+      return dictionaryEntry;
+    }
+  }
 }

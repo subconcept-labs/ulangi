@@ -7,6 +7,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { DictionaryEntryConverter } from '@ulangi/ulangi-common/converters';
 import {
   WiktionaryPage,
   WiktionaryPageConverter,
@@ -24,6 +25,7 @@ function run(): void {
   });
 
   const wiktionaryPageConverter = new WiktionaryPageConverter();
+  const dictionaryEntryConverter = new DictionaryEntryConverter();
 
   rl.on('line', function(line): void {
     if (!_.isEmpty(line)) {
@@ -36,7 +38,27 @@ function run(): void {
             language
           );
 
-          console.log(JSON.stringify(dictionaryEntry));
+          // Do not write simplified Chinese entry from Wiktionary
+          if (
+            typeof dictionaryEntry.traditional !== 'undefined' &&
+            dictionaryEntry.traditional.length > 0
+          ) {
+            return;
+          } else {
+            console.log(JSON.stringify(dictionaryEntry));
+
+            // For chinese traditional entry only
+            if (
+              typeof dictionaryEntry.simplified !== 'undefined' &&
+              dictionaryEntry.simplified.length > 0
+            ) {
+              const simplifiedFirstEntry = dictionaryEntryConverter.convertToSimplifiedFirst(
+                dictionaryEntry
+              );
+
+              console.log(JSON.stringify(simplifiedFirstEntry));
+            }
+          }
         }
       );
     }

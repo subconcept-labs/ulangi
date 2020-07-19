@@ -63,8 +63,13 @@ function run(): void {
                       language
                     );
 
-                    return dictionaryEntryConverter.convertDictionaryEntryToPublicVocabulary(
+                    // For chinese entry only
+                    const simplifiedFirstEntry = dictionaryEntryConverter.convertToSimplifiedFirst(
                       dictionaryEntry
+                    );
+
+                    return dictionaryEntryConverter.convertDictionaryEntryToPublicVocabulary(
+                      simplifiedFirstEntry
                     );
                   }
                 );
