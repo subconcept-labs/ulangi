@@ -175,13 +175,23 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
             this.props.observableScreen.listType.get() ===
             DiscoverListType.PREMADE_SET_LIST ? (
               <DefaultText style={this.styles.header_text}>
-                You can search dictionary for words or categories. Try{' '}
+                You can search dictionary for words or categories, such as
                 <DefaultText
                   style={this.styles.highlighted}
                   onPress={(): void =>
                     this.props.screenDelegate.setInputAndRefresh('cat')
                   }>
+                  {' '}
                   cat
+                </DefaultText>{' '}
+                or
+                <DefaultText
+                  style={this.styles.highlighted}
+                  onPress={(): void =>
+                    this.props.screenDelegate.setInputAndRefresh('animals')
+                  }>
+                  {' '}
+                  animals
                 </DefaultText>
                 .
               </DefaultText>
