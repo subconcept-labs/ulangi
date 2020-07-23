@@ -16,7 +16,6 @@ import {
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Keyboard } from 'react-native';
 
 import { Container, ContainerPassedProps } from '../../Container';
 import { Images } from '../../constants/Images';
@@ -71,20 +70,7 @@ export class CategorySelectorScreenContainer extends Container<
           this.navigatorDelegate.pop();
         },
       ),
-      new ObservableTopBarButton(
-        CategorySelectorScreenIds.DONE_BTN,
-        'Done',
-        null,
-        (): void => {
-          Keyboard.dismiss();
-          this.props.passedProps.onSelect(
-            this.observableScreen.categoryFormState.categoryName === ''
-              ? 'Uncategorized'
-              : this.observableScreen.categoryFormState.categoryName,
-          );
-          this.navigatorDelegate.pop();
-        },
-      ),
+      null,
     ),
   );
 
@@ -92,10 +78,11 @@ export class CategorySelectorScreenContainer extends Container<
 
   private screenDelegate = this.categorySelectorScreenFactory.createScreenDelegate(
     this.observableScreen,
+    this.props.passedProps.onSelect,
   );
 
   public componentDidMount(): void {
-    this.screenDelegate.autoRefreshCategorySuggestionsOnNameChange(500);
+    this.screenDelegate.autoRefreshCategorySuggestionsOnInputChange(500);
     this.screenDelegate.prepareAndFetchCategorySuggestions();
   }
 

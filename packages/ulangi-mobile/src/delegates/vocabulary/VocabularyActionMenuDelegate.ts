@@ -149,8 +149,7 @@ export class VocabularyActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.push(ScreenName.CATEGORIZE_SCREEN, {
-          categoryName:
-            (vocabulary.category && vocabulary.category.categoryName) || '',
+          categoryName: '',
           selectedVocabularyIds: [vocabulary.vocabularyId],
         });
       },

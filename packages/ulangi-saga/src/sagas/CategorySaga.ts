@@ -7,6 +7,8 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
+import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import { CategorySuggestion } from '@ulangi/ulangi-common/interfaces';
 import { CategoryModel } from '@ulangi/ulangi-local-database';
 import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
@@ -103,6 +105,27 @@ export class CategorySaga extends ProtectedSaga {
           createAction(ActionType.CATEGORY__FETCHING_SUGGESTIONS, null)
         );
 
+        const suggestions: CategorySuggestion[] = [];
+
+        if (offset === 0 && term !== '') {
+          const hasCategory: PromiseType<
+            ReturnType<CategoryModel['hasCategory']>
+          > = yield call(
+            [this.categoryModel, 'hasCategory'],
+            this.userDb,
+            setId,
+            VocabularyStatus.ACTIVE,
+            term
+          );
+
+          if (hasCategory === false) {
+            suggestions.push({
+              kind: 'new',
+              categoryName: term,
+            });
+          }
+        }
+
         const result: PromiseType<
           ReturnType<CategoryModel['getCategoryNameSuggestions']>
         > = yield call(
@@ -120,9 +143,20 @@ export class CategorySaga extends ProtectedSaga {
 
         const noMore = categoryNames.length === 0 ? true : false;
 
+        suggestions.push(
+          ...categoryNames.map(
+            (categoryName): CategorySuggestion => {
+              return {
+                kind: 'existing',
+                categoryName,
+              };
+            }
+          )
+        );
+
         yield put(
           createAction(ActionType.CATEGORY__FETCH_SUGGESTIONS_SUCCEEDED, {
-            categoryNames,
+            suggestions,
             noMore,
           })
         );

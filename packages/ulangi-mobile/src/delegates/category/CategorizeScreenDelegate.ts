@@ -7,14 +7,12 @@
 
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableCategorizeScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
+import { Keyboard } from 'react-native';
 
-import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { CategoryFormDelegate } from './CategoryFormDelegate';
@@ -26,6 +24,7 @@ export class CategorizeScreenDelegate {
   private categoryFormDelegate: CategoryFormDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
+  private selectedVocabularyIds: readonly string[];
 
   public constructor(
     eventBus: EventBus,
@@ -33,29 +32,28 @@ export class CategorizeScreenDelegate {
     categoryFormDelegate: CategoryFormDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
+    selectedVocabularyIds: readonly string[],
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
     this.categoryFormDelegate = categoryFormDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
+    this.selectedVocabularyIds = selectedVocabularyIds;
   }
 
-  public save(selectedVocabularyIds: readonly string[]): void {
-    if (selectedVocabularyIds.length === 1) {
-      this.saveSingle(selectedVocabularyIds[0]);
-    } else {
-      this.saveMultiple(selectedVocabularyIds);
-    }
+  public handleInputChange(searchInput: string): void {
+    this.categoryFormDelegate.handleInputChange(searchInput);
   }
 
-  public setCategoryName(categoryName: string): void {
-    this.categoryFormDelegate.setCategoryName(categoryName);
+  public selectCategory(categoryName: string): void {
+    Keyboard.dismiss();
+    this.save(categoryName, this.selectedVocabularyIds);
   }
 
   public prepareAndFetchCategorySuggestions(): void {
     this.categoryFormDelegate.prepareAndFetchSuggestions(
-      this.observableScreen.categoryFormState.categoryName,
+      this.observableScreen.categoryFormState.searchInput,
     );
   }
 
@@ -67,26 +65,34 @@ export class CategorizeScreenDelegate {
     this.categoryFormDelegate.clearFetchSuggestions();
   }
 
-  public showAllCategories(): void {
-    this.categoryFormDelegate.showAllCategories();
+  public clear(): void {
+    this.categoryFormDelegate.clear();
   }
 
-  public autoRefreshCategorySuggestionsOnNameChange(
+  public autoRefreshCategorySuggestionsOnInputChange(
     debounceTime: number,
   ): void {
-    this.categoryFormDelegate.autoRefreshCategorySuggestionsOnNameChange(
+    this.categoryFormDelegate.autoRefreshCategorySuggestionsOnInputChange(
       debounceTime,
     );
   }
 
-  private saveSingle(vocabularyId: string): void {
+  private save(
+    categoryName: string,
+    selectedVocabularyIds: readonly string[],
+  ): void {
+    if (selectedVocabularyIds.length === 1) {
+      this.saveSingle(categoryName, selectedVocabularyIds[0]);
+    } else {
+      this.saveMultiple(categoryName, selectedVocabularyIds);
+    }
+  }
+
+  private saveSingle(categoryName: string, vocabularyId: string): void {
     const editedVocabulary = {
       vocabularyId,
       category: {
-        categoryName:
-          this.observableScreen.categoryFormState.categoryName === ''
-            ? 'Uncategorized'
-            : this.observableScreen.categoryFormState.categoryName,
+        categoryName: categoryName === '' ? 'Uncategorized' : categoryName,
       },
     };
 
@@ -128,46 +134,16 @@ export class CategorizeScreenDelegate {
     );
   }
 
-  public showMoveToUncategorizedDialog(proceedCallback: () => void): void {
-    this.dialogDelegate.show({
-      message:
-        'You are moving the term(s) to Uncategorized. If you want to proceed, press OKAY.',
-      onBackgroundPress: (): void => {
-        this.dialogDelegate.dismiss();
-      },
-      buttonList: [
-        {
-          testID: LightBoxDialogIds.CANCEL_BTN,
-          text: 'CANCEL',
-          onPress: (): void => {
-            this.navigatorDelegate.dismissLightBox();
-          },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
-        },
-        {
-          testID: LightBoxDialogIds.OKAY_BTN,
-          text: 'OKAY',
-          onPress: proceedCallback,
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
-        },
-      ],
-    });
-  }
-
-  private saveMultiple(vocabularyIds: readonly string[]): void {
+  private saveMultiple(
+    categoryName: string,
+    vocabularyIds: readonly string[],
+  ): void {
     const editedVocabularyList = vocabularyIds.map(
       (vocabularyId): DeepPartial<Vocabulary> => {
         return {
           vocabularyId,
           category: {
-            categoryName:
-              this.observableScreen.categoryFormState.categoryName === ''
-                ? 'Uncategorized'
-                : this.observableScreen.categoryFormState.categoryName,
+            categoryName: categoryName === '' ? 'Uncategorized' : categoryName,
           },
         };
       },

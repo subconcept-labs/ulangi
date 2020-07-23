@@ -31,11 +31,12 @@ export class CategorizeScreen extends React.Component<CategorizeScreenProps> {
         <CategoryForm
           theme={this.props.themeStore.theme}
           categoryFormState={this.props.observableScreen.categoryFormState}
-          setCategoryName={this.props.screenDelegate.setCategoryName}
+          handleInputChange={this.props.screenDelegate.handleInputChange}
+          selectCategory={this.props.screenDelegate.selectCategory}
           fetchCategorySuggestions={
             this.props.screenDelegate.fetchCategorySuggestions
           }
-          showAllCategories={this.props.screenDelegate.showAllCategories}
+          clear={this.props.screenDelegate.clear}
         />
       </View>
     );

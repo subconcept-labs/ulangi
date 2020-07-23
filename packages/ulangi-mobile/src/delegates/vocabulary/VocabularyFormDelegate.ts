@@ -253,10 +253,7 @@ export class VocabularyFormDelegate {
       (): boolean => this.observableKeyboard.state === 'hidden',
       (): void => {
         this.navigatorDelegate.push(ScreenName.CATEGORY_SELECTOR_SCREEN, {
-          initialCategoryName:
-            this.vocabularyFormState.categoryName === 'Uncategorized'
-              ? ''
-              : this.vocabularyFormState.categoryName,
+          initialCategoryName: undefined,
           onSelect: (categoryName): void => {
             this.vocabularyFormState.categoryName = categoryName;
           },

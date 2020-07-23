@@ -15,6 +15,7 @@ import { ScreenFactory } from '../ScreenFactory';
 export class CategorizeScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableCategorizeScreen,
+    selectedVocabularyIds: readonly string[],
   ): CategorizeScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -35,6 +36,7 @@ export class CategorizeScreenFactory extends ScreenFactory {
       categoryFormDelegate,
       dialogDelegate,
       navigatorDelegate,
+      selectedVocabularyIds,
     );
   }
 }

@@ -13,7 +13,6 @@ import {
   Attribution,
   VocabularyExtraFields,
 } from '@ulangi/ulangi-common/interfaces';
-import * as _ from 'lodash';
 import { IObservableArray, computed, observable } from 'mobx';
 
 import { ObservablePublicDefinition } from './ObservablePublicDefinition';

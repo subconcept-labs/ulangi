@@ -7,7 +7,6 @@
 
 import { AttributionHelper } from '@ulangi/ulangi-common/core';
 import { Attribution } from '@ulangi/ulangi-common/interfaces';
-import * as _ from 'lodash';
 import { computed, observable } from 'mobx';
 
 import { ObservableDictionaryDefinition } from './ObservableDictionaryDefinition';

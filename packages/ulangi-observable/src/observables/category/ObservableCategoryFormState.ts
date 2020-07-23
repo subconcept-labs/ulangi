@@ -6,14 +6,15 @@
  */
 
 import { ActivityState } from '@ulangi/ulangi-common/enums';
+import { CategorySuggestion } from '@ulangi/ulangi-common/interfaces';
 import { IObservableArray, IObservableValue, action, observable } from 'mobx';
 
 export class ObservableCategoryFormState {
   @observable
-  public categoryName: string;
+  public searchInput: string;
 
   @observable
-  public suggestions: null | IObservableArray<string>;
+  public suggestions: null | IObservableArray<CategorySuggestion>;
 
   @observable
   public noMoreSuggestions: boolean;
@@ -21,12 +22,12 @@ export class ObservableCategoryFormState {
   public readonly fetchSuggestionsState: IObservableValue<ActivityState>;
 
   public constructor(
-    categoryName: string,
-    suggestions: null | IObservableArray<string>,
+    searchInput: string,
+    suggestions: null | IObservableArray<CategorySuggestion>,
     noMoreSuggestions: boolean,
     fetchSuggestionsState: IObservableValue<ActivityState>
   ) {
-    this.categoryName = categoryName;
+    this.searchInput = searchInput;
     this.suggestions = suggestions;
     this.noMoreSuggestions = noMoreSuggestions;
     this.fetchSuggestionsState = fetchSuggestionsState;
@@ -34,7 +35,7 @@ export class ObservableCategoryFormState {
 
   @action
   public reset(): void {
-    this.categoryName = '';
+    this.searchInput = '';
     this.suggestions = null;
     this.fetchSuggestionsState.set(ActivityState.INACTIVE);
     this.noMoreSuggestions = false;

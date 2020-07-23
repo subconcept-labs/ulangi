@@ -9,18 +9,14 @@ import { ObservableCategorySelectorScreen } from '@ulangi/ulangi-observable';
 
 import { CategoryFormDelegate } from '../../delegates/category/CategoryFormDelegate';
 import { CategorySelectorScreenDelegate } from '../../delegates/category/CategorySelectorScreenDelegate';
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class CategorySelectorScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableCategorySelectorScreen,
+    onSelect: (categoryName: string) => void,
   ): CategorySelectorScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
-
-    const dialogDelegate = this.createDialogDelegate(
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
 
     const categoryFormDelegate = new CategoryFormDelegate(
       this.eventBus,
@@ -30,11 +26,11 @@ export class CategorySelectorScreenFactory extends ScreenFactory {
     );
 
     return new CategorySelectorScreenDelegate(
-      this.eventBus,
+      this.observer,
       observableScreen,
       categoryFormDelegate,
-      dialogDelegate,
       navigatorDelegate,
+      onSelect,
     );
   }
 }

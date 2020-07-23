@@ -20,9 +20,10 @@ export interface CategorySuggestionListStyles {
   empty_container: ViewStyle;
   empty_text: TextStyle;
   activity_indicator: ViewStyle;
+  left: ViewStyle;
   category_name: TextStyle;
-  use_btn: ViewStyle;
-  use_text: TextStyle;
+  category_meta: TextStyle;
+  new_category: TextStyle;
 }
 
 export const baseStyles: CategorySuggestionListStyles = {
@@ -76,27 +77,19 @@ export const baseStyles: CategorySuggestionListStyles = {
     alignItems: 'center',
   },
 
+  left: {},
+
   category_name: {
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: 'bold',
   },
 
-  use_btn: {
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    marginLeft: 7,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.15,
-    elevation: 0.75,
-  },
-
-  use_text: {
+  category_meta: {
     fontSize: 14,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
+  },
+
+  new_category: {
+    fontWeight: 'bold',
   },
 };
 
@@ -128,12 +121,7 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.primaryTextColor,
     },
 
-    use_btn: {
-      borderColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
-
-    use_text: {
+    category_meta: {
       color: config.styles.light.secondaryTextColor,
     },
   }),
@@ -167,12 +155,7 @@ export const darkStyles = StyleSheet.create(
       color: config.styles.dark.primaryTextColor,
     },
 
-    use_btn: {
-      borderColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
-
-    use_text: {
+    category_meta: {
       color: config.styles.dark.secondaryTextColor,
     },
   }),

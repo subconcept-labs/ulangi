@@ -176,6 +176,42 @@ export class CategoryModel {
     );
   }
 
+  public hasCategory(
+    db: SQLiteDatabase,
+    setId: string,
+    vocabularyStatus: VocabularyStatus,
+    categoryName: string
+  ): Promise<boolean> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          const query = squel
+            .select()
+            .from(TableName.VOCABULARY, 'v')
+            .left_join(
+              TableName.VOCABULARY_CATEGORY,
+              'c',
+              'v.vocabularyId = c.vocabularyId'
+            )
+            .where('v.setId = ?', setId)
+            .where('v.vocabularyStatus = ?', vocabularyStatus)
+            .where('c.categoryName = ?', categoryName)
+            .limit(1)
+            .toParam();
+          const result = await db.executeSql(query.text, query.values);
+
+          if (result.rows.length > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
   public getCategoryNameSuggestions(
     db: SQLiteDatabase,
     setId: string,

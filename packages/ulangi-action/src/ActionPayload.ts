@@ -17,6 +17,7 @@ import {
 import {
   AutoArchiveSettings,
   Category,
+  CategorySuggestion,
   ErrorBag,
   PixabayImage,
   Product,
@@ -180,7 +181,7 @@ export interface ActionPayload {
   readonly CATEGORY__FETCH_SUGGESTIONS: null;
   readonly CATEGORY__FETCHING_SUGGESTIONS: null;
   readonly CATEGORY__FETCH_SUGGESTIONS_SUCCEEDED: {
-    categoryNames: readonly string[];
+    suggestions: readonly CategorySuggestion[];
     noMore: boolean;
   };
   readonly CATEGORY__FETCH_SUGGESTIONS_FAILED: ErrorBag;

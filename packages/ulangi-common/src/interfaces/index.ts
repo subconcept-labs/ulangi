@@ -10,6 +10,7 @@ export { AutoArchiveSettings } from './general/AutoArchiveSettings';
 export { AutoShowInAppRating } from './general/AutoShowInAppRating';
 export { ButtonStyles } from './general/ButtonStyles';
 export { Category } from './general/Category';
+export { CategorySuggestion } from './general/CategorySuggestion';
 export { Definition } from './general/Definition';
 export { DefinitionExtraFields } from './general/DefinitionExtraFields';
 export { ErrorBag } from './general/ErrorBag';

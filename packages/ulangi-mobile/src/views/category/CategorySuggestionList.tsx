@@ -5,14 +5,17 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
+import { ActivityState, ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { CategorySuggestion } from '@ulangi/ulangi-common/interfaces';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
 import { CategoryFormIds } from '../../constants/ids/CategoryFormIds';
+import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
+import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { FixedTouchableWithoutFeedback } from '../common/FixedTouchableWithoutFeedback';
 import {
@@ -23,11 +26,11 @@ import {
 
 export interface CategorySuggestionListProps {
   theme: Theme;
-  suggestions: null | IObservableArray<string>;
+  suggestions: null | IObservableArray<CategorySuggestion>;
   fetchState: IObservableValue<ActivityState>;
-  setCategoryName: (categoryName: string) => void;
+  selectCategory: (categoryName: string) => void;
   fetchMore: () => void;
-  showAll: () => void;
+  clear: () => void;
   styles?: {
     light: CategorySuggestionListStyles;
     dark: CategorySuggestionListStyles;
@@ -38,7 +41,8 @@ export interface CategorySuggestionListProps {
 export class CategorySuggestionList extends React.Component<
   CategorySuggestionListProps
 > {
-  private keyExtractor = (item: any): string => item;
+  private keyExtractor = (item: CategorySuggestion): string =>
+    item.categoryName;
 
   public get styles(): CategorySuggestionListStyles {
     const light = this.props.styles ? this.props.styles.light : lightStyles;
@@ -48,61 +52,51 @@ export class CategorySuggestionList extends React.Component<
   }
 
   public render(): null | React.ReactElement<any> {
-    if (this.props.suggestions === null) {
-      return null;
-    } else {
-      return (
-        <FlatList
-          data={this.props.suggestions}
-          contentContainerStyle={this.styles.suggestion_list}
-          keyExtractor={this.keyExtractor}
-          keyboardShouldPersistTaps="handled"
-          renderItem={({ item: categoryName }): React.ReactElement<any> => {
-            return (
-              <FixedTouchableWithoutFeedback
-                style={this.styles.suggestion_item}>
-                <DefaultText style={this.styles.category_name}>
-                  {categoryName}
-                </DefaultText>
-                <TouchableOpacity
-                  testID={CategoryFormIds.USE_BTN_BY_CATEGORY_NAME(
-                    categoryName,
-                  )}
-                  style={this.styles.use_btn}
-                  onPress={(): void =>
-                    this.props.setCategoryName(categoryName)
-                  }>
-                  <DefaultText style={this.styles.use_text}>
-                    Use this
-                  </DefaultText>
-                </TouchableOpacity>
-              </FixedTouchableWithoutFeedback>
-            );
-          }}
-          onEndReachedThreshold={0.5}
-          onEndReached={this.props.fetchMore}
-          stickyHeaderIndices={[0]}
-          ListEmptyComponent={this.renderEmptyComponent()}
-          ListHeaderComponent={this.renderHeaderSection()}
-          ListFooterComponent={
-            <DefaultActivityIndicator
-              activityState={this.props.fetchState}
-              size="small"
-              style={this.styles.activity_indicator}
-            />
-          }
-        />
-      );
-    }
-  }
-
-  private renderEmptyComponent(): React.ReactElement<any> {
     return (
-      <View style={this.styles.empty_container}>
-        <DefaultText style={this.styles.empty_text}>
-          No existing categories to select. You are entering a new category.
-        </DefaultText>
-      </View>
+      <FlatList
+        data={this.props.suggestions || []}
+        contentContainerStyle={this.styles.suggestion_list}
+        keyExtractor={this.keyExtractor}
+        keyboardShouldPersistTaps="handled"
+        renderItem={({ item: suggestion }): React.ReactElement<any> => {
+          return (
+            <FixedTouchableWithoutFeedback style={this.styles.suggestion_item}>
+              <View style={this.styles.left}>
+                <DefaultText style={this.styles.category_name}>
+                  {suggestion.categoryName}
+                </DefaultText>
+                <DefaultText
+                  style={[
+                    this.styles.category_meta,
+                    suggestion.kind === 'new' ? this.styles.new_category : null,
+                  ]}>
+                  {suggestion.kind === 'new' ? 'New' : 'Existing'}
+                </DefaultText>
+              </View>
+              <DefaultButton
+                text="Select"
+                styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+                  ButtonSize.SMALL,
+                )}
+                onPress={(): void =>
+                  this.props.selectCategory(suggestion.categoryName)
+                }
+              />
+            </FixedTouchableWithoutFeedback>
+          );
+        }}
+        onEndReachedThreshold={0.5}
+        onEndReached={this.props.fetchMore}
+        stickyHeaderIndices={[0]}
+        ListHeaderComponent={this.renderHeaderSection()}
+        ListFooterComponent={
+          <DefaultActivityIndicator
+            activityState={this.props.fetchState}
+            size="small"
+            style={this.styles.activity_indicator}
+          />
+        }
+      />
     );
   }
 
@@ -110,14 +104,14 @@ export class CategorySuggestionList extends React.Component<
     return (
       <View style={this.styles.suggestion_title_container}>
         <DefaultText style={this.styles.suggestion_title}>
-          EXISTING CATEGORIES:
+          CATEGORIES:
         </DefaultText>
         <TouchableOpacity
           testID={CategoryFormIds.SHOW_ALL_BTN}
-          onPress={this.props.showAll}
+          onPress={this.props.clear}
           style={this.styles.show_all_suggestions_btn}>
           <DefaultText style={this.styles.show_all_suggestions_text}>
-            Show all
+            Clear
           </DefaultText>
         </TouchableOpacity>
       </View>

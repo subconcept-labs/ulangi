@@ -34,8 +34,8 @@ export class CategoryFormDelegate {
     this.categoryFormState = categoryFormState;
   }
 
-  public setCategoryName(categoryName: string): void {
-    this.categoryFormState.categoryName = categoryName;
+  public handleInputChange(searchInput: string): void {
+    this.categoryFormState.searchInput = searchInput;
   }
 
   public clearFetchSuggestions(): void {
@@ -47,7 +47,8 @@ export class CategoryFormDelegate {
     );
   }
 
-  public showAllCategories(): void {
+  public clear(): void {
+    this.categoryFormState.searchInput = '';
     this.clearFetchSuggestions();
     this.prepareAndFetchSuggestions('');
   }
@@ -101,7 +102,7 @@ export class CategoryFormDelegate {
         group(
           once(
             ActionType.CATEGORY__FETCH_SUGGESTIONS_SUCCEEDED,
-            ({ categoryNames, noMore }): void => {
+            ({ suggestions, noMore }): void => {
               runInAction(
                 (): void => {
                   this.categoryFormState.fetchSuggestionsState.set(
@@ -113,7 +114,7 @@ export class CategoryFormDelegate {
                   }
 
                   this.categoryFormState.suggestions.push(
-                    ...categoryNames.slice(),
+                    ...suggestions.slice(),
                   );
                 },
               );
@@ -133,15 +134,15 @@ export class CategoryFormDelegate {
     }
   }
 
-  public autoRefreshCategorySuggestionsOnNameChange(
+  public autoRefreshCategorySuggestionsOnInputChange(
     debounceTime: number,
   ): void {
     const debouncedPrepareAndFetchCategorySuggestions = _.debounce((): void => {
-      this.prepareAndFetchSuggestions(this.categoryFormState.categoryName);
+      this.prepareAndFetchSuggestions(this.categoryFormState.searchInput);
     }, debounceTime);
 
     this.observer.reaction(
-      (): undefined | string => this.categoryFormState.categoryName,
+      (): undefined | string => this.categoryFormState.searchInput,
       (): void => {
         this.clearFetchSuggestions();
         debouncedPrepareAndFetchCategorySuggestions();

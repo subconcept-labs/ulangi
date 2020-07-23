@@ -25,9 +25,10 @@ export interface CategoryFormProps {
   theme: Theme;
   placeholderText?: string;
   categoryFormState: ObservableCategoryFormState;
-  setCategoryName: (categoryName: string) => void;
+  handleInputChange: (searchInput: string) => void;
+  selectCategory: (categoryName: string) => void;
   fetchCategorySuggestions: () => void;
-  showAllCategories: () => void;
+  clear: () => void;
   styles?: {
     light: CategoryFormStyles;
     dark: CategoryFormStyles;
@@ -49,26 +50,25 @@ export class CategoryForm extends React.Component<CategoryFormProps> {
           <TextInput
             testID={CategoryFormIds.CATEGORY_INPUT}
             placeholder={
-              this.props.placeholderText ||
-              'Select or enter category of the term'
+              this.props.placeholderText || 'Enter category to search'
             }
             placeholderTextColor={
               this.props.theme === Theme.LIGHT
                 ? config.styles.light.secondaryTextColor
                 : config.styles.dark.secondaryTextColor
             }
-            onChangeText={this.props.setCategoryName}
+            onChangeText={this.props.handleInputChange}
             style={this.styles.category_input}
-            value={this.props.categoryFormState.categoryName}
+            value={this.props.categoryFormState.searchInput}
           />
         </View>
         <CategorySuggestionList
           theme={this.props.theme}
           suggestions={this.props.categoryFormState.suggestions}
           fetchState={this.props.categoryFormState.fetchSuggestionsState}
-          setCategoryName={this.props.setCategoryName}
+          selectCategory={this.props.selectCategory}
           fetchMore={this.props.fetchCategorySuggestions}
-          showAll={this.props.showAllCategories}
+          clear={this.props.clear}
         />
         <KeyboardSpacer />
       </View>
