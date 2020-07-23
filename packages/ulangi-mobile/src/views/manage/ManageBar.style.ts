@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
+import { config } from '../../constants/config';
+
 export interface ManageBarStyles {
   container: ViewStyle;
   button: ViewStyle;
@@ -17,7 +19,8 @@ export interface ManageBarStyles {
 export const baseStyle: ManageBarStyles = {
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -34,12 +37,16 @@ export const baseStyle: ManageBarStyles = {
   button_text: {
     fontWeight: 'bold',
     color: '#888',
-    fontSize: 14,
+    fontSize: 15,
   },
 };
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyle, {
+    container: {
+      borderBottomColor: config.styles.light.primaryBorderColor,
+    },
+
     button_text: {
       color: '#888',
     },
@@ -48,6 +55,10 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyle, {
+    container: {
+      borderBottomColor: config.styles.dark.primaryBorderColor,
+    },
+
     button_text: {
       color: '#aaa',
     },

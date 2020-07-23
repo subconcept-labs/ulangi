@@ -22,6 +22,7 @@ export interface VocabularyItemStyles {
   term: TextStyle;
   missing_term: TextStyle;
   option_btn: ViewStyle;
+  definition_list_container: ViewStyle;
 }
 
 const baseStyles: VocabularyItemStyles = {
@@ -71,9 +72,8 @@ const baseStyles: VocabularyItemStyles = {
   },
 
   term: {
-    fontSize: 16,
+    fontSize: 19,
     fontWeight: 'bold',
-    lineHeight: 20,
   },
 
   missing_term: {
@@ -86,6 +86,10 @@ const baseStyles: VocabularyItemStyles = {
     paddingLeft: 5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  definition_list_container: {
+    borderTopWidth: 2,
   },
 };
 
@@ -110,6 +114,10 @@ export const lightStyles = StyleSheet.create(
     missing_term: {
       color: config.styles.light.secondaryTextColor,
     },
+
+    definition_list_container: {
+      borderTopColor: config.styles.light.secondaryBorderColor,
+    },
   }),
 );
 
@@ -125,15 +133,19 @@ export const darkStyles = StyleSheet.create(
     },
 
     tag_text: {
-      color: config.styles.light.secondaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
     },
 
     dot: {
-      color: config.styles.light.secondaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
     },
 
     missing_term: {
-      color: config.styles.light.secondaryTextColor,
+      color: config.styles.dark.secondaryTextColor,
+    },
+
+    definition_list_container: {
+      borderTopColor: config.styles.dark.secondaryBorderColor,
     },
   }),
 );

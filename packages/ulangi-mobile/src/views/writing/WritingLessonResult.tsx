@@ -106,7 +106,7 @@ export class WritingLessonResult extends React.Component<
         <View style={this.styles.button_container}>
           <DefaultButton
             testID={WritingLessonScreenIds.TAKE_ANOTHER_LESSON_BTN}
-            text="Take another lesson"
+            text="Continue"
             styles={LessonScreenStyle.getLargeButtonStyles(
               config.styles.primaryColor,
               'white',

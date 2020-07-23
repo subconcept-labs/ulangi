@@ -13,6 +13,7 @@ import { config } from '../../constants/config';
 export interface CategoryItemStyles {
   item_container: ViewStyle;
   top_container: ViewStyle;
+  bottom_container: ViewStyle;
   stats_container: ViewStyle;
   stats_label_container: ViewStyle;
   stats_label: TextStyle;
@@ -44,8 +45,10 @@ const baseStyles: CategoryItemStyles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 14,
   },
+
+  bottom_container: {},
 
   stats_container: {
     paddingHorizontal: 14,
@@ -63,12 +66,12 @@ const baseStyles: CategoryItemStyles = {
   stats_label: {
     paddingRight: 4,
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 13,
   },
 
   category_name: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 17,
     paddingBottom: 4,
   },
 
@@ -100,7 +103,7 @@ const baseStyles: CategoryItemStyles = {
 
   count: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     paddingBottom: 3,
   },
 
@@ -109,6 +112,8 @@ const baseStyles: CategoryItemStyles = {
   },
 
   review_btn_container: {
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 12,
   },
 };
@@ -119,6 +124,8 @@ export const lightStyles = StyleSheet.create(
       backgroundColor: config.styles.light.primaryBackgroundColor,
       elevation: 1,
     },
+
+    bottom_container: {},
 
     stats_container: {
       borderTopColor: config.styles.light.secondaryBorderColor,
@@ -152,6 +159,8 @@ export const darkStyles = StyleSheet.create(
       backgroundColor: config.styles.dark.primaryBackgroundColor,
       elevation: 3,
     },
+
+    bottom_container: {},
 
     stats_container: {
       borderTopColor: config.styles.dark.secondaryBorderColor,

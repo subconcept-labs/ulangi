@@ -99,22 +99,24 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
           theme={this.props.theme}
           extraFields={this.props.reviewState.vocabulary.vocabularyExtraFields}
         />
-        {this.props.reviewState.vocabulary.definitions.map(
-          (definition, index): React.ReactElement<any> => {
-            return (
-              <DefinitionItem
-                key={definition.definitionId}
-                theme={this.props.theme}
-                index={index}
-                definition={definition}
-                styles={{
-                  light: definitionItemLightStyles,
-                  dark: definitionItemDarkStyles,
-                }}
-              />
-            );
-          },
-        )}
+        <View style={this.styles.definition_list_container}>
+          {this.props.reviewState.vocabulary.definitions.map(
+            (definition, index): React.ReactElement<any> => {
+              return (
+                <DefinitionItem
+                  key={definition.definitionId}
+                  theme={this.props.theme}
+                  index={index}
+                  definition={definition}
+                  styles={{
+                    light: definitionItemLightStyles,
+                    dark: definitionItemDarkStyles,
+                  }}
+                />
+              );
+            },
+          )}
+        </View>
       </Animatable.View>
     );
   }

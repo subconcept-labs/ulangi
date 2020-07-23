@@ -50,7 +50,7 @@ export class PublicSetDetailScreenContainer extends Container<
     this.props.componentId,
     ScreenName.PUBLIC_SET_DETAIL_SCREEN,
     new ObservableTitleTopBar(
-      'Detail',
+      this.props.passedProps.publicSet.title,
       new ObservableTopBarButton(
         PublicSetDetailScreenIds.BACK_BTN,
         null,

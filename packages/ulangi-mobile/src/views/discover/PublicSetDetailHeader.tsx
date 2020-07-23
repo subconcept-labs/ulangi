@@ -9,8 +9,10 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { Attribution } from '@ulangi/ulangi-common/interfaces';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
+import { Images } from '../../constants/Images';
+import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   PublicSetDetailHeaderStyles,
@@ -22,8 +24,10 @@ export interface PublicSetDetailHeaderProps {
   theme: Theme;
   title: string;
   subtitle?: string;
+  numberOfTerms: number;
   attributions: Attribution[];
   openLink: (link: string) => void;
+  addAllVocabulary: () => void;
   styles?: {
     light: PublicSetDetailHeaderStyles;
     dark: PublicSetDetailHeaderStyles;
@@ -43,58 +47,60 @@ export class PublicSetDetailHeader extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.container}>
-        <DefaultText style={this.styles.title}>{this.props.title}</DefaultText>
-        {typeof this.props.subtitle !== 'undefined' &&
-        this.props.subtitle !== '' ? (
-          <DefaultText style={this.styles.subtitle}>
-            {this.props.subtitle}
+        <View style={this.styles.left}>
+          <DefaultText style={this.styles.attributions}>
+            This content is created by{' '}
+            {this.props.attributions.map(
+              (attribution, index): React.ReactElement<any> => {
+                return this.renderAttribution(attribution, index);
+              },
+            )}
           </DefaultText>
-        ) : null}
-        <View style={this.styles.attribution_containers}>
-          {this.props.attributions.map(
-            (attribution): React.ReactElement<any> => {
-              return this.renderAttribution(attribution);
-            },
-          )}
+          <DefaultText style={this.styles.term_count}>{`${
+            this.props.numberOfTerms
+          } terms`}</DefaultText>
         </View>
+        <View style={this.styles.right}>{this.renderAddAllButton()}</View>
       </View>
     );
   }
 
-  private renderAttribution(attribution: Attribution): React.ReactElement<any> {
+  private renderAttribution(
+    attribution: Attribution,
+    index: number,
+  ): React.ReactElement<any> {
     return (
-      <View
-        key={attribution.sourceName}
-        style={this.styles.attribution_container}>
-        <DefaultText allowFontScaling={false} style={this.styles.attribution}>
-          <DefaultText
-            style={attribution.sourceLink ? this.styles.highlighted : null}
-            onPress={(): void => {
-              if (typeof attribution.sourceLink !== 'undefined') {
-                this.props.openLink(attribution.sourceLink);
-              }
-            }}>
-            {attribution.sourceName}
-          </DefaultText>
-          {typeof attribution.license !== 'undefined' ? (
-            <DefaultText>
-              <DefaultText> (under </DefaultText>
-              <DefaultText
-                onPress={(): void => {
-                  if (typeof attribution.licenseLink !== 'undefined') {
-                    this.props.openLink(attribution.licenseLink);
-                  }
-                }}
-                style={
-                  attribution.licenseLink ? this.styles.highlighted : null
-                }>
-                {attribution.license}
-              </DefaultText>
-              <DefaultText>)</DefaultText>
-            </DefaultText>
-          ) : null}
+      <DefaultText key={attribution.sourceName}>
+        {index > 0 ? ', ' : ''}
+        <DefaultText
+          style={attribution.sourceLink ? this.styles.highlighted : null}
+          onPress={(): void => {
+            if (typeof attribution.sourceLink !== 'undefined') {
+              this.props.openLink(attribution.sourceLink);
+            }
+          }}>
+          {attribution.sourceName}
         </DefaultText>
-      </View>
+      </DefaultText>
+    );
+  }
+
+  private renderAddAllButton(): React.ReactElement<any> {
+    return (
+      <TouchableOpacity
+        testID={PublicSetDetailScreenIds.ADD_ALL_BTN}
+        style={this.styles.add_all_btn}
+        onPress={this.props.addAllVocabulary}>
+        <Image
+          style={this.styles.add_all_plus}
+          source={
+            this.props.theme === Theme.LIGHT
+              ? Images.ADD_BLACK_16X16
+              : Images.ADD_MILK_16X16
+          }
+        />
+        <DefaultText style={this.styles.add_all_text}>ALL</DefaultText>
+      </TouchableOpacity>
     );
   }
 }

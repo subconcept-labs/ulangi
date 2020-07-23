@@ -82,7 +82,7 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
           autoFocus={this.props.searchInputAutoFocus.get()}
           style={this.styles.search_input}
           value={this.props.searchInput.get()}
-          placeholder="e.g. cat, dog, animals..."
+          placeholder="e.g. cat, animals..."
           placeholderTextColor={
             this.props.theme === Theme.LIGHT
               ? config.styles.light.secondaryTextColor

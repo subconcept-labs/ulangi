@@ -68,7 +68,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.props.componentId,
     ScreenName.CATEGORY_DETAIL_SCREEN,
     new ObservableTitleTopBar(
-      'Detail',
+      this.props.passedProps.category.categoryName,
       new ObservableTopBarButton(
         CategoryDetailScreenIds.BACK_BTN,
         null,
@@ -102,6 +102,14 @@ export class CategoryDetailScreenContainer extends Container<
 
   public componentWillUnmount(): void {
     this.screenDelegate.clearFetch();
+  }
+
+  public componentDidAppear(): void {
+    if (
+      this.observableScreen.vocabularyListState.shouldShowRefreshNotice.get()
+    ) {
+      this.screenDelegate.refreshCurrentList();
+    }
   }
 
   protected onThemeChanged(theme: Theme): void {

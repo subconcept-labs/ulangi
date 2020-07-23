@@ -22,6 +22,7 @@ export interface ReviewItemStyles {
   message_inline: TextStyle;
   message_text: TextStyle;
   message_text_highlighted: TextStyle;
+  definition_list_container: ViewStyle;
   bold: TextStyle;
 }
 
@@ -40,14 +41,14 @@ export const baseStyles: ReviewItemStyles = {
   },
 
   vocabulary_text: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: 'bold',
   },
 
   message_container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderTopWidth: 1,
+    borderTopWidth: 2,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -69,6 +70,10 @@ export const baseStyles: ReviewItemStyles = {
 
   bold: {
     fontWeight: 'bold',
+  },
+
+  definition_list_container: {
+    borderTopWidth: 2,
   },
 };
 
@@ -93,6 +98,10 @@ export const lightStyles = StyleSheet.create(
     message_text: {
       color: config.styles.light.primaryTextColor,
     },
+
+    definition_list_container: {
+      borderTopColor: config.styles.light.secondaryBorderColor,
+    },
   }),
 );
 
@@ -116,6 +125,10 @@ export const darkStyles = StyleSheet.create(
 
     message_text: {
       color: config.styles.dark.primaryTextColor,
+    },
+
+    definition_list_container: {
+      borderTopColor: config.styles.dark.secondaryBorderColor,
     },
   }),
 );

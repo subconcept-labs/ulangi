@@ -63,7 +63,7 @@ export class TopBar extends Container<TopBarPassedProps> {
       return (
         <Animatable.View
           style={this.styles.top_bar_container}
-          animation={Platform.select({ ios: 'fadeInRight', android: 'fadeIn' })}
+          animation={Platform.select({ ios: 'fadeIn', android: 'fadeIn' })}
           useNativeDriver
           duration={500}>
           <View style={this.styles.button_container}>

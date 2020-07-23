@@ -69,10 +69,12 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
           theme={this.props.theme}
           extraFields={this.props.vocabulary.vocabularyExtraFields}
         />
-        <DefinitionList
-          theme={this.props.theme}
-          definitions={this.props.vocabulary.definitions}
-        />
+        <View style={this.styles.definition_list_container}>
+          <DefinitionList
+            theme={this.props.theme}
+            definitions={this.props.vocabulary.definitions}
+          />
+        </View>
       </TouchableOpacity>
     );
   }

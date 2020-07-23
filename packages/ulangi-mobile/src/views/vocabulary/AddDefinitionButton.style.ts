@@ -19,7 +19,7 @@ export const baseStyles = {
     height: 30,
     width: 32,
     borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
     marginLeft: 7,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },

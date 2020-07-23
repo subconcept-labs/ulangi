@@ -13,14 +13,12 @@ import * as React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { PublicVocabularyItem } from './PublicVocabularyItem';
-import { PublicVocabularyListHeader } from './PublicVocabularyListHeader';
 
 export interface PublicVocabularyListProps {
   testID: string;
   theme: Theme;
   vocabularyList: readonly ObservablePublicVocabulary[];
   addVocabulary: (vocabulary: PublicVocabulary) => void;
-  addAllVocabulary: () => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
   openLink: (link: string) => void;
 }
@@ -56,16 +54,6 @@ export class PublicVocabularyList extends React.Component<
             />
           );
         }}
-        ListHeaderComponent={(): React.ReactElement<any> => {
-          return (
-            <PublicVocabularyListHeader
-              theme={this.props.theme}
-              numberOfTerms={this.props.vocabularyList.length}
-              addAllVocabulary={this.props.addAllVocabulary}
-            />
-          );
-        }}
-        stickyHeaderIndices={[0]}
       />
     );
   }

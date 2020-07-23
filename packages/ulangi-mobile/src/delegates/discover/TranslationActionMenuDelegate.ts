@@ -70,7 +70,7 @@ export class TranslationActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: TranslationActionMenuIds.EDIT_BEFORE_ADDING_BTN,
-      text: 'Edit before adding',
+      text: 'Show editor',
       onPress: (): void => {
         const translation = this.translationConverter.convertToTranslation(
           translationWithLanguages,

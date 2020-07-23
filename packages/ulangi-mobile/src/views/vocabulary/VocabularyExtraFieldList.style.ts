@@ -46,15 +46,13 @@ const baseStyles: VocabularyExtraFieldListStyles = {
   },
 
   name: {
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: '700',
-    color: '#aaa',
   },
 
   value: {
-    fontSize: 15,
+    fontSize: 17,
     //fontWeight: 'bold',
-    color: '#222',
   },
 
   speak_touchable: {

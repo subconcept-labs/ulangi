@@ -128,6 +128,10 @@ export class ManageScreenContainer extends Container {
 
       this.screenDelegate.autorun();
     }
+
+    if (this.observableScreen.categoryListState.shouldShowRefreshNotice.get()) {
+      this.screenDelegate.refreshCurrentList();
+    }
   }
 
   public componentWillUnmount(): void {

@@ -15,7 +15,6 @@ import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetit
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
 import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
-import { VocabularyEventDelegate } from '../../delegates/vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../../delegates/vocabulary/VocabularyLiveUpdateDelegate';
@@ -68,8 +67,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       navigatorDelegate,
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
-
-    const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
 
     const vocabularySelectionDelegate = new VocabularySelectionDelegate(
       observableScreen.vocabularyListState,
@@ -126,7 +123,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       this.eventBus,
       observableScreen,
       categoryActionMenuDelegate,
-      vocabularyEventDelegate,
       vocabularyListDelegate,
       vocabularyFilterMenuDelegate,
       vocabularyActionMenuDelegate,

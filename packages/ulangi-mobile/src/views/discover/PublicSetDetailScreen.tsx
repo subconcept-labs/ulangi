@@ -48,6 +48,10 @@ export class PublicSetDetailScreen extends React.Component<
           title={this.props.observableScreen.publicSet.title}
           subtitle={this.props.observableScreen.publicSet.subtitle}
           attributions={this.props.observableScreen.publicSet.attributions}
+          addAllVocabulary={this.props.screenDelegate.showAddAllDialog}
+          numberOfTerms={
+            this.props.observableScreen.publicSet.vocabularyList.length
+          }
           openLink={this.props.screenDelegate.openLink}
         />
         <PublicVocabularyList
@@ -55,7 +59,6 @@ export class PublicSetDetailScreen extends React.Component<
           theme={this.props.themeStore.theme}
           vocabularyList={this.props.observableScreen.publicSet.vocabularyList}
           addVocabulary={this.props.screenDelegate.addVocabulary}
-          addAllVocabulary={this.props.screenDelegate.showAddAllDialog}
           showPublicVocabularyActionMenu={
             this.props.screenDelegate.showPublicVocabularyActionMenu
           }

@@ -6,54 +6,74 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
 export interface PublicSetDetailHeaderStyles {
   container: ViewStyle;
-  title: TextStyle;
-  subtitle: TextStyle;
-  attribution_containers: ViewStyle;
-  attribution_container: ViewStyle;
+  left: ViewStyle;
+  right: ViewStyle;
+  attributions: TextStyle;
   attribution: TextStyle;
+  term_count: TextStyle;
+  add_all_btn: ViewStyle;
+  add_all_plus: ImageStyle;
+  add_all_text: TextStyle;
   highlighted: TextStyle;
 }
 
 export const baseStyles: PublicSetDetailHeaderStyles = {
   container: {
-    marginTop: 24,
-    marginBottom: 14,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-
-  attribution_containers: {
-    marginTop: 4,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
   },
 
-  attribution_container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 8,
+  left: {},
+
+  right: {},
+
+  attributions: {
+    fontSize: 13,
   },
 
   attribution: {
-    fontSize: 13,
+    color: config.styles.primaryColor,
     textAlign: 'center',
+  },
+
+  term_count: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+
+  add_all_btn: {
+    borderRadius: 3,
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    marginLeft: 7,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0.5 },
+    shadowRadius: 0.75,
+    shadowOpacity: 0.15,
+    elevation: 0.75,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  add_all_plus: {
+    marginRight: 3,
+  },
+
+  add_all_text: {
+    fontSize: 13,
+    fontWeight: 'bold',
   },
 
   highlighted: {
@@ -63,32 +83,50 @@ export const baseStyles: PublicSetDetailHeaderStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
+    container: {
+      borderBottomColor: config.styles.light.primaryBorderColor,
     },
 
-    subtitle: {
-      color: config.styles.light.primaryTextColor,
-    },
-
-    attribution: {
+    attributions: {
       color: config.styles.light.secondaryTextColor,
+    },
+
+    term_count: {
+      color: config.styles.light.secondaryTextColor,
+    },
+
+    add_all_btn: {
+      borderColor: config.styles.light.primaryBorderColor,
+      backgroundColor: config.styles.light.primaryBackgroundColor,
+    },
+
+    add_all_text: {
+      color: config.styles.light.primaryTextColor,
     },
   }),
 );
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
+    container: {
+      borderBottomColor: config.styles.dark.primaryBorderColor,
     },
 
-    subtitle: {
-      color: config.styles.dark.primaryTextColor,
-    },
-
-    attribution: {
+    attributions: {
       color: config.styles.dark.secondaryTextColor,
+    },
+
+    term_count: {
+      color: config.styles.dark.secondaryTextColor,
+    },
+
+    add_all_btn: {
+      borderColor: config.styles.dark.primaryBorderColor,
+      backgroundColor: config.styles.dark.primaryBackgroundColor,
+    },
+
+    add_all_text: {
+      color: config.styles.dark.primaryTextColor,
     },
   }),
 );

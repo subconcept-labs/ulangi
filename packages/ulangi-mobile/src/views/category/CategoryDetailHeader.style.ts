@@ -6,30 +6,22 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
 export interface CategoryDetailHeaderStyles {
   container: ViewStyle;
-  title: TextStyle;
   buttons_container: ViewStyle;
   button_container: ViewStyle;
 }
 
 export const baseStyles: CategoryDetailHeaderStyles = {
   container: {
-    marginHorizontal: 16,
-    paddingVertical: 20,
+    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingBottom: 6,
+    borderBottomWidth: 1,
   },
 
   buttons_container: {
@@ -45,6 +37,10 @@ export const baseStyles: CategoryDetailHeaderStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    container: {
+      borderBottomColor: config.styles.light.primaryBorderColor,
+    },
+
     title: {
       color: config.styles.light.primaryTextColor,
     },
@@ -53,8 +49,8 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
+    container: {
+      borderBottomColor: config.styles.dark.primaryBorderColor,
     },
   }),
 );

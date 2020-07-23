@@ -265,21 +265,36 @@ export class ManageScreenDelegate {
   }
 
   public autoShowRefreshNotice(): void {
-    this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
-      (): void => {
-        if (
-          this.observableScreen.manageListType.get() ===
-          ManageListType.CATEGORY_LIST
-        ) {
-          this.observableScreen.categoryListState.shouldShowRefreshNotice.set(
-            true,
-          );
-        } else {
-          this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
-            true,
-          );
-        }
-      },
+    this.eventBus.subscribe(
+      on(
+        [
+          ActionType.SET__ADD_SUCCEEDED,
+          ActionType.SET__EDIT_SUCCEEDED,
+          ActionType.SET__DOWNLOAD_SETS_SUCCEEDED,
+          ActionType.SET__DOWNLOAD_INCOMPATIBLE_SETS_FAILED,
+          ActionType.VOCABULARY__ADD_SUCCEEDED,
+          ActionType.VOCABULARY__ADD_MULTIPLE_SUCCEEDED,
+          ActionType.VOCABULARY__EDIT_SUCCEEDED,
+          ActionType.VOCABULARY__DOWNLOAD_VOCABULARY_SUCCEEDED,
+          ActionType.VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_SUCCEEDED,
+          ActionType.SPACED_REPETITION__SAVE_RESULT,
+          ActionType.WRITING__SAVE_RESULT,
+        ],
+        (): void => {
+          if (
+            this.observableScreen.manageListType.get() ===
+            ManageListType.CATEGORY_LIST
+          ) {
+            this.observableScreen.categoryListState.shouldShowRefreshNotice.set(
+              true,
+            );
+          } else {
+            this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
+              true,
+            );
+          }
+        },
+      ),
     );
   }
 

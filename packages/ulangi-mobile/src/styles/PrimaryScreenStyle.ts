@@ -50,11 +50,11 @@ export class PrimaryScreenStyle {
 
   public static SCREEN_DARK_STYLES_ONLY = {
     statusBar: {
-      backgroundColor: '#000',
+      backgroundColor: config.styles.dark.tertiaryBackgroundColor,
     },
     topBar: {
       background: {
-        color: '#212121',
+        color: config.styles.dark.tertiaryBackgroundColor,
       },
     },
     layout: {
@@ -64,19 +64,19 @@ export class PrimaryScreenStyle {
 
   public static TOP_BAR_LIGHT_STYLES = _.merge({}, defaultTopBarLightStyles, {
     title: {
-      color: '#fff',
+      color: '#eee',
     },
     touchable: {
       backgroundColor: '#eee',
     },
     touchable_text: {
-      color: '#888',
+      color: '#777',
     },
   });
 
   public static TOP_BAR_DARK_STYLES = _.merge({}, defaultTopBarDarkStyles, {
     title: {
-      color: config.styles.dark.primaryTextColor,
+      color: '#eee',
     },
     touchable: {
       backgroundColor: '#eee',
@@ -98,7 +98,7 @@ export class PrimaryScreenStyle {
       statusBar: {
         style: 'light',
         // Android only
-        backgroundColor: '#212121',
+        backgroundColor: config.styles.dark.tertiaryBackgroundColor,
       },
     },
   };

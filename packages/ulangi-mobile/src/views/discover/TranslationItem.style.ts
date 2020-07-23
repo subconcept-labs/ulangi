@@ -27,7 +27,7 @@ export interface TranslationItemStyles {
 export const baseStyles: TranslationItemStyles = {
   container: {
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginTop: 16,
     borderRadius: 5,
     borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
@@ -51,7 +51,7 @@ export const baseStyles: TranslationItemStyles = {
 
   vocabulary_text: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 19,
     lineHeight: 20,
   },
 
@@ -59,7 +59,7 @@ export const baseStyles: TranslationItemStyles = {
     height: 30,
     width: 32,
     borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
     marginLeft: 7,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
@@ -70,7 +70,9 @@ export const baseStyles: TranslationItemStyles = {
     alignItems: 'center',
   },
 
-  definition_list_container: {},
+  definition_list_container: {
+    borderTopWidth: 2,
+  },
 
   definition_container: {
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -102,7 +104,7 @@ export const baseStyles: TranslationItemStyles = {
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     container: {
-      borderColor: config.styles.light.primaryBorderColor,
+      borderColor: config.styles.light.secondaryBorderColor,
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
 
@@ -117,6 +119,10 @@ export const lightStyles = StyleSheet.create(
 
     add_text: {
       color: config.styles.light.primaryTextColor,
+    },
+
+    definition_list_container: {
+      borderTopColor: config.styles.light.secondaryBorderColor,
     },
 
     definition_container: {
@@ -137,7 +143,7 @@ export const lightStyles = StyleSheet.create(
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     container: {
-      borderColor: config.styles.dark.primaryBorderColor,
+      borderColor: config.styles.dark.secondaryBorderColor,
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
 
@@ -152,6 +158,10 @@ export const darkStyles = StyleSheet.create(
 
     add_text: {
       color: config.styles.dark.primaryTextColor,
+    },
+
+    definition_list_container: {
+      borderTopColor: config.styles.dark.secondaryBorderColor,
     },
 
     definition_container: {

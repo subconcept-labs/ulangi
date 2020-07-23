@@ -18,7 +18,7 @@ export interface CategoryDetailScreenStyles {
 export const baseStyles: CategoryDetailScreenStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: 1,
   },
 
   floating_button_container: {

@@ -104,32 +104,34 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
             </View>
           </View>
         </TouchableOpacity>
-        {this.props.shouldShowLevelProgressForSR === true
-          ? this.renderLevelProgress(
-              'SR',
-              this.props.category.totalCount,
-              this.props.category.srLevel0Count,
-              this.props.category.srLevel1To3Count,
-              this.props.category.srLevel4To6Count,
-              this.props.category.srLevel7To8Count,
-              this.props.category.srLevel9To10Count,
-              this.props.showLevelBreakdownForSR,
-              this.props.reviewBySpacedRepetition,
-            )
-          : null}
-        {this.props.shouldShowLevelProgressForWR === true
-          ? this.renderLevelProgress(
-              'WR',
-              this.props.category.totalCount,
-              this.props.category.wrLevel0Count,
-              this.props.category.wrLevel1To3Count,
-              this.props.category.wrLevel4To6Count,
-              this.props.category.wrLevel7To8Count,
-              this.props.category.wrLevel9To10Count,
-              this.props.showLevelBreakdownForWR,
-              this.props.reviewByWriting,
-            )
-          : null}
+        <View style={this.styles.bottom_container}>
+          {this.props.shouldShowLevelProgressForSR === true
+            ? this.renderLevelProgress(
+                'SR',
+                this.props.category.totalCount,
+                this.props.category.srLevel0Count,
+                this.props.category.srLevel1To3Count,
+                this.props.category.srLevel4To6Count,
+                this.props.category.srLevel7To8Count,
+                this.props.category.srLevel9To10Count,
+                this.props.showLevelBreakdownForSR,
+                this.props.reviewBySpacedRepetition,
+              )
+            : null}
+          {this.props.shouldShowLevelProgressForWR === true
+            ? this.renderLevelProgress(
+                'WR',
+                this.props.category.totalCount,
+                this.props.category.wrLevel0Count,
+                this.props.category.wrLevel1To3Count,
+                this.props.category.wrLevel4To6Count,
+                this.props.category.wrLevel7To8Count,
+                this.props.category.wrLevel9To10Count,
+                this.props.showLevelBreakdownForWR,
+                this.props.reviewByWriting,
+              )
+            : null}
+        </View>
       </View>
     );
   }
@@ -164,18 +166,17 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
         />
         <View style={this.styles.review_btn_container}>
           <DefaultButton
-            text="Review"
-            onPress={(): void => review()}
             styles={
               this.props.theme === Theme.LIGHT
-                ? FullRoundedButtonStyle.getOutlineStyles(
+                ? FullRoundedButtonStyle.getGreyOutlineStyles(
                     ButtonSize.X_SMALL,
-                    config.styles.light.secondaryTextColor,
                   )
                 : FullRoundedButtonStyle.getFullGreyBackgroundStyles(
                     ButtonSize.X_SMALL,
                   )
             }
+            text="Review"
+            onPress={review}
           />
         </View>
       </TouchableOpacity>

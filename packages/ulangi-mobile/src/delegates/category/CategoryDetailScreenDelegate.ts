@@ -19,7 +19,6 @@ import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../vocabulary/VocabularyBulkActionMenuDelegate';
-import { VocabularyEventDelegate } from '../vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../vocabulary/VocabularyLiveUpdateDelegate';
@@ -30,7 +29,6 @@ export class CategoryDetailScreenDelegate {
   private eventBus: EventBus;
   private observableScreen: ObservableCategoryDetailScreen;
   private categoryActionMenuDelegate: CategoryActionMenuDelegate;
-  private vocabularyEventDelegate: VocabularyEventDelegate;
   private vocabularyListDelegate: VocabularyListDelegate;
   private vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate;
   private vocabularyActionMenuDelegate: VocabularyActionMenuDelegate;
@@ -44,7 +42,6 @@ export class CategoryDetailScreenDelegate {
     eventBus: EventBus,
     observableScreen: ObservableCategoryDetailScreen,
     categoryActionMenuDelegate: CategoryActionMenuDelegate,
-    vocabularyEventDelegate: VocabularyEventDelegate,
     vocabularyListDelegate: VocabularyListDelegate,
     vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate,
     vocabularyActionMenuDelegate: VocabularyActionMenuDelegate,
@@ -57,7 +54,6 @@ export class CategoryDetailScreenDelegate {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
     this.categoryActionMenuDelegate = categoryActionMenuDelegate;
-    this.vocabularyEventDelegate = vocabularyEventDelegate;
     this.vocabularyListDelegate = vocabularyListDelegate;
     this.vocabularyFilterMenuDelegate = vocabularyFilterMenuDelegate;
     this.vocabularyActionMenuDelegate = vocabularyActionMenuDelegate;
@@ -112,12 +108,20 @@ export class CategoryDetailScreenDelegate {
   }
 
   public autoShowRefreshNotice(): void {
-    this.vocabularyEventDelegate.onDownloadVocabularyCompleted(
-      (): void => {
-        this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
-          true,
-        );
-      },
+    this.eventBus.subscribe(
+      on(
+        [
+          ActionType.VOCABULARY__ADD_SUCCEEDED,
+          ActionType.VOCABULARY__EDIT_SUCCEEDED,
+          ActionType.VOCABULARY__DOWNLOAD_VOCABULARY_SUCCEEDED,
+          ActionType.VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_SUCCEEDED,
+        ],
+        (): void => {
+          this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
+            true,
+          );
+        },
+      ),
     );
   }
 
@@ -165,7 +169,7 @@ export class CategoryDetailScreenDelegate {
       this.observableScreen.category,
       this.observableScreen.selectedFilterType.get(),
       {
-        hideViewDetailButton: false,
+        hideViewDetailButton: true,
         hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
         hideReviewByWritingButton: !featureSettings.writingEnabled,
         hideQuizButton: !featureSettings.quizEnabled,

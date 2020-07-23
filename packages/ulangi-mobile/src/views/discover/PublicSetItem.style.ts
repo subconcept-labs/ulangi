@@ -56,7 +56,7 @@ export const baseStyles: PublicSetItemStyles = {
 
   set_name: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 17,
   },
 
   set_subtitle: {
@@ -80,7 +80,7 @@ export const baseStyles: PublicSetItemStyles = {
 
   count: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     paddingBottom: 3,
   },
 

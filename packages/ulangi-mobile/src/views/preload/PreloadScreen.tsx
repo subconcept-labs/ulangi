@@ -15,6 +15,7 @@ import { DefaultText } from '../common/DefaultText';
 
 export interface PreloadScreenProps {
   observableScreen: ObservablePreloadScreen;
+  shouldRenderMessage: boolean;
 }
 
 @observer
@@ -24,7 +25,9 @@ export class PreloadScreen extends React.Component<PreloadScreenProps> {
       <View style={styles.screen} testID={PreloadScreenIds.SCREEN}>
         <ActivityIndicator color="white" />
         <DefaultText style={styles.message}>
-          {this.props.observableScreen.message}
+          {this.props.shouldRenderMessage === true
+            ? this.props.observableScreen.message
+            : ''}
         </DefaultText>
       </View>
     );

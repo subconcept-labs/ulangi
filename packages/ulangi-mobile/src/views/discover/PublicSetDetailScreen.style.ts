@@ -17,7 +17,7 @@ export interface PublicSetDetailScreenStyles {
 export const baseStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: 1,
   },
 });
 

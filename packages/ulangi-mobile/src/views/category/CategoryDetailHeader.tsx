@@ -21,7 +21,6 @@ import { config } from '../../constants/config';
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
-import { DefaultText } from '../common/DefaultText';
 import {
   CategoryDetailHeaderStyles,
   darkStyles,
@@ -51,9 +50,6 @@ export class CategoryDetailHeader extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.container}>
-        <DefaultText style={this.styles.title}>
-          {this.props.category.categoryName}
-        </DefaultText>
         <View style={this.styles.buttons_container}>
           <View style={this.styles.button_container}>
             <DefaultButton
@@ -69,6 +65,7 @@ export class CategoryDetailHeader extends React.Component<
               )}
             />
           </View>
+          <View style={this.styles.button_container} />
         </View>
       </View>
     );

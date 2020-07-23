@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
+import { config } from '../../constants/config';
+
 export interface LearnScreenStyles {
   screen: ViewStyle;
   top_container: ViewStyle;
@@ -22,10 +24,11 @@ const baseStyles: LearnScreenStyles = {
 
   top_container: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomWidth: 1,
   },
 
   button: {},
@@ -33,12 +36,15 @@ const baseStyles: LearnScreenStyles = {
   button_text: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 15,
   },
 };
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    top_container: {
+      borderBottomColor: config.styles.light.primaryBorderColor,
+    },
     button_text: {
       color: '#888',
     },
@@ -47,6 +53,9 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    top_container: {
+      borderBottomColor: config.styles.dark.primaryBorderColor,
+    },
     button_text: {
       color: '#aaa',
     },

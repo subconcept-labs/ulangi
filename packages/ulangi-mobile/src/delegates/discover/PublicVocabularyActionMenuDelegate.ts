@@ -71,7 +71,7 @@ export class PublicVocabularyActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: PublicVocabularyActionMenuIds.EDIT_BEFORE_ADDING_BTN,
-      text: 'Edit before adding',
+      text: 'Show editor',
       onPress: (): void => {
         const vocabulary = this.publicVocabularyConverter.convertToVocabulary(
           publicVocabulary,

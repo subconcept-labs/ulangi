@@ -40,7 +40,7 @@
       "primaryBackgroundColor": "#fff",
       "secondaryBackgroundColor": "#e3e3e3",
       "tertiaryBackgroundColor": "#efefef",
-      "primaryTextColor": "#444",
+      "primaryTextColor": "#555555",
       "secondaryTextColor": "#999",
       "primaryBorderColor": "#b9b9b9",
       "secondaryBorderColor": "#d3d3d3"
@@ -51,8 +51,8 @@
       "tertiaryBackgroundColor": "#393939",
       "primaryTextColor": "#e3e3e3",
       "secondaryTextColor": "#888",
-      "primaryBorderColor": "#191919",
-      "secondaryBorderColor": "#292929"
+      "primaryBorderColor": "#666",
+      "secondaryBorderColor": "#222"
     }
   },
 
