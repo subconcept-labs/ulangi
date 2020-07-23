@@ -149,7 +149,7 @@ export class CategoryDetailScreenDelegate {
   }
 
   public showVocabularyDetail(vocabulary: ObservableVocabulary): void {
-    this.navigatorDelegate.push(ScreenName.VOCABULARY_DETAIL_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.VOCABULARY_DETAIL_SCREEN, {
       vocabulary,
     });
   }

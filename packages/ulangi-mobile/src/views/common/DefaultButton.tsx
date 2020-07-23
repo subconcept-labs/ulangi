@@ -8,9 +8,11 @@
 import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as React from 'react';
 import {
+  PanResponder,
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProperties,
+  View,
 } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
@@ -21,11 +23,27 @@ export interface DefaultButtonProps extends TouchableOpacityProperties {
   styles?: ButtonStyles;
   disabled?: boolean;
   icon?: React.ReactElement<any>;
+  cancelPressOnMove?: boolean;
   onPress?: () => void;
 }
 
 export class DefaultButton extends React.Component<DefaultButtonProps> {
   public render(): React.ReactElement<any> {
+    const panResponder = PanResponder.create({
+      onMoveShouldSetPanResponderCapture: (_, gestureState): boolean => {
+        const { dx, dy } = gestureState;
+        return dx > 5 || dx < -5 || dy > 5 || dy < -5;
+      },
+    });
+
+    if (this.props.cancelPressOnMove === true) {
+      return <View {...panResponder.panHandlers}>{this.renderButton()}</View>;
+    } else {
+      return this.renderButton();
+    }
+  }
+
+  private renderButton(): React.ReactElement<any> {
     const disabledTextStyle =
       this.props.disabled === true &&
       typeof this.props.styles !== 'undefined' &&

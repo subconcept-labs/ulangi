@@ -67,7 +67,7 @@ export class ChangeEmailScreenDelegate {
     this.dialogDelegate.showSuccessDialog({
       message: 'Changed email successfully.',
       onClose: (): void => {
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
     });
   }

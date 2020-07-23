@@ -15,7 +15,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { debounce } from 'lodash-decorators';
 import { when } from 'mobx';
-import { BackHandler, Platform } from 'react-native';
+import { BackHandler } from 'react-native';
 
 import { ScreenContainers } from '../../constants/ScreenContainers';
 import { ExtractPassedProps } from '../../types/ExtractPassedProps';
@@ -25,15 +25,18 @@ export class NavigatorDelegate {
   private static isWaitingToDismissLightBox: boolean = false;
 
   private componentId: string;
+  private screenType: undefined | 'full' | 'modal';
   private observableLightBox: ObservableLightBox;
   private themeStore: ObservableThemeStore;
 
   public constructor(
     componentId: string,
+    screenType: undefined | 'full' | 'modal',
     observableLightBox: ObservableLightBox,
     themeStore: ObservableThemeStore,
   ) {
     this.componentId = componentId;
+    this.screenType = screenType;
     this.observableLightBox = observableLightBox;
     this.themeStore = themeStore;
   }
@@ -47,13 +50,15 @@ export class NavigatorDelegate {
     passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
     options?: Options,
   ): void {
-    // On iOS, we use push
-    // On Android, we use showModal because it has better animation
-    if (Platform.OS === 'ios') {
-      this.debouncedPush(screenName, passProps, options);
-    } else {
-      this.debouncedShowModal(screenName, passProps, options);
-    }
+    this.debouncedPush(screenName, passProps, options);
+  }
+
+  public showModal<T extends keyof typeof ScreenContainers>(
+    screenName: T,
+    passProps: ExtractPassedProps<typeof ScreenContainers[T]>,
+    options?: Options,
+  ): void {
+    this.debouncedShowModal(screenName, passProps, options);
   }
 
   public resetTo<T extends keyof typeof ScreenContainers>(
@@ -75,10 +80,10 @@ export class NavigatorDelegate {
     });
   }
 
-  public pop(): void {
-    if (Platform.OS === 'ios') {
+  public dismissScreen(): void {
+    if (this.screenType === 'full') {
       this.debouncedPop();
-    } else {
+    } else if (this.screenType === 'modal') {
       this.debouncedDismissModel();
     }
   }
@@ -210,6 +215,7 @@ export class NavigatorDelegate {
         name: screenName,
         passProps: {
           theme: this.themeStore.theme,
+          screenType: 'full',
           // WORKAROUND FOR BUG:
           // We wrap passedProps inside a getter because
           // react-native-navigation cannot pass observables directly.
@@ -236,6 +242,7 @@ export class NavigatorDelegate {
               name: screenName,
               passProps: {
                 theme: this.themeStore.theme,
+                screenType: 'modal',
                 get passedProps(): ExtractPassedProps<
                   typeof ScreenContainers[T]
                 > {

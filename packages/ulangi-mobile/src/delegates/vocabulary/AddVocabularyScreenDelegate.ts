@@ -118,7 +118,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
       message: 'Saved successfully. What do you want to do next?',
       onBackgroundPress: (): void => {
         this.dialogDelegate.dismiss();
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
       buttonList: [
         {
@@ -126,7 +126,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
           text: 'CLOSE',
           onPress: (): void => {
             this.dialogDelegate.dismiss();
-            this.navigatorDelegate.pop();
+            this.navigatorDelegate.dismissScreen();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
             ButtonSize.SMALL,

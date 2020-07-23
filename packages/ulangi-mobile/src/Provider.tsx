@@ -23,6 +23,7 @@ export class Provider extends React.Component {
     if (React.isValidElement<any>(child)) {
       const containerProps: ContainerProps<any> = {
         componentId: child.props.componentId,
+        screenType: child.props.screenType,
         theme: child.props.theme,
         styles: child.props.styles,
         passedProps: child.props.passedProps,

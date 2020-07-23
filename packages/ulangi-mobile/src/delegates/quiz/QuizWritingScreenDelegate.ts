@@ -94,6 +94,6 @@ export class QuizWritingScreenDelegate {
   }
 
   public quit(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 }

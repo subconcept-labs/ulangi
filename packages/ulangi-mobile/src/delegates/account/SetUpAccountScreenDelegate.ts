@@ -75,7 +75,7 @@ export class SetUpAccountScreenDelegate {
     this.dialogDelegate.showSuccessDialog({
       message: 'Account set up successully.',
       onClose: (): void => {
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
     });
   }

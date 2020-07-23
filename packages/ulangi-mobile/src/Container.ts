@@ -20,6 +20,7 @@ import { Services } from './interfaces/Services';
 
 export interface ContainerPassedProps {
   readonly theme: Theme;
+  readonly screenType: undefined | 'full' | 'modal';
   readonly styles?: {
     readonly light: Options;
     readonly dark: Options;

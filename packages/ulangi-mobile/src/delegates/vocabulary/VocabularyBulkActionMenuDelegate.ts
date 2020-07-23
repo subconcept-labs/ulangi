@@ -115,7 +115,7 @@ export class VocabularyBulkActionMenuDelegate {
       text: 'Categorize selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
-        this.navigatorDelegate.push(ScreenName.CATEGORIZE_SCREEN, {
+        this.navigatorDelegate.showModal(ScreenName.CATEGORIZE_SCREEN, {
           categoryName: '',
           selectedVocabularyIds: this.vocabularyListState.selectedVocabularyIds.slice(),
         });

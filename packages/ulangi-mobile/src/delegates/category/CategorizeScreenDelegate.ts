@@ -117,7 +117,7 @@ export class CategorizeScreenDelegate {
               message: 'Save successfully.',
               onClose: (): void => {
                 this.dialogDelegate.dismiss();
-                this.navigatorDelegate.pop();
+                this.navigatorDelegate.dismissScreen();
               },
             });
           },
@@ -170,7 +170,7 @@ export class CategorizeScreenDelegate {
               message: 'Save successfully.',
               onClose: (): void => {
                 this.navigatorDelegate.dismissLightBox();
-                this.navigatorDelegate.pop();
+                this.navigatorDelegate.dismissScreen();
               },
             });
           },

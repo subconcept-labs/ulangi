@@ -7,6 +7,7 @@
 
 import {
   ManageListType,
+  Theme,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
 import {
@@ -16,7 +17,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { ManageScreenDelegate } from '../../delegates/manage/ManageScreenDelegate';
@@ -28,6 +29,11 @@ import { NoVocabulary } from '../vocabulary/NoVocabulary';
 import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
 import { VocabularyList } from '../vocabulary/VocabularyList';
 import { ManageBar } from './ManageBar';
+import {
+  ManageScreenStyles,
+  darkStyles,
+  lightStyles,
+} from './ManageScreen.style';
 import { QuickTutorialButton } from './QuickTutorialButton';
 
 export interface ManageScreenProps {
@@ -39,9 +45,15 @@ export interface ManageScreenProps {
 
 @observer
 export class ManageScreen extends React.Component<ManageScreenProps> {
+  private get styles(): ManageScreenStyles {
+    return this.props.themeStore.theme === Theme.LIGHT
+      ? lightStyles
+      : darkStyles;
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View testID={ManageScreenIds.SCREEN} style={styles.screen}>
+      <View testID={ManageScreenIds.SCREEN} style={this.styles.screen}>
         <ManageBar
           theme={this.props.themeStore.theme}
           manageListType={this.props.observableScreen.manageListType}
@@ -147,7 +159,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
   private renderBulkActionBar(): null | React.ReactElement<any> {
     if (this.shouldShowVocabularyBulkActionBar()) {
       return (
-        <View style={styles.bulk_action_bar_container}>
+        <View style={this.styles.bulk_action_bar_container}>
           <VocabularyBulkActionBar
             vocabularyListState={
               this.props.observableScreen.vocabularyListState
@@ -161,7 +173,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       );
     } else if (this.shouldShowCategoryBulkActionBar()) {
       return (
-        <View style={styles.bulk_action_bar_container}>
+        <View style={this.styles.bulk_action_bar_container}>
           <CategoryBulkActionBar
             categoryListState={this.props.observableScreen.categoryListState}
             showCategoryBulkActionMenu={
@@ -182,7 +194,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       !this.shouldShowCategoryBulkActionBar()
     ) {
       return (
-        <View style={styles.floating_action_button}>
+        <View style={this.styles.floating_action_button}>
           <AddVocabularyFloatingButton
             addVocabulary={this.props.screenDelegate.goToAddVocabulary}
           />
@@ -199,7 +211,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       !this.shouldShowCategoryBulkActionBar()
     ) {
       return (
-        <View style={styles.syncing_notice}>
+        <View style={this.styles.syncing_notice}>
           <SyncingNotice
             shouldShowSyncingNotice={
               this.props.observableScreen.manageListType.get() ===
@@ -243,30 +255,3 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  bulk_action_bar_container: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-  },
-
-  floating_action_button: {
-    position: 'absolute',
-    right: 14,
-    bottom: 14,
-  },
-
-  syncing_notice: {
-    position: 'absolute',
-    left: (Dimensions.get('window').width - 120) / 2,
-    bottom: 16,
-    width: 120,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-});

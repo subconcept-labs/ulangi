@@ -112,7 +112,7 @@ export class AtomTutorialScreenDelegate {
   }
 
   public back(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   private makeParticles(): readonly ObservableParticle[] {

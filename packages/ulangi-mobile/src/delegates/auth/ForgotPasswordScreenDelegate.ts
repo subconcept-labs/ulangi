@@ -58,7 +58,7 @@ export class ForgotPasswordScreenDelegate {
   }
 
   public back(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   private showRequestingDialog(): void {

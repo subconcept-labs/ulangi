@@ -64,7 +64,7 @@ export class CategorizeScreenContainer extends Container<
           dark: Images.ARROW_LEFT_MILK_22X22,
         },
         (): void => {
-          this.navigatorDelegate.pop();
+          this.navigatorDelegate.dismissScreen();
         },
       ),
       null,

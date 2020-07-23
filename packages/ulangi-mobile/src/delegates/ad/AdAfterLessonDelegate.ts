@@ -38,7 +38,7 @@ export class AdAfterLessonDelegate {
       willShow = true;
       this.showAdOrGoogleConsentForm(
         (): void => {
-          this.navigatorDelegate.pop();
+          this.navigatorDelegate.dismissScreen();
         },
       );
     }

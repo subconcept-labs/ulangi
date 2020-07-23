@@ -28,6 +28,6 @@ export class QuickTutorialScreenDelegate {
   }
 
   public back(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 }

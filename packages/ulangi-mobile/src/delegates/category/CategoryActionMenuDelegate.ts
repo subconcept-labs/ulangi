@@ -229,7 +229,7 @@ export class CategoryActionMenuDelegate {
       )} terms`,
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
-        this.navigatorDelegate.push(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+        this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
           screenTitle: 'Recategorize',
           initialCategoryName: categoryName,
           onSelect: (newCategoryName): void => {

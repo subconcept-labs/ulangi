@@ -42,7 +42,7 @@ export class CategorySelectorScreenDelegate {
   }
 
   public selectCategory(categoryName: string): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,

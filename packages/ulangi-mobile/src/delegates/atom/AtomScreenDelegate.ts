@@ -83,7 +83,7 @@ export class AtomScreenDelegate {
   }
 
   public back(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   public showSelectSpecificCategoryMessage(): void {

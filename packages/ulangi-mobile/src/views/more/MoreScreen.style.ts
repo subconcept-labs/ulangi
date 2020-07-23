@@ -52,6 +52,10 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    screen: {
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: '#131313',
+    },
     description_text: {
       color: config.styles.dark.secondaryTextColor,
     },

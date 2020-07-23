@@ -86,7 +86,7 @@ export class FlashcardPlayerScreenDelegate {
   }
 
   public back(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   public openFlashcardPlayerHomePage(): void {

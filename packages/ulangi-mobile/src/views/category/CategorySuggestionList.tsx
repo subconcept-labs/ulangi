@@ -78,6 +78,7 @@ export class CategorySuggestionList extends React.Component<
                 styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
                   ButtonSize.SMALL,
                 )}
+                cancelPressOnMove={true}
                 onPress={(): void =>
                   this.props.selectCategory(suggestion.categoryName)
                 }

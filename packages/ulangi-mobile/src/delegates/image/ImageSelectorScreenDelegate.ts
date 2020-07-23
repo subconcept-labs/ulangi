@@ -70,7 +70,7 @@ export class ImageSelectorScreenDelegate {
 
   public uploadImages(callback: (urls: string[]) => void): void {
     if (this.observableScreen.images === null) {
-      this.navigatorDelegate.pop();
+      this.navigatorDelegate.dismissScreen();
     } else {
       this.uploadImageDelegate.uploadImages(
         this.observableScreen.images
@@ -91,7 +91,7 @@ export class ImageSelectorScreenDelegate {
             when(
               (): boolean => this.observableLightBox.state === 'unmounted',
               (): void => {
-                this.navigatorDelegate.pop();
+                this.navigatorDelegate.dismissScreen();
                 callback(urls);
               },
             );

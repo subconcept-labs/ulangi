@@ -196,10 +196,10 @@ export class WritingLessonScreenDelegate {
   public showAdIfRequiredThenQuit(): void {
     if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
       this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.pop(),
+        (): void => this.navigatorDelegate.dismissScreen(),
       );
     } else {
-      this.navigatorDelegate.pop();
+      this.navigatorDelegate.dismissScreen();
     }
   }
 
@@ -361,7 +361,7 @@ export class WritingLessonScreenDelegate {
           text: 'YES',
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
-            this.navigatorDelegate.pop();
+            this.navigatorDelegate.dismissScreen();
           },
           styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
             ButtonSize.SMALL,

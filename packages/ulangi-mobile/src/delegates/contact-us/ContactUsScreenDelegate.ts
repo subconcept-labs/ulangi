@@ -156,7 +156,7 @@ export class ContactUsScreenDelegate {
     this.dialogDelegate.showSuccessDialog({
       message: 'Sent successfully.',
       onClose: (): void => {
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
     });
   }

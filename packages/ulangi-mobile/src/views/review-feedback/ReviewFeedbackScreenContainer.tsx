@@ -87,7 +87,7 @@ export class ReviewFeedbackScreenContainer extends Container<
           dark: Images.ARROW_LEFT_MILK_22X22,
         },
         (): void => {
-          this.navigatorDelegate.pop();
+          this.navigatorDelegate.dismissScreen();
         },
       ),
       new ObservableTopBarButton(

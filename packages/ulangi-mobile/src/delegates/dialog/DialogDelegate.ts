@@ -87,7 +87,7 @@ export class DialogDelegate {
     this.showSuccessDialog({
       message: 'Saved successfully.',
       onClose: (): void => {
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
     });
   }

@@ -69,7 +69,7 @@ export class ChangePasswordScreenDelegate {
     this.dialogDelegate.showSuccessDialog({
       message: 'Changed password successfully.',
       onClose: (): void => {
-        this.navigatorDelegate.pop();
+        this.navigatorDelegate.dismissScreen();
       },
     });
   }

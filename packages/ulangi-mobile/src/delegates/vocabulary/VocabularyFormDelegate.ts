@@ -252,7 +252,7 @@ export class VocabularyFormDelegate {
     when(
       (): boolean => this.observableKeyboard.state === 'hidden',
       (): void => {
-        this.navigatorDelegate.push(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+        this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
           initialCategoryName: undefined,
           onSelect: (categoryName): void => {
             this.vocabularyFormState.categoryName = categoryName;

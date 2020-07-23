@@ -235,7 +235,7 @@ export class AtomPlayScreenDelegate {
     this.dialogDelegate.dismiss();
     this.observer.when(
       (): boolean => this.observableLightBox.state === LightBoxState.UNMOUNTED,
-      (): void => this.navigatorDelegate.pop(),
+      (): void => this.navigatorDelegate.dismissScreen(),
     );
   }
 

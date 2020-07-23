@@ -59,7 +59,7 @@ export class QuizMultipleChoiceScreenDelegate {
   }
 
   public quit(): void {
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   private nextQuestion(): void {

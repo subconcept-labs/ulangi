@@ -109,7 +109,7 @@ export class ReflexScreenDelegate {
 
   public quit(): void {
     this.navigatorDelegate.dismissLightBox();
-    this.navigatorDelegate.pop();
+    this.navigatorDelegate.dismissScreen();
   }
 
   public continue(): void {
@@ -165,7 +165,7 @@ export class ReflexScreenDelegate {
     if (this.observableScreen.gameState.started === true) {
       this.pause();
     } else {
-      this.navigatorDelegate.pop();
+      this.navigatorDelegate.dismissScreen();
     }
   }
 
