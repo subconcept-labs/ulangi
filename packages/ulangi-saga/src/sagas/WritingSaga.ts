@@ -13,6 +13,7 @@ import { WritingScheduler } from '@ulangi/ulangi-common/core';
 import { ErrorCode, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { VocabularyModel, WritingModel } from '@ulangi/ulangi-local-database';
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
@@ -102,7 +103,7 @@ export class WritingSaga extends ProtectedSaga {
           yield put(
             createAction(ActionType.WRITING__FETCH_VOCABULARY_SUCCEEDED, {
               setId,
-              vocabularyList,
+              vocabularyList: _.shuffle(vocabularyList),
             })
           );
         }

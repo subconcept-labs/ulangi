@@ -16,6 +16,7 @@ import {
   SpacedRepetitionModel,
   VocabularyModel,
 } from '@ulangi/ulangi-local-database';
+import * as _ from 'lodash';
 import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
@@ -113,7 +114,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
               ActionType.SPACED_REPETITION__FETCH_VOCABULARY_SUCCEEDED,
               {
                 setId,
-                vocabularyList,
+                vocabularyList: _.shuffle(vocabularyList),
               }
             )
           );
