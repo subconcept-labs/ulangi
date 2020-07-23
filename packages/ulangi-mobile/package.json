@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "@ulangi/ulangi-mobile",
-	"version": "3.12.3",
+	"version": "3.13.0",
 	"scripts": {
 		"postbootstrap": "cd ios && pod install",
 		"android": "react-native run-android --variant devDebug --appIdSuffix dev",

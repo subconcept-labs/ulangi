@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0](https://github.com/ulangi/ulangi/compare/v3.12.3...v3.13.0) (2020-07-23)
+
+
+### Bug Fixes
+
+* randomize review ([9f84897](https://github.com/ulangi/ulangi/commit/9f84897))
+
+
+### Features
+
+* redesign category selection ([1bd3716](https://github.com/ulangi/ulangi/commit/1bd3716))
+
+
+
+
+
 ## [3.12.2](https://github.com/ulangi/ulangi/compare/v3.12.1...v3.12.2) (2020-06-10)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0](https://github.com/ulangi/ulangi/compare/v3.12.3...v3.13.0) (2020-07-23)
+
+**Note:** Version bump only for package @ulangi/ulangi-store
+
+
+
+
+
 ## [3.12.2](https://github.com/ulangi/ulangi/compare/v3.12.1...v3.12.2) (2020-06-10)
 
 **Note:** Version bump only for package @ulangi/ulangi-store
