@@ -148,10 +148,6 @@ export class AddVocabularyScreenContainer extends Container<
 
   public componentDidAppear(): void {
     this.observableScreen.screenAppearedTimes += 1;
-
-    if (this.observableScreen.screenAppearedTimes === 1) {
-      this.observableScreen.vocabularyFormState.shouldFocusVocabularyInput = true;
-    }
   }
 
   public onThemeChanged(theme: Theme): void {
