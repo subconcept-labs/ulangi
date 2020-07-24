@@ -11,6 +11,7 @@ import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
 import {
   DefinitionStatus,
+  VocabularySortType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { Definition, Vocabulary } from '@ulangi/ulangi-common/interfaces';
@@ -107,6 +108,7 @@ export class VocabularyModel {
     setId: string,
     vocabularyStatus: VocabularyStatus,
     categoryNames: undefined | string[],
+    sortType: VocabularySortType,
     limit: number,
     offset: number,
     stripUnknown: boolean
@@ -138,13 +140,19 @@ export class VocabularyModel {
             }
           }
 
-          const queryParam = query
+          query = query
             .where('v.setId = ?', setId)
-            .where('v.vocabularyStatus = ?', vocabularyStatus)
-            .order('v.updatedStatusAt', false)
-            .limit(limit)
-            .offset(offset)
-            .toParam();
+            .where('v.vocabularyStatus = ?', vocabularyStatus);
+
+          if (sortType === VocabularySortType.SORT_BY_NAME_ASC) {
+            query = query.order('v.vocabularyText', true);
+          } else if (sortType === VocabularySortType.SORT_BY_NAME_DESC) {
+            query = query.order('v.vocabularyText', false);
+          }
+
+          query = query.limit(limit).offset(offset);
+
+          const queryParam = query.toParam();
 
           const result = await db.executeSql(
             queryParam.text,

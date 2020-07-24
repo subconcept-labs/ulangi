@@ -6,7 +6,10 @@
  */
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
-import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  CategorySortType,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import { CategoryResolver } from '@ulangi/ulangi-common/resolvers';
 import * as squel from 'squel';
@@ -21,6 +24,7 @@ export class CategoryModel {
     db: SQLiteDatabase,
     setId: string,
     vocabularyStatus: VocabularyStatus,
+    sortType: CategorySortType,
     limitOfCategorized: number,
     offsetOfCategorized: number,
     includeUncategorized: boolean
@@ -61,10 +65,19 @@ export class CategoryModel {
             .where('v.setId = ?', setId)
             .where('v.vocabularyStatus = ?', vocabularyStatus)
             .group('categoryName')
-            .having('categoryName != ?', 'Uncategorized')
-            .order('categoryName', true)
-            .limit(limitOfCategorized)
-            .offset(offsetOfCategorized);
+            .having('categoryName != ?', 'Uncategorized');
+
+          if (sortType === CategorySortType.SORT_BY_NAME_ASC) {
+            query = query.order('categoryName', true);
+          } else if (sortType === CategorySortType.SORT_BY_NAME_DESC) {
+            query = query.order('categoryName', false);
+          } else if (sortType === CategorySortType.SORT_BY_COUNT_ASC) {
+            query = query.order('totalCount', true);
+          } else if (sortType === CategorySortType.SORT_BY_COUNT_DESC) {
+            query = query.order('totalCount', false);
+          }
+
+          query = query.limit(limitOfCategorized).offset(offsetOfCategorized);
 
           const sql = query.toParam();
 

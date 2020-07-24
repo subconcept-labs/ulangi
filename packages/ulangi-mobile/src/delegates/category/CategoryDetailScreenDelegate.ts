@@ -6,7 +6,7 @@
  */
 
 import { ActionType } from '@ulangi/ulangi-action';
-import { ScreenName, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
   ObservableCategoryDetailScreen,
@@ -23,6 +23,7 @@ import { VocabularyFilterMenuDelegate } from '../vocabulary/VocabularyFilterMenu
 import { VocabularyListDelegate } from '../vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../vocabulary/VocabularyLiveUpdateDelegate';
 import { VocabularySelectionDelegate } from '../vocabulary/VocabularySelectionDelegate';
+import { VocabularySortMenuDelegate } from '../vocabulary/VocabularySortMenuDelegate';
 
 @boundClass
 export class CategoryDetailScreenDelegate {
@@ -31,6 +32,7 @@ export class CategoryDetailScreenDelegate {
   private categoryActionMenuDelegate: CategoryActionMenuDelegate;
   private vocabularyListDelegate: VocabularyListDelegate;
   private vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate;
+  private vocabularySortMenuDelegate: VocabularySortMenuDelegate;
   private vocabularyActionMenuDelegate: VocabularyActionMenuDelegate;
   private vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate;
   private vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate;
@@ -44,6 +46,7 @@ export class CategoryDetailScreenDelegate {
     categoryActionMenuDelegate: CategoryActionMenuDelegate,
     vocabularyListDelegate: VocabularyListDelegate,
     vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate,
+    vocabularySortMenuDelegate: VocabularySortMenuDelegate,
     vocabularyActionMenuDelegate: VocabularyActionMenuDelegate,
     vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate,
     vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate,
@@ -56,6 +59,7 @@ export class CategoryDetailScreenDelegate {
     this.categoryActionMenuDelegate = categoryActionMenuDelegate;
     this.vocabularyListDelegate = vocabularyListDelegate;
     this.vocabularyFilterMenuDelegate = vocabularyFilterMenuDelegate;
+    this.vocabularySortMenuDelegate = vocabularySortMenuDelegate;
     this.vocabularyActionMenuDelegate = vocabularyActionMenuDelegate;
     this.vocabularyBulkActionMenuDelegate = vocabularyBulkActionMenuDelegate;
     this.vocabularyLiveUpdateDelegate = vocabularyLiveUpdateDelegate;
@@ -64,10 +68,12 @@ export class CategoryDetailScreenDelegate {
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public prepareAndFetch(filterType: VocabularyFilterType): void {
-    this.vocabularyListDelegate.prepareAndFetch(filterType, [
-      this.observableScreen.category.categoryName,
-    ]);
+  public prepareAndFetch(): void {
+    this.vocabularyListDelegate.prepareAndFetch(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedSortType.get(),
+      [this.observableScreen.category.categoryName],
+    );
   }
 
   public fetch(): void {
@@ -78,14 +84,12 @@ export class CategoryDetailScreenDelegate {
     this.vocabularyListDelegate.clearFetch();
   }
 
-  public refresh(filterType: VocabularyFilterType): void {
-    this.vocabularyListDelegate.refresh(filterType, [
-      this.observableScreen.category.categoryName,
-    ]);
-  }
-
-  public refreshCurrentList(): void {
-    this.refresh(this.observableScreen.selectedFilterType.get());
+  public refresh(): void {
+    this.vocabularyListDelegate.refresh(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedSortType.get(),
+      [this.observableScreen.category.categoryName],
+    );
   }
 
   public autoUpdateEditedVocabulary(): void {
@@ -101,7 +105,7 @@ export class CategoryDetailScreenDelegate {
           ActionType.VOCABULARY__EDIT_MULTIPLE_SUCCEEDED,
         ],
         (): void => {
-          this.refreshCurrentList();
+          this.refresh();
         },
       ),
     );
@@ -186,11 +190,21 @@ export class CategoryDetailScreenDelegate {
       this.observableScreen.selectedFilterType.get(),
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
-        this.refresh(filterType);
+        this.refresh();
       },
       {
         hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
         hideDueByWriting: !featureSettings.writingEnabled,
+      },
+    );
+  }
+
+  public showVocabularySortMenu(): void {
+    this.vocabularySortMenuDelegate.show(
+      this.observableScreen.selectedSortType.get(),
+      (sortType): void => {
+        this.observableScreen.selectedSortType.set(sortType);
+        this.refresh();
       },
     );
   }

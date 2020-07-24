@@ -198,7 +198,7 @@ export class CategoryBulkActionMenuDelegate {
           initialCategoryName: undefined,
           onSelect: (newCategoryName): void => {
             this.vocabularyBulkEditDelegate.bulkEdit(
-              this.generateCondition(filterType, categoryNames),
+              this.generateFilterCondition(filterType, categoryNames),
               {
                 type: 'recategorize',
                 newCategoryName,
@@ -242,7 +242,7 @@ export class CategoryBulkActionMenuDelegate {
             this.setSelectionMenuDelegate.showActiveSets(
               (selectedSetId): void => {
                 this.vocabularyBulkEditDelegate.bulkEdit(
-                  this.generateCondition(filterType, categoryNames),
+                  this.generateFilterCondition(filterType, categoryNames),
                   {
                     type: 'moveToSet',
                     newSetId: selectedSetId,
@@ -286,7 +286,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateCondition(filterType, categoryNames),
+          this.generateFilterCondition(filterType, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.ACTIVE,
@@ -321,7 +321,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateCondition(filterType, categoryNames),
+          this.generateFilterCondition(filterType, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.ARCHIVED,
@@ -357,7 +357,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateCondition(filterType, categoryNames),
+          this.generateFilterCondition(filterType, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.DELETED,
@@ -503,7 +503,7 @@ export class CategoryBulkActionMenuDelegate {
     }
   }
 
-  private generateCondition(
+  private generateFilterCondition(
     filterType: VocabularyFilterType,
     categoryNames: string[],
   ): VocabularyFilterCondition {

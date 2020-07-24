@@ -7,7 +7,7 @@
 
 import {
   ButtonSize,
-  ManageListType,
+  CategorySortType,
   Theme,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
@@ -26,9 +26,9 @@ import { ManageBarStyles, darkStyles, lightStyles } from './ManageBar.style';
 
 export interface ManageBarProps {
   theme: Theme;
-  manageListType: IObservableValue<ManageListType>;
+  selectedSortType: IObservableValue<CategorySortType>;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
-  showManageListSelectionMenu: () => void;
+  showCategorySortMenu: () => void;
   showVocabularyFilterMenu: () => void;
   styles?: {
     light: ManageBarStyles;
@@ -48,15 +48,17 @@ export class ManageBar extends React.Component<ManageBarProps> {
     return (
       <View style={this.styles.container}>
         <TouchableOpacity
-          testID={ManageScreenIds.SHOW_MANAGE_LIST_SELECTION_MENU_BTN}
-          onPress={this.props.showManageListSelectionMenu}
+          testID={ManageScreenIds.SHOW_CATEGORY_SORT_MENU_BTN}
+          onPress={this.props.showCategorySortMenu}
           hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
           style={this.styles.button}>
           <DefaultText
             ellipsizeMode="tail"
             numberOfLines={1}
             style={this.styles.button_text}>
-            {this.getTitle()}
+            {_.upperFirst(
+              config.category.sortMap[this.props.selectedSortType.get()].name,
+            )}
           </DefaultText>
         </TouchableOpacity>
         <DefaultButton
@@ -77,13 +79,5 @@ export class ManageBar extends React.Component<ManageBarProps> {
 
   private getColorByStatus(selectedFilterType: VocabularyFilterType): string {
     return config.vocabulary.filterMap[selectedFilterType].textColor;
-  }
-
-  private getTitle(): string {
-    if (this.props.manageListType.get() === ManageListType.CATEGORY_LIST) {
-      return 'Group by category';
-    } else {
-      return 'Show all terms';
-    }
   }
 }

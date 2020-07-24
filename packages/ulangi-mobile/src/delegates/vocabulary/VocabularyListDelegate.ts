@@ -10,6 +10,7 @@ import {
   ActivityState,
   VocabularyDueType,
   VocabularyFilterType,
+  VocabularySortType,
 } from '@ulangi/ulangi-common/enums';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
@@ -29,7 +30,6 @@ import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetit
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 
 export class VocabularyListDelegate {
-  private forManageScreen: boolean;
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableConverter: ObservableConverter;
@@ -38,7 +38,6 @@ export class VocabularyListDelegate {
   private writingSettingsDelegate: WritingSettingsDelegate;
 
   public constructor(
-    forManageScreen: boolean,
     eventBus: EventBus,
     setStore: ObservableSetStore,
     observableConverter: ObservableConverter,
@@ -46,7 +45,6 @@ export class VocabularyListDelegate {
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
     writingSettingsDelegate: WritingSettingsDelegate,
   ) {
-    this.forManageScreen = forManageScreen;
     this.eventBus = eventBus;
     this.setStore = setStore;
     this.observableConverter = observableConverter;
@@ -57,37 +55,30 @@ export class VocabularyListDelegate {
 
   public prepareAndFetch(
     filterType: VocabularyFilterType,
+    sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
     this.eventBus.pubsub(
-      createAction(
-        this.forManageScreen
-          ? ActionType.MANAGE__PREPARE_FETCH_VOCABULARY
-          : ActionType.VOCABULARY__PREPARE_FETCH,
-        this.createPrepareFetchPayload(filterType, categoryNames),
-      ),
+      createAction(ActionType.VOCABULARY__PREPARE_FETCH, {
+        filterCondition: this.createFilterCondition(filterType, categoryNames),
+        sortType,
+      }),
       group(
         on(
-          this.forManageScreen
-            ? ActionType.MANAGE__PREPARING_FETCH_VOCABULARY
-            : ActionType.VOCABULARY__PREPARING_FETCH,
+          ActionType.VOCABULARY__PREPARING_FETCH,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.ACTIVE);
           },
         ),
         once(
-          this.forManageScreen
-            ? ActionType.MANAGE__PREPARE_FETCH_VOCABULARY_SUCCEEDED
-            : ActionType.VOCABULARY__PREPARE_FETCH_SUCCEEDED,
+          ActionType.VOCABULARY__PREPARE_FETCH_SUCCEEDED,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.INACTIVE);
             this.fetch();
           },
         ),
         once(
-          this.forManageScreen
-            ? ActionType.MANAGE__PREPARE_FETCH_VOCABULARY_FAILED
-            : ActionType.VOCABULARY__PREPARE_FETCH_FAILED,
+          ActionType.VOCABULARY__PREPARE_FETCH_FAILED,
           (): void => {
             this.vocabularyListState.fetchState.set(ActivityState.ERROR);
           },
@@ -98,12 +89,13 @@ export class VocabularyListDelegate {
 
   public refresh(
     filterType: VocabularyFilterType,
+    sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
     this.vocabularyListState.isRefreshing.set(true);
     this.vocabularyListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
-    this.prepareAndFetch(filterType, categoryNames);
+    this.prepareAndFetch(filterType, sortType, categoryNames);
   }
 
   public fetch(): void {
@@ -113,17 +105,10 @@ export class VocabularyListDelegate {
     ) {
       this.vocabularyListState.fetchState.set(ActivityState.ACTIVE);
       this.eventBus.pubsub(
-        createAction(
-          this.forManageScreen
-            ? ActionType.MANAGE__FETCH_VOCABULARY
-            : ActionType.VOCABULARY__FETCH,
-          null,
-        ),
+        createAction(ActionType.VOCABULARY__FETCH, null),
         group(
           once(
-            this.forManageScreen
-              ? ActionType.MANAGE__FETCH_VOCABULARY_SUCCEEDED
-              : ActionType.VOCABULARY__FETCH_SUCCEEDED,
+            ActionType.VOCABULARY__FETCH_SUCCEEDED,
             ({ vocabularyList, noMore }): void => {
               this.vocabularyListState.fetchState.set(ActivityState.INACTIVE);
               this.vocabularyListState.isRefreshing.set(false);
@@ -142,9 +127,7 @@ export class VocabularyListDelegate {
             },
           ),
           once(
-            this.forManageScreen
-              ? ActionType.MANAGE__FETCH_VOCABULARY_FAILED
-              : ActionType.VOCABULARY__FETCH_FAILED,
+            ActionType.VOCABULARY__FETCH_FAILED,
             (): void => {
               this.vocabularyListState.fetchState.set(ActivityState.ERROR);
               this.vocabularyListState.isRefreshing.set(false);
@@ -160,28 +143,24 @@ export class VocabularyListDelegate {
     this.vocabularyListState.vocabularyList = null;
     this.vocabularyListState.noMore = false;
     this.eventBus.publish(
-      createAction(
-        this.forManageScreen
-          ? ActionType.MANAGE__CLEAR_FETCH_VOCABULARY
-          : ActionType.VOCABULARY__CLEAR_FETCH,
-        null,
-      ),
+      createAction(ActionType.VOCABULARY__CLEAR_FETCH, null),
     );
   }
 
   public refreshIfEmpty(
     filterType: VocabularyFilterType,
+    sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
     if (
       this.vocabularyListState.vocabularyList !== null &&
       this.vocabularyListState.vocabularyList.size === 0
     ) {
-      this.refresh(filterType, categoryNames);
+      this.refresh(filterType, sortType, categoryNames);
     }
   }
 
-  private createPrepareFetchPayload(
+  private createFilterCondition(
     filterType: VocabularyFilterType,
     categoryNames?: undefined | string[],
   ): VocabularyFilterCondition {

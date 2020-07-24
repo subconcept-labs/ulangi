@@ -8,10 +8,11 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import {
   ActivityState,
+  CategorySortType,
   VocabularyDueType,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
-import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
+import { CategoryFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   isVocabularyDueType,
   isVocabularyStatus,
@@ -52,11 +53,14 @@ export class CategoryListDelegate {
     this.writingSettingsDelegate = writingSettingsDelegate;
   }
 
-  public prepareAndFetch(filterType: VocabularyFilterType): void {
+  public prepareAndFetch(
+    filterType: VocabularyFilterType,
+    sortType: CategorySortType,
+  ): void {
     this.eventBus.pubsub(
       createAction(
         ActionType.MANAGE__PREPARE_FETCH_CATEGORY,
-        this.createPrepareFetchPayload(filterType),
+        this.createPrepareFetchPayload(filterType, sortType),
       ),
       group(
         on(
@@ -82,11 +86,14 @@ export class CategoryListDelegate {
     );
   }
 
-  public refresh(filterType: VocabularyFilterType): void {
+  public refresh(
+    filterType: VocabularyFilterType,
+    sortType: CategorySortType,
+  ): void {
     this.categoryListState.isRefreshing.set(true);
     this.categoryListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
-    this.prepareAndFetch(filterType);
+    this.prepareAndFetch(filterType, sortType);
   }
 
   public fetch(): void {
@@ -140,36 +147,45 @@ export class CategoryListDelegate {
     );
   }
 
-  public refreshIfEmpty(filterType: VocabularyFilterType): void {
+  public refreshIfEmpty(
+    filterType: VocabularyFilterType,
+    sortType: CategorySortType,
+  ): void {
     if (
       this.categoryListState.categoryList !== null &&
       this.categoryListState.categoryList.size === 0
     ) {
-      this.refresh(filterType);
+      this.refresh(filterType, sortType);
     }
   }
 
   private createPrepareFetchPayload(
     filterType: VocabularyFilterType,
-  ): VocabularyFilterCondition {
+    sortType: CategorySortType,
+  ): { filterCondition: CategoryFilterCondition; sortType: CategorySortType } {
     if (isVocabularyStatus(filterType)) {
       return {
-        filterBy: 'VocabularyStatus',
-        setId: this.setStore.existingCurrentSetId,
-        vocabularyStatus: filterType,
-        categoryNames: undefined,
+        filterCondition: {
+          filterBy: 'VocabularyStatus',
+          setId: this.setStore.existingCurrentSetId,
+          vocabularyStatus: filterType,
+        },
+        sortType,
       };
     } else if (isVocabularyDueType(filterType)) {
       return {
-        filterBy: 'VocabularyDueType',
-        setId: this.setStore.existingCurrentSetId,
-        initialInterval:
-          filterType === VocabularyDueType.DUE_BY_SPACED_REPETITION
-            ? this.spacedRepetitionSettingsDelegate.getCurrentSettings()
-                .initialInterval
-            : this.writingSettingsDelegate.getCurrentSettings().initialInterval,
-        dueType: filterType,
-        categoryNames: undefined,
+        filterCondition: {
+          filterBy: 'VocabularyDueType',
+          setId: this.setStore.existingCurrentSetId,
+          initialInterval:
+            filterType === VocabularyDueType.DUE_BY_SPACED_REPETITION
+              ? this.spacedRepetitionSettingsDelegate.getCurrentSettings()
+                  .initialInterval
+              : this.writingSettingsDelegate.getCurrentSettings()
+                  .initialInterval,
+          dueType: filterType,
+        },
+        sortType,
       };
     } else {
       throw new Error('Invalid filter type');

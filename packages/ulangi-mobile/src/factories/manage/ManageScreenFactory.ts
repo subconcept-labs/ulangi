@@ -12,24 +12,18 @@ import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryAct
 import { CategoryBulkActionMenuDelegate } from '../../delegates/category/CategoryBulkActionMenuDelegate';
 import { CategoryListDelegate } from '../../delegates/category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../../delegates/category/CategorySelectionDelegate';
+import { CategorySortMenuDelegate } from '../../delegates/category/CategorySortMenuDelegate';
 import { DataSharingDelegate } from '../../delegates/data-sharing/DataSharingDelegate';
 import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../../delegates/level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../../delegates/manage/AutorunDelegate';
-import { ManageListSelectionMenuDelegate } from '../../delegates/manage/ManageListSelectionMenuDelegate';
 import { ManageScreenDelegate } from '../../delegates/manage/ManageScreenDelegate';
 import { ReminderDelegate } from '../../delegates/reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../../delegates/reminder/ReminderSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
-import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
-import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
 import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
-import { VocabularyEventDelegate } from '../../delegates/vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
-import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
-import { VocabularyLiveUpdateDelegate } from '../../delegates/vocabulary/VocabularyLiveUpdateDelegate';
-import { VocabularySelectionDelegate } from '../../delegates/vocabulary/VocabularySelectionDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
@@ -52,14 +46,12 @@ export class ManageScreenFactory extends ScreenFactory {
 
     const setSelectionMenuDelegate = this.createSetSelectionMenuDelegateWithStyles();
 
-    const manageListSelectionMenuDelegate = new ManageListSelectionMenuDelegate(
+    const vocabularyFilterMenuDelegate = new VocabularyFilterMenuDelegate(
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const vocabularyEventDelegate = new VocabularyEventDelegate(this.eventBus);
-
-    const vocabularyFilterMenuDelegate = new VocabularyFilterMenuDelegate(
+    const categorySortMenuDelegate = new CategorySortMenuDelegate(
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
@@ -72,41 +64,6 @@ export class ManageScreenFactory extends ScreenFactory {
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
-    );
-
-    const vocabularyListDelegate = new VocabularyListDelegate(
-      true,
-      this.eventBus,
-      this.props.rootStore.setStore,
-      this.props.observableConverter,
-      observableScreen.vocabularyListState,
-      spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate,
-    );
-
-    const vocabularySelectionDelegate = new VocabularySelectionDelegate(
-      observableScreen.vocabularyListState,
-    );
-
-    const vocabularyActionMenuDelegate = new VocabularyActionMenuDelegate(
-      this.eventBus,
-      this.observer,
-      this.props.observableLightBox,
-      setSelectionMenuDelegate,
-      vocabularySelectionDelegate,
-      navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
-
-    const vocabularyBulkActionMenuDelegate = new VocabularyBulkActionMenuDelegate(
-      this.eventBus,
-      this.observer,
-      this.props.observableLightBox,
-      observableScreen.vocabularyListState,
-      setSelectionMenuDelegate,
-      dialogDelegate,
-      navigatorDelegate,
-      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
     const categorySelectionDelegate = new CategorySelectionDelegate(
@@ -151,13 +108,6 @@ export class ManageScreenFactory extends ScreenFactory {
       observableScreen.categoryListState,
       spacedRepetitionSettingsDelegate,
       writingSettingsDelegate,
-    );
-
-    const vocabularyLiveUpdateDelegate = new VocabularyLiveUpdateDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-      this.props.observableConverter,
-      observableScreen.vocabularyListState,
     );
 
     const adDelegate = new AdDelegate(
@@ -211,15 +161,9 @@ export class ManageScreenFactory extends ScreenFactory {
       categoryActionMenuDelegate,
       categoryBulkActionMenuDelegate,
       categorySelectionDelegate,
+      categorySortMenuDelegate,
       levelBreakdownDelegate,
-      vocabularyEventDelegate,
-      vocabularyListDelegate,
-      vocabularyActionMenuDelegate,
-      vocabularyBulkActionMenuDelegate,
       vocabularyFilterMenuDelegate,
-      vocabularyLiveUpdateDelegate,
-      vocabularySelectionDelegate,
-      manageListSelectionMenuDelegate,
       featureSettingsDelegate,
       autorunDelegate,
       navigatorDelegate,

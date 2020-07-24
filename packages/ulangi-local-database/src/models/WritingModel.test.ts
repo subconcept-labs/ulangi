@@ -9,7 +9,11 @@ import { assertExists } from '@ulangi/assert';
 import { SQLiteDatabase, SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import { SetBuilder, VocabularyBuilder } from '@ulangi/ulangi-common/builders';
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
-import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  CategorySortType,
+  VocabularySortType,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Category, Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { mockCurrentTime } from '@ulangi/ulangi-common/testing-utils';
 import * as _ from 'lodash';
@@ -688,6 +692,7 @@ describe('WritingModel', (): void => {
             initialInterval,
             maxLevel,
             ['category1'],
+            VocabularySortType.SORT_BY_NAME_ASC,
             limit,
             0,
             true
@@ -725,6 +730,7 @@ describe('WritingModel', (): void => {
             initialInterval,
             maxLevel,
             ['Uncategorized'],
+            VocabularySortType.SORT_BY_NAME_ASC,
             limit,
             0,
             true
@@ -764,6 +770,7 @@ describe('WritingModel', (): void => {
             initialInterval,
             maxLevel,
             undefined,
+            VocabularySortType.SORT_BY_NAME_ASC,
             limit,
             0,
             true
@@ -798,6 +805,7 @@ describe('WritingModel', (): void => {
             setList[0].setId,
             initialInterval,
             maxLevel,
+            CategorySortType.SORT_BY_NAME_ASC,
             limit,
             0,
             false
@@ -911,6 +919,7 @@ describe('WritingModel', (): void => {
             setList[0].setId,
             initialInterval,
             maxLevel,
+            CategorySortType.SORT_BY_NAME_ASC,
             limit,
             0,
             true

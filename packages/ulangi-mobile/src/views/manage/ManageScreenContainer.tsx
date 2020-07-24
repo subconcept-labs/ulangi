@@ -8,7 +8,7 @@
 import { Options } from '@ulangi/react-native-navigation';
 import {
   ActivityState,
-  ManageListType,
+  CategorySortType,
   ScreenName,
   Theme,
   VocabularyFilterType,
@@ -18,7 +18,6 @@ import {
   ObservableManageScreen,
   ObservableTopBarButton,
   ObservableTouchableTopBar,
-  ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -51,17 +50,8 @@ export class ManageScreenContainer extends Container {
 
   protected observableScreen = new ObservableManageScreen(
     0,
-    observable.box(ManageListType.CATEGORY_LIST),
+    observable.box(CategorySortType.SORT_BY_NAME_ASC),
     observable.box(VocabularyFilterType.ACTIVE),
-    new ObservableVocabularyListState(
-      null,
-      false,
-      observable.box(ActivityState.INACTIVE),
-      observable.box(this.props.rootStore.syncStore.currentState === 'SYNCING'),
-      observable.box(false),
-      observable.box(false),
-      observable.box(false),
-    ),
     new ObservableCategoryListState(
       null,
       false,
@@ -122,15 +112,13 @@ export class ManageScreenContainer extends Container {
       this.screenDelegate.autoShowRefreshNotice();
       this.screenDelegate.autoRefreshOnSetChange();
       this.screenDelegate.autoRefreshOnMultipleEdit();
-      this.screenDelegate.autoRefreshEmptyListOnVocabularyChange();
-      this.screenDelegate.autoUpdateEditedVocabulary();
-      this.screenDelegate.prepareAndFetch(VocabularyFilterType.ACTIVE);
+      this.screenDelegate.prepareAndFetch();
 
       this.screenDelegate.autorun();
     }
 
     if (this.observableScreen.categoryListState.shouldShowRefreshNotice.get()) {
-      this.screenDelegate.refreshCurrentList();
+      this.screenDelegate.refresh();
     }
   }
 

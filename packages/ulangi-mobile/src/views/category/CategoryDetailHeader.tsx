@@ -9,18 +9,20 @@ import {
   ButtonSize,
   Theme,
   VocabularyFilterType,
+  VocabularySortType,
 } from '@ulangi/ulangi-common/enums';
 import { ObservableCategory } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
+import { DefaultText } from '../common/DefaultText';
 import {
   CategoryDetailHeaderStyles,
   darkStyles,
@@ -31,6 +33,8 @@ export interface CategoryDetailHeaderProps {
   theme: Theme;
   category: ObservableCategory;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
+  selectedSortType: IObservableValue<VocabularySortType>;
+  showVocabularySortMenu: () => void;
   showVocabularyFilterMenu: () => void;
   styles?: {
     light: CategoryDetailHeaderStyles;
@@ -50,23 +54,32 @@ export class CategoryDetailHeader extends React.Component<
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.container}>
-        <View style={this.styles.buttons_container}>
-          <View style={this.styles.button_container}>
-            <DefaultButton
-              testID={CategoryDetailScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
-              text={_.upperFirst(
-                config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-                  .shortName,
-              )}
-              onPress={this.props.showVocabularyFilterMenu}
-              styles={FullRoundedButtonStyle.getOutlineStyles(
-                ButtonSize.SMALL,
-                this.getColorByStatus(this.props.selectedFilterType.get()),
-              )}
-            />
-          </View>
-          <View style={this.styles.button_container} />
-        </View>
+        <TouchableOpacity
+          testID={CategoryDetailScreenIds.SHOW_VOCABULARY_SORT_MENU_BTN}
+          onPress={this.props.showVocabularySortMenu}
+          hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }}
+          style={this.styles.button}>
+          <DefaultText
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={this.styles.button_text}>
+            {_.upperFirst(
+              config.category.sortMap[this.props.selectedSortType.get()].name,
+            )}
+          </DefaultText>
+        </TouchableOpacity>
+        <DefaultButton
+          testID={CategoryDetailScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
+          text={_.upperFirst(
+            config.vocabulary.filterMap[this.props.selectedFilterType.get()]
+              .shortName,
+          )}
+          onPress={this.props.showVocabularyFilterMenu}
+          styles={FullRoundedButtonStyle.getOutlineStyles(
+            ButtonSize.SMALL,
+            this.getColorByStatus(this.props.selectedFilterType.get()),
+          )}
+        />
       </View>
     );
   }

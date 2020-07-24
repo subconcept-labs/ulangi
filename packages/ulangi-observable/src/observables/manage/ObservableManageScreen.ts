@@ -6,7 +6,7 @@
  */
 
 import {
-  ManageListType,
+  CategorySortType,
   ScreenName,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
@@ -15,25 +15,21 @@ import { IObservableValue, observable } from 'mobx';
 import { ObservableCategoryListState } from '../category/ObservableCategoryListState';
 import { ObservableScreen } from '../screen/ObservableScreen';
 import { ObservableTouchableTopBar } from '../top-bar/ObservableTouchableTopBar';
-import { ObservableVocabularyListState } from '../vocabulary/ObservableVocabularyListState';
 
 export class ObservableManageScreen extends ObservableScreen {
   @observable
   public screenAppearedTimes: number;
 
-  public readonly manageListType: IObservableValue<ManageListType>;
+  public readonly selectedSortType: IObservableValue<CategorySortType>;
 
   public readonly selectedFilterType: IObservableValue<VocabularyFilterType>;
-
-  public readonly vocabularyListState: ObservableVocabularyListState;
 
   public readonly categoryListState: ObservableCategoryListState;
 
   public constructor(
     screenAppearedTimes: number,
-    manageListType: IObservableValue<ManageListType>,
+    selectedSortType: IObservableValue<CategorySortType>,
     selectedFilterType: IObservableValue<VocabularyFilterType>,
-    vocabularyListState: ObservableVocabularyListState,
     categoryListState: ObservableCategoryListState,
     componentId: string,
     screenName: ScreenName,
@@ -41,9 +37,8 @@ export class ObservableManageScreen extends ObservableScreen {
   ) {
     super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
-    this.manageListType = manageListType;
+    this.selectedSortType = selectedSortType;
     this.selectedFilterType = selectedFilterType;
-    this.vocabularyListState = vocabularyListState;
     this.categoryListState = categoryListState;
   }
 }

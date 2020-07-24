@@ -5,11 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import {
-  ManageListType,
-  Theme,
-  VocabularyFilterType,
-} from '@ulangi/ulangi-common/enums';
+import { Theme, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
 import {
   ObservableManageScreen,
   ObservableSetStore,
@@ -26,8 +22,6 @@ import { CategoryList } from '../category/CategoryList';
 import { SyncingNotice } from '../sync/SyncingNotice';
 import { AddVocabularyFloatingButton } from '../vocabulary/AddVocabularyFloatingButton';
 import { NoVocabulary } from '../vocabulary/NoVocabulary';
-import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
-import { VocabularyList } from '../vocabulary/VocabularyList';
 import { ManageBar } from './ManageBar';
 import {
   ManageScreenStyles,
@@ -56,50 +50,19 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       <View testID={ManageScreenIds.SCREEN} style={this.styles.screen}>
         <ManageBar
           theme={this.props.themeStore.theme}
-          manageListType={this.props.observableScreen.manageListType}
+          selectedSortType={this.props.observableScreen.selectedSortType}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
-          showManageListSelectionMenu={
-            this.props.screenDelegate.showManageListSelectionMenu
-          }
+          showCategorySortMenu={this.props.screenDelegate.showCategorySortMenu}
           showVocabularyFilterMenu={
             this.props.screenDelegate.showVocabularyFilterMenu
           }
         />
-        {this.props.observableScreen.manageListType.get() ===
-        ManageListType.VOCABULARY_LIST
-          ? this.renderVocabularyList()
-          : this.renderCategoryList()}
+        {this.renderCategoryList()}
         {this.renderBulkActionBar()}
         {this.renderSyncingNotice()}
         {this.renderFloatingActionButton()}
       </View>
     );
-  }
-
-  private renderVocabularyList(): React.ReactElement<any> {
-    if (
-      this.props.observableScreen.vocabularyListState.vocabularyList !== null &&
-      this.props.observableScreen.vocabularyListState.noMore === true &&
-      this.props.observableScreen.vocabularyListState.vocabularyList.size === 0
-    ) {
-      return this.renderEmptyComponent();
-    } else {
-      return (
-        <VocabularyList
-          key={this.props.observableScreen.selectedFilterType.get()}
-          testID={ManageScreenIds.VOCABULARY_LIST}
-          theme={this.props.themeStore.theme}
-          vocabularyListState={this.props.observableScreen.vocabularyListState}
-          toggleSelection={this.props.screenDelegate.toggleSelection}
-          showVocabularyDetail={this.props.screenDelegate.showVocabularyDetail}
-          showVocabularyActionMenu={
-            this.props.screenDelegate.showVocabularyActionMenu
-          }
-          fetchNext={this.props.screenDelegate.fetch}
-          refresh={this.props.screenDelegate.refreshCurrentList}
-        />
-      );
-    }
   }
 
   private renderCategoryList(): React.ReactElement<any> {
@@ -122,7 +85,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           }
           showCategoryDetail={this.props.screenDelegate.showCategoryDetail}
           fetchNext={this.props.screenDelegate.fetch}
-          refresh={this.props.screenDelegate.refreshCurrentList}
+          refresh={this.props.screenDelegate.refresh}
           goToSpacedRepetition={this.props.screenDelegate.goToSpacedRepetition}
           goToWriting={this.props.screenDelegate.goToWriting}
           showLevelBreakdownForSR={
@@ -145,33 +108,17 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
     ) {
       return (
         <QuickTutorialButton
-          refresh={this.props.screenDelegate.refreshCurrentList}
+          refresh={this.props.screenDelegate.refresh}
           showQuickTutorial={this.props.screenDelegate.showQuickTutorial}
         />
       );
     } else {
-      return (
-        <NoVocabulary refresh={this.props.screenDelegate.refreshCurrentList} />
-      );
+      return <NoVocabulary refresh={this.props.screenDelegate.refresh} />;
     }
   }
 
   private renderBulkActionBar(): null | React.ReactElement<any> {
-    if (this.shouldShowVocabularyBulkActionBar()) {
-      return (
-        <View style={this.styles.bulk_action_bar_container}>
-          <VocabularyBulkActionBar
-            vocabularyListState={
-              this.props.observableScreen.vocabularyListState
-            }
-            showVocabularyBulkActionMenu={
-              this.props.screenDelegate.showVocabularyBulkActionMenu
-            }
-            clearSelections={this.props.screenDelegate.clearSelections}
-          />
-        </View>
-      );
-    } else if (this.shouldShowCategoryBulkActionBar()) {
+    if (this.shouldShowCategoryBulkActionBar()) {
       return (
         <View style={this.styles.bulk_action_bar_container}>
           <CategoryBulkActionBar
@@ -189,10 +136,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
   }
 
   private renderFloatingActionButton(): null | React.ReactElement<any> {
-    if (
-      !this.shouldShowVocabularyBulkActionBar() &&
-      !this.shouldShowCategoryBulkActionBar()
-    ) {
+    if (!this.shouldShowCategoryBulkActionBar()) {
       return (
         <View style={this.styles.floating_action_button}>
           <AddVocabularyFloatingButton
@@ -206,30 +150,19 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
   }
 
   private renderSyncingNotice(): null | React.ReactElement<any> {
-    if (
-      !this.shouldShowVocabularyBulkActionBar() &&
-      !this.shouldShowCategoryBulkActionBar()
-    ) {
+    if (!this.shouldShowCategoryBulkActionBar()) {
       return (
         <View style={this.styles.syncing_notice}>
           <SyncingNotice
             shouldShowSyncingNotice={
-              this.props.observableScreen.manageListType.get() ===
-              ManageListType.CATEGORY_LIST
-                ? this.props.observableScreen.categoryListState
-                    .shouldShowSyncingNotice
-                : this.props.observableScreen.vocabularyListState
-                    .shouldShowSyncingNotice
+              this.props.observableScreen.categoryListState
+                .shouldShowSyncingNotice
             }
             shouldShowRefreshNotice={
-              this.props.observableScreen.manageListType.get() ===
-              ManageListType.CATEGORY_LIST
-                ? this.props.observableScreen.categoryListState
-                    .shouldShowRefreshNotice
-                : this.props.observableScreen.vocabularyListState
-                    .shouldShowRefreshNotice
+              this.props.observableScreen.categoryListState
+                .shouldShowRefreshNotice
             }
-            refresh={this.props.screenDelegate.refreshCurrentList}
+            refresh={this.props.screenDelegate.refresh}
           />
         </View>
       );
@@ -237,21 +170,10 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       return null;
     }
   }
-  private shouldShowVocabularyBulkActionBar(): boolean {
-    return (
-      this.props.observableScreen.manageListType.get() ===
-        ManageListType.VOCABULARY_LIST &&
-      this.props.observableScreen.vocabularyListState.isSelectionModeOn.get() ===
-        true
-    );
-  }
-
   private shouldShowCategoryBulkActionBar(): boolean {
     return (
-      this.props.observableScreen.manageListType.get() ===
-        ManageListType.CATEGORY_LIST &&
       this.props.observableScreen.categoryListState.isSelectionModeOn.get() ===
-        true
+      true
     );
   }
 }

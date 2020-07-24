@@ -132,6 +132,20 @@
         "borderColor": "orangered"
       }
     },
+    "sortMap": {
+      "SORT_BY_NAME_ASC": {
+        "name": "Sort by name (A-Z)",
+        "longName": "Sort by name (A to Z)"
+      },
+      "SORT_BY_NAME_ASC": {
+        "name": "Sort by name (Z-A)",
+        "longName": "Sort by name (Z to A)"
+      },
+      "UNSORTED": {
+        "name": "No sorting",
+        "longName": "No sorting"
+      }
+    },
     "statusMap": {
       "ACTIVE": {
         "name": "active"
@@ -156,7 +170,29 @@
   },
 
   "category": {
-    "fetchSuggestionsLimit": 6
+    "fetchSuggestionsLimit": 6,
+    "sortMap": {
+      "SORT_BY_NAME_ASC": {
+        "name": "Sort by name (A-Z)",
+        "longName": "Sort by name (A to Z)"
+      },
+      "SORT_BY_NAME_ASC": {
+        "name": "Sort by name (Z-A)",
+        "longName": "Sort by name (Z to A)"
+      },
+      "SORT_BY_COUNT_ASC": {
+        "name": "Sort by count (ASC)",
+        "longName": "Sort by count (ASC)"
+      },
+      "SORT_BY_COUNT_DESC": {
+        "name": "Sort by count (DESC)",
+        "longName": "Sort by count (DESC)"
+      },
+      "UNSORTED": {
+        "name": "No sorting",
+        "longName": "No sorting"
+      }
+    }
   },
 
   "builtInWordClass": {

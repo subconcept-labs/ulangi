@@ -14,7 +14,7 @@ export class VocabularyBulkEditDelegate {
   }
 
   public bulkEdit(
-    condition: VocabularyFilterCondition,
+    filterCondition: VocabularyFilterCondition,
     edit: VocabularyBulkEdit,
     callback: {
       onBulkEditing: (updatedCount: number) => void;
@@ -24,7 +24,7 @@ export class VocabularyBulkEditDelegate {
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.VOCABULARY__BULK_EDIT, {
-        condition,
+        filterCondition,
         edit,
       }),
       group(

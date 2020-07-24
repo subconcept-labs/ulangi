@@ -7,7 +7,11 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
-import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  CategorySortType,
+  VocabularySortType,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Category, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { CategoryResolver } from '@ulangi/ulangi-common/resolvers';
 import * as _ from 'lodash';
@@ -124,6 +128,7 @@ export class WritingModel {
     initialInterval: number,
     maxLevel: number,
     categoryNames: undefined | string[],
+    sortType: VocabularySortType,
     limit: number,
     offset: number,
     stripUnknown: boolean
@@ -165,11 +170,15 @@ export class WritingModel {
 
           query = this.addDueCondition(query, initialInterval, maxLevel);
 
-          const queryParam = query
-            .order('v.updatedStatusAt', false)
-            .limit(limit)
-            .offset(offset)
-            .toParam();
+          if (sortType === VocabularySortType.SORT_BY_NAME_ASC) {
+            query = query.order('v.vocabularyText', true);
+          } else if (sortType === VocabularySortType.SORT_BY_NAME_DESC) {
+            query = query.order('v.vocabularyText', false);
+          }
+
+          query = query.limit(limit).offset(offset);
+
+          const queryParam = query.toParam();
 
           const result = await db.executeSql(
             queryParam.text,
@@ -200,6 +209,7 @@ export class WritingModel {
     setId: string,
     initialInterval: number,
     maxLevel: number,
+    sortType: CategorySortType,
     limitOfCategorized: number,
     offsetOfCategorized: number,
     includeUncategorized: boolean
@@ -245,10 +255,19 @@ export class WritingModel {
 
           query = query
             .group('categoryName')
-            .having('totalCount > 0 and categoryName != ?', 'Uncategorized')
-            .order('categoryName', true)
-            .limit(limitOfCategorized)
-            .offset(offsetOfCategorized);
+            .having('totalCount > 0 and categoryName != ?', 'Uncategorized');
+
+          if (sortType === CategorySortType.SORT_BY_NAME_ASC) {
+            query = query.order('categoryName', true);
+          } else if (sortType === CategorySortType.SORT_BY_NAME_DESC) {
+            query = query.order('categoryName', false);
+          } else if (sortType === CategorySortType.SORT_BY_COUNT_ASC) {
+            query = query.order('totalCount', true);
+          } else if (sortType === CategorySortType.SORT_BY_COUNT_DESC) {
+            query = query.order('totalCount', false);
+          }
+
+          query = query.limit(limitOfCategorized).offset(offsetOfCategorized);
 
           const sql = query.toParam();
 

@@ -6,17 +6,12 @@
  */
 
 import { ActionType } from '@ulangi/ulangi-action';
-import {
-  ManageListType,
-  ScreenName,
-  VocabularyFilterType,
-} from '@ulangi/ulangi-common/enums';
+import { ScreenName, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
   ObservableCategory,
   ObservableManageScreen,
-  ObservableVocabulary,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
@@ -24,18 +19,12 @@ import { CategoryActionMenuDelegate } from '../category/CategoryActionMenuDelega
 import { CategoryBulkActionMenuDelegate } from '../category/CategoryBulkActionMenuDelegate';
 import { CategoryListDelegate } from '../category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../category/CategorySelectionDelegate';
+import { CategorySortMenuDelegate } from '../category/CategorySortMenuDelegate';
 import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../manage/AutorunDelegate';
-import { ManageListSelectionMenuDelegate } from '../manage/ManageListSelectionMenuDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
-import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
-import { VocabularyBulkActionMenuDelegate } from '../vocabulary/VocabularyBulkActionMenuDelegate';
-import { VocabularyEventDelegate } from '../vocabulary/VocabularyEventDelegate';
 import { VocabularyFilterMenuDelegate } from '../vocabulary/VocabularyFilterMenuDelegate';
-import { VocabularyListDelegate } from '../vocabulary/VocabularyListDelegate';
-import { VocabularyLiveUpdateDelegate } from '../vocabulary/VocabularyLiveUpdateDelegate';
-import { VocabularySelectionDelegate } from '../vocabulary/VocabularySelectionDelegate';
 
 @boundClass
 export class ManageScreenDelegate {
@@ -45,15 +34,9 @@ export class ManageScreenDelegate {
   private categoryActionMenuDelegate: CategoryActionMenuDelegate;
   private categoryBulkActionMenuDelegate: CategoryBulkActionMenuDelegate;
   private categorySelectionDelegate: CategorySelectionDelegate;
+  private categorySortMenuDelegate: CategorySortMenuDelegate;
   private levelBreakdownDelegate: LevelBreakdownDelegate;
-  private vocabularyEventDelegate: VocabularyEventDelegate;
-  private vocabularyListDelegate: VocabularyListDelegate;
-  private vocabularyActionMenuDelegate: VocabularyActionMenuDelegate;
-  private vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate;
   private vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate;
-  private vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate;
-  private vocabularySelectionDelegate: VocabularySelectionDelegate;
-  private manageListSelectionMenuDelegate: ManageListSelectionMenuDelegate;
   private featureSettingsDelegate: FeatureSettingsDelegate;
   private autorunDelegate: AutorunDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -65,15 +48,9 @@ export class ManageScreenDelegate {
     categoryActionMenuDelegate: CategoryActionMenuDelegate,
     categoryBulkActionMenuDelegate: CategoryBulkActionMenuDelegate,
     categorySelectionDelegate: CategorySelectionDelegate,
+    categorySortMenuDelegate: CategorySortMenuDelegate,
     levelBreakdownDelegate: LevelBreakdownDelegate,
-    vocabularyEventDelegate: VocabularyEventDelegate,
-    vocabularyListDelegate: VocabularyListDelegate,
-    vocabularyActionMenuDelegate: VocabularyActionMenuDelegate,
-    vocabularyBulkActionMenuDelegate: VocabularyBulkActionMenuDelegate,
     vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate,
-    vocabularyLiveUpdateDelegate: VocabularyLiveUpdateDelegate,
-    vocabularySelectionDelegate: VocabularySelectionDelegate,
-    manageListSelectionMenuDelegate: ManageListSelectionMenuDelegate,
     featureSettingsDelegate: FeatureSettingsDelegate,
     autorunDelegate: AutorunDelegate,
     navigatorDelegate: NavigatorDelegate,
@@ -84,87 +61,41 @@ export class ManageScreenDelegate {
     this.categoryActionMenuDelegate = categoryActionMenuDelegate;
     this.categoryBulkActionMenuDelegate = categoryBulkActionMenuDelegate;
     this.categorySelectionDelegate = categorySelectionDelegate;
+    this.categorySortMenuDelegate = categorySortMenuDelegate;
     this.levelBreakdownDelegate = levelBreakdownDelegate;
-    this.vocabularyEventDelegate = vocabularyEventDelegate;
-    this.vocabularyListDelegate = vocabularyListDelegate;
-    this.vocabularyActionMenuDelegate = vocabularyActionMenuDelegate;
-    this.vocabularyBulkActionMenuDelegate = vocabularyBulkActionMenuDelegate;
     this.vocabularyFilterMenuDelegate = vocabularyFilterMenuDelegate;
-    this.vocabularyLiveUpdateDelegate = vocabularyLiveUpdateDelegate;
-    this.vocabularySelectionDelegate = vocabularySelectionDelegate;
-    this.manageListSelectionMenuDelegate = manageListSelectionMenuDelegate;
     this.featureSettingsDelegate = featureSettingsDelegate;
     this.autorunDelegate = autorunDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public prepareAndFetch(filterType: VocabularyFilterType): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categoryListDelegate.prepareAndFetch(filterType);
-    } else {
-      this.vocabularyListDelegate.prepareAndFetch(filterType);
-    }
+  public prepareAndFetch(): void {
+    this.categoryListDelegate.prepareAndFetch(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedSortType.get(),
+    );
   }
 
   public fetch(): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categoryListDelegate.fetch();
-    } else {
-      this.vocabularyListDelegate.fetch();
-    }
+    this.categoryListDelegate.fetch();
   }
 
   public clearFetch(): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categoryListDelegate.clearFetch();
-    } else {
-      this.vocabularyListDelegate.clearFetch();
-    }
+    this.categoryListDelegate.clearFetch();
   }
 
-  public refresh(filterType: VocabularyFilterType): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categoryListDelegate.refresh(filterType);
-    } else {
-      this.vocabularyListDelegate.refresh(filterType);
-    }
+  public refresh(): void {
+    this.categoryListDelegate.refresh(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedSortType.get(),
+    );
   }
 
-  public refreshCurrentList(): void {
-    this.refresh(this.observableScreen.selectedFilterType.get());
-  }
-
-  public refreshCurrentListIfEmpty(): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categoryListDelegate.refreshIfEmpty(
-        this.observableScreen.selectedFilterType.get(),
-      );
-    } else {
-      this.vocabularyListDelegate.refreshIfEmpty(
-        this.observableScreen.selectedFilterType.get(),
-      );
-    }
-  }
-
-  public showVocabularyDetail(vocabulary: ObservableVocabulary): void {
-    this.navigatorDelegate.push(ScreenName.VOCABULARY_DETAIL_SCREEN, {
-      vocabulary,
-    });
+  public refreshIfEmpty(): void {
+    this.categoryListDelegate.refreshIfEmpty(
+      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedSortType.get(),
+    );
   }
 
   public showCategoryDetail(category: ObservableCategory): void {
@@ -207,12 +138,14 @@ export class ManageScreenDelegate {
     );
   }
 
-  public showVocabularyActionMenu(vocabulary: ObservableVocabulary): void {
-    this.vocabularyActionMenuDelegate.show(vocabulary);
-  }
-
-  public showVocabularyBulkActionMenu(): void {
-    this.vocabularyBulkActionMenuDelegate.show();
+  public showCategorySortMenu(): void {
+    this.categorySortMenuDelegate.show(
+      this.observableScreen.selectedSortType.get(),
+      (sortType): void => {
+        this.observableScreen.selectedSortType.set(sortType);
+        this.refresh();
+      },
+    );
   }
 
   public showVocabularyFilterMenu(): void {
@@ -222,29 +155,11 @@ export class ManageScreenDelegate {
       this.observableScreen.selectedFilterType.get(),
       (filterType): void => {
         this.observableScreen.selectedFilterType.set(filterType);
-        this.refresh(filterType);
+        this.refresh();
       },
       {
         hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
         hideDueByWriting: !featureSettings.writingEnabled,
-      },
-    );
-  }
-
-  public showManageListSelectionMenu(): void {
-    this.manageListSelectionMenuDelegate.show(
-      this.observableScreen.manageListType.get(),
-      (listType): void => {
-        this.observableScreen.manageListType.set(listType);
-        this.refresh(this.observableScreen.selectedFilterType.get());
-      },
-    );
-  }
-
-  public autoRefreshEmptyListOnVocabularyChange(): void {
-    this.vocabularyEventDelegate.onVocabularyChange(
-      (): void => {
-        this.refreshCurrentListIfEmpty();
       },
     );
   }
@@ -258,7 +173,7 @@ export class ManageScreenDelegate {
           ActionType.VOCABULARY__BULK_EDIT_SUCCEEDED,
         ],
         (): void => {
-          this.refreshCurrentList();
+          this.refresh();
         },
       ),
     );
@@ -281,18 +196,9 @@ export class ManageScreenDelegate {
           ActionType.WRITING__SAVE_RESULT,
         ],
         (): void => {
-          if (
-            this.observableScreen.manageListType.get() ===
-            ManageListType.CATEGORY_LIST
-          ) {
-            this.observableScreen.categoryListState.shouldShowRefreshNotice.set(
-              true,
-            );
-          } else {
-            this.observableScreen.vocabularyListState.shouldShowRefreshNotice.set(
-              true,
-            );
-          }
+          this.observableScreen.categoryListState.shouldShowRefreshNotice.set(
+            true,
+          );
         },
       ),
     );
@@ -307,18 +213,12 @@ export class ManageScreenDelegate {
             this.observableScreen.categoryListState.shouldShowSyncingNotice.set(
               false,
             );
-            this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
-              false,
-            );
           },
         ),
         on(
           ActionType.SYNC__SYNCING,
           (): void => {
             this.observableScreen.categoryListState.shouldShowSyncingNotice.set(
-              true,
-            );
-            this.observableScreen.vocabularyListState.shouldShowSyncingNotice.set(
               true,
             );
           },
@@ -332,36 +232,18 @@ export class ManageScreenDelegate {
       on(
         ActionType.SET__SELECT,
         (): void => {
-          this.refreshCurrentList();
+          this.refresh();
         },
       ),
     );
   }
 
-  public autoUpdateEditedVocabulary(): void {
-    this.vocabularyLiveUpdateDelegate.autoUpdateEditedVocabulary(true, false);
-  }
-
   public toggleSelection(id: string): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categorySelectionDelegate.toggleSelection(id);
-    } else {
-      this.vocabularySelectionDelegate.toggleSelection(id);
-    }
+    this.categorySelectionDelegate.toggleSelection(id);
   }
 
   public clearSelections(): void {
-    if (
-      this.observableScreen.manageListType.get() ===
-      ManageListType.CATEGORY_LIST
-    ) {
-      this.categorySelectionDelegate.clearSelections();
-    } else {
-      this.vocabularySelectionDelegate.clearSelections();
-    }
+    this.categorySelectionDelegate.clearSelections();
   }
 
   public showQuickTutorial(): void {

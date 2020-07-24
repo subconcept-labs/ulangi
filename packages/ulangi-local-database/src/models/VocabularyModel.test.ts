@@ -9,7 +9,10 @@ import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import { SetBuilder, VocabularyBuilder } from '@ulangi/ulangi-common/builders';
-import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  VocabularySortType,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Definition, Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { mockCurrentTime } from '@ulangi/ulangi-common/testing-utils';
 import * as moment from 'moment';
@@ -321,6 +324,7 @@ describe('VocabularyModel', (): void => {
             setList[0].setId,
             VocabularyStatus.ACTIVE,
             undefined,
+            VocabularySortType.SORT_BY_NAME_ASC,
             10,
             0,
             true
@@ -343,6 +347,7 @@ describe('VocabularyModel', (): void => {
             setList[0].setId,
             VocabularyStatus.ACTIVE,
             ['category0'],
+            VocabularySortType.SORT_BY_NAME_ASC,
             10,
             0,
             true
@@ -514,6 +519,7 @@ describe('VocabularyModel', (): void => {
             setList[0].setId,
             VocabularyStatus.ACTIVE,
             ['Uncategorized'],
+            VocabularySortType.SORT_BY_NAME_ASC,
             10,
             0,
             true

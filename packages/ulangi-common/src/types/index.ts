@@ -10,3 +10,4 @@ export { UserExtraDataItem } from './UserExtraDataItem';
 export { Receipt } from './Receipt';
 export { VocabularyFilterCondition } from './VocabularyFilterCondition';
 export { VocabularyBulkEdit } from './VocabularyBulkEdit';
+export { CategoryFilterCondition } from './CategoryFilterCondition';

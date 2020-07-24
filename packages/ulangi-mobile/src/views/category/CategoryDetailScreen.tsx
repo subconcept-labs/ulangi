@@ -52,8 +52,12 @@ export class CategoryDetailScreen extends React.Component<
           theme={this.props.themeStore.theme}
           category={this.props.observableScreen.category}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
+          selectedSortType={this.props.observableScreen.selectedSortType}
           showVocabularyFilterMenu={
             this.props.screenDelegate.showVocabularyFilterMenu
+          }
+          showVocabularySortMenu={
+            this.props.screenDelegate.showVocabularySortMenu
           }
         />
         {this.renderVocabularyList()}
@@ -69,9 +73,7 @@ export class CategoryDetailScreen extends React.Component<
       this.props.observableScreen.vocabularyListState.noMore === true &&
       this.props.observableScreen.vocabularyListState.vocabularyList.size === 0
     ) {
-      return (
-        <NoVocabulary refresh={this.props.screenDelegate.refreshCurrentList} />
-      );
+      return <NoVocabulary refresh={this.props.screenDelegate.refresh} />;
     } else {
       return (
         <VocabularyList
@@ -85,7 +87,7 @@ export class CategoryDetailScreen extends React.Component<
             this.props.screenDelegate.showVocabularyActionMenu
           }
           fetchNext={this.props.screenDelegate.fetch}
-          refresh={this.props.screenDelegate.refreshCurrentList}
+          refresh={this.props.screenDelegate.refresh}
         />
       );
     }

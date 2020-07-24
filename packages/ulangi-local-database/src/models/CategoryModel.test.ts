@@ -7,7 +7,11 @@
 
 import { SQLiteDatabase, SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import { SetBuilder, VocabularyBuilder } from '@ulangi/ulangi-common/builders';
-import { SetStatus, VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  CategorySortType,
+  SetStatus,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { mockCurrentTime } from '@ulangi/ulangi-common/testing-utils';
 import * as sqlite3 from 'sqlite3';
@@ -161,6 +165,7 @@ describe('VocabularyCategoryModel', (): void => {
             userDb,
             set.setId,
             VocabularyStatus.ACTIVE,
+            CategorySortType.SORT_BY_NAME_ASC,
             10,
             0,
             false
@@ -193,6 +198,7 @@ describe('VocabularyCategoryModel', (): void => {
             userDb,
             set.setId,
             VocabularyStatus.ACTIVE,
+            CategorySortType.SORT_BY_NAME_ASC,
             10,
             0,
             true

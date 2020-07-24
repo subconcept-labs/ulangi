@@ -23,7 +23,6 @@ import { DownloadIncompatibleVocabularySaga } from '../sagas/DownloadIncompatibl
 import { DownloadSetSaga } from '../sagas/DownloadSetSaga';
 import { DownloadUserSaga } from '../sagas/DownloadUserSaga';
 import { DownloadVocabularySaga } from '../sagas/DownloadVocabularySaga';
-import { FlashcardPlayerSaga } from '../sagas/FlashcardPlayerSaga';
 import { IapSaga } from '../sagas/IapSaga';
 import { ImageSaga } from '../sagas/ImageSaga';
 import { LibrarySaga } from '../sagas/LibrarySaga';
@@ -98,7 +97,6 @@ export class ProtectedSagaFactory {
       new CategorySaga(this.userDb, this.modelList.categoryModel),
       new ManageSaga(
         this.userDb,
-        this.modelList.vocabularyModel,
         this.modelList.categoryModel,
         this.modelList.spacedRepetitionModel,
         this.modelList.writingModel
@@ -129,7 +127,6 @@ export class ProtectedSagaFactory {
       ),
       new ReflexSaga(this.userDb, this.modelList.vocabularyModel),
       new AtomSaga(this.userDb, this.modelList.vocabularyModel),
-      new FlashcardPlayerSaga(this.userDb, this.modelList.vocabularyModel),
       new DictionarySaga(this.sharedDb, this.modelList.sessionModel),
       new TranslationSaga(this.sharedDb, this.modelList.sessionModel),
       new SyncSaga(

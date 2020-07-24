@@ -1,0 +1,5 @@
+export enum VocabularySortType {
+  UNSORTED = 'UNSORTED',
+  SORT_BY_NAME_ASC = 'SORT_BY_NAME_ASC',
+  SORT_BY_NAME_DESC = 'SORT_BY_NAME_DESC',
+}

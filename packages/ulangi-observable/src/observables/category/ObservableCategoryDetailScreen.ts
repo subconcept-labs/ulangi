@@ -5,7 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ScreenName, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import {
+  ScreenName,
+  VocabularyFilterType,
+  VocabularySortType,
+} from '@ulangi/ulangi-common/enums';
 import { IObservableValue } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
@@ -18,11 +22,14 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
 
   public readonly selectedFilterType: IObservableValue<VocabularyFilterType>;
 
+  public readonly selectedSortType: IObservableValue<VocabularySortType>;
+
   public readonly vocabularyListState: ObservableVocabularyListState;
 
   public constructor(
     category: ObservableCategory,
     selectedFilterType: IObservableValue<VocabularyFilterType>,
+    selectedSortType: IObservableValue<VocabularySortType>,
     vocabularyListState: ObservableVocabularyListState,
     componentId: string,
     screenName: ScreenName,
@@ -31,6 +38,7 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
     super(componentId, screenName, topBar);
     this.category = category;
     this.selectedFilterType = selectedFilterType;
+    this.selectedSortType = selectedSortType;
     this.vocabularyListState = vocabularyListState;
   }
 }

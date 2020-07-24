@@ -10,7 +10,11 @@ import { DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
-import { ErrorCode, VocabularyDueType } from '@ulangi/ulangi-common/enums';
+import {
+  ErrorCode,
+  VocabularyDueType,
+  VocabularySortType,
+} from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
@@ -353,7 +357,7 @@ export class VocabularySaga extends ProtectedSaga {
       const action: Action<ActionType.VOCABULARY__BULK_EDIT> = yield take(
         ActionType.VOCABULARY__BULK_EDIT
       );
-      const { condition, edit } = action.payload;
+      const { filterCondition, edit } = action.payload;
 
       try {
         let updatedCount = 0;
@@ -366,17 +370,20 @@ export class VocabularySaga extends ProtectedSaga {
 
         let done = false;
         while (!done) {
-          if (edit.type === 'moveToSet' && condition.setId === edit.newSetId) {
+          if (
+            edit.type === 'moveToSet' &&
+            filterCondition.setId === edit.newSetId
+          ) {
             done = true;
           } else if (
             edit.type === 'changeStatus' &&
-            condition.filterBy === 'VocabularyStatus' &&
-            condition.vocabularyStatus === edit.newVocabularyStatus
+            filterCondition.filterBy === 'VocabularyStatus' &&
+            filterCondition.vocabularyStatus === edit.newVocabularyStatus
           ) {
             done = true;
           } else if (
             edit.type === 'recategorize' &&
-            _.difference(condition.categoryNames, [edit.newCategoryName])
+            _.difference(filterCondition.categoryNames, [edit.newCategoryName])
               .length === 0
           ) {
             done = true;
@@ -386,15 +393,16 @@ export class VocabularySaga extends ProtectedSaga {
             } = yield call(
               [this, this.getVocabularyListByFilterType],
               {
-                ...condition,
+                ...filterCondition,
                 categoryNames:
                   edit.type === 'recategorize'
                     ? _.difference(
-                        condition.categoryNames,
+                        filterCondition.categoryNames,
                         edit.newCategoryName
                       )
-                    : condition.categoryNames,
+                    : filterCondition.categoryNames,
               },
+              VocabularySortType.UNSORTED,
               100,
               0,
               spacedRepetitionMaxLevel,
@@ -524,7 +532,8 @@ export class VocabularySaga extends ProtectedSaga {
 
       yield fork(
         [this, this.allowFetchVocabulary],
-        action.payload,
+        action.payload.filterCondition,
+        action.payload.sortType,
         limit,
         spacedRepetitionMaxLevel,
         writingMaxLevel
@@ -544,7 +553,8 @@ export class VocabularySaga extends ProtectedSaga {
   }
 
   private *allowFetchVocabulary(
-    condition: VocabularyFilterCondition,
+    filterCondition: VocabularyFilterCondition,
+    sortType: VocabularySortType,
     limit: number,
     spacedRepetitionMaxLevel: number,
     writingMaxLevel: number
@@ -557,7 +567,8 @@ export class VocabularySaga extends ProtectedSaga {
 
         const result = yield call(
           [this, this.getVocabularyListByFilterType],
-          condition,
+          filterCondition,
+          sortType,
           limit,
           offset,
           spacedRepetitionMaxLevel,
@@ -590,7 +601,8 @@ export class VocabularySaga extends ProtectedSaga {
   }
 
   protected *getVocabularyListByFilterType(
-    condition: VocabularyFilterCondition,
+    filterCondition: VocabularyFilterCondition,
+    sortType: VocabularySortType,
     limit: number,
     offset: number,
     spacedRepetitionMaxLevel: number,
@@ -611,8 +623,8 @@ export class VocabularySaga extends ProtectedSaga {
         | WritingModel['getDueVocabularyList']
       >
     >;
-    if (condition.filterBy === 'VocabularyStatus') {
-      const { setId, vocabularyStatus, categoryNames } = condition;
+    if (filterCondition.filterBy === 'VocabularyStatus') {
+      const { setId, vocabularyStatus, categoryNames } = filterCondition;
 
       result = yield call(
         [this.vocabularyModel, 'getVocabularyList'],
@@ -620,12 +632,18 @@ export class VocabularySaga extends ProtectedSaga {
         setId,
         vocabularyStatus,
         typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+        sortType,
         limit,
         offset,
         true
       );
     } else {
-      const { setId, initialInterval, dueType, categoryNames } = condition;
+      const {
+        setId,
+        initialInterval,
+        dueType,
+        categoryNames,
+      } = filterCondition;
 
       if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
         result = yield call(
@@ -635,6 +653,7 @@ export class VocabularySaga extends ProtectedSaga {
           initialInterval,
           spacedRepetitionMaxLevel,
           typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+          sortType,
           limit,
           offset,
           true
@@ -647,6 +666,7 @@ export class VocabularySaga extends ProtectedSaga {
           initialInterval,
           writingMaxLevel,
           typeof categoryNames !== 'undefined' ? categoryNames : undefined,
+          sortType,
           limit,
           offset,
           true

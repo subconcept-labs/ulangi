@@ -11,6 +11,7 @@ import {
   ScreenName,
   Theme,
   VocabularyFilterType,
+  VocabularySortType,
 } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import {
@@ -56,6 +57,7 @@ export class CategoryDetailScreenContainer extends Container<
       this.props.passedProps.category,
     ),
     observable.box(this.props.passedProps.selectedFilterType),
+    observable.box(VocabularySortType.SORT_BY_NAME_ASC),
     new ObservableVocabularyListState(
       null,
       false,
@@ -95,9 +97,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.screenDelegate.autoRefreshOnMultipleEdit();
     this.screenDelegate.autoShowRefreshNotice();
     this.screenDelegate.autoShowSyncingInProgress();
-    this.screenDelegate.prepareAndFetch(
-      this.observableScreen.selectedFilterType.get(),
-    );
+    this.screenDelegate.prepareAndFetch();
   }
 
   public componentWillUnmount(): void {
@@ -108,7 +108,7 @@ export class CategoryDetailScreenContainer extends Container<
     if (
       this.observableScreen.vocabularyListState.shouldShowRefreshNotice.get()
     ) {
-      this.screenDelegate.refreshCurrentList();
+      this.screenDelegate.refresh();
     }
   }
 

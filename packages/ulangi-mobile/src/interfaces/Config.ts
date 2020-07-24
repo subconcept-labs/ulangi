@@ -6,10 +6,12 @@
  */
 
 import {
+  CategorySortType,
   Feedback,
   ReviewStrategy,
   SetStatus,
   VocabularyFilterType,
+  VocabularySortType,
   VocabularyStatus,
   WordClass,
 } from '@ulangi/ulangi-common/enums';
@@ -104,6 +106,12 @@ export interface Config {
         readonly borderColor: string;
       }
     };
+    readonly sortMap: {
+      [P in VocabularySortType]: {
+        readonly name: string;
+        readonly longName: string;
+      }
+    };
     readonly statusMap: {
       [P in VocabularyStatus]: {
         readonly name: string;
@@ -117,6 +125,12 @@ export interface Config {
 
   readonly category: {
     readonly fetchSuggestionsLimit: number;
+    readonly sortMap: {
+      [P in CategorySortType]: {
+        readonly name: string;
+        readonly longName: string;
+      }
+    };
   };
 
   readonly builtInWordClass: {

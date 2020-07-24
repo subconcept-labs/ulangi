@@ -7,13 +7,15 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
-import { VocabularyDueType } from '@ulangi/ulangi-common/enums';
+import {
+  CategorySortType,
+  VocabularyDueType,
+} from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
-import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
+import { CategoryFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   CategoryModel,
   SpacedRepetitionModel,
-  VocabularyModel,
   WritingModel,
 } from '@ulangi/ulangi-local-database';
 import { Task } from 'redux-saga';
@@ -26,25 +28,21 @@ import { SagaEnv } from '../interfaces/SagaEnv';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class ManageSaga extends ProtectedSaga {
-  private fetchVocabularyTask?: Task;
   private fetchCategoryTask?: Task;
 
   private userDb: SQLiteDatabase;
-  private vocabularyModel: VocabularyModel;
   private categoryModel: CategoryModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
   private writingModel: WritingModel;
 
   public constructor(
     userDb: SQLiteDatabase,
-    vocabularyModel: VocabularyModel,
     categoryModel: CategoryModel,
     spacedRepetitionModel: SpacedRepetitionModel,
     writingModel: WritingModel
   ) {
     super();
     this.userDb = userDb;
-    this.vocabularyModel = vocabularyModel;
     this.categoryModel = categoryModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
     this.writingModel = writingModel;
@@ -52,183 +50,11 @@ export class ManageSaga extends ProtectedSaga {
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
-      [this, this.allowPrepareAndClearFetchVocabulary],
-      config.manage.fetchVocabularyLimit,
-      config.spacedRepetition.maxLevel,
-      config.writing.maxLevel
-    );
-    yield fork(
       [this, this.allowPrepareAndClearFetchCategory],
       config.manage.fetchCategoryLimit,
       config.spacedRepetition.maxLevel,
       config.writing.maxLevel
     );
-  }
-
-  public *allowPrepareAndClearFetchVocabulary(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
-    this.fetchVocabularyTask = yield fork(
-      [this, this.allowPrepareFetchVocabulary],
-      limit,
-      spacedRepetitionMaxLevel,
-      writingMaxLevel
-    );
-    yield fork(
-      [this, this.allowClearFetchVocabulary],
-      limit,
-      spacedRepetitionMaxLevel,
-      writingMaxLevel
-    );
-  }
-
-  private *allowClearFetchVocabulary(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
-    while (true) {
-      yield take(ActionType.MANAGE__CLEAR_FETCH_VOCABULARY);
-      if (typeof this.fetchVocabularyTask !== 'undefined') {
-        yield cancel(this.fetchVocabularyTask);
-      }
-
-      this.fetchVocabularyTask = yield fork(
-        [this, this.allowPrepareFetchVocabulary],
-        limit,
-        spacedRepetitionMaxLevel,
-        writingMaxLevel
-      );
-    }
-  }
-
-  private *allowPrepareFetchVocabulary(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
-    try {
-      const action: Action<
-        ActionType.MANAGE__PREPARE_FETCH_VOCABULARY
-      > = yield take(ActionType.MANAGE__PREPARE_FETCH_VOCABULARY);
-
-      yield put(
-        createAction(ActionType.MANAGE__PREPARING_FETCH_VOCABULARY, null)
-      );
-
-      yield fork(
-        [this, this.allowFetchVocabulary],
-        action.payload,
-        limit,
-        spacedRepetitionMaxLevel,
-        writingMaxLevel
-      );
-
-      yield put(
-        createAction(
-          ActionType.MANAGE__PREPARE_FETCH_VOCABULARY_SUCCEEDED,
-          null
-        )
-      );
-    } catch (error) {
-      yield put(
-        createAction(ActionType.MANAGE__PREPARE_FETCH_VOCABULARY_FAILED, {
-          errorCode: errorConverter.getErrorCode(error),
-          error,
-        })
-      );
-    }
-  }
-
-  private *allowFetchVocabulary(
-    payload: VocabularyFilterCondition,
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
-    let offset = 0;
-    while (true) {
-      yield take(ActionType.MANAGE__FETCH_VOCABULARY);
-      try {
-        yield put(createAction(ActionType.MANAGE__FETCHING_VOCABULARY, null));
-
-        let result: PromiseType<
-          ReturnType<
-            | VocabularyModel['getVocabularyList']
-            | SpacedRepetitionModel['getDueVocabularyList']
-            | WritingModel['getDueVocabularyList']
-          >
-        >;
-        if (payload.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus, categoryNames } = payload;
-
-          result = yield call(
-            [this.vocabularyModel, 'getVocabularyList'],
-            this.userDb,
-            setId,
-            vocabularyStatus,
-            typeof categoryNames !== 'undefined' ? categoryNames : undefined,
-            limit,
-            offset,
-            true
-          );
-        } else {
-          const { setId, initialInterval, dueType, categoryNames } = payload;
-
-          if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
-            result = yield call(
-              [this.spacedRepetitionModel, 'getDueVocabularyList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              spacedRepetitionMaxLevel,
-              typeof categoryNames !== 'undefined' ? categoryNames : undefined,
-              limit,
-              offset,
-              true
-            );
-          } else if (dueType === VocabularyDueType.DUE_BY_WRITING) {
-            result = yield call(
-              [this.writingModel, 'getDueVocabularyList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              writingMaxLevel,
-              typeof categoryNames !== 'undefined' ? categoryNames : undefined,
-              limit,
-              offset,
-              true
-            );
-          } else {
-            throw new Error('Unsupported due type');
-          }
-        }
-
-        const { vocabularyList } = result;
-        offset += limit;
-
-        let noMore = false;
-        if (vocabularyList.length === 0) {
-          noMore = true;
-        }
-
-        yield put(
-          createAction(ActionType.MANAGE__FETCH_VOCABULARY_SUCCEEDED, {
-            vocabularyList,
-            noMore,
-          })
-        );
-      } catch (error) {
-        yield put(
-          createAction(ActionType.MANAGE__FETCH_VOCABULARY_FAILED, {
-            errorCode: errorConverter.getErrorCode(error),
-            error,
-          })
-        );
-      }
-    }
   }
 
   public *allowPrepareAndClearFetchCategory(
@@ -286,7 +112,8 @@ export class ManageSaga extends ProtectedSaga {
 
       yield fork(
         [this, this.allowFetchCategory],
-        action.payload,
+        action.payload.filterCondition,
+        action.payload.sortType,
         limit,
         spacedRepetitionMaxLevel,
         writingMaxLevel
@@ -306,7 +133,8 @@ export class ManageSaga extends ProtectedSaga {
   }
 
   private *allowFetchCategory(
-    condition: VocabularyFilterCondition,
+    filterCondition: CategoryFilterCondition,
+    sortType: CategorySortType,
     limitOfCategorized: number,
     spacedRepetitionMaxLevel: number,
     writingMaxLevel: number
@@ -320,8 +148,8 @@ export class ManageSaga extends ProtectedSaga {
         yield put(createAction(ActionType.MANAGE__FETCHING_CATEGORY, null));
 
         let categoryList;
-        if (condition.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus } = condition;
+        if (filterCondition.filterBy === 'VocabularyStatus') {
+          const { setId, vocabularyStatus } = filterCondition;
 
           const result: PromiseType<
             ReturnType<CategoryModel['getCategoryListByVocabularyStatus']>
@@ -330,6 +158,7 @@ export class ManageSaga extends ProtectedSaga {
             this.userDb,
             setId,
             vocabularyStatus,
+            sortType,
             limitOfCategorized,
             offsetOfCategorized,
             shouldIncludeUncategorized
@@ -337,7 +166,7 @@ export class ManageSaga extends ProtectedSaga {
 
           categoryList = result.categoryList;
         } else {
-          const { setId, initialInterval, dueType } = condition;
+          const { setId, initialInterval, dueType } = filterCondition;
           if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
             const result: PromiseType<
               ReturnType<SpacedRepetitionModel['getDueCategoryList']>
@@ -347,6 +176,7 @@ export class ManageSaga extends ProtectedSaga {
               setId,
               initialInterval,
               spacedRepetitionMaxLevel,
+              sortType,
               limitOfCategorized,
               offsetOfCategorized,
               shouldIncludeUncategorized
@@ -362,6 +192,7 @@ export class ManageSaga extends ProtectedSaga {
               setId,
               initialInterval,
               writingMaxLevel,
+              sortType,
               limitOfCategorized,
               offsetOfCategorized,
               shouldIncludeUncategorized

@@ -6,32 +6,37 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
 export interface CategoryDetailHeaderStyles {
   container: ViewStyle;
-  buttons_container: ViewStyle;
-  button_container: ViewStyle;
+  button: ViewStyle;
+  button_text: TextStyle;
 }
 
 export const baseStyles: CategoryDetailHeaderStyles = {
   container: {
     paddingVertical: 14,
+    paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 1,
   },
 
-  buttons_container: {
+  button: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'center',
+    // Shrink the button if set name is too long
+    flexShrink: 1,
   },
 
-  button_container: {
-    paddingHorizontal: 6,
+  button_text: {
+    fontWeight: 'bold',
+    color: '#888',
+    fontSize: 15,
   },
 };
 
@@ -41,8 +46,8 @@ export const lightStyles = StyleSheet.create(
       borderBottomColor: config.styles.light.primaryBorderColor,
     },
 
-    title: {
-      color: config.styles.light.primaryTextColor,
+    button_text: {
+      color: config.styles.light.secondaryTextColor,
     },
   }),
 );
@@ -51,6 +56,10 @@ export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     container: {
       borderBottomColor: config.styles.dark.primaryBorderColor,
+    },
+
+    button_text: {
+      color: config.styles.dark.secondaryTextColor,
     },
   }),
 );

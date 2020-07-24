@@ -19,6 +19,7 @@ import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/Vocabul
 import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../../delegates/vocabulary/VocabularyLiveUpdateDelegate';
 import { VocabularySelectionDelegate } from '../../delegates/vocabulary/VocabularySelectionDelegate';
+import { VocabularySortMenuDelegate } from '../../delegates/vocabulary/VocabularySortMenuDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
@@ -73,7 +74,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
     );
 
     const vocabularyListDelegate = new VocabularyListDelegate(
-      false,
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
@@ -83,6 +83,11 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
     );
 
     const vocabularyFilterMenuDelegate = new VocabularyFilterMenuDelegate(
+      navigatorDelegate,
+      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
+    const vocabularySortMenuDelegate = new VocabularySortMenuDelegate(
       navigatorDelegate,
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
@@ -125,6 +130,7 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       categoryActionMenuDelegate,
       vocabularyListDelegate,
       vocabularyFilterMenuDelegate,
+      vocabularySortMenuDelegate,
       vocabularyActionMenuDelegate,
       vocabularyBulkActionMenuDelegate,
       vocabularyLiveUpdateDelegate,

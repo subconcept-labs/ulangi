@@ -112,6 +112,10 @@ export class ConfigResolver extends AbstractResolver<Config> {
         textColor: Joi.string(),
         borderColor: Joi.string(),
       }),
+      sortMap: Joi.object().pattern(/^/, {
+        name: Joi.string(),
+        longName: Joi.string(),
+      }),
       statusMap: Joi.object().pattern(/^/, {
         name: Joi.string(),
       }),
@@ -123,6 +127,10 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     category: {
       fetchSuggestionsLimit: Joi.number(),
+      sortMap: Joi.object().pattern(/^/, {
+        name: Joi.string(),
+        longName: Joi.string(),
+      }),
     },
 
     reviewFeedback: {

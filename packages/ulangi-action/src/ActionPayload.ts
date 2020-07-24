@@ -8,11 +8,13 @@
 import { DeepPartial } from '@ulangi/extended-types';
 import {
   ApiScope,
+  CategorySortType,
   ConsentStatus,
   Feedback,
   SetStatus,
   SyncTask,
   Theme,
+  VocabularySortType,
 } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettings,
@@ -32,6 +34,7 @@ import {
   Vocabulary,
 } from '@ulangi/ulangi-common/interfaces';
 import {
+  CategoryFilterCondition,
   VocabularyBulkEdit,
   VocabularyFilterCondition,
 } from '@ulangi/ulangi-common/types';
@@ -263,20 +266,10 @@ export interface ActionPayload {
   readonly LIBRARY__GET_PUBLIC_SET_COUNT_SUCCEEDED: { count: number };
   readonly LIBRARY__GET_PUBLIC_SET_COUNT_FAILED: ErrorBag;
 
-  readonly MANAGE__PREPARE_FETCH_VOCABULARY: VocabularyFilterCondition;
-  readonly MANAGE__PREPARING_FETCH_VOCABULARY: null;
-  readonly MANAGE__PREPARE_FETCH_VOCABULARY_SUCCEEDED: null;
-  readonly MANAGE__PREPARE_FETCH_VOCABULARY_FAILED: ErrorBag;
-  readonly MANAGE__FETCH_VOCABULARY: null;
-  readonly MANAGE__FETCHING_VOCABULARY: null;
-  readonly MANAGE__FETCH_VOCABULARY_SUCCEEDED: {
-    vocabularyList: readonly Vocabulary[];
-    noMore: boolean;
+  readonly MANAGE__PREPARE_FETCH_CATEGORY: {
+    filterCondition: CategoryFilterCondition;
+    sortType: CategorySortType;
   };
-  readonly MANAGE__FETCH_VOCABULARY_FAILED: ErrorBag;
-  readonly MANAGE__CLEAR_FETCH_VOCABULARY: null;
-  readonly MANAGE__PREPARE_FETCH_CATEGORY: VocabularyFilterCondition;
-
   readonly MANAGE__PREPARING_FETCH_CATEGORY: null;
   readonly MANAGE__PREPARE_FETCH_CATEGORY_SUCCEEDED: null;
   readonly MANAGE__PREPARE_FETCH_CATEGORY_FAILED: ErrorBag;
@@ -612,7 +605,7 @@ export interface ActionPayload {
     vocabularyList: readonly DeepPartial<Vocabulary>[];
   };
   readonly VOCABULARY__BULK_EDIT: {
-    condition: VocabularyFilterCondition;
+    filterCondition: VocabularyFilterCondition;
     edit: VocabularyBulkEdit;
   };
   readonly VOCABULARY__BULK_EDITING: {
@@ -636,7 +629,10 @@ export interface ActionPayload {
     vocabularyList: readonly Vocabulary[];
   };
   readonly VOCABULARY__DOWNLOAD_INCOMPATIBLE_VOCABULARY_FAILED: ErrorBag;
-  readonly VOCABULARY__PREPARE_FETCH: VocabularyFilterCondition;
+  readonly VOCABULARY__PREPARE_FETCH: {
+    filterCondition: VocabularyFilterCondition;
+    sortType: VocabularySortType;
+  };
   readonly VOCABULARY__PREPARING_FETCH: null;
   readonly VOCABULARY__PREPARE_FETCH_SUCCEEDED: null;
   readonly VOCABULARY__PREPARE_FETCH_FAILED: ErrorBag;
