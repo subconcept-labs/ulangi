@@ -20,7 +20,7 @@ import {
   VocabularyCategory,
   VocabularyWriting,
 } from '@ulangi/ulangi-common/interfaces';
-import { DictionaryDefinition,DictionaryEntry } from '@ulangi/wiktionary-core';
+import { DictionaryDefinition, DictionaryEntry } from '@ulangi/wiktionary-core';
 import { observable } from 'mobx';
 
 import { ObservableCategory } from '../observables/category/ObservableCategory';

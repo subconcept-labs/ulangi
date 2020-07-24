@@ -25,7 +25,9 @@ export const baseStyles: DiscoverScreenStyles = {
     flex: 1,
   },
 
-  top_container: {},
+  top_container: {
+    borderBottomWidth: 1,
+  },
 
   message_container: {
     flex: 1,
@@ -60,6 +62,10 @@ export const baseStyles: DiscoverScreenStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    top_container: {
+      borderBottomColor: config.styles.light.primaryBorderColor,
+    },
+
     header_text: {
       color: config.styles.light.secondaryTextColor,
     },
@@ -68,10 +74,15 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
+    top_container: {
+      borderBottomColor: config.styles.dark.primaryBorderColor,
+    },
+
     screen: {
       borderTopWidth: StyleSheet.hairlineWidth,
       borderTopColor: '#131313',
     },
+
     header_text: {
       color: config.styles.dark.secondaryTextColor,
     },
