@@ -14,15 +14,17 @@ import {
   PublicSet,
   PublicVocabulary,
   Set,
+  Translation,
   User,
   Vocabulary,
   VocabularyCategory,
   VocabularyWriting,
 } from '@ulangi/ulangi-common/interfaces';
-import { DictionaryEntry } from '@ulangi/wiktionary-core';
+import { DictionaryDefinition,DictionaryEntry } from '@ulangi/wiktionary-core';
 import { observable } from 'mobx';
 
 import { ObservableCategory } from '../observables/category/ObservableCategory';
+import { ObservableDictionaryDefinition } from '../observables/dictionary/ObservableDictionaryDefinition';
 import { ObservableDictionaryEntry } from '../observables/dictionary/ObservableDictionaryEntry';
 import { ObservablePublicDefinition } from '../observables/discover/ObservablePublicDefinition';
 import { ObservablePublicSet } from '../observables/discover/ObservablePublicSet';
@@ -31,6 +33,7 @@ import { ObservablePixabayImage } from '../observables/image/ObservablePixabayIm
 import { ObservableLanguagePair } from '../observables/language/ObservableLanguagePair';
 import { ObservableSet } from '../observables/set/ObservableSet';
 import { ObservableRootStore } from '../observables/stores/ObservableRootStore';
+import { ObservableTranslation } from '../observables/translation/ObservableTranslation';
 import { ObservableUser } from '../observables/user/ObservableUser';
 import { ObservableDefinition } from '../observables/vocabulary/ObservableDefinition';
 import { ObservableVocabulary } from '../observables/vocabulary/ObservableVocabulary';
@@ -187,7 +190,11 @@ export class ObservableConverter {
   ): ObservableDictionaryEntry {
     return new ObservableDictionaryEntry(
       dictionaryEntry.vocabularyTerm,
-      dictionaryEntry.definitions,
+      dictionaryEntry.definitions.map(
+        (definition): ObservableDictionaryDefinition => {
+          return this.convertToObservableDictionaryDefinition(definition);
+        }
+      ),
       dictionaryEntry.categories,
       dictionaryEntry.tags,
       dictionaryEntry.ipa,
@@ -204,6 +211,28 @@ export class ObservableConverter {
       dictionaryEntry.feminine,
       dictionaryEntry.masculine,
       dictionaryEntry.sources
+    );
+  }
+
+  public convertToObservableDictionaryDefinition(
+    definition: DictionaryDefinition
+  ): ObservableDictionaryDefinition {
+    return new ObservableDictionaryDefinition(
+      definition.wordClasses,
+      definition.meaning,
+      definition.source,
+      false
+    );
+  }
+
+  public convertToObservableTranslation(
+    translation: Translation
+  ): ObservableTranslation {
+    return new ObservableTranslation(
+      translation.sourceText,
+      translation.translatedText,
+      translation.translatedBy,
+      false
     );
   }
 

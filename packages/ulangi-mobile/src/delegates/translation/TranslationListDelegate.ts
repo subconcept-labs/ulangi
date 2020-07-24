@@ -9,22 +9,27 @@ import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ActivityState, ErrorCode } from '@ulangi/ulangi-common/enums';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
+  ObservableConverter,
   ObservableSetStore,
+  ObservableTranslation,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
 import { observable, runInAction } from 'mobx';
 
 export class TranslationListDelegate {
   private eventBus: EventBus;
+  private observableConverter: ObservableConverter;
   private setStore: ObservableSetStore;
   private translationListState: ObservableTranslationListState;
 
   public constructor(
     eventBus: EventBus,
+    observableConverter: ObservableConverter,
     setStore: ObservableSetStore,
     translationListState: ObservableTranslationListState,
   ) {
     this.eventBus = eventBus;
+    this.observableConverter = observableConverter;
     this.setStore = setStore;
     this.translationListState = translationListState;
   }
@@ -76,7 +81,13 @@ export class TranslationListDelegate {
                 ActivityState.INACTIVE,
               );
               this.translationListState.translations = observable.array(
-                translations.slice(),
+                translations.map(
+                  (translation): ObservableTranslation => {
+                    return this.observableConverter.convertToObservableTranslation(
+                      translation,
+                    );
+                  },
+                ),
               );
             },
           ),

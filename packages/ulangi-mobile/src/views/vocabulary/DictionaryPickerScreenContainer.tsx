@@ -71,6 +71,7 @@ export class DictionaryPickerScreenContainer extends Container<
 
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
+    this.props.passedProps.onPick,
   );
 
   public componentDidMount(): void {
@@ -102,7 +103,6 @@ export class DictionaryPickerScreenContainer extends Container<
         themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}
         screenDelegate={this.screenDelegate}
-        onPick={this.props.passedProps.onPick}
       />
     );
   }

@@ -18,13 +18,18 @@ export class ObservableDictionaryDefinition {
   @observable
   public source: string;
 
+  @observable
+  public isAdded: boolean;
+
   public constructor(
     wordClasses: readonly WordClass[],
     meaning: string,
-    source: string
+    source: string,
+    isAdded: boolean
   ) {
     this.wordClasses = wordClasses;
     this.meaning = meaning;
     this.source = source;
+    this.isAdded = isAdded;
   }
 }

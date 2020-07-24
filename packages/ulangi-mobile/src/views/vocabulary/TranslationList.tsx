@@ -5,9 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableTranslation } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -23,7 +21,7 @@ import {
 export interface TranslationListProps {
   theme: Theme;
   translations: readonly ObservableTranslation[];
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPick: (definition: ObservableTranslation) => void;
   styles?: {
     light: TranslationListStyles;
     dark: TranslationListStyles;

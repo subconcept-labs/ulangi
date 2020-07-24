@@ -5,9 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Attribution, Definition } from '@ulangi/ulangi-common/interfaces';
+import { Attribution } from '@ulangi/ulangi-common/interfaces';
 import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +26,7 @@ export interface DictionaryDefinitionListProps {
   label?: string;
   attributions: undefined | Attribution[];
   definitions: readonly ObservableDictionaryDefinition[];
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPick: (definition: ObservableDictionaryDefinition) => void;
   openLink: (link: string) => void;
   styles?: {
     light: DictionaryDefinitionListStyles;

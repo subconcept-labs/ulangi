@@ -5,10 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDictionaryEntryState } from '@ulangi/ulangi-observable';
+import {
+  ObservableDictionaryDefinition,
+  ObservableDictionaryEntryState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -29,7 +30,7 @@ export interface DictionarySectionProps {
   translatedToLanguageName: string;
   dictionaryEntryState: ObservableDictionaryEntryState;
   getDictionaryEntry: () => void;
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPick: (definition: ObservableDictionaryDefinition) => void;
   openLink: (link: string) => void;
   styles?: {
     light: DictionarySectionStyles;

@@ -5,9 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableTranslation } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +25,7 @@ export interface TranslationProps {
   index: number;
   theme: Theme;
   translation: ObservableTranslation;
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPick: (translation: ObservableTranslation) => void;
   styles?: {
     light: TranslationStyles;
     dark: TranslationStyles;
@@ -67,13 +65,9 @@ export class Translation extends React.Component<TranslationProps> {
               this.props.index,
             )}
             theme={this.props.theme}
-            onPress={(): void =>
-              this.props.onPick({
-                meaning: this.props.translation.translatedText,
-                wordClasses: [],
-                source: this.props.translation.translatedBy,
-              })
-            }
+            disabled={this.props.translation.isAdded}
+            isAdded={this.props.translation.isAdded}
+            onPress={(): void => this.props.onPick(this.props.translation)}
           />
         </View>
       </View>

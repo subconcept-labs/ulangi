@@ -21,6 +21,7 @@ export interface AddDefinitionButtonProps {
   theme: Theme;
   testID?: string;
   disabled?: boolean;
+  isAdded?: boolean;
   onPress: () => void;
   styles?: {
     light: AddDefinitionButtonStyles;
@@ -48,7 +49,9 @@ export class AddDefinitionButton extends React.Component<
         disabled={this.props.disabled}>
         <Image
           source={
-            this.props.theme === Theme.LIGHT
+            this.props.isAdded === true
+              ? Images.CHECK_GREEN_14X14
+              : this.props.theme === Theme.LIGHT
               ? Images.ADD_BLACK_16X16
               : Images.ADD_MILK_16X16
           }

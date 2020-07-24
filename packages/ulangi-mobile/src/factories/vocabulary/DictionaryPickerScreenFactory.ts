@@ -5,6 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { DeepPartial } from '@ulangi/extended-types';
+import { Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableDictionaryPickerScreen } from '@ulangi/ulangi-observable';
 
 import { DictionaryEntryDelegate } from '../../delegates/dictionary/DictionaryEntryDelegate';
@@ -15,6 +17,7 @@ import { ScreenFactory } from '../ScreenFactory';
 export class DictionaryPickerScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableDictionaryPickerScreen,
+    onPick: (definition: DeepPartial<Definition>) => void,
   ): DictionaryPickerScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 
@@ -27,6 +30,7 @@ export class DictionaryPickerScreenFactory extends ScreenFactory {
 
     const translationListDelegate = new TranslationListDelegate(
       this.eventBus,
+      this.props.observableConverter,
       this.props.rootStore.setStore,
       observableScreen.translationListState,
     );
@@ -36,6 +40,7 @@ export class DictionaryPickerScreenFactory extends ScreenFactory {
       dictionaryEntryDelegate,
       translationListDelegate,
       navigatorDelegate,
+      onPick,
     );
   }
 }

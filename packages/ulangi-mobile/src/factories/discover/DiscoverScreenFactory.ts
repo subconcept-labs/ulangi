@@ -56,6 +56,7 @@ export class DiscoverScreenFactory extends ScreenFactory {
 
     const translationListDelegate = new TranslationListDelegate(
       this.eventBus,
+      this.props.observableConverter,
       this.props.rootStore.setStore,
       observableScreen.translationListState,
     );

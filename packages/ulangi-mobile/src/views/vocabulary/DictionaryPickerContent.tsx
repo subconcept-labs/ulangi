@@ -5,11 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
+  ObservableDictionaryDefinition,
   ObservableDictionaryEntryState,
+  ObservableTranslation,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -34,7 +34,10 @@ export interface DictionaryPickerContentProps {
   getDictionaryEntry: () => void;
   translate: () => void;
   openLink: (link: string) => void;
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPickDictionaryDefinition: (
+    definition: ObservableDictionaryDefinition,
+  ) => void;
+  onPickTranslation: (translation: ObservableTranslation) => void;
   styles?: {
     light: DictionaryPickerContentStyles;
     dark: DictionaryPickerContentStyles;
@@ -64,7 +67,7 @@ export class DictionaryPickerContent extends React.Component<
           dictionaryEntryState={this.props.dictionaryEntryState}
           getDictionaryEntry={this.props.getDictionaryEntry}
           openLink={this.props.openLink}
-          onPick={this.props.onPick}
+          onPick={this.props.onPickDictionaryDefinition}
         />
         <TranslationSection
           theme={this.props.theme}
@@ -72,7 +75,7 @@ export class DictionaryPickerContent extends React.Component<
           translatedToLanguageName={this.props.translatedToLanguageName}
           translationListState={this.props.translationListState}
           translate={this.props.translate}
-          onPick={this.props.onPick}
+          onPick={this.props.onPickTranslation}
         />
       </SmartScrollView>
     );

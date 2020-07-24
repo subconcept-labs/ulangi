@@ -5,9 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableDictionaryPickerScreen,
   ObservableLightBox,
@@ -37,7 +35,6 @@ export interface DictionaryPickerScreenProps {
   themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
   screenDelegate: DictionaryPickerScreenDelegate;
-  onPick: (definition: DeepPartial<Definition>) => void;
 }
 
 @observer
@@ -106,7 +103,10 @@ export class DictionaryPickerScreen extends React.Component<
         getDictionaryEntry={this.props.screenDelegate.getDictionaryEntry}
         translate={this.props.screenDelegate.translate}
         openLink={this.props.screenDelegate.openLink}
-        onPick={this.props.onPick}
+        onPickDictionaryDefinition={
+          this.props.screenDelegate.onPickDictionaryDefinition
+        }
+        onPickTranslation={this.props.screenDelegate.onPickTranslation}
       />
     );
   }

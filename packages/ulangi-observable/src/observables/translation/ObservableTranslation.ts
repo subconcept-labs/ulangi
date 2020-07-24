@@ -17,13 +17,18 @@ export class ObservableTranslation {
   @observable
   public translatedBy: string;
 
+  @observable
+  public isAdded: boolean;
+
   public constructor(
     sourceText: string,
     translatedText: string,
-    translatedBy: string
+    translatedBy: string,
+    isAdded: boolean
   ) {
     this.sourceText = sourceText;
     this.translatedText = translatedText;
     this.translatedBy = translatedBy;
+    this.isAdded = isAdded;
   }
 }

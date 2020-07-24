@@ -5,7 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableDictionaryPickerScreen } from '@ulangi/ulangi-observable';
+import { DeepPartial } from '@ulangi/extended-types';
+import { Definition } from '@ulangi/ulangi-common/interfaces';
+import {
+  ObservableDictionaryDefinition,
+  ObservableDictionaryPickerScreen,
+  ObservableTranslation,
+} from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import { Linking } from 'react-native';
 
@@ -19,17 +25,20 @@ export class DictionaryPickerScreenDelegate {
   private dictionaryEntryDelegate: DictionaryEntryDelegate;
   private translationListDelegate: TranslationListDelegate;
   private navigatorDelegate: NavigatorDelegate;
+  private onPick: (definition: DeepPartial<Definition>) => void;
 
   public constructor(
     observableScreen: ObservableDictionaryPickerScreen,
     dictionaryEntryDelegate: DictionaryEntryDelegate,
     translationListDelegate: TranslationListDelegate,
     navigatorDelegate: NavigatorDelegate,
+    onPick: (definition: DeepPartial<Definition>) => void,
   ) {
     this.observableScreen = observableScreen;
     this.dictionaryEntryDelegate = dictionaryEntryDelegate;
     this.translationListDelegate = translationListDelegate;
     this.navigatorDelegate = navigatorDelegate;
+    this.onPick = onPick;
   }
 
   public getDictionaryEntry(): void {
@@ -61,5 +70,25 @@ export class DictionaryPickerScreenDelegate {
 
   public close(): void {
     this.navigatorDelegate.dismissLightBox();
+  }
+
+  public onPickDictionaryDefinition(
+    definition: ObservableDictionaryDefinition,
+  ): void {
+    definition.isAdded = true;
+    this.onPick({
+      meaning: definition.meaning,
+      wordClasses: definition.wordClasses,
+      source: definition.source,
+    });
+  }
+
+  public onPickTranslation(translation: ObservableTranslation): void {
+    translation.isAdded = true;
+    this.onPick({
+      meaning: translation.translatedText,
+      wordClasses: [],
+      source: translation.translatedBy,
+    });
   }
 }

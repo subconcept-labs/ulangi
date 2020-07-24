@@ -5,9 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DeepPartial } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
 import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -27,7 +25,7 @@ export interface DictionaryDefinitionProps {
   index: number;
   theme: Theme;
   definition: ObservableDictionaryDefinition;
-  onPick: (definition: DeepPartial<Definition>) => void;
+  onPick: (definition: ObservableDictionaryDefinition) => void;
   styles?: {
     light: DictionaryDefinitionStyles;
     dark: DictionaryDefinitionStyles;
@@ -65,13 +63,9 @@ export class DictionaryDefinition extends React.Component<
             testID={VocabularyFormIds.ADD_DEFINITION_FROM_DICTIONARY_BY_INDEX(
               this.props.index,
             )}
-            onPress={(): void =>
-              this.props.onPick({
-                meaning: this.props.definition.meaning,
-                wordClasses: this.props.definition.wordClasses,
-                source: this.props.definition.source,
-              })
-            }
+            disabled={this.props.definition.isAdded}
+            isAdded={this.props.definition.isAdded}
+            onPress={(): void => this.props.onPick(this.props.definition)}
           />
         </View>
       </View>
