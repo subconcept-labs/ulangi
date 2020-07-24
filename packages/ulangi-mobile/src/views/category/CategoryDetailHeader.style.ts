@@ -20,8 +20,9 @@ export const baseStyles: CategoryDetailHeaderStyles = {
   container: {
     paddingVertical: 14,
     paddingHorizontal: 16,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
   },
 
