@@ -30,6 +30,9 @@ export function useCustomTopBar(
           },
         },
       },
+      backButton: {
+        visible: false,
+      },
     },
     options,
   );
