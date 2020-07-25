@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.14.0](https://github.com/ulangi/ulangi/compare/v3.13.0...v3.14.0) (2020-07-25)
+
+
+### Bug Fixes
+
+* add border for discover and search bar ([666e1fa](https://github.com/ulangi/ulangi/commit/666e1fa))
+* disable auto focus when adding vocabulary ([de8b6bb](https://github.com/ulangi/ulangi/commit/de8b6bb))
+* mark added definitions and translations ([f60491d](https://github.com/ulangi/ulangi/commit/f60491d))
+* minor fixes ([df61c28](https://github.com/ulangi/ulangi/commit/df61c28))
+* minor UI fixes ([a07d495](https://github.com/ulangi/ulangi/commit/a07d495))
+* use showModal for some screens ([b273aa2](https://github.com/ulangi/ulangi/commit/b273aa2))
+
+
+### Features
+
+* add sorting ([72f59ae](https://github.com/ulangi/ulangi/commit/72f59ae))
+
+
+
+
+
 # [3.13.0](https://github.com/ulangi/ulangi/compare/v3.12.3...v3.13.0) (2020-07-23)
 
 

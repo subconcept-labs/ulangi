@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.14.0](https://github.com/ulangi/ulangi/compare/v3.13.0...v3.14.0) (2020-07-25)
+
+
+### Bug Fixes
+
+* add border for discover and search bar ([666e1fa](https://github.com/ulangi/ulangi/commit/666e1fa))
+* mark added definitions and translations ([f60491d](https://github.com/ulangi/ulangi/commit/f60491d))
+
+
+### Features
+
+* add sorting ([72f59ae](https://github.com/ulangi/ulangi/commit/72f59ae))
+
+
+
+
+
 # [3.13.0](https://github.com/ulangi/ulangi/compare/v3.12.3...v3.13.0) (2020-07-23)
 
 
