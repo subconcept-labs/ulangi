@@ -36,7 +36,7 @@ export const baseStyles: DefinitionItemStyle = {
   },
 
   plain_meaning: {
-    fontSize: 15,
+    fontSize: 17,
   },
 };
 

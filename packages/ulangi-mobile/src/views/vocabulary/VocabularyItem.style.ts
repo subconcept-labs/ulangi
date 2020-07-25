@@ -13,6 +13,7 @@ import { config } from '../../constants/config';
 export interface VocabularyItemStyles {
   item_container: ViewStyle;
   vocabulary_container: ViewStyle;
+  top_container: ViewStyle;
   term_container: ViewStyle;
   tag_list: ViewStyle;
   tag_container: ViewStyle;
@@ -23,6 +24,7 @@ export interface VocabularyItemStyles {
   missing_term: TextStyle;
   option_btn: ViewStyle;
   definition_list_container: ViewStyle;
+  highlighted: TextStyle;
 }
 
 const baseStyles: VocabularyItemStyles = {
@@ -37,15 +39,19 @@ const baseStyles: VocabularyItemStyles = {
   },
 
   vocabulary_container: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+
+  top_container: {
+    paddingVertical: 2,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
   },
 
   term_container: {
     flexShrink: 1,
-    paddingLeft: 16,
     //flexDirection: "row",
     //alignItems: "center"
   },
@@ -82,7 +88,6 @@ const baseStyles: VocabularyItemStyles = {
   },
 
   option_btn: {
-    paddingRight: 16,
     paddingLeft: 5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,6 +95,10 @@ const baseStyles: VocabularyItemStyles = {
 
   definition_list_container: {
     borderTopWidth: 2,
+  },
+
+  highlighted: {
+    color: config.styles.primaryColor,
   },
 };
 

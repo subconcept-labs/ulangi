@@ -216,7 +216,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public showReviewFeedback(): void {
-    this.navigatorDelegate.push(ScreenName.REVIEW_FEEDBACK_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.REVIEW_FEEDBACK_SCREEN, {
       lessonType: 'spaced-repetition',
       vocabularyList: this.observableScreen.vocabularyList,
       originalFeedbackList: this.observableScreen.feedbackListState

@@ -11,8 +11,10 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { config } from '../../constants/config';
 
 export interface PublicVocabularyItemStyles {
-  container: ViewStyle;
+  outer_container: ViewStyle;
+  inner_container: ViewStyle;
   vocabulary_text_container: ViewStyle;
+  top_container: ViewStyle;
   left: ViewStyle;
   right: ViewStyle;
   vocabulary_text: TextStyle;
@@ -30,17 +32,28 @@ export interface PublicVocabularyItemStyles {
 }
 
 export const baseStyles: PublicVocabularyItemStyles = {
-  container: {
+  outer_container: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0.3 },
+    shadowRadius: 0.75,
+    shadowOpacity: 0.25,
+  },
+
+  inner_container: {
     marginHorizontal: 16,
     marginTop: 16,
     borderRadius: 5,
-    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
+    elevation: 2,
   },
 
   vocabulary_text_container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+
+  top_container: {
+    paddingVertical: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -125,8 +138,7 @@ export const baseStyles: PublicVocabularyItemStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderColor: config.styles.light.secondaryBorderColor,
+    inner_container: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
 
@@ -168,8 +180,7 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderColor: config.styles.dark.secondaryBorderColor,
+    inner_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
 

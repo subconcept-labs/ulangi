@@ -60,8 +60,9 @@ export class TranslationItem extends React.Component<TranslationItemProps> {
       <FixedTouchableWithoutFeedback
         testID={TranslationItemIds.TRANSLATION_CONTAINER_BY_VOCABULARY_TEXT(
           vocabularyText,
-        )}>
-        <View style={this.styles.container}>
+        )}
+        style={this.styles.outer_container}>
+        <View style={this.styles.inner_container}>
           <View style={this.styles.vocabulary_text_container}>
             <View style={this.styles.left}>
               <DefaultText style={this.styles.vocabulary_text}>

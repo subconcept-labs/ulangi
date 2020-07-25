@@ -11,7 +11,8 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { config } from '../../constants/config';
 
 export interface TranslationItemStyles {
-  container: ViewStyle;
+  outer_container: ViewStyle;
+  inner_container: ViewStyle;
   vocabulary_text_container: ViewStyle;
   left: ViewStyle;
   right: ViewStyle;
@@ -25,12 +26,19 @@ export interface TranslationItemStyles {
 }
 
 export const baseStyles: TranslationItemStyles = {
-  container: {
+  outer_container: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0.3 },
+    shadowRadius: 0.75,
+    shadowOpacity: 0.25,
+  },
+
+  inner_container: {
     marginHorizontal: 16,
     marginTop: 16,
     borderRadius: 5,
-    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
+    elevation: 2,
   },
 
   vocabulary_text_container: {
@@ -76,7 +84,6 @@ export const baseStyles: TranslationItemStyles = {
 
   definition_container: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: config.styles.light.primaryBorderColor,
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: 'row',
@@ -89,7 +96,7 @@ export const baseStyles: TranslationItemStyles = {
   },
 
   meaning: {
-    fontSize: 15,
+    fontSize: 17,
   },
 
   attribution_container: {
@@ -103,8 +110,7 @@ export const baseStyles: TranslationItemStyles = {
 
 export const lightStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderColor: config.styles.light.secondaryBorderColor,
+    inner_container: {
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
 
@@ -126,7 +132,7 @@ export const lightStyles = StyleSheet.create(
     },
 
     definition_container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
+      borderTopColor: config.styles.light.secondaryBorderColor,
     },
 
     meaning: {
@@ -142,8 +148,7 @@ export const lightStyles = StyleSheet.create(
 
 export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
-    container: {
-      borderColor: config.styles.dark.secondaryBorderColor,
+    inner_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
     },
 
@@ -165,7 +170,7 @@ export const darkStyles = StyleSheet.create(
     },
 
     definition_container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
+      borderTopColor: config.styles.dark.secondaryBorderColor,
     },
 
     meaning: {

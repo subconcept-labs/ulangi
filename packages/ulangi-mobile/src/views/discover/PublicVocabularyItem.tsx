@@ -59,23 +59,26 @@ export class PublicVocabularyItem extends React.Component<
       <FixedTouchableWithoutFeedback
         testID={PublicVocabularyItemIds.PUBLIC_VOCABULARY_CONTAINER_BY_VOCABULARY_TEXT(
           this.props.vocabulary.vocabularyText,
-        )}>
-        <View style={this.styles.container}>
+        )}
+        style={this.styles.outer_container}>
+        <View style={this.styles.inner_container}>
           <View style={this.styles.vocabulary_text_container}>
-            <View style={this.styles.left}>
-              <DefaultText style={this.styles.vocabulary_text}>
-                {this.props.vocabulary.vocabularyTerm}
-              </DefaultText>
+            <View style={this.styles.top_container}>
+              <View style={this.styles.left}>
+                <DefaultText style={this.styles.vocabulary_text}>
+                  {this.props.vocabulary.vocabularyTerm}
+                </DefaultText>
+              </View>
+              <View style={this.styles.right}>
+                {this.renderAddButton()}
+                {this.renderActionButton()}
+              </View>
             </View>
-            <View style={this.styles.right}>
-              {this.renderAddButton()}
-              {this.renderActionButton()}
-            </View>
+            <VocabularyExtraFieldList
+              theme={this.props.theme}
+              extraFields={this.props.vocabulary.extraFields}
+            />
           </View>
-          <VocabularyExtraFieldList
-            theme={this.props.theme}
-            extraFields={this.props.vocabulary.extraFields}
-          />
           <View style={this.styles.definition_list_container}>
             {_.map(
               this.props.vocabulary.definitions,

@@ -49,33 +49,28 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
 
   public render(): React.ReactElement<any> {
     return (
-      <TouchableOpacity
+      <View
         testID={VocabularyItemIds.VIEW_DETAIL_BTN_BY_VOCABULARY_TERM(
           this.props.vocabulary.vocabularyTerm,
         )}
-        accessible={false}
-        style={this.styles.item_container}
-        disabled={typeof this.props.showVocabularyDetail === 'undefined'}
-        onPress={(): void => {
-          if (typeof this.props.showVocabularyDetail !== 'undefined') {
-            this.props.showVocabularyDetail(this.props.vocabulary);
-          }
-        }}>
+        style={this.styles.item_container}>
         <View style={this.styles.vocabulary_container}>
-          {this.renderVocabularyTerm(this.props.vocabulary.vocabularyTerm)}
-          {this.renderRightButton()}
+          <View style={this.styles.top_container}>
+            {this.renderVocabularyTerm(this.props.vocabulary.vocabularyTerm)}
+            {this.renderRightButton()}
+          </View>
+          <VocabularyExtraFieldList
+            theme={this.props.theme}
+            extraFields={this.props.vocabulary.vocabularyExtraFields}
+          />
         </View>
-        <VocabularyExtraFieldList
-          theme={this.props.theme}
-          extraFields={this.props.vocabulary.vocabularyExtraFields}
-        />
         <View style={this.styles.definition_list_container}>
           <DefinitionList
             theme={this.props.theme}
             definitions={this.props.vocabulary.definitions}
           />
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 
@@ -119,16 +114,32 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
 
   private renderVocabularyTerm(term: string): React.ReactElement<any> {
     return (
-      <View style={this.styles.term_container}>
+      <TouchableOpacity
+        style={this.styles.term_container}
+        accessible={false}
+        disabled={typeof this.props.showVocabularyDetail === 'undefined'}
+        onPress={(): void => {
+          if (typeof this.props.showVocabularyDetail !== 'undefined') {
+            this.props.showVocabularyDetail(this.props.vocabulary);
+          }
+        }}>
         {term !== '' ? (
-          <DefaultText style={this.styles.term}>{term}</DefaultText>
+          <DefaultText
+            style={[
+              this.styles.term,
+              typeof this.props.showVocabularyDetail !== 'undefined'
+                ? this.styles.highlighted
+                : null,
+            ]}>
+            {term}
+          </DefaultText>
         ) : (
           <DefaultText style={this.styles.missing_term}>
             Missing term!
           </DefaultText>
         )}
         {this.renderTags()}
-      </View>
+      </TouchableOpacity>
     );
   }
 

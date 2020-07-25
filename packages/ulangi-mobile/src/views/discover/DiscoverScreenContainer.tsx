@@ -16,7 +16,6 @@ import {
   ObservableDiscoverScreen,
   ObservablePublicSetListState,
   ObservablePublicVocabularyListState,
-  ObservableTopBarButton,
   ObservableTouchableTopBar,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
@@ -25,7 +24,6 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container, ContainerPassedProps } from '../../Container';
-import { Images } from '../../constants/Images';
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverScreenFactory } from '../../factories/discover/DiscoverScreenFactory';
 import { DiscoverScreen } from './DiscoverScreen';
@@ -84,17 +82,7 @@ export class DiscoverScreenContainer extends Container {
         this.setSelectionMenuDelegate.showActiveSetsForSetSelection();
       },
       null,
-      new ObservableTopBarButton(
-        DiscoverScreenIds.TIP_BTN,
-        null,
-        {
-          light: Images.INFO_WHITE_22X22,
-          dark: Images.INFO_MILK_22X22,
-        },
-        (): void => {
-          this.screenDelegate.showTipScreen();
-        },
-      ),
+      null,
     ),
   );
 

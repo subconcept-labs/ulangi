@@ -204,7 +204,7 @@ export class WritingLessonScreenDelegate {
   }
 
   public showReviewFeedback(): void {
-    this.navigatorDelegate.push(ScreenName.REVIEW_FEEDBACK_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.REVIEW_FEEDBACK_SCREEN, {
       lessonType: 'writing',
       vocabularyList: this.observableScreen.vocabularyList.toJS(),
       originalFeedbackList: this.observableScreen.feedbackListState

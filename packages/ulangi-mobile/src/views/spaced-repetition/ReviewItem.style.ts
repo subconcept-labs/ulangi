@@ -18,6 +18,7 @@ export interface ReviewItemStyles {
   vocabulary_container: ViewStyle;
   vocabulary_text_container: ViewStyle;
   vocabulary_text: TextStyle;
+  top_container: ViewStyle;
   message_container: ViewStyle;
   message_inline: TextStyle;
   message_text: TextStyle;
@@ -37,6 +38,10 @@ export const baseStyles: ReviewItemStyles = {
   vocabulary_text_container: {
     paddingHorizontal: 16,
     paddingVertical: 14,
+  },
+
+  top_container: {
+    paddingVertical: 3,
     flexDirection: 'row',
   },
 

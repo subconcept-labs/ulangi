@@ -91,14 +91,18 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
     return (
       <Animatable.View animation="fadeIn">
         <View style={this.styles.vocabulary_text_container}>
-          <DefaultText style={this.styles.vocabulary_text}>
-            {this.props.reviewState.vocabulary.vocabularyTerm}
-          </DefaultText>
+          <View style={this.styles.top_container}>
+            <DefaultText style={this.styles.vocabulary_text}>
+              {this.props.reviewState.vocabulary.vocabularyTerm}
+            </DefaultText>
+          </View>
+          <VocabularyExtraFieldList
+            theme={this.props.theme}
+            extraFields={
+              this.props.reviewState.vocabulary.vocabularyExtraFields
+            }
+          />
         </View>
-        <VocabularyExtraFieldList
-          theme={this.props.theme}
-          extraFields={this.props.reviewState.vocabulary.vocabularyExtraFields}
-        />
         <View style={this.styles.definition_list_container}>
           {this.props.reviewState.vocabulary.definitions.map(
             (definition, index): React.ReactElement<any> => {
@@ -125,14 +129,18 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
     return (
       <>
         <View style={this.styles.vocabulary_text_container}>
-          <DefaultText style={this.styles.vocabulary_text}>
-            {this.props.reviewState.vocabulary.vocabularyTerm}
-          </DefaultText>
+          <View style={this.styles.top_container}>
+            <DefaultText style={this.styles.vocabulary_text}>
+              {this.props.reviewState.vocabulary.vocabularyTerm}
+            </DefaultText>
+          </View>
+          <VocabularyExtraFieldList
+            theme={this.props.theme}
+            extraFields={
+              this.props.reviewState.vocabulary.vocabularyExtraFields
+            }
+          />
         </View>
-        <VocabularyExtraFieldList
-          theme={this.props.theme}
-          extraFields={this.props.reviewState.vocabulary.vocabularyExtraFields}
-        />
         <View style={this.styles.message_container}>
           <DefaultText style={this.styles.message_inline}>
             <DefaultText>What does it mean?</DefaultText>

@@ -21,7 +21,7 @@ export const baseStyles: SearchInputStyles = {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 16,
-    marginVertical: 10,
+    marginVertical: 12,
     paddingHorizontal: 13,
     borderRadius: 5,
     shadowColor: '#000000',

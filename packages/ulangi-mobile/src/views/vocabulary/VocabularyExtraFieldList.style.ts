@@ -27,8 +27,7 @@ const baseStyles: VocabularyExtraFieldListStyles = {
   container: {},
 
   item_container: {
-    marginBottom: 10,
-    paddingHorizontal: 16,
+    marginVertical: 4,
     //borderTopWidth: StyleSheet.hairlineWidth,
     //borderTopColor: config.styles.light.primaryBorderColor,
     flexDirection: 'row',
