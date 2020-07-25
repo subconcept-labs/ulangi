@@ -114,6 +114,7 @@ export class ReviewFeedbackItem extends React.Component<
             this.props.vocabulary.vocabularyId,
           )
         }
+        cancelPressOnMove={true}
       />
     );
   }
