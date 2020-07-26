@@ -49,6 +49,7 @@ export class ObservableReviewState {
         } else if (_.inRange(this.vocabulary.level, 5, 10)) {
           questionType = 'reversed';
         }
+        break;
 
       case ReviewStrategy.ALTERNATING:
         if (this.vocabulary.level === 0) {
