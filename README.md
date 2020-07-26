@@ -27,16 +27,27 @@
 ## Introduction
 **Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memorize them, such as spaced repetition, writing, quiz and more...
 
+This framework can be optimized to learn a specific language. For example, we used to this to develop **Jizhu** app, which is specifically for learning Mandarin.
+
 ---
 
 ## Main apps
 
+### Ulangi
 | Platform | Store |
 | --- | --- |
 | iOS | [Download on App Store](https://itunes.apple.com/us/app/id1435524341?mt=8) |
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
 | Mac | *To be developed* |
 | Window | *To be developed* |
+
+### Jizhu
+***Jizhu*** is developed based on the **Ulangi** framework. It is optimized to learn Mandarin Chinese only (with stroke order.)
+
+| Platform | Store |
+| --- | --- |
+| iOS | [Download on App Store](https://apps.apple.com/us/app/id1522591595) |
+| Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi.jizhu) |
 
 ---
 
