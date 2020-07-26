@@ -49,6 +49,13 @@ This framework can be optimized to learn a specific language. For example, we us
 | iOS | [Download on App Store](https://apps.apple.com/us/app/id1522591595) |
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi.jizhu) |
 
+### Tungu
+***Tungu*** is developed based on the **Ulangi** framework. It is optimized to learn Vietnamese only.
+
+| Platform | Store |
+| --- | --- |
+| iOS | [Download on App Store](https://apps.apple.com/us/app/id1524177050) |
+| Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi.tungu) |
 ---
 
 ## Development principles
