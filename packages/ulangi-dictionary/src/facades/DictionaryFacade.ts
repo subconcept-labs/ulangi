@@ -185,7 +185,11 @@ export class DictionaryFacade {
               query: {
                 multi_match: {
                   query: searchTerm,
-                  fields: ['vocabularyTerm^3', 'definitions.meaning'],
+                  fields: [
+                    'vocabularyTerm.keyword^3',
+                    'vocabularyTerm^2',
+                    'definitions.meaning',
+                  ],
                 },
               },
             },
@@ -193,10 +197,74 @@ export class DictionaryFacade {
           const sources = response.body.hits.hits.map(
             (hit: any): unknown => hit._source
           );
+
           const dictionaryEntries = this.dictionaryEntryResolver.resolveArray(
             sources,
             true
           );
+
+          resolve(dictionaryEntries.slice());
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
+  public searchDictionaryEntriesWithTermAndMeaning(
+    languageCodePair: string,
+    term: string,
+    meaning: string,
+    limit: number,
+    offset: number
+  ): Promise<DictionaryEntry[]> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          const response = await this.client.search({
+            index: this.getIndexNameByLanguageCodePair(languageCodePair),
+            body: {
+              from: offset,
+              size: limit,
+              query: {
+                bool: {
+                  should: [
+                    {
+                      match: {
+                        'vocabularyTerm.keyword': {
+                          query: term,
+                          boost: 3,
+                        },
+                      },
+                    },
+                    {
+                      match: {
+                        vocabularyTerm: {
+                          query: term,
+                        },
+                      },
+                    },
+                    {
+                      match: {
+                        'definitions.meaning': {
+                          query: meaning,
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          });
+
+          const sources = response.body.hits.hits.map(
+            (hit: any): unknown => hit._source
+          );
+
+          const dictionaryEntries = this.dictionaryEntryResolver
+            .resolveArray(sources, true)
+            .slice();
+
           resolve(dictionaryEntries.slice());
         } catch (error) {
           reject(error);

@@ -224,13 +224,17 @@ export class ApiControllerFactory {
       controllers.push(new GetDictionaryEntryController(this.dictionary));
     }
 
-    if (this.library !== null) {
+    if (this.library !== null && this.googleTranslate !== null) {
       controllers.push(
         new GetPublicSetCountController(this.library),
         new SearchNativeSetsController(this.library, this.config),
         new SearchNativeVocabularyController(this.library, this.config),
         new SearchPublicSetsController(this.library, this.config),
-        new SearchPublicVocabularyController(this.library, this.config)
+        new SearchPublicVocabularyController(
+          this.library,
+          this.googleTranslate,
+          this.config
+        )
       );
     }
 

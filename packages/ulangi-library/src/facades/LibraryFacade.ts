@@ -342,6 +342,36 @@ export class LibraryFacade {
     );
   }
 
+  public searchPublicVocabularyWithTermAndMeaning(
+    languageCodePair: string,
+    term: string,
+    meaning: string,
+    limit: number,
+    offset: number
+  ): Promise<readonly PublicVocabulary[]> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          const dictionaryEntries = await this.dictionary.searchDictionaryEntriesWithTermAndMeaning(
+            languageCodePair,
+            term,
+            meaning,
+            limit,
+            offset
+          );
+          const publicVocabularyList = this.dictionaryEntryConverter.convertDictionaryEntriesToPublicVocabulary(
+            dictionaryEntries
+          );
+
+          resolve(publicVocabularyList);
+        } catch (error) {
+          console.log(require('util').inspect(error, false, null));
+          reject(error);
+        }
+      }
+    );
+  }
+
   public async indexForLanguagePairExists(
     languageCodePair: string
   ): Promise<boolean> {
