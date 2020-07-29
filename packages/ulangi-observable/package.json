@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-observable",
-  "version": "3.14.0",
+  "version": "3.14.1",
   "description": "Ulangi Observable",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
     "@ulangi/extended-types": "^1.0.0",
-    "@ulangi/ulangi-action": "^3.14.0",
-    "@ulangi/ulangi-common": "^3.14.0",
+    "@ulangi/ulangi-action": "^3.14.1",
+    "@ulangi/ulangi-common": "^3.14.1",
     "@ulangi/wiktionary-core": "^2.2.0",
     "change-case": "^3.0.2",
     "lodash": "^4.17.4",

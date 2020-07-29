@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.1](https://github.com/ulangi/ulangi/compare/v3.14.0...v3.14.1) (2020-07-29)
+
+
+### Bug Fixes
+
+* half-and-half review strategy ([815901e](https://github.com/ulangi/ulangi/commit/815901e))
+* show public vocabulary detail ([2fda01a](https://github.com/ulangi/ulangi/commit/2fda01a))
+
+
+
+
+
 # [3.14.0](https://github.com/ulangi/ulangi/compare/v3.13.0...v3.14.0) (2020-07-25)
 
 
