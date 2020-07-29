@@ -6,8 +6,10 @@
  */
 
 import {
- PublicVocabulary,  SearchPublicVocabularyRequest,
-  SearchPublicVocabularyResponse } from '@ulangi/ulangi-common/interfaces';
+  PublicVocabulary,
+  SearchPublicVocabularyRequest,
+  SearchPublicVocabularyResponse,
+} from '@ulangi/ulangi-common/interfaces';
 import { SearchPublicVocabularyRequestResolver } from '@ulangi/ulangi-common/resolvers';
 import { LibraryFacade } from '@ulangi/ulangi-library';
 
