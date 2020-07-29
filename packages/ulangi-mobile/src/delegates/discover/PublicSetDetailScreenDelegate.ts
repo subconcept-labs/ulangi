@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, ErrorCode } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag, PublicVocabulary } from '@ulangi/ulangi-common/interfaces';
 import { ObservablePublicSet } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -16,6 +16,7 @@ import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
+import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AddVocabularyDelegate } from './AddVocabularyDelegate';
 import { PublicVocabularyActionMenuDelegate } from './PublicVocabularyActionMenuDelegate';
 
@@ -25,17 +26,20 @@ export class PublicSetDetailScreenDelegate {
   private addVocabularyDelegate: AddVocabularyDelegate;
   private publicVocabularyActionMenuDelegate: PublicVocabularyActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     publicSet: ObservablePublicSet,
     addVocabularyDelegate: AddVocabularyDelegate,
     publicVocabularyActionMenuDelegate: PublicVocabularyActionMenuDelegate,
     dialogDelegate: DialogDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.publicSet = publicSet;
     this.addVocabularyDelegate = addVocabularyDelegate;
     this.publicVocabularyActionMenuDelegate = publicVocabularyActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public addVocabulary(
@@ -112,6 +116,15 @@ export class PublicSetDetailScreenDelegate {
   public openLink(link: string): void {
     Linking.openURL(link).catch(
       (err): void => console.error('An error occurred', err),
+    );
+  }
+
+  public showPublicVocabularyDetail(vocabulary: PublicVocabulary): void {
+    this.navigatorDelegate.showModal(
+      ScreenName.PUBLIC_VOCABULARY_DETAIL_SCREEN,
+      {
+        vocabulary,
+      },
     );
   }
 

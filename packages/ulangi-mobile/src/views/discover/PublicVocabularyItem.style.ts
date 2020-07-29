@@ -70,6 +70,7 @@ export const baseStyles: PublicVocabularyItemStyles = {
   vocabulary_text: {
     fontWeight: 'bold',
     fontSize: 19,
+    color: config.styles.primaryColor,
   },
 
   button: {
@@ -142,10 +143,6 @@ export const lightStyles = StyleSheet.create(
       backgroundColor: config.styles.light.primaryBackgroundColor,
     },
 
-    vocabulary_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-
     button: {
       borderColor: config.styles.light.primaryBorderColor,
       backgroundColor: config.styles.light.primaryBackgroundColor,
@@ -182,10 +179,6 @@ export const darkStyles = StyleSheet.create(
   _.merge({}, baseStyles, {
     inner_container: {
       backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
-
-    vocabulary_text: {
-      color: config.styles.dark.primaryTextColor,
     },
 
     button: {

@@ -152,6 +152,9 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
           addVocabularyFromTranslation={
             this.props.screenDelegate.addVocabularyFromTranslation
           }
+          showPublicVocabularyDetail={
+            this.props.screenDelegate.showPublicVocabularyDetail
+          }
           showPublicVocabularyActionMenu={
             this.props.screenDelegate.showPublicVocabularyActionMenu
           }

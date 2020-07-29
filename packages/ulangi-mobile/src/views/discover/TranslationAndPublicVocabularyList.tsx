@@ -50,6 +50,7 @@ export interface TranslationAndPublicVocabularyListProps {
   addVocabularyFromTranslation: (translation: TranslationWithLanguages) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
   showTranslationActionMenu: (translation: TranslationWithLanguages) => void;
+  showPublicVocabularyDetail: (vocabulary: PublicVocabulary) => void;
   onEndReached: () => void;
   refresh: () => void;
   openLink: (link: string) => void;
@@ -176,6 +177,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
         theme={this.props.theme}
         vocabulary={vocabulary}
         addVocabulary={this.props.addVocabularyFromPublicVocabulary}
+        showPublicVocabularyDetail={this.props.showPublicVocabularyDetail}
         showPublicVocabularyActionMenu={
           this.props.showPublicVocabularyActionMenu
         }

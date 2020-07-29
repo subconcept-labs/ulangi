@@ -40,6 +40,7 @@ export class PublicSetDetailScreenFactory extends ScreenFactory {
       addVocabularyDelegate,
       publicVocabularyActionMenuDelegate,
       dialogDelegate,
+      navigatorDelegate,
     );
   }
 }

@@ -37,6 +37,7 @@ export interface PublicVocabularyItemProps {
   vocabulary: ObservablePublicVocabulary;
   addVocabulary: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
+  showPublicVocabularyDetail: (vocbulary: PublicVocabulary) => void;
   openLink: (link: string) => void;
   styles?: {
     light: PublicVocabularyItemStyles;
@@ -65,9 +66,15 @@ export class PublicVocabularyItem extends React.Component<
           <View style={this.styles.vocabulary_text_container}>
             <View style={this.styles.top_container}>
               <View style={this.styles.left}>
-                <DefaultText style={this.styles.vocabulary_text}>
-                  {this.props.vocabulary.vocabularyTerm}
-                </DefaultText>
+                <TouchableOpacity
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  onPress={(): void =>
+                    this.props.showPublicVocabularyDetail(this.props.vocabulary)
+                  }>
+                  <DefaultText style={this.styles.vocabulary_text}>
+                    {this.props.vocabulary.vocabularyTerm}
+                  </DefaultText>
+                </TouchableOpacity>
               </View>
               <View style={this.styles.right}>
                 {this.renderAddButton()}

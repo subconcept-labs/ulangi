@@ -262,6 +262,15 @@ export class DiscoverScreenDelegate {
     });
   }
 
+  public showPublicVocabularyDetail(vocabulary: PublicVocabulary): void {
+    this.navigatorDelegate.showModal(
+      ScreenName.PUBLIC_VOCABULARY_DETAIL_SCREEN,
+      {
+        vocabulary,
+      },
+    );
+  }
+
   public autoRefreshOnSetChange(): void {
     this.eventBus.subscribe(
       on(

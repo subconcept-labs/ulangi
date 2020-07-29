@@ -30,6 +30,7 @@ import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScr
 import { DiscoverFAQScreenContainer } from '../views/discover/DiscoverFAQScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
+import { PublicVocabularyDetailScreenContainer } from '../views/discover/PublicVocabularyDetailScreenContainer';
 import { EventLogsScreenContainer } from '../views/event/EventLogsScreenContainer';
 import { FlashcardPlayerScreenContainer } from '../views/flashcard-player/FlashcardPlayerScreenContainer';
 import { FollowUsScreenContainer } from '../views/follow-us/FollowUsScreenContainer';
@@ -155,4 +156,5 @@ export const ScreenContainers = {
   WRITING_SCREEN: WritingScreenContainer,
   WRITING_SETTINGS_SCREEN: WritingSettingsScreenContainer,
   EVENT_LOGS_SCREEN: EventLogsScreenContainer,
+  PUBLIC_VOCABULARY_DETAIL_SCREEN: PublicVocabularyDetailScreenContainer,
 };

@@ -59,6 +59,9 @@ export class PublicSetDetailScreen extends React.Component<
           theme={this.props.themeStore.theme}
           vocabularyList={this.props.observableScreen.publicSet.vocabularyList}
           addVocabulary={this.props.screenDelegate.addVocabulary}
+          showPublicVocabularyDetail={
+            this.props.screenDelegate.showPublicVocabularyDetail
+          }
           showPublicVocabularyActionMenu={
             this.props.screenDelegate.showPublicVocabularyActionMenu
           }

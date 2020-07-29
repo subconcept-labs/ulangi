@@ -140,6 +140,9 @@ export {
   ObservablePublicSetDetailScreen,
 } from './observables/discover/ObservablePublicSetDetailScreen';
 export {
+  ObservablePublicVocabularyDetailScreen,
+} from './observables/discover/ObservablePublicVocabularyDetailScreen';
+export {
   ObservablePublicSetListState,
 } from './observables/discover/ObservablePublicSetListState';
 export {

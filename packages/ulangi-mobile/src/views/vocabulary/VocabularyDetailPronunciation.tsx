@@ -6,7 +6,7 @@
  */
 
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableVocabularyDetailScreen } from '@ulangi/ulangi-observable';
+import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
@@ -22,7 +22,7 @@ import {
 
 export interface VocabularyDetailPronunciationProps {
   theme: Theme;
-  observableScreen: ObservableVocabularyDetailScreen;
+  speakState: IObservableValue<ActivityState>;
   speak: () => void;
   styles?: {
     light: VocabularyDetailPronunciationStyles;
@@ -55,9 +55,7 @@ export class VocabularyDetailPronunciation extends React.Component<
   }
 
   private renderSpeaker(): React.ReactElement<any> {
-    if (
-      this.props.observableScreen.speakState.get() === ActivityState.INACTIVE
-    ) {
+    if (this.props.speakState.get() === ActivityState.INACTIVE) {
       return (
         <TouchableOpacity
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}

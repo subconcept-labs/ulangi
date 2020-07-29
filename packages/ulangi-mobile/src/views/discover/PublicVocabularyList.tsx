@@ -20,6 +20,7 @@ export interface PublicVocabularyListProps {
   vocabularyList: readonly ObservablePublicVocabulary[];
   addVocabulary: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
+  showPublicVocabularyDetail: (vocabulary: PublicVocabulary) => void;
   openLink: (link: string) => void;
 }
 
@@ -47,6 +48,7 @@ export class PublicVocabularyList extends React.Component<
               theme={this.props.theme}
               vocabulary={item}
               addVocabulary={this.props.addVocabulary}
+              showPublicVocabularyDetail={this.props.showPublicVocabularyDetail}
               showPublicVocabularyActionMenu={
                 this.props.showPublicVocabularyActionMenu
               }
