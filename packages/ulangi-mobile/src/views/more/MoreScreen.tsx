@@ -81,8 +81,9 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       this.renderAccountSection(),
       this.renderToolsAndSettingsSection(),
       this.renderGeneralSection(),
+      this.renderProjectsSection(),
       this.renderContactUsSection(),
-      this.renderFAQSection(),
+      this.renderInfoSection(),
       this.renderLogOutSection(),
     ];
   }
@@ -223,6 +224,34 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
     );
   }
 
+  private renderProjectsSection(): React.ReactElement<any> {
+    return (
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        key="projects"
+        header="PROJECTS">
+        <SectionRow
+          testID={MoreScreenIds.SOURCE_CODE_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Ulangi Open Source Project"
+          rightText=""
+          showArrow={true}
+          onPress={this.props.screenDelegate.goToGitHub}
+          description="View Ulangi source code on GitHub."
+        />
+        <SectionRow
+          testID={MoreScreenIds.DICTIONARY_FUNCTIONS_BTN}
+          theme={this.props.themeStore.theme}
+          leftText="Dictionary Functions"
+          rightText=""
+          showArrow={true}
+          onPress={this.props.screenDelegate.goToDictionaryFunctionsWebsite}
+          description="Use Google Sheets formulas to look up dictionary for thousand words with a single drag."
+        />
+      </SectionGroup>
+    );
+  }
+
   private renderContactUsSection(): React.ReactElement<any> {
     return (
       <SectionGroup
@@ -257,7 +286,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
     );
   }
 
-  private renderFAQSection(): React.ReactElement<any> {
+  private renderInfoSection(): React.ReactElement<any> {
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
@@ -270,15 +299,6 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           rightText={VersionInfo.appVersion}
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToWhatsNewScreen}
-        />
-        <SectionRow
-          testID={MoreScreenIds.SOURCE_CODE_BTN}
-          theme={this.props.themeStore.theme}
-          leftText="Source Code"
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.goToGitHub();
-          }}
         />
         {env.OPEN_SOURCE_ONLY === false &&
         this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (

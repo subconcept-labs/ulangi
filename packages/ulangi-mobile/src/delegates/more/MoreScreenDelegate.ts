@@ -331,4 +331,8 @@ export class MoreScreenDelegate {
   public showGoogleConsentForm(): void {
     this.adDelegate.showGoogleConsentForm();
   }
+
+  public goToDictionaryFunctionsWebsite(): void {
+    this.linkingDelegate.openLink('https://dictionaryfx.com');
+  }
 }
