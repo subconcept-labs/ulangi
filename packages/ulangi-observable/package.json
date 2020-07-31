@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-observable",
-  "version": "3.14.1",
+  "version": "3.14.2",
   "description": "Ulangi Observable",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
