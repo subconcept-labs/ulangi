@@ -24,9 +24,11 @@ import {
   definitionItemLightStyles,
   lightStyles,
 } from './ReviewItem.style';
+import { ReviewStrokeOrder } from './ReviewStrokeOrder';
 
 export interface ReviewItemProps {
   theme: Theme;
+  learningLanguageCode: string;
   reviewState: ObservableReviewState;
   styles?: {
     light: ReviewItemStyles;
@@ -71,7 +73,6 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
   public render(): React.ReactElement<any> {
     return (
       <Animatable.View
-        style={this.styles.vocabulary_container}
         ref={(ref: any): void => {
           this.animationContainerRef = ref;
         }}
@@ -90,44 +91,52 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
   private renderAll(): React.ReactElement<any> {
     return (
       <Animatable.View animation="fadeIn">
-        <View style={this.styles.vocabulary_text_container}>
-          <View style={this.styles.top_container}>
-            <DefaultText style={this.styles.vocabulary_text}>
-              {this.props.reviewState.vocabulary.vocabularyTerm}
-            </DefaultText>
+        <View style={this.styles.vocabulary_container}>
+          <View style={this.styles.vocabulary_text_container}>
+            <View style={this.styles.top_container}>
+              <DefaultText style={this.styles.vocabulary_text}>
+                {this.props.reviewState.vocabulary.vocabularyTerm}
+              </DefaultText>
+            </View>
+            <VocabularyExtraFieldList
+              theme={this.props.theme}
+              extraFields={
+                this.props.reviewState.vocabulary.vocabularyExtraFields
+              }
+            />
           </View>
-          <VocabularyExtraFieldList
+          <View style={this.styles.definition_list_container}>
+            {this.props.reviewState.vocabulary.definitions.map(
+              (definition, index): React.ReactElement<any> => {
+                return (
+                  <DefinitionItem
+                    key={definition.definitionId}
+                    theme={this.props.theme}
+                    index={index}
+                    definition={definition}
+                    styles={{
+                      light: definitionItemLightStyles,
+                      dark: definitionItemDarkStyles,
+                    }}
+                  />
+                );
+              },
+            )}
+          </View>
+        </View>
+        {this.props.learningLanguageCode === 'zh' ? (
+          <ReviewStrokeOrder
             theme={this.props.theme}
-            extraFields={
-              this.props.reviewState.vocabulary.vocabularyExtraFields
-            }
+            reviewState={this.props.reviewState}
           />
-        </View>
-        <View style={this.styles.definition_list_container}>
-          {this.props.reviewState.vocabulary.definitions.map(
-            (definition, index): React.ReactElement<any> => {
-              return (
-                <DefinitionItem
-                  key={definition.definitionId}
-                  theme={this.props.theme}
-                  index={index}
-                  definition={definition}
-                  styles={{
-                    light: definitionItemLightStyles,
-                    dark: definitionItemDarkStyles,
-                  }}
-                />
-              );
-            },
-          )}
-        </View>
+        ) : null}
       </Animatable.View>
     );
   }
 
   private renderForwardQuestion(): React.ReactElement<any> {
     return (
-      <>
+      <View style={this.styles.vocabulary_container}>
         <View style={this.styles.vocabulary_text_container}>
           <View style={this.styles.top_container}>
             <DefaultText style={this.styles.vocabulary_text}>
@@ -146,13 +155,13 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
             <DefaultText>What does it mean?</DefaultText>
           </DefaultText>
         </View>
-      </>
+      </View>
     );
   }
 
   private renderReversedQuestion(): React.ReactElement<any> {
     return (
-      <>
+      <View style={this.styles.vocabulary_container}>
         <View style={this.styles.vocabulary_text_container}>
           <DefaultText style={this.styles.vocabulary_text}>
             What is the term?
@@ -175,7 +184,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
             );
           },
         )}
-      </>
+      </View>
     );
   }
 }

@@ -48,6 +48,7 @@ export class VocabularyDetailScreenContainer extends Container<
       this.props.passedProps.vocabulary,
     ),
     ActivityState.INACTIVE,
+    'unknown',
     this.props.componentId,
     ScreenName.VOCABULARY_DETAIL_SCREEN,
     new ObservableTitleTopBar(

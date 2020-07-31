@@ -12,6 +12,7 @@ import {
   ObservableThemeStore,
   ObservableVocabularyDetailScreen,
 } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -21,6 +22,7 @@ import { VocabularyDetailDefinitions } from '../../views/vocabulary/VocabularyDe
 import { VocabularyDetailExtraFields } from '../../views/vocabulary/VocabularyDetailExtraFields';
 import { VocabularyDetailPronunciation } from '../../views/vocabulary/VocabularyDetailPronunciation';
 import { VocabularyDetailSpacedRepetitionInfo } from '../../views/vocabulary/VocabularyDetailSpacedRepetitionInfo';
+import { VocabularyDetailStrokeOrder } from '../../views/vocabulary/VocabularyDetailStrokeOrder';
 import { VocabularyDetailTitle } from '../../views/vocabulary/VocabularyDetailTitle';
 import { VocabularyDetailWritingInfo } from '../../views/vocabulary/VocabularyDetailWritingInfo';
 import {
@@ -36,6 +38,7 @@ export interface VocabularyDetailScreenProps {
   screenDelegate: VocabularyDetailScreenDelegate;
 }
 
+@observer
 export class VocabularyDetailScreen extends React.Component<
   VocabularyDetailScreenProps
 > {
@@ -71,6 +74,21 @@ export class VocabularyDetailScreen extends React.Component<
               )
             }
           />
+          {currentSet.learningLanguageCode === 'zh' ? (
+            <VocabularyDetailStrokeOrder
+              theme={this.props.themeStore.theme}
+              vocabularyTerm={
+                this.props.observableScreen.vocabulary.vocabularyTerm
+              }
+              vocabularyExtraFields={
+                this.props.observableScreen.vocabulary.vocabularyExtraFields
+              }
+              strokeOrderForm={this.props.observableScreen.strokeOrderForm}
+              changeStrokeOrderForm={
+                this.props.screenDelegate.changeStrokeOrderForm
+              }
+            />
+          ) : null}
           <VocabularyDetailExtraFields
             theme={this.props.themeStore.theme}
             vocabularyExtraFields={

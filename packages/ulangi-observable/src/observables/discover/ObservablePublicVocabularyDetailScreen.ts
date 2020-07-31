@@ -17,9 +17,13 @@ export class ObservablePublicVocabularyDetailScreen extends ObservableScreen {
 
   public readonly speakState: IObservableValue<ActivityState>;
 
+  @observable
+  public strokeOrderForm: 'traditional' | 'simplified' | 'unknown';
+
   public constructor(
     vocabulary: ObservablePublicVocabulary,
     speakState: ActivityState,
+    strokeOrderForm: 'traditional' | 'simplified' | 'unknown',
     componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
@@ -27,5 +31,6 @@ export class ObservablePublicVocabularyDetailScreen extends ObservableScreen {
     super(componentId, screenName, topBar);
     this.vocabulary = vocabulary;
     this.speakState = observable.box(speakState);
+    this.strokeOrderForm = strokeOrderForm;
   }
 }

@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -27,6 +28,7 @@ import {
 import { SpacedRepetitionResult } from './SpacedRepetitionResult';
 
 export interface SpacedRepetitionLessonScreenProps {
+  setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionLessonScreen;
   screenDelegate: SpacedRepetitionLessonScreenDelegate;
@@ -71,6 +73,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
         </ScrollView>
       );
     } else {
+      const currentSet = this.props.setStore.existingCurrentSet;
       return (
         <React.Fragment>
           <ScrollView contentContainerStyle={this.styles.container}>
@@ -79,10 +82,11 @@ export class SpacedRepetitionLessonScreen extends React.Component<
               reviewState={this.props.observableScreen.reviewState}
             />
             <ReviewItem
-              theme={this.props.themeStore.theme}
               key={
                 this.props.observableScreen.reviewState.vocabulary.vocabularyId
               }
+              theme={this.props.themeStore.theme}
+              learningLanguageCode={currentSet.learningLanguageCode}
               reviewState={this.props.observableScreen.reviewState}
             />
           </ScrollView>

@@ -69,6 +69,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
       0,
       this.reviewIterator.getSize(),
       false,
+      'unknown',
     ),
     new ObservableReviewActionBarState(observable.array([])),
     new ObservableReviewFeedbackBarState(observable.map()),
@@ -130,6 +131,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <SpacedRepetitionLessonScreen
+        setStore={this.props.rootStore.setStore}
         themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}

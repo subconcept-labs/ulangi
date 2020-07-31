@@ -30,6 +30,10 @@ export class ObservableReviewState {
   @observable
   public shouldRunFadeOutAnimation: boolean;
 
+  // For Chinese only
+  @observable
+  public strokeOrderForm: 'traditional' | 'simplified' | 'unknown';
+
   @computed
   public get currentQuestionType(): 'forward' | 'reversed' {
     let questionType: 'forward' | 'reversed' = 'forward';
@@ -98,7 +102,8 @@ export class ObservableReviewState {
     shouldShowAnswer: boolean,
     currentIndex: number,
     total: number,
-    shouldRunFadeOutAnimation: boolean
+    shouldRunFadeOutAnimation: boolean,
+    strokeOrderForm: 'traditional' | 'simplified' | 'unknown'
   ) {
     this.reviewStrategy = reviewStrategy;
     this.vocabulary = vocabulary;
@@ -106,5 +111,6 @@ export class ObservableReviewState {
     this.currentIndex = currentIndex;
     this.total = total;
     this.shouldRunFadeOutAnimation = shouldRunFadeOutAnimation;
+    this.strokeOrderForm = strokeOrderForm;
   }
 }

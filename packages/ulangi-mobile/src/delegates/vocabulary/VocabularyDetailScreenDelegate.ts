@@ -52,6 +52,12 @@ export class VocabularyDetailScreenDelegate {
     this.dialogDelegate = dialogDelegate;
   }
 
+  public changeStrokeOrderForm(
+    form: 'unknown' | 'traditional' | 'simplified',
+  ): void {
+    this.observableScreen.strokeOrderForm = form;
+  }
+
   public synthesizeAndSpeak(text: string, languageCode: string): void {
     this.speakDelegate.synthesize(text, languageCode, {
       onSynthesizing: (): void => {

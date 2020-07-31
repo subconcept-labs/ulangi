@@ -19,6 +19,7 @@ import { PublicVocabularyDetailScreenIds } from '../../constants/ids/PublicVocab
 import { PublicVocabularyDetailScreenDelegate } from '../../delegates/discover/PublicVocabularyDetailScreenDelegate';
 import { VocabularyDetailExtraFields } from '../../views/vocabulary/VocabularyDetailExtraFields';
 import { VocabularyDetailPronunciation } from '../../views/vocabulary/VocabularyDetailPronunciation';
+import { VocabularyDetailStrokeOrder } from '../../views/vocabulary/VocabularyDetailStrokeOrder';
 import { VocabularyDetailTitle } from '../../views/vocabulary/VocabularyDetailTitle';
 import {
   PublicVocabularyDetailScreenStyles,
@@ -68,6 +69,21 @@ export class PublicVocabularyDetailScreen extends React.Component<
               )
             }
           />
+          {currentSet.learningLanguageCode === 'zh' ? (
+            <VocabularyDetailStrokeOrder
+              theme={this.props.themeStore.theme}
+              vocabularyTerm={
+                this.props.observableScreen.vocabulary.vocabularyTerm
+              }
+              vocabularyExtraFields={
+                this.props.observableScreen.vocabulary.extraFields
+              }
+              strokeOrderForm={this.props.observableScreen.strokeOrderForm}
+              changeStrokeOrderForm={
+                this.props.screenDelegate.changeStrokeOrderForm
+              }
+            />
+          ) : null}
           <VocabularyDetailExtraFields
             theme={this.props.themeStore.theme}
             vocabularyExtraFields={
