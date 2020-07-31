@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.3](https://github.com/ulangi/ulangi/compare/v3.14.2...v3.14.3) (2020-07-31)
+
+
+### Bug Fixes
+
+* add projects section ([b087937](https://github.com/ulangi/ulangi/commit/b087937))
+
+
+
+
+
 ## [3.14.2](https://github.com/ulangi/ulangi/compare/v3.14.1...v3.14.2) (2020-07-31)
 
 
