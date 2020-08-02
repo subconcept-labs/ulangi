@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReviewState } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableReviewState,
+} from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -28,6 +31,7 @@ import { ReviewStrokeOrder } from './ReviewStrokeOrder';
 
 export interface ReviewItemProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   learningLanguageCode: string;
   reviewState: ObservableReviewState;
   styles?: {
@@ -127,6 +131,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
         {this.props.learningLanguageCode === 'zh' ? (
           <ReviewStrokeOrder
             theme={this.props.theme}
+            observableDimensions={this.props.observableDimensions}
             reviewState={this.props.reviewState}
           />
         ) : null}

@@ -5,25 +5,38 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ObservableDimensions } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionScreenIds';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
+import { ls, ss, xls } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 
 export interface SpacedRepetitionMenuProps {
+  observableDimensions: ObservableDimensions;
   startLesson: () => void;
   showSettings: () => void;
   showFAQ: () => void;
 }
 
+@observer
 export class SpacedRepetitionMenu extends React.Component<
   SpacedRepetitionMenuProps
 > {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            marginHorizontal: this.props.observableDimensions.isPortrait
+              ? ls(16)
+              : xls(16),
+          },
+        ]}>
         <DefaultButton
           testID={SpacedRepetitionScreenIds.START_BTN}
           text="Start Review"
@@ -49,7 +62,6 @@ export class SpacedRepetitionMenu extends React.Component<
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
-    marginTop: 40,
+    marginTop: ss(40),
   },
 });

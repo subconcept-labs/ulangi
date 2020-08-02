@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DiscoverNavButtonStyles {
   selected_text: TextStyle;
@@ -24,30 +25,30 @@ export const baseStyles: DiscoverNavButtonStyles = {
 
   text: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   count: {
-    paddingLeft: 5,
+    paddingLeft: ss(5),
   },
 
   selected_count: {},
 
   touchable: {
     marginBottom: -StyleSheet.hairlineWidth,
-    paddingHorizontal: 10,
-    paddingTop: 8,
-    paddingBottom: 10,
+    paddingHorizontal: ss(10),
+    paddingTop: ss(8),
+    paddingBottom: ss(10),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginRight: 8,
+    marginRight: ss(8),
     flex: 1,
   },
 
   selected_touchable: {
     borderBottomColor: config.styles.primaryColor,
-    borderBottomWidth: 2,
+    borderBottomWidth: ss(2),
   },
 };
 
@@ -63,7 +64,6 @@ export const lightStyles = StyleSheet.create(
 
     count: {
       color: config.styles.light.secondaryTextColor,
-      paddingLeft: 5,
     },
 
     selected_count: {
@@ -84,7 +84,6 @@ export const darkStyles = StyleSheet.create(
 
     count: {
       color: config.styles.dark.secondaryTextColor,
-      paddingLeft: 5,
     },
 
     selected_count: {

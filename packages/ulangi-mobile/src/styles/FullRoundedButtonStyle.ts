@@ -9,6 +9,7 @@ import { assertExists } from '@ulangi/assert';
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import { Map } from 'immutable';
+import { ms } from 'react-native-size-matters';
 
 import { config } from '../constants/config';
 import { RoundedCornerButtonStyle } from './RoundedCornerButtonStyle';
@@ -18,14 +19,23 @@ export class FullRoundedButtonStyle {
   private static readonly borderRadiusBySize: Map<ButtonSize, number> = Map([
     [
       ButtonSize.X_LARGE,
-      TextButtonStyle.getHeightBySize(ButtonSize.X_LARGE) / 2,
+      ms(TextButtonStyle.getHeightBySize(ButtonSize.X_LARGE) / 2),
     ],
-    [ButtonSize.LARGE, TextButtonStyle.getHeightBySize(ButtonSize.LARGE) / 2],
-    [ButtonSize.NORMAL, TextButtonStyle.getHeightBySize(ButtonSize.NORMAL) / 2],
-    [ButtonSize.SMALL, TextButtonStyle.getHeightBySize(ButtonSize.SMALL) / 2],
+    [
+      ButtonSize.LARGE,
+      ms(TextButtonStyle.getHeightBySize(ButtonSize.LARGE) / 2),
+    ],
+    [
+      ButtonSize.NORMAL,
+      ms(TextButtonStyle.getHeightBySize(ButtonSize.NORMAL) / 2),
+    ],
+    [
+      ButtonSize.SMALL,
+      ms(TextButtonStyle.getHeightBySize(ButtonSize.SMALL) / 2),
+    ],
     [
       ButtonSize.X_SMALL,
-      TextButtonStyle.getHeightBySize(ButtonSize.X_SMALL) / 2,
+      ms(TextButtonStyle.getHeightBySize(ButtonSize.X_SMALL) / 2),
     ],
   ]);
 

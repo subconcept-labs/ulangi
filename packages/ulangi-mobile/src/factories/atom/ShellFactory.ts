@@ -6,26 +6,26 @@
  */
 
 import { AtomShellType } from '@ulangi/ulangi-common/enums';
-import { ObservableShell } from '@ulangi/ulangi-observable';
+import { ObservableOrigin, ObservableShell } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
 
 export class ShellFactory {
-  public make(originPosition: { x: number; y: number }): ObservableShell[] {
+  public make(origin: ObservableOrigin): ObservableShell[] {
     const shells: ObservableShell[] = [];
 
     shells.push(
       new ObservableShell(
+        origin,
         AtomShellType.INNER,
         config.atom.innerShellDiameter,
-        originPosition,
         null,
         10,
       ),
       new ObservableShell(
+        origin,
         AtomShellType.OUTER,
         config.atom.outerShellDiameter,
-        originPosition,
         null,
         20,
       ),

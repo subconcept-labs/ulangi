@@ -6,7 +6,7 @@
  */
 
 import * as _ from 'lodash';
-import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 
@@ -59,9 +59,7 @@ export const baseStyles: ExtraFieldsPickerScreenStyles = {
     color: config.styles.primaryColor,
   },
 
-  picker_content_container: {
-    height: Dimensions.get('window').height / 2,
-  },
+  picker_content_container: {},
 };
 
 export const lightStyles = StyleSheet.create(

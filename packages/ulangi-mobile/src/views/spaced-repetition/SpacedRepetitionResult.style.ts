@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface SpacedRepetitionResultStyles {
   container: ViewStyle;
@@ -26,13 +27,13 @@ export const baseStyles: SpacedRepetitionResultStyles = {
   },
 
   title_container: {
-    marginTop: 20,
+    marginTop: ss(20),
     flexDirection: 'row',
     justifyContent: 'center',
   },
 
   title: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
@@ -43,19 +44,19 @@ export const baseStyles: SpacedRepetitionResultStyles = {
   },
 
   save_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     textAlign: 'center',
-    paddingTop: 6,
-    lineHeight: 19,
+    paddingTop: ss(6),
+    lineHeight: ss(19),
   },
 
   ad_notice_container: {
-    marginTop: 16,
-    marginHorizontal: 16,
+    marginTop: ss(16),
+    marginHorizontal: ls(16),
   },
 
   button_container: {
-    marginTop: 16,
+    marginTop: ss(16),
   },
 };
 

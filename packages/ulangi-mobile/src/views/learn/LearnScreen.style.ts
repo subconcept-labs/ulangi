@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LearnScreenStyles {
   screen: ViewStyle;
@@ -23,8 +24,8 @@ const baseStyles: LearnScreenStyles = {
   },
 
   top_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(16),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -36,7 +37,7 @@ const baseStyles: LearnScreenStyles = {
   button_text: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

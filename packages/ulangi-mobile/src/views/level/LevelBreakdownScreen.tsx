@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableLightBox,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -23,6 +24,7 @@ import { LevelBreakdown } from './LevelBreakdown';
 export interface LevelBreakdownScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   levelCounts: {
     readonly totalCount: number;
     readonly level0Count: number;
@@ -43,6 +45,7 @@ export class LevelBreakdownScreen extends React.Component<
       <LightBoxContainerWithTitle
         theme={this.props.themeStore.theme}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         dismissLightBox={this.props.screenDelegate.dismissLightBox}
         styles={{
           light: lightBoxContainerWithTitleLightStyles,

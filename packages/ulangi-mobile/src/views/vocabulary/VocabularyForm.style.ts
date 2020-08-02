@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface VocabularyFormStyles {
   form: ViewStyle;
@@ -46,13 +47,13 @@ export const baseStyles: VocabularyFormStyles = {
   vocabulary_container: {},
 
   vocabulary_input_container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   vocabulary_input: {
-    paddingHorizontal: 0,
-    paddingVertical: 16,
-    fontSize: 16,
+    paddingHorizontal: ss(0),
+    paddingVertical: ss(16),
+    fontSize: ss(16),
     textAlignVertical: 'top',
   },
 
@@ -67,20 +68,20 @@ export const baseStyles: VocabularyFormStyles = {
   category_name_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 16,
-    paddingHorizontal: 16,
+    paddingBottom: ss(16),
+    paddingHorizontal: ss(16),
   },
 
   category_name: {
     //paddingTop: 8,
     flex: 1,
     flexWrap: 'wrap',
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   header: {
     flexDirection: 'row',
-    marginVertical: 5,
+    marginVertical: ss(5),
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -90,32 +91,32 @@ export const baseStyles: VocabularyFormStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingLeft: 16,
-    paddingTop: 8,
+    paddingLeft: ss(16),
+    paddingTop: ss(8),
   },
 
   title: {
-    fontSize: 16,
+    fontSize: ss(16),
     fontWeight: 'bold',
   },
 
   title_button_container: {
-    paddingHorizontal: 12,
+    paddingHorizontal: ss(12),
   },
 
   button_list: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingHorizontal: 12,
-    paddingBottom: 12,
+    paddingHorizontal: ss(12),
+    paddingBottom: ss(12),
   },
 
   button: {
-    marginHorizontal: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 7,
+    marginHorizontal: ss(4),
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(7),
     backgroundColor: '#E0E0E0',
-    borderRadius: 3,
+    borderRadius: ss(3),
   },
 
   button_green: {
@@ -131,10 +132,10 @@ export const baseStyles: VocabularyFormStyles = {
   },
 
   button_text: {
-    fontSize: 11,
+    fontSize: ss(11),
     fontWeight: '700',
     color: '#424242',
-    letterSpacing: -0.5,
+    letterSpacing: ss(-0.5),
   },
 
   button_red_text: {
@@ -152,20 +153,20 @@ export const baseStyles: VocabularyFormStyles = {
   add_definition_btn_container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: ss(12),
+    paddingVertical: ss(10),
     borderTopWidth: StyleSheet.hairlineWidth,
   },
 
   add_definition_btn: {
     flex: 1,
-    paddingVertical: 9,
-    paddingHorizontal: 10,
-    marginHorizontal: 4,
+    paddingVertical: ss(9),
+    paddingHorizontal: ss(10),
+    marginHorizontal: ss(4),
   },
 
   add_definition_btn_text: {
-    fontSize: 12,
+    fontSize: ss(12),
     textAlign: 'center',
   },
 };

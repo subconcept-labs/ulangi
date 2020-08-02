@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface MultipleChoiceFormStyles {
   multiple_choice_container: ViewStyle;
@@ -24,17 +25,17 @@ export interface MultipleChoiceFormStyles {
 
 export const baseStyles: MultipleChoiceFormStyles = {
   multiple_choice_container: {
-    marginHorizontal: 16,
-    borderRadius: 10,
+    marginHorizontal: ls(16),
+    borderRadius: ss(10),
   },
 
   vocabulary_text_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(14),
   },
 
   vocabulary_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
@@ -45,8 +46,8 @@ export const baseStyles: MultipleChoiceFormStyles = {
   },
 
   answer_touchable: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -54,15 +55,15 @@ export const baseStyles: MultipleChoiceFormStyles = {
 
   meaning_container: {
     flexShrink: 1,
-    paddingVertical: 2,
+    paddingVertical: ss(2),
   },
 
   meaning: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   uncheck: {
-    marginRight: 8,
+    marginRight: ss(8),
   },
 };
 

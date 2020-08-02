@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DefinitionListStyles {
   definition_list: ViewStyle;
@@ -21,12 +22,12 @@ export const baseStyles: DefinitionListStyles = {
 
   missing_definitions_container: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingVertical: ss(10),
+    paddingHorizontal: ss(16),
   },
 
   missing_definitions: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontStyle: 'italic',
     color: '#777',
   },

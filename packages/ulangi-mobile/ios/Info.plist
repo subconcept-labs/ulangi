@@ -93,9 +93,7 @@
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
+	<array/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>firebase_crashlytics_collection_enabled</key>

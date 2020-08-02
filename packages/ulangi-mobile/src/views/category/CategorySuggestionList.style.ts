@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface CategorySuggestionListStyles {
   suggestion_list: ViewStyle;
@@ -35,19 +36,19 @@ export const baseStyles: CategorySuggestionListStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 9,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(9),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   suggestion_title: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   show_all_suggestions_btn: {},
 
   show_all_suggestions_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.styles.primaryColor,
   },
 
@@ -55,8 +56,8 @@ export const baseStyles: CategorySuggestionListStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
     borderTopWidth: StyleSheet.hairlineWidth,
   },
 
@@ -64,12 +65,12 @@ export const baseStyles: CategorySuggestionListStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 
   empty_text: {
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   activity_indicator: {
@@ -80,12 +81,12 @@ export const baseStyles: CategorySuggestionListStyles = {
   left: {},
 
   category_name: {
-    fontSize: 17,
+    fontSize: ss(17),
     fontWeight: 'bold',
   },
 
   category_meta: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   new_category: {

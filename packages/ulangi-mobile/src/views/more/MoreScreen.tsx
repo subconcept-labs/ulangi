@@ -8,6 +8,7 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
+  ObservableDimensions,
   ObservableMoreScreen,
   ObservableNetworkStore,
   ObservableSyncStore,
@@ -45,6 +46,7 @@ export interface MoreScreenProps {
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
   adStore: ObservableAdStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableMoreScreen;
   screenDelegate: MoreScreenDelegate;
 }
@@ -65,6 +67,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           style={this.styles.scroll_view_container}>
           <MessageCarousel
             theme={this.props.themeStore.theme}
+            observableDimensions={this.props.observableDimensions}
             messages={this.props.observableScreen.messages}
             currentMessageIndex={
               this.props.observableScreen.currentMessageIndex

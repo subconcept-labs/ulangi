@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface PublicSetItemStyles {
   item_container: ViewStyle;
@@ -32,10 +33,10 @@ export interface PublicSetItemStyles {
 
 export const baseStyles: PublicSetItemStyles = {
   item_container: {
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
     // Use padding instead of margin to make hit area larger
-    marginVertical: 8,
-    borderRadius: 5,
+    marginVertical: ss(8),
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
@@ -46,57 +47,57 @@ export const baseStyles: PublicSetItemStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: ss(14),
+    paddingVertical: ss(12),
   },
 
   title: {
-    paddingBottom: 3,
+    paddingBottom: ss(3),
   },
 
   set_name: {
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: ss(17),
   },
 
   set_subtitle: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   meta_container: {},
 
   authors: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   dot: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   curated_text: {
-    fontSize: 12,
+    fontSize: ss(12),
     fontWeight: '700',
   },
 
   count: {
     fontWeight: 'bold',
-    fontSize: 18,
-    paddingBottom: 3,
+    fontSize: ss(18),
+    paddingBottom: ss(3),
   },
 
   terms: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   left: {
-    paddingRight: 12,
+    paddingRight: ss(12),
     flexShrink: 1,
   },
 
   right: {
     borderLeftWidth: 1,
     borderLeftColor: '#ddd',
-    paddingLeft: 12,
+    paddingLeft: ss(12),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -105,17 +106,17 @@ export const baseStyles: PublicSetItemStyles = {
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: ss(14),
+    paddingVertical: ss(12),
   },
 
   arrow: {
-    marginRight: 5,
+    marginRight: ss(5),
   },
 
   content: {
     flexShrink: 1,
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   content_bold: {

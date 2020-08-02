@@ -12,6 +12,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { VocabularyItemIds } from '../../constants/ids/VocabularyItemIds';
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface WordClassListProps {
@@ -107,14 +108,15 @@ export class WordClassList extends React.Component<WordClassListProps> {
 
 const styles = StyleSheet.create({
   word_class_container: {
-    borderRadius: 3,
-    marginVertical: 2,
-    paddingVertical: 1,
-    paddingHorizontal: 7,
-    marginRight: 5,
+    borderRadius: ss(3),
+    marginVertical: ss(2),
+    paddingVertical: ss(1),
+    paddingHorizontal: ss(7),
+    marginRight: ss(5),
   },
 
   word_class: {
     textAlign: 'center',
+    fontSize: ss(15),
   },
 });

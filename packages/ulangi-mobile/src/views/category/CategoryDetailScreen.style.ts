@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface CategoryDetailScreenStyles {
   screen: ViewStyle;
@@ -23,8 +24,8 @@ export const baseStyles: CategoryDetailScreenStyles = StyleSheet.create({
 
   floating_button_container: {
     position: 'absolute',
-    right: 14,
-    bottom: 14,
+    right: ss(14),
+    bottom: ss(14),
   },
 });
 

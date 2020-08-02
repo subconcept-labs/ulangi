@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReviewState } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableReviewState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -21,6 +24,7 @@ import {
 
 export interface ReviewStrokeOrderProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   reviewState: ObservableReviewState;
   styles?: {
     light: ReviewStrokeOrderStyles;
@@ -48,6 +52,7 @@ export class ReviewStrokeOrder extends React.Component<ReviewStrokeOrderProps> {
         </DefaultText>
         <StrokeOrders
           theme={this.props.theme}
+          observableDimensions={this.props.observableDimensions}
           words={
             this.props.reviewState.strokeOrderForm === 'traditional'
               ? this.props.reviewState.vocabulary.vocabularyExtraFields.traditional[0][0].split(

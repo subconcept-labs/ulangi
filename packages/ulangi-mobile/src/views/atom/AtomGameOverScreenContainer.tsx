@@ -64,6 +64,7 @@ export class AtomGameOverScreenContainer extends Container<
     return (
       <AtomGameOverScreen
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         title={this.props.passedProps.title}
         score={this.props.passedProps.score}
         correctCount={this.props.passedProps.correctCount}

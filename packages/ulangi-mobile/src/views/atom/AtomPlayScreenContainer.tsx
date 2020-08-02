@@ -19,6 +19,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container } from '../../Container';
+import { config } from '../../constants/config';
 import { AtomPlayScreenFactory } from '../../factories/atom/AtomPlayScreenFactory';
 import { AtomQuestionIterator } from '../../iterators/AtomQuestionIterator';
 import { AtomStyle } from '../../styles/AtomStyle';
@@ -57,14 +58,17 @@ export class AtomPlayScreenContainer extends Container<
     ),
   );
 
-  private atomSettingsDelegate = this.atomPlayScreenFactory.createAtomSettingsDelegate();
-
   protected observableScreen = new ObservableAtomPlayScreen(
     new ObservableAtomGameState(false, false),
     new ObservableAtomGameStats(10, 0, 0),
     this.props.passedProps.noMoreVocabulary,
     this.questionIterator.next(),
-    new ObservableOrigin(this.atomSettingsDelegate.getDefaultOriginPosition()),
+    new ObservableOrigin(
+      this.props.observableDimensions,
+      config.atom.bottomOffset,
+      config.atom.outerShellDiameter,
+      config.atom.particleSize,
+    ),
     [],
     [],
     [],
@@ -84,6 +88,7 @@ export class AtomPlayScreenContainer extends Container<
 
   public componentDidMount(): void {
     this.screenDelegate.initializeShellsAndParticles();
+    this.screenDelegate.autoMoveParticlesOnOriginPositionChange();
   }
 
   protected onThemeChanged(): void {
@@ -94,6 +99,7 @@ export class AtomPlayScreenContainer extends Container<
     return (
       <AtomPlayScreen
         observableScreen={this.observableScreen}
+        observableDimensions={this.props.observableDimensions}
         screenDelegate={this.screenDelegate}
       />
     );

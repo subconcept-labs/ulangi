@@ -6,7 +6,9 @@
  */
 
 import * as _ from 'lodash';
-import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+
+import { ss } from '../../utils/responsive';
 
 export interface ManageScreenStyles {
   screen: ViewStyle;
@@ -28,15 +30,13 @@ export const baseStyle: ManageScreenStyles = {
 
   floating_action_button: {
     position: 'absolute',
-    right: 14,
-    bottom: 14,
+    right: ss(14),
+    bottom: ss(14),
   },
 
   syncing_notice: {
     position: 'absolute',
-    left: (Dimensions.get('window').width - 120) / 2,
-    bottom: 16,
-    width: 120,
+    bottom: ss(16),
     flexDirection: 'row',
     justifyContent: 'center',
   },

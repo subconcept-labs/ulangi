@@ -83,6 +83,7 @@ export class QuickTutorialScreenContainer extends Container {
     return (
       <QuickTutorialScreen
         themeStore={this.props.rootStore.themeStore}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

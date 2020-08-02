@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SetManagementTopBarStyles {
   top_bar_container: ViewStyle;
@@ -30,18 +31,18 @@ export const baseStyles: SetManagementTopBarStyles = {
 
   text_container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(8),
     alignItems: 'center',
   },
 
   text: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
   selectedContainerStyle: {
-    borderBottomWidth: 2,
+    borderBottomWidth: ss(2),
     zIndex: 2,
   },
 

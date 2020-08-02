@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableAtomPlayScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableAtomPlayScreen,
+  ObservableDimensions,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
@@ -21,6 +24,7 @@ import { AtomTopBar } from './AtomTopBar';
 
 export interface AtomPlayScreenProps {
   observableScreen: ObservableAtomPlayScreen;
+  observableDimensions: ObservableDimensions;
   screenDelegate: AtomPlayScreenDelegate;
 }
 
@@ -32,10 +36,19 @@ export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
         <View style={styles.container}>
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
-              return <AtomShell key={shell.shellType} shell={shell} />;
+              return (
+                <AtomShell
+                  key={shell.shellType}
+                  observableDimensions={this.props.observableDimensions}
+                  shell={shell}
+                />
+              );
             },
           )}
-          <AtomArcs arcs={this.props.observableScreen.arcs} />
+          <AtomArcs
+            observableDimensions={this.props.observableDimensions}
+            arcs={this.props.observableScreen.arcs}
+          />
           <AtomParticles
             particles={this.props.observableScreen.particles}
             getShellByPosition={this.props.screenDelegate.getShellByPosition}

@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableThemeStore,
   ObservableWritingScreen,
 } from '@ulangi/ulangi-observable';
@@ -20,6 +21,7 @@ import { WritingMenu } from './WritingMenu';
 import { WritingTitle } from './WritingTitle';
 
 export interface WritingScreenProps {
+  observableDimensions: ObservableDimensions;
   themeStore: ObservableThemeStore;
   observableScreen: ObservableWritingScreen;
   screenDelegate: WritingScreenDelegate;
@@ -37,6 +39,7 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
             </View>
             <View style={styles.menu_container}>
               <WritingMenu
+                observableDimensions={this.props.observableDimensions}
                 startLesson={(): void =>
                   this.props.screenDelegate.startLesson(false)
                 }

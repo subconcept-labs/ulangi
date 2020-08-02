@@ -99,6 +99,7 @@ export class DictionaryPickerScreenContainer extends Container<
     return (
       <DictionaryPickerScreen
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}

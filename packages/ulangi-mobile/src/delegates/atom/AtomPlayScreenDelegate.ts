@@ -93,6 +93,10 @@ export class AtomPlayScreenDelegate {
     );
   }
 
+  public autoMoveParticlesOnOriginPositionChange(): void {
+    this.particleDelegate.autoMoveParticlesOnOriginPositionChange();
+  }
+
   public clearGame(): void {
     this.clearFetchVocabulary();
   }
@@ -204,7 +208,7 @@ export class AtomPlayScreenDelegate {
   }
 
   private makeShells(): ObservableShell[] {
-    return this.shellFactory.make(this.observableScreen.origin.position);
+    return this.shellFactory.make(this.observableScreen.origin);
   }
 
   private clearFetchVocabulary(): void {

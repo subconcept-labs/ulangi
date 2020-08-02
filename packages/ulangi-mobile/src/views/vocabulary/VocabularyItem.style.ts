@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface VocabularyItemStyles {
   item_container: ViewStyle;
@@ -29,9 +30,9 @@ export interface VocabularyItemStyles {
 
 const baseStyles: VocabularyItemStyles = {
   item_container: {
-    marginBottom: 16,
-    marginHorizontal: 16,
-    borderRadius: 5,
+    marginBottom: ss(16),
+    marginHorizontal: ls(16),
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
@@ -39,12 +40,12 @@ const baseStyles: VocabularyItemStyles = {
   },
 
   vocabulary_container: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: ss(12),
+    paddingHorizontal: ss(16),
   },
 
   top_container: {
-    paddingVertical: 2,
+    paddingVertical: ss(2),
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -66,35 +67,35 @@ const baseStyles: VocabularyItemStyles = {
   },
 
   tag_text: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   dot_container: {
-    paddingHorizontal: 6,
+    paddingHorizontal: ss(6),
   },
 
   dot: {
-    fontSize: 17,
+    fontSize: ss(17),
   },
 
   term: {
-    fontSize: 19,
+    fontSize: ss(19),
     fontWeight: 'bold',
   },
 
   missing_term: {
-    fontSize: 16,
+    fontSize: ss(16),
     fontStyle: 'italic',
   },
 
   option_btn: {
-    paddingLeft: 5,
+    paddingLeft: ss(5),
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   definition_list_container: {
-    borderTopWidth: 2,
+    borderTopWidth: ss(2),
   },
 
   highlighted: {

@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { Platform } from 'react-native';
 
 import { config } from '../constants/config';
+import { shortDimension } from '../utils/responsive';
 
 export function setDefaultNavigationOptions(): void {
   const common: Options = {
@@ -37,7 +38,8 @@ export function setDefaultNavigationOptions(): void {
       animate: false,
     },
     layout: {
-      orientation: ['portrait'],
+      orientation:
+        shortDimension > 480 ? ['portrait', 'landscape'] : ['portrait'],
     },
   };
 

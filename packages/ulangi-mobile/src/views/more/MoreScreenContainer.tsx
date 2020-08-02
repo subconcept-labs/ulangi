@@ -77,6 +77,7 @@ export class MoreScreenContainer extends Container {
         networkStore={this.props.rootStore.networkStore}
         syncStore={this.props.rootStore.syncStore}
         adStore={this.props.rootStore.adStore}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

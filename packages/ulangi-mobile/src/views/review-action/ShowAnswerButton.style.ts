@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
+import { ss } from '../../utils/responsive';
+
 export interface ShowAnswerButtonStyles {
   container: ViewStyle;
   show_answer_button_container: ViewStyle;
@@ -17,8 +19,8 @@ export const baseStyles: ShowAnswerButtonStyles = {
   container: {},
 
   show_answer_button_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 };
 

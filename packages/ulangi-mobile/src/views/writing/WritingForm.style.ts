@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 import {
   darkStyles as defaultDefinitionItemDarkStyles,
   lightStyles as defaultDefinitionItemLightStyles,
@@ -34,24 +35,24 @@ export interface WritingFormStyles {
 
 export const baseStyles: WritingFormStyles = {
   container: {
-    paddingHorizontal: 16,
-    marginVertical: 20,
+    paddingHorizontal: ls(16),
+    marginVertical: ss(20),
   },
 
   row: {
-    paddingVertical: 6,
+    paddingVertical: ss(6),
   },
 
   label: {
-    fontSize: 11,
+    fontSize: ss(11),
     fontWeight: 'bold',
-    lineHeight: 19,
-    paddingBottom: 1,
+    lineHeight: ss(19),
+    paddingBottom: ss(1),
   },
 
   definition_container: {
-    marginTop: 5,
-    borderRadius: 10,
+    marginTop: ss(5),
+    borderRadius: ss(10),
   },
 
   answer_container: {
@@ -65,8 +66,8 @@ export const baseStyles: WritingFormStyles = {
   },
 
   input: {
-    fontSize: 16,
-    paddingVertical: 3,
+    fontSize: ss(16),
+    paddingVertical: ss(3),
   },
 
   hint_container: {
@@ -82,30 +83,30 @@ export const baseStyles: WritingFormStyles = {
   hint_scrollview: {},
 
   hint_text: {
-    fontSize: 16,
-    paddingVertical: 3,
+    fontSize: ss(16),
+    paddingVertical: ss(3),
   },
 
   underline: {
-    height: 2,
-    borderRadius: 1,
-    marginBottom: 2,
+    height: ss(2),
+    borderRadius: ss(1),
+    marginBottom: ss(2),
   },
 
   button_container: {
-    marginLeft: 5,
+    marginLeft: ss(5),
   },
 
   message: {
     flexShrink: 1,
-    fontSize: 15,
-    lineHeight: 19,
+    fontSize: ss(15),
+    lineHeight: ss(19),
   },
 
   message_highlighted: {
     color: config.styles.primaryColor,
-    fontSize: 15,
-    lineHeight: 19,
+    fontSize: ss(15),
+    lineHeight: ss(19),
   },
 };
 

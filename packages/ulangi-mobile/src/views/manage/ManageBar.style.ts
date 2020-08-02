@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ManageBarStyles {
   container: ViewStyle;
@@ -18,9 +19,9 @@ export interface ManageBarStyles {
 
 export const baseStyle: ManageBarStyles = {
   container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
+    borderBottomWidth: ss(1),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -37,7 +38,7 @@ export const baseStyle: ManageBarStyles = {
   button_text: {
     fontWeight: 'bold',
     color: '#888',
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

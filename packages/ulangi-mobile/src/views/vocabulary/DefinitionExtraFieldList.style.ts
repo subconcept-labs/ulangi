@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DefinitionExtraFieldListStyles {
   container: ViewStyle;
@@ -24,11 +25,11 @@ export interface DefinitionExtraFieldListStyles {
 
 export const baseStyles: DefinitionExtraFieldListStyles = {
   container: {
-    marginHorizontal: 16,
+    marginHorizontal: ss(16),
   },
 
   field_container: {
-    marginBottom: 10,
+    marginBottom: ss(10),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -39,29 +40,29 @@ export const baseStyles: DefinitionExtraFieldListStyles = {
   right: {},
 
   name: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: 'bold',
   },
 
   image_list: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -8,
+    marginHorizontal: ss(-8),
   },
 
   image_container: {
-    paddingHorizontal: 8,
-    paddingVertical: 10,
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(10),
   },
 
   image: {
     backgroundColor: '#e3e3e3',
-    width: Dimensions.get('window').width / 3,
-    height: Dimensions.get('window').width / 3,
+    width: Dimensions.get('window').width / ss(3),
+    height: Dimensions.get('window').width / ss(3),
   },
 
   value: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

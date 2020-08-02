@@ -160,6 +160,10 @@ export {
 
 export { ObservableKeyboard } from './observables/keyboard/ObservableKeyboard';
 
+export {
+  ObservableDimensions,
+} from './observables/dimensions/ObservableDimensions';
+
 export { ObservableLightBox } from './observables/light-box/ObservableLightBox';
 
 export { ObservableLanguage } from './observables/language/ObservableLanguage';

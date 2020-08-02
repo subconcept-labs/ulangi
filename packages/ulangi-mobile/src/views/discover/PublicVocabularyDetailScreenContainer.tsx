@@ -87,6 +87,7 @@ export class PublicVocabularyDetailScreenContainer extends Container<
       <PublicVocabularyDetailScreen
         setStore={this.props.rootStore.setStore}
         themeStore={this.props.rootStore.themeStore}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

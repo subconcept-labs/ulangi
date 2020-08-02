@@ -7,20 +7,14 @@
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableQuickTutorialScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Image, Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { config } from '../../constants/config';
@@ -29,10 +23,9 @@ import { QuickTutorialScreenDelegate } from '../../delegates/tip/QuickTutorialSc
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
 
-const screenWidth = Dimensions.get('window').width;
-
 export interface QuickTutorialScreenProps {
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableQuickTutorialScreen;
   screenDelegate: QuickTutorialScreenDelegate;
 }
@@ -42,6 +35,8 @@ export class QuickTutorialScreen extends React.Component<
   QuickTutorialScreenProps
 > {
   public render(): React.ReactElement<any> {
+    const windowWidth = this.props.observableDimensions.windowWidth;
+
     return (
       <SafeAreaView
         style={styles.screen}
@@ -55,8 +50,8 @@ export class QuickTutorialScreen extends React.Component<
             data={this.props.observableScreen.images}
             onSnapToItem={this.props.screenDelegate.setSlideIndex}
             renderItem={this.renderItem}
-            sliderWidth={screenWidth}
-            itemWidth={screenWidth}
+            sliderWidth={windowWidth}
+            itemWidth={windowWidth}
           />
           <Pagination
             containerStyle={styles.pagination}

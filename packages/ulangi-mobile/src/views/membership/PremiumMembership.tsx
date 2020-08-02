@@ -11,6 +11,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { MembershipLabel } from './MembershipLabel';
 import { MembershipTitle } from './MembershipTitle';
@@ -78,7 +79,7 @@ export class PremiumMembership extends React.Component<PremiumMembershipProps> {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 50,
+    paddingVertical: ss(50),
     flex: 1,
     backgroundColor: config.styles.premiumMembershipColor,
     justifyContent: 'center',
@@ -89,41 +90,41 @@ const styles = StyleSheet.create({
 
   feature_list_container: {
     alignSelf: 'stretch',
-    paddingTop: 40,
+    paddingTop: ss(40),
   },
 
   button_container: {
     alignSelf: 'stretch',
-    paddingTop: 20,
+    paddingTop: ss(20),
   },
 
   loading_text: {
     textAlign: 'center',
-    paddingTop: 4,
-    fontSize: 14,
+    paddingTop: ss(4),
+    fontSize: ss(14),
     fontWeight: '700',
     color: 'white',
   },
 
   note_container: {
-    paddingTop: 16,
-    paddingHorizontal: 16,
+    paddingTop: ss(16),
+    paddingHorizontal: ls(16),
   },
 
   thank_you_container: {
-    paddingTop: 40,
-    paddingHorizontal: 16,
+    paddingTop: ss(40),
+    paddingHorizontal: ls(16),
   },
 
   note: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
     color: '#ffffff98',
   },
 
   feature_request_btn: {
-    paddingTop: 2,
-    paddingHorizontal: 16,
+    paddingTop: ss(2),
+    paddingHorizontal: ls(16),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
 
   highlighted: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
     color: '#fff',
   },
 });

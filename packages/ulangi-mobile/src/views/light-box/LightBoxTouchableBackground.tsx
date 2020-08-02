@@ -5,12 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableLightBox } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableLightBox,
+} from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import {
-  Dimensions,
   PanResponder,
   PanResponderInstance,
   StyleSheet,
@@ -23,6 +25,7 @@ import { config } from '../../constants/config';
 
 export interface LightBoxTouchableBackgroundProps {
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   testID?: string;
   style?: ViewStyle;
   enabled?: boolean;
@@ -172,7 +175,14 @@ export class LightBoxTouchableBackground extends React.Component<
     return (
       <View
         testID={this.props.testID}
-        style={[styles.light_box_container, this.props.style]}>
+        style={[
+          styles.light_box_container,
+          this.props.style,
+          {
+            width: this.props.observableDimensions.windowWidth,
+            height: this.props.observableDimensions.windowHeight,
+          },
+        ]}>
         <Animatable.View
           ref={(ref: any): void => {
             this.animationContainerRef = ref;
@@ -180,7 +190,13 @@ export class LightBoxTouchableBackground extends React.Component<
           animation="fadeIn"
           duration={200}
           useNativeDriver
-          style={styles.background}
+          style={[
+            styles.background,
+            {
+              width: this.props.observableDimensions.windowWidth,
+              height: this.props.observableDimensions.windowHeight,
+            },
+          ]}
           {...panHandlers}
         />
         <View
@@ -196,14 +212,9 @@ export class LightBoxTouchableBackground extends React.Component<
 }
 
 const styles = StyleSheet.create({
-  light_box_container: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
+  light_box_container: {},
 
   background: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
     position: 'absolute',
     top: 0,
     right: 0,

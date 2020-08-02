@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableLightBox,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -21,6 +22,7 @@ import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
 export interface LightBoxActionMenuScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   navigatorDelegate: NavigatorDelegate;
 }
 
@@ -48,6 +50,7 @@ export class LightBoxActionMenuScreen extends React.Component<
       return (
         <LightBoxTouchableBackground
           observableLightBox={this.props.observableLightBox}
+          observableDimensions={this.props.observableDimensions}
           style={styles.light_box_container}
           enabled={true}
           activeOpacity={0.2}

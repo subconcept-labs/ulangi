@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface ReviewFeedbackItemStyles {
   vocabulary_container: ViewStyle;
@@ -25,33 +26,33 @@ export interface ReviewFeedbackItemStyles {
 
 export const baseStyles: ReviewFeedbackItemStyles = {
   vocabulary_container: {
-    marginHorizontal: 16,
-    borderRadius: 3,
-    marginTop: 20,
+    marginHorizontal: ls(16),
+    borderRadius: ss(3),
+    marginTop: ss(20),
   },
 
   vocabulary_text_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 13,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(13),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   vocabulary_text: {
-    fontSize: 15,
+    fontSize: ss(17),
     fontWeight: 'bold',
   },
 
   level_net_change: {
-    paddingLeft: 10,
+    paddingLeft: ss(10),
   },
 
   row_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 13,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(13),
     borderTopWidth: 1,
   },
 
@@ -61,7 +62,7 @@ export const baseStyles: ReviewFeedbackItemStyles = {
   },
 
   left_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   right_container: {
@@ -74,7 +75,7 @@ export const baseStyles: ReviewFeedbackItemStyles = {
   },
 
   right_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

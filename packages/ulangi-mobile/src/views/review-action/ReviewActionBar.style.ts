@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ReviewActionBarStyles {
   container: ViewStyle;
@@ -24,36 +25,36 @@ export const baseStyles: ReviewActionBarStyles = {
 
   action_btn: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    maxWidth: 150,
+    paddingHorizontal: ss(16),
+    maxWidth: ss(150),
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: ss(12),
     overflow: 'hidden',
   },
 
   icon_container: {
-    width: 25,
-    height: 25,
+    width: ss(25),
+    height: ss(25),
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   title_container: {
     flexShrink: 1,
-    marginLeft: 6,
+    marginLeft: ss(6),
     alignSelf: 'stretch',
     justifyContent: 'center',
   },
 
   action_title: {
     fontWeight: 'bold',
-    fontSize: 11,
-    letterSpacing: -0.5,
+    fontSize: ss(11),
+    letterSpacing: ss(-0.5),
   },
 
   action_subtitle: {
-    letterSpacing: -0.5,
-    fontSize: 11,
+    letterSpacing: ss(-0.5),
+    fontSize: ss(11),
   },
 };
 

@@ -973,7 +973,7 @@
 				PRODUCT_NAME = UlangiDev;
 				PROVISIONING_PROFILE = "b8030d5c-590e-4be5-a167-132cdad89c3d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Dev (Development)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Development.Debug;
@@ -1101,7 +1101,7 @@
 				PRODUCT_NAME = UlangiDev;
 				PROVISIONING_PROFILE = "dc47f474-5188-4312-a7e4-355d14e974e5";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Dev (Distribution)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Development.Release;
@@ -1233,7 +1233,7 @@
 				PRODUCT_NAME = UlangiStaging;
 				PROVISIONING_PROFILE = "7f47100d-42e3-41fd-879f-4c95fdf5ffbf";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Staging (Development)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Staging.Debug;
@@ -1361,7 +1361,7 @@
 				PRODUCT_NAME = UlangiStaging;
 				PROVISIONING_PROFILE = "61528cd2-47cf-4974-9e29-98928876db3a";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Staging (Distribution)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Staging.Release;
@@ -1493,7 +1493,7 @@
 				PRODUCT_NAME = Ulangi;
 				PROVISIONING_PROFILE = "314d3a34-1aaf-47ac-b409-2ba8930ae7ea";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Prod (Development)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Production.Debug;
@@ -1621,7 +1621,7 @@
 				PRODUCT_NAME = Ulangi;
 				PROVISIONING_PROFILE = "1f5dd7da-42d6-49a6-a30f-c6367273eb78";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Prod (Distribution)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Production.Release;
@@ -1704,7 +1704,7 @@
 				PRODUCT_NAME = UlangiDev;
 				PROVISIONING_PROFILE = "b8030d5c-590e-4be5-a167-132cdad89c3d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Dev (Development)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1753,7 +1753,7 @@
 				PRODUCT_NAME = UlangiDev;
 				PROVISIONING_PROFILE = "dc47f474-5188-4312-a7e4-355d14e974e5";
 				PROVISIONING_PROFILE_SPECIFIER = "Ulangi - Dev (Distribution)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

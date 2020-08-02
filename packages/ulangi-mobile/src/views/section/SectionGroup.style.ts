@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SectionGroupStyles {
   section_container: ViewStyle;
@@ -18,13 +19,13 @@ export interface SectionGroupStyles {
 
 export const baseStyles = StyleSheet.create({
   section_container: {
-    marginBottom: 22,
+    marginBottom: ss(22),
   },
 
   header: {
-    fontSize: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 8,
+    fontSize: ss(12),
+    paddingHorizontal: ss(16),
+    paddingBottom: ss(8),
   },
 
   item_container: {

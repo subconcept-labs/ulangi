@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableLightBox } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableLightBox,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -24,6 +27,7 @@ export interface LightBoxContainerWithTitleProps {
   testID?: string;
   theme: Theme;
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   dismissLightBox: () => void;
   title: string;
   styles?: {
@@ -47,6 +51,7 @@ export class LightBoxContainerWithTitle extends React.Component<
       <LightBoxTouchableBackground
         testID={this.props.testID}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         enabled={true}
         style={this.styles.light_box_container}
         onPress={this.props.dismissLightBox}

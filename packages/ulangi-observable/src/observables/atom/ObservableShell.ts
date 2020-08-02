@@ -6,9 +6,13 @@
  */
 
 import { AtomShellType } from '@ulangi/ulangi-common/enums';
-import { observable } from 'mobx';
+import { computed, observable } from 'mobx';
+
+import { ObservableOrigin } from './ObservableOrigin';
 
 export class ObservableShell {
+  private origin: ObservableOrigin;
+
   @observable
   public highlightColor: 'green' | 'red' | null;
 
@@ -19,21 +23,23 @@ export class ObservableShell {
   public diameter: number;
 
   @observable
-  public position: { x: number; y: number };
-
-  @observable
   public max: number;
 
+  @computed
+  public get position(): { x: number; y: number } {
+    return this.origin.position;
+  }
+
   public constructor(
+    origin: ObservableOrigin,
     shellType: AtomShellType,
     diameter: number,
-    position: { x: number; y: number },
     highlightColor: 'green' | null,
     max: number
   ) {
+    this.origin = origin;
     this.shellType = shellType;
     this.diameter = diameter;
-    this.position = position;
     this.highlightColor = highlightColor;
     this.max = max;
   }

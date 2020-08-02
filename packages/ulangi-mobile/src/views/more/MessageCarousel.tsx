@@ -6,22 +6,26 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableCarouselMessage } from '@ulangi/ulangi-observable';
+import {
+  ObservableCarouselMessage,
+  ObservableDimensions,
+} from '@ulangi/ulangi-observable';
+import { boundMethod } from 'autobind-decorator';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { config } from '../../constants/config';
 import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 
-const screenWidth = Dimensions.get('window').width;
-
 export interface MessageCarouselProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   messages: IObservableArray<ObservableCarouselMessage>;
   currentMessageIndex: IObservableValue<number>;
 }
@@ -30,14 +34,16 @@ export interface MessageCarouselProps {
 export class MessageCarousel extends React.Component<MessageCarouselProps> {
   public render(): null | React.ReactElement<any> {
     if (this.props.messages.length > 0) {
+      const windowWidth = this.props.observableDimensions.windowWidth;
+
       return (
         <View>
           <Carousel
             layout="default"
             data={this.props.messages}
             renderItem={this.renderItem}
-            sliderWidth={screenWidth}
-            itemWidth={screenWidth}
+            sliderWidth={windowWidth}
+            itemWidth={windowWidth}
             autoplay={true}
             onSnapToItem={(index): void =>
               this.props.currentMessageIndex.set(index)
@@ -67,13 +73,20 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
     }
   }
 
+  @boundMethod
   private renderItem({
     item,
   }: {
     item: ObservableCarouselMessage;
   }): React.ReactElement<any> {
     return (
-      <View style={styles.item_container}>
+      <View
+        style={[
+          styles.item_container,
+          {
+            width: this.props.observableDimensions.windowWidth,
+          },
+        ]}>
         <View
           style={[
             styles.inner_container,
@@ -101,37 +114,36 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
 
 const styles = StyleSheet.create({
   item_container: {
-    width: screenWidth,
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: ls(16),
+    paddingTop: ss(16),
   },
 
   inner_container: {
     backgroundColor: '#777',
-    borderRadius: 4,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    borderRadius: ss(4),
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(16),
   },
 
   title: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: 'bold',
     color: '#ffffff85',
   },
 
   message: {
-    paddingTop: 14,
-    fontSize: 15,
+    paddingTop: ss(14),
+    fontSize: ss(15),
     color: '#fff',
   },
 
   button_container: {
-    marginTop: 16,
-    marginBottom: 2,
+    marginTop: ss(16),
+    marginBottom: ss(2),
   },
 
   pagination: {
-    paddingTop: 20,
-    paddingBottom: 10,
+    paddingTop: ss(20),
+    paddingBottom: ss(10),
   },
 });

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface LightBoxActionMenuStyles {
   action_menu_container: ViewStyle;
@@ -20,21 +21,22 @@ export interface LightBoxActionMenuStyles {
 export const baseStyles: LightBoxActionMenuStyles = {
   action_menu_container: {
     flexShrink: 1,
-    margin: 16,
-    borderRadius: 4,
+    marginVertical: ss(16),
+    marginHorizontal: ls(16),
+    borderRadius: ss(4),
   },
 
   title_container: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    height: 50,
+    paddingHorizontal: ss(16),
+    height: ss(50),
   },
 
   title_text: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   list_container: {},

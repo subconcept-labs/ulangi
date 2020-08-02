@@ -11,6 +11,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 @observer
@@ -49,10 +50,10 @@ export class PremiumFeatureList extends React.Component {
 
 const styles = StyleSheet.create({
   box: {
-    marginHorizontal: 16,
-    paddingHorizontal: 18,
+    marginHorizontal: ls(16),
+    paddingHorizontal: ss(18),
     backgroundColor: '#f9f9f9',
-    borderRadius: 5,
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 0.5,
@@ -71,23 +72,23 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#cecece',
     flexDirection: 'row',
-    paddingVertical: 5,
+    paddingVertical: ss(5),
     alignItems: 'center',
   },
 
   bullet: {
-    marginRight: 8,
+    marginRight: ss(8),
   },
 
   text_container: {
     flexShrink: 1,
-    paddingVertical: 8,
+    paddingVertical: ss(8),
   },
 
   text: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: '#333',
-    lineHeight: 20,
+    lineHeight: ss(20),
   },
 
   premium: {

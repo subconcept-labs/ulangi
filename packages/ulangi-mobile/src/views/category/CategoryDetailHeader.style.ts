@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface CategoryDetailHeaderStyles {
   container: ViewStyle;
@@ -18,8 +19,8 @@ export interface CategoryDetailHeaderStyles {
 
 export const baseStyles: CategoryDetailHeaderStyles = {
   container: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingVertical: ss(14),
+    paddingHorizontal: ss(16),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -37,7 +38,7 @@ export const baseStyles: CategoryDetailHeaderStyles = {
   button_text: {
     fontWeight: 'bold',
     color: '#888',
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

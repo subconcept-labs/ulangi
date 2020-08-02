@@ -10,6 +10,7 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SearchFloatingButtonProps {
   focusSearchInput: () => void;
@@ -32,9 +33,9 @@ export class SearchFloatingButton extends React.Component<
 
 const styles = StyleSheet.create({
   button: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: ss(50),
+    height: ss(50),
+    borderRadius: ss(50) / 2,
     backgroundColor: config.styles.primaryColor,
     justifyContent: 'center',
     alignItems: 'center',

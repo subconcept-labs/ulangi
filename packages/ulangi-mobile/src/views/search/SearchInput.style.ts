@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SearchInputStyles {
   search_container: ViewStyle;
@@ -20,10 +21,10 @@ export const baseStyles: SearchInputStyles = {
   search_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 16,
-    marginVertical: 12,
-    paddingHorizontal: 13,
-    borderRadius: 5,
+    marginHorizontal: ss(16),
+    marginVertical: ss(12),
+    paddingHorizontal: ss(13),
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
@@ -32,13 +33,13 @@ export const baseStyles: SearchInputStyles = {
   },
 
   search_icon: {
-    marginRight: 3,
+    marginRight: ss(3),
   },
 
   text_input: {
     flex: 1,
-    fontSize: 15,
-    paddingVertical: 10,
+    fontSize: ss(15),
+    paddingVertical: ss(10),
   },
 };
 

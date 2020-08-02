@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSelectedCategoriesDarkStyles,
   lightStyles as defaultSelectedCategoriesLightStyles,
@@ -38,25 +39,25 @@ export const baseStyles: AtomScreenStyles = {
 
   title_container: {
     alignSelf: 'stretch',
-    marginTop: -100,
+    marginTop: ss(-100),
   },
 
   menu_container: {
-    marginTop: 20,
+    marginTop: ss(20),
     alignSelf: 'stretch',
   },
 
   selected_categories_container: {
-    marginTop: 30,
+    marginTop: ss(30),
   },
 
   bottom_container: {
-    padding: 16,
+    padding: ss(16),
   },
 
   note: {
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: ss(14),
+    lineHeight: ss(19),
     textAlign: 'center',
     color: '#1495bc',
   },

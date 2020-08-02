@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LearnListStyles {
   scroll_view_container: ViewStyle;
@@ -22,15 +23,14 @@ export interface LearnListStyles {
 
 export const baseStyles: LearnListStyles = {
   scroll_view_container: {
-    paddingBottom: 16,
+    paddingBottom: ss(16),
   },
 
   learn_item: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    marginTop: 16,
-    marginHorizontal: 16,
-    height: 180,
+    borderRadius: ss(10),
+    marginTop: ss(16),
+    height: ss(180),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,

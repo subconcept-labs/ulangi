@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface PublicSetDetailHeaderStyles {
   container: ViewStyle;
@@ -25,8 +26,8 @@ export interface PublicSetDetailHeaderStyles {
 
 export const baseStyles: PublicSetDetailHeaderStyles = {
   container: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: ss(16),
+    paddingHorizontal: ss(16),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -38,7 +39,7 @@ export const baseStyles: PublicSetDetailHeaderStyles = {
   right: {},
 
   attributions: {
-    fontSize: 13,
+    fontSize: ss(13),
   },
 
   attribution: {
@@ -47,16 +48,16 @@ export const baseStyles: PublicSetDetailHeaderStyles = {
   },
 
   term_count: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 
   add_all_btn: {
-    borderRadius: 3,
+    borderRadius: ss(3),
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    marginLeft: 7,
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(6),
+    marginLeft: ss(7),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
     shadowRadius: 0.75,
@@ -68,11 +69,11 @@ export const baseStyles: PublicSetDetailHeaderStyles = {
   },
 
   add_all_plus: {
-    marginRight: 3,
+    marginRight: ss(3),
   },
 
   add_all_text: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: 'bold',
   },
 

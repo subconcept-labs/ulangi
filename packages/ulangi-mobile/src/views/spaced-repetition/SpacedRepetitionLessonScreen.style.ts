@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SpacedRepetitionLessonScreenStyles {
   screen: ViewStyle;
@@ -23,7 +24,7 @@ export const baseStyles: SpacedRepetitionLessonScreenStyles = {
 
   container: {
     flexGrow: 1,
-    paddingBottom: 50,
+    paddingBottom: ss(50),
   },
 };
 

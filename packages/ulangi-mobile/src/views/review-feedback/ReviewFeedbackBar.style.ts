@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ReviewFeedbackBarStyles {
   container: ViewStyle;
@@ -26,53 +27,53 @@ export const baseStyles: ReviewFeedbackBarStyles = {
   container: {},
 
   title_container: {
-    paddingVertical: 10,
+    paddingVertical: ss(10),
   },
 
   title: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: ss(15),
   },
 
   subtitle: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   feedback_container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 3,
-    paddingBottom: 14,
+    paddingHorizontal: ss(3),
+    paddingBottom: ss(14),
   },
 
   feedback_btn: {
     flex: 1,
-    borderRadius: 6,
-    marginHorizontal: 3,
-    paddingVertical: 7,
+    borderRadius: ss(6),
+    marginHorizontal: ss(3),
+    paddingVertical: ss(7),
   },
 
   feedback_text: {
     fontWeight: '700',
     textAlign: 'center',
-    fontSize: 11,
-    letterSpacing: -0.5,
+    fontSize: ss(11),
+    letterSpacing: ss(-0.5),
     color: '#f7f7f7',
   },
 
   time_text: {
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: '700',
     color: '#f7f7f7',
   },
 
   level_text: {
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: ss(13),
     color: '#fff',
   },
 };

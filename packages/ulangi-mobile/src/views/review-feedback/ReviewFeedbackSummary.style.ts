@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface ReviewFeedbackSummaryStyles {
   stats_container: ViewStyle;
@@ -28,23 +29,23 @@ export interface ReviewFeedbackSummaryStyles {
 
 export const baseStyles: ReviewFeedbackSummaryStyles = {
   stats_container: {
-    marginTop: 12,
-    marginBottom: 12,
+    marginTop: ss(12),
+    marginBottom: ss(12),
   },
 
   result_container: {
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
   },
 
   result_row: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingVertical: 2,
+    paddingVertical: ss(2),
   },
 
   row: {
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingHorizontal: ls(16),
+    paddingVertical: ss(4),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -52,17 +53,17 @@ export const baseStyles: ReviewFeedbackSummaryStyles = {
 
   row_left: {
     flexShrink: 1,
-    paddingRight: 16,
+    paddingRight: ss(16),
   },
 
   row_right: {},
 
   text_left: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   text_right: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 
@@ -74,8 +75,8 @@ export const baseStyles: ReviewFeedbackSummaryStyles = {
 
   horizontal_line: {
     height: 1,
-    marginVertical: 12,
-    marginHorizontal: 16,
+    marginVertical: ss(12),
+    marginHorizontal: ls(16),
   },
 
   percentage: {

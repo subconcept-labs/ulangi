@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableSearchScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -22,6 +23,7 @@ import { SearchList } from './SearchList';
 export interface SearchScreenProps {
   themeStore: ObservableThemeStore;
   observableScreen: ObservableSearchScreen;
+  observableDimensions: ObservableDimensions;
   screenDelegate: SearchScreenDelegate;
 }
 
@@ -48,6 +50,7 @@ export class SearchScreen extends React.Component<SearchScreenProps> {
         />
         {this.props.observableScreen.vocabularyListState.isSelectionModeOn.get() ? (
           <VocabularyBulkActionBar
+            observableDimensions={this.props.observableDimensions}
             vocabularyListState={
               this.props.observableScreen.vocabularyListState
             }

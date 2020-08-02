@@ -11,6 +11,7 @@ import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 
 import { config } from '../constants/config';
+import { ss } from '../utils/responsive';
 import { FullRoundedButtonStyle } from './FullRoundedButtonStyle';
 
 export class AtomStyle {
@@ -71,8 +72,7 @@ export class AtomStyle {
       ),
       {
         buttonStyle: {
-          marginHorizontal: 34,
-          marginVertical: 9,
+          marginVertical: ss(9),
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 0.5 },
           shadowRadius: 0.8,
@@ -80,8 +80,8 @@ export class AtomStyle {
         },
         textStyle: {
           fontFamily: 'JosefinSans-Bold',
-          fontSize: 24,
-          marginTop: 5,
+          fontSize: ss(24),
+          marginTop: ss(5),
         },
       },
     );
@@ -96,8 +96,8 @@ export class AtomStyle {
       ),
       {
         buttonStyle: {
-          marginHorizontal: 55,
-          marginVertical: 9,
+          marginHorizontal: ss(16),
+          marginVertical: ss(9),
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 0.5 },
           shadowRadius: 0.8,
@@ -105,8 +105,8 @@ export class AtomStyle {
         },
         textStyle: {
           fontFamily: 'JosefinSans-Bold',
-          fontSize: 20,
-          marginTop: 5,
+          fontSize: ss(20),
+          marginTop: ss(5),
         },
       },
     );
@@ -133,7 +133,7 @@ export class AtomStyle {
       {
         buttonStyle: {
           flex: 1,
-          marginHorizontal: 8,
+          marginHorizontal: ss(8),
         },
         textStyle: {
           fontFamily: 'JosefinSans-Bold',

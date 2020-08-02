@@ -7,11 +7,13 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { FeatureSettings } from '@ulangi/ulangi-common/interfaces';
+import { ObservableDimensions } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 
 import { LearnScreenIds } from '../../constants/ids/LearnScreenIds';
+import { ls, xls } from '../../utils/responsive';
 import { QuizTitle } from '../../views/quiz/QuizTitle';
 import { SpacedRepetitionTitle } from '../../views/spaced-repetition/SpacedRepetitionTitle';
 import { WritingTitle } from '../../views/writing/WritingTitle';
@@ -21,6 +23,7 @@ import { LearnListStyles, darkStyles, lightStyles } from './LearnList.style';
 
 export interface LearnListProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   featureSettings: FeatureSettings;
   navigateToSpacedRepetitionScreen: () => void;
   navigateToWritingScreen: () => void;
@@ -45,7 +48,14 @@ export class LearnList extends React.Component<LearnListProps> {
     return (
       <ScrollView
         testID={LearnScreenIds.LEARN_LIST}
-        contentContainerStyle={this.styles.scroll_view_container}>
+        contentContainerStyle={[
+          this.styles.scroll_view_container,
+          {
+            paddingHorizontal: this.props.observableDimensions.isPortrait
+              ? ls(16)
+              : xls(16),
+          },
+        ]}>
         {this.props.featureSettings.spacedRepetitionEnabled ? (
           <TouchableOpacity
             testID={LearnScreenIds.SPACED_REPETITION_BTN}

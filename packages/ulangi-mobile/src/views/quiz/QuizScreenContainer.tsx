@@ -92,6 +92,7 @@ export class QuizScreenContainer extends Container<QuizScreenPassedProps> {
     return (
       <QuizScreen
         themeStore={this.props.rootStore.themeStore}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableLightBox } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableLightBox,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -18,6 +21,7 @@ import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackg
 
 export interface AtomPausedScreenProps {
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   restart: () => void;
   quit: () => void;
   close: () => void;
@@ -38,6 +42,7 @@ export class AtomPausedScreen extends React.Component<AtomPausedScreenProps> {
       <LightBoxTouchableBackground
         testID={AtomPausedScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         style={styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}

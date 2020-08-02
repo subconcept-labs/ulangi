@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableLightBox } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableLightBox,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -19,6 +22,7 @@ import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackg
 
 export interface AtomGameOverScreenProps {
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   title: string;
   score: number;
   correctCount: number;
@@ -35,6 +39,7 @@ export class AtomGameOverScreen extends React.Component<
       <LightBoxTouchableBackground
         testID={AtomGameOverScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         style={styles.light_box_container}
         enabled={true}
         onPress={(): void => this.props.quit()}

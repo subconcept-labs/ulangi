@@ -6,7 +6,7 @@
  */
 
 import * as _ from 'lodash';
-import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 export interface StrokeOrdersStyles {
   webview: ViewStyle;
@@ -14,8 +14,6 @@ export interface StrokeOrdersStyles {
 
 export const baseStyles: StrokeOrdersStyles = {
   webview: {
-    zIndex: 10,
-    width: Dimensions.get('window').width - 16 * 2,
     marginVertical: 16,
   },
 };

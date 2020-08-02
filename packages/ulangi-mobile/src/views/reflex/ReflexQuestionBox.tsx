@@ -16,6 +16,7 @@ import * as React from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface ReflexQuestionBoxProps {
@@ -160,40 +161,40 @@ export class ReflexQuestionBox extends React.Component<
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 16,
-    marginVertical: 10,
-    borderRadius: 4,
+    marginHorizontal: ls(16),
+    marginVertical: ss(10),
+    borderRadius: ss(4),
     backgroundColor: '#f5f5f5',
     overflow: 'hidden',
   },
 
   question_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 
   question: {
     textAlign: 'center',
     color: '#555',
-    fontSize: 17,
-    lineHeight: 22,
+    fontSize: ss(17),
+    lineHeight: ss(22),
   },
 
   time_bar_container: {
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: ss(10),
+    paddingVertical: ss(8),
     backgroundColor: '#e6e6e6',
   },
 
   time_bar_placeholder: {
-    height: 8,
+    height: ss(8),
     backgroundColor: '#ccc',
-    borderRadius: 4,
+    borderRadius: ss(8) / 2,
     overflow: 'hidden',
   },
 
   time_bar: {
-    height: 8,
+    height: ss(8),
     backgroundColor: 'darkturquoise',
   },
 

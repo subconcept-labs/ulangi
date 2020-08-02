@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableLightBox } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableLightBox,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -19,6 +22,7 @@ import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackg
 
 export interface ReflexPausedScreenProps {
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   continue: () => void;
   restart: () => void;
   quit: () => void;
@@ -33,6 +37,7 @@ export class ReflexPausedScreen extends React.Component<
       <LightBoxTouchableBackground
         testID={ReflexPausedScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         enabled={true}
         activeOpacity={0.2}
         style={styles.light_box_container}
