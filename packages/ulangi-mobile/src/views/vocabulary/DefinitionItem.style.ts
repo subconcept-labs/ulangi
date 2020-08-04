@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DefinitionItemStyle {
   item_container: ViewStyle;
@@ -19,24 +20,24 @@ export interface DefinitionItemStyle {
 
 export const baseStyles: DefinitionItemStyle = {
   item_container: {
-    paddingVertical: 2,
+    paddingVertical: ss(2),
     borderTopWidth: StyleSheet.hairlineWidth,
   },
 
   meaning_container: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingVertical: ss(10),
+    paddingHorizontal: ss(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   plain_meaning_container: {
     flexShrink: 1,
-    paddingVertical: 3,
+    paddingVertical: ss(3),
   },
 
   plain_meaning: {
-    fontSize: 17,
+    fontSize: ss(17),
   },
 };
 

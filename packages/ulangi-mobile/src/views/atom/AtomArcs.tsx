@@ -5,28 +5,22 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableArc } from '@ulangi/ulangi-observable';
+import { ObservableArc, ObservableDimensions } from '@ulangi/ulangi-observable';
 import { IObservableArray } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
 import { config } from '../../constants/config';
 
 export interface AtomArcsProps {
+  observableDimensions: ObservableDimensions;
   arcs: IObservableArray<ObservableArc>;
 }
 
 @observer
 export class AtomArcs extends React.Component<AtomArcsProps> {
-  public getScreenDimensions(): { width: number; height: number } {
-    return {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-    };
-  }
-
   public describeArc(
     fromPosition: { x: number; y: number },
     toPosition: { x: number; y: number },
@@ -65,13 +59,13 @@ export class AtomArcs extends React.Component<AtomArcsProps> {
   }
 
   public render(): React.ReactElement<any> {
-    const dimensions = this.getScreenDimensions();
+    const { windowWidth, windowHeight } = this.props.observableDimensions;
     return (
       <Svg
         key={this.generateSvgKey()}
         style={styles.container}
-        width={dimensions.width}
-        height={dimensions.height}>
+        width={windowWidth}
+        height={windowHeight}>
         {this.props.arcs.map(
           (arc): React.ReactElement<any> => {
             return (

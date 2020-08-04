@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableLightBox,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -28,6 +29,7 @@ export interface IntervalsScreenProps {
   themeStore: ObservableThemeStore;
   levelIntervalPairs: readonly [number, number][];
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   screenDelegate: IntervalsScreenDelegate;
 }
 
@@ -44,6 +46,7 @@ export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
       <LightBoxContainerWithTitle
         theme={this.props.themeStore.theme}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         dismissLightBox={this.props.screenDelegate.dismissLightBox}
         title="Intervals">
         {this.props.levelIntervalPairs.map(

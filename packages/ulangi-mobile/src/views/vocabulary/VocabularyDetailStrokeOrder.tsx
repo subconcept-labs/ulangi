@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
+import { ObservableDimensions } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -23,6 +24,7 @@ import {
 
 export interface VocabularyDetailStrokeOrderProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   vocabularyTerm: string;
   vocabularyExtraFields: VocabularyExtraFields;
   strokeOrderForm: 'traditional' | 'simplified' | 'unknown';
@@ -55,6 +57,7 @@ export class VocabularyDetailStrokeOrder extends React.Component<
             <View style={this.styles.container}>
               <StrokeOrders
                 theme={this.props.theme}
+                observableDimensions={this.props.observableDimensions}
                 words={
                   this.props.strokeOrderForm === 'traditional'
                     ? this.props.vocabularyExtraFields.traditional[0][0].split(

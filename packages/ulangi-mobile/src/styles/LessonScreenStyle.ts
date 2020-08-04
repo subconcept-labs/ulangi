@@ -11,6 +11,7 @@ import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 
 import { config } from '../constants/config';
+import { ls, ss } from '../utils/responsive';
 import {
   darkStyles as defaultTopBarDarkStyles,
   lightStyles as defaultTopBarLightStyles,
@@ -110,7 +111,11 @@ export class LessonScreenStyle {
         config.styles.primaryColor,
         'white',
       ),
-      { buttonStyle: { marginHorizontal: 5, marginVertical: 6 } },
+      {
+        buttonStyle: {
+          marginVertical: ss(6),
+        },
+      },
     );
   }
 
@@ -122,7 +127,7 @@ export class LessonScreenStyle {
         '#ddd',
         '#444',
       ),
-      { buttonStyle: { marginHorizontal: 22, marginVertical: 6 } },
+      { buttonStyle: { marginHorizontal: ss(16), marginVertical: ss(6) } },
     );
   }
 
@@ -152,8 +157,8 @@ export class LessonScreenStyle {
       ),
       {
         buttonStyle: {
-          marginHorizontal: 16,
-          marginVertical: 4,
+          marginHorizontal: ls(16),
+          marginVertical: ss(4),
         },
       },
     );

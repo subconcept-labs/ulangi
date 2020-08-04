@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableQuizScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -20,6 +21,7 @@ import { QuizTitle } from './QuizTitle';
 
 export interface QuizScreenProps {
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableQuizScreen;
   screenDelegate: QuizScreenDelegate;
 }
@@ -35,6 +37,7 @@ export class QuizScreen extends React.Component<QuizScreenProps> {
             </View>
             <View style={styles.menu_container}>
               <QuizMenu
+                observableDimensions={this.props.observableDimensions}
                 startWritingQuiz={this.props.screenDelegate.startWritingQuiz}
                 startMultipleChoiceQuiz={
                   this.props.screenDelegate.startMultipleChoiceQuiz

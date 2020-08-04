@@ -10,6 +10,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import { MembershipLabel } from './MembershipLabel';
 import { MembershipTitle } from './MembershipTitle';
 import { RegularFeatureList } from './RegularFeatureList';
@@ -38,7 +39,7 @@ export class RegularMembership extends React.Component<RegularMembershipProps> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 50,
+    paddingVertical: ss(50),
     backgroundColor: config.styles.regularMembershipColor,
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
 
   feature_list_container: {
     alignSelf: 'stretch',
-    paddingTop: 40,
+    paddingTop: ss(40),
   },
 });

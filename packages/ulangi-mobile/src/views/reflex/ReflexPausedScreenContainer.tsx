@@ -70,6 +70,7 @@ export class ReflexPausedScreenContainer extends Container<
     return (
       <ReflexPausedScreen
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         continue={this.props.passedProps.continue}
         restart={this.props.passedProps.restart}
         quit={this.props.passedProps.quit}

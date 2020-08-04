@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface FAQListStyles {
   container: ViewStyle;
@@ -29,17 +30,17 @@ export const baseStyles: FAQListStyles = {
   },
 
   scroll_view: {
-    paddingVertical: 8,
+    paddingVertical: ss(8),
   },
 
   section_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
   },
 
   header_container: {
     flexDirection: 'row',
-    paddingVertical: 4,
+    paddingVertical: ss(4),
     alignItems: 'center',
   },
 
@@ -49,32 +50,32 @@ export const baseStyles: FAQListStyles = {
 
   title_text: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   content_container: {
-    marginLeft: 11,
-    paddingHorizontal: 16,
+    marginLeft: ss(11),
+    paddingHorizontal: ss(16),
     borderLeftWidth: StyleSheet.hairlineWidth,
   },
 
   content_text: {
-    fontSize: 15,
-    lineHeight: 20,
+    fontSize: ss(15),
+    lineHeight: ss(20),
   },
 
   index_container: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: ss(22),
+    height: ss(22),
+    borderRadius: ss(22) / 2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 5,
+    marginRight: ss(5),
   },
 
   index: {
     fontWeight: 'bold',
-    fontSize: 13,
+    fontSize: ss(13),
   },
 };
 

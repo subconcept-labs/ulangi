@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface UpgradeButtonProps {
@@ -52,10 +53,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#5C6BC0',
-    marginHorizontal: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 5,
+    marginHorizontal: ls(16),
+    paddingVertical: ss(12),
+    paddingHorizontal: ss(16),
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.12,
@@ -63,12 +64,12 @@ const styles = StyleSheet.create({
   },
 
   text_container: {
-    paddingRight: 14,
+    paddingRight: ss(14),
     flexShrink: 1,
   },
 
   text: {
-    fontSize: 16,
+    fontSize: ss(16),
     fontWeight: '700',
     color: '#fff',
   },
@@ -79,17 +80,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderLeftWidth: StyleSheet.hairlineWidth,
     borderLeftColor: '#f9f9f9',
-    paddingLeft: 14,
+    paddingLeft: ss(14),
   },
 
   price: {
-    fontSize: 18,
+    fontSize: ss(18),
     fontWeight: '700',
     color: '#fff',
   },
 
   currency: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: '700',
     color: '#fff',
   },

@@ -6,7 +6,10 @@
  */
 
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservablePixabayImage } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservablePixabayImage,
+} from '@ulangi/ulangi-observable';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -26,6 +29,7 @@ import { SelectableImage } from './SelectableImage';
 
 export interface ImageListProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   images: null | IObservableArray<ObservablePixabayImage>;
   isRefreshing: IObservableValue<boolean>;
   searchState: IObservableValue<ActivityState>;
@@ -51,6 +55,7 @@ export class ImageList extends React.Component<ImageListProps> {
   }
 
   public render(): React.ReactElement<any> {
+    const windowWidth = this.props.observableDimensions.windowWidth;
     return (
       <FlatList
         style={this.styles.container}
@@ -82,8 +87,8 @@ export class ImageList extends React.Component<ImageListProps> {
               image={item}
               toggleSelect={(): void => this.props.toggleSelect(item)}
               styles={{
-                light: selectableImageLightStyles,
-                dark: selectableImageDarkStyles,
+                light: selectableImageLightStyles(windowWidth),
+                dark: selectableImageDarkStyles(windowWidth),
               }}
             />
           );

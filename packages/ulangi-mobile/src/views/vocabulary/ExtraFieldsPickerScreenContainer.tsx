@@ -75,6 +75,7 @@ export class ExtraFieldsPickerScreenContainer extends Container<
     return (
       <ExtraFieldsPickerScreen
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         screenDelegate={this.screenDelegate}
         themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}

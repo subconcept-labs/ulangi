@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableLightBox,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -21,6 +22,7 @@ import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
 export interface LightBoxDialogScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   navigatorDelegate: NavigatorDelegate;
 }
 
@@ -48,6 +50,7 @@ export class LightBoxDialogScreen extends React.Component<
       return (
         <LightBoxTouchableBackground
           observableLightBox={this.props.observableLightBox}
+          observableDimensions={this.props.observableDimensions}
           style={styles.light_box_container}
           enabled={this.isBackgroundTouchable()}
           onPress={(): void => this.onBackgroundPress()}

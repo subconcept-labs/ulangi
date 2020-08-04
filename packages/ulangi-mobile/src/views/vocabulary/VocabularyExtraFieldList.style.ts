@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface VocabularyExtraFieldListStyles {
   container: ViewStyle;
@@ -27,7 +28,7 @@ const baseStyles: VocabularyExtraFieldListStyles = {
   container: {},
 
   item_container: {
-    marginVertical: 4,
+    marginVertical: ss(4),
     //borderTopWidth: StyleSheet.hairlineWidth,
     //borderTopColor: config.styles.light.primaryBorderColor,
     flexDirection: 'row',
@@ -45,12 +46,12 @@ const baseStyles: VocabularyExtraFieldListStyles = {
   },
 
   name: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: '700',
   },
 
   value: {
-    fontSize: 17,
+    fontSize: ss(17),
     //fontWeight: 'bold',
   },
 
@@ -60,11 +61,11 @@ const baseStyles: VocabularyExtraFieldListStyles = {
   },
 
   speaker_icon: {
-    marginLeft: 6,
+    marginLeft: ss(6),
   },
 
   activity_indicator: {
-    marginLeft: 6,
+    marginLeft: ss(6),
   },
 };
 

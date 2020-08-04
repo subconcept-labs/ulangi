@@ -72,6 +72,7 @@ export class LearnScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <LearnScreen
+        observableDimensions={this.props.observableDimensions}
         setStore={this.props.rootStore.setStore}
         themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}

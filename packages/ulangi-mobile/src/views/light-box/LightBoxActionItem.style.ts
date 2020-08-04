@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxActionItemStyles {
   item_container: ViewStyle;
@@ -28,12 +29,12 @@ export const baseStyles: LightBoxActionItemStyles = {
   },
 
   item_button: {
-    paddingVertical: 14,
-    paddingHorizontal: 8,
+    paddingVertical: ss(14),
+    paddingHorizontal: ss(8),
   },
 
   item_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

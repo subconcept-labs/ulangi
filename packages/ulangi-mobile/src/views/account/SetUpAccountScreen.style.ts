@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface SetUpAccountScreenStyles {
   screen: ViewStyle;
@@ -25,25 +26,25 @@ export const baseStyles: SetUpAccountScreenStyles = {
 
   form: {
     flex: 1,
-    marginTop: 16,
-    paddingHorizontal: 16,
+    marginTop: ss(16),
+    paddingHorizontal: ls(16),
   },
 
   text_input_container: {
-    marginVertical: 5,
-    borderRadius: 5,
+    marginVertical: ss(5),
+    borderRadius: ss(5),
     borderWidth: StyleSheet.hairlineWidth,
   },
 
   text_input: {
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    fontSize: 16,
+    paddingHorizontal: ss(12),
+    paddingVertical: ss(12),
+    fontSize: ss(16),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   submit_btn_container: {
-    marginTop: 8,
+    marginTop: ss(8),
   },
 };
 

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 import {
   darkStyles as defaultDefinitionItemDarkStyles,
   lightStyles as defaultDefinitionItemLightStyles,
@@ -21,7 +22,6 @@ export interface ReviewItemStyles {
   top_container: ViewStyle;
   message_container: ViewStyle;
   message_inline: TextStyle;
-  message_text: TextStyle;
   message_text_highlighted: TextStyle;
   definition_list_container: ViewStyle;
   bold: TextStyle;
@@ -29,48 +29,45 @@ export interface ReviewItemStyles {
 
 export const baseStyles: ReviewItemStyles = {
   vocabulary_container: {
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
     backgroundColor: '#ececec',
-    borderRadius: 10,
-    marginTop: 20,
+    borderRadius: ss(10),
+    marginTop: ss(20),
   },
 
   vocabulary_text_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(14),
   },
 
   top_container: {
-    paddingVertical: 3,
+    paddingVertical: ss(3),
     flexDirection: 'row',
   },
 
   vocabulary_text: {
-    fontSize: 19,
+    fontSize: ss(19),
     fontWeight: 'bold',
   },
 
   message_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderTopWidth: 2,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
+    borderTopWidth: ss(2),
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   message_inline: {
     flexShrink: 1,
-  },
-
-  message_text: {
-    fontSize: 15,
-    lineHeight: 19,
+    fontSize: ss(15),
+    lineHeight: ss(19),
   },
 
   message_text_highlighted: {
     color: config.styles.primaryColor,
-    fontSize: 15,
-    lineHeight: 19,
+    fontSize: ss(15),
+    lineHeight: ss(19),
   },
 
   bold: {
@@ -100,10 +97,6 @@ export const lightStyles = StyleSheet.create(
       color: config.styles.light.secondaryTextColor,
     },
 
-    message_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-
     definition_list_container: {
       borderTopColor: config.styles.light.secondaryBorderColor,
     },
@@ -126,10 +119,6 @@ export const darkStyles = StyleSheet.create(
 
     message_inline: {
       color: config.styles.dark.secondaryTextColor,
-    },
-
-    message_text: {
-      color: config.styles.dark.primaryTextColor,
     },
 
     definition_list_container: {

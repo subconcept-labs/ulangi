@@ -15,6 +15,7 @@ import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { ms } from 'react-native-size-matters';
 
 import { CategoryItem } from '../category/CategoryItem';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
@@ -110,7 +111,7 @@ export class CategoryList extends React.Component<CategoryListProps> {
 
 const styles = StyleSheet.create({
   activity_indicator: {
-    marginBottom: 16,
+    marginBottom: ms(16),
   },
 
   list_container: {
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   },
 
   list: {
-    paddingTop: 16,
-    paddingBottom: 74,
+    paddingTop: ms(16),
+    paddingBottom: ms(74),
   },
 });

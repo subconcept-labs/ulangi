@@ -12,6 +12,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 
@@ -112,15 +113,15 @@ export class AtomTutorialContent extends React.Component<
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: ls(16),
   },
 
   content_container: {},
 
   content: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.atom.textColor,
-    lineHeight: 19,
+    lineHeight: ss(19),
   },
 
   highlighted: {
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
 
   button_container: {
-    marginTop: 6,
+    marginTop: ss(6),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

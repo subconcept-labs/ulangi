@@ -8,6 +8,7 @@
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableLightBox,
   ObservableSetStore,
   ObservableThemeStore,
@@ -32,6 +33,7 @@ import {
 export interface ExtraFieldsPickerScreenProps {
   kind: 'vocabulary' | 'definition';
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
   screenDelegate: ExtraFieldsPickerScreenDelegate;
@@ -58,6 +60,7 @@ export class ExtraFieldsPickerScreen extends React.Component<
       <LightBoxTouchableBackground
         testID={ExtraFieldsPickerScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         style={this.styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
@@ -67,7 +70,13 @@ export class ExtraFieldsPickerScreen extends React.Component<
           observableLightBox={this.props.observableLightBox}>
           <View style={this.styles.inner_container}>
             {this.renderPickerHeader()}
-            <View style={this.styles.picker_content_container}>
+            <View
+              style={[
+                this.styles.picker_content_container,
+                {
+                  height: this.props.observableDimensions.windowHeight / 2,
+                },
+              ]}>
               {this.renderPickerContent()}
             </View>
           </View>

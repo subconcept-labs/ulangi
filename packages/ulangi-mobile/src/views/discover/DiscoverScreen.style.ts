@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface DiscoverScreenStyles {
   screen: ViewStyle;
@@ -31,26 +32,26 @@ export const baseStyles: DiscoverScreenStyles = {
 
   message_container: {
     flex: 1,
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   message: {
     color: '#888',
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   floating_button_container: {
     position: 'absolute',
-    right: 14,
-    bottom: 14,
+    right: ss(14),
+    bottom: ss(14),
   },
 
   header_text: {
-    paddingVertical: 20,
-    paddingHorizontal: 50,
-    fontSize: 15,
+    paddingVertical: ss(20),
+    paddingHorizontal: ss(50),
+    fontSize: ss(15),
     textAlign: 'center',
   },
 

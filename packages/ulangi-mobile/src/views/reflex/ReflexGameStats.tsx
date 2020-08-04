@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface ReflexGameStatsProps {
@@ -33,13 +34,13 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
     flex: 1,
   },
 
   score_text: {
     fontFamily: 'Raleway-Black',
-    fontSize: 32,
+    fontSize: ss(32),
     color: 'white',
   },
 });

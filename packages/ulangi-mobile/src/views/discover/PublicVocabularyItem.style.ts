@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface PublicVocabularyItemStyles {
   outer_container: ViewStyle;
@@ -40,20 +41,20 @@ export const baseStyles: PublicVocabularyItemStyles = {
   },
 
   inner_container: {
-    marginHorizontal: 16,
-    marginTop: 16,
-    borderRadius: 5,
+    marginHorizontal: ls(16),
+    marginTop: ss(16),
+    borderRadius: ss(5),
     overflow: 'hidden',
     elevation: 2,
   },
 
   vocabulary_text_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 
   top_container: {
-    paddingVertical: 2,
+    paddingVertical: ss(2),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -62,23 +63,23 @@ export const baseStyles: PublicVocabularyItemStyles = {
   left: {},
 
   right: {
-    marginLeft: 8,
+    marginLeft: ss(8),
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   vocabulary_text: {
     fontWeight: 'bold',
-    fontSize: 19,
+    fontSize: ss(19),
     color: config.styles.primaryColor,
   },
 
   button: {
-    height: 30,
-    width: 32,
-    borderRadius: 3,
+    height: ss(30),
+    width: ss(32),
+    borderRadius: ss(3),
     borderWidth: 1,
-    marginLeft: 7,
+    marginLeft: ss(7),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
     shadowRadius: 0.75,
@@ -89,7 +90,7 @@ export const baseStyles: PublicVocabularyItemStyles = {
   },
 
   definition_list_container: {
-    borderTopWidth: 2,
+    borderTopWidth: ss(2),
   },
 
   definition_container: {
@@ -97,31 +98,31 @@ export const baseStyles: PublicVocabularyItemStyles = {
   },
 
   meaning_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   plain_meaning_container: {
     flexShrink: 1,
-    paddingVertical: 3,
+    paddingVertical: ss(3),
   },
 
   plain_meaning: {
-    fontSize: 17,
+    fontSize: ss(17),
   },
 
   attribution_container: {
-    paddingVertical: 13,
+    paddingVertical: ss(13),
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   attribution: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   highlighted: {
@@ -129,11 +130,11 @@ export const baseStyles: PublicVocabularyItemStyles = {
   },
 
   dot_container: {
-    paddingHorizontal: 6,
+    paddingHorizontal: ss(6),
   },
 
   dot: {
-    fontSize: 17,
+    fontSize: ss(17),
   },
 };
 

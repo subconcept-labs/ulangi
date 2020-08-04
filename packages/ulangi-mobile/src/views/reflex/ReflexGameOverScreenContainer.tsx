@@ -71,6 +71,7 @@ export class ReflexGameOverScreenContainer extends Container<
     return (
       <ReflexGameOverScreen
         observableLightBox={this.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         title={this.props.passedProps.title}
         score={this.props.passedProps.score}
         restart={this.props.passedProps.restart}

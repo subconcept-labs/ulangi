@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SectionRowStyles {
   outer_container: ViewStyle;
@@ -31,21 +32,21 @@ export const baseStyles: SectionRowStyles = StyleSheet.create({
   },
 
   inner_container: {
-    paddingVertical: 3,
+    paddingVertical: ss(3),
   },
 
   row_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
   },
 
   left: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingRight: 8,
+    paddingRight: ss(8),
   },
 
   right: {
@@ -54,26 +55,26 @@ export const baseStyles: SectionRowStyles = StyleSheet.create({
   },
 
   left_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   right_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   caret: {
-    marginLeft: 8,
+    marginLeft: ss(8),
   },
 
   description_container: {
-    paddingHorizontal: 16,
-    paddingTop: 6,
-    paddingBottom: 12,
+    paddingHorizontal: ss(16),
+    paddingTop: ss(6),
+    paddingBottom: ss(12),
   },
 
   description_text: {
-    fontSize: 15,
-    lineHeight: 19,
+    fontSize: ss(15),
+    lineHeight: ss(19),
   },
 
   disabled_container: {},

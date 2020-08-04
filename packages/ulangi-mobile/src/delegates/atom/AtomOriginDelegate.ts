@@ -9,9 +9,6 @@ import {
   ObservableAtomPlayScreen,
   ObservableElasticScaleCommand,
 } from '@ulangi/ulangi-observable';
-import { Dimensions } from 'react-native';
-
-import { config } from '../../constants/config';
 
 export class AtomOriginDelegate {
   private observableScreen: ObservableAtomPlayScreen;
@@ -27,16 +24,5 @@ export class AtomOriginDelegate {
         { scaleX: 1, scaleY: 1 },
       ),
     );
-  }
-
-  public getDefaultOriginPosition(): { x: number; y: number } {
-    const x = Dimensions.get('window').width / 2;
-    const screenHeight = Dimensions.get('window').height;
-    const y =
-      screenHeight -
-      config.atom.bottomOffset -
-      config.atom.outerShellDiameter / 2 -
-      config.atom.particleSize / 2;
-    return { x, y };
   }
 }

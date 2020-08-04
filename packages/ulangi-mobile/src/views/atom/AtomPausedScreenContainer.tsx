@@ -47,6 +47,7 @@ export class AtomPausedScreenContainer extends Container<
     return (
       <AtomPausedScreen
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         restart={this.props.passedProps.restart}
         quit={this.props.passedProps.quit}
         close={(): void => this.navigatorDelegate.dismissLightBox()}

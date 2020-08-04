@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
   ObservableThemeStore,
@@ -30,6 +31,7 @@ import { SpacedRepetitionResult } from './SpacedRepetitionResult';
 export interface SpacedRepetitionLessonScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableSpacedRepetitionLessonScreen;
   screenDelegate: SpacedRepetitionLessonScreenDelegate;
 }
@@ -86,6 +88,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
                 this.props.observableScreen.reviewState.vocabulary.vocabularyId
               }
               theme={this.props.themeStore.theme}
+              observableDimensions={this.props.observableDimensions}
               learningLanguageCode={currentSet.learningLanguageCode}
               reviewState={this.props.observableScreen.reviewState}
             />

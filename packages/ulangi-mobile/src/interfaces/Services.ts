@@ -8,6 +8,7 @@
 import { EventBusFactory } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
+  ObservableDimensions,
   ObservableKeyboard,
   ObservableLightBox,
   ObservableRootStore,
@@ -19,6 +20,7 @@ export interface Services {
   readonly rootStore: ObservableRootStore;
   readonly observableConverter: ObservableConverter;
   readonly observableLightBox: ObservableLightBox;
+  readonly observableDimensions: ObservableDimensions;
   readonly observableKeyboard: ObservableKeyboard;
   readonly observableScreenRegistry: ObservableScreenRegistry;
 }

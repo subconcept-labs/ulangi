@@ -13,6 +13,7 @@ import * as Animatable from 'react-native-animatable';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface SyncingNoticeProps {
@@ -82,24 +83,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    height: 30,
-    borderRadius: 15,
+    paddingHorizontal: ss(10),
+    height: ss(30),
+    borderRadius: ss(15),
     backgroundColor: config.styles.primaryColor,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 1,
     shadowOpacity: 0.15,
     elevation: 3,
-    marginBottom: -3,
+    marginBottom: ss(-3),
   },
 
   icon: {},
 
   text: {
-    marginLeft: 4,
+    marginLeft: ss(4),
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: ss(13),
     color: '#fff',
   },
 

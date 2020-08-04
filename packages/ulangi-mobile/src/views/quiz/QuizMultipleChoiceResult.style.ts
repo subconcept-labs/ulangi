@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface QuizMultipleChoiceResultStyles {
   container: ViewStyle;
@@ -27,30 +28,30 @@ export const baseStyles: QuizMultipleChoiceResultStyles = {
   },
 
   title_container: {
-    marginTop: 30,
+    marginTop: ss(30),
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   title: {
-    fontSize: 16,
+    fontSize: ss(16),
     fontWeight: 'bold',
   },
 
   table: {
-    marginTop: 20,
-    paddingHorizontal: 16,
+    marginTop: ss(20),
+    paddingHorizontal: ss(16),
   },
 
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 4,
+    paddingVertical: ss(4),
   },
 
   horizontal_line: {
     height: 1,
-    marginVertical: 12,
+    marginVertical: ss(12),
   },
 
   bold: {
@@ -58,7 +59,7 @@ export const baseStyles: QuizMultipleChoiceResultStyles = {
   },
 
   button_container: {
-    marginTop: 8,
+    marginTop: ss(8),
   },
 };
 

@@ -8,6 +8,7 @@
 import { assertExists } from '@ulangi/assert';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableSetStore,
   ObservableThemeStore,
   ObservableVocabularyDetailScreen,
@@ -34,6 +35,7 @@ import {
 export interface VocabularyDetailScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableVocabularyDetailScreen;
   screenDelegate: VocabularyDetailScreenDelegate;
 }
@@ -77,6 +79,7 @@ export class VocabularyDetailScreen extends React.Component<
           {currentSet.learningLanguageCode === 'zh' ? (
             <VocabularyDetailStrokeOrder
               theme={this.props.themeStore.theme}
+              observableDimensions={this.props.observableDimensions}
               vocabularyTerm={
                 this.props.observableScreen.vocabulary.vocabularyTerm
               }

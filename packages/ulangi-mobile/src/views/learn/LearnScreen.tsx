@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableSetStore,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -25,6 +26,7 @@ import {
 } from './LearnScreen.style';
 
 export interface LearnScreenProps {
+  observableDimensions: ObservableDimensions;
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
   screenDelegate: LearnScreenDelegate;
@@ -55,6 +57,7 @@ export class LearnScreen extends React.Component<LearnScreenProps> {
         </View>
         <LearnList
           theme={this.props.themeStore.theme}
+          observableDimensions={this.props.observableDimensions}
           featureSettings={this.props.screenDelegate.getCurrentFeatureSettings()}
           navigateToSpacedRepetitionScreen={
             this.props.screenDelegate.navigateToSpacedRepetitionScreen

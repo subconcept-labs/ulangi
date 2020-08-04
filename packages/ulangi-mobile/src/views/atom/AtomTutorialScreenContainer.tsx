@@ -20,6 +20,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { Container } from '../../Container';
+import { config } from '../../constants/config';
 import { AtomTutorialScreenFactory } from '../../factories/atom/AtomTutorialScreenFactory';
 import { AtomStyle } from '../../styles/AtomStyle';
 import { AtomTutorialScreen } from './AtomTutorialScreen';
@@ -43,15 +44,18 @@ export class AtomTutorialScreenContainer extends Container {
     observable.array(['A', 'T', 'O', 'M', 'K']),
   );
 
-  private atomSettingsDelegate = this.atomTutorialScreenFactory.createAtomSettingsDelegate();
-
   protected observableScreen = new ObservableAtomTutorialScreen(
     0,
     new ObservableAtomGameState(false, false),
     new ObservableAtomGameStats(10, 0, 0),
     false,
     this.question,
-    new ObservableOrigin(this.atomSettingsDelegate.getDefaultOriginPosition()),
+    new ObservableOrigin(
+      this.props.observableDimensions,
+      config.atom.bottomOffset,
+      config.atom.outerShellDiameter,
+      config.atom.particleSize,
+    ),
     [],
     [],
     [],
@@ -65,6 +69,7 @@ export class AtomTutorialScreenContainer extends Container {
 
   public componentDidMount(): void {
     this.screenDelegate.initializeShellsAndParticles();
+    this.screenDelegate.autoMoveParticlesOnOriginPositionChange();
   }
 
   protected onThemeChanged(): void {
@@ -75,6 +80,7 @@ export class AtomTutorialScreenContainer extends Container {
     return (
       <AtomTutorialScreen
         observableScreen={this.observableScreen}
+        observableDimensions={this.props.observableDimensions}
         screenDelegate={this.screenDelegate}
       />
     );

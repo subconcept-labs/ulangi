@@ -12,6 +12,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface ReflexAnswerButtonsProps {
@@ -93,23 +94,23 @@ const styles = StyleSheet.create({
   vertical_axis_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
   },
 
   horizontal_axis_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 8,
+    marginHorizontal: ls(8),
   },
 
   start_button: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: ss(16),
     alignSelf: 'stretch',
     backgroundColor: 'mintcream',
-    borderRadius: 8,
+    borderRadius: ss(8),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.12,
@@ -119,19 +120,19 @@ const styles = StyleSheet.create({
   start_text: {
     fontFamily: 'Raleway-Black',
     color: '#2fc68f',
-    paddingVertical: 16,
-    fontSize: 35,
+    paddingVertical: ss(16),
+    fontSize: ss(35),
   },
 
   touchable: {
-    marginHorizontal: 8,
-    marginVertical: 30,
+    marginHorizontal: ls(8),
+    marginVertical: ss(30),
     justifyContent: 'center',
     alignItems: 'center',
-    height: 120,
+    height: ss(120),
     flex: 1,
     backgroundColor: 'mintcream',
-    borderRadius: 8,
+    borderRadius: ss(8),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.12,
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
 
   touchable_text: {
     fontFamily: 'Raleway-Black',
-    fontSize: 35,
+    fontSize: ss(35),
   },
 
   touchable_text_green: {
@@ -152,12 +153,12 @@ const styles = StyleSheet.create({
   },
 
   note_container: {
-    marginBottom: 16,
+    marginBottom: ss(16),
   },
 
   note: {
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: ss(14),
+    lineHeight: ss(19),
     textAlign: 'center',
     color: '#21eddc',
   },

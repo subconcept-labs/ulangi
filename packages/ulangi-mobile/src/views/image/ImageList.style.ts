@@ -6,9 +6,10 @@
  */
 
 import * as _ from 'lodash';
-import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSelectableImageDarkStyles,
   lightStyles as defaultSelectableImageLightStyles,
@@ -25,7 +26,7 @@ export interface ImageListStyles {
   highlighted: TextStyle;
 }
 
-export const imagePadding = 4;
+export const imagePadding = ss(4);
 export const numColumns = 3;
 
 export const baseStyles: ImageListStyles = {
@@ -40,29 +41,29 @@ export const baseStyles: ImageListStyles = {
   header_container: {
     marginHorizontal: -imagePadding,
     marginBottom: imagePadding,
-    paddingHorizontal: 16,
-    paddingVertical: 9,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(9),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   header_text: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   empty_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 
   empty_text: {
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   activity_indicator: {
-    marginTop: 16,
+    marginTop: ss(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -106,28 +107,29 @@ export const darkStyles = StyleSheet.create(
   }),
 );
 
-export const selectableImageLightStyles = StyleSheet.create(
-  _.merge({}, defaultSelectableImageLightStyles, {
-    image_container: {
-      padding: imagePadding,
-    },
-    image: calculateImageDimension(),
-  }),
-);
+export const selectableImageLightStyles = (windowWidth: number): any =>
+  StyleSheet.create(
+    _.merge({}, defaultSelectableImageLightStyles, {
+      image_container: {
+        padding: imagePadding,
+      },
+      image: calculateImageDimension(windowWidth),
+    }),
+  );
 
-export const selectableImageDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSelectableImageDarkStyles, {
-    image_container: {
-      padding: imagePadding,
-    },
-    image: calculateImageDimension(),
-  }),
-);
+export const selectableImageDarkStyles = (windowWidth: number): any =>
+  StyleSheet.create(
+    _.merge({}, defaultSelectableImageDarkStyles, {
+      image_container: {
+        padding: imagePadding,
+      },
+      image: calculateImageDimension(windowWidth),
+    }),
+  );
 
-function calculateImageDimension(): ViewStyle {
+function calculateImageDimension(windowWidth: number): ViewStyle {
   const width =
-    (Dimensions.get('window').width - imagePadding * 2 * (numColumns + 1)) /
-    numColumns;
+    (windowWidth - imagePadding * 2 * (numColumns + 1)) / numColumns;
 
   return {
     width,

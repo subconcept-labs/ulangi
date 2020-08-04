@@ -6,10 +6,13 @@
  */
 
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
-import { ObservableVocabularyListState } from '@ulangi/ulangi-observable';
+import {
+  ObservableDimensions,
+  ObservableVocabularyListState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { VocabularyBulkActionBarIds } from '../../constants/ids/VocabularyBulkActionBarIds';
@@ -18,6 +21,7 @@ import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 
 export interface VocabularyBulkActionBarProps {
+  observableDimensions: ObservableDimensions;
   vocabularyListState: ObservableVocabularyListState;
   clearSelections: () => void;
   showVocabularyBulkActionMenu: () => void;
@@ -29,7 +33,13 @@ export class VocabularyBulkActionBar extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          {
+            width: this.props.observableDimensions.windowWidth,
+          },
+        ]}>
         <DefaultText style={styles.selection_text} numberOfLines={1}>
           <DefaultText style={styles.number_of_selected}>
             {this.props.vocabularyListState.numOfVocabularySelected}
@@ -72,7 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: Dimensions.get('window').width,
     backgroundColor: config.styles.primaryColor,
     paddingHorizontal: 16,
     paddingVertical: 12,

@@ -12,6 +12,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
+import { ss } from '../../utils/responsive';
 
 export interface ReflexTopBarProps {
   onIconPressed: () => void;
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: ss(16),
+    paddingHorizontal: ss(16),
   },
 
   button: {},
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 
   score_text: {
     fontFamily: 'JosefinSans-bold',
-    fontSize: 20,
+    fontSize: ss(20),
     color: '#efecca',
   },
 });

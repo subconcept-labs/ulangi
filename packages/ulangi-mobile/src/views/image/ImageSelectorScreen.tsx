@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableImageSelectorScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -20,6 +21,7 @@ import { SearchInput } from './SearchInput';
 
 export interface ImageSelectorScreenProps {
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableImageSelectorScreen;
   screenDelegate: ImageSelectorScreenDelegate;
 }
@@ -39,6 +41,7 @@ export class ImageSelectorScreen extends React.Component<
         />
         <ImageList
           theme={this.props.themeStore.theme}
+          observableDimensions={this.props.observableDimensions}
           images={this.props.observableScreen.images}
           searchState={this.props.observableScreen.searchState}
           isRefreshing={this.props.observableScreen.isRefreshing}

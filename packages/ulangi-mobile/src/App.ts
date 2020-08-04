@@ -10,12 +10,14 @@ import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { EventBusFactory, EventFacade } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
+  ObservableDimensions,
   ObservableKeyboard,
   ObservableLightBox,
   ObservableScreenRegistry,
 } from '@ulangi/ulangi-observable';
 import { SagaFacade } from '@ulangi/ulangi-saga';
 import { StoreFactory } from '@ulangi/ulangi-store';
+import { Dimensions } from 'react-native';
 
 import { RemoteLogger } from './RemoteLogger';
 import { ServiceRegistry } from './ServiceRegistry';
@@ -23,6 +25,7 @@ import { config } from './constants/config';
 import { env } from './constants/env';
 import { RootScreenDelegate } from './delegates/root/RootScreenDelegate';
 import { AdapterFactory } from './factories/AdapterFactory';
+import { autoUpdateDimensionsState } from './setup/autoUpdateDimensionsState';
 import { autoUpdateKeyboardState } from './setup/autoUpdateKeyboardState';
 import { makeInitialState } from './setup/makeInitialState';
 import { registerCustomViews } from './setup/registerCustomViews';
@@ -104,6 +107,12 @@ export class App {
       rootStore: store.getState(),
       observableLightBox: new ObservableLightBox(),
       observableKeyboard: new ObservableKeyboard(),
+      observableDimensions: new ObservableDimensions(
+        Dimensions.get('screen').width,
+        Dimensions.get('screen').height,
+        Dimensions.get('window').width,
+        Dimensions.get('window').height,
+      ),
       observableConverter: new ObservableConverter(store.getState()),
       observableScreenRegistry: new ObservableScreenRegistry(),
     });
@@ -114,6 +123,7 @@ export class App {
     }
 
     autoUpdateKeyboardState(ServiceRegistry.services.observableKeyboard);
+    autoUpdateDimensionsState(ServiceRegistry.services.observableDimensions);
     sagaFacade.run();
 
     this.initialized = true;

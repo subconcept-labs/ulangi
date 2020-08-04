@@ -65,6 +65,10 @@ export class AtomTutorialScreenDelegate {
     );
   }
 
+  public autoMoveParticlesOnOriginPositionChange(): void {
+    this.particleDelegate.autoMoveParticlesOnOriginPositionChange();
+  }
+
   public checkAnswer(isUserMove: boolean): void {
     this.answerDelegate.checkAnswer(
       (): void => this.onAnswerCorrect(isUserMove),
@@ -170,7 +174,7 @@ export class AtomTutorialScreenDelegate {
   }
 
   private makeShells(): readonly ObservableShell[] {
-    return this.shellFactory.make(this.observableScreen.origin.position);
+    return this.shellFactory.make(this.observableScreen.origin);
   }
 
   private onAnswerCorrect(isUserMove: boolean): void {

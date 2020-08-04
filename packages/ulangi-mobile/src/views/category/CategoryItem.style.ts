@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface CategoryItemStyles {
   item_container: ViewStyle;
@@ -31,9 +32,9 @@ export interface CategoryItemStyles {
 
 const baseStyles: CategoryItemStyles = {
   item_container: {
-    marginHorizontal: 16,
-    marginBottom: 16,
-    borderRadius: 5,
+    marginHorizontal: ls(16),
+    marginBottom: ss(16),
+    borderRadius: ss(5),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.3 },
     shadowRadius: 0.75,
@@ -44,15 +45,15 @@ const baseStyles: CategoryItemStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 14,
+    paddingHorizontal: ss(14),
+    paddingVertical: ss(14),
   },
 
   bottom_container: {},
 
   stats_container: {
-    paddingHorizontal: 14,
-    paddingVertical: 14,
+    paddingHorizontal: ss(14),
+    paddingVertical: ss(14),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -60,61 +61,61 @@ const baseStyles: CategoryItemStyles = {
   },
 
   stats_label_container: {
-    width: 30,
+    width: ss(30),
   },
 
   stats_label: {
-    paddingRight: 4,
+    paddingRight: ss(4),
     fontWeight: 'bold',
-    fontSize: 13,
+    fontSize: ss(13),
   },
 
   category_name: {
     fontWeight: 'bold',
-    fontSize: 17,
-    paddingBottom: 4,
+    fontSize: ss(17),
+    paddingBottom: ss(4),
   },
 
   category_meta: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   left: {
-    paddingRight: 12,
+    paddingRight: ss(12),
     flexShrink: 1,
   },
 
   right: {
     flexDirection: 'row',
-    paddingLeft: 12,
+    paddingLeft: ss(12),
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   right_item: {
-    paddingLeft: 14,
+    paddingLeft: ss(14),
   },
 
   first_right_item: {
-    paddingLeft: 0,
+    paddingLeft: ss(0),
   },
 
   action_btn: {},
 
   count: {
     fontWeight: 'bold',
-    fontSize: 18,
-    paddingBottom: 3,
+    fontSize: ss(18),
+    paddingBottom: ss(3),
   },
 
   terms: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 
   review_btn_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 12,
+    marginLeft: ss(12),
   },
 };
 

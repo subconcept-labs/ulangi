@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ls, ss } from '../../utils/responsive';
 
 export interface MultipleChoiceSummaryStyles {
   stats_container: ViewStyle;
@@ -28,18 +29,18 @@ export interface MultipleChoiceSummaryStyles {
 
 export const baseStyles: MultipleChoiceSummaryStyles = {
   stats_container: {
-    marginTop: 12,
-    marginBottom: 12,
+    marginTop: ss(12),
+    marginBottom: ss(12),
   },
 
   result_container: {
-    marginHorizontal: 16,
+    marginHorizontal: ls(16),
   },
 
   result_row: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingVertical: 2,
+    paddingVertical: ss(2),
   },
 
   percentage: {
@@ -51,8 +52,8 @@ export const baseStyles: MultipleChoiceSummaryStyles = {
   },
 
   row: {
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingHorizontal: ls(16),
+    paddingVertical: ss(4),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -60,17 +61,17 @@ export const baseStyles: MultipleChoiceSummaryStyles = {
 
   left: {
     flexShrink: 1,
-    paddingRight: 16,
+    paddingRight: ss(16),
   },
 
   right: {},
 
   text_left: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   text_right: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 
@@ -82,8 +83,8 @@ export const baseStyles: MultipleChoiceSummaryStyles = {
 
   horizontal_line: {
     height: 1,
-    marginVertical: 12,
-    marginHorizontal: 16,
+    marginVertical: ss(12),
+    marginHorizontal: ls(16),
   },
 };
 

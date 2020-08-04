@@ -10,6 +10,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LevelBarProps {
   theme: Theme;
@@ -47,8 +48,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    height: 10,
-    borderRadius: 5,
+    height: ss(10),
+    borderRadius: ss(5),
     overflow: 'hidden',
   },
 

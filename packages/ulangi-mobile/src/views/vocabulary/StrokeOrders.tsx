@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableDimensions } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import AutoHeightWebView from 'react-native-autoheight-webview';
@@ -21,6 +22,7 @@ import jsEscapeStr = require('js-string-escape');
 
 export interface StrokeOrdersProps {
   theme: Theme;
+  observableDimensions: ObservableDimensions;
   words: string[];
   styles?: {
     light: StrokeOrdersStyles;
@@ -80,7 +82,12 @@ export class StrokeOrders extends React.Component<StrokeOrdersProps> {
     return (
       <AutoHeightWebView
         source={{ html }}
-        style={this.styles.webview}
+        style={[
+          this.styles.webview,
+          {
+            width: this.props.observableDimensions.windowWidth - 16 * 2,
+          },
+        ]}
         customScript={injectedJavascript}
         viewportContent={'width=device-width, user-scalable=no'}
         cacheMode="LOAD_CACHE_ELSE_NETWORK"

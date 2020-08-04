@@ -8,6 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryDetailScreen,
+  ObservableDimensions,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -29,6 +30,7 @@ import {
 
 export interface CategoryDetailScreenProps {
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableCategoryDetailScreen;
   screenDelegate: CategoryDetailScreenDelegate;
 }
@@ -99,6 +101,7 @@ export class CategoryDetailScreen extends React.Component<
     ) {
       return (
         <VocabularyBulkActionBar
+          observableDimensions={this.props.observableDimensions}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           showVocabularyBulkActionMenu={
             this.props.screenDelegate.showVocabularyBulkActionMenu

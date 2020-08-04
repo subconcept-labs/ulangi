@@ -6,10 +6,13 @@
  */
 
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
-import { ObservableCategoryListState } from '@ulangi/ulangi-observable';
+import {
+  ObservableCategoryListState,
+  ObservableDimensions,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { CategoryBulkActionBarIds } from '../../constants/ids/CategoryBulkActionBarIds';
@@ -18,6 +21,7 @@ import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 
 export interface CategoryBulkActionBarProps {
+  observableDimensions: ObservableDimensions;
   categoryListState: ObservableCategoryListState;
   clearSelections: () => void;
   showCategoryBulkActionMenu: () => void;
@@ -29,7 +33,13 @@ export class CategoryBulkActionBar extends React.Component<
 > {
   public render(): null | React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            width: this.props.observableDimensions.windowWidth,
+          },
+        ]}>
         <DefaultText style={styles.selection_text} numberOfLines={1}>
           <DefaultText style={styles.number_of_selected}>
             {this.props.categoryListState.numOfCategoriesSelected}
@@ -78,7 +88,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: Dimensions.get('window').width,
     backgroundColor: config.styles.primaryColor,
     paddingHorizontal: 16,
     paddingVertical: 12,

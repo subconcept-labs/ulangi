@@ -117,6 +117,7 @@ export class SearchScreenContainer extends Container {
     return (
       <SearchScreen
         themeStore={this.props.rootStore.themeStore}
+        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

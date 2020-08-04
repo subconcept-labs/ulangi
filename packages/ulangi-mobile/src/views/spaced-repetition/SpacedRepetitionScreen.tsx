@@ -6,6 +6,7 @@
  */
 
 import {
+  ObservableDimensions,
   ObservableSpacedRepetitionScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -16,11 +17,13 @@ import { StyleSheet, View } from 'react-native';
 import { config } from '../../constants/config';
 import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionScreenIds';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
+import { ss } from '../../utils/responsive';
 import { SelectedCategories } from '../category/SelectedCategories';
 import { SpacedRepetitionMenu } from './SpacedRepetitionMenu';
 import { SpacedRepetitionTitle } from './SpacedRepetitionTitle';
 
 export interface SpacedRepetitionScreenProps {
+  observableDimensions: ObservableDimensions;
   themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionScreen;
   screenDelegate: SpacedRepetitionScreenDelegate;
@@ -40,6 +43,7 @@ export class SpacedRepetitionScreen extends React.Component<
             </View>
             <View style={styles.menu_container}>
               <SpacedRepetitionMenu
+                observableDimensions={this.props.observableDimensions}
                 startLesson={(): void =>
                   this.props.screenDelegate.startLesson(false)
                 }
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
 
   title_container: {
     alignSelf: 'stretch',
-    marginTop: -50,
+    marginTop: ss(-50),
   },
 
   menu_container: {
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
   bottom_container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: 16,
+    padding: ss(16),
   },
 
   note: {
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: ss(14),
+    lineHeight: ss(19),
     textAlign: 'center',
     color: '#777',
   },
@@ -107,6 +111,6 @@ const styles = StyleSheet.create({
   },
 
   selected_categories_container: {
-    marginTop: 50,
+    marginTop: ss(50),
   },
 });

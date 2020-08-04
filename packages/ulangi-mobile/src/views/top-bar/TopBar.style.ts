@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface TopBarStyles {
   top_bar_container: ViewStyle;
@@ -42,7 +43,7 @@ export const baseStyles: TopBarStyles = {
   },
 
   button_container: {
-    minWidth: 80,
+    minWidth: ss(80),
     alignItems: 'center',
   },
 
@@ -71,7 +72,7 @@ export const baseStyles: TopBarStyles = {
 
   button_text_container: {
     height: 24,
-    borderRadius: 12,
+    borderRadius: 24 / 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -97,7 +98,7 @@ export const baseStyles: TopBarStyles = {
   touchable: {
     flexShrink: 1,
     height: 32,
-    borderRadius: 16,
+    borderRadius: 32 / 2,
     padding: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -116,7 +117,7 @@ export const baseStyles: TopBarStyles = {
   },
 
   touchable_caret: {
-    marginRight: 4,
+    marginRight: ss(4),
   },
 };
 

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SpacedRepetitionTitleStyles {
   container: ViewStyle;
@@ -24,20 +25,20 @@ export const baseStyles: SpacedRepetitionTitleStyles = {
   },
 
   title: {
-    fontSize: 26,
+    fontSize: ss(26),
     fontFamily: 'JosefinSans-Bold',
-    letterSpacing: -0.5,
+    letterSpacing: ss(-0.5),
   },
 
   subtitle: {
-    paddingTop: 4,
-    fontSize: 9,
+    paddingTop: ss(4),
+    fontSize: ss(9),
     fontFamily: 'JosefinSans-Bold',
-    letterSpacing: 0.5,
+    letterSpacing: ss(0.5),
   },
 
   icon: {
-    marginTop: 10,
+    marginTop: ss(10),
   },
 };
 

@@ -8,6 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAtomScreen,
+  ObservableDimensions,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -31,6 +32,7 @@ import { AtomTopBar } from './AtomTopBar';
 
 export interface AtomScreenProps {
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableAtomScreen;
   screenDelegate: AtomScreenDelegate;
 }
@@ -59,6 +61,7 @@ export class AtomScreen extends React.Component<AtomScreenProps> {
           </View>
           <View style={this.styles.menu_container}>
             <AtomMenu
+              observableDimensions={this.props.observableDimensions}
               start={this.props.screenDelegate.startGame}
               goToTutorial={this.props.screenDelegate.goToTutorial}
             />

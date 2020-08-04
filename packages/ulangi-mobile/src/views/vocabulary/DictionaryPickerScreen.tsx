@@ -8,6 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDictionaryPickerScreen,
+  ObservableDimensions,
   ObservableLightBox,
   ObservableSetStore,
   ObservableThemeStore,
@@ -31,6 +32,7 @@ import {
 
 export interface DictionaryPickerScreenProps {
   observableLightBox: ObservableLightBox;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableDictionaryPickerScreen;
   themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
@@ -51,6 +53,7 @@ export class DictionaryPickerScreen extends React.Component<
       <LightBoxTouchableBackground
         testID={DictionaryPickerScreenIds.SCREEN}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         style={this.styles.light_box_container}
         enabled={true}
         activeOpacity={0.2}
@@ -60,7 +63,13 @@ export class DictionaryPickerScreen extends React.Component<
           observableLightBox={this.props.observableLightBox}>
           <View style={this.styles.inner_container}>
             {this.renderPickerHeader()}
-            <View style={this.styles.picker_content_container}>
+            <View
+              style={[
+                this.styles.picker_content_container,
+                {
+                  height: this.props.observableDimensions.windowHeight / 2,
+                },
+              ]}>
               {this.renderPickerContent()}
             </View>
           </View>

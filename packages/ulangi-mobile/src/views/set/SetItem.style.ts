@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SetItemStyles {
   cell_container: ViewStyle;
@@ -32,11 +33,11 @@ export const baseStyles: SetItemStyles = {
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   icon_container: {
-    paddingRight: 12,
+    paddingRight: ss(12),
   },
 
   flag_icon: {},
@@ -55,12 +56,12 @@ export const baseStyles: SetItemStyles = {
   right: {},
 
   set_name_container: {
-    paddingTop: 14,
-    paddingBottom: 4,
+    paddingTop: ss(14),
+    paddingBottom: ss(4),
   },
 
   set_name: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
@@ -70,25 +71,25 @@ export const baseStyles: SetItemStyles = {
     flexDirection: 'row',
     alignItems: 'center',
     flexShrink: 1,
-    paddingBottom: 14,
+    paddingBottom: ss(14),
   },
 
   meta_text: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   language: {},
 
   dot: {
-    fontSize: 12,
+    fontSize: ss(12),
     fontWeight: 'bold',
   },
 
   current_text: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: ss(6),
+    paddingVertical: ss(2),
     color: 'coral',
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 };

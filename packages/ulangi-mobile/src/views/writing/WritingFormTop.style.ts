@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface WritingFormTopStyles {
   container: ViewStyle;
@@ -26,9 +27,9 @@ export const baseStyles: WritingFormTopStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: 20,
-    marginBottom: 20,
+    paddingHorizontal: ss(16),
+    marginTop: ss(20),
+    marginBottom: ss(20),
   },
 
   top_container: {
@@ -38,21 +39,21 @@ export const baseStyles: WritingFormTopStyles = {
   },
 
   number_container: {
-    height: 24,
-    paddingHorizontal: 16,
-    borderRadius: 12,
+    height: ss(24),
+    paddingHorizontal: ss(16),
+    borderRadius: ss(12),
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   number: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
   placeholder: {
-    height: 24,
+    height: ss(24),
     flex: 1,
   },
 
@@ -64,11 +65,11 @@ export const baseStyles: WritingFormTopStyles = {
   },
 
   note_container: {
-    marginTop: 6,
+    marginTop: ss(6),
   },
 
   note: {
-    fontSize: 14,
+    fontSize: ss(14),
     textAlign: 'center',
   },
 };

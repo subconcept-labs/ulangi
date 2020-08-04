@@ -61,6 +61,7 @@ export class IntervalsScreenContainer extends Container<
       <IntervalsScreen
         themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
+        observableDimensions={this.props.observableDimensions}
         levelIntervalPairs={this.spacedRepetitionScheduler.calculateWaitingHoursInRange(
           this.props.passedProps.initialInterval,
           this.props.passedProps.range,

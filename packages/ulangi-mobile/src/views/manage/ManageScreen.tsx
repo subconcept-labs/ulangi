@@ -7,6 +7,7 @@
 
 import { Theme, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableDimensions,
   ObservableManageScreen,
   ObservableSetStore,
   ObservableThemeStore,
@@ -17,6 +18,7 @@ import { View } from 'react-native';
 
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
 import { ManageScreenDelegate } from '../../delegates/manage/ManageScreenDelegate';
+import { ss } from '../../utils/responsive';
 import { CategoryBulkActionBar } from '../category/CategoryBulkActionBar';
 import { CategoryList } from '../category/CategoryList';
 import { SyncingNotice } from '../sync/SyncingNotice';
@@ -33,6 +35,7 @@ import { QuickTutorialButton } from './QuickTutorialButton';
 export interface ManageScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
+  observableDimensions: ObservableDimensions;
   observableScreen: ObservableManageScreen;
   screenDelegate: ManageScreenDelegate;
 }
@@ -122,6 +125,7 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
       return (
         <View style={this.styles.bulk_action_bar_container}>
           <CategoryBulkActionBar
+            observableDimensions={this.props.observableDimensions}
             categoryListState={this.props.observableScreen.categoryListState}
             showCategoryBulkActionMenu={
               this.props.screenDelegate.showCategoryBulkActionMenu
@@ -152,7 +156,14 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
   private renderSyncingNotice(): null | React.ReactElement<any> {
     if (!this.shouldShowCategoryBulkActionBar()) {
       return (
-        <View style={this.styles.syncing_notice}>
+        <View
+          style={[
+            this.styles.syncing_notice,
+            {
+              left: (this.props.observableDimensions.windowWidth - ss(120)) / 2,
+              width: ss(120),
+            },
+          ]}>
           <SyncingNotice
             shouldShowSyncingNotice={
               this.props.observableScreen.categoryListState

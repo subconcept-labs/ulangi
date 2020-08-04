@@ -31,6 +31,15 @@ export class AtomParticleDelegate {
     this.observableScreen = observableScreen;
   }
 
+  public autoMoveParticlesOnOriginPositionChange(): void {
+    this.observer.reaction(
+      (): { x: number; y: number } => this.observableScreen.origin.position,
+      (): void => {
+        this.spreadParticlesByIndices();
+      },
+    );
+  }
+
   public spreadParticlesByIndices(callback?: () => void): void {
     const commandList = new ObservableCommandList();
     this.observableScreen.particles.forEach(

@@ -12,33 +12,34 @@ import { Map } from 'immutable';
 import * as _ from 'lodash';
 
 import { config } from '../constants/config';
+import { ss } from '../utils/responsive';
 
 export class TextButtonStyle {
   private static readonly heightBySize: Map<ButtonSize, number> = Map([
-    [ButtonSize.X_LARGE, 52], // checked
-    [ButtonSize.LARGE, 46], // checked
-    [ButtonSize.NORMAL, 36], // checked
-    [ButtonSize.SMALL, 26], // checked
-    [ButtonSize.X_SMALL, 22], // checked
+    [ButtonSize.X_LARGE, ss(52)], // checked
+    [ButtonSize.LARGE, ss(46)], // checked
+    [ButtonSize.NORMAL, ss(36)], // checked
+    [ButtonSize.SMALL, ss(26)], // checked
+    [ButtonSize.X_SMALL, ss(22)], // checked
   ]);
 
   private static readonly paddingHorizontalBySize: Map<
     ButtonSize,
     number
   > = Map([
-    [ButtonSize.X_LARGE, 26],
-    [ButtonSize.LARGE, 22],
-    [ButtonSize.NORMAL, 18], // checked
-    [ButtonSize.SMALL, 14], // checked
-    [ButtonSize.X_SMALL, 10], // checked
+    [ButtonSize.X_LARGE, ss(26)],
+    [ButtonSize.LARGE, ss(22)],
+    [ButtonSize.NORMAL, ss(18)], // checked
+    [ButtonSize.SMALL, ss(14)], // checked
+    [ButtonSize.X_SMALL, ss(10)], // checked
   ]);
 
   private static readonly fontSizeBySize: Map<ButtonSize, number> = Map([
-    [ButtonSize.X_LARGE, 20], // checked
-    [ButtonSize.LARGE, 17], // checked
-    [ButtonSize.NORMAL, 15], // checked
-    [ButtonSize.SMALL, 14], // checked
-    [ButtonSize.X_SMALL, 12], // checked
+    [ButtonSize.X_LARGE, ss(20)], // checked
+    [ButtonSize.LARGE, ss(17)], // checked
+    [ButtonSize.NORMAL, ss(15)], // checked
+    [ButtonSize.SMALL, ss(14)], // checked
+    [ButtonSize.X_SMALL, ss(12)], // checked
   ]);
 
   public static getNormalStyles(size: ButtonSize): ButtonStyles {
