@@ -12,6 +12,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { CreateFirstSetScreenIds } from '../../constants/ids/CreateFirstSetScreenIds';
 import { CreateFirstSetScreenDelegate } from '../../delegates/set/CreateFirstSetScreenDelegate';
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { SimpleLanguagePicker } from './SimpleLanguagePicker';
 
@@ -63,12 +64,12 @@ const styles = StyleSheet.create({
 
   title_container: {
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: ss(20),
+    marginBottom: ss(20),
   },
 
   title_text: {
-    fontSize: 20,
+    fontSize: ss(20),
     color: 'white',
     fontWeight: 'bold',
   },

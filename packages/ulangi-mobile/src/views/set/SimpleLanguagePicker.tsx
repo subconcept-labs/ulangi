@@ -12,6 +12,7 @@ import * as React from 'react';
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Images } from '../../constants/Images';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface SimpleLanguagePickerProps {
@@ -65,15 +66,15 @@ export class SimpleLanguagePicker extends React.Component<
 
 const styles = StyleSheet.create({
   content_container: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingHorizontal: ls(20),
+    paddingBottom: ss(20),
   },
 
   item_touchable: {
-    marginTop: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderRadius: 4,
+    marginTop: ss(20),
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(14),
+    borderRadius: ss(4),
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -85,11 +86,11 @@ const styles = StyleSheet.create({
   },
 
   flag_icon: {
-    marginRight: 8,
+    marginRight: ss(8),
   },
 
   item_text: {
-    fontSize: 17,
+    fontSize: ss(17),
     fontWeight: 'bold',
     color: '#777',
   },
