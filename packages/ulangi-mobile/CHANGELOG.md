@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.15.0](https://github.com/ulangi/ulangi/compare/v3.14.3...v3.15.0) (2020-08-04)
+
+
+### Bug Fixes
+
+* disable text scaling for text input ([98eb461](https://github.com/ulangi/ulangi/commit/98eb461))
+* responsive design for some screens ([33f51bb](https://github.com/ulangi/ulangi/commit/33f51bb))
+
+
+### Features
+
+* response design ([19f48eb](https://github.com/ulangi/ulangi/commit/19f48eb))
+
+
+
+
+
 ## [3.14.3](https://github.com/ulangi/ulangi/compare/v3.14.2...v3.14.3) (2020-07-31)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.15.0](https://github.com/ulangi/ulangi/compare/v3.14.3...v3.15.0) (2020-08-04)
+
+
+### Features
+
+* response design ([19f48eb](https://github.com/ulangi/ulangi/commit/19f48eb))
+
+
+
+
+
 ## [3.14.2](https://github.com/ulangi/ulangi/compare/v3.14.1...v3.14.2) (2020-07-31)
 
 

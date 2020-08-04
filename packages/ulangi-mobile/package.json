@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "@ulangi/ulangi-mobile",
-	"version": "3.14.3",
+	"version": "3.15.0",
 	"scripts": {
 		"postbootstrap": "cd ios && pod install",
 		"android": "react-native run-android --variant devDebug --appIdSuffix dev",
@@ -56,7 +56,7 @@
 		"react-native-keyboard-aware-scroll-view": "^0.9.1",
 		"react-native-modal-datetime-picker": "^7.6.1",
 		"react-native-rate": "^1.1.10",
-    "react-native-size-matters": "^0.3.0",
+		"react-native-size-matters": "^0.3.0",
 		"react-native-snap-carousel": "^3.8.4",
 		"react-native-sound": "^0.11.0",
 		"react-native-splash-screen": "^3.2.0",
