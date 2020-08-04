@@ -11,8 +11,8 @@ import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { ss } from "../../utils/responsive"
 
+import { ls, ss } from '../../utils/responsive';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 
 export interface InputFieldProps {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   input_field: {
     height: ss(46),
     borderRadius: ss(4),
-    marginHorizontal: ss(16),
+    marginHorizontal: ls(16),
     marginVertical: ss(2),
     paddingHorizontal: ss(16),
     paddingVertical: ss(14),

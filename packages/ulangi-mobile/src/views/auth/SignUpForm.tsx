@@ -12,6 +12,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { SignUpScreenIds } from '../../constants/ids/SignUpScreenIds';
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { InputField } from './InputField';
 import { SubmitButton } from './SubmitButton';
@@ -94,14 +95,14 @@ const styles = StyleSheet.create({
   other_containers: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginHorizontal: ss(16),
+    marginTop: ss(16),
   },
 
   touchable_text: {},
 
   other_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.styles.lightPrimaryColor,
   },
 });

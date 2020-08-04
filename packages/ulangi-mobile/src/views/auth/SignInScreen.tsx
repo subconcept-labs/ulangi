@@ -13,6 +13,7 @@ import { StyleSheet, View } from 'react-native';
 import { config } from '../../constants/config';
 import { SignInScreenIds } from '../../constants/ids/SignInScreenIds';
 import { SignInScreenDelegate } from '../../delegates/auth/SignInScreenDelegate';
+import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { SmartScrollView } from '../common/SmartScrollView';
@@ -83,16 +84,16 @@ const styles = StyleSheet.create({
   },
 
   logo_container: {
-    marginTop: 20,
+    marginTop: ss(20),
   },
 
   form_container: {
-    marginTop: 20,
+    marginTop: ss(20),
     flex: 1,
   },
 
   sign_in_as_guest_container: {
-    marginBottom: 30,
+    marginBottom: ss(30),
   },
 
   sign_in_as_guest_btn: {
@@ -104,10 +105,10 @@ const styles = StyleSheet.create({
   },
 
   sign_in_as_guest_note: {
-    paddingHorizontal: 16,
-    paddingTop: 10,
+    paddingHorizontal: ss(16),
+    paddingTop: ss(10),
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.styles.lightPrimaryColor,
   },
 });

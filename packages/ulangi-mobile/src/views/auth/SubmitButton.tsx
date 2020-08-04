@@ -13,6 +13,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 
 export interface SubmitButtonProps {
@@ -41,11 +42,11 @@ export class SubmitButton extends React.Component<SubmitButtonProps> {
 const styles = StyleSheet.create({
   button_touchable: {
     alignSelf: 'stretch',
-    paddingHorizontal: 10,
-    paddingVertical: 12,
-    borderRadius: 4,
-    marginTop: 8,
-    marginHorizontal: 16,
+    paddingHorizontal: ss(10),
+    paddingVertical: ss(12),
+    borderRadius: ss(4),
+    marginTop: ss(8),
+    marginHorizontal: ls(16),
     backgroundColor: '#00c7fe',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 
   button_text: {
     color: 'white',
-    fontSize: 17,
+    fontSize: ss(17),
     fontFamily: 'Arial',
     fontWeight: '700',
     textAlign: 'center',

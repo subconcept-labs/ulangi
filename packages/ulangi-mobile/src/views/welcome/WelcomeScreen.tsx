@@ -11,6 +11,7 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { WelcomeScreenIds } from '../../constants/ids/WelcomeScreenIds';
 import { WelcomeScreenDelegate } from '../../delegates/welcome/WelcomeScreenDelegate';
+import { ss } from '../../utils/responsive';
 import { Logo } from '../auth/Logo';
 import { SubmitButton } from '../auth/SubmitButton';
 import { DefaultText } from '../common/DefaultText';
@@ -60,11 +61,11 @@ const styles = StyleSheet.create({
   },
 
   logo_container: {
-    marginTop: 20,
+    marginTop: ss(20),
   },
 
   title_container: {
-    marginTop: 30,
+    marginTop: ss(30),
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
 
   title: {
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: ss(18),
     fontWeight: 'bold',
     color: 'white',
   },
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
   },
 
   no_btn: {
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: ss(10),
+    marginBottom: ss(20),
   },
 
   no_text: {},
