@@ -9,11 +9,12 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableCategoryFormState } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { CategoryFormIds } from '../../constants/ids/CategoryFormIds';
 import { CategorySuggestionList } from '../category/CategorySuggestionList';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   CategoryFormStyles,
@@ -47,7 +48,7 @@ export class CategoryForm extends React.Component<CategoryFormProps> {
     return (
       <View style={this.styles.container}>
         <View style={this.styles.category_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={CategoryFormIds.CATEGORY_INPUT}
             placeholder={
               this.props.placeholderText || 'Enter category to search'

@@ -15,6 +15,7 @@ import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   DiscoverSearchStyles,
   darkStyles,
@@ -37,7 +38,7 @@ export interface DiscoverSearchProps {
 
 @observer
 export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
-  private textInputRef: any;
+  private textInputRef: TextInput | null | undefined;
   private unsubscribeFocus?: () => void;
 
   public componentDidMount(): void {
@@ -74,7 +75,7 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
           style={this.styles.search_icon}
           source={Images.SEARCH_GREY_14X14}
         />
-        <TextInput
+        <DefaultTextInput
           ref={(ref): void => {
             this.textInputRef = ref;
           }}

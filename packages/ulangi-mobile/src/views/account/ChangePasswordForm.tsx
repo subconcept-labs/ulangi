@@ -9,10 +9,11 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableChangePasswordScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ChangePasswordScreenIds } from '../../constants/ids/ChangePasswordScreenIds';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   ChangePasswordFormStyles,
   darkStyles,
@@ -42,7 +43,7 @@ export class ChangePasswordForm extends React.Component<
     return (
       <View style={this.styles.form}>
         <View style={this.styles.text_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={ChangePasswordScreenIds.CURRENT_PASSWORD_INPUT}
             style={this.styles.text_input}
             value={this.props.observableScreen.currentPassword}
@@ -60,7 +61,7 @@ export class ChangePasswordForm extends React.Component<
           />
         </View>
         <View style={this.styles.text_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={ChangePasswordScreenIds.NEW_PASSWORD_INPUT}
             style={this.styles.text_input}
             value={this.props.observableScreen.newPassword}
@@ -78,7 +79,7 @@ export class ChangePasswordForm extends React.Component<
           />
         </View>
         <View style={this.styles.text_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={ChangePasswordScreenIds.CONFIRM_NEW_PASSWORD_INPUT}
             style={[this.styles.text_input, this.styles.no_border]}
             value={this.props.observableScreen.confirmNewPassword}

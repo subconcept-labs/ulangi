@@ -16,6 +16,7 @@ import { Image, TextInput, View } from 'react-native';
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { SearchScreenIds } from '../../constants/ids/SearchScreenIds';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   SearchInputStyles,
   darkStyles,
@@ -72,7 +73,7 @@ export class SearchInput extends React.Component<SearchInputProps> {
           style={this.styles.search_icon}
           source={Images.SEARCH_GREY_14X14}
         />
-        <TextInput
+        <DefaultTextInput
           testID={SearchScreenIds.SEARCH_INPUT}
           ref={(ref): void => {
             this.textInputRef = ref;

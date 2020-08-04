@@ -11,6 +11,9 @@ import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import { ss } from "../../utils/responsive"
+
+import { DefaultTextInput } from '../common/DefaultTextInput';
 
 export interface InputFieldProps {
   testID: string;
@@ -27,7 +30,7 @@ export interface InputFieldProps {
 @observer
 export class InputField extends React.Component<InputFieldProps> {
   private unsubscribeAutoFocus?: () => void;
-  private inputRef?: any;
+  private inputRef?: TextInput | null;
 
   public componentDidMount(): void {
     if (typeof this.props.shouldFocus !== 'undefined') {
@@ -47,7 +50,11 @@ export class InputField extends React.Component<InputFieldProps> {
       this.props.shouldFocus,
       'shouldFocus should not be null or undefined',
     );
-    if (shouldFocus.get() === true) {
+    if (
+      shouldFocus.get() === true &&
+      typeof this.inputRef !== 'undefined' &&
+      this.inputRef !== null
+    ) {
       shouldFocus.set(false);
       this.inputRef.focus();
     }
@@ -56,7 +63,7 @@ export class InputField extends React.Component<InputFieldProps> {
   public render(): React.ReactElement<any> {
     return (
       <View style={styles.input_container}>
-        <TextInput
+        <DefaultTextInput
           ref={(ref): void => {
             this.inputRef = ref;
           }}
@@ -81,16 +88,16 @@ const styles = StyleSheet.create({
   input_container: {},
 
   input_field: {
-    height: 46,
-    borderRadius: 4,
-    marginHorizontal: 16,
-    marginVertical: 2,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    height: ss(46),
+    borderRadius: ss(4),
+    marginHorizontal: ss(16),
+    marginVertical: ss(2),
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(14),
     //backgroundColor: '#0083b3',
     backgroundColor: '#eee',
     color: '#545454',
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: '700',
   },
 });

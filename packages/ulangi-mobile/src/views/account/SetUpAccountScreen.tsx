@@ -12,13 +12,14 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { SetUpAccountScreenIds } from '../../constants/ids/SetUpAccountScreenIds';
 import { SetUpAccountScreenDelegate } from '../../delegates/account/SetUpAccountScreenDelegate';
 import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { SmartScrollView } from '../common/SmartScrollView';
 import {
   SetUpAccountScreenStyles,
@@ -50,7 +51,7 @@ export class SetUpAccountScreen extends React.Component<
           keyboardAware={true}
           keyboardShouldPersistTaps="handled">
           <View style={this.styles.text_input_container}>
-            <TextInput
+            <DefaultTextInput
               testID={SetUpAccountScreenIds.EMAIL_INPUT}
               style={this.styles.text_input}
               value={this.props.observableScreen.email}
@@ -68,7 +69,7 @@ export class SetUpAccountScreen extends React.Component<
             />
           </View>
           <View style={this.styles.text_input_container}>
-            <TextInput
+            <DefaultTextInput
               testID={SetUpAccountScreenIds.PASSWORD_INPUT}
               style={this.styles.text_input}
               value={this.props.observableScreen.password}
@@ -86,7 +87,7 @@ export class SetUpAccountScreen extends React.Component<
             />
           </View>
           <View style={this.styles.text_input_container}>
-            <TextInput
+            <DefaultTextInput
               testID={SetUpAccountScreenIds.CONFIRM_PASSWORD_INPUT}
               style={this.styles.text_input}
               value={this.props.observableScreen.confirmPassword}

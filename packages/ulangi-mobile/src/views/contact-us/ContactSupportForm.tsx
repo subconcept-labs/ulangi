@@ -9,11 +9,12 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableContactUsScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ContactUsScreenIds } from '../../constants/ids/ContactUsScreenIds';
 import { DefaultText } from '../common/DefaultText';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   ContactSupportFormStyles,
@@ -72,7 +73,7 @@ export class ContactSupportForm extends React.Component<
         </View>
         <View style={this.styles.text_input_container}>
           {this.props.isGuestEmail ? null : (
-            <TextInput
+            <DefaultTextInput
               testID={ContactUsScreenIds.TEXT_INPUT}
               style={this.styles.text_input}
               multiline={true}

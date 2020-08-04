@@ -19,6 +19,7 @@ import { TextInput, TouchableOpacity, View } from 'react-native';
 import { config } from '../../constants/config';
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultText } from '../common/DefaultText';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { DefinitionInput } from './DefinitionInput';
 import {
   VocabularyFormStyles,
@@ -46,7 +47,7 @@ export interface VocabularyFormProps {
 
 @observer
 export class VocabularyForm extends React.Component<VocabularyFormProps> {
-  private textInputRef: any;
+  private textInputRef?: TextInput | null;
   private unsubscribeFocus?: () => void;
   private unsubscribeHandlingCursor?: () => void;
 
@@ -59,7 +60,8 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
   private handleFocus(): void {
     if (
       this.props.vocabularyFormState.shouldFocusVocabularyInput === true &&
-      typeof this.textInputRef !== 'undefined'
+      typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null
     ) {
       this.textInputRef.focus();
       this.props.vocabularyFormState.shouldFocusVocabularyInput = false;
@@ -70,6 +72,7 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
   private handleCursor(): void {
     if (
       typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null &&
       this.props.vocabularyFormState.shouldMoveCursorOfVocabularyInput !== null
     ) {
       this.textInputRef.setNativeProps({
@@ -118,7 +121,7 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
           </View>
         </View>
         <View style={this.styles.vocabulary_input_container}>
-          <TextInput
+          <DefaultTextInput
             ref={(ref: any): void => {
               this.textInputRef = ref;
             }}

@@ -13,7 +13,10 @@ import { config } from '../../constants/config';
 export class DefaultText extends React.Component<TextProperties> {
   public render(): React.ReactElement<any> {
     return (
-      <Text {...this.props} style={[styles.defaultTextStyle, this.props.style]}>
+      <Text
+        allowFontScaling={false}
+        {...this.props}
+        style={[styles.defaultTextStyle, this.props.style]}>
         {this.props.children}
       </Text>
     );

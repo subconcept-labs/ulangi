@@ -15,6 +15,7 @@ import { TextInput, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   DefinitionInputStyles,
   darkStyles,
@@ -39,7 +40,7 @@ export interface DefinitionInputProps {
 
 @observer
 export class DefinitionInput extends React.Component<DefinitionInputProps> {
-  private textInputRef: any;
+  private textInputRef?: TextInput | null;
   private unsubscribeFocus?: () => void;
   private unsubscribeHandlingCursor?: () => void;
 
@@ -62,6 +63,7 @@ export class DefinitionInput extends React.Component<DefinitionInputProps> {
   private handleFocus(): void {
     if (
       typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null &&
       this.props.shouldFocusInput.get() === this.props.index
     ) {
       this.textInputRef.focus();
@@ -75,6 +77,7 @@ export class DefinitionInput extends React.Component<DefinitionInputProps> {
 
     if (
       typeof this.textInputRef !== 'undefined' &&
+      this.textInputRef !== null &&
       cursorCommand !== null &&
       cursorCommand.index === this.props.index
     ) {
@@ -97,7 +100,7 @@ export class DefinitionInput extends React.Component<DefinitionInputProps> {
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.meaning_container}>
-        <TextInput
+        <DefaultTextInput
           scrollEnabled={false}
           ref={(ref): void => {
             this.textInputRef = ref;

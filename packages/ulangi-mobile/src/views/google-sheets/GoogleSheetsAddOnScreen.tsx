@@ -14,12 +14,13 @@ import {
 import { observer } from 'mobx-react';
 import * as moment from 'moment';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { GoogleSheetsAddOnScreenIds } from '../../constants/ids/GoogleSheetsAddOnScreenIds';
 import { GoogleSheetsAddOnScreenDelegate } from '../../delegates/google-sheets/GoogleSheetsAddOnScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
@@ -109,7 +110,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
         <SectionRow
           theme={this.props.themeStore.theme}
           customLeft={
-            <TextInput
+            <DefaultTextInput
               style={this.styles.password_input}
               secureTextEntry={true}
               autoCapitalize="none"

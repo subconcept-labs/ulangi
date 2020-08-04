@@ -18,6 +18,7 @@ import { WritingFormIds } from '../../constants/ids/WritingFormIds';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { DefinitionItem } from '../vocabulary/DefinitionItem';
 import {
   WritingFormStyles,
@@ -123,7 +124,7 @@ export class WritingForm extends React.Component<WritingFormProps> {
           <DefaultText style={this.styles.label}>WRITE THE TERM:</DefaultText>
           <View style={this.styles.answer_container}>
             <View style={this.styles.answer}>
-              <TextInput
+              <DefaultTextInput
                 testID={WritingFormIds.ANSWER_INPUT}
                 ref={(ref): void => {
                   this.textInputRef = ref;

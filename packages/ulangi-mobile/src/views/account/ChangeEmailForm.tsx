@@ -9,10 +9,11 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableChangeEmailScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ChangeEmailScreenIds } from '../../constants/ids/ChangeEmailScreenIds';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   ChangeEmailFormStyles,
   darkStyles,
@@ -40,7 +41,7 @@ export class ChangeEmailForm extends React.Component<ChangeEmailProps> {
     return (
       <View style={this.styles.form}>
         <View style={this.styles.text_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={ChangeEmailScreenIds.NEW_EMAIL_INPUT}
             style={this.styles.text_input}
             value={this.props.observableScreen.email}
@@ -58,7 +59,7 @@ export class ChangeEmailForm extends React.Component<ChangeEmailProps> {
           />
         </View>
         <View style={this.styles.text_input_container}>
-          <TextInput
+          <DefaultTextInput
             testID={ChangeEmailScreenIds.CURRENT_PASSWORD_INPUT}
             style={[this.styles.password_input, this.styles.no_border]}
             value={this.props.observableScreen.password}

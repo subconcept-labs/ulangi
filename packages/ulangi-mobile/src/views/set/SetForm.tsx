@@ -10,12 +10,13 @@ import { SetFormPickerType, Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableSetFormState } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { SetFormIds } from '../../constants/ids/SetFormIds';
 import { DefaultText } from '../common/DefaultText';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import { SetFormStyles, darkStyles, lightStyles } from './SetForm.style';
 
 export interface SetFormProps {
@@ -42,7 +43,7 @@ export class SetForm extends React.Component<SetFormProps> {
       <View style={this.styles.form_body_container}>
         {this.props.setFormState.shouldShowSetNameInput === true ? (
           <View style={this.styles.set_name_container}>
-            <TextInput
+            <DefaultTextInput
               testID={SetFormIds.SET_NAME_INPUT}
               placeholder="Enter set name (optional)"
               placeholderTextColor={

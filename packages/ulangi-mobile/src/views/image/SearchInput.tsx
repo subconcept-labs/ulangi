@@ -13,6 +13,7 @@ import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
 import { config } from '../../constants/config';
+import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   SearchInputStyles,
   darkStyles,
@@ -32,7 +33,7 @@ export interface SearchInputProps {
 
 @observer
 export class SearchInput extends React.Component<SearchInputProps> {
-  private textInputRef: any;
+  private textInputRef: TextInput | null | undefined;
   private unsubscribeFocus?: () => void;
 
   public get styles(): SearchInputStyles {
@@ -66,7 +67,7 @@ export class SearchInput extends React.Component<SearchInputProps> {
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.input_container}>
-        <TextInput
+        <DefaultTextInput
           placeholder="Type topics to search..."
           ref={(ref): void => {
             this.textInputRef = ref;
