@@ -6,15 +6,13 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservablePublicVocabularyDetailScreen,
   ObservableSetStore,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { PublicVocabularyDetailScreenIds } from '../../constants/ids/PublicVocabularyDetailScreenIds';
 import { PublicVocabularyDetailScreenDelegate } from '../../delegates/discover/PublicVocabularyDetailScreenDelegate';
@@ -22,16 +20,15 @@ import { VocabularyDetailExtraFields } from '../../views/vocabulary/VocabularyDe
 import { VocabularyDetailPronunciation } from '../../views/vocabulary/VocabularyDetailPronunciation';
 import { VocabularyDetailStrokeOrder } from '../../views/vocabulary/VocabularyDetailStrokeOrder';
 import { VocabularyDetailTitle } from '../../views/vocabulary/VocabularyDetailTitle';
+import { Screen } from '../common/Screen';
 import {
   PublicVocabularyDetailScreenStyles,
-  darkStyles,
-  lightStyles,
+  publicVocabularyDetailScreenResponsiveStyles,
 } from './PublicVocabularyDetailScreen.style';
 
 export interface PublicVocabularyDetailScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
-  observableDimensions: ObservableDimensions;
   observableScreen: ObservablePublicVocabularyDetailScreen;
   screenDelegate: PublicVocabularyDetailScreenDelegate;
 }
@@ -40,9 +37,10 @@ export class PublicVocabularyDetailScreen extends React.Component<
   PublicVocabularyDetailScreenProps
 > {
   public get styles(): PublicVocabularyDetailScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return publicVocabularyDetailScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -51,18 +49,22 @@ export class PublicVocabularyDetailScreen extends React.Component<
       'currentSet should not be undefined or null',
     );
     return (
-      <View
+      <Screen
         style={this.styles.screen}
-        testID={PublicVocabularyDetailScreenIds.SCREEN}>
+        testID={PublicVocabularyDetailScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <ScrollView style={this.styles.container}>
           <VocabularyDetailTitle
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabularyTerm={
               this.props.observableScreen.vocabulary.vocabularyTerm
             }
           />
           <VocabularyDetailPronunciation
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             speakState={this.props.observableScreen.speakState}
             speak={(): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
@@ -74,7 +76,7 @@ export class PublicVocabularyDetailScreen extends React.Component<
           {currentSet.learningLanguageCode === 'zh' ? (
             <VocabularyDetailStrokeOrder
               theme={this.props.themeStore.theme}
-              observableDimensions={this.props.observableDimensions}
+              screenLayout={this.props.observableScreen.screenLayout}
               vocabularyTerm={
                 this.props.observableScreen.vocabulary.vocabularyTerm
               }
@@ -89,6 +91,7 @@ export class PublicVocabularyDetailScreen extends React.Component<
           ) : null}
           <VocabularyDetailExtraFields
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabularyExtraFields={
               this.props.observableScreen.vocabulary.extraFields
             }
@@ -101,7 +104,7 @@ export class PublicVocabularyDetailScreen extends React.Component<
             }
           />
         </ScrollView>
-      </View>
+      </Screen>
     );
   }
 }

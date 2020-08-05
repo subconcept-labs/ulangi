@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
@@ -16,19 +17,15 @@ import { config } from '../../constants/config';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   SearchInputStyles,
-  darkStyles,
-  lightStyles,
+  searchInputResponsiveStyles,
 } from './SearchInput.style';
 
 export interface SearchInputProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   input: IObservableValue<string>;
   shouldFocusInput: IObservableValue<boolean>;
   onSubmitEditing: () => void;
-  styles?: {
-    light: SearchInputStyles;
-    dark: SearchInputStyles;
-  };
 }
 
 @observer
@@ -37,9 +34,10 @@ export class SearchInput extends React.Component<SearchInputProps> {
   private unsubscribeFocus?: () => void;
 
   public get styles(): SearchInputStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return searchInputResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public componentDidMount(): void {

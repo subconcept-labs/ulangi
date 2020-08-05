@@ -1,7 +1,7 @@
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SuggestionItemStyles {
   item_container: ViewStyle;
@@ -14,112 +14,120 @@ export interface SuggestionItemStyles {
   button_text: TextStyle;
 }
 
-export const baseStyles: SuggestionItemStyles = {
-  item_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+export class SuggestionItemResponsiveStyles extends ResponsiveStyleSheet<
+  SuggestionItemStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SuggestionItemStyles {
+    return {
+      item_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(16),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  text: {},
+      text: {},
 
-  importance: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    letterSpacing: -0.5,
-    textAlignVertical: 'center',
-  },
+      importance: {
+        fontSize: scaleByFactor(12),
+        fontWeight: 'bold',
+        letterSpacing: -scaleByFactor(0.5),
+        textAlignVertical: 'center',
+      },
 
-  dot: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
+      dot: {
+        fontSize: scaleByFactor(14),
+        fontWeight: 'bold',
+      },
 
-  message: {
-    fontSize: 16,
-  },
+      message: {
+        fontSize: scaleByFactor(16),
+      },
 
-  button_list: {
-    marginTop: 4,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
+      button_list: {
+        marginTop: scaleByFactor(4),
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+      },
 
-  button: {
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    marginHorizontal: 4,
-    marginVertical: 4,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.15,
-    elevation: 0.75,
-  },
+      button: {
+        borderRadius: scaleByFactor(3),
+        borderWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(8),
+        paddingVertical: scaleByFactor(5),
+        marginHorizontal: scaleByFactor(4),
+        marginVertical: scaleByFactor(4),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.5 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.15,
+        elevation: 0.75,
+      },
 
-  button_text: {
-    fontSize: 15,
-  },
-};
+      button_text: {
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<SuggestionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    importance: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      importance: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    message: {
-      color: config.styles.light.primaryTextColor,
-    },
+      message: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    button: {
-      borderColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+      button: {
+        borderColor: config.styles.light.primaryBorderColor,
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    button_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      button_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<SuggestionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    importance: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      importance: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    message: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      message: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    button: {
-      borderColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      button: {
+        borderColor: config.styles.dark.primaryBorderColor,
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    button_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      button_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const suggestionItemResponsiveStyles = new SuggestionItemResponsiveStyles();

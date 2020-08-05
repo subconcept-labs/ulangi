@@ -8,13 +8,14 @@
 import { assertExists } from '@ulangi/assert';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ApiScope, ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableGoogleSheetsAddOnScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import { Clipboard } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { LinkingDelegate } from '../linking/LinkingDelegate';
 
@@ -124,9 +125,12 @@ export class GoogleSheetsAddOnScreenDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: LightBoxDialogIds.OKAY_BTN,
@@ -134,9 +138,12 @@ export class GoogleSheetsAddOnScreenDelegate {
           onPress: (): void => {
             this.invalidateApiKey();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

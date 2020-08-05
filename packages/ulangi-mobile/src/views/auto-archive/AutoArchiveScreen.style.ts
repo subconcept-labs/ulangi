@@ -5,19 +5,32 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
+
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 
 export interface AutoArchiveScreenStyles {
   screen: ViewStyle;
 }
 
-export const baseStyles: AutoArchiveScreenStyles = {
-  screen: {
-    flex: 1,
-  },
-};
+export class AutoArchiveScreenResponsiveStyles extends ResponsiveStyleSheet<
+  AutoArchiveScreenStyles
+> {
+  public baseStyles(): AutoArchiveScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<AutoArchiveScreenStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<AutoArchiveScreenStyles> {
+    return {};
+  }
+}
+
+export const autoArchiveScreenResponsiveStyles = new AutoArchiveScreenResponsiveStyles();

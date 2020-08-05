@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface FollowUsScreenStyles {
   screen: ViewStyle;
@@ -18,36 +17,44 @@ export interface FollowUsScreenStyles {
   section_container: ViewStyle;
 }
 
-export const baseStyles: FollowUsScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class FollowUsScreenResponsiveStyles extends ResponsiveStyleSheet<
+  FollowUsScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): FollowUsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  intro_container: {
-    paddingHorizontal: ss(16),
-  },
+      intro_container: {
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  intro_text: {
-    fontSize: ss(15),
-  },
+      intro_text: {
+        fontSize: scaleByFactor(15),
+      },
 
-  section_container: {
-    marginTop: ss(16),
-  },
-};
+      section_container: {
+        marginTop: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    intro_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<FollowUsScreenStyles> {
+    return {
+      intro_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    intro_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<FollowUsScreenStyles> {
+    return {
+      intro_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const followUsScreenResponsiveStyles = new FollowUsScreenResponsiveStyles();

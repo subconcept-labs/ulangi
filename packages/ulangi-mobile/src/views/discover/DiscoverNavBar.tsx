@@ -9,18 +9,24 @@ import { DiscoverListType, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservablePublicSetListState,
   ObservablePublicVocabularyListState,
+  ObservableScreenLayout,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverNavButton } from '../../views/discover/DiscoverNavButton';
+import {
+  DiscoverNavBarStyles,
+  discoverNavBarResponsiveStyles,
+} from './DiscoverNavBar.style';
 
 export interface DiscoverNavBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   listType: IObservableValue<null | DiscoverListType>;
   publicSetListState: ObservablePublicSetListState;
   publicVocabularyListState: ObservablePublicVocabularyListState;
@@ -30,6 +36,13 @@ export interface DiscoverNavBarProps {
 
 @observer
 export class DiscoverNavBar extends React.Component<DiscoverNavBarProps> {
+  private get styles(): DiscoverNavBarStyles {
+    return discoverNavBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     if (
       this.props.listType.get() === null ||
@@ -38,12 +51,13 @@ export class DiscoverNavBar extends React.Component<DiscoverNavBarProps> {
       return null;
     } else {
       return (
-        <View style={styles.container}>
+        <View style={this.styles.container}>
           <DiscoverNavButton
             testID={
               DiscoverScreenIds.VIEW_TRANSLATION_AND_SEARCH_VOCABULARY_RESULT_BTN
             }
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             isSelected={
               this.props.listType.get() ===
               DiscoverListType.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST
@@ -57,8 +71,9 @@ export class DiscoverNavBar extends React.Component<DiscoverNavBarProps> {
             count={this.numOfTranslationsAndVocabulary()}
           />
           <DiscoverNavButton
-            theme={this.props.theme}
             testID={DiscoverScreenIds.VIEW_SEARCH_SET_RESULT_BTN}
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             isSelected={
               this.props.listType.get() === DiscoverListType.PUBLIC_SET_LIST
             }
@@ -94,11 +109,3 @@ export class DiscoverNavBar extends React.Component<DiscoverNavBarProps> {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

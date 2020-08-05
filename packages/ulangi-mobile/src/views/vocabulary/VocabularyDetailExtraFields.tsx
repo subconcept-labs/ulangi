@@ -9,6 +9,7 @@ import { VocabularyExtraFieldDetails } from '@ulangi/ulangi-common/constants';
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
 import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
@@ -21,12 +22,12 @@ import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   VocabularyDetailExtraFieldsStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyDetailExtraFieldsResponsiveStyles,
 } from './VocabularyDetailExtraFields.style';
 
 export interface VocabularyDetailExtraFieldsProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyExtraFields: VocabularyExtraFields;
   speakState: IObservableValue<ActivityState>;
   speak: (text: string) => void;
@@ -41,9 +42,10 @@ export class VocabularyDetailExtraFields extends React.Component<
   VocabularyDetailExtraFieldsProps
 > {
   public get styles(): VocabularyDetailExtraFieldsStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyDetailExtraFieldsResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -58,7 +60,10 @@ export class VocabularyDetailExtraFields extends React.Component<
       return null;
     } else {
       return (
-        <SectionGroup theme={this.props.theme} header="EXTRA FIELDS">
+        <SectionGroup
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          header="EXTRA FIELDS">
           {_.toPairs(this.props.vocabularyExtraFields).map(
             ([key, valueList]): React.ReactElement<any> => {
               if (
@@ -98,6 +103,7 @@ export class VocabularyDetailExtraFields extends React.Component<
               <SectionRow
                 key={values[0]}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 leftText={detail.name}
                 customRight={
                   <FastImage
@@ -125,6 +131,7 @@ export class VocabularyDetailExtraFields extends React.Component<
             return (
               <SectionRow
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 key={values[0]}
                 leftText={detail.name}
                 rightText={values[0]}

@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LearnScreenStyles {
   screen: ViewStyle;
@@ -18,51 +17,59 @@ export interface LearnScreenStyles {
   button_text: TextStyle;
 }
 
-const baseStyles: LearnScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class LearnScreenResponsiveStyles extends ResponsiveStyleSheet<
+  LearnScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): LearnScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  top_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(16),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-  },
+      top_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(16),
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+      },
 
-  button: {},
+      button: {},
 
-  button_text: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: ss(15),
-  },
-};
+      button_text: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    top_container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
-    button_text: {
-      color: '#888',
-    },
-  }),
-);
+  public lightStyles(): Partial<LearnScreenStyles> {
+    return {
+      top_container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
+      button_text: {
+        color: '#888',
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    screen: {
-      borderTopWidth: StyleSheet.hairlineWidth,
-      borderTopColor: '#131313',
-    },
-    top_container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
-    button_text: {
-      color: '#aaa',
-    },
-  }),
-);
+  public darkStyles(): Partial<LearnScreenStyles> {
+    return {
+      screen: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: '#131313',
+      },
+      top_container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
+      button_text: {
+        color: '#aaa',
+      },
+    };
+  }
+}
+
+export const learnScreenResponsiveStyles = new LearnScreenResponsiveStyles();

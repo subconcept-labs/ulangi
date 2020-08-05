@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableTranslation } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableTranslation,
+} from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -14,12 +17,12 @@ import { DefaultText } from '../common/DefaultText';
 import { Translation } from './Translation';
 import {
   TranslationListStyles,
-  darkStyles,
-  lightStyles,
+  translationListResponsiveStyles,
 } from './TranslationList.style';
 
 export interface TranslationListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   translations: readonly ObservableTranslation[];
   onPick: (definition: ObservableTranslation) => void;
   styles?: {
@@ -30,9 +33,10 @@ export interface TranslationListProps {
 
 export class TranslationList extends React.Component<TranslationListProps> {
   public get styles(): TranslationListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return translationListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -49,6 +53,7 @@ export class TranslationList extends React.Component<TranslationListProps> {
               <Translation
                 key={index}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 index={index}
                 translation={translation}
                 onPick={this.props.onPick}

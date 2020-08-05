@@ -6,22 +6,25 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableThemeStore,
   ObservableWritingScreen,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { WritingScreenIds } from '../../constants/ids/WritingScreenIds';
 import { WritingScreenDelegate } from '../../delegates/writing/WritingScreenDelegate';
 import { SelectedCategories } from '../category/SelectedCategories';
+import { Screen } from '../common/Screen';
 import { WritingMenu } from './WritingMenu';
+import {
+  WritingScreenStyles,
+  writingScreenResponsiveStyles,
+} from './WritingScreen.style';
 import { WritingTitle } from './WritingTitle';
 
 export interface WritingScreenProps {
-  observableDimensions: ObservableDimensions;
   themeStore: ObservableThemeStore;
   observableScreen: ObservableWritingScreen;
   screenDelegate: WritingScreenDelegate;
@@ -29,17 +32,32 @@ export interface WritingScreenProps {
 
 @observer
 export class WritingScreen extends React.Component<WritingScreenProps> {
+  private get styles(): WritingScreenStyles {
+    return writingScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={WritingScreenIds.SCREEN}>
-        <View style={styles.container}>
-          <View style={styles.middle_container}>
-            <View style={styles.title_container}>
-              <WritingTitle theme={this.props.themeStore.theme} />
+      <Screen
+        style={this.styles.screen}
+        useSafeAreaView={false}
+        testID={WritingScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}>
+        <View style={this.styles.container}>
+          <View style={this.styles.middle_container}>
+            <View style={this.styles.title_container}>
+              <WritingTitle
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+              />
             </View>
-            <View style={styles.menu_container}>
+            <View style={this.styles.menu_container}>
               <WritingMenu
-                observableDimensions={this.props.observableDimensions}
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 startLesson={(): void =>
                   this.props.screenDelegate.startLesson(false)
                 }
@@ -47,49 +65,21 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
                 showFAQ={this.props.screenDelegate.showFAQ}
               />
             </View>
-            <View style={styles.selected_categories_container}>
+            <View style={this.styles.selected_categories_container}>
               <SelectedCategories
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.themeStore.theme}
               />
             </View>
           </View>
         </View>
-      </View>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-  },
-
-  middle_container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  title_container: {
-    alignSelf: 'stretch',
-    marginTop: -50,
-  },
-
-  menu_container: {
-    alignSelf: 'stretch',
-  },
-
-  selected_categories_container: {
-    marginTop: 50,
-  },
-});

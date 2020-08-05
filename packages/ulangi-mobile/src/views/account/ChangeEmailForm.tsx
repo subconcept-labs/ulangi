@@ -16,8 +16,7 @@ import { ChangeEmailScreenIds } from '../../constants/ids/ChangeEmailScreenIds';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   ChangeEmailFormStyles,
-  darkStyles,
-  lightStyles,
+  changeEmailFormResponsiveStyles,
 } from './ChangeEmailForm.style';
 
 export interface ChangeEmailProps {
@@ -32,9 +31,10 @@ export interface ChangeEmailProps {
 @observer
 export class ChangeEmailForm extends React.Component<ChangeEmailProps> {
   public get styles(): ChangeEmailFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return changeEmailFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

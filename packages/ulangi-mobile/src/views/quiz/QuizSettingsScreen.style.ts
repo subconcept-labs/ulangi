@@ -6,12 +6,12 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultSectionRowDarkStyles,
-  lightStyles as defaultSectionRowLightStyles,
+  SectionRowResponsiveStyles,
+  SectionRowStyles,
 } from '../section/SectionRow.style';
 
 export interface QuizSettingsScreenStyles {
@@ -19,37 +19,49 @@ export interface QuizSettingsScreenStyles {
   content_container: ViewStyle;
 }
 
-export const baseStyles: QuizSettingsScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class QuizSettingsScreenResponsiveStyles extends ResponsiveStyleSheet<
+  QuizSettingsScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): QuizSettingsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  content_container: {
-    paddingTop: ss(16),
-  },
-};
+      content_container: {
+        paddingTop: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<QuizSettingsScreenStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<QuizSettingsScreenStyles> {
+    return {};
+  }
+}
 
-export const sectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-    inner_container: {
-      backgroundColor: '#f0f0f0',
-    },
-  }),
-);
+export class ExtendedSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      left_text: {
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
+    });
+  }
 
-export const sectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-  }),
-);
+  public lightStyles(): Partial<SectionRowStyles> {
+    return _.merge({}, super.lightStyles(), {
+      inner_container: {
+        backgroundColor: '#f0f0f0',
+      },
+    });
+  }
+}
+
+export const sectionRowResponsiveStyles = new ExtendedSectionRowResponsiveStyles();
+
+export const quizSettingsScreenResponsiveStyles = new QuizSettingsScreenResponsiveStyles();

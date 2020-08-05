@@ -7,7 +7,10 @@
 
 import { assertExists } from '@ulangi/assert';
 import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSuggestionListState } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSuggestionListState,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -20,12 +23,12 @@ import { PickerLoading } from './PickerLoading';
 import { SuggestionList, SuggestionListProps } from './SuggestionList';
 import {
   SuggestionsPickerContentStyles,
-  darkStyles,
-  lightStyles,
+  suggestionsPickerContentResponsiveStyles,
 } from './SuggestionsPickerContent.style';
 
 export interface SuggestionsPickerContentProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageName: string;
   translatedToLanguageName: string;
   suggestionListState: ObservableSuggestionListState;
@@ -42,9 +45,10 @@ export class SuggestionsPickerContent extends React.Component<
   SuggestionsPickerContentProps
 > {
   public get styles(): SuggestionsPickerContentStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return suggestionsPickerContentResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -55,6 +59,7 @@ export class SuggestionsPickerContent extends React.Component<
       return (
         <PickerLoading
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           message="Fetching suggestions. Please wait...."
         />
       );
@@ -76,6 +81,7 @@ export class SuggestionsPickerContent extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             'Suggestions is not yet available for ' +
             this.props.learningLanguageName +
@@ -92,6 +98,7 @@ export class SuggestionsPickerContent extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           testID={VocabularyFormIds.DICTIONARY_SPECIFIC_LANGUAGE_REQUIRED}
           errorMessage={
             "We couldn't provide suggestions because the language of your current set is ambiguous (Any Language.)"
@@ -105,6 +112,7 @@ export class SuggestionsPickerContent extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             <DefaultText>
               <DefaultText>
@@ -122,6 +130,7 @@ export class SuggestionsPickerContent extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             <DefaultText>
               <DefaultText>Oops! Something went wrong.</DefaultText>
@@ -147,7 +156,7 @@ export class SuggestionsPickerContent extends React.Component<
 
     const allSuggestionLists: (null | Omit<
       SuggestionListProps,
-      'theme' | 'openLink'
+      'theme' | 'screenLayout' | 'openLink'
     >)[] = [
       suggestionListState.dictionaryEntryState.dictionaryEntry !== null
         ? {
@@ -212,6 +221,7 @@ export class SuggestionsPickerContent extends React.Component<
                   <SuggestionList
                     key={list.term + '-' + list.label}
                     theme={this.props.theme}
+                    screenLayout={this.props.screenLayout}
                     term={list.term}
                     label={list.label}
                     attributions={list.attributions}

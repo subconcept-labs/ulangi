@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SuggestionsPickerContentStyles {
   picker_content: ViewStyle;
@@ -18,36 +17,46 @@ export interface SuggestionsPickerContentStyles {
   bold: TextStyle;
 }
 
-export const baseStyles: SuggestionsPickerContentStyles = {
-  picker_content: {},
+export class SuggestionsPickerContentResponsiveStyles extends ResponsiveStyleSheet<
+  SuggestionsPickerContentStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): SuggestionsPickerContentStyles {
+    return {
+      picker_content: {},
 
-  no_suggestions_text: {
-    paddingVertical: ss(10),
-    textAlign: 'center',
-    fontSize: ss(14),
-  },
+      no_suggestions_text: {
+        paddingVertical: scaleByFactor(10),
+        textAlign: 'center',
+        fontSize: scaleByFactor(14),
+      },
 
-  highlighted_text: {
-    color: config.styles.primaryColor,
-  },
+      highlighted_text: {
+        color: config.styles.primaryColor,
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
-};
+      bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    no_suggestions_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<SuggestionsPickerContentStyles> {
+    return {
+      no_suggestions_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    no_suggestions_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<SuggestionsPickerContentStyles> {
+    return {
+      no_suggestions_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const suggestionsPickerContentResponsiveStyles = new SuggestionsPickerContentResponsiveStyles();

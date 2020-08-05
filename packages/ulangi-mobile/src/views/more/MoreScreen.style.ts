@@ -9,10 +9,10 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultSectionRowDarkStyles,
-  lightStyles as defaultSectionRowLightStyles,
+  SectionRowResponsiveStyles,
+  SectionRowStyles,
 } from '../section/SectionRow.style';
 
 export interface MoreScreenStyles {
@@ -23,78 +23,73 @@ export interface MoreScreenStyles {
   left_icon: ImageStyle;
 }
 
-export const baseStyles: MoreScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class MoreScreenResponsiveStyles extends ResponsiveStyleSheet<
+  MoreScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): MoreScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  scroll_view_container: {
-    flex: 1,
-  },
+      scroll_view_container: {
+        flex: 1,
+      },
 
-  section_list: {
-    marginTop: ss(22),
-  },
+      section_list: {
+        marginTop: scaleByFactor(22),
+      },
 
-  description_text: {},
+      description_text: {},
 
-  left_icon: {
-    marginRight: ss(4),
-  },
-};
+      left_icon: {
+        marginRight: scaleByFactor(4),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    description_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<MoreScreenStyles> {
+    return {
+      description_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    screen: {
-      borderTopWidth: StyleSheet.hairlineWidth,
-      borderTopColor: '#131313',
-    },
-    description_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<MoreScreenStyles> {
+    return {
+      screen: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: '#131313',
+      },
+      description_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
 
-export const regularMembershipSectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    right_text: {
-      color: config.styles.regularMembershipColor,
-      fontWeight: 'bold',
-    },
-  }),
-);
+export class RegularSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      right_text: {
+        color: config.styles.regularMembershipColor,
+        fontWeight: 'bold',
+      },
+    });
+  }
+}
 
-export const regularMembershipSectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    right_text: {
-      color: config.styles.regularMembershipColor,
-      fontWeight: 'bold',
-    },
-  }),
-);
-
-export const premiumMembershipSectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    right_text: {
-      color: config.styles.premiumMembershipColor,
-      fontWeight: 'bold',
-    },
-  }),
-);
-
-export const premiumMembershipSectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    right_text: {
-      color: config.styles.premiumMembershipColor,
-      fontWeight: 'bold',
-    },
-  }),
-);
+export class PremiumSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      right_text: {
+        color: config.styles.premiumMembershipColor,
+        fontWeight: 'bold',
+      },
+    });
+  }
+}
+export const moreScreenResponsiveStyles = new MoreScreenResponsiveStyles();
+export const regularSectionRowResponsiveStyles = new RegularSectionRowResponsiveStyles();
+export const premiumSectionRowResponsiveStyles = new PremiumSectionRowResponsiveStyles();

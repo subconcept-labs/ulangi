@@ -66,6 +66,7 @@ export class EventLogsScreenContainer extends Container {
       <EventLogsScreen
         themeStore={this.props.rootStore.themeStore}
         eventStore={this.props.rootStore.eventStore}
+        observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />
     );

@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,22 +18,19 @@ import { DefaultText } from '../common/DefaultText';
 import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackground';
 import { LightBoxAnimatableView } from './LightBoxAnimatableView';
 import {
+  LightBoxContainerWithTitleResponsiveStyles,
   LightBoxContainerWithTitleStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxContainerWithTitleResponsiveStyles,
 } from './LightBoxContainerWithTitle.style';
 
 export interface LightBoxContainerWithTitleProps {
   testID?: string;
   theme: Theme;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   dismissLightBox: () => void;
   title: string;
-  styles?: {
-    light: LightBoxContainerWithTitleStyles;
-    dark: LightBoxContainerWithTitleStyles;
-  };
+  styles?: LightBoxContainerWithTitleResponsiveStyles;
 }
 
 @observer
@@ -41,17 +38,21 @@ export class LightBoxContainerWithTitle extends React.Component<
   LightBoxContainerWithTitleProps
 > {
   public get styles(): LightBoxContainerWithTitleStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return this.props.styles
+      ? this.props.styles.compile(this.props.screenLayout, this.props.theme)
+      : lightBoxContainerWithTitleResponsiveStyles.compile(
+          this.props.screenLayout,
+          this.props.theme,
+        );
   }
 
   public render(): React.ReactElement<any> {
     return (
       <LightBoxTouchableBackground
         testID={this.props.testID}
+        theme={this.props.theme}
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        screenLayout={this.props.screenLayout}
         enabled={true}
         style={this.styles.light_box_container}
         onPress={this.props.dismissLightBox}

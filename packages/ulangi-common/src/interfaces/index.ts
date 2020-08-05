@@ -9,6 +9,7 @@ export { Attribution } from './general/Attribution';
 export { AutoArchiveSettings } from './general/AutoArchiveSettings';
 export { AutoShowInAppRating } from './general/AutoShowInAppRating';
 export { ButtonStyles } from './general/ButtonStyles';
+export { ButtonProps } from './general/ButtonProps';
 export { Category } from './general/Category';
 export { CategorySuggestion } from './general/CategorySuggestion';
 export { Definition } from './general/Definition';
@@ -194,5 +195,3 @@ export {
 export { UploadSetsRequest } from './request/UploadSetsRequest';
 export { UploadUserRequest } from './request/UploadUserRequest';
 export { UploadVocabularyRequest } from './request/UploadVocabularyRequest';
-
-export { DefaultButtonProps } from './props/DefaultButtonProps';

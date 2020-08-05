@@ -11,10 +11,14 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { AddEditSetScreenDelegate } from '../../delegates/set/AddEditSetScreenDelegate';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
+import {
+  AddEditSetScreenStyles,
+  addEditSetScreenResponsiveStyles,
+} from './AddEditSetScreen.style';
 import { LanguagePicker } from './LanguagePicker';
 import { SetForm } from './SetForm';
 
@@ -27,22 +31,36 @@ export interface AddEditSetScreenProps {
 
 @observer
 export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
+  private get styles(): AddEditSetScreenStyles {
+    return addEditSetScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <DismissKeyboardView testID={this.props.testID} style={styles.screen}>
-        <SetForm
-          theme={this.props.themeStore.theme}
-          setFormState={this.props.observableScreen.setFormState}
-          showSelectLearningLanguageFirstDialog={
-            this.props.screenDelegate.showSelectLearningLanguageFirstDialog
-          }
-          showPicker={this.props.screenDelegate.showPicker}
-        />
-        {this.props.observableScreen.setFormState.pickerState.currentPicker !==
-        null
-          ? this.renderLanguagePicker()
-          : null}
-      </DismissKeyboardView>
+      <Screen
+        testID={this.props.testID}
+        style={this.styles.screen}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <DismissKeyboardView>
+          <SetForm
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
+            setFormState={this.props.observableScreen.setFormState}
+            showSelectLearningLanguageFirstDialog={
+              this.props.screenDelegate.showSelectLearningLanguageFirstDialog
+            }
+            showPicker={this.props.screenDelegate.showPicker}
+          />
+          {this.props.observableScreen.setFormState.pickerState
+            .currentPicker !== null
+            ? this.renderLanguagePicker()
+            : null}
+        </DismissKeyboardView>
+      </Screen>
     );
   }
 
@@ -50,6 +68,7 @@ export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
     return (
       <LanguagePicker
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         pickerState={this.props.observableScreen.setFormState.pickerState}
         selectedLanguageCode={
           this.props.observableScreen.setFormState
@@ -65,9 +84,3 @@ export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});

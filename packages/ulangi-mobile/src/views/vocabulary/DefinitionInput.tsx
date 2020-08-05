@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDefinition } from '@ulangi/ulangi-observable';
+import {
+  ObservableDefinition,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
@@ -18,12 +21,12 @@ import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   DefinitionInputStyles,
-  darkStyles,
-  lightStyles,
+  definitionInputResponsiveStyles,
 } from './DefinitionInput.style';
 
 export interface DefinitionInputProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   index: number;
   definition: ObservableDefinition;
   translatedToLanguageName: string;
@@ -91,10 +94,11 @@ export class DefinitionInput extends React.Component<DefinitionInputProps> {
     }
   }
 
-  public get styles(): DefinitionInputStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): DefinitionInputStyles {
+    return definitionInputResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

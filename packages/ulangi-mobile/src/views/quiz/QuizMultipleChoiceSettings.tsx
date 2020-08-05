@@ -1,20 +1,19 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { config } from '../../constants/config';
 import { QuizSettingsScreenIds } from '../../constants/ids/QuizSettingsScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
-import {
-  sectionRowDarkStyles,
-  sectionRowLightStyles,
-} from './QuizSettingsScreen.style';
+import { sectionRowResponsiveStyles } from './QuizSettingsScreen.style';
 
 export interface QuizMultipleChoiceSettingsProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   multipleChoiceSettings: {
     selectedQuizSize: number;
   };
@@ -33,10 +32,12 @@ export class QuizMultipleChoiceSettings extends React.Component<
     return (
       <SectionGroup
         theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
         key="multiple-choice-quiz"
         header="MULTIPLE CHOICE QUIZ">
         <SectionRow
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Quiz Size"
           shrink="left"
           description="Number of questions per multiple choice quiz"
@@ -44,8 +45,10 @@ export class QuizMultipleChoiceSettings extends React.Component<
             <DefaultButton
               testID={QuizSettingsScreenIds.MULTIPLE_CHOICE_QUIZ_SIZE_BTN}
               text={this.props.multipleChoiceSettings.selectedQuizSize.toString()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={(): void => {
                 this.props.showMultipleChoiceQuizSizeMenu(
@@ -58,10 +61,7 @@ export class QuizMultipleChoiceSettings extends React.Component<
               }}
             />
           }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );

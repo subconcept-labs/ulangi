@@ -67,6 +67,11 @@ export class PrivacyPolicyScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <PrivacyPolicyScreen />;
+    return (
+      <PrivacyPolicyScreen
+        themeStore={this.props.rootStore.themeStore}
+        observableScreen={this.observableScreen}
+      />
+    );
   }
 }

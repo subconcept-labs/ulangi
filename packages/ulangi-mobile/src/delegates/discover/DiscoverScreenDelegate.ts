@@ -13,6 +13,7 @@ import {
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
 import {
+  ButtonStyles,
   ErrorBag,
   PublicVocabulary,
   TranslationWithLanguages,
@@ -29,7 +30,7 @@ import { Linking } from 'react-native';
 
 import { RemoteLogger } from '../../RemoteLogger';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { TranslationListDelegate } from '../translation/TranslationListDelegate';
@@ -336,9 +337,12 @@ export class DiscoverScreenDelegate {
             onPress: (): void => {
               this.dialogDelegate.dismiss();
             },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+            styles: (theme, layout): ButtonStyles =>
+              fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+                ButtonSize.SMALL,
+                theme,
+                layout,
+              ),
           },
           {
             testID: LightBoxDialogIds.OKAY_BTN,
@@ -346,9 +350,12 @@ export class DiscoverScreenDelegate {
             onPress: (): void => {
               retry(false);
             },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+            styles: (theme, layout): ButtonStyles =>
+              fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+                ButtonSize.SMALL,
+                theme,
+                layout,
+              ),
           },
         ],
       });

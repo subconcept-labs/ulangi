@@ -6,40 +6,58 @@
  */
 
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
-import { ObservableAdScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableAdScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import { AdScreenDelegate } from '../../delegates/ad/AdScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
+import { AdScreenStyles, adScreenResponsiveStyles } from './AdScreen.style';
 
 export interface AdScreenProps {
   observableScreen: ObservableAdScreen;
+  themeStore: ObservableThemeStore;
   screenDelegate: AdScreenDelegate;
 }
 
 @observer
 export class AdScreen extends React.Component<AdScreenProps> {
+  private get styles(): AdScreenStyles {
+    return adScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen}>
+      <Screen
+        style={this.styles.screen}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         {this.props.observableScreen.closable === true
           ? this.renderCloseButton()
           : this.renderLoading()}
-      </View>
+      </Screen>
     );
   }
 
   private renderCloseButton(): React.ReactElement<any> {
     return (
-      <View style={styles.button_container}>
+      <View style={this.styles.button_container}>
         <DefaultButton
           text="Close"
-          styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+          styles={fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
             ButtonSize.LARGE,
+            this.props.themeStore.theme,
+            this.props.observableScreen.screenLayout,
           )}
           onPress={this.props.screenDelegate.back}
         />
@@ -51,30 +69,8 @@ export class AdScreen extends React.Component<AdScreenProps> {
     return (
       <React.Fragment>
         <ActivityIndicator />
-        <DefaultText style={styles.text}>LOADING AD</DefaultText>
+        <DefaultText style={this.styles.text}>LOADING AD</DefaultText>
       </React.Fragment>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  button_container: {
-    alignSelf: 'stretch',
-    flex: 1,
-    justifyContent: 'flex-end',
-    padding: 16,
-  },
-
-  text: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#999',
-    paddingTop: 10,
-  },
-});

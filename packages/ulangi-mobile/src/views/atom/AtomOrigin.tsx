@@ -6,21 +6,29 @@
  */
 
 import { assertExists } from '@ulangi/assert';
+import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAtomGameStats,
   ObservableCommandList,
   ObservableOrigin,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Animated, StyleSheet, ViewStyle } from 'react-native';
+import { Animated, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import {
+  AtomOriginStyles,
+  atomOriginResponsiveStyles,
+} from './AtomOrigin.style';
 
 export interface AtomOriginProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   origin: ObservableOrigin;
   gameStats: ObservableAtomGameStats;
 }
@@ -92,6 +100,13 @@ export class AtomOrigin extends React.Component<
     };
   }
 
+  private get styles(): AtomOriginStyles {
+    return atomOriginResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public componentDidMount(): void {
     this.unsubscribeHandleCommand = autorun(
       (): void => this.handleCommand(this.props.origin.commandList),
@@ -106,34 +121,14 @@ export class AtomOrigin extends React.Component<
     return (
       <Animated.View
         style={[
-          styles.container,
+          this.styles.container,
           this.getContainerStyle(),
           this.getTransformStyle(),
         ]}>
-        <DefaultText style={styles.move_count}>
+        <DefaultText style={this.styles.move_count}>
           {this.props.gameStats.remainingMoves}
         </DefaultText>
       </Animated.View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: config.atom.secondaryColor,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.8,
-    shadowOpacity: 0.2,
-  },
-
-  move_count: {
-    color: '#fff',
-    fontFamily: 'JosefinSans-Bold',
-    fontSize: 18,
-    marginTop: 2,
-  },
-});

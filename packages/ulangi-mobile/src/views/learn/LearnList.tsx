@@ -7,55 +7,44 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { FeatureSettings } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDimensions } from '@ulangi/ulangi-observable';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 
 import { LearnScreenIds } from '../../constants/ids/LearnScreenIds';
-import { ls, xls } from '../../utils/responsive';
 import { QuizTitle } from '../../views/quiz/QuizTitle';
 import { SpacedRepetitionTitle } from '../../views/spaced-repetition/SpacedRepetitionTitle';
 import { WritingTitle } from '../../views/writing/WritingTitle';
 import { AtomTitle } from '../atom/AtomTitle';
 import { ReflexTitle } from '../reflex/ReflexTitle';
-import { LearnListStyles, darkStyles, lightStyles } from './LearnList.style';
+import { LearnListStyles, learnListResponsiveStyles } from './LearnList.style';
 
 export interface LearnListProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   featureSettings: FeatureSettings;
   navigateToSpacedRepetitionScreen: () => void;
   navigateToWritingScreen: () => void;
   navigateToQuizScreen: () => void;
   navigateToReflexScreen: () => void;
   navigateToAtomScreen: () => void;
-  styles?: {
-    light: LearnListStyles;
-    dark: LearnListStyles;
-  };
 }
 
 @observer
 export class LearnList extends React.Component<LearnListProps> {
   public get styles(): LearnListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return learnListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
       <ScrollView
         testID={LearnScreenIds.LEARN_LIST}
-        contentContainerStyle={[
-          this.styles.scroll_view_container,
-          {
-            paddingHorizontal: this.props.observableDimensions.isPortrait
-              ? ls(16)
-              : xls(16),
-          },
-        ]}>
+        contentContainerStyle={this.styles.scroll_view_container}>
         {this.props.featureSettings.spacedRepetitionEnabled ? (
           <TouchableOpacity
             testID={LearnScreenIds.SPACED_REPETITION_BTN}
@@ -64,7 +53,10 @@ export class LearnList extends React.Component<LearnListProps> {
               this.styles.spaced_repetition_title_container,
             ]}
             onPress={this.props.navigateToSpacedRepetitionScreen}>
-            <SpacedRepetitionTitle theme={this.props.theme} />
+            <SpacedRepetitionTitle
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+            />
           </TouchableOpacity>
         ) : null}
         {this.props.featureSettings.writingEnabled ? (
@@ -75,7 +67,10 @@ export class LearnList extends React.Component<LearnListProps> {
               this.styles.writing_title_container,
             ]}
             onPress={this.props.navigateToWritingScreen}>
-            <WritingTitle theme={this.props.theme} />
+            <WritingTitle
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+            />
           </TouchableOpacity>
         ) : null}
         {this.props.featureSettings.quizEnabled ? (
@@ -83,7 +78,10 @@ export class LearnList extends React.Component<LearnListProps> {
             testID={LearnScreenIds.QUIZ_BTN}
             style={[this.styles.learn_item, this.styles.quiz_title_container]}
             onPress={this.props.navigateToQuizScreen}>
-            <QuizTitle theme={this.props.theme} />
+            <QuizTitle
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+            />
           </TouchableOpacity>
         ) : null}
         {this.props.featureSettings.reflexEnabled ? (
@@ -91,7 +89,10 @@ export class LearnList extends React.Component<LearnListProps> {
             testID={LearnScreenIds.REFLEX_BTN}
             style={[this.styles.learn_item, this.styles.reflex_title_container]}
             onPress={this.props.navigateToReflexScreen}>
-            <ReflexTitle />
+            <ReflexTitle
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+            />
           </TouchableOpacity>
         ) : null}
         {this.props.featureSettings.atomEnabled ? (

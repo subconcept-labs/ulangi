@@ -5,38 +5,54 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableUpgradeButtonState } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableScreenLayout,
+  ObservableUpgradeButtonState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  UpgradeButtonStyles,
+  upgradeButtonResponsiveStyles,
+} from './UpgradeButton.style';
 
 export interface UpgradeButtonProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   upgradeButtonState: ObservableUpgradeButtonState;
 }
 
 @observer
 export class UpgradeButton extends React.Component<UpgradeButtonProps> {
+  private get styles(): UpgradeButtonStyles {
+    return upgradeButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <TouchableOpacity
         onPress={this.props.upgradeButtonState.onPress}
-        style={styles.button_container}
+        style={this.styles.button_container}
         disabled={typeof this.props.upgradeButtonState.onPress === 'undefined'}>
-        <View style={styles.text_container}>
-          <DefaultText style={styles.text}>
+        <View style={this.styles.text_container}>
+          <DefaultText style={this.styles.text}>
             {this.props.upgradeButtonState.text}
           </DefaultText>
         </View>
         {typeof this.props.upgradeButtonState.price !== 'undefined' ? (
-          <View style={styles.price_container}>
-            <DefaultText style={styles.price}>
+          <View style={this.styles.price_container}>
+            <DefaultText style={this.styles.price}>
               {this.props.upgradeButtonState.price}
             </DefaultText>
             {typeof this.props.upgradeButtonState.currency !== 'undefined' ? (
-              <DefaultText style={styles.currency}>
+              <DefaultText style={this.styles.currency}>
                 {this.props.upgradeButtonState.currency}
               </DefaultText>
             ) : null}
@@ -46,52 +62,3 @@ export class UpgradeButton extends React.Component<UpgradeButtonProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  button_container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#5C6BC0',
-    marginHorizontal: ls(16),
-    paddingVertical: ss(12),
-    paddingHorizontal: ss(16),
-    borderRadius: ss(5),
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    elevation: 1,
-  },
-
-  text_container: {
-    paddingRight: ss(14),
-    flexShrink: 1,
-  },
-
-  text: {
-    fontSize: ss(16),
-    fontWeight: '700',
-    color: '#fff',
-  },
-
-  price_container: {
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderLeftWidth: StyleSheet.hairlineWidth,
-    borderLeftColor: '#f9f9f9',
-    paddingLeft: ss(14),
-  },
-
-  price: {
-    fontSize: ss(18),
-    fontWeight: '700',
-    color: '#fff',
-  },
-
-  currency: {
-    fontSize: ss(13),
-    fontWeight: '700',
-    color: '#fff',
-  },
-});

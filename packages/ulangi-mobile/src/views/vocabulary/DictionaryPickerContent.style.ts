@@ -5,17 +5,30 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
+
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 
 export interface DictionaryPickerContentStyles {
   picker_content: ViewStyle;
 }
 
-export const baseStyles: DictionaryPickerContentStyles = {
-  picker_content: {},
-};
+export class DictionaryPickerContentResponsiveStyles extends ResponsiveStyleSheet<
+  DictionaryPickerContentStyles
+> {
+  public baseStyles(): DictionaryPickerContentStyles {
+    return {
+      picker_content: {},
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<DictionaryPickerContentStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<DictionaryPickerContentStyles> {
+    return {};
+  }
+}
+
+export const dictionaryPickerContentResponsiveStyles = new DictionaryPickerContentResponsiveStyles();

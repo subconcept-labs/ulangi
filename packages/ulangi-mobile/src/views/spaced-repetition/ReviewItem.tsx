@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableReviewState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
@@ -22,22 +22,16 @@ import { DefinitionItem } from '../vocabulary/DefinitionItem';
 import { VocabularyExtraFieldList } from '../vocabulary/VocabularyExtraFieldList';
 import {
   ReviewItemStyles,
-  darkStyles,
-  definitionItemDarkStyles,
-  definitionItemLightStyles,
-  lightStyles,
+  definitionItemResponsiveStyles,
+  reviewItemResponsiveStyles,
 } from './ReviewItem.style';
 import { ReviewStrokeOrder } from './ReviewStrokeOrder';
 
 export interface ReviewItemProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   learningLanguageCode: string;
   reviewState: ObservableReviewState;
-  styles?: {
-    light: ReviewItemStyles;
-    dark: ReviewItemStyles;
-  };
 }
 
 @observer
@@ -69,9 +63,10 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
   }
 
   public get styles(): ReviewItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -104,6 +99,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
             </View>
             <VocabularyExtraFieldList
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               extraFields={
                 this.props.reviewState.vocabulary.vocabularyExtraFields
               }
@@ -116,12 +112,10 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
                   <DefinitionItem
                     key={definition.definitionId}
                     theme={this.props.theme}
+                    screenLayout={this.props.screenLayout}
                     index={index}
                     definition={definition}
-                    styles={{
-                      light: definitionItemLightStyles,
-                      dark: definitionItemDarkStyles,
-                    }}
+                    styles={definitionItemResponsiveStyles}
                   />
                 );
               },
@@ -131,7 +125,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
         {this.props.learningLanguageCode === 'zh' ? (
           <ReviewStrokeOrder
             theme={this.props.theme}
-            observableDimensions={this.props.observableDimensions}
+            screenLayout={this.props.screenLayout}
             reviewState={this.props.reviewState}
           />
         ) : null}
@@ -150,6 +144,7 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
           </View>
           <VocabularyExtraFieldList
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             extraFields={
               this.props.reviewState.vocabulary.vocabularyExtraFields
             }
@@ -178,13 +173,11 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
               <DefinitionItem
                 key={definition.definitionId}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 index={index}
                 definition={definition}
                 hideFields={['example', 'note']}
-                styles={{
-                  light: definitionItemLightStyles,
-                  dark: definitionItemDarkStyles,
-                }}
+                styles={definitionItemResponsiveStyles}
               />
             );
           },

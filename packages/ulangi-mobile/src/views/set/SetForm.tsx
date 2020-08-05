@@ -7,7 +7,10 @@
 
 import { assertExists } from '@ulangi/assert';
 import { SetFormPickerType, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSetFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSetFormState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -17,25 +20,23 @@ import { config } from '../../constants/config';
 import { SetFormIds } from '../../constants/ids/SetFormIds';
 import { DefaultText } from '../common/DefaultText';
 import { DefaultTextInput } from '../common/DefaultTextInput';
-import { SetFormStyles, darkStyles, lightStyles } from './SetForm.style';
+import { SetFormStyles, setFormResponsiveStyles } from './SetForm.style';
 
 export interface SetFormProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   setFormState: ObservableSetFormState;
   showPicker: (pickerType: SetFormPickerType) => void;
   showSelectLearningLanguageFirstDialog: () => void;
-  styles?: {
-    light: SetFormStyles;
-    dark: SetFormStyles;
-  };
 }
 
 @observer
 export class SetForm extends React.Component<SetFormProps> {
-  public get styles(): SetFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): SetFormStyles {
+    return setFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

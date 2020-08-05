@@ -16,8 +16,7 @@ import { ChangePasswordScreenIds } from '../../constants/ids/ChangePasswordScree
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   ChangePasswordFormStyles,
-  darkStyles,
-  lightStyles,
+  changePasswordFormResponsiveStyles,
 } from './ChangePasswordForm.style';
 
 export interface ChangePasswordFormProps {
@@ -34,9 +33,10 @@ export class ChangePasswordForm extends React.Component<
   ChangePasswordFormProps
 > {
   public get styles(): ChangePasswordFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return changePasswordFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

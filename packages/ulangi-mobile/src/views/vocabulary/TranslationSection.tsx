@@ -7,6 +7,7 @@
 
 import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableScreenLayout,
   ObservableTranslation,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
@@ -21,12 +22,12 @@ import { TranslateWithGoogleButton } from './TranslateWithGoogleButton';
 import { TranslationList } from './TranslationList';
 import {
   TranslationSectionStyles,
-  darkStyles,
-  lightStyles,
+  translationSectionResponsiveStyles,
 } from './TranslationSection.style';
 
 export interface TranslationSectionProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageName: string;
   translatedToLanguageName: string;
   translationListState: ObservableTranslationListState;
@@ -43,9 +44,10 @@ export class TranslationSection extends React.Component<
   TranslationSectionProps
 > {
   public get styles(): TranslationSectionStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return translationSectionResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -53,7 +55,13 @@ export class TranslationSection extends React.Component<
       this.props.translationListState.translateState.get() ===
       ActivityState.ACTIVE
     ) {
-      return <PickerLoading theme={this.props.theme} message="Translating" />;
+      return (
+        <PickerLoading
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          message="Translating"
+        />
+      );
     } else if (
       this.props.translationListState.translateState.get() ===
       ActivityState.ERROR
@@ -64,6 +72,7 @@ export class TranslationSection extends React.Component<
         return (
           <PickerError
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             errorMessage={
               <DefaultText>
                 <DefaultText>{"We couldn't translate the term"} </DefaultText>
@@ -78,13 +87,20 @@ export class TranslationSection extends React.Component<
         return (
           <TranslationList
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             translations={this.props.translationListState.translations}
             onPick={this.props.onPick}
           />
         );
       }
     } else {
-      return <TranslateWithGoogleButton translate={this.props.translate} />;
+      return (
+        <TranslateWithGoogleButton
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          translate={this.props.translate}
+        />
+      );
     }
   }
 
@@ -96,6 +112,7 @@ export class TranslationSection extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={`We couldn't translate it because the source language is same as the target language (${this
             .props.learningLanguageName +
             ' - ' +
@@ -109,6 +126,7 @@ export class TranslationSection extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           testID={VocabularyFormIds.TRANSLATION_SPECIFIC_LANGUAGE_REQUIRED}
           errorMessage={
             "We couldn't translate it because the language of your current set is ambiguous (Any Language.)"
@@ -119,6 +137,7 @@ export class TranslationSection extends React.Component<
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             <DefaultText>
               <DefaultText>Oops! Something went wrong. </DefaultText>

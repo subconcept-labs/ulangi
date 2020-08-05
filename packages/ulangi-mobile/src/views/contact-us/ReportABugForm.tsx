@@ -18,8 +18,7 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   ReportABugFormStyles,
-  darkStyles,
-  lightStyles,
+  reportABugFormResponsiveStyles,
 } from './ReportABugForm.style';
 
 export interface ReportABugFormProps {
@@ -35,10 +34,11 @@ export interface ReportABugFormProps {
 
 @observer
 export class ReportABugForm extends React.Component<ReportABugFormProps> {
-  public get styles(): ReportABugFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): ReportABugFormStyles {
+    return reportABugFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

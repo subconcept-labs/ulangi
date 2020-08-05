@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface FAQListStyles {
   container: ViewStyle;
@@ -24,105 +23,113 @@ export interface FAQListStyles {
   index: TextStyle;
 }
 
-export const baseStyles: FAQListStyles = {
-  container: {
-    flex: 1,
-  },
+export class FAQListResponsiveStyles extends ResponsiveStyleSheet<
+  FAQListStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): FAQListStyles {
+    return {
+      container: {
+        flex: 1,
+      },
 
-  scroll_view: {
-    paddingVertical: ss(8),
-  },
+      scroll_view: {
+        paddingVertical: scaleByFactor(8),
+      },
 
-  section_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(10),
-  },
+      section_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(10),
+      },
 
-  header_container: {
-    flexDirection: 'row',
-    paddingVertical: ss(4),
-    alignItems: 'center',
-  },
+      header_container: {
+        flexDirection: 'row',
+        paddingVertical: scaleByFactor(4),
+        alignItems: 'center',
+      },
 
-  title_container: {
-    flexShrink: 1,
-  },
+      title_container: {
+        flexShrink: 1,
+      },
 
-  title_text: {
-    fontWeight: 'bold',
-    fontSize: ss(16),
-  },
+      title_text: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(16),
+      },
 
-  content_container: {
-    marginLeft: ss(11),
-    paddingHorizontal: ss(16),
-    borderLeftWidth: StyleSheet.hairlineWidth,
-  },
+      content_container: {
+        marginLeft: scaleByFactor(11),
+        paddingHorizontal: scaleByFactor(16),
+        borderLeftWidth: StyleSheet.hairlineWidth,
+      },
 
-  content_text: {
-    fontSize: ss(15),
-    lineHeight: ss(20),
-  },
+      content_text: {
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(20),
+      },
 
-  index_container: {
-    width: ss(22),
-    height: ss(22),
-    borderRadius: ss(22) / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: ss(5),
-  },
+      index_container: {
+        width: scaleByFactor(22),
+        height: scaleByFactor(22),
+        borderRadius: scaleByFactor(22) / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: scaleByFactor(5),
+      },
 
-  index: {
-    fontWeight: 'bold',
-    fontSize: ss(13),
-  },
-};
+      index: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(13),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<FAQListStyles> {
+    return {
+      title_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    content_container: {
-      borderLeftColor: config.styles.light.secondaryBackgroundColor,
-    },
+      content_container: {
+        borderLeftColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    content_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      content_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    index_container: {
-      backgroundColor: config.styles.light.secondaryTextColor,
-    },
+      index_container: {
+        backgroundColor: config.styles.light.secondaryTextColor,
+      },
 
-    index: {
-      color: config.styles.light.primaryBackgroundColor,
-    },
-  }),
-);
+      index: {
+        color: config.styles.light.primaryBackgroundColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<FAQListStyles> {
+    return {
+      title_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    content_container: {
-      borderLeftColor: config.styles.dark.secondaryBackgroundColor,
-    },
+      content_container: {
+        borderLeftColor: config.styles.dark.secondaryBackgroundColor,
+      },
 
-    content_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      content_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    index_container: {
-      backgroundColor: config.styles.dark.secondaryTextColor,
-    },
+      index_container: {
+        backgroundColor: config.styles.dark.secondaryTextColor,
+      },
 
-    index: {
-      color: config.styles.dark.primaryBackgroundColor,
-    },
-  }),
-);
+      index: {
+        color: config.styles.dark.primaryBackgroundColor,
+      },
+    };
+  }
+}
+
+export const faqListResponsiveStyles = new FAQListResponsiveStyles();

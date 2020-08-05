@@ -6,18 +6,19 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
   DiscoverNavButtonStyles,
-  darkStyles,
-  lightStyles,
+  discoverNavButtonResponsiveStyles,
 } from './DiscoverNavButton.style';
 
 export interface DiscoverNavButtonProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   testID: string;
   isSelected: boolean;
   onPress: () => void;
@@ -31,9 +32,10 @@ export interface DiscoverNavButtonProps {
 
 export class DiscoverNavButton extends React.Component<DiscoverNavButtonProps> {
   public get styles(): DiscoverNavButtonStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return discoverNavButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

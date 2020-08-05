@@ -12,11 +12,16 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { AddEditVocabularyScreenDelegate } from '../../delegates/vocabulary/AddEditVocabularyScreenDelegate';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
+import {
+  AddEditVocabularyScreenStyles,
+  addEditVocabularyScreenResponsiveStyles,
+} from './AddEditVocabularyScreen.style';
 import { VocabularyForm } from './VocabularyForm';
 import { VocabularyFormTopBar } from './VocabularyFormTopBar';
 import { VocabularyItem } from './VocabularyItem';
@@ -34,17 +39,29 @@ export interface AddEditVocabularyScreenProps {
 export class AddEditVocabularyScreen extends React.Component<
   AddEditVocabularyScreenProps
 > {
+  private get styles(): AddEditVocabularyScreenStyles {
+    return addEditVocabularyScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={this.props.testID}>
+      <Screen
+        style={this.styles.screen}
+        testID={this.props.testID}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <VocabularyFormTopBar
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           currentTab={this.props.observableScreen.currentTab}
         />
         {this.props.observableScreen.currentTab.get() === 'Editor'
           ? this.renderEditor()
           : this.renderPreview()}
-      </View>
+      </Screen>
     );
   }
 
@@ -54,10 +71,11 @@ export class AddEditVocabularyScreen extends React.Component<
         <SmartScrollView
           keyboardShouldPersistTaps="handled"
           keyboardAware={true}
-          style={styles.scrollview}>
+          style={this.styles.scrollview}>
           <DismissKeyboardView>
             <VocabularyForm
               theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
               learningLanguage={this.props.learningLanguage}
               translatedToLanguage={this.props.translatedToLanguage}
               vocabularyFormState={
@@ -83,9 +101,10 @@ export class AddEditVocabularyScreen extends React.Component<
 
   private renderPreview(): React.ReactElement<any> {
     return (
-      <ScrollView contentContainerStyle={styles.preview_container}>
+      <ScrollView contentContainerStyle={this.styles.preview_container}>
         <VocabularyItem
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           vocabulary={this.props.screenDelegate.createPreview()}
           shouldShowTags={false}
         />
@@ -93,20 +112,3 @@ export class AddEditVocabularyScreen extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  scrollview: {
-    flex: 1,
-  },
-
-  preview_container: {
-    flexGrow: 1,
-    paddingTop: 16,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-  },
-});

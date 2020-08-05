@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableReviewState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,13 +18,12 @@ import { DefaultText } from '../common/DefaultText';
 import { StrokeOrders } from '../vocabulary/StrokeOrders';
 import {
   ReviewStrokeOrderStyles,
-  darkStyles,
-  lightStyles,
+  reviewStrokeOrderResponsiveStyles,
 } from './ReviewStrokeOrder.style';
 
 export interface ReviewStrokeOrderProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   reviewState: ObservableReviewState;
   styles?: {
     light: ReviewStrokeOrderStyles;
@@ -35,9 +34,10 @@ export interface ReviewStrokeOrderProps {
 @observer
 export class ReviewStrokeOrder extends React.Component<ReviewStrokeOrderProps> {
   public get styles(): ReviewStrokeOrderStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewStrokeOrderResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -52,7 +52,7 @@ export class ReviewStrokeOrder extends React.Component<ReviewStrokeOrderProps> {
         </DefaultText>
         <StrokeOrders
           theme={this.props.theme}
-          observableDimensions={this.props.observableDimensions}
+          screenLayout={this.props.screenLayout}
           words={
             this.props.reviewState.strokeOrderForm === 'traditional'
               ? this.props.reviewState.vocabulary.vocabularyExtraFields.traditional[0][0].split(

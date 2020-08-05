@@ -9,6 +9,7 @@ import { Options } from '@ulangi/react-native-navigation';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, ScreenName } from '@ulangi/ulangi-common/enums';
 import {
+  ButtonStyles,
   SelectionItem,
   Set,
   SetSelectionMenuOptions,
@@ -22,7 +23,7 @@ import * as _ from 'lodash';
 
 import { Images } from '../../constants/Images';
 import { SetSelectionMenuIds } from '../../constants/ids/SetSelectionMenuIds';
-import { TextButtonStyle } from '../../styles/TextButtonStyle';
+import { textButtonStyles } from '../../styles/TextButtonStyles';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 export class SetSelectionMenuDelegate {
@@ -149,7 +150,12 @@ export class SetSelectionMenuDelegate {
                     {},
                   );
                 },
-                styles: TextButtonStyle.getNormalStyles(ButtonSize.NORMAL),
+                styles: (theme, layout): ButtonStyles =>
+                  textButtonStyles.getNormalStyles(
+                    ButtonSize.NORMAL,
+                    layout,
+                    theme,
+                  ),
               },
         rightButton:
           options && options.hideRightButton
@@ -161,7 +167,12 @@ export class SetSelectionMenuDelegate {
                   this.navigatorDelegate.dismissLightBox();
                   this.navigatorDelegate.push(ScreenName.ADD_SET_SCREEN, {});
                 },
-                styles: TextButtonStyle.getNormalStyles(ButtonSize.NORMAL),
+                styles: (theme, layout): ButtonStyles =>
+                  textButtonStyles.getNormalStyles(
+                    ButtonSize.NORMAL,
+                    layout,
+                    theme,
+                  ),
               },
         title: options && options.title ? options.title : 'Select',
       },

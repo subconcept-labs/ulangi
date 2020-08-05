@@ -6,19 +6,21 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import {
+  SectionRowResponsiveStyles,
   SectionRowStyles,
-  darkStyles,
-  lightStyles,
+  sectionRowResponsiveStyles,
 } from '../section/SectionRow.style';
 
 export interface SectionRowProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   testID?: string;
   leftIcon?: React.ReactElement<any>;
   leftText?: string;
@@ -31,18 +33,17 @@ export interface SectionRowProps {
   description?: React.ReactElement<any> | string;
   shrink?: 'left' | 'right';
   onPress?: () => void;
-  styles?: {
-    light: SectionRowStyles;
-    dark: SectionRowStyles;
-  };
+  styles?: SectionRowResponsiveStyles;
 }
 
 export class SectionRow extends React.Component<SectionRowProps> {
   public get styles(): SectionRowStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return this.props.styles
+      ? this.props.styles.compile(this.props.screenLayout, this.props.theme)
+      : sectionRowResponsiveStyles.compile(
+          this.props.screenLayout,
+          this.props.theme,
+        );
   }
 
   public render(): React.ReactElement<any> {

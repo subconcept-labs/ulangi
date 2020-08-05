@@ -21,7 +21,7 @@ import { Container } from '../../Container';
 import { config } from '../../constants/config';
 import { ReflexScreenFactory } from '../../factories/reflex/ReflexScreenFactory';
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
-import { ReflexStyle } from '../../styles/ReflexStyle';
+import { reflexStyles } from '../../styles/ReflexStyles';
 import { ReflexScreen } from './ReflexScreen';
 
 export interface ReflexScreenPassedProps {
@@ -31,7 +31,7 @@ export interface ReflexScreenPassedProps {
 @observer
 export class ReflexScreenContainer extends Container<ReflexScreenPassedProps> {
   public static options(): Options {
-    return ReflexStyle.getScreenStyle();
+    return reflexStyles.getScreenStyle();
   }
 
   private screenFactory = new ReflexScreenFactory(

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableThemeStore,
   ObservableWritingSettingsScreen,
@@ -17,17 +17,16 @@ import { ScrollView } from 'react-native';
 import { config } from '../../constants/config';
 import { WritingSettingsScreenIds } from '../../constants/ids/WritingSettingsScreenIds';
 import { WritingSettingsScreenDelegate } from '../../delegates/writing/WritingSettingsScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   WritingSettingsScreenStyles,
-  darkStyles,
-  lightStyles,
-  sectionRowDarkStyles,
-  sectionRowLightStyles,
+  sectionRowResponsiveStyles,
+  writingSettingsScreenResponsiveStyles,
 } from './WritingSettingsScreen.style';
 
 export interface WritingSettingsScreenProps {
@@ -40,20 +39,24 @@ export interface WritingSettingsScreenProps {
 export class WritingSettingsScreen extends React.Component<
   WritingSettingsScreenProps
 > {
-  public get styles(): WritingSettingsScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+  private get styles(): WritingSettingsScreenStyles {
+    return writingSettingsScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <ScrollView
+      <Screen
         style={this.styles.screen}
-        contentContainerStyle={this.styles.content_container}
-        testID={WritingSettingsScreenIds.SCREEN}>
-        {this.renderSections()}
-      </ScrollView>
+        testID={WritingSettingsScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
+        <ScrollView contentContainerStyle={this.styles.content_container}>
+          {this.renderSections()}
+        </ScrollView>
+      </Screen>
     );
   }
 
@@ -70,17 +73,21 @@ export class WritingSettingsScreen extends React.Component<
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         header="LESSON SETTINGS"
         key="lesson-settings">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Lesson Size"
           customRight={
             <DefaultButton
               testID={WritingSettingsScreenIds.LIMIT_BTN}
               text={this.props.observableScreen.selectedLimit.toString()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLimitMenu(
@@ -93,14 +100,12 @@ export class WritingSettingsScreen extends React.Component<
               }}
             />
           }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
           description={this.renderLimitDescription()}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Feedback Buttons"
           customRight={
             <DefaultButton
@@ -108,8 +113,10 @@ export class WritingSettingsScreen extends React.Component<
               text={
                 this.props.observableScreen.selectedFeedbackButtons + ' buttons'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showFeedbackButtonsMenu(
@@ -123,13 +130,11 @@ export class WritingSettingsScreen extends React.Component<
             />
           }
           description={this.renderFeedbackButtonsDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Autoplay Audio"
           customRight={
             <DefaultButton
@@ -137,8 +142,10 @@ export class WritingSettingsScreen extends React.Component<
               text={
                 this.props.observableScreen.selectedAutoplayAudio ? 'Yes' : 'No'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showAutoplayAudioMenu(
@@ -152,13 +159,11 @@ export class WritingSettingsScreen extends React.Component<
             />
           }
           description={this.renderAutoplayAudioDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Auto-Show Keyboard"
           customRight={
             <DefaultButton
@@ -168,8 +173,10 @@ export class WritingSettingsScreen extends React.Component<
                   ? 'Yes'
                   : 'No'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showAutoShowKeyboardMenu(
@@ -183,10 +190,7 @@ export class WritingSettingsScreen extends React.Component<
             />
           }
           description={this.renderAutoShowKeyboardDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );
@@ -196,10 +200,12 @@ export class WritingSettingsScreen extends React.Component<
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         header="SPACED REPETITION FACTORS"
         key="spaced-repetition-factors">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Initial Interval"
           description={this.renderInitialIntervalDescription()}
           customRight={
@@ -209,8 +215,10 @@ export class WritingSettingsScreen extends React.Component<
                 this.props.observableScreen.selectedInitialInterval.toString() +
                 ' hours'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showInitialIntervalMenu(
@@ -223,10 +231,7 @@ export class WritingSettingsScreen extends React.Component<
               }}
             />
           }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );

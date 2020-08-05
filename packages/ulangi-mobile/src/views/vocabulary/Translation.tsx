@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableTranslation } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableTranslation,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, View } from 'react-native';
@@ -17,13 +20,13 @@ import { DefaultText } from '../common/DefaultText';
 import { AddDefinitionButton } from './AddDefinitionButton';
 import {
   TranslationStyles,
-  darkStyles,
-  lightStyles,
+  translationResponsiveStyles,
 } from './Translation.style';
 
 export interface TranslationProps {
   index: number;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   translation: ObservableTranslation;
   onPick: (translation: ObservableTranslation) => void;
   styles?: {
@@ -35,9 +38,10 @@ export interface TranslationProps {
 @observer
 export class Translation extends React.Component<TranslationProps> {
   public get styles(): TranslationStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return translationResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -65,6 +69,7 @@ export class Translation extends React.Component<TranslationProps> {
               this.props.index,
             )}
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             disabled={this.props.translation.isAdded}
             isAdded={this.props.translation.isAdded}
             onPress={(): void => this.props.onPick(this.props.translation)}

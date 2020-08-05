@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ActionMenu } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -15,12 +16,12 @@ import { DefaultText } from '../common/DefaultText';
 import { LightBoxActionItem } from './LightBoxActionItem';
 import {
   LightBoxActionMenuStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxActionMenuResponsiveStyles,
 } from './LightBoxActionMenu.style';
 
 export interface LightBoxActionMenuProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   actionMenu: ActionMenu;
 }
 
@@ -29,7 +30,10 @@ export class LightBoxActionMenu extends React.Component<
   LightBoxActionMenuProps
 > {
   public get styles(): LightBoxActionMenuStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+    return lightBoxActionMenuResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -52,6 +56,7 @@ export class LightBoxActionMenu extends React.Component<
                 <LightBoxActionItem
                   key={item.text}
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   isLast={isLast}
                   item={item}
                 />

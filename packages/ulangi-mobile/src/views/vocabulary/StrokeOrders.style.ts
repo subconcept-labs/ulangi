@@ -5,21 +5,32 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface StrokeOrdersStyles {
   webview: ViewStyle;
 }
 
-export const baseStyles: StrokeOrdersStyles = {
-  webview: {
-    marginVertical: ss(16),
-  },
-};
+export class StrokeOrdersResponsiveStyles extends ResponsiveStyleSheet<
+  StrokeOrdersStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): StrokeOrdersStyles {
+    return {
+      webview: {
+        marginVertical: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<StrokeOrdersStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<StrokeOrdersStyles> {
+    return {};
+  }
+}
+
+export const strokeOrdersResponsiveStyles = new StrokeOrdersResponsiveStyles();

@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface WritingTitleStyles {
   container: ViewStyle;
@@ -18,49 +17,57 @@ export interface WritingTitleStyles {
   icon: ImageStyle;
 }
 
-export const baseStyles: WritingTitleStyles = {
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+export class WritingTitleResponsiveStyles extends ResponsiveStyleSheet<
+  WritingTitleStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): WritingTitleStyles {
+    return {
+      container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  title: {
-    fontSize: ss(26),
-    fontFamily: 'JosefinSans-Bold',
-    letterSpacing: ss(-0.5),
-  },
+      title: {
+        fontSize: scaleByFactor(26),
+        fontFamily: 'JosefinSans-Bold',
+        letterSpacing: scaleByFactor(-0.5),
+      },
 
-  subtitle: {
-    fontSize: ss(9),
-    fontFamily: 'JosefinSans-Bold',
-    letterSpacing: ss(0.5),
-  },
+      subtitle: {
+        fontSize: scaleByFactor(9),
+        fontFamily: 'JosefinSans-Bold',
+        letterSpacing: scaleByFactor(0.5),
+      },
 
-  icon: {
-    marginTop: ss(10),
-  },
-};
+      icon: {
+        marginTop: scaleByFactor(10),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<WritingTitleStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<WritingTitleStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const writingTitleResponsiveStyles = new WritingTitleResponsiveStyles();

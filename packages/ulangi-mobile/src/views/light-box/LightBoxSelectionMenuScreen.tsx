@@ -6,24 +6,27 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
-import { ls } from '../../utils/responsive';
+import { Screen } from '../common/Screen';
 import { LightBoxAnimatableView } from './LightBoxAnimatableView';
 import { LightBoxSelectionMenu } from './LightBoxSelectionMenu';
+import {
+  LightBoxSelectionMenuScreenStyles,
+  lightBoxSelectionMenuScreenResponsiveStyles,
+} from './LightBoxSelectionMenuScreen.style';
 import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
 
 export interface LightBoxSelectionMenuScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   navigatorDelegate: NavigatorDelegate;
 }
 
@@ -44,40 +47,42 @@ export class LightBoxSelectionMenuScreen extends React.Component<
     }
   }
 
+  private get styles(): LightBoxSelectionMenuScreenStyles {
+    return lightBoxSelectionMenuScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     if (this.props.observableLightBox.selectionMenu === null) {
       return null;
     } else {
       return (
-        <LightBoxTouchableBackground
-          observableLightBox={this.props.observableLightBox}
-          observableDimensions={this.props.observableDimensions}
-          style={styles.light_box_container}
-          enabled={true}
-          activeOpacity={0.2}
-          onPress={(): void => this.close()}>
-          <LightBoxAnimatableView
-            style={styles.inner_container}
-            observableLightBox={this.props.observableLightBox}>
-            <LightBoxSelectionMenu
-              theme={this.props.themeStore.theme}
-              selectionMenu={this.props.observableLightBox.selectionMenu}
-            />
-          </LightBoxAnimatableView>
-        </LightBoxTouchableBackground>
+        <Screen
+          useSafeAreaView={false}
+          observableScreen={this.props.observableScreen}
+          style={this.styles.screen}>
+          <LightBoxTouchableBackground
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
+            observableLightBox={this.props.observableLightBox}
+            style={this.styles.light_box_container}
+            enabled={true}
+            activeOpacity={0.2}
+            onPress={(): void => this.close()}>
+            <LightBoxAnimatableView
+              style={this.styles.inner_container}
+              observableLightBox={this.props.observableLightBox}>
+              <LightBoxSelectionMenu
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                selectionMenu={this.props.observableLightBox.selectionMenu}
+              />
+            </LightBoxAnimatableView>
+          </LightBoxTouchableBackground>
+        </Screen>
       );
     }
   }
 }
-
-const styles = StyleSheet.create({
-  light_box_container: {
-    justifyContent: 'center',
-    paddingVertical: 150,
-    paddingHorizontal: ls(16),
-  },
-
-  inner_container: {
-    flexShrink: 1,
-  },
-});

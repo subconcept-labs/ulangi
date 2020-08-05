@@ -15,7 +15,7 @@ import { BackHandler } from 'react-native';
 
 import { Container } from '../../Container';
 import { ScreenFactory } from '../../factories/ScreenFactory';
-import { ReflexStyle } from '../../styles/ReflexStyle';
+import { reflexStyles } from '../../styles/ReflexStyles';
 import { ReflexPausedScreen } from './ReflexPausedScreen';
 
 export interface ReflexPausedScreenPassedProps {
@@ -29,7 +29,7 @@ export class ReflexPausedScreenContainer extends Container<
   ReflexPausedScreenPassedProps
 > {
   public static options(): Options {
-    return ReflexStyle.getScreenStyle();
+    return reflexStyles.getScreenStyle();
   }
 
   protected observableLightBox = this.props.observableLightBox;
@@ -69,8 +69,9 @@ export class ReflexPausedScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <ReflexPausedScreen
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         continue={this.props.passedProps.continue}
         restart={this.props.passedProps.restart}
         quit={this.props.passedProps.quit}

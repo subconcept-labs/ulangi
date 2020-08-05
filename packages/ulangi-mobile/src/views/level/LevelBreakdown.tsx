@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -14,13 +15,13 @@ import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
 import {
   LevelBreakdownStyles,
-  darkStyles,
-  lightStyles,
+  levelBreakdownResponsiveStyles,
 } from './LevelBreakdown.style';
 import { LevelSingleBar } from './LevelSingleBar';
 
 export interface LevelBreakdownProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   levelCounts: {
     readonly totalCount: number;
     readonly level0Count: number;
@@ -38,9 +39,10 @@ export interface LevelBreakdownProps {
 @observer
 export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
   public get styles(): LevelBreakdownStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return levelBreakdownResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -53,6 +55,7 @@ export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
                 <DefaultText style={this.styles.level}>{level}</DefaultText>
                 <LevelSingleBar
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   color={config.level.colorMap[index]}
                   percentage={count / this.props.levelCounts.totalCount}
                 />

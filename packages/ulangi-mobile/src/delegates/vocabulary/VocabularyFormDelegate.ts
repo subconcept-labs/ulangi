@@ -9,7 +9,7 @@ import { assertExists } from '@ulangi/assert';
 import { DeepPartial } from '@ulangi/extended-types';
 import { DefinitionBuilder } from '@ulangi/ulangi-common/builders';
 import { ButtonSize, ScreenName } from '@ulangi/ulangi-common/enums';
-import { Definition } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, Definition } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableConverter,
   ObservableKeyboard,
@@ -21,7 +21,7 @@ import { when } from 'mobx';
 import { Keyboard, Platform } from 'react-native';
 
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -135,9 +135,12 @@ export class VocabularyFormDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: VocabularyFormIds.DELETE_BTN,
@@ -146,9 +149,12 @@ export class VocabularyFormDelegate {
             this.deleteDefinition(index);
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

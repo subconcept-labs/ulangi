@@ -10,19 +10,24 @@ import { Theme, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategory,
   ObservableCategoryListState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
-import { ms } from 'react-native-size-matters';
+import { FlatList, View } from 'react-native';
 
 import { CategoryItem } from '../category/CategoryItem';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
+import {
+  CategoryListStyles,
+  categoryListResponsiveStyles,
+} from './CategoryList.style';
 
 export interface CategoryListProps {
   testID: string;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   categoryListState: ObservableCategoryListState;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
   toggleSelection: (categoryName: string) => void;
@@ -43,14 +48,21 @@ export interface CategoryListProps {
 
 @observer
 export class CategoryList extends React.Component<CategoryListProps> {
-  public keyExtractor = (item: any): string => item[0];
+  private keyExtractor = (item: any): string => item[0];
+
+  private get styles(): CategoryListStyles {
+    return categoryListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.list_container}>
+      <View style={this.styles.list_container}>
         <FlatList
           testID={this.props.testID}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={this.styles.list}
           data={
             this.props.categoryListState.categoryList
               ? Array.from(this.props.categoryListState.categoryList)
@@ -65,6 +77,7 @@ export class CategoryList extends React.Component<CategoryListProps> {
             return (
               <CategoryItem
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 category={category}
                 selectedFilterType={this.props.selectedFilterType}
                 isSelectionModeOn={
@@ -100,7 +113,7 @@ export class CategoryList extends React.Component<CategoryListProps> {
               activityState={this.props.categoryListState.fetchState}
               isRefreshing={this.props.categoryListState.isRefreshing}
               size="small"
-              style={styles.activity_indicator}
+              style={this.styles.activity_indicator}
             />
           }
         />
@@ -108,18 +121,3 @@ export class CategoryList extends React.Component<CategoryListProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  activity_indicator: {
-    marginBottom: ms(16),
-  },
-
-  list_container: {
-    flex: 1,
-  },
-
-  list: {
-    paddingTop: ms(16),
-    paddingBottom: ms(74),
-  },
-});

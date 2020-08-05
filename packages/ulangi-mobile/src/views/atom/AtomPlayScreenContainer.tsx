@@ -13,6 +13,7 @@ import {
   ObservableAtomGameStats,
   ObservableAtomPlayScreen,
   ObservableOrigin,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
@@ -22,7 +23,7 @@ import { Container } from '../../Container';
 import { config } from '../../constants/config';
 import { AtomPlayScreenFactory } from '../../factories/atom/AtomPlayScreenFactory';
 import { AtomQuestionIterator } from '../../iterators/AtomQuestionIterator';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { atomStyles } from '../../styles/AtomStyles';
 import { AtomPlayScreen } from './AtomPlayScreen';
 
 export interface AtomPlayScreenPassedProps {
@@ -36,7 +37,7 @@ export class AtomPlayScreenContainer extends Container<
   AtomPlayScreenPassedProps
 > {
   public static options(): Options {
-    return AtomStyle.getScreenStyle({
+    return atomStyles.getScreenStyle({
       popGesture: false,
     });
   }
@@ -58,13 +59,15 @@ export class AtomPlayScreenContainer extends Container<
     ),
   );
 
+  private screenLayout = new ObservableScreenLayout(0, 0);
+
   protected observableScreen = new ObservableAtomPlayScreen(
     new ObservableAtomGameState(false, false),
     new ObservableAtomGameStats(10, 0, 0),
     this.props.passedProps.noMoreVocabulary,
     this.questionIterator.next(),
     new ObservableOrigin(
-      this.props.observableDimensions,
+      this.screenLayout,
       config.atom.bottomOffset,
       config.atom.outerShellDiameter,
       config.atom.particleSize,
@@ -74,6 +77,7 @@ export class AtomPlayScreenContainer extends Container<
     [],
     this.props.componentId,
     ScreenName.ATOM_PLAY_SCREEN,
+    this.screenLayout,
   );
 
   private screenDelegate = this.atomPlayScreenFactory.createScreenDelegate(
@@ -98,8 +102,8 @@ export class AtomPlayScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <AtomPlayScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
-        observableDimensions={this.props.observableDimensions}
         screenDelegate={this.screenDelegate}
       />
     );

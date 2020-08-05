@@ -11,7 +11,7 @@ import { ObservableThemeStore } from '@ulangi/ulangi-observable';
 
 import { Images } from '../../constants/Images';
 import { BottomTabIds } from '../../constants/ids/BottomTabIds';
-import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
+import { bottomTabsStyles } from '../../styles/BottomTabsStyles';
 
 export class RootScreenDelegate {
   private themeStore: ObservableThemeStore;
@@ -128,7 +128,7 @@ export class RootScreenDelegate {
           ],
           options: {
             bottomTabs: {
-              backgroundColor: BottomTabsStyle.getBackgroundColor(theme),
+              backgroundColor: bottomTabsStyles.getBackgroundColor(theme),
             },
           },
         },

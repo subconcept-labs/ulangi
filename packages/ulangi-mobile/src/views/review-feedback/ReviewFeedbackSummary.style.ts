@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
 
 export interface ReviewFeedbackSummaryStyles {
   stats_container: ViewStyle;
@@ -27,111 +30,122 @@ export interface ReviewFeedbackSummaryStyles {
   grade: TextStyle;
 }
 
-export const baseStyles: ReviewFeedbackSummaryStyles = {
-  stats_container: {
-    marginTop: ss(12),
-    marginBottom: ss(12),
-  },
+export class ReviewFeedbackSummaryResponsiveStyles extends ResponsiveStyleSheet<
+  ReviewFeedbackSummaryStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): ReviewFeedbackSummaryStyles {
+    return {
+      stats_container: {
+        marginTop: scaleByFactor(12),
+        marginBottom: scaleByFactor(12),
+      },
 
-  result_container: {
-    marginHorizontal: ls(16),
-  },
+      result_container: {
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+      },
 
-  result_row: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingVertical: ss(2),
-  },
+      result_row: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingVertical: scaleByFactor(2),
+      },
 
-  row: {
-    paddingHorizontal: ls(16),
-    paddingVertical: ss(4),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      row: {
+        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingVertical: scaleByFactor(4),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  row_left: {
-    flexShrink: 1,
-    paddingRight: ss(16),
-  },
+      row_left: {
+        flexShrink: 1,
+        paddingRight: scaleByFactor(16),
+      },
 
-  row_right: {},
+      row_right: {},
 
-  text_left: {
-    fontSize: ss(14),
-  },
+      text_left: {
+        fontSize: scaleByFactor(14),
+      },
 
-  text_right: {
-    fontSize: ss(14),
-    fontWeight: 'bold',
-  },
+      text_right: {
+        fontSize: scaleByFactor(14),
+        fontWeight: 'bold',
+      },
 
-  text_highlight: {
-    color: config.styles.primaryColor,
-  },
+      text_highlight: {
+        color: config.styles.primaryColor,
+      },
 
-  text_touchable: {},
+      text_touchable: {},
 
-  horizontal_line: {
-    height: 1,
-    marginVertical: ss(12),
-    marginHorizontal: ls(16),
-  },
+      horizontal_line: {
+        height: 1,
+        marginVertical: scaleByFactor(12),
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+      },
 
-  percentage: {
-    fontWeight: 'bold',
-  },
+      percentage: {
+        fontWeight: 'bold',
+      },
 
-  grade: {
-    fontWeight: 'bold',
-  },
-};
+      grade: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    text_left: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<ReviewFeedbackSummaryStyles> {
+    return {
+      text_left: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    text_right: {
-      color: config.styles.light.primaryTextColor,
-    },
+      text_right: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.light.primaryBorderColor,
-    },
+      horizontal_line: {
+        backgroundColor: config.styles.light.primaryBorderColor,
+      },
 
-    percentage: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      percentage: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    grade: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      grade: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    text_left: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<ReviewFeedbackSummaryStyles> {
+    return {
+      text_left: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    text_right: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      text_right: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.dark.primaryBorderColor,
-    },
+      horizontal_line: {
+        backgroundColor: config.styles.dark.primaryBorderColor,
+      },
 
-    percentage: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      percentage: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    grade: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      grade: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const reviewFeedbackSummaryResponsiveStyles = new ReviewFeedbackSummaryResponsiveStyles();

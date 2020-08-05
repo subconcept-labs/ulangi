@@ -93,7 +93,6 @@ export class SuggestionsPickerScreenContainer extends Container<
     return (
       <SuggestionsPickerScreen
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         themeStore={this.props.rootStore.themeStore}
         setStore={this.props.rootStore.setStore}

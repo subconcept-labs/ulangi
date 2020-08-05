@@ -9,6 +9,7 @@ import { ActivityState, ErrorCode, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDictionaryDefinition,
   ObservableDictionaryEntryState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,14 +19,14 @@ import { DefaultText } from '../common/DefaultText';
 import { DictionaryDefinitionList } from './DictionaryDefinitionList';
 import {
   DictionarySectionStyles,
-  darkStyles,
-  lightStyles,
+  dictionarySectionResponsiveStyles,
 } from './DictionarySection.style';
 import { PickerError } from './PickerError';
 import { PickerLoading } from './PickerLoading';
 
 export interface DictionarySectionProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageName: string;
   translatedToLanguageName: string;
   dictionaryEntryState: ObservableDictionaryEntryState;
@@ -41,9 +42,10 @@ export interface DictionarySectionProps {
 @observer
 export class DictionarySection extends React.Component<DictionarySectionProps> {
   public get styles(): DictionarySectionStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return dictionarySectionResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -53,6 +55,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
       return (
         <PickerLoading
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           message="Searching dictionary..."
         />
       );
@@ -71,6 +74,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
           {dictionaryEntry.definitions.length > 0 ? (
             <DictionaryDefinitionList
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               term={dictionaryEntry.vocabularyTerm}
               attributions={dictionaryEntry.attributions}
               definitions={dictionaryEntry.definitions}
@@ -81,6 +85,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
           {traditionalEntry !== null ? (
             <DictionaryDefinitionList
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               term={traditionalEntry.vocabularyTerm}
               label="traditional"
               attributions={traditionalEntry.attributions}
@@ -92,6 +97,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
           {masculineEntry !== null ? (
             <DictionaryDefinitionList
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               term={masculineEntry.vocabularyTerm}
               label="masculine"
               attributions={masculineEntry.attributions}
@@ -115,6 +121,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             this.props.learningLanguageName +
             ' - ' +
@@ -130,6 +137,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           testID={VocabularyFormIds.DICTIONARY_SPECIFIC_LANGUAGE_REQUIRED}
           errorMessage={
             "We couldn't search dictionary because the language of your current set is ambiguous (Any Language.)"
@@ -144,6 +152,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
         return (
           <PickerError
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             errorMessage={
               <DefaultText>
                 <DefaultText>
@@ -164,6 +173,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
         return (
           <PickerError
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             errorMessage={
               <DefaultText>
                 <DefaultText>
@@ -178,6 +188,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
       return (
         <PickerError
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           errorMessage={
             <DefaultText>
               <DefaultText>Oops! Something went wrong.</DefaultText>

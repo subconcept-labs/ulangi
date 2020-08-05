@@ -11,7 +11,7 @@ import { AtomScreenDelegate } from '../../delegates/atom/AtomScreenDelegate';
 import { FetchVocabularyDelegate } from '../../delegates/atom/FetchVocabularyDelegate';
 import { PrepareFetchVocabularyDelegate } from '../../delegates/atom/PrepareFetchVocabularyDelegate';
 import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { atomStyles } from '../../styles/AtomStyles';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class AtomScreenFactory extends ScreenFactory {
@@ -21,7 +21,7 @@ export class AtomScreenFactory extends ScreenFactory {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
+      atomStyles.getLightBoxScreenStyles(),
     );
 
     const prepareFetchVocabularyDelegate = new PrepareFetchVocabularyDelegate(

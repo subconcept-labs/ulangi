@@ -5,25 +5,25 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableThemeScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 
 import { ThemeScreenIds } from '../../constants/ids/ThemeScreenIds';
 import { ThemeScreenDelegate } from '../../delegates/theme/ThemeScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   ThemeScreenStyles,
-  darkStyles,
-  lightStyles,
+  themeScreenResponsiveStyles,
 } from './ThemeScreen.style';
 
 export interface ThemeScreenProps {
@@ -35,31 +35,41 @@ export interface ThemeScreenProps {
 @observer
 export class ThemeScreen extends React.Component<ThemeScreenProps> {
   public get styles(): ThemeScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return themeScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={ThemeScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={ThemeScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         {this.renderSection()}
-      </View>
+      </Screen>
     );
   }
 
   private renderSection(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.themeStore.theme}>
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}>
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Theme Mode"
           customRight={
             <DefaultButton
               testID={ThemeScreenIds.SHOW_THEME_SELECTION_MENU_BTN}
               text={this.props.observableScreen.settings.trigger}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={this.props.screenDelegate.showThemeSelectionMenu}
             />

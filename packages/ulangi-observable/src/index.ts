@@ -226,6 +226,9 @@ export {
 
 export { ObservableScreen } from './observables/screen/ObservableScreen';
 export {
+  ObservableScreenLayout,
+} from './observables/screen/ObservableScreenLayout';
+export {
   ObservableScreenRegistry,
 } from './observables/screen/ObservableScreenRegistry';
 

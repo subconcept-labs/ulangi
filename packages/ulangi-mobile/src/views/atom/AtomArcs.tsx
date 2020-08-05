@@ -5,7 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableArc, ObservableDimensions } from '@ulangi/ulangi-observable';
+import {
+  ObservableArc,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { IObservableArray } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -15,7 +18,7 @@ import { Path, Svg } from 'react-native-svg';
 import { config } from '../../constants/config';
 
 export interface AtomArcsProps {
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   arcs: IObservableArray<ObservableArc>;
 }
 
@@ -59,13 +62,13 @@ export class AtomArcs extends React.Component<AtomArcsProps> {
   }
 
   public render(): React.ReactElement<any> {
-    const { windowWidth, windowHeight } = this.props.observableDimensions;
+    const { width, height } = this.props.screenLayout;
     return (
       <Svg
         key={this.generateSvgKey()}
         style={styles.container}
-        width={windowWidth}
-        height={windowHeight}>
+        width={width}
+        height={height}>
         {this.props.arcs.map(
           (arc): React.ReactElement<any> => {
             return (

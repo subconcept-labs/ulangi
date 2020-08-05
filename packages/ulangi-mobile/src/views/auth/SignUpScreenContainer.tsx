@@ -61,6 +61,7 @@ export class SignUpScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <SignUpScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

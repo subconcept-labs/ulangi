@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableCategoryFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableCategoryFormState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -18,12 +21,12 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   CategoryFormStyles,
-  darkStyles,
-  lightStyles,
+  categoryFormResponsiveStyles,
 } from './CategoryForm.style';
 
 export interface CategoryFormProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   placeholderText?: string;
   categoryFormState: ObservableCategoryFormState;
   handleInputChange: (searchInput: string) => void;
@@ -38,10 +41,11 @@ export interface CategoryFormProps {
 
 @observer
 export class CategoryForm extends React.Component<CategoryFormProps> {
-  public get styles(): CategoryFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): CategoryFormStyles {
+    return categoryFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -65,6 +69,7 @@ export class CategoryForm extends React.Component<CategoryFormProps> {
         </View>
         <CategorySuggestionList
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           suggestions={this.props.categoryFormState.suggestions}
           fetchState={this.props.categoryFormState.fetchSuggestionsState}
           selectCategory={this.props.selectCategory}

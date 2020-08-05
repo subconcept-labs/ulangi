@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultSectionRowDarkStyles,
-  lightStyles as defaultSectionRowLightStyles,
+  SectionRowResponsiveStyles,
+  SectionRowStyles,
 } from '../section/SectionRow.style';
 
 export interface FeatureManagementScreenStyles {
@@ -14,57 +14,67 @@ export interface FeatureManagementScreenStyles {
   message: TextStyle;
 }
 
-const baseStyles: FeatureManagementScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class FeatureManagementScreenResponsiveStyles extends ResponsiveStyleSheet<
+  FeatureManagementScreenStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): FeatureManagementScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  message_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      message_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(12),
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  message: {
-    fontSize: ss(14),
-  },
-};
+      message: {
+        fontSize: scaleByFactor(14),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<FeatureManagementScreenStyles> {
+    return {
+      message: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<FeatureManagementScreenStyles> {
+    return {
+      message: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
 
-export const sectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-    inner_container: {
-      backgroundColor: '#f0f0f0',
-    },
-  }),
-);
+export class ExtendedSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      left_text: {
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
+    });
+  }
 
-export const sectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-  }),
-);
+  public lightStyles(): Partial<SectionRowStyles> {
+    return _.merge({}, super.lightStyles(), {
+      inner_container: {
+        backgroundColor: '#f0f0f0',
+      },
+    });
+  }
+}
+
+export const featureManagementScreenResponsiveStyles = new FeatureManagementScreenResponsiveStyles();
+
+export const sectionRowResponsiveStyles = new ExtendedSectionRowResponsiveStyles();

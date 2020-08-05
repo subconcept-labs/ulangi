@@ -5,24 +5,23 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableQuizMultipleChoiceScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { QuizMultipleChoiceScreenIds } from '../../constants/ids/QuizMultipleChoiceScreenIds';
 import { QuizMultipleChoiceScreenDelegate } from '../../delegates/quiz/QuizMultipleChoiceScreenDelegate';
+import { Screen } from '../common/Screen';
 import { MultipleChoiceForm } from '../multiple-choice/MultipleChoiceForm';
 import { MultipleChoiceFormTop } from '../multiple-choice/MultipleChoiceFormTop';
 import { QuizMultipleChoiceResult } from './QuizMultipleChoiceResult';
 import {
   QuizMultipleChoiceScreenStyles,
-  darkStyles,
-  lightStyles,
+  quizMultipleChoiceScreenResponsiveStyles,
 } from './QuizMultipleChoiceScreen.style';
 
 export interface QuizMultipleChoiceScreenProps {
@@ -36,16 +35,19 @@ export class QuizMultipleChoiceScreen extends React.Component<
   QuizMultipleChoiceScreenProps
 > {
   public get styles(): QuizMultipleChoiceScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return quizMultipleChoiceScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View
+      <Screen
         testID={QuizMultipleChoiceScreenIds.SCREEN}
-        style={this.styles.screen}>
+        style={this.styles.screen}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <ScrollView>
           {this.props.observableScreen.shouldShowResult.get() === true ? (
             <QuizMultipleChoiceResult
@@ -58,6 +60,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
             <React.Fragment>
               <MultipleChoiceFormTop
                 theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 multipleChoiceFormState={
                   this.props.observableScreen.multipleChoiceFormState
                 }
@@ -68,6 +71,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
                     .currentQuestion.questionId
                 }
                 theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 multipleChoiceFormState={
                   this.props.observableScreen.multipleChoiceFormState
                 }
@@ -76,7 +80,7 @@ export class QuizMultipleChoiceScreen extends React.Component<
             </React.Fragment>
           )}
         </ScrollView>
-      </View>
+      </Screen>
     );
   }
 }

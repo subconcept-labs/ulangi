@@ -5,10 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SynchronizerScreenStyles {
   screen: ViewStyle;
@@ -22,103 +22,111 @@ export interface SynchronizerScreenStyles {
   paragraph: TextStyle;
 }
 
-export const baseStyles: SynchronizerScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class SynchronizerScreenResponsiveStyles extends ResponsiveStyleSheet<
+  SynchronizerScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SynchronizerScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  indicator: {
-    marginRight: 4,
-  },
+      indicator: {
+        marginRight: scaleByFactor(4),
+      },
 
-  icon: {
-    marginRight: 4,
-  },
+      icon: {
+        marginRight: scaleByFactor(4),
+      },
 
-  sync_btn: {
-    marginLeft: 16,
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.2,
-    elevation: 1,
-  },
+      sync_btn: {
+        marginLeft: scaleByFactor(16),
+        borderRadius: scaleByFactor(3),
+        borderWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(10),
+        paddingVertical: scaleByFactor(5),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.5 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.2,
+        elevation: 1,
+      },
 
-  sync_btn_text: {
-    fontSize: 14,
-  },
+      sync_btn_text: {
+        fontSize: scaleByFactor(14),
+      },
 
-  sync_state_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      sync_state_container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  sync_state: {
-    fontSize: 16,
-  },
+      sync_state: {
+        fontSize: scaleByFactor(16),
+      },
 
-  title: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
+      title: {
+        fontSize: scaleByFactor(15),
+        fontWeight: 'bold',
+      },
 
-  paragraph: {
-    paddingVertical: 6,
-    lineHeight: 19,
-    fontSize: 14,
-  },
-};
+      paragraph: {
+        paddingVertical: scaleByFactor(6),
+        lineHeight: scaleByFactor(19),
+        fontSize: scaleByFactor(14),
+      },
+    };
+  }
 
-export const lightStyles: SynchronizerScreenStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    sync_btn: {
-      borderColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+  public lightStyles(): Partial<SynchronizerScreenStyles> {
+    return {
+      sync_btn: {
+        borderColor: config.styles.light.primaryBorderColor,
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    sync_btn_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      sync_btn_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    sync_state: {
-      color: config.styles.light.primaryTextColor,
-    },
+      sync_state: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    title: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      title: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    paragraph: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      paragraph: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles: SynchronizerScreenStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    sync_btn: {
-      borderColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.secondaryBackgroundColor,
-    },
+  public darkStyles(): Partial<SynchronizerScreenStyles> {
+    return {
+      sync_btn: {
+        borderColor: config.styles.dark.primaryBorderColor,
+        backgroundColor: config.styles.dark.secondaryBackgroundColor,
+      },
 
-    sync_btn_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      sync_btn_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    sync_state: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      sync_state: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    title: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      title: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    paragraph: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      paragraph: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const synchronizerScreenResponsiveStyles = new SynchronizerScreenResponsiveStyles();

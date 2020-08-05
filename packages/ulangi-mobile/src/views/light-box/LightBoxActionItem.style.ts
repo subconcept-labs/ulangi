@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LightBoxActionItemStyles {
   item_container: ViewStyle;
@@ -18,46 +17,54 @@ export interface LightBoxActionItemStyles {
   item_text: TextStyle;
 }
 
-export const baseStyles: LightBoxActionItemStyles = {
-  item_container: {
-    marginHorizontal: 8,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+export class LightBoxActionItemResponsiveStyles extends ResponsiveStyleSheet<
+  LightBoxActionItemStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): LightBoxActionItemStyles {
+    return {
+      item_container: {
+        marginHorizontal: scaleByFactor(8),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  last_item_style: {
-    borderBottomWidth: 0,
-  },
+      last_item_style: {
+        borderBottomWidth: 0,
+      },
 
-  item_button: {
-    paddingVertical: ss(14),
-    paddingHorizontal: ss(8),
-  },
+      item_button: {
+        paddingVertical: scaleByFactor(14),
+        paddingHorizontal: scaleByFactor(8),
+      },
 
-  item_text: {
-    fontSize: ss(15),
-  },
-};
+      item_text: {
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.light.secondaryBorderColor,
-    },
+  public lightStyles(): Partial<LightBoxActionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.light.secondaryBorderColor,
+      },
 
-    item_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      item_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.dark.secondaryBorderColor,
-    },
+  public darkStyles(): Partial<LightBoxActionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    item_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      item_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const lightBoxActionItemResponsiveStyles = new LightBoxActionItemResponsiveStyles();

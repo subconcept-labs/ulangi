@@ -5,9 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
@@ -15,17 +16,21 @@ import * as React from 'react';
 import {
   PanResponder,
   PanResponderInstance,
-  StyleSheet,
   View,
   ViewStyle,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
+import {
+  LightBoxTouchableBackgroundStyles,
+  lightBoxTouchableBackgroundResponsiveStyles,
+} from './LightBoxTouchableBackground.style';
 
 export interface LightBoxTouchableBackgroundProps {
+  theme: Theme;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   testID?: string;
   style?: ViewStyle;
   enabled?: boolean;
@@ -81,6 +86,13 @@ export class LightBoxTouchableBackground extends React.Component<
     if (typeof this.animationHandler !== 'undefined') {
       this.animationHandler();
     }
+  }
+
+  private get styles(): LightBoxTouchableBackgroundStyles {
+    return lightBoxTouchableBackgroundResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public constructor(props: LightBoxTouchableBackgroundProps) {
@@ -177,11 +189,11 @@ export class LightBoxTouchableBackground extends React.Component<
       <View
         testID={this.props.testID}
         style={[
-          styles.light_box_container,
+          this.styles.light_box_container,
           this.props.style,
           {
-            width: this.props.observableDimensions.windowWidth,
-            height: this.props.observableDimensions.windowHeight,
+            width: this.props.screenLayout.width,
+            height: this.props.screenLayout.height,
           },
         ]}>
         <Animatable.View
@@ -192,10 +204,10 @@ export class LightBoxTouchableBackground extends React.Component<
           duration={200}
           useNativeDriver
           style={[
-            styles.background,
+            this.styles.background,
             {
-              width: this.props.observableDimensions.windowWidth,
-              height: this.props.observableDimensions.windowHeight,
+              width: this.props.screenLayout.width,
+              height: this.props.screenLayout.height,
             },
           ]}
           {...panHandlers}
@@ -211,14 +223,3 @@ export class LightBoxTouchableBackground extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  light_box_container: {},
-
-  background: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    backgroundColor: '#00000075',
-  },
-});

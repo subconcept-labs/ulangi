@@ -7,19 +7,25 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableScreenLayout,
   ObservableVocabulary,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { VocabularyItem } from '../vocabulary/VocabularyItem';
+import {
+  VocabularyListStyles,
+  vocabularyListResponsiveStyles,
+} from './VocabularyList.style';
 
 export interface VocabularyListProps {
   testID: string;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyListState: ObservableVocabularyListState;
   toggleSelection: (vocabularyId: string) => void;
   showVocabularyDetail: (vocabulary: ObservableVocabulary) => void;
@@ -32,12 +38,19 @@ export interface VocabularyListProps {
 export class VocabularyList extends React.Component<VocabularyListProps> {
   public keyExtractor = (item: any): string => item[0];
 
+  private get styles(): VocabularyListStyles {
+    return vocabularyListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.list_container}>
+      <View style={this.styles.list_container}>
         <FlatList
           testID={this.props.testID}
-          contentContainerStyle={styles.list}
+          contentContainerStyle={this.styles.list}
           data={
             this.props.vocabularyListState.vocabularyList
               ? Array.from(this.props.vocabularyListState.vocabularyList)
@@ -48,6 +61,7 @@ export class VocabularyList extends React.Component<VocabularyListProps> {
             return (
               <VocabularyItem
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 vocabulary={vocabulary}
                 shouldShowTags={true}
                 isSelectionModeOn={
@@ -69,7 +83,7 @@ export class VocabularyList extends React.Component<VocabularyListProps> {
               activityState={this.props.vocabularyListState.fetchState}
               isRefreshing={this.props.vocabularyListState.isRefreshing}
               size="small"
-              style={styles.activity_indicator}
+              style={this.styles.activity_indicator}
             />
           }
         />
@@ -77,18 +91,3 @@ export class VocabularyList extends React.Component<VocabularyListProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  activity_indicator: {
-    marginBottom: 16,
-  },
-
-  list_container: {
-    flex: 1,
-  },
-
-  list: {
-    paddingTop: 16,
-    paddingBottom: 74,
-  },
-});

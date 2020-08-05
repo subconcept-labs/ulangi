@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDefinition } from '@ulangi/ulangi-observable';
+import {
+  ObservableDefinition,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { IObservableArray } from 'mobx';
 import * as React from 'react';
 
@@ -14,45 +17,42 @@ import { SectionGroup } from '../section/SectionGroup';
 import { DefinitionItem } from '../vocabulary/DefinitionItem';
 import {
   VocabularyDetailDefinitionsStyles,
-  darkStyles,
-  definitionItemDarkStyles,
-  definitionItemLightStyles,
-  lightStyles,
+  definitionItemResponsiveStyles,
+  vocabularyDetailDefinitionsResponsiveStyles,
 } from './VocabularyDetailDefinitions.style';
 
 export interface VocabularyDetailDefinitionsProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   definitions: IObservableArray<ObservableDefinition>;
-  styles?: {
-    light: VocabularyDetailDefinitionsStyles;
-    dark: VocabularyDetailDefinitionsStyles;
-  };
 }
 
 export class VocabularyDetailDefinitions extends React.Component<
   VocabularyDetailDefinitionsProps
 > {
   public get styles(): VocabularyDetailDefinitionsStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyDetailDefinitionsResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.theme} header="DEFINITIONS">
+      <SectionGroup
+        theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
+        header="DEFINITIONS">
         {this.props.definitions.map(
           (definition, index): React.ReactElement<any> => {
             return (
               <DefinitionItem
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 key={definition.definitionId}
                 index={index}
                 definition={definition}
-                styles={{
-                  light: definitionItemLightStyles,
-                  dark: definitionItemDarkStyles,
-                }}
+                styles={definitionItemResponsiveStyles}
               />
             );
           },

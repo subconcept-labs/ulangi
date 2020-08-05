@@ -7,7 +7,7 @@
 
 import { DefinitionBuilder } from '@ulangi/ulangi-common/builders';
 import { ButtonSize, ErrorCode } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -20,7 +20,7 @@ import { runInAction } from 'mobx';
 import { RemoteLogger } from '../../RemoteLogger';
 import { AddVocabularyScreenIds } from '../../constants/ids/AddVocabularyScreenIds';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AddEditVocabularyScreenDelegate } from './AddEditVocabularyScreenDelegate';
@@ -91,9 +91,12 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             onPress: (): void => {
               this.dialogDelegate.dismiss();
             },
-            styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+            styles: (theme, layout): ButtonStyles =>
+              fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+                ButtonSize.SMALL,
+                theme,
+                layout,
+              ),
           },
           {
             testID: LightBoxDialogIds.OKAY_BTN,
@@ -101,9 +104,12 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             onPress: (): void => {
               retry(false);
             },
-            styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-              ButtonSize.SMALL,
-            ),
+            styles: (theme, layout): ButtonStyles =>
+              fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+                ButtonSize.SMALL,
+                theme,
+                layout,
+              ),
           },
         ],
       });
@@ -128,9 +134,12 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             this.dialogDelegate.dismiss();
             this.navigatorDelegate.dismissScreen();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: AddVocabularyScreenIds.ADD_MORE_BTN,
@@ -139,9 +148,12 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             this.resetForms();
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

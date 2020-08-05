@@ -5,41 +5,50 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SpacedRepetitionLessonScreenStyles {
   screen: ViewStyle;
   container: ViewStyle;
 }
 
-export const baseStyles: SpacedRepetitionLessonScreenStyles = {
-  screen: {
-    flex: 1,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
+export class SpacedRepetitionLessonScreenResponsiveStyles extends ResponsiveStyleSheet<
+  SpacedRepetitionLessonScreenStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): SpacedRepetitionLessonScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+        borderTopWidth: StyleSheet.hairlineWidth,
+      },
 
-  container: {
-    flexGrow: 1,
-    paddingBottom: ss(50),
-  },
-};
+      container: {
+        flexGrow: 1,
+        paddingBottom: scaleByFactor(50),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    screen: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<SpacedRepetitionLessonScreenStyles> {
+    return {
+      screen: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    screen: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<SpacedRepetitionLessonScreenStyles> {
+    return {
+      screen: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+      },
+    };
+  }
+}
+
+export const spacedRepetitionLessonScreenResponsiveStyles = new SpacedRepetitionLessonScreenResponsiveStyles();

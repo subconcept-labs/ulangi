@@ -5,19 +5,32 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
+
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 
 export interface ThemeScreenStyles {
   screen: ViewStyle;
 }
 
-export const baseStyles: ThemeScreenStyles = {
-  screen: {
-    flex: 1,
-  },
-};
+export class ThemeScreenResponsiveStyles extends ResponsiveStyleSheet<
+  ThemeScreenStyles
+> {
+  public baseStyles(): ThemeScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<ThemeScreenStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<ThemeScreenStyles> {
+    return {};
+  }
+}
+
+export const themeScreenResponsiveStyles = new ThemeScreenResponsiveStyles();

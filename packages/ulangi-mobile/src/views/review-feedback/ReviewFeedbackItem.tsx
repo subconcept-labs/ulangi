@@ -5,27 +5,30 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Feedback, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, Feedback, Theme } from '@ulangi/ulangi-common/enums';
 import { NextReviewData } from '@ulangi/ulangi-common/interfaces';
-import { ObservableVocabulary } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableVocabulary,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ReviewFeedbackItemIds } from '../../constants/ids/ReviewFeedbackItemIds';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LevelNetChange } from '../vocabulary/LevelNetChange';
 import {
   ReviewFeedbackItemStyles,
-  darkStyles,
-  lightStyles,
+  reviewFeedbackItemResponsiveStyles,
 } from './ReviewFeedbackItem.style';
 
 interface ReviewFeedbackItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabulary: ObservableVocabulary;
   feedback: Feedback;
   nextReviewData: NextReviewData;
@@ -41,9 +44,10 @@ export class ReviewFeedbackItem extends React.Component<
   ReviewFeedbackItemProps
 > {
   public get styles(): ReviewFeedbackItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewFeedbackItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -75,6 +79,8 @@ export class ReviewFeedbackItem extends React.Component<
               {this.props.nextReviewData.nextLevel}
             </DefaultText>
             <LevelNetChange
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               style={this.styles.level_net_change}
               netChange={this.props.nextReviewData.netLevelChange}
             />
@@ -105,9 +111,13 @@ export class ReviewFeedbackItem extends React.Component<
           this.props.vocabulary.vocabularyText,
         )}
         text={this.props.feedback}
-        styles={LessonScreenStyle.getNormalButtonStyles(
+        styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+          ButtonSize.NORMAL,
+          3,
           config.reviewFeedback.feedbackMap[this.props.feedback].color,
           'white',
+          this.props.theme,
+          this.props.screenLayout,
         )}
         onPress={(): void =>
           this.props.showFeedbackSelectionMenu(

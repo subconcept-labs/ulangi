@@ -12,7 +12,7 @@ import {
   ScreenName,
   Theme,
 } from '@ulangi/ulangi-common/enums';
-import { ThemeSettings } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, ThemeSettings } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableCarouselMessage,
   ObservableLightBox,
@@ -28,8 +28,8 @@ import { config } from '../../constants/config';
 import { env } from '../../constants/env';
 import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { RootScreenDelegate } from '../../delegates/root/RootScreenDelegate';
-import { BottomTabsStyle } from '../../styles/BottomTabsStyle';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { bottomTabsStyles } from '../../styles/BottomTabsStyles';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { AdDelegate } from '../ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../auto-archive/AutoArchiveSettingsDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
@@ -93,7 +93,7 @@ export class MoreScreenDelegate {
       (): Theme => this.themeStore.theme,
       (theme): void => {
         this.rootScreenDelegate.mergeBottomTabsOptions({
-          backgroundColor: BottomTabsStyle.getBackgroundColor(theme),
+          backgroundColor: bottomTabsStyles.getBackgroundColor(theme),
         });
       },
     );
@@ -187,9 +187,12 @@ export class MoreScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: MoreScreenIds.YES_BTN,
@@ -205,9 +208,12 @@ export class MoreScreenDelegate {
                 ),
             );
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

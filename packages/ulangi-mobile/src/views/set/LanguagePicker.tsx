@@ -8,6 +8,7 @@
 import { SetFormPickerType, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableLanguage,
+  ObservableScreenLayout,
   ObservableSetPickerState,
 } from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
@@ -21,13 +22,13 @@ import { SetFormIds } from '../../constants/ids/SetFormIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   LanguagePickerStyles,
-  darkStyles,
-  lightStyles,
+  languagePickerResponsiveStyles,
 } from './LanguagePicker.style';
 import { LanguagePickerItem } from './LanguagePickerItem';
 
 export interface LanguagePickerProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   pickerState: ObservableSetPickerState;
   selectedLanguageCode: null | string;
   selectableLanguages: readonly ObservableLanguage[];
@@ -69,10 +70,11 @@ export class LanguagePicker extends React.Component<LanguagePickerProps> {
     }
   }
 
-  public get styles(): LanguagePickerStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): LanguagePickerStyles {
+    return languagePickerResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -118,6 +120,7 @@ export class LanguagePicker extends React.Component<LanguagePickerProps> {
                 <LanguagePickerItem
                   key={item.languageCode}
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   language={item}
                   isSelected={
                     this.props.selectedLanguageCode === item.languageCode

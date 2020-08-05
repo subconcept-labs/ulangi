@@ -15,12 +15,12 @@ export class ObservableDimensions {
 
   @computed
   public get isPortrait(): boolean {
-    return this.screenHeight >= this.screenWidth;
+    return this.windowHeight >= this.windowWidth;
   }
 
   @computed
   public get isLandscape(): boolean {
-    return this.screenHeight < this.screenWidth;
+    return this.windowHeight < this.windowWidth;
   }
 
   public constructor(

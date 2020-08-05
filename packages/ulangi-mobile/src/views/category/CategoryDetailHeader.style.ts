@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface CategoryDetailHeaderStyles {
   container: ViewStyle;
@@ -17,51 +16,59 @@ export interface CategoryDetailHeaderStyles {
   button_text: TextStyle;
 }
 
-export const baseStyles: CategoryDetailHeaderStyles = {
-  container: {
-    paddingVertical: ss(14),
-    paddingHorizontal: ss(16),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-  },
+export class CategoryDetailHeaderResponsiveStyles extends ResponsiveStyleSheet<
+  CategoryDetailHeaderStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): CategoryDetailHeaderStyles {
+    return {
+      container: {
+        paddingVertical: scaleByFactor(14),
+        paddingHorizontal: scaleByFactor(16),
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+      },
 
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // Shrink the button if set name is too long
-    flexShrink: 1,
-  },
+      button: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // Shrink the button if set name is too long
+        flexShrink: 1,
+      },
 
-  button_text: {
-    fontWeight: 'bold',
-    color: '#888',
-    fontSize: ss(15),
-  },
-};
+      button_text: {
+        fontWeight: 'bold',
+        color: '#888',
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<CategoryDetailHeaderStyles> {
+    return {
+      container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    button_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      button_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<CategoryDetailHeaderStyles> {
+    return {
+      container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    button_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      button_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const categoryDetailHeaderResponsiveStyles = new CategoryDetailHeaderResponsiveStyles();

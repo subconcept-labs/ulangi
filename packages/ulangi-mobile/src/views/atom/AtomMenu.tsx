@@ -5,52 +5,58 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableDimensions } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { AtomScreenIds } from '../../constants/ids/AtomScreenIds';
-import { AtomStyle } from '../../styles/AtomStyle';
-import { ls, xls } from '../../utils/responsive';
+import {
+  atomPrimaryButtonStyles,
+  atomSecondaryButtonStyles,
+} from '../../styles/AtomStyles';
 import { DefaultButton } from '../common/DefaultButton';
+import { AtomMenuStyles, atomMenuResponsiveStyles } from './AtomMenu.style';
 
 export interface AtomMenuProps {
-  observableDimensions: ObservableDimensions;
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   start: () => void;
   goToTutorial: () => void;
 }
 
 @observer
 export class AtomMenu extends React.Component<AtomMenuProps> {
+  private get styles(): AtomMenuStyles {
+    return atomMenuResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View
-        style={[
-          styles.container,
-          {
-            marginHorizontal: this.props.observableDimensions.isPortrait
-              ? ls(16)
-              : xls(16),
-          },
-        ]}>
+      <View style={this.styles.container}>
         <DefaultButton
           testID={AtomScreenIds.PLAY_BTN}
           text="PLAY"
-          styles={AtomStyle.getPrimaryMenuButtonStyles()}
+          styles={atomPrimaryButtonStyles.compile(
+            this.props.screenLayout,
+            this.props.theme,
+          )}
           onPress={this.props.start}
         />
         <DefaultButton
           testID={AtomScreenIds.TUTORIAL_BTN}
           text="TUTORIAL"
-          styles={AtomStyle.getSecondaryMenuButtonStyles()}
+          styles={atomSecondaryButtonStyles.compile(
+            this.props.screenLayout,
+            this.props.theme,
+          )}
           onPress={this.props.goToTutorial}
         />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {},
-});

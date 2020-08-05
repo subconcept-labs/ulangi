@@ -7,18 +7,19 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ActionItem } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
   LightBoxActionItemStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxActionItemResponsiveStyles,
 } from './LightBoxActionItem.style';
 
 export interface LightBoxActionItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   isLast: boolean;
   item: ActionItem;
 }
@@ -27,7 +28,10 @@ export class LightBoxActionItem extends React.Component<
   LightBoxActionItemProps
 > {
   public get styles(): LightBoxActionItemStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+    return lightBoxActionItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
+import {
+  ObservableDictionaryDefinition,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -16,14 +19,14 @@ import { DefaultText } from '../common/DefaultText';
 import { AddDefinitionButton } from './AddDefinitionButton';
 import {
   DictionaryDefinitionStyles,
-  darkStyles,
-  lightStyles,
+  dictionaryDefinitionResponsiveStyles,
 } from './DictionaryDefinition.style';
 import { WordClassList } from './WordClassList';
 
 export interface DictionaryDefinitionProps {
   index: number;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   definition: ObservableDictionaryDefinition;
   onPick: (definition: ObservableDictionaryDefinition) => void;
   styles?: {
@@ -37,9 +40,10 @@ export class DictionaryDefinition extends React.Component<
   DictionaryDefinitionProps
 > {
   public get styles(): DictionaryDefinitionStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return dictionaryDefinitionResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -47,6 +51,8 @@ export class DictionaryDefinition extends React.Component<
       <View style={this.styles.definition_container}>
         <View style={this.styles.definition_content_container}>
           <WordClassList
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             wordClasses={this.props.definition.wordClasses}
             isUsingCustomWordClasses={false}
             noBorder={this.props.theme === Theme.DARK}
@@ -60,6 +66,7 @@ export class DictionaryDefinition extends React.Component<
         <View style={this.styles.add_button_container}>
           <AddDefinitionButton
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             testID={VocabularyFormIds.ADD_DEFINITION_FROM_DICTIONARY_BY_INDEX(
               this.props.index,
             )}

@@ -5,50 +5,57 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface PickerErrorStyles {
   error_container: ViewStyle;
   error_text: TextStyle;
 }
 
-export const baseStyles: PickerErrorStyles = {
-  error_container: {
-    padding: ss(16),
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    flexDirection: 'row',
-  },
+export class PickerErrorResponsiveStyles extends ResponsiveStyleSheet<
+  PickerErrorStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): PickerErrorStyles {
+    return {
+      error_container: {
+        padding: scaleByFactor(16),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        flexDirection: 'row',
+      },
 
-  error_text: {
-    fontSize: ss(14),
-    lineHeight: ss(19),
-  },
-};
+      error_text: {
+        fontSize: scaleByFactor(14),
+        lineHeight: scaleByFactor(19),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    error_container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<PickerErrorStyles> {
+    return {
+      error_container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    error_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      error_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    error_container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<PickerErrorStyles> {
+    return {
+      error_container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    error_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      error_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const pickerErrorResponsiveStyles = new PickerErrorResponsiveStyles();

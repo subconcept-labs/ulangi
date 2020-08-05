@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, ReviewStrategy, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   ObservableSpacedRepetitionSettingsScreen,
   ObservableThemeStore,
@@ -18,17 +18,16 @@ import { ScrollView } from 'react-native';
 import { config } from '../../constants/config';
 import { SpacedRepetitionSettingsScreenIds } from '../../constants/ids/SpacedRepetitionSettingsScreenIds';
 import { SpacedRepetitionSettingsScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   SpacedRepetitionSettingsScreenStyles,
-  darkStyles,
-  lightStyles,
-  sectionRowDarkStyles,
-  sectionRowLightStyles,
+  sectionRowResponsiveStyles,
+  spacedRepetitionSettingsScreenResponsiveStyles,
 } from './SpacedRepetitionSettingsScreen.style';
 
 export interface SpacedRepetitionSettingsScreenProps {
@@ -42,19 +41,23 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
   SpacedRepetitionSettingsScreenProps
 > {
   public get styles(): SpacedRepetitionSettingsScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return spacedRepetitionSettingsScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <ScrollView
+      <Screen
         style={this.styles.screen}
-        contentContainerStyle={this.styles.content_container}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}
         testID={SpacedRepetitionSettingsScreenIds.SCREEN}>
-        {this.renderSections()}
-      </ScrollView>
+        <ScrollView contentContainerStyle={this.styles.content_container}>
+          {this.renderSections()}
+        </ScrollView>
+      </Screen>
     );
   }
 
@@ -71,17 +74,21 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         header="LESSON SETTINGS"
         key="lesson-settings">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Review Strategy"
           customRight={
             <DefaultButton
               testID={SpacedRepetitionSettingsScreenIds.REVIEW_STRATEGY_BTN}
               text={this.props.observableScreen.selectedReviewStrategy}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showReviewStrategyMenu(
@@ -95,20 +102,20 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderReviewStrategyDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Lesson Size"
           customRight={
             <DefaultButton
               testID={SpacedRepetitionSettingsScreenIds.LIMIT_BTN}
               text={this.props.observableScreen.selectedLimit.toString()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLimitMenu(
@@ -122,13 +129,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderLimitDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Feedback Buttons"
           customRight={
             <DefaultButton
@@ -136,8 +141,10 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
               text={
                 this.props.observableScreen.selectedFeedbackButtons + ' buttons'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showFeedbackButtonsMenu(
@@ -151,13 +158,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderFeedbackButtonsDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Autoplay Audio"
           customRight={
             <DefaultButton
@@ -165,8 +170,10 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
               text={
                 this.props.observableScreen.selectedAutoplayAudio ? 'Yes' : 'No'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showAutoplayAudioMenu(
@@ -180,10 +187,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderAutoplayAudioDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );
@@ -193,10 +197,12 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         header="SPACED REPETITION FACTORS"
         key="spaced-repetition-factors">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Initial Interval"
           customRight={
             <DefaultButton
@@ -205,8 +211,10 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
                 this.props.observableScreen.selectedInitialInterval.toString() +
                 ' hours'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showInitialIntervalMenu(
@@ -220,10 +228,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderInitialIntervalDescription()}
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );

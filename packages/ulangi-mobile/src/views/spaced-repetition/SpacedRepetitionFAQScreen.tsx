@@ -5,23 +5,25 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableThemeStore } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { SpacedRepetitionFAQScreenIds } from '../../constants/ids/SpacedRepetitionFAQScreenIds';
 import { SpacedRepetitionFAQScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionFAQScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
 import { FAQList } from '../common/FAQList';
+import { Screen } from '../common/Screen';
 import {
   SpacedRepetitionFAQScreenStyles,
-  darkStyles,
-  lightStyles,
+  spacedRepetitionFAQScreenResponsiveStyles,
 } from './SpacedRepetitionFAQScreen.style';
 
 export interface SpacedRepetitionFAQScreenProps {
+  observableScreen: ObservableScreen;
   themeStore: ObservableThemeStore;
   screenDelegate: SpacedRepetitionFAQScreenDelegate;
 }
@@ -31,9 +33,10 @@ export class SpacedRepetitionFAQScreen extends React.Component<
   SpacedRepetitionFAQScreenProps
 > {
   public get styles(): SpacedRepetitionFAQScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return spacedRepetitionFAQScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   private data = {
@@ -88,14 +91,17 @@ export class SpacedRepetitionFAQScreen extends React.Component<
 
   public render(): React.ReactElement<any> {
     return (
-      <View
+      <Screen
         style={this.styles.screen}
-        testID={SpacedRepetitionFAQScreenIds.SCREEN}>
+        testID={SpacedRepetitionFAQScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <FAQList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           sections={this.data.sections}
         />
-      </View>
+      </Screen>
     );
   }
 }

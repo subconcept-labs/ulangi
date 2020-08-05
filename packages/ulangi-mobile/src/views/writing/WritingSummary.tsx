@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingResult } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableWritingResult,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -14,25 +17,22 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   WritingSummaryStyles,
-  darkStyles,
-  lightStyles,
+  writingSummaryResponsiveStyles,
 } from './WritingSummary.style';
 
 export interface WritingSummaryProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   writingResult: ObservableWritingResult;
-  styles?: {
-    light: WritingSummaryStyles;
-    dark: WritingSummaryStyles;
-  };
 }
 
 @observer
 export class WritingSummary extends React.Component<WritingSummaryProps> {
-  public get styles(): WritingSummaryStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingSummaryStyles {
+    return writingSummaryResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

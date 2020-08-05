@@ -5,42 +5,41 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableTime } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableScreenLayout,
+  ObservableTime,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import { AtomTimeStyles, atomTimeResponsiveStyles } from './AtomTime.style';
 
 export interface AtomTimeProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   observableTime: ObservableTime;
 }
 
 @observer
 export class AtomTime extends React.Component<AtomTimeProps> {
+  private get styles(): AtomTimeStyles {
+    return atomTimeResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <DefaultText style={styles.time_text}>
+      <View style={this.styles.container}>
+        <DefaultText style={this.styles.time_text}>
           {moment(this.props.observableTime.remainingTime).format('m:ss')}
         </DefaultText>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  time_text: {
-    color: config.atom.textColor,
-    fontSize: 34,
-    fontFamily: 'JosefinSans-Bold',
-  },
-});

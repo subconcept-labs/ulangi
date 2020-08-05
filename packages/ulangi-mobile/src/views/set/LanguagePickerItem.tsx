@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableLanguage } from '@ulangi/ulangi-observable';
+import {
+  ObservableLanguage,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -17,12 +20,12 @@ import { SetFormIds } from '../../constants/ids/SetFormIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   LanguagePickerItemStyles,
-  darkStyles,
-  lightStyles,
+  languagePickerItemResponsiveStyles,
 } from './LanguagePickerItem.style';
 
 export interface LanguagePickerItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   isSelected: boolean;
   language: ObservableLanguage;
   onSelect: (languageCode: string) => void;
@@ -37,9 +40,10 @@ export class LanguagePickerItem extends React.Component<
   LanguagePickerItemProps
 > {
   public get styles(): LanguagePickerItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return languagePickerItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

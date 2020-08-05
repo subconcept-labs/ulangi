@@ -5,33 +5,30 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableSetStore,
   ObservableSpacedRepetitionLessonScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { SpacedRepetitionLessonScreenIds } from '../../constants/ids/SpacedRepetitionLessonScreenIds';
 import { SpacedRepetitionLessonScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionLessonScreenDelegate';
+import { Screen } from '../common/Screen';
 import { ReviewBottom } from './ReviewBottom';
 import { ReviewItem } from './ReviewItem';
 import { ReviewTop } from './ReviewTop';
 import {
   SpacedRepetitionLessonScreenStyles,
-  darkStyles,
-  lightStyles,
+  spacedRepetitionLessonScreenResponsiveStyles,
 } from './SpacedRepetitionLessonScreen.style';
 import { SpacedRepetitionResult } from './SpacedRepetitionResult';
 
 export interface SpacedRepetitionLessonScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
-  observableDimensions: ObservableDimensions;
   observableScreen: ObservableSpacedRepetitionLessonScreen;
   screenDelegate: SpacedRepetitionLessonScreenDelegate;
 }
@@ -41,18 +38,21 @@ export class SpacedRepetitionLessonScreen extends React.Component<
   SpacedRepetitionLessonScreenProps
 > {
   public get styles(): SpacedRepetitionLessonScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return spacedRepetitionLessonScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView
+      <Screen
         style={this.styles.screen}
-        testID={SpacedRepetitionLessonScreenIds.SCREEN}>
+        testID={SpacedRepetitionLessonScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         {this.renderContent()}
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -62,6 +62,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
         <ScrollView contentContainerStyle={this.styles.container}>
           <SpacedRepetitionResult
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
             shouldShowAdOrGoogleConsentForm={
@@ -81,6 +82,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
           <ScrollView contentContainerStyle={this.styles.container}>
             <ReviewTop
               theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
               reviewState={this.props.observableScreen.reviewState}
             />
             <ReviewItem
@@ -88,13 +90,14 @@ export class SpacedRepetitionLessonScreen extends React.Component<
                 this.props.observableScreen.reviewState.vocabulary.vocabularyId
               }
               theme={this.props.themeStore.theme}
-              observableDimensions={this.props.observableDimensions}
+              screenLayout={this.props.observableScreen.screenLayout}
               learningLanguageCode={currentSet.learningLanguageCode}
               reviewState={this.props.observableScreen.reviewState}
             />
           </ScrollView>
           <ReviewBottom
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             reviewState={this.props.observableScreen.reviewState}
             reviewActionBarState={
               this.props.observableScreen.reviewActionBarState

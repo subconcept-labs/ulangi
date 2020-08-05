@@ -18,7 +18,7 @@ import { boundClass } from 'autobind-decorator';
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
-import { ReflexStyle } from '../../styles/ReflexStyle';
+import { reflexStyles } from '../../styles/ReflexStyles';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -275,7 +275,7 @@ export class ReflexScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
+      reflexStyles.getLightBoxScreenStyles(),
     );
   }
 
@@ -288,7 +288,7 @@ export class ReflexScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
+      reflexStyles.getLightBoxScreenStyles(),
     );
   }
 

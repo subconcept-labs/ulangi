@@ -15,7 +15,7 @@ import * as React from 'react';
 
 import { Container } from '../../Container';
 import { AtomScreenFactory } from '../../factories/atom/AtomScreenFactory';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { atomStyles } from '../../styles/AtomStyles';
 import { AtomScreen } from './AtomScreen';
 
 export interface AtomScreenPassedProps {
@@ -25,7 +25,7 @@ export interface AtomScreenPassedProps {
 @observer
 export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
   public static options(): Options {
-    return AtomStyle.getScreenStyle();
+    return atomStyles.getScreenStyle();
   }
 
   private atomScreenFactory = new AtomScreenFactory(
@@ -54,7 +54,6 @@ export class AtomScreenContainer extends Container<AtomScreenPassedProps> {
     return (
       <AtomScreen
         themeStore={this.props.rootStore.themeStore}
-        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

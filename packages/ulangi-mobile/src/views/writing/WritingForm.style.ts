@@ -6,13 +6,13 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultDefinitionItemDarkStyles,
-  lightStyles as defaultDefinitionItemLightStyles,
+  DefinitionItemResponsiveStyles,
+  DefinitionItemStyles,
 } from '../vocabulary/DefinitionItem.style';
 
 export interface WritingFormStyles {
@@ -33,155 +33,155 @@ export interface WritingFormStyles {
   message_highlighted: TextStyle;
 }
 
-export const baseStyles: WritingFormStyles = {
-  container: {
-    paddingHorizontal: ls(16),
-    marginVertical: ss(20),
-  },
+export class WritingFormResponsiveStyles extends ResponsiveStyleSheet<
+  WritingFormStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): WritingFormStyles {
+    return {
+      container: {
+        paddingHorizontal: scaleByFactor(16),
+        marginVertical: scaleByFactor(20),
+      },
 
-  row: {
-    paddingVertical: ss(6),
-  },
+      row: {
+        paddingVertical: scaleByFactor(6),
+      },
 
-  label: {
-    fontSize: ss(11),
-    fontWeight: 'bold',
-    lineHeight: ss(19),
-    paddingBottom: ss(1),
-  },
+      label: {
+        fontSize: scaleByFactor(11),
+        fontWeight: 'bold',
+        lineHeight: scaleByFactor(19),
+        paddingBottom: scaleByFactor(1),
+      },
 
-  definition_container: {
-    marginTop: ss(5),
-    borderRadius: ss(10),
-  },
+      definition_container: {
+        marginTop: scaleByFactor(5),
+        borderRadius: scaleByFactor(10),
+      },
 
-  answer_container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      answer_container: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  answer: {
-    flex: 1,
-  },
+      answer: {
+        flex: 1,
+      },
 
-  input: {
-    fontSize: ss(16),
-    paddingVertical: ss(3),
-  },
+      input: {
+        fontSize: scaleByFactor(16),
+        paddingVertical: scaleByFactor(3),
+      },
 
-  hint_container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      hint_container: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  hint_text_container: {
-    flex: 1,
-  },
+      hint_text_container: {
+        flex: 1,
+      },
 
-  hint_scrollview: {},
+      hint_scrollview: {},
 
-  hint_text: {
-    fontSize: ss(16),
-    paddingVertical: ss(3),
-  },
+      hint_text: {
+        fontSize: scaleByFactor(16),
+        paddingVertical: scaleByFactor(3),
+      },
 
-  underline: {
-    height: ss(2),
-    borderRadius: ss(1),
-    marginBottom: ss(2),
-  },
+      underline: {
+        height: scaleByFactor(2),
+        borderRadius: scaleByFactor(1),
+        marginBottom: scaleByFactor(2),
+      },
 
-  button_container: {
-    marginLeft: ss(5),
-  },
+      button_container: {
+        marginLeft: scaleByFactor(5),
+      },
 
-  message: {
-    flexShrink: 1,
-    fontSize: ss(15),
-    lineHeight: ss(19),
-  },
+      message: {
+        flexShrink: 1,
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(19),
+      },
 
-  message_highlighted: {
-    color: config.styles.primaryColor,
-    fontSize: ss(15),
-    lineHeight: ss(19),
-  },
-};
+      message_highlighted: {
+        color: config.styles.primaryColor,
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(19),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    label: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<WritingFormStyles> {
+    return {
+      label: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    definition_container: {
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+      definition_container: {
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    input: {
-      color: config.styles.light.primaryTextColor,
-    },
+      input: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    underline: {
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+      underline: {
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    hint_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      hint_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    message: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      message: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    label: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<WritingFormStyles> {
+    return {
+      label: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    definition_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      definition_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    input: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      input: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    underline: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      underline: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    hint_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      hint_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    message: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      message: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
 
-export const definitionItemLightStyles = _.merge(
-  {},
-  defaultDefinitionItemLightStyles,
-  {
-    item_container: {
-      borderTopWidth: 0,
-    },
-  },
-);
+export const writingFormResponsiveStyles = new WritingFormResponsiveStyles();
 
-export const definitionItemDarkStyles = _.merge(
-  {},
-  defaultDefinitionItemDarkStyles,
-  {
-    item_container: {
-      borderTopWidth: 0,
-    },
-  },
-);
+export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): DefinitionItemStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      item_container: {
+        borderTopWidth: 0,
+      },
+    });
+  }
+}
+
+export const definitionItemResponsiveStyles = new ExtendedDefinitionItemResponsiveStyles();

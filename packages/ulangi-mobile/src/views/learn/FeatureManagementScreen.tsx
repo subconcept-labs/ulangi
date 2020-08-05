@@ -1,4 +1,4 @@
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableFeatureManagementScreen,
   ObservableThemeStore,
@@ -9,17 +9,16 @@ import { ScrollView, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { FeatureManagementScreenIds } from '../../constants/ids/FeatureManagementScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   FeatureManagementScreenStyles,
-  darkStyles,
-  lightStyles,
-  sectionRowDarkStyles,
-  sectionRowLightStyles,
+  featureManagementScreenResponsiveStyles,
+  sectionRowResponsiveStyles,
 } from './FeatureManagementScreen.style';
 
 export interface FeatureManagementScreenProps {
@@ -32,19 +31,24 @@ export class FeatureManagementScreen extends React.Component<
   FeatureManagementScreenProps
 > {
   private get styles(): FeatureManagementScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return featureManagementScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <ScrollView
+      <Screen
         style={this.styles.screen}
-        testID={FeatureManagementScreenIds.SCREEN}>
-        {this.renderMessage()}
-        {this.renderSections()}
-      </ScrollView>
+        testID={FeatureManagementScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
+        <ScrollView>
+          {this.renderMessage()}
+          {this.renderSections()}
+        </ScrollView>
+      </Screen>
     );
   }
 
@@ -60,9 +64,13 @@ export class FeatureManagementScreen extends React.Component<
 
   private renderSections(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.themeStore.theme} key="toggle">
+      <SectionGroup
+        key="toggle"
+        theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}>
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Spaced Repetition"
           customRight={
             <DefaultButton
@@ -73,12 +81,14 @@ export class FeatureManagementScreen extends React.Component<
                   ? 'Enabled'
                   : 'Disabled'
               }
-              styles={FullRoundedButtonStyle.getOutlineStyles(
+              styles={fullRoundedButtonStyles.getOutlineStyles(
                 ButtonSize.SMALL,
                 this.props.observableScreen.featureSettings
                   .spacedRepetitionEnabled
                   ? config.styles.primaryColor
                   : 'orangered',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.featureSettings.spacedRepetitionEnabled = !this
@@ -88,13 +98,11 @@ export class FeatureManagementScreen extends React.Component<
             />
           }
           description="Spaced Repetition helps you to memorize terms with less time by using a smart scheduling algorithm."
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Writing"
           customRight={
             <DefaultButton
@@ -105,11 +113,13 @@ export class FeatureManagementScreen extends React.Component<
                   ? 'Enabled'
                   : 'Disabled'
               }
-              styles={FullRoundedButtonStyle.getOutlineStyles(
+              styles={fullRoundedButtonStyles.getOutlineStyles(
                 ButtonSize.SMALL,
                 this.props.observableScreen.featureSettings.writingEnabled
                   ? config.styles.primaryColor
                   : 'orangered',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.featureSettings.writingEnabled = !this
@@ -118,13 +128,11 @@ export class FeatureManagementScreen extends React.Component<
             />
           }
           description="Writing helps you to learn terms more effectively by maximizing your engagement."
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Quiz"
           customRight={
             <DefaultButton
@@ -134,11 +142,13 @@ export class FeatureManagementScreen extends React.Component<
                   ? 'Enabled'
                   : 'Disabled'
               }
-              styles={FullRoundedButtonStyle.getOutlineStyles(
+              styles={fullRoundedButtonStyles.getOutlineStyles(
                 ButtonSize.SMALL,
                 this.props.observableScreen.featureSettings.quizEnabled
                   ? config.styles.primaryColor
                   : 'orangered',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.featureSettings.quizEnabled = !this
@@ -147,13 +157,11 @@ export class FeatureManagementScreen extends React.Component<
             />
           }
           description="Quiz is designed to test what you learned."
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Reflex"
           customRight={
             <DefaultButton
@@ -164,11 +172,13 @@ export class FeatureManagementScreen extends React.Component<
                   ? 'Enabled'
                   : 'Disabled'
               }
-              styles={FullRoundedButtonStyle.getOutlineStyles(
+              styles={fullRoundedButtonStyles.getOutlineStyles(
                 ButtonSize.SMALL,
                 this.props.observableScreen.featureSettings.reflexEnabled
                   ? config.styles.primaryColor
                   : 'orangered',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.featureSettings.reflexEnabled = !this
@@ -177,13 +187,11 @@ export class FeatureManagementScreen extends React.Component<
             />
           }
           description="Reflex is a mini-game to test memory retrieval (recall and recognization) of your words."
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Atom"
           customRight={
             <DefaultButton
@@ -193,11 +201,13 @@ export class FeatureManagementScreen extends React.Component<
                   ? 'Enabled'
                   : 'Disabled'
               }
-              styles={FullRoundedButtonStyle.getOutlineStyles(
+              styles={fullRoundedButtonStyles.getOutlineStyles(
                 ButtonSize.SMALL,
                 this.props.observableScreen.featureSettings.atomEnabled
                   ? config.styles.primaryColor
                   : 'orangered',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.featureSettings.atomEnabled = !this
@@ -206,10 +216,7 @@ export class FeatureManagementScreen extends React.Component<
             />
           }
           description="Atom is a mini-game to practice terms with ease and fun."
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );

@@ -5,31 +5,34 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableThemeStore } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { DiscoverFAQScreenIds } from '../../constants/ids/DiscoverFAQScreenIds';
 import { DefaultText } from '../common/DefaultText';
 import { FAQList } from '../common/FAQList';
+import { Screen } from '../common/Screen';
 import {
   DiscoverFAQScreenStyles,
-  darkStyles,
-  lightStyles,
+  discoverFAQScreenResponsiveStyles,
 } from './DiscoverFAQScreen.style';
 
 export interface DiscoverFAQScreenProps {
   themeStore: ObservableThemeStore;
+  observableScreen: ObservableScreen;
 }
 
 @observer
 export class DiscoverFAQScreen extends React.Component<DiscoverFAQScreenProps> {
   public get styles(): DiscoverFAQScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return discoverFAQScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   private data = {
@@ -74,12 +77,17 @@ export class DiscoverFAQScreen extends React.Component<DiscoverFAQScreenProps> {
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={DiscoverFAQScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={DiscoverFAQScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <FAQList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           sections={this.data.sections}
         />
-      </View>
+      </Screen>
     );
   }
 }

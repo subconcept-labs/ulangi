@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { IObservableArray } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -13,19 +14,17 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
+  SelectedCategoriesResponsiveStyles,
   SelectedCategoriesStyles,
-  darkStyles,
-  lightStyles,
+  selectedCategoriesResponsiveStyles,
 } from './SelectedCategories.style';
 
 export interface SelectedCategoriesProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   selectedCategoryNames: undefined | IObservableArray<string>;
   showSelectSpecificCategoryMessage: () => void;
-  styles?: {
-    light: SelectedCategoriesStyles;
-    dark: SelectedCategoriesStyles;
-  };
+  styles?: SelectedCategoriesResponsiveStyles;
 }
 
 @observer
@@ -33,9 +32,12 @@ export class SelectedCategories extends React.Component<
   SelectedCategoriesProps
 > {
   private get styles(): SelectedCategoriesStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return this.props.styles
+      ? this.props.styles.compile(this.props.screenLayout, this.props.theme)
+      : selectedCategoriesResponsiveStyles.compile(
+          this.props.screenLayout,
+          this.props.theme,
+        );
   }
 
   public render(): React.ReactElement<any> {

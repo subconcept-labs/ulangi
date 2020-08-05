@@ -7,7 +7,10 @@
 
 import { VocabularyExtraFieldParser } from '@ulangi/ulangi-common/core';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableMultipleChoiceFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableMultipleChoiceFormState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
@@ -27,18 +30,14 @@ import { DefaultText } from '../common/DefaultText';
 import { WordClassList } from '../vocabulary/WordClassList';
 import {
   MultipleChoiceFormStyles,
-  darkStyles,
-  lightStyles,
+  multipleChoiceFormResponsiveStyles,
 } from './MultipleChoiceForm.style';
 
 export interface MultipleChoiceFormProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   multipleChoiceFormState: ObservableMultipleChoiceFormState;
   selectAnswer: (answer: string) => void;
-  styles?: {
-    light: MultipleChoiceFormStyles;
-    dark: MultipleChoiceFormStyles;
-  };
 }
 
 @observer
@@ -99,10 +98,11 @@ export class MultipleChoiceForm extends React.Component<
     }
   }
 
-  public get styles(): MultipleChoiceFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): MultipleChoiceFormStyles {
+    return multipleChoiceFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -152,6 +152,8 @@ export class MultipleChoiceForm extends React.Component<
                     style={this.styles.uncheck}
                   />
                   <WordClassList
+                    theme={this.props.theme}
+                    screenLayout={this.props.screenLayout}
                     wordClasses={
                       definition.extraFields.wordClass.length > 0
                         ? definition.extraFields.wordClass.map(

@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
 
 export interface CategoryItemStyles {
   item_container: ViewStyle;
@@ -30,161 +33,172 @@ export interface CategoryItemStyles {
   review_btn_container: ViewStyle;
 }
 
-const baseStyles: CategoryItemStyles = {
-  item_container: {
-    marginHorizontal: ls(16),
-    marginBottom: ss(16),
-    borderRadius: ss(5),
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.3 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.2,
-  },
+export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
+  CategoryItemStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): CategoryItemStyles {
+    return {
+      item_container: {
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginBottom: scaleByFactor(16),
+        borderRadius: scaleByFactor(5),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.3 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.2,
+      },
 
-  top_container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: ss(14),
-    paddingVertical: ss(14),
-  },
+      top_container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: scaleByFactor(14),
+        paddingVertical: scaleByFactor(14),
+      },
 
-  bottom_container: {},
+      bottom_container: {},
 
-  stats_container: {
-    paddingHorizontal: ss(14),
-    paddingVertical: ss(14),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
+      stats_container: {
+        paddingHorizontal: scaleByFactor(14),
+        paddingVertical: scaleByFactor(14),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderTopWidth: StyleSheet.hairlineWidth,
+      },
 
-  stats_label_container: {
-    width: ss(30),
-  },
+      stats_label_container: {
+        width: scaleByFactor(30),
+      },
 
-  stats_label: {
-    paddingRight: ss(4),
-    fontWeight: 'bold',
-    fontSize: ss(13),
-  },
+      stats_label: {
+        paddingRight: scaleByFactor(4),
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(13),
+      },
 
-  category_name: {
-    fontWeight: 'bold',
-    fontSize: ss(17),
-    paddingBottom: ss(4),
-  },
+      category_name: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(17),
+        paddingBottom: scaleByFactor(4),
+      },
 
-  category_meta: {
-    fontSize: ss(12),
-  },
+      category_meta: {
+        fontSize: scaleByFactor(12),
+      },
 
-  left: {
-    paddingRight: ss(12),
-    flexShrink: 1,
-  },
+      left: {
+        paddingRight: scaleByFactor(12),
+        flexShrink: 1,
+      },
 
-  right: {
-    flexDirection: 'row',
-    paddingLeft: ss(12),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+      right: {
+        flexDirection: 'row',
+        paddingLeft: scaleByFactor(12),
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
 
-  right_item: {
-    paddingLeft: ss(14),
-  },
+      right_item: {
+        paddingLeft: scaleByFactor(14),
+      },
 
-  first_right_item: {
-    paddingLeft: ss(0),
-  },
+      first_right_item: {
+        paddingLeft: scaleByFactor(0),
+      },
 
-  action_btn: {},
+      action_btn: {},
 
-  count: {
-    fontWeight: 'bold',
-    fontSize: ss(18),
-    paddingBottom: ss(3),
-  },
+      count: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(18),
+        paddingBottom: scaleByFactor(3),
+      },
 
-  terms: {
-    fontSize: ss(12),
-  },
+      terms: {
+        fontSize: scaleByFactor(12),
+      },
 
-  review_btn_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: ss(12),
-  },
-};
+      review_btn_container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: scaleByFactor(12),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-      elevation: 1,
-    },
+  public lightStyles(): Partial<CategoryItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+        elevation: 1,
+      },
 
-    bottom_container: {},
+      bottom_container: {},
 
-    stats_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
+      stats_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
 
-    stats_label: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      stats_label: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    category_name: {
-      color: config.styles.light.primaryTextColor,
-    },
+      category_name: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    category_meta: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      category_meta: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.light.primaryTextColor,
-    },
+      count: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    terms: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      terms: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-      elevation: 3,
-    },
+  public darkStyles(): Partial<CategoryItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+        elevation: 3,
+      },
 
-    bottom_container: {},
+      bottom_container: {},
 
-    stats_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
+      stats_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    stats_label: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      stats_label: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    category_name: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      category_name: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    category_meta: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      category_meta: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      count: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    terms: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      terms: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const categoryItemResponsiveStyles = new CategoryItemResponsiveStyles();

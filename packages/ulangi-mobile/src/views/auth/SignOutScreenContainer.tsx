@@ -60,6 +60,6 @@ export class SignOutScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <SignOutScreen />;
+    return <SignOutScreen observableScreen={this.observableScreen} />;
   }
 }

@@ -72,6 +72,7 @@ export class SpacedRepetitionFAQScreenContainer extends Container {
     return (
       <SpacedRepetitionFAQScreen
         themeStore={this.props.rootStore.themeStore}
+        observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />
     );

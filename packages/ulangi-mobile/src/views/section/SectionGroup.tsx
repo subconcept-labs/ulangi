@@ -6,31 +6,29 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
   SectionGroupStyles,
-  darkStyles,
-  lightStyles,
+  sectionGroupResponsiveStyles,
 } from './SectionGroup.style';
 
 export interface SectionGroupProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   header?: string;
   children?: React.ReactNode;
-  styles?: {
-    light: SectionGroupStyles;
-    dark: SectionGroupStyles;
-  };
 }
 
 export class SectionGroup extends React.Component<SectionGroupProps> {
   public get styles(): SectionGroupStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return sectionGroupResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

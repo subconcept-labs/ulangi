@@ -9,42 +9,55 @@ import * as _ from 'lodash';
 import { StyleSheet } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 import {
-  darkStyles as defaultDefinitionItemDarkStyles,
-  lightStyles as defaultDefinitionItemLightStyles,
+  DefinitionItemResponsiveStyles,
+  DefinitionItemStyles,
 } from './DefinitionItem.style';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface VocabularyDetailDefinitionsStyles {}
 
-export const baseStyles: VocabularyDetailDefinitionsStyles = {};
+export class VocabularyDetailDefinitionsResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyDetailDefinitionsStyles
+> {
+  public baseStyles(): VocabularyDetailDefinitionsStyles {
+    return {};
+  }
 
-export const lightStyles = StyleSheet.create(baseStyles);
+  public lightStyles(): Partial<VocabularyDetailDefinitionsStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(baseStyles);
+  public darkStyles(): Partial<VocabularyDetailDefinitionsStyles> {
+    return {};
+  }
+}
 
-export const definitionItemLightStyles = _.merge(
-  {},
-  defaultDefinitionItemLightStyles,
-  {
-    item_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-      borderTopWidth: 0,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
-  },
-);
+export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemResponsiveStyles {
+  public lightStyles(): Partial<DefinitionItemStyles> {
+    return _.merge({}, super.lightStyles(), {
+      item_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+        borderTopWidth: 0,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
+    });
+  }
 
-export const definitionItemDarkStyles = _.merge(
-  {},
-  defaultDefinitionItemDarkStyles,
-  {
-    item_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-      borderTopWidth: 0,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
-  },
-);
+  public darkStyles(): Partial<DefinitionItemStyles> {
+    return _.merge({}, super.darkStyles(), {
+      item_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+        borderTopWidth: 0,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
+    });
+  }
+}
+
+export const vocabularyDetailDefinitionsResponsiveStyles = new VocabularyDetailDefinitionsResponsiveStyles();
+
+export const definitionItemResponsiveStyles = new DefinitionItemResponsiveStyles();

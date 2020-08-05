@@ -6,21 +6,22 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
-import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import {
   ShowAnswerButtonStyles,
-  darkStyles,
-  lightStyles,
+  showAnswerButtonResponsiveStyles,
 } from './ShowAnswerButton.style';
 
 export interface ShowAnswerButtonProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   showAnswer: () => void;
   styles?: {
     light: ShowAnswerButtonStyles;
@@ -30,10 +31,11 @@ export interface ShowAnswerButtonProps {
 
 @observer
 export class ShowAnswerButton extends React.Component<ShowAnswerButtonProps> {
-  public get styles(): ShowAnswerButtonStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): ShowAnswerButtonStyles {
+    return showAnswerButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -45,11 +47,13 @@ export class ShowAnswerButton extends React.Component<ShowAnswerButtonProps> {
         style={this.styles.show_answer_button_container}>
         <DefaultButton
           text="Show Answer"
-          styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+          styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
             ButtonSize.LARGE,
             4,
             config.styles.primaryColor,
             '#fff',
+            this.props.theme,
+            this.props.screenLayout,
           )}
           onPress={this.props.showAnswer}
         />

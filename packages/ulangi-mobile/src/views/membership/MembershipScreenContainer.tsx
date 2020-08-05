@@ -92,6 +92,7 @@ export class MembershipScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <MembershipScreen
+        themeStore={this.props.rootStore.themeStore}
         userStore={this.props.rootStore.userStore}
         screenDelegate={this.screenDelegate}
         observableScreen={this.observableScreen}

@@ -5,23 +5,28 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryListState,
-  ObservableDimensions,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { CategoryBulkActionBarIds } from '../../constants/ids/CategoryBulkActionBarIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import {
+  CategoryBulkActionBarStyles,
+  categoryBulkActionBarResponsiveStyles,
+} from './CategoryBulkActionBar.style';
 
 export interface CategoryBulkActionBarProps {
-  observableDimensions: ObservableDimensions;
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   categoryListState: ObservableCategoryListState;
   clearSelections: () => void;
   showCategoryBulkActionMenu: () => void;
@@ -31,17 +36,24 @@ export interface CategoryBulkActionBarProps {
 export class CategoryBulkActionBar extends React.Component<
   CategoryBulkActionBarProps
 > {
+  private get styles(): CategoryBulkActionBarStyles {
+    return categoryBulkActionBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     return (
       <View
         style={[
-          styles.container,
+          this.styles.container,
           {
-            width: this.props.observableDimensions.windowWidth,
+            width: this.props.screenLayout.width,
           },
         ]}>
-        <DefaultText style={styles.selection_text} numberOfLines={1}>
-          <DefaultText style={styles.number_of_selected}>
+        <DefaultText style={this.styles.selection_text} numberOfLines={1}>
+          <DefaultText style={this.styles.number_of_selected}>
             {this.props.categoryListState.numOfCategoriesSelected}
           </DefaultText>
           <DefaultText>
@@ -52,27 +64,31 @@ export class CategoryBulkActionBar extends React.Component<
             selected
           </DefaultText>
         </DefaultText>
-        <View style={styles.buttons}>
-          <View style={styles.button_container}>
+        <View style={this.styles.buttons}>
+          <View style={this.styles.button_container}>
             <DefaultButton
               testID={CategoryBulkActionBarIds.CLEAR_BTN}
               text="CLEAR"
-              styles={FullRoundedButtonStyle.getFullBackgroundStyles(
+              styles={fullRoundedButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
                 config.styles.darkPrimaryColor,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={this.props.clearSelections}
             />
           </View>
-          <View style={styles.button_container}>
+          <View style={this.styles.button_container}>
             <DefaultButton
               testID={CategoryBulkActionBarIds.BULK_ACTION_BTN}
               text="ACTION"
-              styles={FullRoundedButtonStyle.getFullBackgroundStyles(
+              styles={fullRoundedButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
                 config.styles.darkPrimaryColor,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={this.props.showCategoryBulkActionMenu}
             />
@@ -82,34 +98,3 @@ export class CategoryBulkActionBar extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: config.styles.primaryColor,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-
-  selection_text: {
-    flexShrink: 1,
-    fontSize: 15,
-    color: 'white',
-  },
-
-  number_of_selected: {
-    fontWeight: 'bold',
-  },
-
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  button_container: {
-    paddingLeft: 12,
-  },
-});

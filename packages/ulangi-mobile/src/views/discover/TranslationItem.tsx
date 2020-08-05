@@ -7,7 +7,10 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { TranslationWithLanguages } from '@ulangi/ulangi-common/interfaces';
-import { ObservableTranslationWithLanguages } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableTranslationWithLanguages,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -18,12 +21,12 @@ import { DefaultText } from '../common/DefaultText';
 import { FixedTouchableWithoutFeedback } from '../common/FixedTouchableWithoutFeedback';
 import {
   TranslationItemStyles,
-  darkStyles,
-  lightStyles,
+  translationItemResponsiveStyles,
 } from './TranslationItem.style';
 
 export interface TranslationItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageCode: string;
   translatedToLanguageCode: string;
   translation: ObservableTranslationWithLanguages;
@@ -38,9 +41,10 @@ export interface TranslationItemProps {
 @observer
 export class TranslationItem extends React.Component<TranslationItemProps> {
   public get styles(): TranslationItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return translationItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

@@ -3,6 +3,7 @@ import {
   ObservableReviewActionBarState,
   ObservableReviewFeedbackBarState,
   ObservableReviewState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -14,12 +15,12 @@ import { ShowAnswerButton } from '../review-action/ShowAnswerButton';
 import { ReviewFeedbackBar } from '../review-feedback/ReviewFeedbackBar';
 import {
   ReviewBottomStyles,
-  darkStyles,
-  lightStyles,
+  reviewBottomResponsiveStyles,
 } from './ReviewBottom.style';
 
 export interface ReviewButtomProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   reviewState: ObservableReviewState;
   reviewActionBarState: ObservableReviewActionBarState;
   reviewFeedbackBarState: ObservableReviewFeedbackBarState;
@@ -35,10 +36,10 @@ export interface ReviewButtomProps {
 @observer
 export class ReviewBottom extends React.Component<ReviewButtomProps> {
   private get styles(): ReviewBottomStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewBottomResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -46,6 +47,7 @@ export class ReviewBottom extends React.Component<ReviewButtomProps> {
       <View style={this.styles.container}>
         <ReviewActionBar
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           reviewActionBarState={this.props.reviewActionBarState}
         />
         <View style={this.styles.horizontal_line} />
@@ -61,6 +63,7 @@ export class ReviewBottom extends React.Component<ReviewButtomProps> {
       return (
         <ShowAnswerButton
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           showAnswer={this.props.showAnswer}
         />
       );
@@ -71,6 +74,7 @@ export class ReviewBottom extends React.Component<ReviewButtomProps> {
       return (
         <NextButton
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           title={
             currentVocabulary.vocabularyStatus === VocabularyStatus.ARCHIVED
               ? 'This term has been archived. You will not see it again.'
@@ -83,6 +87,7 @@ export class ReviewBottom extends React.Component<ReviewButtomProps> {
       return (
         <ReviewFeedbackBar
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           reviewFeedbackBarState={this.props.reviewFeedbackBarState}
           setFeedback={this.props.setFeedback}
         />

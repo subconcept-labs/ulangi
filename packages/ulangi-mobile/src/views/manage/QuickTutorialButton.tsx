@@ -5,19 +5,21 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native';
 
-import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import {
+  QuickTutorialButtonStyles,
+  quickTutorialButtonResponsiveStyles,
+} from './QuickTutorialButton.style';
 
 export interface QuickTutorialButtonProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   refresh: () => void;
   showQuickTutorial: () => void;
 }
@@ -26,18 +28,25 @@ export interface QuickTutorialButtonProps {
 export class QuickTutorialButton extends React.Component<
   QuickTutorialButtonProps
 > {
+  private get styles(): QuickTutorialButtonStyles {
+    return quickTutorialButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <ScrollView
-        contentContainerStyle={styles.scroll_view_container}
+        contentContainerStyle={this.styles.scroll_view_container}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={this.props.refresh} />
         }>
         {this.renderText()}
         <TouchableOpacity
-          style={styles.button_container}
+          style={this.styles.button_container}
           onPress={this.props.showQuickTutorial}>
-          <DefaultText style={styles.quick_tutorial}>
+          <DefaultText style={this.styles.quick_tutorial}>
             View quick tutorial
           </DefaultText>
         </TouchableOpacity>
@@ -47,56 +56,9 @@ export class QuickTutorialButton extends React.Component<
 
   private renderText(): null | React.ReactElement<any> {
     return (
-      <DefaultText style={styles.add_text}>
+      <DefaultText style={this.styles.add_text}>
         Start collecting words you want to memorize.
       </DefaultText>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  scroll_view_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-
-  animation_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  add_text: {
-    textAlign: 'center',
-    fontSize: 15,
-    color: '#999',
-    paddingTop: 3,
-  },
-
-  button_container: {
-    marginTop: 12,
-    height: 34,
-    borderRadius: 17,
-    paddingHorizontal: 20,
-    backgroundColor: config.styles.primaryColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 1,
-    shadowOpacity: 0.15,
-    elevation: 3,
-  },
-
-  quick_tutorial: {
-    fontSize: 15,
-    lineHeight: 19,
-    fontWeight: '700',
-    color: 'white',
-  },
-
-  highlighted: {
-    color: config.styles.primaryColor,
-  },
-});

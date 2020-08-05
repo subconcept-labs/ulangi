@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservablePublicSet } from '@ulangi/ulangi-observable';
+import {
+  ObservablePublicSet,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -15,12 +18,12 @@ import { PublicSetItemIds } from '../../constants/ids/PublicSetItemIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   PublicSetItemStyles,
-  darkStyles,
-  lightStyles,
+  publicSetItemResponsiveStyles,
 } from './PublicSetItem.style';
 
 export interface PublicSetItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   set: ObservablePublicSet;
   showSetDetailModal: (set: ObservablePublicSet) => void;
   styles?: {
@@ -32,9 +35,10 @@ export interface PublicSetItemProps {
 @observer
 export class PublicSetItem extends React.Component<PublicSetItemProps> {
   public get styles(): PublicSetItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return publicSetItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

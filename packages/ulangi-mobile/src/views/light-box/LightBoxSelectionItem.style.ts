@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LightBoxSelectionItemStyles {
   last_item: ViewStyle;
@@ -20,57 +19,65 @@ export interface LightBoxSelectionItemStyles {
   text: TextStyle;
 }
 
-export const baseStyles: LightBoxSelectionItemStyles = {
-  last_item: {
-    borderBottomWidth: 0,
-  },
+export class LightBoxSelectionItemResponsiveStyles extends ResponsiveStyleSheet<
+  LightBoxSelectionItemStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): LightBoxSelectionItemStyles {
+    return {
+      last_item: {
+        borderBottomWidth: 0,
+      },
 
-  item_container: {
-    marginHorizontal: ss(8),
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+      item_container: {
+        marginHorizontal: scaleByFactor(8),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  item_touchable: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: ss(13),
-    paddingHorizontal: ss(8),
-  },
+      item_touchable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: scaleByFactor(13),
+        paddingHorizontal: scaleByFactor(8),
+      },
 
-  select_icon: {
-    marginRight: ss(10),
-  },
+      select_icon: {
+        marginRight: scaleByFactor(10),
+      },
 
-  item_icon: {
-    marginRight: ss(6),
-  },
+      item_icon: {
+        marginRight: scaleByFactor(6),
+      },
 
-  text: {
-    flexShrink: 1,
-    fontSize: ss(15),
-  },
-};
+      text: {
+        flexShrink: 1,
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.light.secondaryBorderColor,
-    },
+  public lightStyles(): Partial<LightBoxSelectionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.light.secondaryBorderColor,
+      },
 
-    text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      borderBottomColor: config.styles.dark.secondaryBorderColor,
-    },
+  public darkStyles(): Partial<LightBoxSelectionItemStyles> {
+    return {
+      item_container: {
+        borderBottomColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const lightBoxSelectionItemResponsiveStyles = new LightBoxSelectionItemResponsiveStyles();

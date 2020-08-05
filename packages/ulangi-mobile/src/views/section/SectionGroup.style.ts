@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SectionGroupStyles {
   section_container: ViewStyle;
@@ -17,42 +16,50 @@ export interface SectionGroupStyles {
   item_container: ViewStyle;
 }
 
-export const baseStyles = StyleSheet.create({
-  section_container: {
-    marginBottom: ss(22),
-  },
+export class SectionGroupResponsiveStyles extends ResponsiveStyleSheet<
+  SectionGroupStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionGroupStyles {
+    return {
+      section_container: {
+        marginBottom: scaleByFactor(22),
+      },
 
-  header: {
-    fontSize: ss(12),
-    paddingHorizontal: ss(16),
-    paddingBottom: ss(8),
-  },
+      header: {
+        fontSize: scaleByFactor(12),
+        paddingHorizontal: scaleByFactor(16),
+        paddingBottom: scaleByFactor(8),
+      },
 
-  item_container: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-});
+      item_container: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    header: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<SectionGroupStyles> {
+    return {
+      header: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    item_container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-    },
-  }),
-);
+      item_container: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    header: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<SectionGroupStyles> {
+    return {
+      header: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    item_container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-    },
-  }),
-);
+      item_container: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+      },
+    };
+  }
+}
+
+export const sectionGroupResponsiveStyles = new SectionGroupResponsiveStyles();

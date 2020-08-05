@@ -58,7 +58,7 @@ export class LightBoxSelectionMenuScreenContainer extends Container {
       <LightBoxSelectionMenuScreen
         themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         navigatorDelegate={this.navigatorDelegate}
       />
     );

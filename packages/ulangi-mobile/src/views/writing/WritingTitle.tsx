@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, View } from 'react-native';
@@ -14,24 +15,21 @@ import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import {
   WritingTitleStyles,
-  darkStyles,
-  lightStyles,
+  writingTitleResponsiveStyles,
 } from './WritingTitle.style';
 
 export interface WritingTitleProps {
   theme: Theme;
-  styles?: {
-    light: WritingTitleStyles;
-    dark: WritingTitleStyles;
-  };
+  screenLayout: ObservableScreenLayout;
 }
 
 @observer
 export class WritingTitle extends React.Component<WritingTitleProps> {
-  public get styles(): WritingTitleStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingTitleStyles {
+    return writingTitleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

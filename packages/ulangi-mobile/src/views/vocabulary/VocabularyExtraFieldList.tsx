@@ -9,6 +9,7 @@ import { VocabularyExtraFieldDetails } from '@ulangi/ulangi-common/constants';
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
 import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
@@ -22,12 +23,12 @@ import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultText } from '../common/DefaultText';
 import {
   VocabularyExtraFieldListStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyExtraFieldListResponsiveStyles,
 } from './VocabularyExtraFieldList.style';
 
 export interface VocabularyExtraFieldListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   extraFields: VocabularyExtraFields;
   speakState?: IObservableValue<ActivityState>;
   speak?: (text: string) => void;
@@ -42,9 +43,10 @@ export class VocabularyExtraFieldList extends React.Component<
   VocabularyExtraFieldListProps
 > {
   public get styles(): VocabularyExtraFieldListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyExtraFieldListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

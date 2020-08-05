@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -13,13 +14,13 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   PickerErrorStyles,
-  darkStyles,
-  lightStyles,
+  pickerErrorResponsiveStyles,
 } from './PickerError.style';
 
 export interface PickerErrorProps {
   testID?: string;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   errorMessage: React.ReactElement<DefaultText> | string;
   styles?: {
     light: PickerErrorStyles;
@@ -30,9 +31,10 @@ export interface PickerErrorProps {
 @observer
 export class PickerError extends React.Component<PickerErrorProps> {
   public get styles(): PickerErrorStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return pickerErrorResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

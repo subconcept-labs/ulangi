@@ -26,7 +26,7 @@ import { observable } from 'mobx';
 import { ParticleFactory } from '../../factories/atom/ParticleFactory';
 import { ShellFactory } from '../../factories/atom/ShellFactory';
 import { AtomQuestionIterator } from '../../iterators/AtomQuestionIterator';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { atomStyles } from '../../styles/AtomStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { AtomAnswerDelegate } from './AtomAnswerDelegate';
@@ -268,7 +268,7 @@ export class AtomPlayScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
+      atomStyles.getLightBoxScreenStyles(),
     );
   }
 
@@ -286,7 +286,7 @@ export class AtomPlayScreenDelegate {
         restart: this.restart,
         quit: this.quit,
       },
-      AtomStyle.LIGHT_BOX_SCREEN_STYLES,
+      atomStyles.getLightBoxScreenStyles(),
     );
   }
 

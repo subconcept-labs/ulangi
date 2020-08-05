@@ -124,7 +124,6 @@ export class CategoryDetailScreenContainer extends Container<
     return (
       <CategoryDetailScreen
         themeStore={this.props.rootStore.themeStore}
-        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

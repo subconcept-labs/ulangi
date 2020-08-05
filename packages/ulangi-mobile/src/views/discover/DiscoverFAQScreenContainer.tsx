@@ -67,6 +67,11 @@ export class DiscoverFAQScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <DiscoverFAQScreen themeStore={this.props.rootStore.themeStore} />;
+    return (
+      <DiscoverFAQScreen
+        themeStore={this.props.rootStore.themeStore}
+        observableScreen={this.observableScreen}
+      />
+    );
   }
 }

@@ -7,7 +7,8 @@
 
 import { Options } from '@ulangi/react-native-navigation';
 import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
-import { Theme } from '@ulangi/ulangi-common/enums';
+import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
@@ -40,6 +41,12 @@ export class IntervalsScreenContainer extends Container<
 
   protected observableLightBox = this.props.observableLightBox;
 
+  protected observableScreen = new ObservableScreen(
+    this.props.componentId,
+    ScreenName.INTERVALS_SCREEN,
+    null,
+  );
+
   private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
 
   private screenDelegate = this.screenFactory.createScreenDelegate();
@@ -61,7 +68,7 @@ export class IntervalsScreenContainer extends Container<
       <IntervalsScreen
         themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         levelIntervalPairs={this.spacedRepetitionScheduler.calculateWaitingHoursInRange(
           this.props.passedProps.initialInterval,
           this.props.passedProps.range,

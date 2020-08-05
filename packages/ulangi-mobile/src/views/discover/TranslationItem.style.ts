@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
 
 export interface TranslationItemStyles {
   outer_container: ViewStyle;
@@ -26,161 +29,164 @@ export interface TranslationItemStyles {
   attribution_container: ViewStyle;
 }
 
-export const baseStyles: TranslationItemStyles = {
-  outer_container: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.3 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.25,
-  },
+export class TranslationItemResponsiveStyles extends ResponsiveStyleSheet<
+  TranslationItemStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): TranslationItemStyles {
+    return {
+      outer_container: {
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.3 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.25,
+      },
 
-  inner_container: {
-    marginHorizontal: ls(16),
-    marginTop: ss(16),
-    borderRadius: ss(5),
-    overflow: 'hidden',
-    elevation: 2,
-  },
+      inner_container: {
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginTop: scaleByFactor(16),
+        borderRadius: scaleByFactor(5),
+        overflow: 'hidden',
+        elevation: 2,
+      },
 
-  vocabulary_text_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      vocabulary_text_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(12),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  left: {},
+      left: {},
 
-  right: {
-    marginLeft: ss(8),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      right: {
+        marginLeft: scaleByFactor(8),
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  vocabulary_text: {
-    fontWeight: 'bold',
-    fontSize: ss(19),
-    lineHeight: ss(20),
-  },
+      vocabulary_text: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(19),
+        lineHeight: scaleByFactor(20),
+      },
 
-  button: {
-    height: ss(30),
-    width: ss(32),
-    borderRadius: ss(3),
-    borderWidth: 1,
-    marginLeft: ss(7),
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.15,
-    elevation: 0.75,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      button: {
+        height: scaleByFactor(30),
+        width: scaleByFactor(32),
+        borderRadius: scaleByFactor(3),
+        borderWidth: 1,
+        marginLeft: scaleByFactor(7),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.5 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.15,
+        elevation: 0.75,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  definition_list_container: {
-    borderTopWidth: 2,
-  },
+      definition_list_container: {
+        borderTopWidth: 2,
+      },
 
-  definition_container: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(8),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      definition_container: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(8),
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  meaning_container: {
-    flexShrink: 1,
-    paddingVertical: ss(3),
-  },
+      meaning_container: {
+        flexShrink: 1,
+        paddingVertical: scaleByFactor(3),
+      },
 
-  meaning: {
-    fontSize: ss(17),
-  },
+      meaning: {
+        fontSize: scaleByFactor(17),
+      },
 
-  attribution_container: {
-    paddingVertical: ss(13),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: ss(16),
-  },
-};
+      attribution_container: {
+        paddingVertical: scaleByFactor(13),
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderTopWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    inner_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+  public lightStyles(): Partial<TranslationItemStyles> {
+    return {
+      inner_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    vocabulary_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      vocabulary_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    button: {
-      borderColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+      button: {
+        borderColor: config.styles.light.primaryBorderColor,
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    add_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      definition_list_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
+      definition_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
 
-    definition_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
+      meaning: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    meaning: {
-      color: config.styles.light.primaryTextColor,
-    },
+      attribution_container: {
+        backgroundColor: config.styles.light.tertiaryBackgroundColor,
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
+    };
+  }
 
-    attribution_container: {
-      backgroundColor: config.styles.light.tertiaryBackgroundColor,
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<TranslationItemStyles> {
+    return {
+      inner_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    inner_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      vocabulary_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    vocabulary_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      button: {
+        borderColor: config.styles.dark.primaryBorderColor,
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    button: {
-      borderColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      definition_list_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    add_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      definition_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
+      meaning: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    definition_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
+      attribution_container: {
+        backgroundColor: config.styles.dark.tertiaryBackgroundColor,
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
+    };
+  }
+}
 
-    meaning: {
-      color: config.styles.dark.primaryTextColor,
-    },
-
-    attribution_container: {
-      backgroundColor: config.styles.dark.tertiaryBackgroundColor,
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
-  }),
-);
+export const translationItemResponsiveStyles = new TranslationItemResponsiveStyles();

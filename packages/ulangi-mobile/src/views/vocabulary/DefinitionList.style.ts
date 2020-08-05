@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DefinitionListStyles {
   definition_list: ViewStyle;
@@ -17,42 +16,50 @@ export interface DefinitionListStyles {
   missing_definitions: TextStyle;
 }
 
-export const baseStyles: DefinitionListStyles = {
-  definition_list: {},
+export class DefinitionListResponsiveStyles extends ResponsiveStyleSheet<
+  DefinitionListStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): DefinitionListStyles {
+    return {
+      definition_list: {},
 
-  missing_definitions_container: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingVertical: ss(10),
-    paddingHorizontal: ss(16),
-  },
+      missing_definitions_container: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        paddingVertical: scaleByFactor(10),
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  missing_definitions: {
-    fontSize: ss(15),
-    fontStyle: 'italic',
-    color: '#777',
-  },
-};
+      missing_definitions: {
+        fontSize: scaleByFactor(15),
+        fontStyle: 'italic',
+        color: '#777',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    missing_definitions_container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<DefinitionListStyles> {
+    return {
+      missing_definitions_container: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+      },
 
-    missing_definitions: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      missing_definitions: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    missing_definitions_container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<DefinitionListStyles> {
+    return {
+      missing_definitions_container: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+      },
 
-    missing_definitions: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      missing_definitions: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const definitionListResponsiveStyles = new DefinitionListResponsiveStyles();

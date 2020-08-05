@@ -5,38 +5,43 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface VocabularyDetailStrokeOrderStyles {
   container: ViewStyle;
   button_text: TextStyle;
 }
 
-export const baseStyles: VocabularyDetailStrokeOrderStyles = {
-  container: {},
+export class VocabularyDetailStrokeOrderResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyDetailStrokeOrderStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): VocabularyDetailStrokeOrderStyles {
+    return {
+      container: {},
 
-  button_text: {
-    fontSize: ss(15),
-    color: config.styles.primaryColor,
-  },
-};
+      button_text: {
+        fontSize: scaleByFactor(15),
+        color: config.styles.primaryColor,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<VocabularyDetailStrokeOrderStyles> {
+    return {
+      container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<VocabularyDetailStrokeOrderStyles> {
+    return {};
+  }
+}
+
+export const vocabularyDetailStrokeOrderResponsiveStyles = new VocabularyDetailStrokeOrderResponsiveStyles();

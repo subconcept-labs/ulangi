@@ -11,7 +11,10 @@ import {
   VocabularyFilterType,
   VocabularySortType,
 } from '@ulangi/ulangi-common/enums';
-import { ObservableCategory } from '@ulangi/ulangi-observable';
+import {
+  ObservableCategory,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
@@ -20,37 +23,35 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import {
   CategoryDetailHeaderStyles,
-  darkStyles,
-  lightStyles,
+  categoryDetailHeaderResponsiveStyles,
 } from './CategoryDetailHeader.style';
 
 export interface CategoryDetailHeaderProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   category: ObservableCategory;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
   selectedSortType: IObservableValue<VocabularySortType>;
   showVocabularySortMenu: () => void;
   showVocabularyFilterMenu: () => void;
-  styles?: {
-    light: CategoryDetailHeaderStyles;
-    dark: CategoryDetailHeaderStyles;
-  };
 }
 
 @observer
 export class CategoryDetailHeader extends React.Component<
   CategoryDetailHeaderProps
 > {
-  public get styles(): CategoryDetailHeaderStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): CategoryDetailHeaderStyles {
+    return categoryDetailHeaderResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
+
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.container}>
@@ -75,9 +76,11 @@ export class CategoryDetailHeader extends React.Component<
               .shortName,
           )}
           onPress={this.props.showVocabularyFilterMenu}
-          styles={FullRoundedButtonStyle.getOutlineStyles(
+          styles={fullRoundedButtonStyles.getOutlineStyles(
             ButtonSize.SMALL,
             this.getColorByStatus(this.props.selectedFilterType.get()),
+            this.props.theme,
+            this.props.screenLayout,
           )}
         />
       </View>

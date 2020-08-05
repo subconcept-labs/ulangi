@@ -11,6 +11,7 @@ import {
   Theme,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
@@ -19,13 +20,14 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
-import { ManageBarStyles, darkStyles, lightStyles } from './ManageBar.style';
+import { ManageBarStyles, manageBarResponsiveStyles } from './ManageBar.style';
 
 export interface ManageBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   selectedSortType: IObservableValue<CategorySortType>;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
   showCategorySortMenu: () => void;
@@ -39,9 +41,10 @@ export interface ManageBarProps {
 @observer
 export class ManageBar extends React.Component<ManageBarProps> {
   public get styles(): ManageBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return manageBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -68,9 +71,11 @@ export class ManageBar extends React.Component<ManageBarProps> {
               .shortName,
           )}
           onPress={this.props.showVocabularyFilterMenu}
-          styles={FullRoundedButtonStyle.getOutlineStyles(
+          styles={fullRoundedButtonStyles.getOutlineStyles(
             ButtonSize.SMALL,
             this.getColorByStatus(this.props.selectedFilterType.get()),
+            this.props.theme,
+            this.props.screenLayout,
           )}
         />
       </View>

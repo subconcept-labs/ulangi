@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SuggestionListStyles {
   title_container: ViewStyle;
@@ -20,75 +19,83 @@ export interface SuggestionListStyles {
   bold: TextStyle;
 }
 
-export const baseStyles: SuggestionListStyles = {
-  title_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(8),
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+export class SuggestionListResponsiveStyles extends ResponsiveStyleSheet<
+  SuggestionListStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SuggestionListStyles {
+    return {
+      title_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(8),
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  title: {
-    fontSize: ss(14),
-  },
+      title: {
+        fontSize: scaleByFactor(14),
+      },
 
-  term: {
-    fontWeight: 'bold',
-  },
+      term: {
+        fontWeight: 'bold',
+      },
 
-  license_text: {
-    fontSize: ss(13),
-  },
+      license_text: {
+        fontSize: scaleByFactor(13),
+      },
 
-  highlighted_text: {
-    color: config.styles.primaryColor,
-  },
+      highlighted_text: {
+        color: config.styles.primaryColor,
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
-};
+      bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_container: {
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-      borderTopColor: config.styles.light.primaryBorderColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<SuggestionListStyles> {
+    return {
+      title_container: {
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+        borderTopColor: config.styles.light.primaryBorderColor,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    title: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      title: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    term: {
-      color: config.styles.light.primaryTextColor,
-    },
+      term: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    license_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      license_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_container: {
-      backgroundColor: config.styles.dark.secondaryBackgroundColor,
-      borderTopColor: config.styles.dark.primaryBorderColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<SuggestionListStyles> {
+    return {
+      title_container: {
+        backgroundColor: config.styles.dark.secondaryBackgroundColor,
+        borderTopColor: config.styles.dark.primaryBorderColor,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    title: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      title: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    term: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      term: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    license_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      license_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const suggestionListResponsiveStyles = new SuggestionListResponsiveStyles();

@@ -6,31 +6,49 @@
  */
 
 import {
+  ObservableScreen,
   ObservableThemeStore,
-  ObservableUser,
+  ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { SecurityScreenIds } from '../../constants/ids/SecurityScreenIds';
 import { SecurityScreenDelegate } from '../../delegates/account/SecurityScreenDelegate';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
+import {
+  SecurityScreenStyles,
+  securityScreenResponsiveStyles,
+} from './SecurityScreen.style';
 
 export interface SecurityScreenProps {
   themeStore: ObservableThemeStore;
-  currentUser: ObservableUser;
+  userStore: ObservableUserStore;
+  observableScreen: ObservableScreen;
   screenDelegate: SecurityScreenDelegate;
 }
 
 @observer
 export class SecurityScreen extends React.Component<SecurityScreenProps> {
+  private get styles(): SecurityScreenStyles {
+    return securityScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={SecurityScreenIds.SCREEN}>
-        <View style={styles.section_list}>{this.renderSections()}</View>
-      </View>
+      <Screen
+        style={this.styles.screen}
+        testID={SecurityScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <View style={this.styles.section_list}>{this.renderSections()}</View>
+      </Screen>
     );
   }
 
@@ -42,14 +60,16 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         key="ulangi-account"
         header="ULANGI ACCOUNT">
         <SectionRow
           testID={SecurityScreenIds.CHANGE_EMAIL_BTN}
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           key="change-email"
           leftText="Change Email"
-          rightText={this.props.currentUser.email}
+          rightText={this.props.userStore.existingCurrentUser.email}
           showArrow={true}
           shrink="right"
           onPress={this.props.screenDelegate.navigateToChangeEmailScreen}
@@ -57,6 +77,7 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
         <SectionRow
           testID={SecurityScreenIds.CHANGE_PASSWORD_BTN}
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           key="change-password"
           leftText="Change Password"
           rightText=""
@@ -67,14 +88,3 @@ export class SecurityScreen extends React.Component<SecurityScreenProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  section_list: {
-    flex: 1,
-    marginTop: 22,
-  },
-});

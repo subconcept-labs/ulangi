@@ -101,6 +101,7 @@ export class CreateFirstSetScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <CreateFirstSetScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

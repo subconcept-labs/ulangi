@@ -6,24 +6,30 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { ReflexPausedScreenIds } from '../../constants/ids/ReflexPausedScreenIds';
-import { ReflexStyle } from '../../styles/ReflexStyle';
-import { ss } from '../../utils/responsive';
+import { reflexMenuButtonStyles } from '../../styles/ReflexStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackground';
+import {
+  ReflexPausedScreenStyles,
+  reflexPausedScreenResponsiveStyles,
+} from './ReflexPausedScreen.style';
 
 export interface ReflexPausedScreenProps {
+  themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   continue: () => void;
   restart: () => void;
   quit: () => void;
@@ -33,72 +39,66 @@ export interface ReflexPausedScreenProps {
 export class ReflexPausedScreen extends React.Component<
   ReflexPausedScreenProps
 > {
+  private get styles(): ReflexPausedScreenStyles {
+    return reflexPausedScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <LightBoxTouchableBackground
-        testID={ReflexPausedScreenIds.SCREEN}
-        observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
-        enabled={true}
-        activeOpacity={0.2}
-        style={styles.light_box_container}
-        onPress={(): void => this.props.continue()}>
-        <LightBoxAnimatableView
-          testID={ReflexPausedScreenIds.CONTAINER}
+      <Screen
+        useSafeAreaView={false}
+        observableScreen={this.props.observableScreen}
+        style={this.styles.screen}>
+        <LightBoxTouchableBackground
+          testID={ReflexPausedScreenIds.SCREEN}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           observableLightBox={this.props.observableLightBox}
-          style={styles.inner_container}>
-          <View style={styles.title_container}>
-            <DefaultText style={styles.title}>Paused</DefaultText>
-          </View>
-          <DefaultButton
-            testID={ReflexPausedScreenIds.CONTINUE_BTN}
-            text="Continue"
-            styles={ReflexStyle.getMenuButtonStyles()}
-            onPress={this.props.continue}
-          />
-          <DefaultButton
-            testID={ReflexPausedScreenIds.RESTART_BTN}
-            text="Restart"
-            styles={ReflexStyle.getMenuButtonStyles()}
-            onPress={this.props.restart}
-          />
-          <DefaultButton
-            testID={ReflexPausedScreenIds.QUIT_BTN}
-            text="Quit"
-            styles={ReflexStyle.getMenuButtonStyles()}
-            onPress={this.props.quit}
-          />
-          <View style={styles.spacer} />
-        </LightBoxAnimatableView>
-      </LightBoxTouchableBackground>
+          enabled={true}
+          activeOpacity={0.2}
+          style={this.styles.light_box_container}
+          onPress={(): void => this.props.continue()}>
+          <LightBoxAnimatableView
+            testID={ReflexPausedScreenIds.CONTAINER}
+            observableLightBox={this.props.observableLightBox}
+            style={this.styles.inner_container}>
+            <View style={this.styles.title_container}>
+              <DefaultText style={this.styles.title}>Paused</DefaultText>
+            </View>
+            <DefaultButton
+              testID={ReflexPausedScreenIds.CONTINUE_BTN}
+              text="Continue"
+              styles={reflexMenuButtonStyles.compile(
+                this.props.observableScreen.screenLayout,
+                this.props.themeStore.theme,
+              )}
+              onPress={this.props.continue}
+            />
+            <DefaultButton
+              testID={ReflexPausedScreenIds.RESTART_BTN}
+              text="Restart"
+              styles={reflexMenuButtonStyles.compile(
+                this.props.observableScreen.screenLayout,
+                this.props.themeStore.theme,
+              )}
+              onPress={this.props.restart}
+            />
+            <DefaultButton
+              testID={ReflexPausedScreenIds.QUIT_BTN}
+              text="Quit"
+              styles={reflexMenuButtonStyles.compile(
+                this.props.observableScreen.screenLayout,
+                this.props.themeStore.theme,
+              )}
+              onPress={this.props.quit}
+            />
+            <View style={this.styles.spacer} />
+          </LightBoxAnimatableView>
+        </LightBoxTouchableBackground>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  light_box_container: {
-    justifyContent: 'center',
-    paddingHorizontal: ss(16),
-  },
-
-  inner_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: ss(8),
-  },
-
-  title: {
-    fontSize: ss(34),
-    fontFamily: 'Raleway-Black',
-    color: '#fff',
-  },
-
-  spacer: {
-    height: ss(30),
-  },
-});

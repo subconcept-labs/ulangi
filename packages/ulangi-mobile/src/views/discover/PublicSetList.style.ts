@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface PublicSetListStyles {
   list_container: ViewStyle;
@@ -18,42 +17,50 @@ export interface PublicSetListStyles {
   button_container: ViewStyle;
 }
 
-export const baseStyles: PublicSetListStyles = {
-  list_container: {
-    paddingBottom: ss(74),
-    paddingTop: ss(8),
-  },
+export class PublicSetListResponsiveStyles extends ResponsiveStyleSheet<
+  PublicSetListStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): PublicSetListStyles {
+    return {
+      list_container: {
+        paddingBottom: scaleByFactor(74),
+        paddingTop: scaleByFactor(8),
+      },
 
-  center_container: {
-    flex: 1,
-    paddingHorizontal: ss(16),
-    marginTop: ss(8),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      center_container: {
+        flex: 1,
+        paddingHorizontal: scaleByFactor(16),
+        marginTop: scaleByFactor(8),
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  message: {
-    fontSize: ss(15),
-    textAlign: 'center',
-  },
+      message: {
+        fontSize: scaleByFactor(15),
+        textAlign: 'center',
+      },
 
-  button_container: {
-    marginTop: ss(8),
-  },
-};
+      button_container: {
+        marginTop: scaleByFactor(8),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<PublicSetListStyles> {
+    return {
+      message: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<PublicSetListStyles> {
+    return {
+      message: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const publicSetListResponsiveStyles = new PublicSetListResponsiveStyles();

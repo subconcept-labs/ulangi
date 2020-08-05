@@ -7,7 +7,10 @@
 
 import { ReadonlyTuple } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSet } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSet,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -16,10 +19,11 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { Images } from '../../constants/Images';
 import { SetItemIds } from '../../constants/ids/SetItemIds';
 import { DefaultText } from '../common/DefaultText';
-import { SetItemStyles, darkStyles, lightStyles } from './SetItem.style';
+import { SetItemStyles, setItemResponsiveStyles } from './SetItem.style';
 
 export interface SetItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   currentSetId: string;
   setTuple: ReadonlyTuple<string, ObservableSet>;
   showSetActionMenu: (set: ObservableSet) => void;
@@ -32,9 +36,10 @@ export interface SetItemProps {
 @observer
 export class SetItem extends React.Component<SetItemProps> {
   public get styles(): SetItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return setItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

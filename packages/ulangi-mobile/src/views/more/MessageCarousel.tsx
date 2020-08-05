@@ -8,34 +8,43 @@
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCarouselMessage,
-  ObservableDimensions,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { config } from '../../constants/config';
-import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
-import { ls, ss } from '../../utils/responsive';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import {
+  MessageCarouselStyles,
+  messageCarouselResponsiveStyles,
+} from './MessageCarousel.style';
 
 export interface MessageCarouselProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   messages: IObservableArray<ObservableCarouselMessage>;
   currentMessageIndex: IObservableValue<number>;
 }
 
 @observer
 export class MessageCarousel extends React.Component<MessageCarouselProps> {
-  public render(): null | React.ReactElement<any> {
-    if (this.props.messages.length > 0) {
-      const windowWidth = this.props.observableDimensions.windowWidth;
+  private get styles(): MessageCarouselStyles {
+    return messageCarouselResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
 
+  public render(): null | React.ReactElement<any> {
+    const windowWidth = this.props.screenLayout.width;
+    if (this.props.messages.length > 0 && windowWidth) {
       return (
         <View>
           <Carousel
@@ -52,7 +61,7 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
             loop={true}
           />
           <Pagination
-            containerStyle={styles.pagination}
+            containerStyle={this.styles.pagination}
             activeDotIndex={this.props.currentMessageIndex.get()}
             dotsLength={this.props.messages.length}
             dotColor={
@@ -82,26 +91,28 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
     return (
       <View
         style={[
-          styles.item_container,
+          this.styles.item_container,
           {
-            width: this.props.observableDimensions.windowWidth,
+            width: this.props.screenLayout.width,
           },
         ]}>
         <View
           style={[
-            styles.inner_container,
+            this.styles.inner_container,
             { backgroundColor: item.backgroundColor },
           ]}>
-          <DefaultText style={styles.title}>{item.title}</DefaultText>
-          <DefaultText style={styles.message}>{item.message}</DefaultText>
-          <View style={styles.button_container}>
+          <DefaultText style={this.styles.title}>{item.title}</DefaultText>
+          <DefaultText style={this.styles.message}>{item.message}</DefaultText>
+          <View style={this.styles.button_container}>
             <DefaultButton
               text={item.buttonText}
-              styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.NORMAL,
                 4,
                 '#fff',
                 item.buttonTextColor,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={item.onPress}
             />
@@ -111,39 +122,3 @@ export class MessageCarousel extends React.Component<MessageCarouselProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  item_container: {
-    paddingHorizontal: ls(16),
-    paddingTop: ss(16),
-  },
-
-  inner_container: {
-    backgroundColor: '#777',
-    borderRadius: ss(4),
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(16),
-  },
-
-  title: {
-    fontSize: ss(13),
-    fontWeight: 'bold',
-    color: '#ffffff85',
-  },
-
-  message: {
-    paddingTop: ss(14),
-    fontSize: ss(15),
-    color: '#fff',
-  },
-
-  button_container: {
-    marginTop: ss(16),
-    marginBottom: ss(2),
-  },
-
-  pagination: {
-    paddingTop: ss(20),
-    paddingBottom: ss(10),
-  },
-});

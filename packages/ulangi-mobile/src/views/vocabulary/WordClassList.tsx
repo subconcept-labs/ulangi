@@ -5,17 +5,23 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { WordClass } from '@ulangi/ulangi-common/enums';
+import { Theme, WordClass } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { VocabularyItemIds } from '../../constants/ids/VocabularyItemIds';
-import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  WordClassListStyles,
+  wordClassListResponsiveStyles,
+} from './WordClassList.style';
 
 export interface WordClassListProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   wordClasses: readonly WordClass[] | readonly string[];
   isUsingCustomWordClasses: boolean;
   noBorder?: boolean;
@@ -23,6 +29,13 @@ export interface WordClassListProps {
 
 @observer
 export class WordClassList extends React.Component<WordClassListProps> {
+  private get styles(): WordClassListStyles {
+    return wordClassListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <React.Fragment>
@@ -60,8 +73,11 @@ export class WordClassList extends React.Component<WordClassListProps> {
               <View
                 key={wordClass}
                 testID={VocabularyItemIds.WORD_CLASS_BY_VALUE(wordClass)}
-                style={[styles.word_class_container, container_extra_style]}>
-                <DefaultText style={[styles.word_class, text_extra_style]}>
+                style={[
+                  this.styles.word_class_container,
+                  container_extra_style,
+                ]}>
+                <DefaultText style={[this.styles.word_class, text_extra_style]}>
                   {wordClass}
                 </DefaultText>
               </View>
@@ -93,8 +109,11 @@ export class WordClassList extends React.Component<WordClassListProps> {
               <View
                 key={wordClass}
                 testID={VocabularyItemIds.WORD_CLASS_BY_VALUE(wordClass)}
-                style={[styles.word_class_container, container_extra_style]}>
-                <DefaultText style={[styles.word_class, text_extra_style]}>
+                style={[
+                  this.styles.word_class_container,
+                  container_extra_style,
+                ]}>
+                <DefaultText style={[this.styles.word_class, text_extra_style]}>
                   {config.builtInWordClass.map[wordClass].abbr}
                 </DefaultText>
               </View>
@@ -105,18 +124,3 @@ export class WordClassList extends React.Component<WordClassListProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  word_class_container: {
-    borderRadius: ss(3),
-    marginVertical: ss(2),
-    paddingVertical: ss(1),
-    paddingHorizontal: ss(7),
-    marginRight: ss(5),
-  },
-
-  word_class: {
-    textAlign: 'center',
-    fontSize: ss(15),
-  },
-});

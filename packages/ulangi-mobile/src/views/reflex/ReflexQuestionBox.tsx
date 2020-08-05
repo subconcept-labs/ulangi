@@ -6,20 +6,27 @@
  */
 
 import { assertExists } from '@ulangi/assert';
+import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCommandList,
   ObservableReflexGameState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, View } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  ReflexQuestionBoxStyles,
+  reflexQuestionBoxResponsiveStyles,
+} from './ReflexQuestionBox.style';
 
 export interface ReflexQuestionBoxProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   gameState: ObservableReflexGameState;
 }
 
@@ -113,17 +120,24 @@ export class ReflexQuestionBox extends React.Component<
     );
   }
 
+  private get styles(): ReflexQuestionBoxStyles {
+    return reflexQuestionBoxResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   private renderQuestion(): React.ReactElement<any> {
     const currentQuestion = assertExists(
       this.props.gameState.currentQuestion,
       'currentQuestion should not be null or undefined',
     );
     return (
-      <DefaultText style={styles.question}>
-        <DefaultText style={styles.vocabulary}>
+      <DefaultText style={this.styles.question}>
+        <DefaultText style={this.styles.vocabulary}>
           {currentQuestion.vocabularyTerm + ': '}
         </DefaultText>
-        <DefaultText style={styles.meaning}>
+        <DefaultText style={this.styles.meaning}>
           {currentQuestion.randomMeaning}
         </DefaultText>
       </DefaultText>
@@ -132,25 +146,25 @@ export class ReflexQuestionBox extends React.Component<
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <View style={styles.question_container}>
+      <View style={this.styles.container}>
+        <View style={this.styles.question_container}>
           {this.props.gameState.started === false ? (
-            <DefaultText style={styles.question}>
+            <DefaultText style={this.styles.question}>
               Rule: If the answer is correct, press{' '}
-              <DefaultText style={styles.yes}>YES</DefaultText>. Otherwise,
-              press <DefaultText style={styles.no}>NO</DefaultText>.
+              <DefaultText style={this.styles.yes}>YES</DefaultText>. Otherwise,
+              press <DefaultText style={this.styles.no}>NO</DefaultText>.
             </DefaultText>
           ) : (
             this.renderQuestion()
           )}
         </View>
-        <View style={styles.time_bar_container}>
-          <View style={styles.time_bar_placeholder}>
+        <View style={this.styles.time_bar_container}>
+          <View style={this.styles.time_bar_placeholder}>
             <View
               ref={(ref: any): void => {
                 this.timerRef = ref;
               }}
-              style={styles.time_bar}
+              style={this.styles.time_bar}
             />
           </View>
         </View>
@@ -158,62 +172,3 @@ export class ReflexQuestionBox extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: ls(16),
-    marginVertical: ss(10),
-    borderRadius: ss(4),
-    backgroundColor: '#f5f5f5',
-    overflow: 'hidden',
-  },
-
-  question_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-  },
-
-  question: {
-    textAlign: 'center',
-    color: '#555',
-    fontSize: ss(17),
-    lineHeight: ss(22),
-  },
-
-  time_bar_container: {
-    paddingHorizontal: ss(10),
-    paddingVertical: ss(8),
-    backgroundColor: '#e6e6e6',
-  },
-
-  time_bar_placeholder: {
-    height: ss(8),
-    backgroundColor: '#ccc',
-    borderRadius: ss(8) / 2,
-    overflow: 'hidden',
-  },
-
-  time_bar: {
-    height: ss(8),
-    backgroundColor: 'darkturquoise',
-  },
-
-  yes: {
-    color: '#2fc68f',
-    fontWeight: 'bold',
-  },
-
-  no: {
-    color: '#ff7396',
-    fontWeight: 'bold',
-  },
-
-  vocabulary: {
-    fontWeight: 'bold',
-    color: config.reflex.backgroundColor,
-  },
-
-  meaning: {
-    color: '#555',
-  },
-});

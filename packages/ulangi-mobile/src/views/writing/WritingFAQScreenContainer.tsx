@@ -67,6 +67,11 @@ export class WritingFAQScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <WritingFAQScreen themeStore={this.props.rootStore.themeStore} />;
+    return (
+      <WritingFAQScreen
+        observableScreen={this.observableScreen}
+        themeStore={this.props.rootStore.themeStore}
+      />
+    );
   }
 }

@@ -5,26 +5,38 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 
 export interface DictionarySectionStyles {
   highlighted_text: TextStyle;
   bold: TextStyle;
 }
 
-export const baseStyles: DictionarySectionStyles = {
-  highlighted_text: {
-    color: config.styles.primaryColor,
-  },
+export class DictionarySectionResponsiveStyles extends ResponsiveStyleSheet<
+  DictionarySectionStyles
+> {
+  public baseStyles(): DictionarySectionStyles {
+    return {
+      highlighted_text: {
+        color: config.styles.primaryColor,
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
-};
+      bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<DictionarySectionStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<DictionarySectionStyles> {
+    return {};
+  }
+}
+
+export const dictionarySectionResponsiveStyles = new DictionarySectionResponsiveStyles();

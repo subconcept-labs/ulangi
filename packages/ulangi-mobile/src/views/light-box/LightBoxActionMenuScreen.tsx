@@ -6,24 +6,27 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 
 import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
-import { ls } from '../../utils/responsive';
+import { Screen } from '../common/Screen';
 import { LightBoxActionMenu } from './LightBoxActionMenu';
+import {
+  LightBoxActionMenuScreenStyles,
+  lightBoxActionMenuScreenResponsiveStyles,
+} from './LightBoxActionMenuScreen.style';
 import { LightBoxAnimatableView } from './LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
 
 export interface LightBoxActionMenuScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   navigatorDelegate: NavigatorDelegate;
 }
 
@@ -44,40 +47,42 @@ export class LightBoxActionMenuScreen extends React.Component<
     }
   }
 
+  private get styles(): LightBoxActionMenuScreenStyles {
+    return lightBoxActionMenuScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     if (this.props.observableLightBox.actionMenu === null) {
       return null;
     } else {
       return (
-        <LightBoxTouchableBackground
-          observableLightBox={this.props.observableLightBox}
-          observableDimensions={this.props.observableDimensions}
-          style={styles.light_box_container}
-          enabled={true}
-          activeOpacity={0.2}
-          onPress={(): void => this.close()}>
-          <LightBoxAnimatableView
+        <Screen
+          useSafeAreaView={false}
+          observableScreen={this.props.observableScreen}
+          style={this.styles.screen}>
+          <LightBoxTouchableBackground
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             observableLightBox={this.props.observableLightBox}
-            style={styles.inner_container}>
-            <LightBoxActionMenu
-              theme={this.props.themeStore.theme}
-              actionMenu={this.props.observableLightBox.actionMenu}
-            />
-          </LightBoxAnimatableView>
-        </LightBoxTouchableBackground>
+            style={this.styles.light_box_container}
+            enabled={true}
+            activeOpacity={0.2}
+            onPress={(): void => this.close()}>
+            <LightBoxAnimatableView
+              observableLightBox={this.props.observableLightBox}
+              style={this.styles.inner_container}>
+              <LightBoxActionMenu
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                actionMenu={this.props.observableLightBox.actionMenu}
+              />
+            </LightBoxAnimatableView>
+          </LightBoxTouchableBackground>
+        </Screen>
       );
     }
   }
 }
-
-const styles = StyleSheet.create({
-  light_box_container: {
-    justifyContent: 'center',
-    paddingVertical: 150,
-    paddingHorizontal: ls(16),
-  },
-
-  inner_container: {
-    flexShrink: 1,
-  },
-});

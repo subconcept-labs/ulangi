@@ -9,25 +9,26 @@ import { ActivityState, ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservablePublicSet,
   ObservablePublicSetListState,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, View } from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { PublicSetItem } from './PublicSetItem';
 import {
   PublicSetListStyles,
-  darkStyles,
-  lightStyles,
+  publicSetListResponsiveStyles,
 } from './PublicSetList.style';
 
 export interface PublicSetListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   publicSetListState: ObservablePublicSetListState;
   showSetDetailModal: (set: ObservablePublicSet) => void;
   onEndReached: () => void;
@@ -44,10 +45,11 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
   private keyExtractor = (item: [string, ObservablePublicSet]): string =>
     item[0];
 
-  public get styles(): PublicSetListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): PublicSetListStyles {
+    return publicSetListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -63,8 +65,10 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
           </DefaultText>
           <View style={this.styles.button_container}>
             <DefaultButton
-              styles={FullRoundedButtonStyle.getGreyOutlineStyles(
+              styles={fullRoundedButtonStyles.getGreyOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               text="Retry"
               onPress={this.props.refresh}
@@ -105,6 +109,7 @@ export class PublicSetList extends React.Component<PublicSetListProps> {
             return (
               <PublicSetItem
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 set={set}
                 showSetDetailModal={this.props.showSetDetailModal}
               />

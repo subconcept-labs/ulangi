@@ -5,16 +5,25 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableSetStore } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableScreenLayout,
+  ObservableSetStore,
+} from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import {
+  DiscoverCenterTitleStyles,
+  discoverCenterTitleResponsiveStyles,
+} from './DiscoverCenterTitle.style';
 
 export interface DiscoverCenterTitleProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   setStore: ObservableSetStore;
   publicSetCount: IObservableValue<null | number>;
   search: (term: string) => void;
@@ -24,20 +33,27 @@ export interface DiscoverCenterTitleProps {
 export class DiscoverCenterTitle extends React.Component<
   DiscoverCenterTitleProps
 > {
+  private get styles(): DiscoverCenterTitleStyles {
+    return discoverCenterTitleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <DefaultText style={styles.title}>
+      <View style={this.styles.container}>
+        <DefaultText style={this.styles.title}>
           You can search dictionary for words or categories, such as
           <DefaultText
-            style={styles.highlighted}
+            style={this.styles.highlighted}
             onPress={(): void => this.props.search('cat')}>
             {' '}
             cat
           </DefaultText>{' '}
           or
           <DefaultText
-            style={styles.highlighted}
+            style={this.styles.highlighted}
             onPress={(): void => this.props.search('animals')}>
             {' '}
             animals
@@ -48,39 +64,3 @@ export class DiscoverCenterTitle extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 26,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title: {
-    textAlign: 'center',
-    color: '#999',
-    fontSize: 16,
-  },
-
-  highlighted: {
-    color: config.styles.primaryColor,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-
-  search_button: {
-    marginTop: 16,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.15,
-    elevation: 0.75,
-  },
-});

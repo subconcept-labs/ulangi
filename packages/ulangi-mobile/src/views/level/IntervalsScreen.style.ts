@@ -5,13 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface IntervalsScreenStyles {
+  screen: ViewStyle;
   row: ViewStyle;
   row_left: ViewStyle;
   row_right: ViewStyle;
@@ -19,59 +19,71 @@ export interface IntervalsScreenStyles {
   interval: TextStyle;
 }
 
-export const baseStyles: IntervalsScreenStyles = {
-  row: {
-    alignSelf: 'stretch',
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(11),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
+export class IntervalsScreenResponsiveStyles extends ResponsiveStyleSheet<
+  IntervalsScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): IntervalsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  row_left: {
-    flexShrink: 1,
-    paddingRight: ss(16),
-  },
+      row: {
+        alignSelf: 'stretch',
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(11),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderTopWidth: StyleSheet.hairlineWidth,
+      },
 
-  row_right: {},
+      row_left: {
+        flexShrink: 1,
+        paddingRight: scaleByFactor(16),
+      },
 
-  level: {
-    fontSize: ss(14),
-    fontWeight: 'bold',
-  },
+      row_right: {},
 
-  interval: {
-    fontSize: ss(14),
-    fontWeight: 'bold',
-  },
-};
+      level: {
+        fontSize: scaleByFactor(14),
+        fontWeight: 'bold',
+      },
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    row: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-    },
-    level: {
-      color: config.styles.light.secondaryTextColor,
-    },
-    interval: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      interval: {
+        fontSize: scaleByFactor(14),
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    row: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-    },
-    level: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-    interval: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<IntervalsScreenStyles> {
+    return {
+      row: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+      },
+      level: {
+        color: config.styles.light.secondaryTextColor,
+      },
+      interval: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
+
+  public darkStyles(): Partial<IntervalsScreenStyles> {
+    return {
+      row: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+      },
+      level: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+      interval: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const intervalsScreenResponsiveStyles = new IntervalsScreenResponsiveStyles();

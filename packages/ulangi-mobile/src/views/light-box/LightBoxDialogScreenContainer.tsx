@@ -79,7 +79,7 @@ export class LightBoxDialogScreenContainer extends Container {
       <LightBoxDialogScreen
         themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         navigatorDelegate={this.navigatorDelegate}
       />
     );

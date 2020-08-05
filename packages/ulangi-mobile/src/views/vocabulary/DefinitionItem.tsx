@@ -7,7 +7,10 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { DefinitionExtraFields } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDefinition } from '@ulangi/ulangi-observable';
+import {
+  ObservableDefinition,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -16,29 +19,30 @@ import { VocabularyItemIds } from '../../constants/ids/VocabularyItemIds';
 import { DefaultText } from '../common/DefaultText';
 import { DefinitionExtraFieldList } from './DefinitionExtraFieldList';
 import {
-  DefinitionItemStyle,
-  darkStyles,
-  lightStyles,
+  DefinitionItemResponsiveStyles,
+  DefinitionItemStyles,
+  definitionItemResponsiveStyles,
 } from './DefinitionItem.style';
 import { WordClassList } from './WordClassList';
 
 export interface DefinitionItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   index: number;
   definition: ObservableDefinition;
   hideFields?: (keyof DefinitionExtraFields)[];
-  styles?: {
-    light: DefinitionItemStyle;
-    dark: DefinitionItemStyle;
-  };
+  styles?: DefinitionItemResponsiveStyles;
 }
 
 @observer
 export class DefinitionItem extends React.Component<DefinitionItemProps> {
-  public get styles(): DefinitionItemStyle {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): DefinitionItemStyles {
+    return this.props.styles
+      ? this.props.styles.compile(this.props.screenLayout, this.props.theme)
+      : definitionItemResponsiveStyles.compile(
+          this.props.screenLayout,
+          this.props.theme,
+        );
   }
 
   public render(): React.ReactElement<any> {
@@ -48,6 +52,8 @@ export class DefinitionItem extends React.Component<DefinitionItemProps> {
         testID={VocabularyItemIds.DEFINITION_BY_INDEX(this.props.index)}>
         <View style={this.styles.meaning_container}>
           <WordClassList
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             wordClasses={
               this.props.definition.extraFields.wordClass.length > 0
                 ? this.props.definition.extraFields.wordClass.map(
@@ -68,6 +74,7 @@ export class DefinitionItem extends React.Component<DefinitionItemProps> {
         </View>
         <DefinitionExtraFieldList
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           extraFields={this.props.definition.extraFields}
           hideFields={this.props.hideFields}
         />

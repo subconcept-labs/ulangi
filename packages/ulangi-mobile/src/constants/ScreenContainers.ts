@@ -32,7 +32,6 @@ import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContain
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
 import { PublicVocabularyDetailScreenContainer } from '../views/discover/PublicVocabularyDetailScreenContainer';
 import { EventLogsScreenContainer } from '../views/event/EventLogsScreenContainer';
-import { FlashcardPlayerScreenContainer } from '../views/flashcard-player/FlashcardPlayerScreenContainer';
 import { FollowUsScreenContainer } from '../views/follow-us/FollowUsScreenContainer';
 import { GoogleSheetsAddOnScreenContainer } from '../views/google-sheets/GoogleSheetsAddOnScreenContainer';
 import { ImageSelectorScreenContainer } from '../views/image/ImageSelectorScreenContainer';
@@ -107,7 +106,6 @@ export const ScreenContainers = {
   EDIT_VOCABULARY_SCREEN: EditVocabularyScreenContainer,
   EXTRA_FIELDS_PICKER_SCREEN: ExtraFieldsPickerScreenContainer,
   FEATURE_MANAGEMENT_SCREEN: FeatureManagementScreenContainer,
-  FLASHCARD_PLAYER_SCREEN: FlashcardPlayerScreenContainer,
   FOLLOW_US_SCREEN: FollowUsScreenContainer,
   FORGOT_PASSWORD_SCREEN: ForgotPasswordScreenContainer,
   GOOGLE_SHEETS_ADD_ON_SCREEN: GoogleSheetsAddOnScreenContainer,

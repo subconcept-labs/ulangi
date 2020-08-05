@@ -10,7 +10,10 @@ import {
   Theme,
   VocabularyFilterType,
 } from '@ulangi/ulangi-common/enums';
-import { ObservableCategory } from '@ulangi/ulangi-observable';
+import {
+  ObservableCategory,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -19,18 +22,18 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { CategoryItemIds } from '../../constants/ids/CategoryItemIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LevelBar } from '../level/LevelBar';
 import {
   CategoryItemStyles,
-  darkStyles,
-  lightStyles,
+  categoryItemResponsiveStyles,
 } from './CategoryItem.style';
 
 export interface CategoryItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   category: ObservableCategory;
   selectedFilterType: IObservableValue<VocabularyFilterType>;
   isSelectionModeOn?: IObservableValue<boolean>;
@@ -57,10 +60,11 @@ export interface CategoryItemProps {
 
 @observer
 export class CategoryItem extends React.Component<CategoryItemProps> {
-  public get styles(): CategoryItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): CategoryItemStyles {
+    return categoryItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -156,6 +160,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
         </View>
         <LevelBar
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           percentages={[
             level0Count / totalCount,
             level1To3Count / totalCount,
@@ -168,11 +173,15 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           <DefaultButton
             styles={
               this.props.theme === Theme.LIGHT
-                ? FullRoundedButtonStyle.getGreyOutlineStyles(
+                ? fullRoundedButtonStyles.getGreyOutlineStyles(
                     ButtonSize.X_SMALL,
+                    this.props.theme,
+                    this.props.screenLayout,
                   )
-                : FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+                : fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                     ButtonSize.X_SMALL,
+                    this.props.theme,
+                    this.props.screenLayout,
                   )
             }
             text="Review"

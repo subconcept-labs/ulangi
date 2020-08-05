@@ -6,18 +6,19 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
   VocabularyDetailTitleStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyDetailTitleResponsiveStyles,
 } from './VocabularyDetailTitle.style';
 
 export interface VocabularyDetailTitleProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyTerm: string;
   styles?: {
     light: VocabularyDetailTitleStyles;
@@ -29,9 +30,10 @@ export class VocabularyDetailTitle extends React.Component<
   VocabularyDetailTitleProps
 > {
   public get styles(): VocabularyDetailTitleStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyDetailTitleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

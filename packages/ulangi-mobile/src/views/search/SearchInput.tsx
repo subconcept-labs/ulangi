@@ -19,8 +19,7 @@ import { SearchScreenIds } from '../../constants/ids/SearchScreenIds';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   SearchInputStyles,
-  darkStyles,
-  lightStyles,
+  searchInputResponsiveStyles,
 } from './SearchInput.style';
 
 export interface SearchInputProps {
@@ -39,9 +38,10 @@ export class SearchInput extends React.Component<SearchInputProps> {
   private unsubscribeFocus?: () => void;
 
   public get styles(): SearchInputStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return searchInputResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public componentDidMount(): void {

@@ -5,42 +5,43 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableReflexGameStats } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableReflexGameStats,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  ReflexGameStatsStyles,
+  reflexGameStatsResponsiveStyles,
+} from './ReflexGameStats.style';
 
 export interface ReflexGameStatsProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   gameStats: ObservableReflexGameStats;
 }
 
 @observer
 export class ReflexGameStats extends React.Component<ReflexGameStatsProps> {
+  private get styles(): ReflexGameStatsStyles {
+    return reflexGameStatsResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <DefaultText style={styles.score_text}>
+      <View style={this.styles.container}>
+        <DefaultText style={this.styles.score_text}>
           {this.props.gameStats.score}
         </DefaultText>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: ss(16),
-    flex: 1,
-  },
-
-  score_text: {
-    fontFamily: 'Raleway-Black',
-    fontSize: ss(32),
-    color: 'white',
-  },
-});

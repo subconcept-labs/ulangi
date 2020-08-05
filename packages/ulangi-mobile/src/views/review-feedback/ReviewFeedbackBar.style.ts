@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface ReviewFeedbackBarStyles {
   container: ViewStyle;
@@ -23,81 +22,89 @@ export interface ReviewFeedbackBarStyles {
   level_text: TextStyle;
 }
 
-export const baseStyles: ReviewFeedbackBarStyles = {
-  container: {},
+export class ReviewFeedbackBarResponsiveStyles extends ResponsiveStyleSheet<
+  ReviewFeedbackBarStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): ReviewFeedbackBarStyles {
+    return {
+      container: {},
 
-  title_container: {
-    paddingVertical: ss(10),
-  },
+      title_container: {
+        paddingVertical: scaleByFactor(10),
+      },
 
-  title: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: ss(15),
-  },
+      title: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(15),
+      },
 
-  subtitle: {
-    textAlign: 'center',
-    fontSize: ss(14),
-  },
+      subtitle: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(14),
+      },
 
-  feedback_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: ss(3),
-    paddingBottom: ss(14),
-  },
+      feedback_container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: scaleByFactor(3),
+        paddingBottom: scaleByFactor(14),
+      },
 
-  feedback_btn: {
-    flex: 1,
-    borderRadius: ss(6),
-    marginHorizontal: ss(3),
-    paddingVertical: ss(7),
-  },
+      feedback_btn: {
+        flex: 1,
+        borderRadius: scaleByFactor(6),
+        marginHorizontal: scaleByFactor(3),
+        paddingVertical: scaleByFactor(7),
+      },
 
-  feedback_text: {
-    fontWeight: '700',
-    textAlign: 'center',
-    fontSize: ss(11),
-    letterSpacing: ss(-0.5),
-    color: '#f7f7f7',
-  },
+      feedback_text: {
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: scaleByFactor(11),
+        letterSpacing: scaleByFactor(-0.5),
+        color: '#f7f7f7',
+      },
 
-  time_text: {
-    textAlign: 'center',
-    fontSize: ss(13),
-    fontWeight: '700',
-    color: '#f7f7f7',
-  },
+      time_text: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(13),
+        fontWeight: '700',
+        color: '#f7f7f7',
+      },
 
-  level_text: {
-    textAlign: 'center',
-    fontSize: ss(13),
-    color: '#fff',
-  },
-};
+      level_text: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(13),
+        color: '#fff',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<ReviewFeedbackBarStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<ReviewFeedbackBarStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const reviewFeedbackBarResponsiveStyles = new ReviewFeedbackBarResponsiveStyles();

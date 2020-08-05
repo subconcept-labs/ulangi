@@ -6,16 +6,14 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableSetStore,
   ObservableThemeStore,
   ObservableVocabularyDetailScreen,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { VocabularyDetailScreenIds } from '../../constants/ids/VocabularyDetailScreenIds';
 import { VocabularyDetailScreenDelegate } from '../../delegates/vocabulary/VocabularyDetailScreenDelegate';
@@ -26,16 +24,15 @@ import { VocabularyDetailSpacedRepetitionInfo } from '../../views/vocabulary/Voc
 import { VocabularyDetailStrokeOrder } from '../../views/vocabulary/VocabularyDetailStrokeOrder';
 import { VocabularyDetailTitle } from '../../views/vocabulary/VocabularyDetailTitle';
 import { VocabularyDetailWritingInfo } from '../../views/vocabulary/VocabularyDetailWritingInfo';
+import { Screen } from '../common/Screen';
 import {
   VocabularyDetailScreenStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyDetailScreenResponsiveStyles,
 } from './VocabularyDetailScreen.style';
 
 export interface VocabularyDetailScreenProps {
   setStore: ObservableSetStore;
   themeStore: ObservableThemeStore;
-  observableDimensions: ObservableDimensions;
   observableScreen: ObservableVocabularyDetailScreen;
   screenDelegate: VocabularyDetailScreenDelegate;
 }
@@ -45,9 +42,10 @@ export class VocabularyDetailScreen extends React.Component<
   VocabularyDetailScreenProps
 > {
   public get styles(): VocabularyDetailScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return vocabularyDetailScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -56,18 +54,22 @@ export class VocabularyDetailScreen extends React.Component<
       'currentSet should not be undefined or null',
     );
     return (
-      <View
+      <Screen
+        testID={VocabularyDetailScreenIds.SCREEN}
         style={this.styles.screen}
-        testID={VocabularyDetailScreenIds.SCREEN}>
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <ScrollView style={this.styles.container}>
           <VocabularyDetailTitle
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabularyTerm={
               this.props.observableScreen.vocabulary.vocabularyTerm
             }
           />
           <VocabularyDetailPronunciation
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             speakState={this.props.observableScreen.speakState}
             speak={(): void =>
               this.props.screenDelegate.synthesizeAndSpeak(
@@ -79,7 +81,7 @@ export class VocabularyDetailScreen extends React.Component<
           {currentSet.learningLanguageCode === 'zh' ? (
             <VocabularyDetailStrokeOrder
               theme={this.props.themeStore.theme}
-              observableDimensions={this.props.observableDimensions}
+              screenLayout={this.props.observableScreen.screenLayout}
               vocabularyTerm={
                 this.props.observableScreen.vocabulary.vocabularyTerm
               }
@@ -94,6 +96,7 @@ export class VocabularyDetailScreen extends React.Component<
           ) : null}
           <VocabularyDetailExtraFields
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabularyExtraFields={
               this.props.observableScreen.vocabulary.vocabularyExtraFields
             }
@@ -107,10 +110,12 @@ export class VocabularyDetailScreen extends React.Component<
           />
           <VocabularyDetailDefinitions
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             definitions={this.props.observableScreen.vocabulary.definitions}
           />
           <VocabularyDetailSpacedRepetitionInfo
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextSpacedRepetitionReview(
               this.props.observableScreen.vocabulary,
@@ -118,13 +123,14 @@ export class VocabularyDetailScreen extends React.Component<
           />
           <VocabularyDetailWritingInfo
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabulary={this.props.observableScreen.vocabulary}
             nextReview={this.props.screenDelegate.calculateNextWritingReview(
               this.props.observableScreen.vocabulary,
             )}
           />
         </ScrollView>
-      </View>
+      </Screen>
     );
   }
 }

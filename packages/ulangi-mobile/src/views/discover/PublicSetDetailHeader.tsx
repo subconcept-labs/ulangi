@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { Attribution } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -16,12 +17,12 @@ import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScr
 import { DefaultText } from '../common/DefaultText';
 import {
   PublicSetDetailHeaderStyles,
-  darkStyles,
-  lightStyles,
+  publicSetDetailHeaderResponsiveStyles,
 } from './PublicSetDetailHeader.style';
 
 export interface PublicSetDetailHeaderProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   title: string;
   subtitle?: string;
   numberOfTerms: number;
@@ -39,9 +40,10 @@ export class PublicSetDetailHeader extends React.Component<
   PublicSetDetailHeaderProps
 > {
   public get styles(): PublicSetDetailHeaderStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return publicSetDetailHeaderResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

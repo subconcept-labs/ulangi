@@ -105,7 +105,6 @@ export class ImageSelectorScreenContainer extends Container<
     return (
       <ImageSelectorScreen
         themeStore={this.props.rootStore.themeStore}
-        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

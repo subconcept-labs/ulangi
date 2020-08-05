@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LightBoxContainerWithTitleStyles {
   light_box_container: ViewStyle;
@@ -18,61 +17,71 @@ export interface LightBoxContainerWithTitleStyles {
   title: TextStyle;
 }
 
-export const baseStyles: LightBoxContainerWithTitleStyles = {
-  light_box_container: {
-    justifyContent: 'center',
-    paddingVertical: 150,
-  },
+export class LightBoxContainerWithTitleResponsiveStyles extends ResponsiveStyleSheet<
+  LightBoxContainerWithTitleStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): LightBoxContainerWithTitleStyles {
+    return {
+      light_box_container: {
+        justifyContent: 'center',
+        paddingVertical: 150,
+      },
 
-  inner_container: {
-    flexShrink: 1,
-    borderRadius: ss(4),
-    marginHorizontal: ss(16),
-    overflow: 'hidden',
-  },
+      inner_container: {
+        flexShrink: 1,
+        borderRadius: scaleByFactor(4),
+        marginHorizontal: scaleByFactor(16),
+        overflow: 'hidden',
+      },
 
-  title_container: {
-    alignSelf: 'stretch',
-    paddingVertical: ss(12),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      title_container: {
+        alignSelf: 'stretch',
+        paddingVertical: scaleByFactor(12),
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  title: {
-    fontWeight: 'bold',
-    fontSize: ss(16),
-  },
-};
+      title: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    inner_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+  public lightStyles(): Partial<LightBoxContainerWithTitleStyles> {
+    return {
+      inner_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    title_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+      title_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    inner_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+  public darkStyles(): Partial<LightBoxContainerWithTitleStyles> {
+    return {
+      inner_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    title_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      title_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const lightBoxContainerWithTitleResponsiveStyles = new LightBoxContainerWithTitleResponsiveStyles();

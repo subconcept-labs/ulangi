@@ -5,32 +5,28 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableThemeStore } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { WritingFAQScreenIds } from '../../constants/ids/WritingFAQScreenIds';
 import { FAQList } from '../common/FAQList';
+import { Screen } from '../common/Screen';
 import {
   WritingFAQScreenStyles,
-  darkStyles,
-  lightStyles,
+  writingFAQScreenResponsiveStyles,
 } from './WritingFAQScreen.style';
 
 export interface WritingFAQScreenProps {
   themeStore: ObservableThemeStore;
+  observableScreen: ObservableScreen;
 }
 
 @observer
 export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
-  public get styles(): WritingFAQScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
-  }
-
   private data = {
     sections: [
       {
@@ -51,14 +47,26 @@ export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
     ],
   };
 
+  private get styles(): WritingFAQScreenStyles {
+    return writingFAQScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={WritingFAQScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={WritingFAQScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <FAQList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           sections={this.data.sections}
         />
-      </View>
+      </Screen>
     );
   }
 }

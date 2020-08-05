@@ -18,27 +18,23 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   FeatureRequestFormStyles,
-  darkStyles,
-  lightStyles,
+  featureRequestFormResponsiveStyles,
 } from './FeatureRequestForm.styles';
 
 export interface FeatureRequestFormProps {
   theme: Theme;
   observableScreen: ObservableContactUsScreen;
-  styles?: {
-    light: FeatureRequestFormStyles;
-    dark: FeatureRequestFormStyles;
-  };
 }
 
 @observer
 export class FeatureRequestForm extends React.Component<
   FeatureRequestFormProps
 > {
-  public get styles(): FeatureRequestFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): FeatureRequestFormStyles {
+    return featureRequestFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

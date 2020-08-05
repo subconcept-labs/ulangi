@@ -6,17 +6,24 @@
  */
 
 import { assertExists } from '@ulangi/assert';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import autobind from 'autobind-decorator';
 import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
-import { ls, ss } from '../../utils/responsive';
 import { DefaultTextInput } from '../common/DefaultTextInput';
+import {
+  InputFieldStyles,
+  inputFieldResponsiveStyles,
+} from './InputField.style';
 
 export interface InputFieldProps {
   testID: string;
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   value: IObservableValue<string>;
   placeholder: string;
   secureTextEntry?: boolean;
@@ -60,15 +67,22 @@ export class InputField extends React.Component<InputFieldProps> {
     }
   }
 
+  private get styles(): InputFieldStyles {
+    return inputFieldResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.input_container}>
+      <View style={this.styles.input_container}>
         <DefaultTextInput
           ref={(ref): void => {
             this.inputRef = ref;
           }}
           testID={this.props.testID}
-          style={styles.input_field}
+          style={this.styles.input_field}
           value={this.props.value.get()}
           placeholder={this.props.placeholder}
           placeholderTextColor="#999"
@@ -83,21 +97,3 @@ export class InputField extends React.Component<InputFieldProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  input_container: {},
-
-  input_field: {
-    height: ss(46),
-    borderRadius: ss(4),
-    marginHorizontal: ls(16),
-    marginVertical: ss(2),
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(14),
-    //backgroundColor: '#0083b3',
-    backgroundColor: '#eee',
-    color: '#545454',
-    fontSize: ss(15),
-    fontWeight: '700',
-  },
-});

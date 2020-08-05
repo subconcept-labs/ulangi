@@ -6,10 +6,11 @@
  */
 
 import { assertExists } from '@ulangi/assert';
-import { AtomShellType } from '@ulangi/ulangi-common/enums';
+import { AtomShellType, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCommandList,
   ObservableParticle,
+  ObservableScreenLayout,
   ObservableShell,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -21,14 +22,19 @@ import {
   Easing,
   PanResponder,
   PanResponderInstance,
-  StyleSheet,
   ViewStyle,
 } from 'react-native';
 
 import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import {
+  AtomParticleStyles,
+  atomParticleResponsiveStyles,
+} from './AtomParticle.style';
 
 export interface AtomParticleProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   particle: ObservableParticle;
   getShellByPosition: (position: {
     x: number;
@@ -59,6 +65,13 @@ export class AtomParticle extends React.Component<
 > {
   private panResponder: PanResponderInstance;
   private unsubscribeHandleCommand: () => void;
+
+  private get styles(): AtomParticleStyles {
+    return atomParticleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
 
   public constructor(props: AtomParticleProps) {
     super(props);
@@ -208,34 +221,16 @@ export class AtomParticle extends React.Component<
       <Animated.View
         {...this.panResponder.panHandlers}
         style={[
-          styles.particle_container,
+          this.styles.particle_container,
           this.getContainerStyle(),
           {
             transform: this.state.pan.getTranslateTransform(),
           },
         ]}>
-        <DefaultText style={styles.character}>
+        <DefaultText style={this.styles.character}>
           {this.props.particle.character}
         </DefaultText>
       </Animated.View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  particle_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.5 },
-    shadowRadius: 0.8,
-    shadowOpacity: 0.2,
-  },
-
-  character: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-});

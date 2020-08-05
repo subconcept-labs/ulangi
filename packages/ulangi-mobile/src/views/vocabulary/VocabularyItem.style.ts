@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
 
 export interface VocabularyItemStyles {
   item_container: ViewStyle;
@@ -28,134 +31,145 @@ export interface VocabularyItemStyles {
   highlighted: TextStyle;
 }
 
-const baseStyles: VocabularyItemStyles = {
-  item_container: {
-    marginBottom: ss(16),
-    marginHorizontal: ls(16),
-    borderRadius: ss(5),
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.3 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.25,
-  },
+export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyItemStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): VocabularyItemStyles {
+    return {
+      item_container: {
+        marginBottom: scaleByFactor(16),
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        borderRadius: scaleByFactor(5),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.3 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.25,
+      },
 
-  vocabulary_container: {
-    paddingVertical: ss(12),
-    paddingHorizontal: ss(16),
-  },
+      vocabulary_container: {
+        paddingVertical: scaleByFactor(12),
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  top_container: {
-    paddingVertical: ss(2),
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      top_container: {
+        paddingVertical: scaleByFactor(2),
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  term_container: {
-    flexShrink: 1,
-    //flexDirection: "row",
-    //alignItems: "center"
-  },
+      term_container: {
+        flexShrink: 1,
+        //flexDirection: "row",
+        //alignItems: "center"
+      },
 
-  tag_list: {
-    flexDirection: 'row',
-  },
+      tag_list: {
+        flexDirection: 'row',
+      },
 
-  tag_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      tag_container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  tag_text: {
-    fontSize: ss(12),
-  },
+      tag_text: {
+        fontSize: scaleByFactor(12),
+      },
 
-  dot_container: {
-    paddingHorizontal: ss(6),
-  },
+      dot_container: {
+        paddingHorizontal: scaleByFactor(6),
+      },
 
-  dot: {
-    fontSize: ss(17),
-  },
+      dot: {
+        fontSize: scaleByFactor(17),
+      },
 
-  term: {
-    fontSize: ss(19),
-    fontWeight: 'bold',
-  },
+      term: {
+        fontSize: scaleByFactor(19),
+        fontWeight: 'bold',
+      },
 
-  missing_term: {
-    fontSize: ss(16),
-    fontStyle: 'italic',
-  },
+      missing_term: {
+        fontSize: scaleByFactor(16),
+        fontStyle: 'italic',
+      },
 
-  option_btn: {
-    paddingLeft: ss(5),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      option_btn: {
+        paddingLeft: scaleByFactor(5),
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  definition_list_container: {
-    borderTopWidth: ss(2),
-  },
+      definition_list_container: {
+        borderTopWidth: scaleByFactor(2),
+      },
 
-  highlighted: {
-    color: config.styles.primaryColor,
-  },
-};
+      highlighted: {
+        color: config.styles.primaryColor,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-      elevation: 1,
-    },
-    term: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<VocabularyItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+        elevation: 1,
+      },
+      term: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    tag_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      tag_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    missing_term: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      missing_term: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
-  }),
-);
+      definition_list_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-      elevation: 3,
-    },
+  public darkStyles(): Partial<VocabularyItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+        elevation: 3,
+      },
 
-    term: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      term: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    tag_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      tag_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    missing_term: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      missing_term: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
-  }),
-);
+      definition_list_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
+    };
+  }
+}
+
+export const vocabularyItemResponsiveStyles = new VocabularyItemResponsiveStyles();

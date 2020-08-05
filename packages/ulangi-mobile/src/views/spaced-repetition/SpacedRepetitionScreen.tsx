@@ -6,24 +6,25 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableSpacedRepetitionScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { config } from '../../constants/config';
 import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionScreenIds';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
-import { ss } from '../../utils/responsive';
 import { SelectedCategories } from '../category/SelectedCategories';
+import { Screen } from '../common/Screen';
 import { SpacedRepetitionMenu } from './SpacedRepetitionMenu';
+import {
+  SpacedRepetitionScreenStyles,
+  spacedRepetitionScreenResponsiveStyles,
+} from './SpacedRepetitionScreen.style';
 import { SpacedRepetitionTitle } from './SpacedRepetitionTitle';
 
 export interface SpacedRepetitionScreenProps {
-  observableDimensions: ObservableDimensions;
   themeStore: ObservableThemeStore;
   observableScreen: ObservableSpacedRepetitionScreen;
   screenDelegate: SpacedRepetitionScreenDelegate;
@@ -33,17 +34,32 @@ export interface SpacedRepetitionScreenProps {
 export class SpacedRepetitionScreen extends React.Component<
   SpacedRepetitionScreenProps
 > {
+  private get styles(): SpacedRepetitionScreenStyles {
+    return spacedRepetitionScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={SpacedRepetitionScreenIds.SCREEN}>
-        <View style={styles.container}>
-          <View style={styles.middle_container}>
-            <View style={styles.title_container}>
-              <SpacedRepetitionTitle theme={this.props.themeStore.theme} />
+      <Screen
+        style={this.styles.screen}
+        testID={SpacedRepetitionScreenIds.SCREEN}
+        useSafeAreaView={false}
+        observableScreen={this.props.observableScreen}>
+        <View style={this.styles.container}>
+          <View style={this.styles.middle_container}>
+            <View style={this.styles.title_container}>
+              <SpacedRepetitionTitle
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+              />
             </View>
-            <View style={styles.menu_container}>
+            <View style={this.styles.menu_container}>
               <SpacedRepetitionMenu
-                observableDimensions={this.props.observableDimensions}
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 startLesson={(): void =>
                   this.props.screenDelegate.startLesson(false)
                 }
@@ -51,66 +67,21 @@ export class SpacedRepetitionScreen extends React.Component<
                 showFAQ={this.props.screenDelegate.showFAQ}
               />
             </View>
-            <View style={styles.selected_categories_container}>
+            <View style={this.styles.selected_categories_container}>
               <SelectedCategories
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
                 showSelectSpecificCategoryMessage={
                   this.props.screenDelegate.showSelectSpecificCategoryMessage
                 }
-                theme={this.props.themeStore.theme}
               />
             </View>
           </View>
         </View>
-      </View>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-  },
-
-  middle_container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  title_container: {
-    alignSelf: 'stretch',
-    marginTop: ss(-50),
-  },
-
-  menu_container: {
-    alignSelf: 'stretch',
-  },
-
-  bottom_container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: ss(16),
-  },
-
-  note: {
-    fontSize: ss(14),
-    lineHeight: ss(19),
-    textAlign: 'center',
-    color: '#777',
-  },
-
-  highlighted: {
-    color: config.styles.primaryColor,
-  },
-
-  selected_categories_container: {
-    marginTop: ss(50),
-  },
-});

@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableVocabulary } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableVocabulary,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
@@ -21,30 +24,27 @@ import { DefinitionList } from './DefinitionList';
 import { VocabularyExtraFieldList } from './VocabularyExtraFieldList';
 import {
   VocabularyItemStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyItemResponsiveStyles,
 } from './VocabularyItem.style';
 
 export interface VocabularyItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabulary: ObservableVocabulary;
   shouldShowTags?: boolean;
   isSelectionModeOn?: IObservableValue<boolean>;
   toggleSelection?: (vocabularyId: string) => void;
   showVocabularyDetail?: (vocabulary: ObservableVocabulary) => void;
   showVocabularyActionMenu?: (vocabulary: ObservableVocabulary) => void;
-  styles?: {
-    light: VocabularyItemStyles;
-    dark: VocabularyItemStyles;
-  };
 }
 
 @observer
 export class VocabularyItem extends React.Component<VocabularyItemProps> {
   public get styles(): VocabularyItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -61,12 +61,14 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
           </View>
           <VocabularyExtraFieldList
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             extraFields={this.props.vocabulary.vocabularyExtraFields}
           />
         </View>
         <View style={this.styles.definition_list_container}>
           <DefinitionList
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             definitions={this.props.vocabulary.definitions}
           />
         </View>

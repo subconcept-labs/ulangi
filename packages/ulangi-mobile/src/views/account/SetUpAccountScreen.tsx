@@ -17,14 +17,14 @@ import { View } from 'react-native';
 import { config } from '../../constants/config';
 import { SetUpAccountScreenIds } from '../../constants/ids/SetUpAccountScreenIds';
 import { SetUpAccountScreenDelegate } from '../../delegates/account/SetUpAccountScreenDelegate';
-import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultTextInput } from '../common/DefaultTextInput';
+import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
 import {
   SetUpAccountScreenStyles,
-  darkStyles,
-  lightStyles,
+  setUpAccountScreenResponsiveStyles,
 } from './SetUpAccountScreen.style';
 
 export interface SetUpAccountScreenProps {
@@ -38,14 +38,19 @@ export class SetUpAccountScreen extends React.Component<
   SetUpAccountScreenProps
 > {
   public get styles(): SetUpAccountScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return setUpAccountScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={SetUpAccountScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={SetUpAccountScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <SmartScrollView
           style={this.styles.form}
           keyboardAware={true}
@@ -110,17 +115,19 @@ export class SetUpAccountScreen extends React.Component<
             <DefaultButton
               testID={SetUpAccountScreenIds.SUBMIT_BTN}
               text="Submit"
-              styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.LARGE,
                 4,
                 config.styles.primaryColor,
                 'white',
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={this.props.screenDelegate.submit}
             />
           </View>
         </SmartScrollView>
-      </View>
+      </Screen>
     );
   }
 }

@@ -5,27 +5,42 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultText } from '../common/DefaultText';
+import {
+  TranslateWithGoogleButtonStyles,
+  translateWithGoogleButtonResponsiveStyles,
+} from './TranslateWithGoogleButton.style';
 
 export interface TranslateWithGoogleButtonProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   translate: () => void;
 }
 
 export class TranslateWithGoogleButton extends React.Component<
   TranslateWithGoogleButtonProps
 > {
+  private get styles(): TranslateWithGoogleButtonStyles {
+    return translateWithGoogleButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.translate_btn_container}>
+      <View style={this.styles.translate_btn_container}>
         <TouchableOpacity
           testID={VocabularyFormIds.TRANSLATE_WITH_GOOGLE_BTN}
-          style={styles.translate_btn}
+          style={this.styles.translate_btn}
           onPress={this.props.translate}>
-          <DefaultText style={styles.translate_btn_text}>
+          <DefaultText style={this.styles.translate_btn_text}>
             TRANSLATE WITH GOOGLE
           </DefaultText>
         </TouchableOpacity>
@@ -33,26 +48,3 @@ export class TranslateWithGoogleButton extends React.Component<
     );
   }
 }
-
-const styles = StyleSheet.create({
-  translate_btn_container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  translate_btn: {
-    backgroundColor: '#ddd',
-    height: 34,
-    borderRadius: 17,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 16,
-  },
-
-  translate_btn_text: {
-    paddingHorizontal: 16,
-    color: '#444',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-});

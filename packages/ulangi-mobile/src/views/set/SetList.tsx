@@ -7,18 +7,22 @@
 
 import { ReadonlyTuple } from '@ulangi/extended-types';
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSet } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSet,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import { SetItem } from './SetItem';
-import { SetListStyles, darkStyles, lightStyles } from './SetList.style';
+import { SetListStyles, setListResponsiveStyles } from './SetList.style';
 
 export interface SetListProps {
   testID: string;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   currentSetId: string;
   setList: null | Map<string, ObservableSet>;
   isRefreshing: boolean;
@@ -35,9 +39,10 @@ export class SetList extends React.Component<SetListProps> {
   private keyExtractor = ([setId]: [string, ObservableSet]): string => setId;
 
   public get styles(): SetListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return setListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -65,6 +70,7 @@ export class SetList extends React.Component<SetListProps> {
               return (
                 <SetItem
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   currentSetId={this.props.currentSetId}
                   showSetActionMenu={this.props.showSetActionMenu}
                   setTuple={item}

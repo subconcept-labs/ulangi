@@ -7,14 +7,15 @@
 
 import {
   ObservableAtomTutorialScreen,
-  ObservableDimensions,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { AtomTutorialScreenIds } from '../../constants/ids/AtomTutorialScreenIds';
 import { AtomTutorialScreenDelegate } from '../../delegates/atom/AtomTutorialScreenDelegate';
+import { Screen } from '../common/Screen';
 import { AtomArcs } from './AtomArcs';
 import { AtomOrigin } from './AtomOrigin';
 import { AtomParticles } from './AtomParticles';
@@ -23,7 +24,7 @@ import { AtomTopBar } from './AtomTopBar';
 import { AtomTutorialContent } from './AtomTutorialContent';
 
 export interface AtomTutorialScreenProps {
-  observableDimensions: ObservableDimensions;
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAtomTutorialScreen;
   screenDelegate: AtomTutorialScreenDelegate;
 }
@@ -34,24 +35,30 @@ export class AtomTutorialScreen extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.screen} testID={AtomTutorialScreenIds.SCREEN}>
+      <Screen
+        style={styles.screen}
+        testID={AtomTutorialScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <View style={styles.container}>
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
               return (
                 <AtomShell
                   key={shell.shellType}
-                  observableDimensions={this.props.observableDimensions}
+                  screenLayout={this.props.observableScreen.screenLayout}
                   shell={shell}
                 />
               );
             },
           )}
           <AtomArcs
-            observableDimensions={this.props.observableDimensions}
+            screenLayout={this.props.observableScreen.screenLayout}
             arcs={this.props.observableScreen.arcs}
           />
           <AtomParticles
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             particles={this.props.observableScreen.particles}
             getShellByPosition={this.props.screenDelegate.getShellByPosition}
             transferParticleToSameShell={
@@ -63,21 +70,27 @@ export class AtomTutorialScreen extends React.Component<
             isMaxReached={this.props.screenDelegate.isMaxReached}
           />
           <AtomOrigin
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             origin={this.props.observableScreen.origin}
             gameStats={this.props.observableScreen.gameStats}
           />
           <AtomTopBar
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             iconTestID={AtomTutorialScreenIds.BACK_BTN}
             iconType="back"
             onPress={this.props.screenDelegate.back}
             gameStats={this.props.observableScreen.gameStats}
           />
           <AtomTutorialContent
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             currentStep={this.props.observableScreen.currentStep}
             back={this.props.screenDelegate.back}
           />
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 }

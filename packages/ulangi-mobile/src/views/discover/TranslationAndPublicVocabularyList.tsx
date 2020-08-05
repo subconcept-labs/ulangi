@@ -18,30 +18,30 @@ import {
 import {
   ObservablePublicVocabulary,
   ObservablePublicVocabularyListState,
+  ObservableScreenLayout,
   ObservableTranslationListState,
   ObservableTranslationWithLanguages,
 } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  SectionBase,
-  SectionList,
-  SectionListData,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { SectionBase, SectionList, SectionListData, View } from 'react-native';
 
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { PublicVocabularyItem } from './PublicVocabularyItem';
+import {
+  TranslationAndPublicVocabularyListStyles,
+  translationAndPublicVocabularyListResponsiveStyles,
+} from './TranslationAndPublicVocabularyList.style';
 import { TranslationItem } from './TranslationItem';
 
 export interface TranslationAndPublicVocabularyListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageCode: string;
   translatedToLanguageCode: string;
   publicVocabularyListState: ObservablePublicVocabularyListState;
@@ -69,6 +69,13 @@ export class TranslationAndPublicVocabularyList extends React.Component<
     item: [string, ObservablePublicVocabulary],
   ): string => item[0];
 
+  private get styles(): TranslationAndPublicVocabularyListStyles {
+    return translationAndPublicVocabularyListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     if (
       this.props.translationListState.translateState.get() ===
@@ -77,14 +84,18 @@ export class TranslationAndPublicVocabularyList extends React.Component<
         ActivityState.ERROR
     ) {
       return (
-        <View testID={DiscoverScreenIds.ERROR} style={styles.center_container}>
-          <DefaultText style={styles.message}>
+        <View
+          testID={DiscoverScreenIds.ERROR}
+          style={this.styles.center_container}>
+          <DefaultText style={this.styles.message}>
             An error occurred. Please check internet connection.
           </DefaultText>
-          <View style={styles.button_container}>
+          <View style={this.styles.button_container}>
             <DefaultButton
-              styles={FullRoundedButtonStyle.getGreyOutlineStyles(
+              styles={fullRoundedButtonStyles.getGreyOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               text="Retry"
               onPress={this.props.refresh}
@@ -101,15 +112,17 @@ export class TranslationAndPublicVocabularyList extends React.Component<
       return (
         <View
           testID={DiscoverScreenIds.NO_RESULTS}
-          style={styles.center_container}>
-          <DefaultText style={styles.message}>No vocabulary found.</DefaultText>
+          style={this.styles.center_container}>
+          <DefaultText style={this.styles.message}>
+            No vocabulary found.
+          </DefaultText>
         </View>
       );
     } else {
       return (
         <SectionList
           testID={DiscoverScreenIds.TRANSLATION_AND_PUBLIC_VOCABULARY_LIST}
-          contentContainerStyle={styles.list_container}
+          contentContainerStyle={this.styles.list_container}
           sections={
             [
               {
@@ -156,6 +169,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
     return (
       <TranslationItem
         theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
         learningLanguageCode={this.props.learningLanguageCode}
         translatedToLanguageCode={this.props.translatedToLanguageCode}
         translation={item}
@@ -175,6 +189,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
     return (
       <PublicVocabularyItem
         theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
         vocabulary={vocabulary}
         addVocabulary={this.props.addVocabularyFromPublicVocabulary}
         showPublicVocabularyDetail={this.props.showPublicVocabularyDetail}
@@ -205,38 +220,9 @@ export class TranslationAndPublicVocabularyList extends React.Component<
             ? this.props.translationListState.isRefreshing
             : this.props.publicVocabularyListState.isRefreshing
         }
-        style={styles.indicator}
+        style={this.styles.indicator}
         size="small"
       />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  list_container: {
-    paddingBottom: 74,
-    paddingTop: 8,
-  },
-
-  center_container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    marginTop: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  message: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: '#888',
-  },
-
-  button_container: {
-    marginTop: 8,
-  },
-
-  indicator: {
-    marginTop: 16,
-  },
-});

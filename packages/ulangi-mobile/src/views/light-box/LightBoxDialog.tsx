@@ -6,25 +6,30 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { Dialog } from '@ulangi/ulangi-common/interfaces';
+import {
+  ButtonProps,
+  ButtonStyles,
+  Dialog,
+} from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { DefaultButtonProps } from '../common/DefaultButton';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
+import { Layout } from '../../utils/responsive';
 import { LightBoxButtonList } from './LightBoxButtonList';
 import {
   LightBoxDialogStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxDialogResponsiveStyles,
 } from './LightBoxDialog.style';
 import { LightBoxMessage } from './LightBoxMessage';
 import { LightBoxTitle } from './LightBoxTitle';
 
 export interface LightBoxDialogProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   dialog: Dialog;
   close: () => void;
 }
@@ -32,7 +37,10 @@ export interface LightBoxDialogProps {
 @observer
 export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
   public get styles(): LightBoxDialogStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+    return lightBoxDialogResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -44,19 +52,25 @@ export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
         {typeof this.props.dialog.title !== 'undefined' ? (
           <LightBoxTitle
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             title={this.props.dialog.title}
           />
         ) : null}
         <LightBoxMessage
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           message={this.props.dialog.message}
         />
-        <LightBoxButtonList buttonList={this.getButtonList()} />
+        <LightBoxButtonList
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          buttonList={this.getButtonList()}
+        />
       </View>
     );
   }
 
-  private getButtonList(): readonly DefaultButtonProps[] {
+  private getButtonList(): readonly ButtonProps[] {
     const buttonList =
       typeof this.props.dialog.buttonList !== 'undefined'
         ? this.props.dialog.buttonList.slice()
@@ -66,9 +80,13 @@ export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
       buttonList.unshift({
         testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
         text: 'CLOSE',
-        styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-          ButtonSize.SMALL,
-        ),
+        styles: (theme: Theme, layout: Layout): ButtonStyles => {
+          return fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+            ButtonSize.SMALL,
+            theme,
+            layout,
+          );
+        },
         onPress: this.props.close,
       });
     }

@@ -5,13 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DictionaryPickerScreenStyles {
+  screen: ViewStyle;
   light_box_container: ViewStyle;
   inner_container: ViewStyle;
   picker_header: ViewStyle;
@@ -22,85 +22,99 @@ export interface DictionaryPickerScreenStyles {
   picker_content_container: ViewStyle;
 }
 
-export const baseStyles: DictionaryPickerScreenStyles = {
-  light_box_container: {
-    justifyContent: 'flex-end',
-  },
+export class DictionaryPickerScreenResponsiveStyles extends ResponsiveStyleSheet<
+  DictionaryPickerScreenStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): DictionaryPickerScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  inner_container: {
-    alignSelf: 'stretch',
-    overflow: 'hidden',
-  },
+      light_box_container: {
+        justifyContent: 'flex-end',
+      },
 
-  picker_header: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      inner_container: {
+        alignSelf: 'stretch',
+        overflow: 'hidden',
+      },
 
-  header_item_left: {
-    justifyContent: 'center',
-    borderBottomWidth: 2,
-    marginBottom: -1,
-    height: ss(44),
-  },
+      picker_header: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  header_text_left: {
-    fontWeight: 'bold',
-    paddingHorizontal: ss(16),
-    fontSize: ss(16),
-  },
+      header_item_left: {
+        justifyContent: 'center',
+        borderBottomWidth: 2,
+        marginBottom: -1,
+        height: scaleByFactor(44),
+      },
 
-  header_item_right: {},
+      header_text_left: {
+        fontWeight: 'bold',
+        paddingHorizontal: scaleByFactor(16),
+        fontSize: scaleByFactor(16),
+      },
 
-  header_text_right: {
-    paddingHorizontal: ss(16),
-    fontSize: ss(16),
-    color: config.styles.primaryColor,
-  },
+      header_item_right: {},
 
-  picker_content_container: {},
-};
+      header_text_right: {
+        paddingHorizontal: scaleByFactor(16),
+        fontSize: scaleByFactor(16),
+        color: config.styles.primaryColor,
+      },
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    picker_header: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+      picker_content_container: {},
+    };
+  }
 
-    header_item_left: {
-      borderBottomColor: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<DictionaryPickerScreenStyles> {
+    return {
+      picker_header: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    header_text_left: {
-      color: config.styles.light.primaryTextColor,
-    },
+      header_item_left: {
+        borderBottomColor: config.styles.light.primaryTextColor,
+      },
 
-    picker_content_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
-  }),
-);
+      header_text_left: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    picker_header: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.secondaryBackgroundColor,
-    },
+      picker_content_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
+    };
+  }
 
-    header_item_left: {
-      borderBottomColor: config.styles.primaryColor,
-    },
+  public darkStyles(): Partial<DictionaryPickerScreenStyles> {
+    return {
+      picker_header: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+        backgroundColor: config.styles.dark.secondaryBackgroundColor,
+      },
 
-    header_text_left: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      header_item_left: {
+        borderBottomColor: config.styles.primaryColor,
+      },
 
-    picker_content_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
-  }),
-);
+      header_text_left: {
+        color: config.styles.dark.primaryTextColor,
+      },
+
+      picker_content_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
+    };
+  }
+}
+
+export const dictionaryPickerScreenResponsiveStyles = new DictionaryPickerScreenResponsiveStyles();

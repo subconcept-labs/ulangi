@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SetManagementTopBarStyles {
   top_bar_container: ViewStyle;
@@ -19,72 +18,80 @@ export interface SetManagementTopBarStyles {
   selectedTextStyle: TextStyle;
 }
 
-export const baseStyles: SetManagementTopBarStyles = {
-  top_bar_container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    zIndex: 1,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: -StyleSheet.hairlineWidth,
-  },
+export class SetManagementTopBarResponsiveStyles extends ResponsiveStyleSheet<
+  SetManagementTopBarStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SetManagementTopBarStyles {
+    return {
+      top_bar_container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: 1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginBottom: -StyleSheet.hairlineWidth,
+      },
 
-  text_container: {
-    flex: 1,
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(8),
-    alignItems: 'center',
-  },
+      text_container: {
+        flex: 1,
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(8),
+        alignItems: 'center',
+      },
 
-  text: {
-    fontSize: ss(15),
-    fontWeight: 'bold',
-  },
+      text: {
+        fontSize: scaleByFactor(15),
+        fontWeight: 'bold',
+      },
 
-  selectedContainerStyle: {
-    borderBottomWidth: ss(2),
-    zIndex: 2,
-  },
+      selectedContainerStyle: {
+        borderBottomWidth: scaleByFactor(2),
+        zIndex: 2,
+      },
 
-  selectedTextStyle: {},
-};
+      selectedTextStyle: {},
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    top_bar_container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<SetManagementTopBarStyles> {
+    return {
+      top_bar_container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    selectedContainerStyle: {
-      borderBottomColor: config.styles.light.primaryTextColor,
-    },
+      selectedContainerStyle: {
+        borderBottomColor: config.styles.light.primaryTextColor,
+      },
 
-    selectedTextStyle: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      selectedTextStyle: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    top_bar_container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<SetManagementTopBarStyles> {
+    return {
+      top_bar_container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    selectedContainerStyle: {
-      borderBottomColor: config.styles.primaryColor,
-    },
+      selectedContainerStyle: {
+        borderBottomColor: config.styles.primaryColor,
+      },
 
-    selectedTextStyle: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      selectedTextStyle: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const setManagementTopBarResponsiveStyles = new SetManagementTopBarResponsiveStyles();

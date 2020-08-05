@@ -67,6 +67,11 @@ export class TermsOfServiceScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <TermsOfServiceScreen />;
+    return (
+      <TermsOfServiceScreen
+        themeStore={this.props.rootStore.themeStore}
+        observableScreen={this.observableScreen}
+      />
+    );
   }
 }

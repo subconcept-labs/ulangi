@@ -8,6 +8,7 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
+import { ObservableScreenLayout } from '../screen/ObservableScreenLayout';
 import { ObservableArc } from './ObservableArc';
 import { ObservableAtomGameState } from './ObservableAtomGameState';
 import { ObservableAtomGameStats } from './ObservableAtomGameStats';
@@ -32,7 +33,8 @@ export class ObservableAtomTutorialScreen extends ObservableAtomPlayScreen {
     particles: readonly ObservableParticle[],
     shells: readonly ObservableShell[],
     componentId: string,
-    screenName: ScreenName
+    screenName: ScreenName,
+    screenLayout: ObservableScreenLayout
   ) {
     super(
       gameState,
@@ -44,7 +46,8 @@ export class ObservableAtomTutorialScreen extends ObservableAtomPlayScreen {
       particles,
       shells,
       componentId,
-      screenName
+      screenName,
+      screenLayout
     );
     this.currentStep = currentStep;
   }

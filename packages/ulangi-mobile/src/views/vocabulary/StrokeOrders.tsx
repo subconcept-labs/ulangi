@@ -6,7 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableDimensions } from '@ulangi/ulangi-observable';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import AutoHeightWebView from 'react-native-autoheight-webview';
@@ -14,15 +14,14 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 import { config } from '../../constants/config';
 import {
   StrokeOrdersStyles,
-  darkStyles,
-  lightStyles,
+  strokeOrdersResponsiveStyles,
 } from './StrokeOrders.style';
 
 import jsEscapeStr = require('js-string-escape');
 
 export interface StrokeOrdersProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   words: string[];
   styles?: {
     light: StrokeOrdersStyles;
@@ -33,9 +32,10 @@ export interface StrokeOrdersProps {
 @observer
 export class StrokeOrders extends React.Component<StrokeOrdersProps> {
   public get styles(): StrokeOrdersStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return strokeOrdersResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -85,7 +85,7 @@ export class StrokeOrders extends React.Component<StrokeOrdersProps> {
         style={[
           this.styles.webview,
           {
-            width: this.props.observableDimensions.windowWidth - 16 * 2,
+            width: this.props.screenLayout.width - 16 * 2,
           },
         ]}
         customScript={injectedJavascript}

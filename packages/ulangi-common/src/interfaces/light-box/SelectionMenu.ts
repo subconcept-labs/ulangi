@@ -5,15 +5,15 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DefaultButtonProps } from '../props/DefaultButtonProps';
+import { ButtonProps } from '../general/ButtonProps';
 import { SelectionItem } from './SelectionItem';
 
 export interface SelectionMenu<T> {
   readonly testID?: string;
   readonly items: Map<T, SelectionItem>;
   readonly selectedIds: readonly T[];
-  readonly rightButton?: DefaultButtonProps;
-  readonly leftButton?: DefaultButtonProps;
+  readonly rightButton?: ButtonProps;
+  readonly leftButton?: ButtonProps;
   readonly title: string;
   readonly onClose?: () => void;
 }

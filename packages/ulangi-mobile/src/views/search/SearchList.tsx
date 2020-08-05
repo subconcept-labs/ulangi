@@ -7,20 +7,26 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
+  ObservableScreenLayout,
   ObservableVocabulary,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 
 import { SearchScreenIds } from '../../constants/ids/SearchScreenIds';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultText } from '../common/DefaultText';
 import { VocabularyItem } from '../vocabulary/VocabularyItem';
+import {
+  SearchListStyles,
+  searchListResponsiveStyles,
+} from './SearchList.style';
 
 export interface SearchListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyListState: ObservableVocabularyListState;
   search: () => void;
   refresh: () => void;
@@ -34,6 +40,13 @@ export class SearchList extends React.Component<SearchListProps> {
   public keyExtractor = (item: [string, ObservableVocabulary]): string =>
     item[0];
 
+  private get styles(): SearchListStyles {
+    return searchListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     if (
       this.props.vocabularyListState.vocabularyList !== null &&
@@ -43,8 +56,8 @@ export class SearchList extends React.Component<SearchListProps> {
       return (
         <ScrollView
           testID={SearchScreenIds.NO_RESULTS}
-          contentContainerStyle={styles.no_results_container}>
-          <DefaultText style={styles.no_results_text}>
+          contentContainerStyle={this.styles.no_results_container}>
+          <DefaultText style={this.styles.no_results_text}>
             Oops! No results found in this set.
           </DefaultText>
         </ScrollView>
@@ -52,14 +65,14 @@ export class SearchList extends React.Component<SearchListProps> {
     }
     if (this.props.vocabularyListState.vocabularyList === null) {
       return (
-        <ScrollView contentContainerStyle={styles.tip_container}>
+        <ScrollView contentContainerStyle={this.styles.tip_container}>
           <DefaultActivityIndicator
             activityState={this.props.vocabularyListState.fetchState}
-            style={styles.center_activity_indicator}
+            style={this.styles.center_activity_indicator}
             size="small"
           />
           <View>
-            <DefaultText style={styles.tip}>
+            <DefaultText style={this.styles.tip}>
               Tip: You can search by definition and/or prefix of the word.
             </DefaultText>
           </View>
@@ -67,10 +80,10 @@ export class SearchList extends React.Component<SearchListProps> {
       );
     } else {
       return (
-        <View style={styles.list_container}>
+        <View style={this.styles.list_container}>
           <FlatList
             testID={SearchScreenIds.SEARCH_LIST}
-            contentContainerStyle={styles.list}
+            contentContainerStyle={this.styles.list}
             data={
               this.props.vocabularyListState.vocabularyList
                 ? Array.from(this.props.vocabularyListState.vocabularyList)
@@ -85,6 +98,7 @@ export class SearchList extends React.Component<SearchListProps> {
               return (
                 <VocabularyItem
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   vocabulary={vocabulary}
                   shouldShowTags={true}
                   isSelectionModeOn={
@@ -106,7 +120,7 @@ export class SearchList extends React.Component<SearchListProps> {
                 activityState={this.props.vocabularyListState.fetchState}
                 isRefreshing={this.props.vocabularyListState.isRefreshing}
                 size="small"
-                style={styles.bottom_activity_indicator}
+                style={this.styles.bottom_activity_indicator}
               />
             }
             onRefresh={(): void => this.props.refresh()}
@@ -117,52 +131,3 @@ export class SearchList extends React.Component<SearchListProps> {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  no_results_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: -100,
-  },
-
-  no_results_text: {
-    fontSize: 15,
-    color: '#999',
-    paddingHorizontal: 16,
-    textAlign: 'center',
-  },
-
-  tip_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: -100,
-  },
-
-  tip: {
-    fontSize: 15,
-    color: '#999',
-    paddingHorizontal: 16,
-    textAlign: 'center',
-    lineHeight: 19,
-  },
-
-  center_activity_indicator: {
-    marginVertical: 8,
-  },
-
-  bottom_activity_indicator: {
-    marginTop: 16,
-  },
-
-  list_container: {
-    flex: 1,
-  },
-
-  list: {
-    paddingTop: 16,
-  },
-});

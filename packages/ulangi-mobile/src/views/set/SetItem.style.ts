@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SetItemStyles {
   cell_container: ViewStyle;
@@ -28,110 +27,118 @@ export interface SetItemStyles {
   current_text: TextStyle;
 }
 
-export const baseStyles: SetItemStyles = {
-  cell_container: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: ss(16),
-  },
+export class SetItemResponsiveStyles extends ResponsiveStyleSheet<
+  SetItemStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SetItemStyles {
+    return {
+      cell_container: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  icon_container: {
-    paddingRight: ss(12),
-  },
+      icon_container: {
+        paddingRight: scaleByFactor(12),
+      },
 
-  flag_icon: {},
+      flag_icon: {},
 
-  content_container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      content_container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  left: {
-    flexShrink: 1,
-  },
+      left: {
+        flexShrink: 1,
+      },
 
-  right: {},
+      right: {},
 
-  set_name_container: {
-    paddingTop: ss(14),
-    paddingBottom: ss(4),
-  },
+      set_name_container: {
+        paddingTop: scaleByFactor(14),
+        paddingBottom: scaleByFactor(4),
+      },
 
-  set_name: {
-    fontSize: ss(15),
-    fontWeight: 'bold',
-  },
+      set_name: {
+        fontSize: scaleByFactor(15),
+        fontWeight: 'bold',
+      },
 
-  option_touchable: {},
+      option_touchable: {},
 
-  meta_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexShrink: 1,
-    paddingBottom: ss(14),
-  },
+      meta_container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexShrink: 1,
+        paddingBottom: scaleByFactor(14),
+      },
 
-  meta_text: {
-    fontSize: ss(14),
-  },
+      meta_text: {
+        fontSize: scaleByFactor(14),
+      },
 
-  language: {},
+      language: {},
 
-  dot: {
-    fontSize: ss(12),
-    fontWeight: 'bold',
-  },
+      dot: {
+        fontSize: scaleByFactor(12),
+        fontWeight: 'bold',
+      },
 
-  current_text: {
-    paddingHorizontal: ss(6),
-    paddingVertical: ss(2),
-    color: 'coral',
-    fontSize: ss(14),
-    fontWeight: 'bold',
-  },
-};
+      current_text: {
+        paddingHorizontal: scaleByFactor(6),
+        paddingVertical: scaleByFactor(2),
+        color: 'coral',
+        fontSize: scaleByFactor(14),
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    cell_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<SetItemStyles> {
+    return {
+      cell_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    set_name: {
-      color: config.styles.light.primaryTextColor,
-    },
+      set_name: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    meta_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      meta_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      dot: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    cell_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<SetItemStyles> {
+    return {
+      cell_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    set_name: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      set_name: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    meta_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      meta_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      dot: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const setItemResponsiveStyles = new SetItemResponsiveStyles();

@@ -6,22 +6,38 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+
+import {
+  LevelSingleBarStyles,
+  levelSingleBarResponsiveStyles,
+} from './LevelSingleBar.style';
 
 export interface LevelSingleBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   color: string;
   percentage: number;
 }
 
+@observer
 export class LevelSingleBar extends React.Component<LevelSingleBarProps> {
+  private get styles(): LevelSingleBarStyles {
+    return levelSingleBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View style={this.styles.container}>
         <View
           style={[
-            styles.part,
+            this.styles.part,
             {
               backgroundColor: this.props.color,
               flex: this.props.percentage,
@@ -30,7 +46,7 @@ export class LevelSingleBar extends React.Component<LevelSingleBarProps> {
         />
         <View
           style={[
-            styles.part,
+            this.styles.part,
             {
               flex: 1 - this.props.percentage,
             },
@@ -40,16 +56,3 @@ export class LevelSingleBar extends React.Component<LevelSingleBarProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    overflow: 'hidden',
-  },
-
-  part: {
-    height: 10,
-    borderRadius: 5,
-  },
-});

@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableVocabulary } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableVocabulary,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -16,6 +19,7 @@ import { SectionRow } from '../section/SectionRow';
 
 export interface VocabularyDetailSpacedRepetitionInfoProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabulary: ObservableVocabulary;
   nextReview: string;
 }
@@ -25,16 +29,21 @@ export class VocabularyDetailSpacedRepetitionInfo extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.theme} header="SPACED REPETITION INFO">
+      <SectionGroup
+        theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
+        header="SPACED REPETITION INFO">
         <SectionRow
           key="level"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="SR Level"
           rightText={this.props.vocabulary.level.toString()}
         />
         <SectionRow
           key="last_learned"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Last Learned"
           rightText={
             this.props.vocabulary.lastLearnedAt === null
@@ -47,6 +56,7 @@ export class VocabularyDetailSpacedRepetitionInfo extends React.Component<
         <SectionRow
           key="next_review"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Next Review"
           rightText={_.upperFirst(this.props.nextReview)}
         />

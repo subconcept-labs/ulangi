@@ -6,6 +6,8 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ObservableScreen } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -13,7 +15,7 @@ import { BackHandler } from 'react-native';
 
 import { Container } from '../../Container';
 import { ScreenFactory } from '../../factories/ScreenFactory';
-import { AtomStyle } from '../../styles/AtomStyle';
+import { atomStyles } from '../../styles/AtomStyles';
 import { AtomGameOverScreen } from './AtomGameOverScreen';
 
 export interface AtomGameOverScreenPassedProps {
@@ -29,10 +31,16 @@ export class AtomGameOverScreenContainer extends Container<
   AtomGameOverScreenPassedProps
 > {
   public static options(): Options {
-    return AtomStyle.getScreenStyle();
+    return atomStyles.getScreenStyle();
   }
 
   protected observableLightBox = this.props.observableLightBox;
+
+  protected observableScreen = new ObservableScreen(
+    this.props.componentId,
+    ScreenName.ATOM_GAME_OVER_SCREEN,
+    null,
+  );
 
   private screenFactory = new ScreenFactory(
     this.props,
@@ -63,8 +71,9 @@ export class AtomGameOverScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <AtomGameOverScreen
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         title={this.props.passedProps.title}
         score={this.props.passedProps.score}
         correctCount={this.props.passedProps.correctCount}

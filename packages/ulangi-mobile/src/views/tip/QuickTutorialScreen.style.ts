@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface QuickTutorialScreenStyles {
   screen: ViewStyle;
@@ -21,56 +20,64 @@ export interface QuickTutorialScreenStyles {
   note: TextStyle;
 }
 
-export const baseStyles: QuickTutorialScreenStyles = {
-  screen: {
-    flex: 1,
-    alignItems: 'center',
-  },
+export class QuickTutorialScreenResponsiveStyles extends ResponsiveStyleSheet<
+  QuickTutorialScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): QuickTutorialScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+        alignItems: 'center',
+      },
 
-  carousel: {
-    alignItems: 'center',
-  },
+      carousel: {
+        alignItems: 'center',
+      },
 
-  pagination: {
-    height: ss(50),
-    paddingVertical: 0,
-  },
+      pagination: {
+        height: scaleByFactor(50),
+        paddingVertical: 0,
+      },
 
-  image_container: {
-    flexShrink: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: ss(16),
-  },
+      image_container: {
+        flexShrink: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  image: {
-    flexShrink: 1,
-  },
+      image: {
+        flexShrink: 1,
+      },
 
-  button_container: {
-    paddingVertical: ss(12),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      button_container: {
+        paddingVertical: scaleByFactor(12),
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  note: {
-    fontSize: ss(14),
-    textAlign: 'center',
-  },
-};
+      note: {
+        fontSize: scaleByFactor(14),
+        textAlign: 'center',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    note: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<QuickTutorialScreenStyles> {
+    return {
+      note: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    note: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<QuickTutorialScreenStyles> {
+    return {
+      note: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const quickTutorialScreenResponsiveStyles = new QuickTutorialScreenResponsiveStyles();

@@ -7,34 +7,31 @@
 
 import { ActivityState, ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import { CategorySuggestion } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
 import { CategoryFormIds } from '../../constants/ids/CategoryFormIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { FixedTouchableWithoutFeedback } from '../common/FixedTouchableWithoutFeedback';
 import {
   CategorySuggestionListStyles,
-  darkStyles,
-  lightStyles,
+  categorySuggestionListResponsiveStyles,
 } from './CategorySuggestionList.style';
 
 export interface CategorySuggestionListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   suggestions: null | IObservableArray<CategorySuggestion>;
   fetchState: IObservableValue<ActivityState>;
   selectCategory: (categoryName: string) => void;
   fetchMore: () => void;
   clear: () => void;
-  styles?: {
-    light: CategorySuggestionListStyles;
-    dark: CategorySuggestionListStyles;
-  };
 }
 
 @observer
@@ -44,11 +41,11 @@ export class CategorySuggestionList extends React.Component<
   private keyExtractor = (item: CategorySuggestion): string =>
     item.categoryName;
 
-  public get styles(): CategorySuggestionListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): CategorySuggestionListStyles {
+    return categorySuggestionListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -75,8 +72,10 @@ export class CategorySuggestionList extends React.Component<
               </View>
               <DefaultButton
                 text="Select"
-                styles={FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
+                styles={fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
                   ButtonSize.SMALL,
+                  this.props.theme,
+                  this.props.screenLayout,
                 )}
                 cancelPressOnMove={true}
                 onPress={(): void =>

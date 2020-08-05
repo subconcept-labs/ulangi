@@ -58,6 +58,7 @@ export class PreloadScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <PreloadScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         shouldRenderMessage={false}
       />

@@ -9,6 +9,7 @@ import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDictionaryDefinition,
   ObservableDictionaryEntryState,
+  ObservableScreenLayout,
   ObservableTranslation,
   ObservableTranslationListState,
 } from '@ulangi/ulangi-observable';
@@ -19,14 +20,14 @@ import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { SmartScrollView } from '../common/SmartScrollView';
 import {
   DictionaryPickerContentStyles,
-  darkStyles,
-  lightStyles,
+  dictionaryPickerContentResponsiveStyles,
 } from './DictionaryPickerContent.style';
 import { DictionarySection } from './DictionarySection';
 import { TranslationSection } from './TranslationSection';
 
 export interface DictionaryPickerContentProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguageName: string;
   translatedToLanguageName: string;
   dictionaryEntryState: ObservableDictionaryEntryState;
@@ -49,9 +50,10 @@ export class DictionaryPickerContent extends React.Component<
   DictionaryPickerContentProps
 > {
   public get styles(): DictionaryPickerContentStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme ? light : dark;
+    return dictionaryPickerContentResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -62,6 +64,7 @@ export class DictionaryPickerContent extends React.Component<
         style={this.styles.picker_content}>
         <DictionarySection
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           learningLanguageName={this.props.learningLanguageName}
           translatedToLanguageName={this.props.translatedToLanguageName}
           dictionaryEntryState={this.props.dictionaryEntryState}
@@ -71,6 +74,7 @@ export class DictionaryPickerContent extends React.Component<
         />
         <TranslationSection
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           learningLanguageName={this.props.learningLanguageName}
           translatedToLanguageName={this.props.translatedToLanguageName}
           translationListState={this.props.translationListState}

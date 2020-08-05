@@ -5,42 +5,49 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DefinitionInputStyles {
   meaning_container: ViewStyle;
-
   meaning_input: TextStyle;
 }
 
-export const baseStyles: DefinitionInputStyles = {
-  meaning_container: {
-    paddingHorizontal: 16,
-  },
+export class DefinitionInputResponsiveStyles extends ResponsiveStyleSheet<
+  DefinitionInputStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): DefinitionInputStyles {
+    return {
+      meaning_container: {
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  meaning_input: {
-    paddingHorizontal: 0,
-    paddingVertical: 16,
-    fontSize: 16,
-    textAlignVertical: 'top',
-  },
-};
+      meaning_input: {
+        paddingHorizontal: scaleByFactor(0),
+        paddingVertical: scaleByFactor(16),
+        fontSize: scaleByFactor(16),
+        textAlignVertical: 'top',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    meaning_input: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<DefinitionInputStyles> {
+    return {
+      meaning_input: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    meaning_input: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<DefinitionInputStyles> {
+    return {
+      meaning_input: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const definitionInputResponsiveStyles = new DefinitionInputResponsiveStyles();

@@ -5,21 +5,37 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableAtomQuestion } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableAtomQuestion,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { config } from '../../constants/config';
 import { DefaultText } from '../common/DefaultText';
+import {
+  AtomQuestionStyles,
+  atomQuestionResponsiveStyles,
+} from './AtomQuestion.style';
 
 export interface AtomQuestionProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   question: ObservableAtomQuestion;
 }
 
 @observer
 export class AtomQuestion extends React.Component<AtomQuestionProps> {
+  private get styles(): AtomQuestionStyles {
+    return atomQuestionResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   private unescapeUnderscore(text: string): string {
     // Replace all \_ with _
     const regex = /\\_/g;
@@ -44,9 +60,9 @@ export class AtomQuestion extends React.Component<AtomQuestionProps> {
     );
 
     return (
-      <DefaultText style={styles.vocabulary_text_with_underscores}>
+      <DefaultText style={this.styles.vocabulary_text_with_underscores}>
         <DefaultText>{beginSubstring}</DefaultText>
-        <DefaultText style={styles.underscores}>{underscores}</DefaultText>
+        <DefaultText style={this.styles.underscores}>{underscores}</DefaultText>
         <DefaultText>{endSubstring}</DefaultText>
       </DefaultText>
     );
@@ -54,13 +70,13 @@ export class AtomQuestion extends React.Component<AtomQuestionProps> {
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <View style={styles.vocabulary_text_container}>
+      <View style={this.styles.container}>
+        <View style={this.styles.vocabulary_text_container}>
           {this.parseVocabularyTextWithUnderscores()}
         </View>
-        <View style={styles.hint_container}>
-          <DefaultText style={styles.label}>Hint: </DefaultText>
-          <DefaultText style={styles.hint}>
+        <View style={this.styles.hint_container}>
+          <DefaultText style={this.styles.label}>Hint: </DefaultText>
+          <DefaultText style={this.styles.hint}>
             {this.props.question.hint}
           </DefaultText>
         </View>
@@ -68,50 +84,3 @@ export class AtomQuestion extends React.Component<AtomQuestionProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    zIndex: -1,
-    marginTop: 15,
-    marginHorizontal: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  hint_container: {
-    marginTop: 14,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  label: {
-    fontWeight: 'bold',
-    fontSize: 13,
-    paddingRight: 4,
-    color: '#91aa9d',
-  },
-
-  hint: {
-    fontSize: 13,
-    color: '#91aa9d',
-  },
-
-  vocabulary_text_container: {},
-
-  vocabulary_text_with_underscores: {
-    color: config.atom.textColor,
-    fontSize: 17,
-    fontWeight: 'bold',
-    textShadowColor: '#00000012',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 0,
-  },
-
-  underscores: {
-    color: config.atom.textColor,
-    fontSize: 17,
-    letterSpacing: 1,
-  },
-});

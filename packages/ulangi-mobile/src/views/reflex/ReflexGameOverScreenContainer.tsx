@@ -15,7 +15,7 @@ import { BackHandler } from 'react-native';
 
 import { Container } from '../../Container';
 import { ScreenFactory } from '../../factories/ScreenFactory';
-import { ReflexStyle } from '../../styles/ReflexStyle';
+import { reflexStyles } from '../../styles/ReflexStyles';
 import { ReflexGameOverScreen } from './ReflexGameOverScreen';
 
 export interface ReflexGameOverScreenPassedProps {
@@ -30,7 +30,7 @@ export class ReflexGameOverScreenContainer extends Container<
   ReflexGameOverScreenPassedProps
 > {
   public static options(): Options {
-    return ReflexStyle.getScreenStyle();
+    return reflexStyles.getScreenStyle();
   }
 
   protected observableLightBox = this.props.observableLightBox;
@@ -70,8 +70,9 @@ export class ReflexGameOverScreenContainer extends Container<
   public render(): React.ReactElement<any> {
     return (
       <ReflexGameOverScreen
+        themeStore={this.props.rootStore.themeStore}
         observableLightBox={this.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         title={this.props.passedProps.title}
         score={this.props.passedProps.score}
         restart={this.props.passedProps.restart}

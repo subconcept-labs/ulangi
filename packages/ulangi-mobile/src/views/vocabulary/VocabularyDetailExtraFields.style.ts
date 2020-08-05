@@ -5,10 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
+import { ImageStyle, ViewStyle } from 'react-native';
 
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface VocabularyDetailExtraFieldsStyles {
   speak_touchable: ViewStyle;
@@ -17,26 +16,40 @@ export interface VocabularyDetailExtraFieldsStyles {
   image: ImageStyle;
 }
 
-export const baseStyles: VocabularyDetailExtraFieldsStyles = StyleSheet.create({
-  speak_touchable: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+export class VocabularyDetailExtraFieldsResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyDetailExtraFieldsStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): VocabularyDetailExtraFieldsStyles {
+    return {
+      speak_touchable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  speaker_icon: {
-    marginLeft: ss(6),
-  },
+      speaker_icon: {
+        marginLeft: scaleByFactor(6),
+      },
 
-  activity_indicator: {
-    marginLeft: ss(6),
-  },
+      activity_indicator: {
+        marginLeft: scaleByFactor(6),
+      },
 
-  image: {
-    width: ss(100),
-    height: ss(100),
-  },
-});
+      image: {
+        width: scaleByFactor(100),
+        height: scaleByFactor(100),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<VocabularyDetailExtraFieldsStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<VocabularyDetailExtraFieldsStyles> {
+    return {};
+  }
+}
+
+export const vocabularyDetailExtraFieldsResponsiveStyles = new VocabularyDetailExtraFieldsResponsiveStyles();

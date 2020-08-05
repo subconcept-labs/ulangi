@@ -5,19 +5,25 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
 import { IObservableValue } from 'mobx';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import { config } from '../../constants/config';
 import { SignUpScreenIds } from '../../constants/ids/SignUpScreenIds';
-import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { InputField } from './InputField';
+import {
+  SignUpFormStyles,
+  signUpFormResponsiveStyles,
+} from './SignUpForm.style';
 import { SubmitButton } from './SubmitButton';
 
 export interface SignUpFormProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   email: IObservableValue<string>;
   password: IObservableValue<string>;
   confirmPassword: IObservableValue<string>;
@@ -38,11 +44,20 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
     this.props.shouldFocusConfirmPassword.set(true);
   }
 
+  private get styles(): SignUpFormStyles {
+    return signUpFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.form}>
+      <View style={this.styles.form}>
         <InputField
           testID={SignUpScreenIds.EMAIL_INPUT}
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           value={this.props.email}
           placeholder="Email"
           keyboardType="email-address"
@@ -52,6 +67,8 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
         />
         <InputField
           testID={SignUpScreenIds.PASSWORD_INPUT}
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           value={this.props.password}
           shouldFocus={this.props.shouldFocusPassword}
           placeholder="Password (min 8 characters)"
@@ -62,6 +79,8 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
         />
         <InputField
           testID={SignUpScreenIds.CONFIRM_PASSWORD_INPUT}
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           value={this.props.confirmPassword}
           shouldFocus={this.props.shouldFocusConfirmPassword}
           secureTextEntry={true}
@@ -72,37 +91,23 @@ export class SignUpForm extends React.Component<SignUpFormProps> {
         />
         <SubmitButton
           testID={SignUpScreenIds.SIGN_UP_BTN}
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           buttonText="Sign up"
           onSubmit={this.props.submit}
         />
-        <View style={styles.other_containers}>
+        <View style={this.styles.other_containers}>
           <TouchableOpacity
             testID={SignUpScreenIds.BACK_BTN}
-            style={styles.touchable_text}
+            style={this.styles.touchable_text}
             onPress={this.props.back}
             hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-            <DefaultText style={styles.other_text}>Back to Sign In</DefaultText>
+            <DefaultText style={this.styles.other_text}>
+              Back to Sign In
+            </DefaultText>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  form: {},
-
-  other_containers: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginHorizontal: ss(16),
-    marginTop: ss(16),
-  },
-
-  touchable_text: {},
-
-  other_text: {
-    fontSize: ss(15),
-    color: config.styles.lightPrimaryColor,
-  },
-});

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableQuizSettingsScreen,
   ObservableThemeStore,
@@ -18,17 +18,16 @@ import { ScrollView } from 'react-native';
 import { config } from '../../constants/config';
 import { QuizSettingsScreenIds } from '../../constants/ids/QuizSettingsScreenIds';
 import { QuizSettingsScreenDelegate } from '../../delegates/quiz/QuizSettingsScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import { QuizMultipleChoiceSettings } from './QuizMultipleChoiceSettings';
 import {
   QuizSettingsScreenStyles,
-  darkStyles,
-  lightStyles,
-  sectionRowDarkStyles,
-  sectionRowLightStyles,
+  quizSettingsScreenResponsiveStyles,
+  sectionRowResponsiveStyles,
 } from './QuizSettingsScreen.style';
 import { QuizWritingSettings } from './QuizWritingSettings';
 
@@ -43,19 +42,23 @@ export class QuizSettingsScreen extends React.Component<
   QuizSettingsScreenProps
 > {
   public get styles(): QuizSettingsScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return quizSettingsScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <ScrollView
+      <Screen
         testID={QuizSettingsScreenIds.SCREEN}
         style={this.styles.screen}
-        contentContainerStyle={this.styles.content_container}>
-        {this.renderSections()}
-      </ScrollView>
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <ScrollView contentContainerStyle={this.styles.content_container}>
+          {this.renderSections()}
+        </ScrollView>
+      </Screen>
     );
   }
 
@@ -65,6 +68,7 @@ export class QuizSettingsScreen extends React.Component<
         {this.renderQuizSettingsSection()}
         <QuizMultipleChoiceSettings
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           multipleChoiceSettings={
             this.props.observableScreen.multipleChoiceSettings
           }
@@ -74,6 +78,7 @@ export class QuizSettingsScreen extends React.Component<
         />
         <QuizWritingSettings
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           writingSettings={this.props.observableScreen.writingSettings}
           showWritingQuizSizeMenu={
             this.props.screenDelegate.showWritingQuizSizeMenu
@@ -90,10 +95,12 @@ export class QuizSettingsScreen extends React.Component<
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         key="quiz-settings"
         header="QUIZ SETTINGS">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Vocabulary Pool"
           description="Specify to test only learned terms or all active ones."
           customRight={
@@ -102,8 +109,10 @@ export class QuizSettingsScreen extends React.Component<
               text={_.upperFirst(
                 this.props.observableScreen.selectedVocabularyPool,
               )}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showVocabularyPoolMenu(
@@ -116,10 +125,7 @@ export class QuizSettingsScreen extends React.Component<
               }}
             />
           }
-          styles={{
-            light: sectionRowLightStyles,
-            dark: sectionRowDarkStyles,
-          }}
+          styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
     );

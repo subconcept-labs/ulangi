@@ -11,10 +11,11 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { CategorizeScreenIds } from '../../constants/ids/CategorizeScreenIds';
 import { CategorizeScreenDelegate } from '../../delegates/category/CategorizeScreenDelegate';
+import { Screen } from '../common/Screen';
 import { CategoryForm } from './CategoryForm';
 
 export interface CategorizeScreenProps {
@@ -27,9 +28,14 @@ export interface CategorizeScreenProps {
 export class CategorizeScreen extends React.Component<CategorizeScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={CategorizeScreenIds.SCREEN}>
+      <Screen
+        style={styles.screen}
+        testID={CategorizeScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <CategoryForm
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           categoryFormState={this.props.observableScreen.categoryFormState}
           handleInputChange={this.props.screenDelegate.handleInputChange}
           selectCategory={this.props.screenDelegate.selectCategory}
@@ -38,7 +44,7 @@ export class CategorizeScreen extends React.Component<CategorizeScreenProps> {
           }
           clear={this.props.screenDelegate.clear}
         />
-      </View>
+      </Screen>
     );
   }
 }

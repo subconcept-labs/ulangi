@@ -5,42 +5,49 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LightBoxMessageStyles {
   message_container: ViewStyle;
   message: TextStyle;
 }
 
-export const baseStyles: LightBoxMessageStyles = {
-  message_container: {
-    alignSelf: 'stretch',
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(11),
-  },
+export class LightBoxMessageResponsiveStyles extends ResponsiveStyleSheet<
+  LightBoxMessageStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): LightBoxMessageStyles {
+    return {
+      message_container: {
+        alignSelf: 'stretch',
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(11),
+      },
 
-  message: {
-    lineHeight: ss(19),
-    fontSize: ss(15),
-  },
-};
+      message: {
+        lineHeight: scaleByFactor(19),
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<LightBoxMessageStyles> {
+    return {
+      message: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    message: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<LightBoxMessageStyles> {
+    return {
+      message: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const lightBoxMessageResponsiveStyles = new LightBoxMessageResponsiveStyles();

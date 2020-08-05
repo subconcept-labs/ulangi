@@ -6,7 +6,10 @@
  */
 
 import { Feedback, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReviewFeedbackBarState } from '@ulangi/ulangi-observable';
+import {
+  ObservableReviewFeedbackBarState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -17,26 +20,23 @@ import { ReviewFeedbackBarIds } from '../../constants/ids/ReviewFeedbackBarIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   ReviewFeedbackBarStyles,
-  darkStyles,
-  lightStyles,
+  reviewFeedbackBarResponsiveStyles,
 } from './ReviewFeedbackBar.style';
 
 export interface ReviewFeedbackBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   reviewFeedbackBarState: ObservableReviewFeedbackBarState;
   setFeedback: (feedback: Feedback) => void;
-  styles?: {
-    light: ReviewFeedbackBarStyles;
-    dark: ReviewFeedbackBarStyles;
-  };
 }
 
 @observer
 export class ReviewFeedbackBar extends React.Component<ReviewFeedbackBarProps> {
-  public get styles(): ReviewFeedbackBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): ReviewFeedbackBarStyles {
+    return reviewFeedbackBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

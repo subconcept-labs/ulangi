@@ -6,13 +6,13 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultSectionRowDarkStyles,
-  lightStyles as defaultSectionRowLightStyles,
+  SectionRowResponsiveStyles,
+  SectionRowStyles,
 } from '../section/SectionRow.style';
 
 export interface WritingSettingsScreenStyles {
@@ -22,65 +22,73 @@ export interface WritingSettingsScreenStyles {
   touchable_text: TextStyle;
 }
 
-export const baseStyles: WritingSettingsScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class WritingSettingsResponsiveScreenStyles extends ResponsiveStyleSheet<
+  WritingSettingsScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): WritingSettingsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  content_container: {
-    paddingTop: ss(16),
-  },
+      content_container: {
+        paddingTop: scaleByFactor(16),
+      },
 
-  description: {
-    fontSize: ss(15),
-    color: '#888',
-    lineHeight: ss(19),
-  },
+      description: {
+        fontSize: scaleByFactor(15),
+        color: '#888',
+        lineHeight: scaleByFactor(19),
+      },
 
-  touchable_text: {},
-};
+      touchable_text: {},
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    description: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<WritingSettingsScreenStyles> {
+    return {
+      description: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    touchable_text: {
-      color: config.styles.primaryColor,
-    },
-  }),
-);
+      touchable_text: {
+        color: config.styles.primaryColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    description: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public darkStyles(): Partial<WritingSettingsScreenStyles> {
+    return {
+      description: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    touchable_text: {
-      color: config.styles.primaryColor,
-    },
-  }),
-);
+      touchable_text: {
+        color: config.styles.primaryColor,
+      },
+    };
+  }
+}
 
-export const sectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-    inner_container: {
-      backgroundColor: '#f0f0f0',
-    },
-  }),
-);
+export const writingSettingsScreenResponsiveStyles = new WritingSettingsResponsiveScreenStyles();
 
-export const sectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-  }),
-);
+export class ExtendedSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      left_text: {
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
+    });
+  }
+
+  public lightStyles(): Partial<SectionRowStyles> {
+    return _.merge({}, super.lightStyles(), {
+      inner_container: {
+        backgroundColor: '#f0f0f0',
+      },
+    });
+  }
+}
+
+export const sectionRowResponsiveStyles = new ExtendedSectionRowResponsiveStyles();

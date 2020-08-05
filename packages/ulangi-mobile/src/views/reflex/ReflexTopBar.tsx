@@ -5,25 +5,41 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableReflexGameState } from '@ulangi/ulangi-observable';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableReflexGameState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
-import { ss } from '../../utils/responsive';
+import {
+  ReflexTopBarStyles,
+  reflexTopBarResponsiveStyles,
+} from './ReflexTopBar.style';
 
 export interface ReflexTopBarProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   onIconPressed: () => void;
   gameState: ObservableReflexGameState;
 }
 
 @observer
 export class ReflexTopBar extends React.Component<ReflexTopBarProps> {
+  private get styles(): ReflexTopBarStyles {
+    return reflexTopBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View style={this.styles.container}>
         <TouchableOpacity
           testID={
             this.props.gameState.started
@@ -31,7 +47,7 @@ export class ReflexTopBar extends React.Component<ReflexTopBarProps> {
               : ReflexScreenIds.BACK_BTN
           }
           hitSlop={{ top: 10, bottom: 10, left: 25, right: 25 }}
-          style={styles.button}
+          style={this.styles.button}
           onPress={this.props.onIconPressed}>
           {this.props.gameState.started === true ? (
             <Image source={Images.PAUSE_WHITE_22X22} />
@@ -43,23 +59,3 @@ export class ReflexTopBar extends React.Component<ReflexTopBarProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: ss(16),
-    paddingHorizontal: ss(16),
-  },
-
-  button: {},
-
-  score_container: {},
-
-  score_text: {
-    fontFamily: 'JosefinSans-bold',
-    fontSize: ss(20),
-    color: '#efecca',
-  },
-});

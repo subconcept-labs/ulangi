@@ -67,6 +67,11 @@ export class WhatsNewScreenContainer extends Container {
   }
 
   public render(): React.ReactElement<any> {
-    return <WhatsNewScreen />;
+    return (
+      <WhatsNewScreen
+        observableScreen={this.observableScreen}
+        themeStore={this.props.rootStore.themeStore}
+      />
+    );
   }
 }

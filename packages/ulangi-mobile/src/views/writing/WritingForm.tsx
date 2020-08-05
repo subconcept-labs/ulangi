@@ -6,7 +6,10 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableWritingFormState,
+} from '@ulangi/ulangi-observable';
 import { autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -15,29 +18,24 @@ import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
 import { WritingFormIds } from '../../constants/ids/WritingFormIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import { DefinitionItem } from '../vocabulary/DefinitionItem';
 import {
   WritingFormStyles,
-  darkStyles,
-  definitionItemDarkStyles,
-  definitionItemLightStyles,
-  lightStyles,
+  definitionItemResponsiveStyles,
+  writingFormResponsiveStyles,
 } from './WritingForm.style';
 
 export interface WritingFormProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   writingFormState: ObservableWritingFormState;
   setAnswer: (text: string) => void;
   showHint: () => void;
   next: () => void;
-  styles?: {
-    light: WritingFormStyles;
-    dark: WritingFormStyles;
-  };
 }
 
 @observer
@@ -87,10 +85,11 @@ export class WritingForm extends React.Component<WritingFormProps> {
     }
   }
 
-  public get styles(): WritingFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingFormStyles {
+    return writingFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -111,12 +110,10 @@ export class WritingForm extends React.Component<WritingFormProps> {
             <DefinitionItem
               index={0}
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               definition={definition}
               hideFields={['example']}
-              styles={{
-                light: definitionItemLightStyles,
-                dark: definitionItemDarkStyles,
-              }}
+              styles={definitionItemResponsiveStyles}
             />
           </View>
         </View>
@@ -159,8 +156,10 @@ export class WritingForm extends React.Component<WritingFormProps> {
                 <DefaultButton
                   testID={WritingFormIds.NEXT_BTN}
                   text={this.props.writingFormState.nextButtonType}
-                  styles={FullRoundedButtonStyle.getFullGreenBackgroundStyles(
+                  styles={fullRoundedButtonStyles.getSolidGreenBackgroundStyles(
                     ButtonSize.SMALL,
+                    this.props.theme,
+                    this.props.screenLayout,
                   )}
                   onPress={this.props.next}
                 />
@@ -190,8 +189,10 @@ export class WritingForm extends React.Component<WritingFormProps> {
               <DefaultButton
                 testID={WritingFormIds.HINT_BTN}
                 text="Show"
-                styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+                styles={fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                   ButtonSize.SMALL,
+                  this.props.theme,
+                  this.props.screenLayout,
                 )}
                 onPress={this.props.showHint}
               />

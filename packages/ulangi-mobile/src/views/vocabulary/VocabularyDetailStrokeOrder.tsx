@@ -7,7 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { VocabularyExtraFields } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDimensions } from '@ulangi/ulangi-observable';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -18,23 +18,18 @@ import { SectionRow } from '../section/SectionRow';
 import { StrokeOrders } from '../vocabulary/StrokeOrders';
 import {
   VocabularyDetailStrokeOrderStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyDetailStrokeOrderResponsiveStyles,
 } from './VocabularyDetailStrokeOrder.style';
 
 export interface VocabularyDetailStrokeOrderProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   vocabularyTerm: string;
   vocabularyExtraFields: VocabularyExtraFields;
   strokeOrderForm: 'traditional' | 'simplified' | 'unknown';
   changeStrokeOrderForm: (
     form: 'traditional' | 'simplified' | 'unknown',
   ) => void;
-  styles?: {
-    light: VocabularyDetailStrokeOrderStyles;
-    dark: VocabularyDetailStrokeOrderStyles;
-  };
 }
 
 @observer
@@ -42,22 +37,27 @@ export class VocabularyDetailStrokeOrder extends React.Component<
   VocabularyDetailStrokeOrderProps
 > {
   public get styles(): VocabularyDetailStrokeOrderStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyDetailStrokeOrderResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.theme} header="STROKE ORDERS">
+      <SectionGroup
+        theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
+        header="STROKE ORDERS">
         <SectionRow
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Tap character to show"
           description={
             <View style={this.styles.container}>
               <StrokeOrders
                 theme={this.props.theme}
-                observableDimensions={this.props.observableDimensions}
+                screenLayout={this.props.screenLayout}
                 words={
                   this.props.strokeOrderForm === 'traditional'
                     ? this.props.vocabularyExtraFields.traditional[0][0].split(

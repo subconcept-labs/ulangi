@@ -6,38 +6,38 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableWritingFormState,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { WritingFormIds } from '../../constants/ids/WritingFormIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import {
   WritingFormTopStyles,
-  darkStyles,
-  lightStyles,
+  writingFormTopResponsiveStyles,
 } from './WritingFormTop.style';
 
 export interface WritingFormTopProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   writingFormState: ObservableWritingFormState;
   showLastWritten: boolean;
   skip?: () => void;
-  styles?: {
-    light: WritingFormTopStyles;
-    dark: WritingFormTopStyles;
-  };
 }
 
 @observer
 export class WritingFormTop extends React.Component<WritingFormTopProps> {
-  public get styles(): WritingFormTopStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingFormTopStyles {
+    return writingFormTopResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -57,8 +57,10 @@ export class WritingFormTop extends React.Component<WritingFormTopProps> {
               <DefaultButton
                 testID={WritingFormIds.SKIP_BTN}
                 text="Skip"
-                styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+                styles={fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                   ButtonSize.SMALL,
+                  this.props.theme,
+                  this.props.screenLayout,
                 )}
                 onPress={this.props.skip}
               />

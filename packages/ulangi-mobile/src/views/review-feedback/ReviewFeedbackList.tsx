@@ -8,7 +8,10 @@
 import { assertExists } from '@ulangi/assert';
 import { Feedback, Theme } from '@ulangi/ulangi-common/enums';
 import { NextReviewData } from '@ulangi/ulangi-common/interfaces';
-import { ObservableVocabulary } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableVocabulary,
+} from '@ulangi/ulangi-observable';
 import { ObservableMap } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -17,12 +20,12 @@ import { ScrollView } from 'react-native';
 import { ReviewFeedbackItem } from './ReviewFeedbackItem';
 import {
   ReviewFeedbackListStyles,
-  darkStyles,
-  lightStyles,
+  reviewFeedbackListResponsiveStyles,
 } from './ReviewFeedbackList.style';
 
 export interface ReviewFeedBackListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyList: ObservableMap<string, ObservableVocabulary>;
   feedbackList: ObservableMap<string, Feedback>;
   allNextReviewData: ObservableMap<string, NextReviewData>;
@@ -38,9 +41,10 @@ export class ReviewFeedbackList extends React.Component<
   ReviewFeedBackListProps
 > {
   public get styles(): ReviewFeedbackListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewFeedbackListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -52,6 +56,7 @@ export class ReviewFeedbackList extends React.Component<
               <ReviewFeedbackItem
                 key={vocabularyId}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 vocabulary={assertExists(
                   this.props.vocabularyList.get(vocabularyId),
                 )}

@@ -7,7 +7,10 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { Attribution } from '@ulangi/ulangi-common/interfaces';
-import { ObservableDictionaryDefinition } from '@ulangi/ulangi-observable';
+import {
+  ObservableDictionaryDefinition,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -16,22 +19,18 @@ import { DefaultText } from '../common/DefaultText';
 import { DictionaryDefinition } from './DictionaryDefinition';
 import {
   DictionaryDefinitionListStyles,
-  darkStyles,
-  lightStyles,
+  dictionaryDefinitionListResponsiveStyles,
 } from './DictionaryDefinitionList.style';
 
 export interface DictionaryDefinitionListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   term: string;
   label?: string;
   attributions: undefined | Attribution[];
   definitions: readonly ObservableDictionaryDefinition[];
   onPick: (definition: ObservableDictionaryDefinition) => void;
   openLink: (link: string) => void;
-  styles?: {
-    light: DictionaryDefinitionListStyles;
-    dark: DictionaryDefinitionListStyles;
-  };
 }
 
 @observer
@@ -39,9 +38,10 @@ export class DictionaryDefinitionList extends React.Component<
   DictionaryDefinitionListProps
 > {
   public get styles(): DictionaryDefinitionListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return dictionaryDefinitionListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -67,6 +67,7 @@ export class DictionaryDefinitionList extends React.Component<
               <DictionaryDefinition
                 key={index}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 index={index}
                 definition={definition}
                 onPick={this.props.onPick}

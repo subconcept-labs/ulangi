@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DiscoverNavButtonStyles {
   selected_text: TextStyle;
@@ -20,74 +19,82 @@ export interface DiscoverNavButtonStyles {
   selected_touchable: ViewStyle;
 }
 
-export const baseStyles: DiscoverNavButtonStyles = {
-  selected_text: {},
+export class DiscoverNavButtonResponsiveStyles extends ResponsiveStyleSheet<
+  DiscoverNavButtonStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): DiscoverNavButtonStyles {
+    return {
+      selected_text: {},
 
-  text: {
-    fontWeight: 'bold',
-    fontSize: ss(14),
-  },
+      text: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(14),
+      },
 
-  count: {
-    paddingLeft: ss(5),
-  },
+      count: {
+        paddingLeft: scaleByFactor(5),
+      },
 
-  selected_count: {},
+      selected_count: {},
 
-  touchable: {
-    marginBottom: -StyleSheet.hairlineWidth,
-    paddingHorizontal: ss(10),
-    paddingTop: ss(8),
-    paddingBottom: ss(10),
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginRight: ss(8),
-    flex: 1,
-  },
+      touchable: {
+        marginBottom: -StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(10),
+        paddingTop: scaleByFactor(8),
+        paddingBottom: scaleByFactor(10),
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginRight: scaleByFactor(8),
+        flex: 1,
+      },
 
-  selected_touchable: {
-    borderBottomColor: config.styles.primaryColor,
-    borderBottomWidth: ss(2),
-  },
-};
+      selected_touchable: {
+        borderBottomColor: config.styles.primaryColor,
+        borderBottomWidth: scaleByFactor(2),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    selected_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<DiscoverNavButtonStyles> {
+    return {
+      selected_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      count: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    selected_count: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      selected_count: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    selected_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<DiscoverNavButtonStyles> {
+    return {
+      selected_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      count: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    selected_count: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      selected_count: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const discoverNavButtonResponsiveStyles = new DiscoverNavButtonResponsiveStyles();

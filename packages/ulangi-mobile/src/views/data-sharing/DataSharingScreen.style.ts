@@ -1,8 +1,7 @@
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DataSharingScreenStyles {
   screen: ViewStyle;
@@ -11,45 +10,53 @@ export interface DataSharingScreenStyles {
   button_container: ViewStyle;
 }
 
-export const baseStyles: DataSharingScreenStyles = {
-  screen: {
-    flex: 1,
-    paddingHorizontal: ss(16),
-  },
-  title: {
-    marginVertical: ss(16),
-    fontSize: ss(16),
-    fontWeight: 'bold',
-  },
+export class DataSharingScreenResponsiveStyles extends ResponsiveStyleSheet<
+  DataSharingScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): DataSharingScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+        paddingHorizontal: scaleByFactor(16),
+      },
+      title: {
+        marginVertical: scaleByFactor(16),
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
 
-  paragraph: {
-    paddingTop: ss(8),
-    fontSize: ss(15),
-  },
+      paragraph: {
+        paddingTop: scaleByFactor(8),
+        fontSize: scaleByFactor(15),
+      },
 
-  button_container: {
-    marginTop: ss(24),
-  },
-};
+      button_container: {
+        marginTop: scaleByFactor(24),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
-    paragraph: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<DataSharingScreenStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
+      paragraph: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
-    paragraph: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<DataSharingScreenStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
+      paragraph: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const dataSharingScreenResponsiveStyles = new DataSharingScreenResponsiveStyles();

@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { Dimensions, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { Dimensions, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface DefinitionExtraFieldListStyles {
   container: ViewStyle;
@@ -23,77 +22,87 @@ export interface DefinitionExtraFieldListStyles {
   value: TextStyle;
 }
 
-export const baseStyles: DefinitionExtraFieldListStyles = {
-  container: {
-    marginHorizontal: ss(16),
-  },
+export class DefinitionExtraFieldListResponsiveStyles extends ResponsiveStyleSheet<
+  DefinitionExtraFieldListStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): DefinitionExtraFieldListStyles {
+    return {
+      container: {
+        marginHorizontal: scaleByFactor(16),
+      },
 
-  field_container: {
-    marginBottom: ss(10),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      field_container: {
+        marginBottom: scaleByFactor(10),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  left: {},
+      left: {},
 
-  right: {},
+      right: {},
 
-  name: {
-    fontSize: ss(13),
-    fontWeight: 'bold',
-  },
+      name: {
+        fontSize: scaleByFactor(13),
+        fontWeight: 'bold',
+      },
 
-  image_list: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: ss(-8),
-  },
+      image_list: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginHorizontal: scaleByFactor(-8),
+      },
 
-  image_container: {
-    paddingHorizontal: ss(8),
-    paddingVertical: ss(10),
-  },
+      image_container: {
+        paddingHorizontal: scaleByFactor(8),
+        paddingVertical: scaleByFactor(10),
+      },
 
-  image: {
-    backgroundColor: '#e3e3e3',
-    width: Dimensions.get('window').width / ss(3),
-    height: Dimensions.get('window').width / ss(3),
-  },
+      image: {
+        backgroundColor: '#e3e3e3',
+        width: Dimensions.get('window').width / scaleByFactor(3),
+        height: Dimensions.get('window').width / scaleByFactor(3),
+      },
 
-  value: {
-    fontSize: ss(15),
-  },
-};
+      value: {
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    name: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<DefinitionExtraFieldListStyles> {
+    return {
+      name: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    image: {
-      backgroundColor: '#e3e3e3',
-    },
+      image: {
+        backgroundColor: '#e3e3e3',
+      },
 
-    value: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      value: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    name: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<DefinitionExtraFieldListStyles> {
+    return {
+      name: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    image: {
-      backgroundColor: '#e3e3e3',
-    },
+      image: {
+        backgroundColor: '#e3e3e3',
+      },
 
-    value: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      value: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const definitionExtraFieldListResponsiveStyles = new DefinitionExtraFieldListResponsiveStyles();

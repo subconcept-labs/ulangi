@@ -18,6 +18,7 @@ import { StyleSheet } from 'react-native';
 import { config } from '../../constants/config';
 import { ContactUsScreenIds } from '../../constants/ids/ContactUsScreenIds';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { ContactSupportForm } from './ContactSupportForm';
 import { FeatureRequestForm } from './FeatureRequestForm';
 import { ReportABugForm } from './ReportABugForm';
@@ -33,11 +34,13 @@ export interface ContactUsScreenProps {
 export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <DismissKeyboardView
+      <Screen
         style={styles.screen}
-        testID={ContactUsScreenIds.SCREEN}>
-        {this.renderForm()}
-      </DismissKeyboardView>
+        testID={ContactUsScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <DismissKeyboardView>{this.renderForm()}</DismissKeyboardView>
+      </Screen>
     );
   }
 

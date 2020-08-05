@@ -5,23 +5,28 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
+  ObservableScreenLayout,
   ObservableVocabularyListState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { VocabularyBulkActionBarIds } from '../../constants/ids/VocabularyBulkActionBarIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
+import {
+  VocabularyBulkActionBarStyles,
+  vocabularyBulkActionBarResponsiveStyles,
+} from './VocabularyBulkActionBar.style';
 
 export interface VocabularyBulkActionBarProps {
-  observableDimensions: ObservableDimensions;
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabularyListState: ObservableVocabularyListState;
   clearSelections: () => void;
   showVocabularyBulkActionMenu: () => void;
@@ -31,79 +36,59 @@ export interface VocabularyBulkActionBarProps {
 export class VocabularyBulkActionBar extends React.Component<
   VocabularyBulkActionBarProps
 > {
+  private get styles(): VocabularyBulkActionBarStyles {
+    return vocabularyBulkActionBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView
+      <View
         style={[
-          styles.container,
+          this.styles.container,
           {
-            width: this.props.observableDimensions.windowWidth,
+            width: this.props.screenLayout.width,
           },
         ]}>
-        <DefaultText style={styles.selection_text} numberOfLines={1}>
-          <DefaultText style={styles.number_of_selected}>
+        <DefaultText style={this.styles.selection_text} numberOfLines={1}>
+          <DefaultText style={this.styles.number_of_selected}>
             {this.props.vocabularyListState.numOfVocabularySelected}
           </DefaultText>
           <DefaultText> term(s) selected</DefaultText>
         </DefaultText>
-        <View style={styles.buttons}>
-          <View style={styles.button_container}>
+        <View style={this.styles.buttons}>
+          <View style={this.styles.button_container}>
             <DefaultButton
               testID={VocabularyBulkActionBarIds.CLEAR_BTN}
               text="CLEAR"
-              styles={FullRoundedButtonStyle.getFullBackgroundStyles(
+              styles={fullRoundedButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
                 config.styles.darkPrimaryColor,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={this.props.clearSelections}
             />
           </View>
-          <View style={styles.button_container}>
+          <View style={this.styles.button_container}>
             <DefaultButton
               testID={VocabularyBulkActionBarIds.BULK_ACTION_BTN}
               text="ACTION"
-              styles={FullRoundedButtonStyle.getFullBackgroundStyles(
+              styles={fullRoundedButtonStyles.getSolidBackgroundStyles(
                 ButtonSize.SMALL,
                 'white',
                 config.styles.darkPrimaryColor,
+                this.props.theme,
+                this.props.screenLayout,
               )}
               onPress={this.props.showVocabularyBulkActionMenu}
             />
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: config.styles.primaryColor,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-
-  selection_text: {
-    flexShrink: 1,
-    fontSize: 15,
-    color: 'white',
-  },
-
-  number_of_selected: {
-    fontWeight: 'bold',
-  },
-
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  button_container: {
-    paddingLeft: 12,
-  },
-});

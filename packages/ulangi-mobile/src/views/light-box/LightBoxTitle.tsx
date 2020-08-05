@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as changeCase from 'change-case';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -13,18 +14,21 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   LightBoxTitleStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxTitleResponsiveStyles,
 } from './LightBoxTitle.style';
 
 export interface LightBoxTitleProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   title: string;
 }
 
 export class LightBoxTitle extends React.Component<LightBoxTitleProps> {
   public get styles(): LightBoxTitleStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+    return lightBoxTitleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

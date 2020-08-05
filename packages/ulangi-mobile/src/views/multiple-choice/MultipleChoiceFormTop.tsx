@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableMultipleChoiceFormState } from '@ulangi/ulangi-observable';
+import {
+  ObservableMultipleChoiceFormState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -14,17 +17,13 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   MultipleChoiceFormTopStyles,
-  darkStyles,
-  lightStyles,
+  multipleChoiceFormTopResponsiveStyles,
 } from './MultipleChoiceFormTop.style';
 
 export interface MultipleChoiceFormTopProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   multipleChoiceFormState: ObservableMultipleChoiceFormState;
-  styles?: {
-    light: MultipleChoiceFormTopStyles;
-    dark: MultipleChoiceFormTopStyles;
-  };
 }
 
 @observer
@@ -32,9 +31,10 @@ export class MultipleChoiceFormTop extends React.Component<
   MultipleChoiceFormTopProps
 > {
   public get styles(): MultipleChoiceFormTopStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return multipleChoiceFormTopResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

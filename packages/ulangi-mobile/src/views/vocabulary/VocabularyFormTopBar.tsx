@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import * as React from 'react';
 import { Keyboard, TouchableOpacity, View } from 'react-native';
@@ -14,26 +15,23 @@ import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   VocabularyFormTopBarStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyFormTopBarResponsiveStyles,
 } from './VocabularyFormTopBar.style';
 
 export interface VocabularyFormTopBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   currentTab: IObservableValue<'Editor' | 'Preview'>;
-  styles?: {
-    light: VocabularyFormTopBarStyles;
-    dark: VocabularyFormTopBarStyles;
-  };
 }
 
 export class VocabularyFormTopBar extends React.Component<
   VocabularyFormTopBarProps
 > {
   public get styles(): VocabularyFormTopBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyFormTopBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

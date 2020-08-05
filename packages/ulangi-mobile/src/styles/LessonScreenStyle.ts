@@ -6,18 +6,13 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
-import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 
 import { config } from '../constants/config';
-import { ls, ss } from '../utils/responsive';
 import {
   darkStyles as defaultTopBarDarkStyles,
   lightStyles as defaultTopBarLightStyles,
 } from '../views/top-bar/TopBar.style';
-import { FullRoundedButtonStyle } from './FullRoundedButtonStyle';
-import { RoundedCornerButtonStyle } from './RoundedCornerButtonStyle';
 
 export class LessonScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = {
@@ -102,65 +97,4 @@ export class LessonScreenStyle {
       },
     },
   };
-
-  public static getPrimaryMenuButtonStyles(): ButtonStyles {
-    return _.merge(
-      {},
-      FullRoundedButtonStyle.getFullBackgroundStyles(
-        ButtonSize.X_LARGE,
-        config.styles.primaryColor,
-        'white',
-      ),
-      {
-        buttonStyle: {
-          marginVertical: ss(6),
-        },
-      },
-    );
-  }
-
-  public static getSecondaryMenuButtonStyles(): ButtonStyles {
-    return _.merge(
-      {},
-      FullRoundedButtonStyle.getFullBackgroundStyles(
-        ButtonSize.LARGE,
-        '#ddd',
-        '#444',
-      ),
-      { buttonStyle: { marginHorizontal: ss(16), marginVertical: ss(6) } },
-    );
-  }
-
-  public static getNormalButtonStyles(
-    backgroundColor: string,
-    textColor: string,
-  ): ButtonStyles {
-    return RoundedCornerButtonStyle.getFullBackgroundStyles(
-      ButtonSize.NORMAL,
-      3,
-      backgroundColor,
-      textColor,
-    );
-  }
-
-  public static getLargeButtonStyles(
-    backgroundColor: string,
-    textColor: string,
-  ): ButtonStyles {
-    return _.merge(
-      {},
-      RoundedCornerButtonStyle.getFullBackgroundStyles(
-        ButtonSize.LARGE,
-        3,
-        backgroundColor,
-        textColor,
-      ),
-      {
-        buttonStyle: {
-          marginHorizontal: ls(16),
-          marginVertical: ss(4),
-        },
-      },
-    );
-  }
 }

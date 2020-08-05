@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface QuizMultipleChoiceResultStyles {
   container: ViewStyle;
@@ -22,67 +21,77 @@ export interface QuizMultipleChoiceResultStyles {
   button_container: ViewStyle;
 }
 
-export const baseStyles: QuizMultipleChoiceResultStyles = {
-  container: {
-    flex: 1,
-  },
+export class QuizMultipleChoiceResultResponsiveStyles extends ResponsiveStyleSheet<
+  QuizMultipleChoiceResultStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): QuizMultipleChoiceResultStyles {
+    return {
+      container: {
+        flex: 1,
+      },
 
-  title_container: {
-    marginTop: ss(30),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+      title_container: {
+        marginTop: scaleByFactor(30),
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
 
-  title: {
-    fontSize: ss(16),
-    fontWeight: 'bold',
-  },
+      title: {
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
 
-  table: {
-    marginTop: ss(20),
-    paddingHorizontal: ss(16),
-  },
+      table: {
+        marginTop: scaleByFactor(20),
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: ss(4),
-  },
+      row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: scaleByFactor(4),
+      },
 
-  horizontal_line: {
-    height: 1,
-    marginVertical: ss(12),
-  },
+      horizontal_line: {
+        height: 1,
+        marginVertical: scaleByFactor(12),
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
+      bold: {
+        fontWeight: 'bold',
+      },
 
-  button_container: {
-    marginTop: ss(8),
-  },
-};
+      button_container: {
+        marginTop: scaleByFactor(8),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<QuizMultipleChoiceResultStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.light.primaryBorderColor,
-    },
-  }),
-);
+      horizontal_line: {
+        backgroundColor: config.styles.light.primaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<QuizMultipleChoiceResultStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.dark.primaryBorderColor,
-    },
-  }),
-);
+      horizontal_line: {
+        backgroundColor: config.styles.dark.primaryBorderColor,
+      },
+    };
+  }
+}
+
+export const quizMultipleChoiceResultResponsiveStyles = new QuizMultipleChoiceResultResponsiveStyles();

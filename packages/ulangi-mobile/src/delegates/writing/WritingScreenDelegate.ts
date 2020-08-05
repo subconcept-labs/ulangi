@@ -7,7 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -21,7 +21,7 @@ import { observable, toJS } from 'mobx';
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -154,9 +154,12 @@ export class WritingScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: LightBoxDialogIds.OKAY_BTN,
@@ -164,9 +167,12 @@ export class WritingScreenDelegate {
           onPress: (): void => {
             this.startLesson(true);
           },
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

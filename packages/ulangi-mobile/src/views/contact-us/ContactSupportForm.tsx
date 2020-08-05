@@ -18,8 +18,7 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   ContactSupportFormStyles,
-  darkStyles,
-  lightStyles,
+  contactSupportFormResponsiveStyles,
 } from './ContactSupportForm.style';
 
 export interface ContactSupportFormProps {
@@ -38,9 +37,10 @@ export class ContactSupportForm extends React.Component<
   ContactSupportFormProps
 > {
   public get styles(): ContactSupportFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return contactSupportFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

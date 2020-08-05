@@ -9,6 +9,7 @@ import { DefinitionExtraFieldDetails } from '@ulangi/ulangi-common/constants';
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { DefinitionExtraFields } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -19,18 +20,14 @@ import { VocabularyItemIds } from '../../constants/ids/VocabularyItemIds';
 import { DefaultText } from '../common/DefaultText';
 import {
   DefinitionExtraFieldListStyles,
-  darkStyles,
-  lightStyles,
+  definitionExtraFieldListResponsiveStyles,
 } from './DefinitionExtraFieldList.style';
 
 export interface DefinitionExtraFieldListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   extraFields: DefinitionExtraFields;
   hideFields?: (keyof DefinitionExtraFields)[];
-  styles?: {
-    light: DefinitionExtraFieldListStyles;
-    dark: DefinitionExtraFieldListStyles;
-  };
 }
 
 @observer
@@ -38,9 +35,10 @@ export class DefinitionExtraFieldList extends React.Component<
   DefinitionExtraFieldListProps
 > {
   public get styles(): DefinitionExtraFieldListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return definitionExtraFieldListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

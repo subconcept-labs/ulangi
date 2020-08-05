@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DefaultButtonProps } from '../props/DefaultButtonProps';
+import { ButtonProps } from '../general/ButtonProps';
 
 export interface Dialog {
   readonly message: string;
@@ -13,7 +13,7 @@ export interface Dialog {
   readonly title?: string;
   readonly showCloseButton?: boolean;
   readonly closeOnTouchOutside?: boolean;
-  readonly buttonList?: readonly DefaultButtonProps[];
+  readonly buttonList?: readonly ButtonProps[];
   readonly onClose?: () => void;
   readonly onBackgroundPress?: () => void;
 }

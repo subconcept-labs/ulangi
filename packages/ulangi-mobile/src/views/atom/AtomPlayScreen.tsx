@@ -7,49 +7,67 @@
 
 import {
   ObservableAtomPlayScreen,
-  ObservableDimensions,
+  ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { AtomPlayScreenIds } from '../../constants/ids/AtomPlayScreenIds';
 import { AtomPlayScreenDelegate } from '../../delegates/atom/AtomPlayScreenDelegate';
+import { Screen } from '../common/Screen';
 import { AtomArcs } from './AtomArcs';
 import { AtomOrigin } from './AtomOrigin';
 import { AtomParticles } from './AtomParticles';
+import {
+  AtomPlayScreenStyles,
+  atomPlayScreenResponsiveStyles,
+} from './AtomPlayScreen.style';
 import { AtomQuestion } from './AtomQuestion';
 import { AtomShell } from './AtomShell';
 import { AtomTopBar } from './AtomTopBar';
 
 export interface AtomPlayScreenProps {
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableAtomPlayScreen;
-  observableDimensions: ObservableDimensions;
   screenDelegate: AtomPlayScreenDelegate;
 }
 
 @observer
 export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
+  private get styles(): AtomPlayScreenStyles {
+    return atomPlayScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.screen} testID={AtomPlayScreenIds.SCREEN}>
-        <View style={styles.container}>
+      <Screen
+        style={this.styles.screen}
+        testID={AtomPlayScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
+        <View style={this.styles.container}>
           {this.props.observableScreen.shells.map(
             (shell): React.ReactElement<any> => {
               return (
                 <AtomShell
                   key={shell.shellType}
-                  observableDimensions={this.props.observableDimensions}
+                  screenLayout={this.props.observableScreen.screenLayout}
                   shell={shell}
                 />
               );
             },
           )}
           <AtomArcs
-            observableDimensions={this.props.observableDimensions}
+            screenLayout={this.props.observableScreen.screenLayout}
             arcs={this.props.observableScreen.arcs}
           />
           <AtomParticles
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             particles={this.props.observableScreen.particles}
             getShellByPosition={this.props.screenDelegate.getShellByPosition}
             transferParticleToAnotherShell={
@@ -61,28 +79,26 @@ export class AtomPlayScreen extends React.Component<AtomPlayScreenProps> {
             isMaxReached={this.props.screenDelegate.isMaxReached}
           />
           <AtomOrigin
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             origin={this.props.observableScreen.origin}
             gameStats={this.props.observableScreen.gameStats}
           />
           <AtomTopBar
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             iconTestID={AtomPlayScreenIds.PAUSE_BTN}
             iconType="pause"
             onPress={this.props.screenDelegate.pause}
             gameStats={this.props.observableScreen.gameStats}
           />
-          <AtomQuestion question={this.props.observableScreen.question} />
+          <AtomQuestion
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
+            question={this.props.observableScreen.question}
+          />
         </View>
-      </SafeAreaView>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-  },
-});

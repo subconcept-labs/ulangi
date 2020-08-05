@@ -5,9 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableNetworkStore,
+  ObservableScreen,
   ObservableSyncStore,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -26,15 +26,16 @@ import { env } from '../../constants/env';
 import { SynchronizerScreenIds } from '../../constants/ids/SynchronizerScreenIds';
 import { SynchronizerScreenDelegate } from '../../delegates/sync/SynchronizerScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   SynchronizerScreenStyles,
-  darkStyles,
-  lightStyles,
+  synchronizerScreenResponsiveStyles,
 } from './SynchronizerScreen.styles';
 
 export interface SynchronizerScreenProps {
+  observableScreen: ObservableScreen;
   themeStore: ObservableThemeStore;
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
@@ -46,22 +47,31 @@ export class SynchronizerScreen extends React.Component<
   SynchronizerScreenProps
 > {
   public get styles(): SynchronizerScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return synchronizerScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={SynchronizerScreenIds.SCREEN}>
-        <SectionGroup theme={this.props.themeStore.theme} header="SYNC STATE">
+      <Screen
+        style={this.styles.screen}
+        testID={SynchronizerScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <SectionGroup
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          header="SYNC STATE">
           <SectionRow
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             customLeft={this.renderSyncState()}
             description={this.renderDescription()}
           />
         </SectionGroup>
-      </View>
+      </Screen>
     );
   }
 

@@ -7,29 +7,23 @@
 
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservablePixabayImage,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import { IObservableArray, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FlatList, View } from 'react-native';
 
+import { Layout } from '../../utils/responsive';
 import { DefaultActivityIndicator } from '../common/DefaultActivityIndicator';
 import { DefaultText } from '../common/DefaultText';
-import {
-  ImageListStyles,
-  darkStyles,
-  lightStyles,
-  numColumns,
-  selectableImageDarkStyles,
-  selectableImageLightStyles,
-} from './ImageList.style';
+import { ImageListStyles, imageListResponsiveStyles } from './ImageList.style';
 import { SelectableImage } from './SelectableImage';
 
 export interface ImageListProps {
   theme: Theme;
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   images: null | IObservableArray<ObservablePixabayImage>;
   isRefreshing: IObservableValue<boolean>;
   searchState: IObservableValue<ActivityState>;
@@ -45,23 +39,42 @@ export interface ImageListProps {
 
 @observer
 export class ImageList extends React.Component<ImageListProps> {
+  private readonly numColumns = 3;
+  private readonly imagePadding = 16;
+
   private keyExtractor = (item: ObservablePixabayImage): string =>
     item.id.toString();
 
-  public get styles(): ImageListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): ImageListStyles {
+    return imageListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+      {
+        imagePadding: this.imagePadding,
+        numColumns: this.numColumns,
+      },
+    );
+  }
+
+  private calculateImageDimension(): Layout {
+    const width =
+      (this.props.screenLayout.width -
+        this.imagePadding * 2 * (this.numColumns + 1)) /
+      this.numColumns;
+
+    return {
+      width,
+      height: width,
+    };
   }
 
   public render(): React.ReactElement<any> {
-    const windowWidth = this.props.observableDimensions.windowWidth;
     return (
       <FlatList
         style={this.styles.container}
         contentContainerStyle={this.styles.content_container}
         data={this.props.images !== null ? this.props.images.slice() : []}
-        numColumns={numColumns}
+        numColumns={this.numColumns}
         ListEmptyComponent={
           this.props.images !== null ? this.renderEmpty() : null
         }
@@ -84,12 +97,11 @@ export class ImageList extends React.Component<ImageListProps> {
           return (
             <SelectableImage
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               image={item}
+              imagePadding={this.imagePadding}
+              imageDimensions={this.calculateImageDimension()}
               toggleSelect={(): void => this.props.toggleSelect(item)}
-              styles={{
-                light: selectableImageLightStyles(windowWidth),
-                dark: selectableImageDarkStyles(windowWidth),
-              }}
             />
           );
         }}

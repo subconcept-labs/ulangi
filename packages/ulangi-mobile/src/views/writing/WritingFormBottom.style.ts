@@ -5,50 +5,57 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface WritingFormBottomStyles {
   container: ViewStyle;
   horizontal_line: ViewStyle;
 }
 
-export const baseStyles: WritingFormBottomStyles = {
-  container: {},
+export class WritingFormBottomResponsiveStyles extends ResponsiveStyleSheet<
+  WritingFormBottomStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): WritingFormBottomStyles {
+    return {
+      container: {},
 
-  horizontal_line: {
-    marginHorizontal: ss(8),
-    height: StyleSheet.hairlineWidth,
-  },
-};
+      horizontal_line: {
+        marginHorizontal: scaleByFactor(8),
+        height: StyleSheet.hairlineWidth,
+      },
+    };
+  }
 
-export const lightStyles: WritingFormBottomStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+  public lightStyles(): Partial<WritingFormBottomStyles> {
+    return {
+      container: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.light.secondaryBorderColor,
-    },
-  }),
-);
+      horizontal_line: {
+        backgroundColor: config.styles.light.secondaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles: WritingFormBottomStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    container: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+  public darkStyles(): Partial<WritingFormBottomStyles> {
+    return {
+      container: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    horizontal_line: {
-      backgroundColor: config.styles.dark.secondaryBorderColor,
-    },
-  }),
-);
+      horizontal_line: {
+        backgroundColor: config.styles.dark.secondaryBorderColor,
+      },
+    };
+  }
+}
+
+export const writingFormBottomResponsiveStyles = new WritingFormBottomResponsiveStyles();

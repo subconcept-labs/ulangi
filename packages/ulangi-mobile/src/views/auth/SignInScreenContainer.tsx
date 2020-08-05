@@ -60,6 +60,7 @@ export class SignInScreenContainer extends Container {
     return (
       <SignInScreen
         observableScreen={this.observableScreen}
+        themeStore={this.props.rootStore.themeStore}
         screenDelegate={this.screenDelegate}
       />
     );

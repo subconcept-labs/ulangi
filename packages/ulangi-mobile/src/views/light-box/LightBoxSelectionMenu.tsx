@@ -7,8 +7,8 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { SelectionMenu } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -19,12 +19,12 @@ import { DefaultText } from '../common/DefaultText';
 import { LightBoxSelectionItem } from './LightBoxSelectionItem';
 import {
   LightBoxSelectionMenuStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxSelectionMenuResponsiveStyles,
 } from './LightBoxSelectionMenu.style';
 
 export interface LightBoxSelectionMenuProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   selectionMenu: SelectionMenu<any>;
 }
 
@@ -33,7 +33,10 @@ export class LightBoxSelectionMenu extends React.Component<
   LightBoxSelectionMenuProps
 > {
   public get styles(): LightBoxSelectionMenuStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+    return lightBoxSelectionMenuResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -55,7 +58,14 @@ export class LightBoxSelectionMenu extends React.Component<
           {this.props.selectionMenu.leftButton ? (
             <DefaultButton
               {...this.props.selectionMenu.leftButton}
-              styles={toJS(this.props.selectionMenu.leftButton.styles)}
+              styles={
+                this.props.selectionMenu.leftButton.styles
+                  ? this.props.selectionMenu.leftButton.styles(
+                      this.props.theme,
+                      this.props.screenLayout,
+                    )
+                  : undefined
+              }
             />
           ) : null}
         </View>
@@ -66,7 +76,14 @@ export class LightBoxSelectionMenu extends React.Component<
           {this.props.selectionMenu.rightButton ? (
             <DefaultButton
               {...this.props.selectionMenu.rightButton}
-              styles={toJS(this.props.selectionMenu.rightButton.styles)}
+              styles={
+                this.props.selectionMenu.rightButton.styles
+                  ? this.props.selectionMenu.rightButton.styles(
+                      this.props.theme,
+                      this.props.screenLayout,
+                    )
+                  : undefined
+              }
             />
           ) : null}
         </View>
@@ -85,6 +102,7 @@ export class LightBoxSelectionMenu extends React.Component<
             return (
               <LightBoxSelectionItem
                 key={selectionItem.text + '_' + index}
+                screenLayout={this.props.screenLayout}
                 theme={this.props.theme}
                 item={selectionItem}
                 isSelected={_.includes(

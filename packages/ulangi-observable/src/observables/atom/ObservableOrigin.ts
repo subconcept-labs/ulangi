@@ -8,10 +8,10 @@
 import { computed, observable } from 'mobx';
 
 import { ObservableCommandList } from '../animation/ObservableCommandList';
-import { ObservableDimensions } from '../dimensions/ObservableDimensions';
+import { ObservableScreenLayout } from '../screen/ObservableScreenLayout';
 
 export class ObservableOrigin {
-  private observableDimensions: ObservableDimensions;
+  private readonly screenLayout: ObservableScreenLayout;
 
   public readonly commandList: ObservableCommandList;
 
@@ -26,8 +26,8 @@ export class ObservableOrigin {
 
   @computed
   public get position(): { x: number; y: number } {
-    const x = this.observableDimensions.windowWidth / 2;
-    const windowHeight = this.observableDimensions.windowHeight;
+    const x = this.screenLayout.width / 2;
+    const windowHeight = this.screenLayout.height;
 
     const y =
       windowHeight -
@@ -39,12 +39,12 @@ export class ObservableOrigin {
   }
 
   public constructor(
-    observableDimensions: ObservableDimensions,
+    screenLayout: ObservableScreenLayout,
     bottomOffset: number,
     outerShellDiameter: number,
     particleSize: number
   ) {
-    this.observableDimensions = observableDimensions;
+    this.screenLayout = screenLayout;
     this.bottomOffset = bottomOffset;
     this.outerShellDiameter = outerShellDiameter;
     this.particleSize = particleSize;

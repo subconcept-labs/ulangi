@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface ReviewTopStyles {
   container: ViewStyle;
@@ -19,68 +18,76 @@ export interface ReviewTopStyles {
   note: TextStyle;
 }
 
-export const baseStyles: ReviewTopStyles = {
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: ss(16),
-    marginTop: ss(20),
-    marginBottom: ss(20),
-  },
+export class ReviewTopResponsiveStyles extends ResponsiveStyleSheet<
+  ReviewTopStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): ReviewTopStyles {
+    return {
+      container: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: scaleByFactor(16),
+        marginTop: scaleByFactor(20),
+        marginBottom: scaleByFactor(20),
+      },
 
-  number_container: {
-    height: ss(24),
-    paddingHorizontal: ss(16),
-    borderRadius: ss(12),
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      number_container: {
+        height: scaleByFactor(24),
+        paddingHorizontal: scaleByFactor(16),
+        borderRadius: scaleByFactor(12),
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  number: {
-    fontSize: ss(15),
-    fontWeight: 'bold',
-  },
+      number: {
+        fontSize: scaleByFactor(15),
+        fontWeight: 'bold',
+      },
 
-  note_container: {
-    marginTop: ss(6),
-  },
+      note_container: {
+        marginTop: scaleByFactor(6),
+      },
 
-  note: {
-    fontSize: ss(14),
-    textAlign: 'center',
-  },
-};
+      note: {
+        fontSize: scaleByFactor(14),
+        textAlign: 'center',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    number_container: {
-      borderColor: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<ReviewTopStyles> {
+    return {
+      number_container: {
+        borderColor: config.styles.light.secondaryTextColor,
+      },
 
-    number: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      number: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    note: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      note: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    number_container: {
-      borderColor: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<ReviewTopStyles> {
+    return {
+      number_container: {
+        borderColor: config.styles.dark.secondaryTextColor,
+      },
 
-    number: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      number: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    note: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      note: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const reviewTopResponsiveStyles = new ReviewTopResponsiveStyles();

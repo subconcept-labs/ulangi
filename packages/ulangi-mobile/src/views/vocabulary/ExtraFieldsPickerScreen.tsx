@@ -6,10 +6,9 @@
  */
 
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
   ObservableSetStore,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
@@ -21,19 +20,19 @@ import { ExtraFieldsPickerScreenIds } from '../../constants/ids/ExtraFieldsPicke
 import { VocabularyFormIds } from '../../constants/ids/VocabularyFormIds';
 import { ExtraFieldsPickerScreenDelegate } from '../../delegates/vocabulary/ExtraFieldsPickerScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackground';
 import { ExtraFieldsPickerContent } from './ExtraFieldsPickerContent';
 import {
   ExtraFieldsPickerScreenStyles,
-  darkStyles,
-  lightStyles,
+  extraFieldsPickerScreenResponsiveStyles,
 } from './ExtraFieldsPickerScreen.style';
 
 export interface ExtraFieldsPickerScreenProps {
   kind: 'vocabulary' | 'definition';
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   themeStore: ObservableThemeStore;
   setStore: ObservableSetStore;
   screenDelegate: ExtraFieldsPickerScreenDelegate;
@@ -50,38 +49,45 @@ export class ExtraFieldsPickerScreen extends React.Component<
   ExtraFieldsPickerScreenProps
 > {
   public get styles(): ExtraFieldsPickerScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return extraFieldsPickerScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <LightBoxTouchableBackground
-        testID={ExtraFieldsPickerScreenIds.SCREEN}
-        observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
-        style={this.styles.light_box_container}
-        enabled={true}
-        activeOpacity={0.2}
-        onPress={this.props.screenDelegate.close}>
-        <LightBoxAnimatableView
-          testID={ExtraFieldsPickerScreenIds.CONTAINER}
-          observableLightBox={this.props.observableLightBox}>
-          <View style={this.styles.inner_container}>
-            {this.renderPickerHeader()}
-            <View
-              style={[
-                this.styles.picker_content_container,
-                {
-                  height: this.props.observableDimensions.windowHeight / 2,
-                },
-              ]}>
-              {this.renderPickerContent()}
+      <Screen
+        useSafeAreaView={false}
+        observableScreen={this.props.observableScreen}
+        style={this.styles.screen}>
+        <LightBoxTouchableBackground
+          testID={ExtraFieldsPickerScreenIds.SCREEN}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          observableLightBox={this.props.observableLightBox}
+          style={this.styles.light_box_container}
+          enabled={true}
+          activeOpacity={0.2}
+          onPress={this.props.screenDelegate.close}>
+          <LightBoxAnimatableView
+            testID={ExtraFieldsPickerScreenIds.CONTAINER}
+            observableLightBox={this.props.observableLightBox}>
+            <View style={this.styles.inner_container}>
+              {this.renderPickerHeader()}
+              <View
+                style={[
+                  this.styles.picker_content_container,
+                  {
+                    height: this.props.observableScreen.screenLayout.height / 2,
+                  },
+                ]}>
+                {this.renderPickerContent()}
+              </View>
             </View>
-          </View>
-        </LightBoxAnimatableView>
-      </LightBoxTouchableBackground>
+          </LightBoxAnimatableView>
+        </LightBoxTouchableBackground>
+      </Screen>
     );
   }
 
@@ -108,6 +114,7 @@ export class ExtraFieldsPickerScreen extends React.Component<
     return (
       <ExtraFieldsPickerContent
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         kind={this.props.kind}
         learningLanguageCode={
           this.props.setStore.existingCurrentSet.learningLanguage.languageCode

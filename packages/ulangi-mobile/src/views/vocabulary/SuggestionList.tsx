@@ -1,6 +1,9 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { Attribution } from '@ulangi/ulangi-common/interfaces';
-import { ObservableSuggestion } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSuggestion,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -9,12 +12,12 @@ import { DefaultText } from '../common/DefaultText';
 import { SuggestionItem } from './SuggestionItem';
 import {
   SuggestionListStyles,
-  darkStyles,
-  lightStyles,
+  suggestionListResponsiveStyles,
 } from './SuggestionList.style';
 
 export interface SuggestionListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   term: string;
   label: undefined | string;
   attributions: undefined | Attribution[];
@@ -29,9 +32,10 @@ export interface SuggestionListProps {
 @observer
 export class SuggestionList extends React.Component<SuggestionListProps> {
   public get styles(): SuggestionListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return suggestionListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -44,6 +48,7 @@ export class SuggestionList extends React.Component<SuggestionListProps> {
               <SuggestionItem
                 key={index}
                 theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 suggestion={suggestion}
               />
             );

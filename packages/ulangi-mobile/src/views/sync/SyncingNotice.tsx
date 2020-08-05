@@ -5,18 +5,24 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { Images } from '../../constants/Images';
-import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  SyncingNoticeStyles,
+  syncingNoticeResponsiveStyles,
+} from './SyncingNotice.style';
 
 export interface SyncingNoticeProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   shouldShowSyncingNotice: IObservableValue<boolean>;
   shouldShowRefreshNotice: IObservableValue<boolean>;
   refresh: () => void;
@@ -24,6 +30,13 @@ export interface SyncingNoticeProps {
 
 @observer
 export class SyncingNotice extends React.Component<SyncingNoticeProps> {
+  private get styles(): SyncingNoticeStyles {
+    return syncingNoticeResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     if (
       this.props.shouldShowSyncingNotice.get() === true ||
@@ -31,7 +44,7 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
     ) {
       return (
         <Animatable.View
-          style={styles.container}
+          style={this.styles.container}
           animation="slideInUp"
           useNativeDriver={true}>
           {this.renderContent()}
@@ -46,7 +59,7 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
     return (
       <TouchableOpacity
         onPress={this.props.refresh}
-        style={styles.content_container}>
+        style={this.styles.content_container}>
         {this.props.shouldShowSyncingNotice.get() ? (
           <>
             <Animatable.View
@@ -54,12 +67,15 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
               easing="linear"
               iterationCount="infinite"
               useNativeDriver={true}>
-              <Image style={styles.icon} source={Images.SYNC_WHITE_20X20} />
+              <Image
+                style={this.styles.icon}
+                source={Images.SYNC_WHITE_20X20}
+              />
             </Animatable.View>
             <DefaultText
               allowFontScaling={false}
               numberOfLines={1}
-              style={styles.text}>
+              style={this.styles.text}>
               <DefaultText>Syncing</DefaultText>
             </DefaultText>
           </>
@@ -67,7 +83,7 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
           <DefaultText
             allowFontScaling={false}
             numberOfLines={1}
-            style={styles.text}>
+            style={this.styles.text}>
             <DefaultText>Tap to refresh</DefaultText>
           </DefaultText>
         )}
@@ -75,40 +91,3 @@ export class SyncingNotice extends React.Component<SyncingNoticeProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {},
-
-  content_container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: ss(10),
-    height: ss(30),
-    borderRadius: ss(15),
-    backgroundColor: config.styles.primaryColor,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 1,
-    shadowOpacity: 0.15,
-    elevation: 3,
-    marginBottom: ss(-3),
-  },
-
-  icon: {},
-
-  text: {
-    marginLeft: ss(4),
-    textAlign: 'center',
-    fontSize: ss(13),
-    color: '#fff',
-  },
-
-  dot: {
-    fontWeight: '700',
-  },
-
-  highlighted_text: {
-    fontWeight: '700',
-  },
-});

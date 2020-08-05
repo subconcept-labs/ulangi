@@ -5,26 +5,38 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 
 export interface TranslationSectionStyles {
   highlighted_text: TextStyle;
   bold: TextStyle;
 }
 
-export const baseStyles: TranslationSectionStyles = {
-  highlighted_text: {
-    color: config.styles.primaryColor,
-  },
+export class TranslationSectionResponsiveStyles extends ResponsiveStyleSheet<
+  TranslationSectionStyles
+> {
+  public baseStyles(): TranslationSectionStyles {
+    return {
+      highlighted_text: {
+        color: config.styles.primaryColor,
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
-};
+      bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<TranslationSectionStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<TranslationSectionStyles> {
+    return {};
+  }
+}
+
+export const translationSectionResponsiveStyles = new TranslationSectionResponsiveStyles();

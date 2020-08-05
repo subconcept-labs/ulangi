@@ -5,63 +5,47 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import {
-  StyleSheet,
-  TextStyle,
-  TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
+import { TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
-import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
+import {
+  SubmitButtonStyles,
+  submitButtonResponsiveStyles,
+} from './SubmitButton.style';
 
 export interface SubmitButtonProps {
   testID: string;
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   buttonText: string;
   onSubmit: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
 }
 
+@observer
 export class SubmitButton extends React.Component<SubmitButtonProps> {
+  private get styles(): SubmitButtonStyles {
+    return submitButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <TouchableOpacity
         testID={this.props.testID}
-        style={[styles.button_touchable, this.props.style]}
+        style={[this.styles.button_touchable, this.props.style]}
         onPress={this.props.onSubmit}>
-        <DefaultText style={[styles.button_text, this.props.textStyle]}>
+        <DefaultText style={[this.styles.button_text, this.props.textStyle]}>
           {this.props.buttonText}
         </DefaultText>
       </TouchableOpacity>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  button_touchable: {
-    alignSelf: 'stretch',
-    paddingHorizontal: ss(10),
-    paddingVertical: ss(12),
-    borderRadius: ss(4),
-    marginTop: ss(8),
-    marginHorizontal: ls(16),
-    backgroundColor: '#00c7fe',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 0.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  button_text: {
-    color: 'white',
-    fontSize: ss(17),
-    fontFamily: 'Arial',
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-});

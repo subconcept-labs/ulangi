@@ -6,13 +6,17 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
 import {
-  darkStyles as defaultDefinitionItemDarkStyles,
-  lightStyles as defaultDefinitionItemLightStyles,
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
+import {
+  DefinitionItemResponsiveStyles,
+  DefinitionItemStyles,
 } from '../vocabulary/DefinitionItem.style';
 
 export interface ReviewItemStyles {
@@ -27,124 +31,135 @@ export interface ReviewItemStyles {
   bold: TextStyle;
 }
 
-export const baseStyles: ReviewItemStyles = {
-  vocabulary_container: {
-    marginHorizontal: ls(16),
-    backgroundColor: '#ececec',
-    borderRadius: ss(10),
-    marginTop: ss(20),
-  },
+export class ReviewItemResponsiveStyles extends ResponsiveStyleSheet<
+  ReviewItemStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): ReviewItemStyles {
+    return {
+      vocabulary_container: {
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        backgroundColor: '#ececec',
+        borderRadius: scaleByFactor(10),
+        marginTop: scaleByFactor(20),
+      },
 
-  vocabulary_text_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(14),
-  },
+      vocabulary_text_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(14),
+      },
 
-  top_container: {
-    paddingVertical: ss(3),
-    flexDirection: 'row',
-  },
+      top_container: {
+        paddingVertical: scaleByFactor(3),
+        flexDirection: 'row',
+      },
 
-  vocabulary_text: {
-    fontSize: ss(19),
-    fontWeight: 'bold',
-  },
+      vocabulary_text: {
+        fontSize: scaleByFactor(19),
+        fontWeight: 'bold',
+      },
 
-  message_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-    borderTopWidth: ss(2),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      message_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(12),
+        borderTopWidth: scaleByFactor(2),
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  message_inline: {
-    flexShrink: 1,
-    fontSize: ss(15),
-    lineHeight: ss(19),
-  },
+      message_inline: {
+        flexShrink: 1,
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(19),
+      },
 
-  message_text_highlighted: {
-    color: config.styles.primaryColor,
-    fontSize: ss(15),
-    lineHeight: ss(19),
-  },
+      message_text_highlighted: {
+        color: config.styles.primaryColor,
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(19),
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
+      bold: {
+        fontWeight: 'bold',
+      },
 
-  definition_list_container: {
-    borderTopWidth: 2,
-  },
-};
+      definition_list_container: {
+        borderTopWidth: 2,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    vocabulary_container: {
-      backgroundColor: config.styles.light.secondaryBackgroundColor,
-    },
+  public lightStyles(): Partial<ReviewItemStyles> {
+    return {
+      vocabulary_container: {
+        backgroundColor: config.styles.light.secondaryBackgroundColor,
+      },
 
-    vocabulary_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+      vocabulary_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    message_container: {
-      borderTopColor: config.styles.light.primaryBackgroundColor,
-    },
+      message_container: {
+        borderTopColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    message_inline: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      message_inline: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
-  }),
-);
+      definition_list_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    vocabulary_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+  public darkStyles(): Partial<ReviewItemStyles> {
+    return {
+      vocabulary_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    vocabulary_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      vocabulary_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    message_container: {
-      borderTopColor: config.styles.dark.secondaryBackgroundColor,
-    },
+      message_container: {
+        borderTopColor: config.styles.dark.secondaryBackgroundColor,
+      },
 
-    message_inline: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      message_inline: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    definition_list_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
-  }),
-);
+      definition_list_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
+    };
+  }
+}
 
-export const definitionItemLightStyles = _.merge(
-  {},
-  defaultDefinitionItemLightStyles,
-  {
-    item_container: {
-      borderTopWidth: 1,
-      borderTopColor: config.styles.light.primaryBackgroundColor,
-    },
-  },
-);
+export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemResponsiveStyles {
+  public lightStyles(): Partial<DefinitionItemStyles> {
+    return _.merge({}, super.lightStyles(), {
+      item_container: {
+        borderTopWidth: 1,
+        borderTopColor: config.styles.light.primaryBackgroundColor,
+      },
+    });
+  }
 
-export const definitionItemDarkStyles = _.merge(
-  {},
-  defaultDefinitionItemDarkStyles,
-  {
-    item_container: {
-      borderTopWidth: 1,
-      borderTopColor: config.styles.dark.secondaryBackgroundColor,
-    },
-  },
-);
+  public darkStyles(): Partial<DefinitionItemStyles> {
+    return _.merge({}, super.lightStyles(), {
+      item_container: {
+        borderTopWidth: 1,
+        borderTopColor: config.styles.dark.secondaryBackgroundColor,
+      },
+    });
+  }
+}
+
+export const reviewItemResponsiveStyles = new ReviewItemResponsiveStyles();
+
+export const definitionItemResponsiveStyles = new ExtendedDefinitionItemResponsiveStyles();

@@ -6,29 +6,30 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReviewState } from '@ulangi/ulangi-observable';
+import {
+  ObservableReviewState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
-import { ReviewTopStyles, darkStyles, lightStyles } from './ReviewTop.style';
+import { ReviewTopStyles, reviewTopResponsiveStyles } from './ReviewTop.style';
 
 export interface ReviewTopProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   reviewState: ObservableReviewState;
-  styles?: {
-    light: ReviewTopStyles;
-    dark: ReviewTopStyles;
-  };
 }
 
 @observer
 export class ReviewTop extends React.Component<ReviewTopProps> {
   public get styles(): ReviewTopStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewTopResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

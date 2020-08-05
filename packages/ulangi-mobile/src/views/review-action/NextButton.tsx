@@ -6,33 +6,35 @@
  */
 
 import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { config } from '../../constants/config';
-import { RoundedCornerButtonStyle } from '../../styles/RoundedCornerButtonStyle';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
-import { NextButtonStyles, darkStyles, lightStyles } from './NextButton.style';
+import {
+  NextButtonStyles,
+  nextButtonResponsiveStyles,
+} from './NextButton.style';
 
 export interface NextButtonProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   title: string;
   next: () => void;
-  styles?: {
-    light: NextButtonStyles;
-    dark: NextButtonStyles;
-  };
 }
 
 @observer
 export class NextButton extends React.Component<NextButtonProps> {
   public get styles(): NextButtonStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return nextButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): null | React.ReactElement<any> {
@@ -49,11 +51,13 @@ export class NextButton extends React.Component<NextButtonProps> {
         </View>
         <DefaultButton
           text="Next"
-          styles={RoundedCornerButtonStyle.getFullBackgroundStyles(
+          styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
             ButtonSize.LARGE,
             4,
             config.styles.greenColor,
             '#fff',
+            this.props.theme,
+            this.props.screenLayout,
           )}
           onPress={this.props.next}
         />

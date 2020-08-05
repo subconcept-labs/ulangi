@@ -12,7 +12,7 @@ import {
   ScreenName,
   ScreenState,
 } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableConverter,
   ObservableSetStore,
@@ -27,7 +27,7 @@ import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
@@ -278,9 +278,12 @@ export class SpacedRepetitionLessonScreenDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: LightBoxDialogIds.OKAY_BTN,
@@ -289,9 +292,12 @@ export class SpacedRepetitionLessonScreenDelegate {
             this.dialogDelegate.dismiss();
             this.navigatorDelegate.dismissScreen();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

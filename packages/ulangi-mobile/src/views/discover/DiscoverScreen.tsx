@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { DiscoverListType, Theme } from '@ulangi/ulangi-common/enums';
+import { DiscoverListType } from '@ulangi/ulangi-common/enums';
 import {
   ObservableDiscoverScreen,
   ObservableSetStore,
@@ -19,12 +19,12 @@ import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverScreenDelegate } from '../../delegates/discover/DiscoverScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { DiscoverCenterTitle } from './DiscoverCenterTitle';
 import { DiscoverNavBar } from './DiscoverNavBar';
 import {
   DiscoverScreenStyles,
-  darkStyles,
-  lightStyles,
+  discoverScreenResponsiveStyles,
 } from './DiscoverScreen.style';
 import { DiscoverSearch } from './DiscoverSearch';
 import { PublicSetList } from './PublicSetList';
@@ -41,9 +41,10 @@ export interface DiscoverScreenProps {
 @observer
 export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
   private get styles(): DiscoverScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return discoverScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   private isSupported(): boolean {
@@ -56,21 +57,25 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
 
   public render(): React.ReactElement<any> {
     return (
-      <DismissKeyboardView
+      <Screen
         style={this.styles.screen}
-        testID={DiscoverScreenIds.SCREEN}>
-        {this.isSupported() ? (
-          <React.Fragment>
-            {this.renderTopBar()}
-            {this.props.observableScreen.listType.get() === null
-              ? this.renderCenterTitle()
-              : this.renderList()}
-            {this.renderFloatingButton()}
-          </React.Fragment>
-        ) : (
-          this.renderNotSupported()
-        )}
-      </DismissKeyboardView>
+        testID={DiscoverScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <DismissKeyboardView style={this.styles.dismiss_view}>
+          {this.isSupported() ? (
+            <React.Fragment>
+              {this.renderTopBar()}
+              {this.props.observableScreen.listType.get() === null
+                ? this.renderCenterTitle()
+                : this.renderList()}
+              {this.renderFloatingButton()}
+            </React.Fragment>
+          ) : (
+            this.renderNotSupported()
+          )}
+        </DismissKeyboardView>
+      </Screen>
     );
   }
 
@@ -79,6 +84,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
       <View style={this.styles.top_container}>
         <DiscoverSearch
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           setStore={this.props.setStore}
           searchInput={this.props.observableScreen.searchInput}
           searchInputAutoFocus={
@@ -92,6 +98,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
         />
         <DiscoverNavBar
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           listType={this.props.observableScreen.listType}
           publicSetListState={this.props.observableScreen.publicSetListState}
           publicVocabularyListState={
@@ -109,6 +116,8 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
   private renderCenterTitle(): React.ReactElement<any> {
     return (
       <DiscoverCenterTitle
+        theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         setStore={this.props.setStore}
         publicSetCount={this.props.observableScreen.publicSetCount}
         search={this.props.screenDelegate.setInputAndRefresh}
@@ -120,6 +129,8 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
     return (
       <View style={this.styles.floating_button_container}>
         <SearchFloatingButton
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           focusSearchInput={this.props.screenDelegate.focusSearchInput}
         />
       </View>
@@ -134,6 +145,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
       return (
         <TranslationAndPublicVocabularyList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           learningLanguageCode={
             this.props.setStore.existingCurrentSet.learningLanguageCode
           }
@@ -170,6 +182,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
       return (
         <PublicSetList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           publicSetListState={this.props.observableScreen.publicSetListState}
           showSetDetailModal={this.props.screenDelegate.showSetDetailModal}
           refresh={this.props.screenDelegate.refreshCurrentList}

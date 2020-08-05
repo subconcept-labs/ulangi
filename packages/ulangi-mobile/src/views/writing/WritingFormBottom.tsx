@@ -9,6 +9,7 @@ import { Feedback, Theme, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableReviewActionBarState,
   ObservableReviewFeedbackBarState,
+  ObservableScreenLayout,
   ObservableWritingFormState,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -20,30 +21,27 @@ import { ReviewActionBar } from '../review-action/ReviewActionBar';
 import { ReviewFeedbackBar } from '../review-feedback/ReviewFeedbackBar';
 import {
   WritingFormBottomStyles,
-  darkStyles,
-  lightStyles,
+  writingFormBottomResponsiveStyles,
 } from './WritingFormBottom.style';
 
 export interface WritingFormBottomProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   writingFormState: ObservableWritingFormState;
   reviewActionBarState: ObservableReviewActionBarState;
   reviewFeedbackBarState: ObservableReviewFeedbackBarState;
   next: () => void;
   showAnswer: () => void;
   setFeedback: (feedback: Feedback) => void;
-  styles?: {
-    light: WritingFormBottomStyles;
-    dark: WritingFormBottomStyles;
-  };
 }
 
 @observer
 export class WritingFormBottom extends React.Component<WritingFormBottomProps> {
-  public get styles(): WritingFormBottomStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingFormBottomStyles {
+    return writingFormBottomResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -51,6 +49,7 @@ export class WritingFormBottom extends React.Component<WritingFormBottomProps> {
       <View style={this.styles.container}>
         <ReviewActionBar
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           reviewActionBarState={this.props.reviewActionBarState}
         />
         <View style={this.styles.horizontal_line} />
@@ -71,6 +70,7 @@ export class WritingFormBottom extends React.Component<WritingFormBottomProps> {
         return (
           <NextButton
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             title={
               currentVocabulary.vocabularyStatus === VocabularyStatus.ARCHIVED
                 ? 'This term has been archived. You will not see it again.'
@@ -83,6 +83,7 @@ export class WritingFormBottom extends React.Component<WritingFormBottomProps> {
         return (
           <ReviewFeedbackBar
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             reviewFeedbackBarState={this.props.reviewFeedbackBarState}
             setFeedback={this.props.setFeedback}
           />

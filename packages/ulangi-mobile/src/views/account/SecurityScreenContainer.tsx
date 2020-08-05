@@ -72,7 +72,8 @@ export class SecurityScreenContainer extends Container {
     return (
       <SecurityScreen
         themeStore={this.props.rootStore.themeStore}
-        currentUser={this.props.rootStore.userStore.existingCurrentUser}
+        userStore={this.props.rootStore.userStore}
+        observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />
     );

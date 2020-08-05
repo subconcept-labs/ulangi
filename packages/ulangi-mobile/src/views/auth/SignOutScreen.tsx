@@ -5,23 +5,33 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ObservableScreen } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
+
+import { Screen } from '../common/Screen';
+
+export interface SignOutScreenProps {
+  observableScreen: ObservableScreen;
+}
 
 @observer
-export class SignOutScreen extends React.Component {
+export class SignOutScreen extends React.Component<SignOutScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <Screen
+        style={styles.screen}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <ActivityIndicator color="white" />
-      </View>
+      </Screen>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

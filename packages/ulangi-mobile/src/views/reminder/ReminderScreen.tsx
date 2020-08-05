@@ -14,13 +14,14 @@ import {
 import { observer } from 'mobx-react';
 import * as moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import { ReminderScreenIds } from '../../constants/ids/ReminderScreenIds';
 import { ReminderScreenDelegate } from '../../delegates/reminder/ReminderScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 
@@ -35,7 +36,11 @@ export interface ReminderScreenProps {
 export class ReminderScreen extends React.Component<ReminderScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.screen} testID={ReminderScreenIds.SCREEN}>
+      <Screen
+        style={styles.screen}
+        testID={ReminderScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         {this.renderSection()}
         <DateTimePicker
           titleIOS="Pick a time"
@@ -49,7 +54,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
           onCancel={this.props.screenDelegate.handleTimeCanceled}
           isDarkModeEnabled={this.props.themeStore.systemMode === 'dark'}
         />
-      </View>
+      </Screen>
     );
   }
 
@@ -59,16 +64,22 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
       this.props.notificationStore.hasPermission === true;
 
     return (
-      <SectionGroup theme={this.props.themeStore.theme} key="reminder">
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
+        key="reminder">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Daily Reminder"
           customRight={
             <DefaultButton
               testID={ReminderScreenIds.REMINDER_TOGGLE_BTN}
               text={reminderActive ? 'On' : 'Off'}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={this.props.screenDelegate.toggle}
             />
@@ -77,6 +88,7 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Time"
           customRight={
             <DefaultButton
@@ -86,8 +98,10 @@ export class ReminderScreen extends React.Component<ReminderScreenProps> {
                 .minutes(this.props.observableScreen.reminderSettings.minutes)
                 .format('hh:mm a')
                 .toUpperCase()}
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={this.props.screenDelegate.showTimePicker}
             />

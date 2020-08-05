@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SetListStyles {
   empty_list_container: ViewStyle;
@@ -18,46 +17,54 @@ export interface SetListStyles {
   list: ViewStyle;
 }
 
-export const baseStyles: SetListStyles = {
-  empty_list_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+export class SetListResponsiveStyles extends ResponsiveStyleSheet<
+  SetListStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SetListStyles {
+    return {
+      empty_list_container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  empty_text: {
-    fontSize: ss(16),
-  },
+      empty_text: {
+        fontSize: scaleByFactor(16),
+      },
 
-  list_container: {
-    flex: 1,
-  },
+      list_container: {
+        flex: 1,
+      },
 
-  list: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-};
+      list: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    empty_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<SetListStyles> {
+    return {
+      empty_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    list: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-    },
-  }),
-);
+      list: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    empty_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<SetListStyles> {
+    return {
+      empty_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    list: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-    },
-  }),
-);
+      list: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+      },
+    };
+  }
+}
+
+export const setListResponsiveStyles = new SetListResponsiveStyles();

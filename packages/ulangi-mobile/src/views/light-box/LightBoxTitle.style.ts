@@ -5,54 +5,61 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface LightBoxTitleStyles {
   title_container: ViewStyle;
   title_text: TextStyle;
 }
 
-export const baseStyles = {
-  title_container: {
-    alignSelf: 'stretch',
-    paddingVertical: ss(12),
-    paddingHorizontal: ss(16),
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+export class LightBoxTitleResponsiveStyles extends ResponsiveStyleSheet<
+  LightBoxTitleStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): LightBoxTitleStyles {
+    return {
+      title_container: {
+        alignSelf: 'stretch',
+        paddingVertical: scaleByFactor(12),
+        paddingHorizontal: scaleByFactor(16),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
 
-  title_text: {
-    fontSize: ss(13),
-    fontWeight: 'bold',
-    letterSpacing: -0.25,
-  },
-};
+      title_text: {
+        fontSize: scaleByFactor(13),
+        fontWeight: 'bold',
+        letterSpacing: -0.25,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_container: {
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<LightBoxTitleStyles> {
+    return {
+      title_container: {
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    title_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      title_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title_container: {
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<LightBoxTitleStyles> {
+    return {
+      title_container: {
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    title_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      title_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const lightBoxTitleResponsiveStyles = new LightBoxTitleResponsiveStyles();

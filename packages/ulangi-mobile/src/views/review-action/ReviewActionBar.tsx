@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableReviewActionBarState } from '@ulangi/ulangi-observable';
+import {
+  ObservableReviewActionBarState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -16,12 +19,12 @@ import { DefaultText } from '../common/DefaultText';
 import { SmartScrollView } from '../common/SmartScrollView';
 import {
   ReviewActionBarStyles,
-  darkStyles,
-  lightStyles,
+  reviewActionBarResponsiveStyles,
 } from './ReviewActionBar.style';
 
 export interface ReviewActionBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   reviewActionBarState: ObservableReviewActionBarState;
   styles?: {
     light: ReviewActionBarStyles;
@@ -31,10 +34,11 @@ export interface ReviewActionBarProps {
 
 @observer
 export class ReviewActionBar extends React.Component<ReviewActionBarProps> {
-  public get styles(): ReviewActionBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): ReviewActionBarStyles {
+    return reviewActionBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

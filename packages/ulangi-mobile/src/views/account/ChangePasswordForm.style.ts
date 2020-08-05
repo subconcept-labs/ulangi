@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface ChangePasswordFormStyles {
   form: ViewStyle;
@@ -18,60 +17,68 @@ export interface ChangePasswordFormStyles {
   no_border: ViewStyle;
 }
 
-export const baseStyles: ChangePasswordFormStyles = {
-  form: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+export class ChangePasswordFormResponsiveStyles extends ResponsiveStyleSheet<
+  ChangePasswordFormStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): ChangePasswordFormStyles {
+    return {
+      form: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  text_input_container: {
-    paddingHorizontal: ss(8),
-  },
+      text_input_container: {
+        paddingHorizontal: scaleByFactor(8),
+      },
 
-  text_input: {
-    paddingHorizontal: ss(8),
-    paddingVertical: ss(13),
-    fontSize: ss(16),
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+      text_input: {
+        paddingHorizontal: scaleByFactor(8),
+        paddingVertical: scaleByFactor(13),
+        fontSize: scaleByFactor(16),
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
 
-  no_border: {
-    borderBottomWidth: 0,
-  },
-};
+      no_border: {
+        borderBottomWidth: 0,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    form: {
-      borderTopColor: config.styles.light.primaryBorderColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
+  public lightStyles(): Partial<ChangePasswordFormStyles> {
+    return {
+      form: {
+        borderTopColor: config.styles.light.primaryBorderColor,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
 
-    text_input_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-    },
+      text_input_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+      },
 
-    text_input: {
-      color: config.styles.light.primaryTextColor,
-      borderBottomColor: config.styles.light.primaryBorderColor,
-    },
-  }),
-);
+      text_input: {
+        color: config.styles.light.primaryTextColor,
+        borderBottomColor: config.styles.light.primaryBorderColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    form: {
-      borderTopColor: config.styles.dark.primaryBorderColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
+  public darkStyles(): Partial<ChangePasswordFormStyles> {
+    return {
+      form: {
+        borderTopColor: config.styles.dark.primaryBorderColor,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
 
-    text_input_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-    },
+      text_input_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+      },
 
-    text_input: {
-      color: config.styles.dark.primaryTextColor,
-      borderBottomColor: config.styles.dark.primaryBorderColor,
-    },
-  }),
-);
+      text_input: {
+        color: config.styles.dark.primaryTextColor,
+        borderBottomColor: config.styles.dark.primaryBorderColor,
+      },
+    };
+  }
+}
+
+export const changePasswordFormResponsiveStyles = new ChangePasswordFormResponsiveStyles();

@@ -5,18 +5,27 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableForgotPasswordScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableForgotPasswordScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { ForgotPasswordScreenIds } from '../../constants/ids/ForgotPasswordScreenIds';
 import { ForgotPasswordScreenDelegate } from '../../delegates/auth/ForgotPasswordScreenDelegate';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
+import {
+  ForgotPasswordScreenStyles,
+  forgotPasswordScreenResponsiveStyles,
+} from './ForgotPasswordScreen.style';
 import { Logo } from './Logo';
 
 export interface ForgotPasswordScreenProps {
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableForgotPasswordScreen;
   screenDelegate: ForgotPasswordScreenDelegate;
 }
@@ -25,43 +34,37 @@ export interface ForgotPasswordScreenProps {
 export class ForgotPasswordScreen extends React.Component<
   ForgotPasswordScreenProps
 > {
+  private get styles(): ForgotPasswordScreenStyles {
+    return forgotPasswordScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <DismissKeyboardView
-        style={styles.screen}
-        testID={ForgotPasswordScreenIds.SCREEN}>
-        <View style={styles.container}>
-          <View style={styles.logo_container}>
-            <Logo />
+      <Screen
+        style={this.styles.screen}
+        testID={ForgotPasswordScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
+        <DismissKeyboardView>
+          <View style={this.styles.container}>
+            <View style={this.styles.logo_container}>
+              <Logo />
+            </View>
+            <View style={this.styles.form_container}>
+              <ForgotPasswordForm
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                email={this.props.observableScreen.email}
+                submit={this.props.screenDelegate.requestResetPasswordEmail}
+                back={this.props.screenDelegate.back}
+              />
+            </View>
           </View>
-          <View style={styles.form_container}>
-            <ForgotPasswordForm
-              email={this.props.observableScreen.email}
-              submit={this.props.screenDelegate.requestResetPasswordEmail}
-              back={this.props.screenDelegate.back}
-            />
-          </View>
-        </View>
-      </DismissKeyboardView>
+        </DismissKeyboardView>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-  },
-
-  logo_container: {
-    marginTop: 20,
-  },
-
-  form_container: {
-    marginTop: 20,
-    flex: 1,
-  },
-});

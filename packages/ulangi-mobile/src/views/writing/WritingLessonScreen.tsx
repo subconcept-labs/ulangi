@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableThemeStore,
   ObservableWritingLessonScreen,
@@ -13,11 +12,12 @@ import {
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { WritingLessonScreenIds } from '../../constants/ids/WritingLessonScreenIds';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { WritingForm } from './WritingForm';
 import { WritingFormBottom } from './WritingFormBottom';
@@ -25,8 +25,7 @@ import { WritingFormTop } from './WritingFormTop';
 import { WritingLessonResult } from './WritingLessonResult';
 import {
   WritingLessonScreenStyles,
-  darkStyles,
-  lightStyles,
+  writingLessonScreenResponsiveStyles,
 } from './WritingLessonScreen.style';
 
 export interface WritingLessonScreenProps {
@@ -39,19 +38,22 @@ export interface WritingLessonScreenProps {
 export class WritingLessonScreen extends React.Component<
   WritingLessonScreenProps
 > {
-  public get styles(): WritingLessonScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+  private get styles(): WritingLessonScreenStyles {
+    return writingLessonScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView
+      <Screen
         testID={WritingLessonScreenIds.SCREEN}
-        style={this.styles.screen}>
+        style={this.styles.screen}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         {this.renderContent()}
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -61,6 +63,7 @@ export class WritingLessonScreen extends React.Component<
         <ScrollView keyboardShouldPersistTaps="handled">
           <WritingLessonResult
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
             showReviewFeedback={this.props.screenDelegate.showReviewFeedback}
@@ -82,6 +85,7 @@ export class WritingLessonScreen extends React.Component<
             <DismissKeyboardView style={this.styles.dismiss_keyboard_view}>
               <WritingFormTop
                 theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 writingFormState={this.props.observableScreen.writingFormState}
                 showLastWritten={true}
               />
@@ -91,6 +95,7 @@ export class WritingLessonScreen extends React.Component<
                     .questionId
                 }
                 theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
                 writingFormState={this.props.observableScreen.writingFormState}
                 setAnswer={this.props.screenDelegate.setAnswer}
                 showHint={this.props.screenDelegate.showHint}
@@ -100,6 +105,7 @@ export class WritingLessonScreen extends React.Component<
           </SmartScrollView>
           <WritingFormBottom
             theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             writingFormState={this.props.observableScreen.writingFormState}
             reviewActionBarState={
               this.props.observableScreen.reviewActionBarState

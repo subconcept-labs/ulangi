@@ -8,6 +8,7 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableLanguage,
+  ObservableScreenLayout,
   ObservableVocabularyFormState,
 } from '@ulangi/ulangi-observable';
 import { boundMethod } from 'autobind-decorator';
@@ -23,12 +24,12 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { DefinitionInput } from './DefinitionInput';
 import {
   VocabularyFormStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyFormResponsiveStyles,
 } from './VocabularyForm.style';
 
 export interface VocabularyFormProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   learningLanguage: ObservableLanguage;
   translatedToLanguage: ObservableLanguage;
   vocabularyFormState: ObservableVocabularyFormState;
@@ -96,10 +97,11 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
     }
   }
 
-  public get styles(): VocabularyFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): VocabularyFormStyles {
+    return vocabularyFormResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -194,6 +196,7 @@ export class VocabularyForm extends React.Component<VocabularyFormProps> {
                 <DefinitionInput
                   key={definition.definitionId}
                   theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
                   index={index}
                   definition={definition}
                   translatedToLanguageName={

@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableMultipleChoiceResult } from '@ulangi/ulangi-observable';
+import {
+  ObservableMultipleChoiceResult,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -14,12 +17,12 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   MultipleChoiceSummaryStyles,
-  darkStyles,
-  lightStyles,
+  multipleChoiceSummaryResponsiveStyles,
 } from './MultipleChoiceSummary.style';
 
 export interface MultipleChoiceSummaryProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   multipleChoiceResult: ObservableMultipleChoiceResult;
   styles?: {
     light: MultipleChoiceSummaryStyles;
@@ -32,9 +35,10 @@ export class MultipleChoiceSummary extends React.Component<
   MultipleChoiceSummaryProps
 > {
   public get styles(): MultipleChoiceSummaryStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return multipleChoiceSummaryResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

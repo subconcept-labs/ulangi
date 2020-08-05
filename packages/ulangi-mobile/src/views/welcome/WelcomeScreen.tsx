@@ -5,91 +5,74 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import {
+  ObservableScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { WelcomeScreenIds } from '../../constants/ids/WelcomeScreenIds';
 import { WelcomeScreenDelegate } from '../../delegates/welcome/WelcomeScreenDelegate';
-import { ss } from '../../utils/responsive';
 import { Logo } from '../auth/Logo';
 import { SubmitButton } from '../auth/SubmitButton';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
+import {
+  WelcomeScreenStyles,
+  welcomeScreenResponsiveStyles,
+} from './WelcomeScreen.style';
 
 export interface WelcomeScreenProps {
   screenDelegate: WelcomeScreenDelegate;
+  themeStore: ObservableThemeStore;
+  observableScreen: ObservableScreen;
 }
 
 @observer
 export class WelcomeScreen extends React.Component<WelcomeScreenProps> {
+  private get styles(): WelcomeScreenStyles {
+    return welcomeScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.logo_container}>
+      <Screen
+        style={this.styles.screen}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <View style={this.styles.logo_container}>
           <Logo />
         </View>
-        <View style={styles.title_container}>
-          <DefaultText style={styles.title}>Hi there!</DefaultText>
-          <DefaultText style={styles.title}>Are you new to Ulangi?</DefaultText>
+        <View style={this.styles.title_container}>
+          <DefaultText style={this.styles.title}>Hi there!</DefaultText>
+          <DefaultText style={this.styles.title}>
+            Are you new to Ulangi?
+          </DefaultText>
         </View>
         <SubmitButton
           testID={WelcomeScreenIds.YES_BTN}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           buttonText="Yes. I'm a new user."
-          style={styles.yes_btn}
-          textStyle={styles.yes_btn_text}
+          style={this.styles.yes_btn}
+          textStyle={this.styles.yes_btn_text}
           onSubmit={this.props.screenDelegate.signInAsGuest}
         />
         <SubmitButton
           testID={WelcomeScreenIds.NO_BTN}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           buttonText="No. I have an account."
-          style={styles.no_btn}
-          textStyle={styles.no_text}
+          style={this.styles.no_btn}
+          textStyle={this.styles.no_text}
           onSubmit={this.props.screenDelegate.navigateToSignInScreen}
         />
-      </SafeAreaView>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-
-  container: {
-    flex: 1,
-  },
-
-  logo_container: {
-    marginTop: ss(20),
-  },
-
-  title_container: {
-    marginTop: ss(30),
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title: {
-    textAlign: 'center',
-    fontSize: ss(18),
-    fontWeight: 'bold',
-    color: 'white',
-  },
-
-  yes_btn: {
-    backgroundColor: '#64d392',
-  },
-
-  yes_btn_text: {
-    color: '#fff',
-  },
-
-  no_btn: {
-    marginTop: ss(10),
-    marginBottom: ss(20),
-  },
-
-  no_text: {},
-});

@@ -5,10 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
+import { ImageStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface SelectableImageStyles {
   image_container: ViewStyle;
@@ -16,19 +16,31 @@ export interface SelectableImageStyles {
   selected: ImageStyle;
 }
 
-export const baseStyles: SelectableImageStyles = {
-  image_container: {},
+export class SelectableImageResponsiveStyles extends ResponsiveStyleSheet<
+  SelectableImageStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): SelectableImageStyles {
+    return {
+      image_container: {},
 
-  image: {
-    backgroundColor: '#ddd',
-  },
+      image: {
+        backgroundColor: '#ddd',
+      },
 
-  selected: {
-    borderWidth: 3,
-    borderColor: config.styles.primaryColor,
-  },
-};
+      selected: {
+        borderWidth: scaleByFactor(3),
+        borderColor: config.styles.primaryColor,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<SelectableImageStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<SelectableImageStyles> {
+    return {};
+  }
+}
+
+export const selectableImageResponsiveStyles = new SelectableImageResponsiveStyles();

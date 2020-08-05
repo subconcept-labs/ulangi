@@ -5,10 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
+import { ImageStyle, ViewStyle } from 'react-native';
 
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface VocabularyDetailPronunciationStyles {
   container: ViewStyle;
@@ -17,23 +16,35 @@ export interface VocabularyDetailPronunciationStyles {
   activity_indicator: ViewStyle;
 }
 
-export const baseStyles: VocabularyDetailPronunciationStyles = StyleSheet.create(
-  {
-    container: {
-      marginTop: ss(22),
-    },
+export class VocabularyDetailPronunciationResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyDetailPronunciationStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): VocabularyDetailPronunciationStyles {
+    return {
+      container: {
+        marginTop: scaleByFactor(22),
+      },
 
-    speak_touchable: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
+      speak_touchable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-    speaker_icon: {},
+      speaker_icon: {},
 
-    activity_indicator: {},
-  },
-);
+      activity_indicator: {},
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<VocabularyDetailPronunciationStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<VocabularyDetailPronunciationStyles> {
+    return {};
+  }
+}
+
+export const vocabularyDetailPronunciationResponsiveStyles = new VocabularyDetailPronunciationResponsiveStyles();

@@ -80,6 +80,7 @@ export class AdScreenContainer extends Container<AdScreenContainerPassedProps> {
   public render(): React.ReactElement<any> {
     return (
       <AdScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

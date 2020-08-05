@@ -5,10 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -18,61 +17,67 @@ import { View } from 'react-native';
 
 import { IntervalsScreenDelegate } from '../../delegates/level/IntervalsScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
+import { Screen } from '../common/Screen';
 import { LightBoxContainerWithTitle } from '../light-box/LightBoxContainerWithTitle';
 import {
   IntervalsScreenStyles,
-  darkStyles,
-  lightStyles,
+  intervalsScreenResponsiveStyles,
 } from './IntervalsScreen.style';
 
 export interface IntervalsScreenProps {
   themeStore: ObservableThemeStore;
   levelIntervalPairs: readonly [number, number][];
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   screenDelegate: IntervalsScreenDelegate;
 }
 
 @observer
 export class IntervalsScreen extends React.Component<IntervalsScreenProps> {
-  public get styles(): IntervalsScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+  private get styles(): IntervalsScreenStyles {
+    return intervalsScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <LightBoxContainerWithTitle
-        theme={this.props.themeStore.theme}
-        observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
-        dismissLightBox={this.props.screenDelegate.dismissLightBox}
-        title="Intervals">
-        {this.props.levelIntervalPairs.map(
-          ([level, interval]): React.ReactElement<any> => {
-            return (
-              <View key={level} style={this.styles.row}>
-                <View style={this.styles.row_left}>
-                  <DefaultText
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                    style={this.styles.level}>
-                    {'Level ' + level}
-                  </DefaultText>
+      <Screen
+        useSafeAreaView={false}
+        observableScreen={this.props.observableScreen}
+        style={this.styles.screen}>
+        <LightBoxContainerWithTitle
+          theme={this.props.themeStore.theme}
+          observableLightBox={this.props.observableLightBox}
+          screenLayout={this.props.observableScreen.screenLayout}
+          dismissLightBox={this.props.screenDelegate.dismissLightBox}
+          title="Intervals">
+          {this.props.levelIntervalPairs.map(
+            ([level, interval]): React.ReactElement<any> => {
+              return (
+                <View key={level} style={this.styles.row}>
+                  <View style={this.styles.row_left}>
+                    <DefaultText
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      style={this.styles.level}>
+                      {'Level ' + level}
+                    </DefaultText>
+                  </View>
+                  <View style={this.styles.row_right} accessible={true}>
+                    <DefaultText style={this.styles.interval}>
+                      {moment()
+                        .add(interval, 'hours')
+                        .toNow(true)}
+                    </DefaultText>
+                  </View>
                 </View>
-                <View style={this.styles.row_right} accessible={true}>
-                  <DefaultText style={this.styles.interval}>
-                    {moment()
-                      .add(interval, 'hours')
-                      .toNow(true)}
-                  </DefaultText>
-                </View>
-              </View>
-            );
-          },
-        )}
-      </LightBoxContainerWithTitle>
+              );
+            },
+          )}
+        </LightBoxContainerWithTitle>
+      </Screen>
     );
   }
 }

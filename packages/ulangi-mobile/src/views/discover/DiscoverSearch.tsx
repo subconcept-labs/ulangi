@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableSetStore } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableSetStore,
+} from '@ulangi/ulangi-observable';
 import { IObservableValue, autorun } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -18,12 +21,12 @@ import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DefaultTextInput } from '../common/DefaultTextInput';
 import {
   DiscoverSearchStyles,
-  darkStyles,
-  lightStyles,
+  discoverSearchResponsiveStyles,
 } from './DiscoverSearch.style';
 
 export interface DiscoverSearchProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   setStore: ObservableSetStore;
   searchInput: IObservableValue<string>;
   searchInputAutoFocus: IObservableValue<boolean>;
@@ -61,11 +64,11 @@ export class DiscoverSearch extends React.Component<DiscoverSearchProps> {
     }
   }
 
-  public get styles(): DiscoverSearchStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): DiscoverSearchStyles {
+    return discoverSearchResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

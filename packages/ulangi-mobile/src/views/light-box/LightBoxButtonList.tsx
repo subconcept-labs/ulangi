@@ -5,32 +5,59 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { toJS } from 'mobx';
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonProps } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { DefaultButton, DefaultButtonProps } from '../common/DefaultButton';
+import { DefaultButton } from '../common/DefaultButton';
+import {
+  LightBoxButtonListStyles,
+  lightBoxButtonListResponsiveStyles,
+} from './LightBoxButtonList.style';
 
 export interface LightBoxButtonListProps {
-  buttonList: readonly DefaultButtonProps[];
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
+  buttonList: readonly ButtonProps[];
 }
 
+@observer
 export class LightBoxButtonList extends React.Component<
   LightBoxButtonListProps
 > {
+  private get styles(): LightBoxButtonListStyles {
+    return lightBoxButtonListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): null | React.ReactElement<any> {
     if (this.props.buttonList.length === 0) {
       return null;
     } else {
       return (
-        <View style={styles.button_list_container}>
+        <View style={this.styles.button_list_container}>
           {this.props.buttonList.map(
             (button, index): React.ReactElement<any> => {
               return (
                 <View
                   key={button.testID || index}
-                  style={styles.button_container}>
-                  <DefaultButton {...button} styles={toJS(button.styles)} />
+                  style={this.styles.button_container}>
+                  <DefaultButton
+                    {...button}
+                    styles={
+                      button.styles
+                        ? button.styles(
+                            this.props.theme,
+                            this.props.screenLayout,
+                          )
+                        : undefined
+                    }
+                  />
                 </View>
               );
             },
@@ -40,18 +67,3 @@ export class LightBoxButtonList extends React.Component<
     }
   }
 }
-
-const styles = StyleSheet.create({
-  button_list_container: {
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingBottom: 12,
-  },
-
-  button_container: {
-    paddingHorizontal: 8,
-  },
-});

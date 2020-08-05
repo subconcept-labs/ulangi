@@ -5,50 +5,58 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
 import { MembershipLabel } from './MembershipLabel';
 import { MembershipTitle } from './MembershipTitle';
 import { RegularFeatureList } from './RegularFeatureList';
+import {
+  RegularMembershipStyles,
+  regularMembershipResponsiveStyles,
+} from './RegularMembership.style';
 
 export interface RegularMembershipProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   showAdsDialog: () => void;
 }
 
 @observer
 export class RegularMembership extends React.Component<RegularMembershipProps> {
+  private get styles(): RegularMembershipStyles {
+    return regularMembershipResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
-        <View style={styles.title_container}>
-          <MembershipLabel label="CURRENT ACCOUNT TYPE" />
-          <MembershipTitle title="FREE" />
+      <View style={this.styles.container}>
+        <View style={this.styles.title_container}>
+          <MembershipLabel
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
+            label="CURRENT ACCOUNT TYPE"
+          />
+          <MembershipTitle
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
+            title="FREE"
+          />
         </View>
-        <View style={styles.feature_list_container}>
-          <RegularFeatureList showAdsDialog={this.props.showAdsDialog} />
+        <View style={this.styles.feature_list_container}>
+          <RegularFeatureList
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
+            showAdsDialog={this.props.showAdsDialog}
+          />
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: ss(50),
-    backgroundColor: config.styles.regularMembershipColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  title_container: {},
-
-  feature_list_container: {
-    alignSelf: 'stretch',
-    paddingTop: ss(40),
-  },
-});

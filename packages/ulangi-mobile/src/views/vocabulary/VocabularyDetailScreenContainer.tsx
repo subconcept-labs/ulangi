@@ -99,7 +99,6 @@ export class VocabularyDetailScreenContainer extends Container<
       <VocabularyDetailScreen
         setStore={this.props.rootStore.setStore}
         themeStore={this.props.rootStore.themeStore}
-        observableDimensions={this.props.observableDimensions}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

@@ -12,7 +12,7 @@ import { FetchVocabularyDelegate } from '../../delegates/reflex/FetchVocabularyD
 import { ReflexScreenDelegate } from '../../delegates/reflex/ReflexScreenDelegate';
 import { TimerDelegate } from '../../delegates/reflex/TimerDelegate';
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
-import { ReflexStyle } from '../../styles/ReflexStyle';
+import { reflexStyles } from '../../styles/ReflexStyles';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class ReflexScreenFactory extends ScreenFactory {
@@ -23,7 +23,7 @@ export class ReflexScreenFactory extends ScreenFactory {
     const navigatorDelegate = this.createNavigatorDelegate();
 
     const dialogDelegate = this.createDialogDelegate(
-      ReflexStyle.LIGHT_BOX_SCREEN_STYLES,
+      reflexStyles.getLightBoxScreenStyles(),
     );
 
     const fetchVocabularyDelegate = new FetchVocabularyDelegate(

@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -13,13 +14,13 @@ import { ActivityIndicator, View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   PickerLoadingStyles,
-  darkStyles,
-  lightStyles,
+  pickerLoadingResponsiveStyles,
 } from './PickerLoading.style';
 
 export interface PickerLoadingProps {
   testID?: string;
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   message: string;
   styles?: {
     light: PickerLoadingStyles;
@@ -30,9 +31,10 @@ export interface PickerLoadingProps {
 @observer
 export class PickerLoading extends React.Component<PickerLoadingProps> {
   public get styles(): PickerLoadingStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return pickerLoadingResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

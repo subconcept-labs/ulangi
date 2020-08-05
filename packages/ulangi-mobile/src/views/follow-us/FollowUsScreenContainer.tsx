@@ -72,6 +72,7 @@ export class FollowUsScreenContainer extends Container {
     return (
       <FollowUsScreen
         themeStore={this.props.rootStore.themeStore}
+        observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />
     );

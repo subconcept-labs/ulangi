@@ -7,6 +7,7 @@
 
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -15,12 +16,12 @@ import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import {
   LightBoxSelectionItemStyles,
-  darkStyles,
-  lightStyles,
+  lightBoxSelectionItemResponsiveStyles,
 } from './LightBoxSelectionItem.style';
 
 export interface LightBoxSelectionItemProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   item: SelectionItem;
   isSelected: boolean;
   isLast: boolean;
@@ -30,8 +31,11 @@ export interface LightBoxSelectionItemProps {
 export class LightBoxSelectionItem extends React.Component<
   LightBoxSelectionItemProps
 > {
-  public get styles(): LightBoxSelectionItemStyles {
-    return this.props.theme === Theme.LIGHT ? lightStyles : darkStyles;
+  private get styles(): LightBoxSelectionItemStyles {
+    return lightBoxSelectionItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

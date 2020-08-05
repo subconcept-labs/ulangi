@@ -5,25 +5,24 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAutoArchiveScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { AutoArchiveScreenIds } from '../../constants/ids/AutoArchiveScreenIds';
 import { AutoArchiveScreenDelegate } from '../../delegates/auto-archive/AutoArchiveScreenDelegate';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
+import { Screen } from '../common/Screen';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   AutoArchiveScreenStyles,
-  darkStyles,
-  lightStyles,
+  autoArchiveScreenResponsiveStyles,
 } from './AutoArchiveScreen.style';
 
 export interface AutoArchiveScreenProps {
@@ -34,26 +33,35 @@ export interface AutoArchiveScreenProps {
 
 @observer
 export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
-  public get styles(): AutoArchiveScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+  private get styles(): AutoArchiveScreenStyles {
+    return autoArchiveScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={AutoArchiveScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={AutoArchiveScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         {this.renderToggleSection()}
         {this.renderConditionsSection()}
-      </View>
+      </Screen>
     );
   }
 
   private renderToggleSection(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.themeStore.theme} key="toggle">
+      <SectionGroup
+        theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
+        key="toggle">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Auto Archive"
           customRight={
             <DefaultButton
@@ -64,8 +72,10 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                   ? 'On'
                   : 'Off'
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.observableScreen.autoArchiveSettings.autoArchiveEnabled = !this
@@ -84,10 +94,12 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
     return (
       <SectionGroup
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         key="conditions"
         header="CONDITIONS">
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="When Spaced Repetition Level (SR) is at or above"
           customRight={
             <DefaultButton
@@ -97,8 +109,10 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                 this.props.observableScreen.autoArchiveSettings
                   .spacedRepetitionLevelThreshold
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLevelMenuForSpacedRepetition();
@@ -112,6 +126,7 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
         />
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="When Writing Level (WR) is at or above"
           customRight={
             <DefaultButton
@@ -121,8 +136,10 @@ export class AutoArchiveScreen extends React.Component<AutoArchiveScreenProps> {
                 this.props.observableScreen.autoArchiveSettings
                   .writingLevelThreshold
               }
-              styles={FullRoundedButtonStyle.getPrimaryOutlineStyles(
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
                 this.props.screenDelegate.showLevelMenuForWriting();

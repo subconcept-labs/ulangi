@@ -1,9 +1,10 @@
 import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
+import { ResponsiveStyleSheet } from '../../utils/responsive';
 import {
-  darkStyles as defaultSelectedCategoriesDarkStyles,
-  lightStyles as defaultSelectedCategoriesLightStyles,
+  SelectedCategoriesResponsiveStyles,
+  SelectedCategoriesStyles,
 } from '../category/SelectedCategories.style';
 
 export interface ReflexScreenStyles {
@@ -12,45 +13,61 @@ export interface ReflexScreenStyles {
   selected_categories_container: ViewStyle;
 }
 
-export const baseStyles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
+export class ReflexScreenResponsiveStyles extends ResponsiveStyleSheet<
+  ReflexScreenStyles
+> {
+  public baseStyles(): ReflexScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
+      container: {
+        flex: 1,
+        justifyContent: 'space-between',
+      },
 
-  selected_categories_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+      selected_categories_container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<ReflexScreenStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<ReflexScreenStyles> {
+    return {};
+  }
+}
 
-export const selectedCategoriesLightStyles = StyleSheet.create(
-  _.merge({}, defaultSelectedCategoriesLightStyles, {
-    title: {
-      color: '#fff',
-    },
-    category_name: {
-      color: '#fff',
-    },
-  }),
-);
+export class ExtendedSelectedCategoriesResponsiveStyles extends SelectedCategoriesResponsiveStyles {
+  public lightStyles(): Partial<SelectedCategoriesStyles> {
+    return _.merge({}, super.lightStyles(), {
+      title: {
+        color: '#fff',
+      },
+      category_name: {
+        color: '#fff',
+      },
+    });
+  }
 
-export const selectedCategoriesDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSelectedCategoriesDarkStyles, {
-    title: {
-      color: '#fff',
-    },
-    category_name: {
-      color: '#fff',
-    },
-  }),
-);
+  public darkStyles(): Partial<SelectedCategoriesStyles> {
+    return _.merge({}, super.darkStyles(), {
+      title: {
+        color: '#fff',
+      },
+      category_name: {
+        color: '#fff',
+      },
+    });
+  }
+}
+
+export const selectedCategoriesResponsiveStyles = new ExtendedSelectedCategoriesResponsiveStyles();
+
+export const reflexScreenResponsiveStyles = new ReflexScreenResponsiveStyles();

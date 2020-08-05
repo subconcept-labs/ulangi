@@ -57,6 +57,7 @@ export class ForgotPasswordScreenContainer extends Container {
   public render(): React.ReactElement<any> {
     return (
       <ForgotPasswordScreen
+        themeStore={this.props.rootStore.themeStore}
         observableScreen={this.observableScreen}
         screenDelegate={this.screenDelegate}
       />

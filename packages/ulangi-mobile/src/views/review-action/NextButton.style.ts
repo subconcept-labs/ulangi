@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface NextButtonStyles {
   container: ViewStyle;
@@ -19,49 +18,57 @@ export interface NextButtonStyles {
   subtitle: TextStyle;
 }
 
-export const baseStyles: NextButtonStyles = {
-  container: {},
+export class NextButtonResponsiveStyles extends ResponsiveStyleSheet<
+  NextButtonStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): NextButtonStyles {
+    return {
+      container: {},
 
-  next_button_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-  },
+      next_button_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(12),
+      },
 
-  title_container: {
-    paddingVertical: ss(10),
-  },
+      title_container: {
+        paddingVertical: scaleByFactor(10),
+      },
 
-  title: {
-    textAlign: 'center',
-    fontSize: ss(14),
-  },
+      title: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(14),
+      },
 
-  subtitle: {
-    textAlign: 'center',
-    fontSize: ss(14),
-  },
-};
+      subtitle: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(14),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<NextButtonStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<NextButtonStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    subtitle: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      subtitle: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const nextButtonResponsiveStyles = new NextButtonResponsiveStyles();

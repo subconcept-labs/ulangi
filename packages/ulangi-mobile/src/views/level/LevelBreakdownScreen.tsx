@@ -6,25 +6,27 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableLightBox,
+  ObservableScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { LevelBreakdownScreenDelegate } from '../../delegates/level/LevelBreakdownScreenDelegate';
+import { Screen } from '../common/Screen';
 import { LightBoxContainerWithTitle } from '../light-box/LightBoxContainerWithTitle';
-import {
-  lightBoxContainerWithTitleDarkStyles,
-  lightBoxContainerWithTitleLightStyles,
-} from './LevelBreakScreen.style';
 import { LevelBreakdown } from './LevelBreakdown';
+import {
+  LevelBreakdownScreenStyles,
+  levelBreakdownScreenResponsiveStyles,
+  lightBoxContainerWithTitleResponsiveStyles,
+} from './LevelBreakdownScreen.style';
 
 export interface LevelBreakdownScreenProps {
   themeStore: ObservableThemeStore;
   observableLightBox: ObservableLightBox;
-  observableDimensions: ObservableDimensions;
+  observableScreen: ObservableScreen;
   levelCounts: {
     readonly totalCount: number;
     readonly level0Count: number;
@@ -40,23 +42,33 @@ export interface LevelBreakdownScreenProps {
 export class LevelBreakdownScreen extends React.Component<
   LevelBreakdownScreenProps
 > {
+  private get styles(): LevelBreakdownScreenStyles {
+    return levelBreakdownScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <LightBoxContainerWithTitle
-        theme={this.props.themeStore.theme}
-        observableLightBox={this.props.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
-        dismissLightBox={this.props.screenDelegate.dismissLightBox}
-        styles={{
-          light: lightBoxContainerWithTitleLightStyles,
-          dark: lightBoxContainerWithTitleDarkStyles,
-        }}
-        title="Level Breakdown">
-        <LevelBreakdown
+      <Screen
+        useSafeAreaView={false}
+        observableScreen={this.props.observableScreen}
+        style={this.styles.screen}>
+        <LightBoxContainerWithTitle
           theme={this.props.themeStore.theme}
-          levelCounts={this.props.levelCounts}
-        />
-      </LightBoxContainerWithTitle>
+          observableLightBox={this.props.observableLightBox}
+          screenLayout={this.props.observableScreen.screenLayout}
+          dismissLightBox={this.props.screenDelegate.dismissLightBox}
+          styles={lightBoxContainerWithTitleResponsiveStyles}
+          title="Level Breakdown">
+          <LevelBreakdown
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
+            levelCounts={this.props.levelCounts}
+          />
+        </LightBoxContainerWithTitle>
+      </Screen>
     );
   }
 }

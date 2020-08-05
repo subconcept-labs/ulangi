@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface WritingLessonResultStyles {
   container: ViewStyle;
@@ -21,64 +20,72 @@ export interface WritingLessonResultStyles {
   button_container: ViewStyle;
 }
 
-export const baseStyles: WritingLessonResultStyles = {
-  container: {
-    flex: 1,
-  },
+export class WritingLessonResultResponsiveStyles extends ResponsiveStyleSheet<
+  WritingLessonResultStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): WritingLessonResultStyles {
+    return {
+      container: {
+        flex: 1,
+      },
 
-  title_container: {
-    marginTop: ss(20),
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
+      title_container: {
+        marginTop: scaleByFactor(20),
+        flexDirection: 'row',
+        justifyContent: 'center',
+      },
 
-  title: {
-    fontSize: ss(15),
-    fontWeight: 'bold',
-  },
+      title: {
+        fontSize: scaleByFactor(15),
+        fontWeight: 'bold',
+      },
 
-  save_text: {
-    fontSize: ss(15),
-    textAlign: 'center',
-    paddingTop: ss(6),
-  },
+      save_text: {
+        fontSize: scaleByFactor(15),
+        textAlign: 'center',
+        paddingTop: scaleByFactor(6),
+      },
 
-  view_all_feedback_button_container: {
-    flexShrink: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
+      view_all_feedback_button_container: {
+        flexShrink: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+      },
 
-  ad_notice_container: {
-    marginTop: ss(16),
-    marginHorizontal: ls(16),
-  },
+      ad_notice_container: {
+        marginTop: scaleByFactor(16),
+        marginHorizontal: scaleByFactor(16),
+      },
 
-  button_container: {
-    marginTop: ss(16),
-  },
-};
+      button_container: {
+        marginTop: scaleByFactor(16),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<WritingLessonResultStyles> {
+    return {
+      title: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    save_text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      save_text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    title: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<WritingLessonResultStyles> {
+    return {
+      title: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    save_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      save_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const writingLessonResultResponsiveStyles = new WritingLessonResultResponsiveStyles();

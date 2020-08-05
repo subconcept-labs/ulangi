@@ -5,8 +5,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { AtomShellType } from '@ulangi/ulangi-common/enums';
-import { ObservableParticle, ObservableShell } from '@ulangi/ulangi-observable';
+import { AtomShellType, Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableParticle,
+  ObservableScreenLayout,
+  ObservableShell,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -14,6 +18,8 @@ import { StyleSheet, View } from 'react-native';
 import { AtomParticle } from './AtomParticle';
 
 export interface AtomParticlesProps {
+  theme: Theme;
+  screenLayout: ObservableScreenLayout;
   particles: ObservableParticle[];
   getShellByPosition: (position: {
     x: number;
@@ -43,6 +49,8 @@ export class AtomParticles extends React.Component<AtomParticlesProps> {
             return (
               <AtomParticle
                 key={particle.id}
+                theme={this.props.theme}
+                screenLayout={this.props.screenLayout}
                 particle={particle}
                 getShellByPosition={this.props.getShellByPosition}
                 transferParticleToAnotherShell={

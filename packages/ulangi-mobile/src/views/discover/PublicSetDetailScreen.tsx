@@ -5,22 +5,20 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservablePublicSetDetailScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { View } from 'react-native';
 
 import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
 import { PublicSetDetailScreenDelegate } from '../../delegates/discover/PublicSetDetailScreenDelegate';
+import { Screen } from '../common/Screen';
 import { PublicSetDetailHeader } from './PublicSetDetailHeader';
 import {
   PublicSetDetailScreenStyles,
-  darkStyles,
-  lightStyles,
+  publicSetDetailScreenResponsiveStyles,
 } from './PublicSetDetailScreen.style';
 import { PublicVocabularyList } from './PublicVocabularyList';
 
@@ -35,16 +33,22 @@ export class PublicSetDetailScreen extends React.Component<
   PublicSetDetailScreenProps
 > {
   public get styles(): PublicSetDetailScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return publicSetDetailScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <View style={this.styles.screen} testID={PublicSetDetailScreenIds.SCREEN}>
+      <Screen
+        style={this.styles.screen}
+        testID={PublicSetDetailScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
         <PublicSetDetailHeader
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           title={this.props.observableScreen.publicSet.title}
           subtitle={this.props.observableScreen.publicSet.subtitle}
           attributions={this.props.observableScreen.publicSet.attributions}
@@ -57,6 +61,7 @@ export class PublicSetDetailScreen extends React.Component<
         <PublicVocabularyList
           testID={PublicSetDetailScreenIds.PUBLIC_VOCABULARY_LIST}
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           vocabularyList={this.props.observableScreen.publicSet.vocabularyList}
           addVocabulary={this.props.screenDelegate.addVocabulary}
           showPublicVocabularyDetail={
@@ -67,7 +72,7 @@ export class PublicSetDetailScreen extends React.Component<
           }
           openLink={this.props.screenDelegate.openLink}
         />
-      </View>
+      </Screen>
     );
   }
 }

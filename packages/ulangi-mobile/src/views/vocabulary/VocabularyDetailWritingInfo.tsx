@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableVocabulary } from '@ulangi/ulangi-observable';
+import {
+  ObservableScreenLayout,
+  ObservableVocabulary,
+} from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as React from 'react';
@@ -16,6 +19,7 @@ import { SectionRow } from '../section/SectionRow';
 
 export interface VocabularyDetailWritingInfoProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   vocabulary: ObservableVocabulary;
   nextReview: string;
 }
@@ -25,10 +29,14 @@ export class VocabularyDetailWritingInfo extends React.Component<
 > {
   public render(): React.ReactElement<any> {
     return (
-      <SectionGroup theme={this.props.theme} header="WRITING INFO">
+      <SectionGroup
+        theme={this.props.theme}
+        screenLayout={this.props.screenLayout}
+        header="WRITING INFO">
         <SectionRow
           key="level"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="WR Level"
           rightText={
             typeof this.props.vocabulary.writing !== 'undefined'
@@ -39,6 +47,7 @@ export class VocabularyDetailWritingInfo extends React.Component<
         <SectionRow
           key="last_written"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Last Written"
           rightText={
             typeof this.props.vocabulary.writing === 'undefined' ||
@@ -52,12 +61,14 @@ export class VocabularyDetailWritingInfo extends React.Component<
         <SectionRow
           key="next_review"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Next Review"
           rightText={_.upperFirst(this.props.nextReview)}
         />
         <SectionRow
           key="writing_disabled"
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           leftText="Disabled"
           rightText={
             typeof this.props.vocabulary.writing !== 'undefined'

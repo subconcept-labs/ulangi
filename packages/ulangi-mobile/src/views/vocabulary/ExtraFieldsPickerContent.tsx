@@ -11,6 +11,7 @@ import {
 } from '@ulangi/ulangi-common/constants';
 import { ExtraFieldDetail } from '@ulangi/ulangi-common/core';
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -21,12 +22,12 @@ import { DefaultText } from '../common/DefaultText';
 import { SmartScrollView } from '../common/SmartScrollView';
 import {
   ExtraFieldsPickerContentStyles,
-  darkStyles,
-  lightStyles,
+  extraFieldsPickerContentResponsiveStyles,
 } from './ExtraFieldsPickerContent.style';
 
 export interface ExtraFieldsPickerContentProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   kind: 'vocabulary' | 'definition';
   learningLanguageCode: string;
   selectImages: () => void;
@@ -35,10 +36,6 @@ export interface ExtraFieldsPickerContentProps {
     value: string,
     cursor: undefined | number,
   ) => void;
-  styles?: {
-    light: ExtraFieldsPickerContentStyles;
-    dark: ExtraFieldsPickerContentStyles;
-  };
 }
 
 @observer
@@ -46,9 +43,10 @@ export class ExtraFieldsPickerContent extends React.Component<
   ExtraFieldsPickerContentProps
 > {
   public get styles(): ExtraFieldsPickerContentStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return extraFieldsPickerContentResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

@@ -6,16 +6,16 @@
  */
 
 import {
-  ObservableDimensions,
   ObservableSearchScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { SearchScreenIds } from '../../constants/ids/SearchScreenIds';
 import { SearchScreenDelegate } from '../../delegates/search/SearchScreenDelegate';
+import { Screen } from '../common/Screen';
 import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
 import { SearchBar } from './SearchBar';
 import { SearchList } from './SearchList';
@@ -23,7 +23,6 @@ import { SearchList } from './SearchList';
 export interface SearchScreenProps {
   themeStore: ObservableThemeStore;
   observableScreen: ObservableSearchScreen;
-  observableDimensions: ObservableDimensions;
   screenDelegate: SearchScreenDelegate;
 }
 
@@ -31,7 +30,11 @@ export interface SearchScreenProps {
 export class SearchScreen extends React.Component<SearchScreenProps> {
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView style={styles.screen} testID={SearchScreenIds.SCREEN}>
+      <Screen
+        style={styles.screen}
+        testID={SearchScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <SearchBar
           theme={this.props.themeStore.theme}
           observableScreen={this.props.observableScreen}
@@ -39,6 +42,7 @@ export class SearchScreen extends React.Component<SearchScreenProps> {
         />
         <SearchList
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           search={this.props.screenDelegate.search}
           refresh={this.props.screenDelegate.refreshCurrentList}
@@ -50,7 +54,8 @@ export class SearchScreen extends React.Component<SearchScreenProps> {
         />
         {this.props.observableScreen.vocabularyListState.isSelectionModeOn.get() ? (
           <VocabularyBulkActionBar
-            observableDimensions={this.props.observableDimensions}
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             vocabularyListState={
               this.props.observableScreen.vocabularyListState
             }
@@ -60,7 +65,7 @@ export class SearchScreen extends React.Component<SearchScreenProps> {
             clearSelections={this.props.screenDelegate.clearSelections}
           />
         ) : null}
-      </SafeAreaView>
+      </Screen>
     );
   }
 }

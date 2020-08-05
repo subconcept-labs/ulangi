@@ -18,8 +18,7 @@ import { DefaultTextInput } from '../common/DefaultTextInput';
 import { KeyboardSpacer } from '../common/KeyboardSpacer';
 import {
   ReportAnErrorFormStyles,
-  darkStyles,
-  lightStyles,
+  reportAnErrorFormResponsiveStyles,
 } from './ReportAnErrorForm.style';
 
 export interface ReportAnErrorFormProps {
@@ -34,9 +33,10 @@ export interface ReportAnErrorFormProps {
 @observer
 export class ReportAnErrorForm extends React.Component<ReportAnErrorFormProps> {
   public get styles(): ReportAnErrorFormStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reportAnErrorFormResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

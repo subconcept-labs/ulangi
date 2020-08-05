@@ -70,7 +70,7 @@ export class LevelBreakdownScreenContainer extends Container<
     return (
       <LevelBreakdownScreen
         observableLightBox={this.observableLightBox}
-        observableDimensions={this.props.observableDimensions}
+        observableScreen={this.observableScreen}
         themeStore={this.props.rootStore.themeStore}
         levelCounts={this.props.passedProps.levelCounts}
         screenDelegate={this.screenDelegate}

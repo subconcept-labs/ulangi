@@ -6,7 +6,7 @@
  */
 
 import {
-  ObservableDimensions,
+  ObservableScreenLayout,
   ObservableShell,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
@@ -15,16 +15,16 @@ import { StyleSheet } from 'react-native';
 import { Ellipse, Svg } from 'react-native-svg';
 
 export interface AtomShellProps {
-  observableDimensions: ObservableDimensions;
+  screenLayout: ObservableScreenLayout;
   shell: ObservableShell;
 }
 
 @observer
 export class AtomShell extends React.Component<AtomShellProps> {
   public render(): React.ReactElement<any> {
-    const { windowWidth, windowHeight } = this.props.observableDimensions;
+    const { width, height } = this.props.screenLayout;
     return (
-      <Svg style={styles.container} width={windowWidth} height={windowHeight}>
+      <Svg style={styles.container} width={width} height={height}>
         <Ellipse
           cx={this.props.shell.position.x}
           cy={this.props.shell.position.y}

@@ -5,18 +5,17 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryDetailScreen,
-  ObservableDimensions,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { View } from 'react-native';
 
 import { CategoryDetailScreenIds } from '../../constants/ids/CategoryDetailScreenIds';
 import { CategoryDetailScreenDelegate } from '../../delegates/category/CategoryDetailScreenDelegate';
+import { Screen } from '../common/Screen';
 import { NoVocabulary } from '../vocabulary/NoVocabulary';
 import { VocabularyBulkActionBar } from '../vocabulary/VocabularyBulkActionBar';
 import { VocabularyList } from '../vocabulary/VocabularyList';
@@ -24,13 +23,11 @@ import { CategoryActionFloatingButton } from './CategoryActionFloatingButton';
 import { CategoryDetailHeader } from './CategoryDetailHeader';
 import {
   CategoryDetailScreenStyles,
-  darkStyles,
-  lightStyles,
+  categoryDetailScreenResponsiveStyles,
 } from './CategoryDetailScreen.style';
 
 export interface CategoryDetailScreenProps {
   themeStore: ObservableThemeStore;
-  observableDimensions: ObservableDimensions;
   observableScreen: ObservableCategoryDetailScreen;
   screenDelegate: CategoryDetailScreenDelegate;
 }
@@ -40,18 +37,22 @@ export class CategoryDetailScreen extends React.Component<
   CategoryDetailScreenProps
 > {
   public get styles(): CategoryDetailScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return categoryDetailScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SafeAreaView
+      <Screen
         style={this.styles.screen}
-        testID={CategoryDetailScreenIds.SCREEN}>
+        testID={CategoryDetailScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
         <CategoryDetailHeader
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           category={this.props.observableScreen.category}
           selectedFilterType={this.props.observableScreen.selectedFilterType}
           selectedSortType={this.props.observableScreen.selectedSortType}
@@ -65,7 +66,7 @@ export class CategoryDetailScreen extends React.Component<
         {this.renderVocabularyList()}
         {this.renderBulkActionBar()}
         {this.renderCategoryFloatingButton()}
-      </SafeAreaView>
+      </Screen>
     );
   }
 
@@ -75,13 +76,20 @@ export class CategoryDetailScreen extends React.Component<
       this.props.observableScreen.vocabularyListState.noMore === true &&
       this.props.observableScreen.vocabularyListState.vocabularyList.size === 0
     ) {
-      return <NoVocabulary refresh={this.props.screenDelegate.refresh} />;
+      return (
+        <NoVocabulary
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          refresh={this.props.screenDelegate.refresh}
+        />
+      );
     } else {
       return (
         <VocabularyList
           key={this.props.observableScreen.selectedFilterType.get()}
           testID={CategoryDetailScreenIds.VOCABULARY_LIST}
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           toggleSelection={this.props.screenDelegate.toggleSelection}
           showVocabularyDetail={this.props.screenDelegate.showVocabularyDetail}
@@ -101,7 +109,8 @@ export class CategoryDetailScreen extends React.Component<
     ) {
       return (
         <VocabularyBulkActionBar
-          observableDimensions={this.props.observableDimensions}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           vocabularyListState={this.props.observableScreen.vocabularyListState}
           showVocabularyBulkActionMenu={
             this.props.screenDelegate.showVocabularyBulkActionMenu
@@ -122,6 +131,8 @@ export class CategoryDetailScreen extends React.Component<
       return (
         <View style={this.styles.floating_button_container}>
           <CategoryActionFloatingButton
+            theme={this.props.themeStore.theme}
+            screenLayout={this.props.observableScreen.screenLayout}
             showCategoryActionMenu={
               this.props.screenDelegate.showCategoryActionMenu
             }

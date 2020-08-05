@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface EventLogsScreenStyles {
   screen: ViewStyle;
@@ -18,38 +17,46 @@ export interface EventLogsScreenStyles {
   text: TextStyle;
 }
 
-export const baseStyles: EventLogsScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class EventLogsScreenResponsiveStyles extends ResponsiveStyleSheet<
+  EventLogsScreenStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): EventLogsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  button_container: {
-    marginTop: ss(10),
-    paddingHorizontal: ss(16),
-  },
+      button_container: {
+        marginTop: scaleByFactor(10),
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  paragraph: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(10),
-  },
+      paragraph: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(10),
+      },
 
-  text: {
-    fontSize: ss(15),
-  },
-};
+      text: {
+        fontSize: scaleByFactor(15),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    text: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<EventLogsScreenStyles> {
+    return {
+      text: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    text: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<EventLogsScreenStyles> {
+    return {
+      text: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const eventLogsScreenResponsiveStyles = new EventLogsScreenResponsiveStyles();

@@ -6,16 +6,18 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
-import { QuizTitleStyles, darkStyles, lightStyles } from './QuizTitle.style';
+import { QuizTitleStyles, quizTitleResponsiveStyles } from './QuizTitle.style';
 
 export interface QuizTitleProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   styles?: {
     light: QuizTitleStyles;
     dark: QuizTitleStyles;
@@ -25,9 +27,10 @@ export interface QuizTitleProps {
 @observer
 export class QuizTitle extends React.Component<QuizTitleProps> {
   public get styles(): QuizTitleStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return quizTitleResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

@@ -6,21 +6,32 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { LevelBarStyles, levelBarResponsiveStyles } from './LevelBar.style';
 
 export interface LevelBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   percentages: [number, number, number, number, number];
 }
 
+@observer
 export class LevelBar extends React.Component<LevelBarProps> {
+  private get styles(): LevelBarStyles {
+    return levelBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <View style={styles.container}>
+      <View style={this.styles.container}>
         {this.props.percentages
           .map(
             (percentage, index): React.ReactElement<any> => {
@@ -28,7 +39,7 @@ export class LevelBar extends React.Component<LevelBarProps> {
                 <View
                   key={index}
                   style={[
-                    styles.part,
+                    this.styles.part,
                     {
                       backgroundColor: config.level.colorMap[index],
                       flex: percentage,
@@ -43,15 +54,3 @@ export class LevelBar extends React.Component<LevelBarProps> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    height: ss(10),
-    borderRadius: ss(5),
-    overflow: 'hidden',
-  },
-
-  part: {},
-});

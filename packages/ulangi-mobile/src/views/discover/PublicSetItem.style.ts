@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+} from '../../utils/responsive';
 
 export interface PublicSetItemStyles {
   item_container: ViewStyle;
@@ -31,193 +34,204 @@ export interface PublicSetItemStyles {
   arrow: ImageStyle;
 }
 
-export const baseStyles: PublicSetItemStyles = {
-  item_container: {
-    marginHorizontal: ls(16),
-    // Use padding instead of margin to make hit area larger
-    marginVertical: ss(8),
-    borderRadius: ss(5),
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 0.3 },
-    shadowRadius: 0.75,
-    shadowOpacity: 0.2,
-  },
+export class PublicSetItemResponsiveStyles extends ResponsiveStyleSheet<
+  PublicSetItemStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): PublicSetItemStyles {
+    return {
+      item_container: {
+        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        // Use padding instead of margin to make hit area larger
+        marginVertical: scaleByFactor(8),
+        borderRadius: scaleByFactor(5),
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 0.3 },
+        shadowRadius: 0.75,
+        shadowOpacity: 0.2,
+      },
 
-  top_container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: ss(14),
-    paddingVertical: ss(12),
-  },
+      top_container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: scaleByFactor(14),
+        paddingVertical: scaleByFactor(12),
+      },
 
-  title: {
-    paddingBottom: ss(3),
-  },
+      title: {
+        paddingBottom: scaleByFactor(3),
+      },
 
-  set_name: {
-    fontWeight: 'bold',
-    fontSize: ss(17),
-  },
+      set_name: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(17),
+      },
 
-  set_subtitle: {
-    fontSize: ss(15),
-  },
+      set_subtitle: {
+        fontSize: scaleByFactor(15),
+      },
 
-  meta_container: {},
+      meta_container: {},
 
-  authors: {
-    fontSize: ss(12),
-  },
+      authors: {
+        fontSize: scaleByFactor(12),
+      },
 
-  dot: {
-    fontSize: ss(12),
-  },
+      dot: {
+        fontSize: scaleByFactor(12),
+      },
 
-  curated_text: {
-    fontSize: ss(12),
-    fontWeight: '700',
-  },
+      curated_text: {
+        fontSize: scaleByFactor(12),
+        fontWeight: '700',
+      },
 
-  count: {
-    fontWeight: 'bold',
-    fontSize: ss(18),
-    paddingBottom: ss(3),
-  },
+      count: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(18),
+        paddingBottom: scaleByFactor(3),
+      },
 
-  terms: {
-    fontSize: ss(12),
-  },
+      terms: {
+        fontSize: scaleByFactor(12),
+      },
 
-  left: {
-    paddingRight: ss(12),
-    flexShrink: 1,
-  },
+      left: {
+        paddingRight: scaleByFactor(12),
+        flexShrink: 1,
+      },
 
-  right: {
-    borderLeftWidth: 1,
-    borderLeftColor: '#ddd',
-    paddingLeft: ss(12),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+      right: {
+        borderLeftWidth: 1,
+        borderLeftColor: '#ddd',
+        paddingLeft: scaleByFactor(12),
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
 
-  bottom_container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: ss(14),
-    paddingVertical: ss(12),
-  },
+      bottom_container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderTopWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: scaleByFactor(14),
+        paddingVertical: scaleByFactor(12),
+      },
 
-  arrow: {
-    marginRight: ss(5),
-  },
+      arrow: {
+        marginRight: scaleByFactor(5),
+      },
 
-  content: {
-    flexShrink: 1,
-    fontSize: ss(14),
-  },
+      content: {
+        flexShrink: 1,
+        fontSize: scaleByFactor(14),
+      },
 
-  content_bold: {
-    fontWeight: 'bold',
-  },
-};
+      content_bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.light.primaryBackgroundColor,
-      elevation: 1,
-    },
+  public lightStyles(): Partial<PublicSetItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.light.primaryBackgroundColor,
+        elevation: 1,
+      },
 
-    set_name: {
-      color: config.styles.light.primaryTextColor,
-    },
+      set_name: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    set_subtitle: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      set_subtitle: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    authors: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      authors: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    curated_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      curated_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.light.primaryTextColor,
-    },
+      count: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    terms: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      terms: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    right: {
-      borderLeftColor: config.styles.light.secondaryBorderColor,
-    },
+      right: {
+        borderLeftColor: config.styles.light.secondaryBorderColor,
+      },
 
-    bottom_container: {
-      borderTopColor: config.styles.light.secondaryBorderColor,
-    },
+      bottom_container: {
+        borderTopColor: config.styles.light.secondaryBorderColor,
+      },
 
-    content: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      content: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    item_container: {
-      backgroundColor: config.styles.dark.primaryBackgroundColor,
-      elevation: 3,
-    },
+  public darkStyles(): Partial<PublicSetItemStyles> {
+    return {
+      item_container: {
+        backgroundColor: config.styles.dark.primaryBackgroundColor,
+        elevation: 3,
+      },
 
-    set_name: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      set_name: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    set_subtitle: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      set_subtitle: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    authors: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      authors: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      dot: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    curated_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      curated_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    count: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      count: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    terms: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      terms: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    right: {
-      borderLeftColor: config.styles.dark.secondaryBorderColor,
-    },
+      right: {
+        borderLeftColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    bottom_container: {
-      borderTopColor: config.styles.dark.secondaryBorderColor,
-    },
+      bottom_container: {
+        borderTopColor: config.styles.dark.secondaryBorderColor,
+      },
 
-    content: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      content: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const publicSetItemResponsiveStyles = new PublicSetItemResponsiveStyles();

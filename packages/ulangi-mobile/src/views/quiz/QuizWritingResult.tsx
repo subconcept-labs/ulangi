@@ -5,39 +5,39 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableWritingResult } from '@ulangi/ulangi-observable';
+import { ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ObservableScreenLayout,
+  ObservableWritingResult,
+} from '@ulangi/ulangi-observable';
 import * as React from 'react';
 import { View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { QuizWritingScreenIds } from '../../constants/ids/QuizWritingScreenIds';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { WritingSummary } from '../writing/WritingSummary';
 import {
   QuizWritingResultStyles,
-  darkStyles,
-  lightStyles,
+  quizWritingResultResponsiveStyles,
 } from './QuizWritingResult.style';
 
 export interface QuizWritingResultProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   writingResult: ObservableWritingResult;
   takeAnotherQuiz: () => void;
   quit: () => void;
-  styles?: {
-    light: QuizWritingResultStyles;
-    dark: QuizWritingResultStyles;
-  };
 }
 
 export class QuizWritingResult extends React.Component<QuizWritingResultProps> {
   public get styles(): QuizWritingResultStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return quizWritingResultResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -48,22 +48,34 @@ export class QuizWritingResult extends React.Component<QuizWritingResultProps> {
         </View>
         <WritingSummary
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           writingResult={this.props.writingResult}
         />
         <View style={this.styles.button_container}>
           <DefaultButton
             testID={QuizWritingScreenIds.TAKE_ANOTHER_QUIZ_BTN}
             text="Take another quiz"
-            styles={LessonScreenStyle.getLargeButtonStyles(
+            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+              ButtonSize.LARGE,
+              3,
               config.styles.primaryColor,
               'white',
+              this.props.theme,
+              this.props.screenLayout,
             )}
             onPress={this.props.takeAnotherQuiz}
           />
           <DefaultButton
             testID={QuizWritingScreenIds.QUIT_BTN}
             text="Quit"
-            styles={LessonScreenStyle.getLargeButtonStyles('#ddd', '#333')}
+            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+              ButtonSize.LARGE,
+              3,
+              '#ddd',
+              '#333',
+              this.props.theme,
+              this.props.screenLayout,
+            )}
             onPress={this.props.quit}
           />
         </View>

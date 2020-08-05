@@ -13,6 +13,7 @@ import {
 import {
   ObservablePublicDefinition,
   ObservablePublicVocabulary,
+  ObservableScreenLayout,
 } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
@@ -28,13 +29,13 @@ import { VocabularyExtraFieldList } from '../vocabulary/VocabularyExtraFieldList
 import { WordClassList } from '../vocabulary/WordClassList';
 import {
   PublicVocabularyItemStyles,
-  darkStyles,
-  lightStyles,
+  publicVocabularyItemResponsiveStyles,
 } from './PublicVocabularyItem.style';
 
 export interface PublicVocabularyItemProps {
   theme: Theme;
   vocabulary: ObservablePublicVocabulary;
+  screenLayout: ObservableScreenLayout;
   addVocabulary: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyDetail: (vocbulary: PublicVocabulary) => void;
@@ -50,9 +51,10 @@ export class PublicVocabularyItem extends React.Component<
   PublicVocabularyItemProps
 > {
   public get styles(): PublicVocabularyItemStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return publicVocabularyItemResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -83,6 +85,7 @@ export class PublicVocabularyItem extends React.Component<
             </View>
             <VocabularyExtraFieldList
               theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
               extraFields={this.props.vocabulary.extraFields}
             />
           </View>
@@ -168,6 +171,8 @@ export class PublicVocabularyItem extends React.Component<
       <View key={index} style={this.styles.definition_container}>
         <View style={this.styles.meaning_container}>
           <WordClassList
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             wordClasses={
               definition.extraFields.wordClass.length > 0
                 ? definition.extraFields.wordClass.map(
@@ -188,6 +193,7 @@ export class PublicVocabularyItem extends React.Component<
         </View>
         <DefinitionExtraFieldList
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           extraFields={definition.extraFields}
         />
       </View>

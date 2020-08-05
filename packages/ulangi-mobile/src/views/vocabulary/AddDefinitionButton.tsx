@@ -6,6 +6,7 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
@@ -13,12 +14,12 @@ import { Image, TouchableOpacity } from 'react-native';
 import { Images } from '../../constants/Images';
 import {
   AddDefinitionButtonStyles,
-  darkStyles,
-  lightStyles,
+  addDefinitionButtonResponsiveStyles,
 } from './AddDefinitionButton.style';
 
 export interface AddDefinitionButtonProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   testID?: string;
   disabled?: boolean;
   isAdded?: boolean;
@@ -33,10 +34,11 @@ export interface AddDefinitionButtonProps {
 export class AddDefinitionButton extends React.Component<
   AddDefinitionButtonProps
 > {
-  public get styles(): AddDefinitionButtonStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): AddDefinitionButtonStyles {
+    return addDefinitionButtonResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

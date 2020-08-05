@@ -5,25 +5,36 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
 
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface ShowAnswerButtonStyles {
   container: ViewStyle;
   show_answer_button_container: ViewStyle;
 }
 
-export const baseStyles: ShowAnswerButtonStyles = {
-  container: {},
+export class ShowAnswerButtonResponsiveStyles extends ResponsiveStyleSheet<
+  ShowAnswerButtonStyles
+> {
+  public baseStyles(scaleByFactor: ScaleByFactor): ShowAnswerButtonStyles {
+    return {
+      container: {},
 
-  show_answer_button_container: {
-    paddingHorizontal: ss(16),
-    paddingVertical: ss(12),
-  },
-};
+      show_answer_button_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(12),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public lightStyles(): Partial<ShowAnswerButtonStyles> {
+    return {};
+  }
 
-export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
+  public darkStyles(): Partial<ShowAnswerButtonStyles> {
+    return {};
+  }
+}
+
+export const showAnswerButtonResponsiveStyles = new ShowAnswerButtonResponsiveStyles();

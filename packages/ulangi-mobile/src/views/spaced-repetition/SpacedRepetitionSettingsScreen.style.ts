@@ -6,13 +6,13 @@
  */
 
 import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 import {
-  darkStyles as defaultSectionRowDarkStyles,
-  lightStyles as defaultSectionRowLightStyles,
+  SectionRowResponsiveStyles,
+  SectionRowStyles,
 } from '../section/SectionRow.style';
 
 export interface SpacedRepetitionSettingsScreenStyles {
@@ -23,62 +23,72 @@ export interface SpacedRepetitionSettingsScreenStyles {
   bold: TextStyle;
 }
 
-export const baseStyles: SpacedRepetitionSettingsScreenStyles = {
-  screen: {
-    flex: 1,
-  },
+export class SpacedRepetitionSettingsScreenResponsiveStyles extends ResponsiveStyleSheet<
+  SpacedRepetitionSettingsScreenStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): SpacedRepetitionSettingsScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  content_container: {
-    paddingTop: ss(16),
-  },
+      content_container: {
+        paddingTop: scaleByFactor(16),
+      },
 
-  description: {
-    fontSize: ss(15),
-    lineHeight: ss(19),
-  },
+      description: {
+        fontSize: scaleByFactor(15),
+        lineHeight: scaleByFactor(19),
+      },
 
-  touchable_text: {
-    color: config.styles.primaryColor,
-  },
+      touchable_text: {
+        color: config.styles.primaryColor,
+      },
 
-  bold: {
-    fontWeight: 'bold',
-  },
-};
+      bold: {
+        fontWeight: 'bold',
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    description: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+  public lightStyles(): Partial<SpacedRepetitionSettingsScreenStyles> {
+    return {
+      description: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    description: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+  public darkStyles(): Partial<SpacedRepetitionSettingsScreenStyles> {
+    return {
+      description: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
 
-export const sectionRowLightStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowLightStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-    inner_container: {
-      backgroundColor: '#f0f0f0',
-    },
-  }),
-);
+export class ExtendedSectionRowResponsiveStyles extends SectionRowResponsiveStyles {
+  public baseStyles(scaleByFactor: ScaleByFactor): SectionRowStyles {
+    return _.merge({}, super.baseStyles(scaleByFactor), {
+      left_text: {
+        fontSize: scaleByFactor(16),
+        fontWeight: 'bold',
+      },
+    });
+  }
 
-export const sectionRowDarkStyles = StyleSheet.create(
-  _.merge({}, defaultSectionRowDarkStyles, {
-    left_text: {
-      fontSize: ss(16),
-      fontWeight: 'bold',
-    },
-  }),
-);
+  public lightStyles(): Partial<SectionRowStyles> {
+    return _.merge({}, super.lightStyles(), {
+      inner_container: {
+        backgroundColor: '#f0f0f0',
+      },
+    });
+  }
+}
+
+export const spacedRepetitionSettingsScreenResponsiveStyles = new SpacedRepetitionSettingsScreenResponsiveStyles();
+
+export const sectionRowResponsiveStyles = new ExtendedSectionRowResponsiveStyles();

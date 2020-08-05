@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface GoogleSheetsAddOnScreenStyles {
   screen: ViewStyle;
@@ -27,98 +26,108 @@ export interface GoogleSheetsAddOnScreenStyles {
   highlighted: TextStyle;
 }
 
-export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
+export class GoogleSheetsAddOnScreenResponsiveStyles extends ResponsiveStyleSheet<
+  GoogleSheetsAddOnScreenStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): GoogleSheetsAddOnScreenStyles {
+    return {
+      screen: {
+        flex: 1,
+      },
 
-  intro_container: {
-    paddingHorizontal: ss(16),
-  },
+      intro_container: {
+        paddingHorizontal: scaleByFactor(16),
+      },
 
-  api_key: {
-    fontSize: ss(15),
-  },
+      api_key: {
+        fontSize: scaleByFactor(15),
+      },
 
-  intro_text: {
-    fontSize: ss(15),
-  },
+      intro_text: {
+        fontSize: scaleByFactor(15),
+      },
 
-  tutorial_text: {
-    paddingTop: ss(5),
-    fontSize: ss(15),
-  },
+      tutorial_text: {
+        paddingTop: scaleByFactor(5),
+        fontSize: scaleByFactor(15),
+      },
 
-  section_container: {
-    marginTop: ss(16),
-  },
+      section_container: {
+        marginTop: scaleByFactor(16),
+      },
 
-  password_input: {
-    flex: 1,
-  },
+      password_input: {
+        flex: 1,
+      },
 
-  expired_text: {},
+      expired_text: {},
 
-  action_container: {
-    marginTop: ss(4),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      action_container: {
+        marginTop: scaleByFactor(4),
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  primary_text: {
-    color: config.styles.primaryColor,
-  },
+      primary_text: {
+        color: config.styles.primaryColor,
+      },
 
-  invalidate_text: {
-    color: 'orangered',
-  },
+      invalidate_text: {
+        color: 'orangered',
+      },
 
-  dot: {
-    paddingHorizontal: ss(8),
-    fontSize: ss(17),
-  },
+      dot: {
+        paddingHorizontal: scaleByFactor(8),
+        fontSize: scaleByFactor(17),
+      },
 
-  highlighted: {
-    color: config.styles.primaryColor,
-  },
-});
+      highlighted: {
+        color: config.styles.primaryColor,
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    intro_text: {
-      color: config.styles.light.primaryTextColor,
-    },
+  public lightStyles(): Partial<GoogleSheetsAddOnScreenStyles> {
+    return {
+      intro_text: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    api_key: {
-      color: config.styles.light.primaryTextColor,
-    },
+      api_key: {
+        color: config.styles.light.primaryTextColor,
+      },
 
-    expired_text: {
-      color: config.styles.light.secondaryTextColor,
-    },
+      expired_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.light.secondaryTextColor,
-    },
-  }),
-);
+      dot: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    intro_text: {
-      color: config.styles.dark.primaryTextColor,
-    },
+  public darkStyles(): Partial<GoogleSheetsAddOnScreenStyles> {
+    return {
+      intro_text: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    api_key: {
-      color: config.styles.dark.primaryTextColor,
-    },
+      api_key: {
+        color: config.styles.dark.primaryTextColor,
+      },
 
-    expired_text: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+      expired_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    dot: {
-      color: config.styles.dark.secondaryTextColor,
-    },
-  }),
-);
+      dot: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
+  }
+}
+
+export const googleSheetsAddOnScreenResponsiveStyles = new GoogleSheetsAddOnScreenResponsiveStyles();

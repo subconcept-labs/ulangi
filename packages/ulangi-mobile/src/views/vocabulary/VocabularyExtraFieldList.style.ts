@@ -5,11 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import * as _ from 'lodash';
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ss } from '../../utils/responsive';
+import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface VocabularyExtraFieldListStyles {
   container: ViewStyle;
@@ -24,71 +23,81 @@ export interface VocabularyExtraFieldListStyles {
   activity_indicator: ViewStyle;
 }
 
-const baseStyles: VocabularyExtraFieldListStyles = {
-  container: {},
+export class VocabularyExtraFieldListResponsiveStyles extends ResponsiveStyleSheet<
+  VocabularyExtraFieldListStyles
+> {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+  ): VocabularyExtraFieldListStyles {
+    return {
+      container: {},
 
-  item_container: {
-    marginVertical: ss(4),
-    //borderTopWidth: StyleSheet.hairlineWidth,
-    //borderTopColor: config.styles.light.primaryBorderColor,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+      item_container: {
+        marginVertical: scaleByFactor(4),
+        //borderTopWidth: StyleSheet.hairlineWidth,
+        //borderTopColor: config.styles.light.primaryBorderColor,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
 
-  left: {},
+      left: {},
 
-  right: {},
+      right: {},
 
-  image: {
-    width: 100,
-    height: 100,
-  },
+      image: {
+        width: 100,
+        height: 100,
+      },
 
-  name: {
-    fontSize: ss(15),
-    fontWeight: '700',
-  },
+      name: {
+        fontSize: scaleByFactor(15),
+        fontWeight: '700',
+      },
 
-  value: {
-    fontSize: ss(17),
-    //fontWeight: 'bold',
-  },
+      value: {
+        fontSize: scaleByFactor(17),
+        //fontWeight: 'bold',
+      },
 
-  speak_touchable: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+      speak_touchable: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
 
-  speaker_icon: {
-    marginLeft: ss(6),
-  },
+      speaker_icon: {
+        marginLeft: scaleByFactor(6),
+      },
 
-  activity_indicator: {
-    marginLeft: ss(6),
-  },
-};
+      activity_indicator: {
+        marginLeft: scaleByFactor(6),
+      },
+    };
+  }
 
-export const lightStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    name: {
-      color: config.styles.light.secondaryTextColor,
-    },
+  public lightStyles(): Partial<VocabularyExtraFieldListStyles> {
+    return {
+      name: {
+        color: config.styles.light.secondaryTextColor,
+      },
 
-    value: {
-      color: config.styles.light.primaryTextColor,
-    },
-  }),
-);
+      value: {
+        color: config.styles.light.primaryTextColor,
+      },
+    };
+  }
 
-export const darkStyles = StyleSheet.create(
-  _.merge({}, baseStyles, {
-    name: {
-      color: config.styles.dark.secondaryTextColor,
-    },
+  public darkStyles(): Partial<VocabularyExtraFieldListStyles> {
+    return {
+      name: {
+        color: config.styles.dark.secondaryTextColor,
+      },
 
-    value: {
-      color: config.styles.dark.primaryTextColor,
-    },
-  }),
-);
+      value: {
+        color: config.styles.dark.primaryTextColor,
+      },
+    };
+  }
+}
+
+export const vocabularyExtraFieldListResponsiveStyles = new VocabularyExtraFieldListResponsiveStyles();

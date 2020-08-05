@@ -12,7 +12,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import { SearchInput } from '../../views/search/SearchInput';
-import { SearchBarStyles, darkStyles, lightStyles } from './SearchBar.style';
+import { SearchBarStyles, searchBarResponsiveStyles } from './SearchBar.style';
 
 export interface SearchBarProps {
   theme: Theme;
@@ -27,9 +27,10 @@ export interface SearchBarProps {
 @observer
 export class SearchBar extends React.Component<SearchBarProps> {
   private get styles(): SearchBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return searchBarResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

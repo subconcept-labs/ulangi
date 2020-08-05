@@ -7,6 +7,7 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ButtonSize, UserExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableNetworkStore,
@@ -19,7 +20,7 @@ import Rate from 'react-native-rate';
 
 import { RemoteLogger } from '../../RemoteLogger';
 import { env } from '../../constants/env';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 
 export class InAppRatingDelegate {
@@ -67,9 +68,12 @@ export class InAppRatingDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           text: 'RATE THIS APP',
@@ -77,9 +81,12 @@ export class InAppRatingDelegate {
             this.showInAppRating(false);
             this.dialogDelegate.dismiss();
           },
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

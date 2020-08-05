@@ -12,7 +12,7 @@ import {
   ScreenName,
   SyncTask,
 } from '@ulangi/ulangi-common/enums';
-import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, once } from '@ulangi/ulangi-event';
 import {
   ObservableKeyboard,
@@ -25,7 +25,7 @@ import { Keyboard } from 'react-native';
 import { RemoteLogger } from '../../RemoteLogger';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { SignInScreenIds } from '../../constants/ids/SignInScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
@@ -204,9 +204,12 @@ export class SignInScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: FullRoundedButtonStyle.getFullPrimaryBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

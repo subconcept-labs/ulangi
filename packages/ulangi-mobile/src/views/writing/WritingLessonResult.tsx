@@ -6,7 +6,10 @@
  */
 
 import { ActivityState, ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableFeedbackListState } from '@ulangi/ulangi-observable';
+import {
+  ObservableFeedbackListState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -14,20 +17,20 @@ import { ScrollView, View } from 'react-native';
 
 import { config } from '../../constants/config';
 import { WritingLessonScreenIds } from '../../constants/ids/WritingLessonScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
-import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
+import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
 import { AdNotice } from '../ad/AdNotice';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { ReviewFeedbackSummary } from '../review-feedback/ReviewFeedbackSummary';
 import {
   WritingLessonResultStyles,
-  darkStyles,
-  lightStyles,
+  writingLessonResultResponsiveStyles,
 } from './WritingLessonResult.style';
 
 export interface WritingLessonResultProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   feedbackListState: ObservableFeedbackListState;
   saveState: IObservableValue<ActivityState>;
   shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
@@ -35,20 +38,17 @@ export interface WritingLessonResultProps {
   takeAnotherLesson: () => void;
   quit: () => void;
   upgradeToPremium: () => void;
-  styles?: {
-    light: WritingLessonResultStyles;
-    dark: WritingLessonResultStyles;
-  };
 }
 
 @observer
 export class WritingLessonResult extends React.Component<
   WritingLessonResultProps
 > {
-  public get styles(): WritingLessonResultStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): WritingLessonResultStyles {
+    return writingLessonResultResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
@@ -59,12 +59,17 @@ export class WritingLessonResult extends React.Component<
         </View>
         <ReviewFeedbackSummary
           theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
           feedbackListState={this.props.feedbackListState}
         />
         {this.renderSaveText()}
         {this.props.shouldShowAdOrGoogleConsentForm.get() ? (
           <View style={this.styles.ad_notice_container}>
-            <AdNotice upgradeToPremium={this.props.upgradeToPremium} />
+            <AdNotice
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+              upgradeToPremium={this.props.upgradeToPremium}
+            />
           </View>
         ) : null}
         {this.renderButtons()}
@@ -87,8 +92,10 @@ export class WritingLessonResult extends React.Component<
           <DefaultButton
             testID={WritingLessonScreenIds.VIEW_ALL_FEEDBACK_BTN}
             text="View all feedback"
-            styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
+            styles={fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.NORMAL,
+              this.props.theme,
+              this.props.screenLayout,
             )}
             onPress={this.props.showReviewFeedback}
           />
@@ -107,16 +114,27 @@ export class WritingLessonResult extends React.Component<
           <DefaultButton
             testID={WritingLessonScreenIds.TAKE_ANOTHER_LESSON_BTN}
             text="Continue"
-            styles={LessonScreenStyle.getLargeButtonStyles(
+            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+              ButtonSize.LARGE,
+              3,
               config.styles.primaryColor,
               'white',
+              this.props.theme,
+              this.props.screenLayout,
             )}
             onPress={this.props.takeAnotherLesson}
           />
           <DefaultButton
             testID={WritingLessonScreenIds.QUIT_BTN}
             text="Quit"
-            styles={LessonScreenStyle.getLargeButtonStyles('#ddd', '#333')}
+            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+              ButtonSize.LARGE,
+              3,
+              '#ddd',
+              '#333',
+              this.props.theme,
+              this.props.screenLayout,
+            )}
             onPress={this.props.quit}
           />
         </View>

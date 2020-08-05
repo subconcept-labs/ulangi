@@ -11,7 +11,7 @@ import {
   LightBoxState,
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
-import { Set } from '@ulangi/ulangi-common/interfaces';
+import { ButtonStyles, Set } from '@ulangi/ulangi-common/interfaces';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableLightBox,
@@ -23,7 +23,7 @@ import * as _ from 'lodash';
 import { BackHandler } from 'react-native';
 
 import { CreateFirstSetScreenIds } from '../../constants/ids/CreateFirstSetScreenIds';
-import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
@@ -100,9 +100,12 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
         {
           testID: CreateFirstSetScreenIds.YES_BTN,
@@ -118,9 +121,12 @@ export class CreateFirstSetScreenDelegate extends AddEditSetScreenDelegate {
               },
             );
           },
-          styles: FullRoundedButtonStyle.getFullGreyBackgroundStyles(
-            ButtonSize.SMALL,
-          ),
+          styles: (theme, layout): ButtonStyles =>
+            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
+              ButtonSize.SMALL,
+              theme,
+              layout,
+            ),
         },
       ],
     });

@@ -5,72 +5,76 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ObservableSignUpScreen } from '@ulangi/ulangi-observable';
+import {
+  ObservableSignUpScreen,
+  ObservableThemeStore,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { SignUpScreenIds } from '../../constants/ids/SignUpScreenIds';
 import { SignUpScreenDelegate } from '../../delegates/auth/SignUpScreenDelegate';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
+import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { Logo } from './Logo';
 import { SignUpForm } from './SignUpForm';
+import {
+  SignUpScreenStyles,
+  signUpScreenResponsiveStyles,
+} from './SignUpScreen.style';
 
 export interface SignUpScreenProps {
+  themeStore: ObservableThemeStore;
   observableScreen: ObservableSignUpScreen;
   screenDelegate: SignUpScreenDelegate;
 }
 
 @observer
 export class SignUpScreen extends React.Component<SignUpScreenProps> {
+  private get styles(): SignUpScreenStyles {
+    return signUpScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
+  }
+
   public render(): React.ReactElement<any> {
     return (
-      <DismissKeyboardView
-        style={styles.screen}
-        testID={SignUpScreenIds.SCREEN}>
-        <View style={styles.container}>
-          <View style={styles.logo_container}>
-            <Logo />
+      <Screen
+        style={this.styles.screen}
+        testID={SignUpScreenIds.SCREEN}
+        useSafeAreaView={true}
+        observableScreen={this.props.observableScreen}>
+        <DismissKeyboardView>
+          <View style={this.styles.container}>
+            <View style={this.styles.logo_container}>
+              <Logo />
+            </View>
+            <SmartScrollView
+              style={this.styles.form_container}
+              keyboardAware={true}
+              keyboardShouldPersistTaps="handled">
+              <SignUpForm
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                email={this.props.observableScreen.email}
+                password={this.props.observableScreen.password}
+                confirmPassword={this.props.observableScreen.confirmPassword}
+                shouldFocusPassword={
+                  this.props.observableScreen.shouldFocusPassword
+                }
+                shouldFocusConfirmPassword={
+                  this.props.observableScreen.shouldFocusConfirmPassword
+                }
+                submit={this.props.screenDelegate.signUp}
+                back={this.props.screenDelegate.back}
+              />
+            </SmartScrollView>
           </View>
-          <SmartScrollView
-            style={styles.form_container}
-            keyboardAware={true}
-            keyboardShouldPersistTaps="handled">
-            <SignUpForm
-              email={this.props.observableScreen.email}
-              password={this.props.observableScreen.password}
-              confirmPassword={this.props.observableScreen.confirmPassword}
-              shouldFocusPassword={
-                this.props.observableScreen.shouldFocusPassword
-              }
-              shouldFocusConfirmPassword={
-                this.props.observableScreen.shouldFocusConfirmPassword
-              }
-              submit={this.props.screenDelegate.signUp}
-              back={this.props.screenDelegate.back}
-            />
-          </SmartScrollView>
-        </View>
-      </DismissKeyboardView>
+        </DismissKeyboardView>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
-
-  logo_container: {
-    marginTop: 20,
-  },
-
-  form_container: {
-    marginTop: 20,
-    flex: 1,
-  },
-});

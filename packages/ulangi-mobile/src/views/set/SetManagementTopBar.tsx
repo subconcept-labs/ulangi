@@ -6,6 +6,7 @@
  */
 
 import { SetStatus, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -16,12 +17,12 @@ import { SetManagementScreenIds } from '../../constants/ids/SetManagementScreenI
 import { DefaultText } from '../common/DefaultText';
 import {
   SetManagementTopBarStyles,
-  darkStyles,
-  lightStyles,
+  setManagementTopBarResponsiveStyles,
 } from './SetManagementTopBar.style';
 
 export interface SetManagementTopBarProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   selectedSetStatus: SetStatus;
   selectSetStatus: (setStatus: SetStatus) => void;
   styles?: {
@@ -35,9 +36,10 @@ export class SetManagementTopBar extends React.Component<
   SetManagementTopBarProps
 > {
   public get styles(): SetManagementTopBarStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return setManagementTopBarResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

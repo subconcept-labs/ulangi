@@ -21,13 +21,13 @@ import { GoogleSheetsAddOnScreenIds } from '../../constants/ids/GoogleSheetsAddO
 import { GoogleSheetsAddOnScreenDelegate } from '../../delegates/google-sheets/GoogleSheetsAddOnScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
 import { DefaultTextInput } from '../common/DefaultTextInput';
+import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
 import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   GoogleSheetsAddOnScreenStyles,
-  darkStyles,
-  lightStyles,
+  googleSheetsAddOnScreenResponsiveStyles,
 } from './GoogleSheetsAddOnScreen.style';
 
 export interface GoogleSheetsAddOnScreenProps {
@@ -42,54 +42,65 @@ export class GoogleSheetsAddOnScreen extends React.Component<
   GoogleSheetsAddOnScreenProps
 > {
   public get styles(): GoogleSheetsAddOnScreenStyles {
-    return this.props.themeStore.theme === Theme.LIGHT
-      ? lightStyles
-      : darkStyles;
+    return googleSheetsAddOnScreenResponsiveStyles.compile(
+      this.props.observableScreen.screenLayout,
+      this.props.themeStore.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
-      <SmartScrollView
+      <Screen
         style={this.styles.screen}
-        testID={GoogleSheetsAddOnScreenIds.SCREEN}>
-        <View style={this.styles.intro_container}>
-          <DefaultText style={this.styles.intro_text}>
-            We developed a Google Sheets add-on so that you can directly
-            import/export your data from a Google Sheets document.
-          </DefaultText>
-        </View>
-        <View style={this.styles.section_container}>
-          <SectionGroup theme={this.props.themeStore.theme} header="TUTORIALS">
-            <SectionRow
+        testID={GoogleSheetsAddOnScreenIds.SCREEN}
+        observableScreen={this.props.observableScreen}
+        useSafeAreaView={true}>
+        <SmartScrollView>
+          <View style={this.styles.intro_container}>
+            <DefaultText style={this.styles.intro_text}>
+              We developed a Google Sheets add-on so that you can directly
+              import/export your data from a Google Sheets document.
+            </DefaultText>
+          </View>
+          <View style={this.styles.section_container}>
+            <SectionGroup
               theme={this.props.themeStore.theme}
-              leftText="How to install the add-on"
-              showArrow={true}
-              onPress={(): void =>
-                this.props.screenDelegate.goToLink(
-                  config.links.ulangiSheetsAddOn.installTutorial,
-                )
-              }
-            />
-            <SectionRow
+              screenLayout={this.props.observableScreen.screenLayout}
+              header="TUTORIALS">
+              <SectionRow
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                leftText="How to install the add-on"
+                showArrow={true}
+                onPress={(): void =>
+                  this.props.screenDelegate.goToLink(
+                    config.links.ulangiSheetsAddOn.installTutorial,
+                  )
+                }
+              />
+              <SectionRow
+                theme={this.props.themeStore.theme}
+                screenLayout={this.props.observableScreen.screenLayout}
+                leftText="How to use the add-on"
+                showArrow={true}
+                onPress={(): void =>
+                  this.props.screenDelegate.goToLink(
+                    config.links.ulangiSheetsAddOn.useTutorial,
+                  )
+                }
+              />
+            </SectionGroup>
+            <SectionGroup
               theme={this.props.themeStore.theme}
-              leftText="How to use the add-on"
-              showArrow={true}
-              onPress={(): void =>
-                this.props.screenDelegate.goToLink(
-                  config.links.ulangiSheetsAddOn.useTutorial,
-                )
-              }
-            />
-          </SectionGroup>
-          <SectionGroup
-            theme={this.props.themeStore.theme}
-            header="API KEY FOR GOOGLE SHEETS">
-            {typeof this.props.observableScreen.apiKey === 'undefined'
-              ? this.renderPasswordInput()
-              : this.renderApiKey()}
-          </SectionGroup>
-        </View>
-      </SmartScrollView>
+              screenLayout={this.props.observableScreen.screenLayout}
+              header="API KEY FOR GOOGLE SHEETS">
+              {typeof this.props.observableScreen.apiKey === 'undefined'
+                ? this.renderPasswordInput()
+                : this.renderApiKey()}
+            </SectionGroup>
+          </View>
+        </SmartScrollView>
+      </Screen>
     );
   }
 
@@ -102,6 +113,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
       return (
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="To get API key, please set up the Ulangi account first."
         />
       );
@@ -109,6 +121,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
       return (
         <SectionRow
           theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           customLeft={
             <DefaultTextInput
               style={this.styles.password_input}
@@ -135,6 +148,7 @@ export class GoogleSheetsAddOnScreen extends React.Component<
     return (
       <SectionRow
         theme={this.props.themeStore.theme}
+        screenLayout={this.props.observableScreen.screenLayout}
         customLeft={
           <DefaultText style={this.styles.api_key} selectable={true}>
             {this.props.observableScreen.apiKey}

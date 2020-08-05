@@ -6,18 +6,20 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { DefaultText } from '../common/DefaultText';
 import {
   FAQListStyles,
-  darkStyles,
-  lightStyles,
+  faqListResponsiveStyles,
 } from '../common/FAQList.style';
 
 export interface FAQListProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   sections: {
     title: string;
     content: string | React.ReactElement<any>;
@@ -28,11 +30,13 @@ export interface FAQListProps {
   };
 }
 
+@observer
 export class FAQList extends React.Component<FAQListProps> {
-  public get styles(): FAQListStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+  private get styles(): FAQListStyles {
+    return faqListResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {

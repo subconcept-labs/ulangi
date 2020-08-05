@@ -6,6 +6,7 @@
  */
 
 import { ActivityState, Theme } from '@ulangi/ulangi-common/enums';
+import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
@@ -16,18 +17,14 @@ import { SectionGroup } from '../section/SectionGroup';
 import { SectionRow } from '../section/SectionRow';
 import {
   VocabularyDetailPronunciationStyles,
-  darkStyles,
-  lightStyles,
+  vocabularyDetailPronunciationResponsiveStyles,
 } from './VocabularyDetailPronunciation.style';
 
 export interface VocabularyDetailPronunciationProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   speakState: IObservableValue<ActivityState>;
   speak: () => void;
-  styles?: {
-    light: VocabularyDetailPronunciationStyles;
-    dark: VocabularyDetailPronunciationStyles;
-  };
 }
 
 @observer
@@ -35,17 +32,22 @@ export class VocabularyDetailPronunciation extends React.Component<
   VocabularyDetailPronunciationProps
 > {
   public get styles(): VocabularyDetailPronunciationStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return vocabularyDetailPronunciationResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
       <View style={this.styles.container}>
-        <SectionGroup theme={this.props.theme} header="PRONUNCIATION">
+        <SectionGroup
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          header="PRONUNCIATION">
           <SectionRow
             theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
             leftText="Audio"
             rightIcon={this.renderSpeaker()}
           />

@@ -6,7 +6,10 @@
  */
 
 import { Theme } from '@ulangi/ulangi-common/enums';
-import { ObservableFeedbackListState } from '@ulangi/ulangi-observable';
+import {
+  ObservableFeedbackListState,
+  ObservableScreenLayout,
+} from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -14,12 +17,12 @@ import { View } from 'react-native';
 import { DefaultText } from '../common/DefaultText';
 import {
   ReviewFeedbackSummaryStyles,
-  darkStyles,
-  lightStyles,
+  reviewFeedbackSummaryResponsiveStyles,
 } from './ReviewFeedbackSummary.style';
 
 export interface ReviewFeedbackSummaryProps {
   theme: Theme;
+  screenLayout: ObservableScreenLayout;
   feedbackListState: ObservableFeedbackListState;
   styles?: {
     light: ReviewFeedbackSummaryStyles;
@@ -32,9 +35,10 @@ export class ReviewFeedbackSummary extends React.Component<
   ReviewFeedbackSummaryProps
 > {
   public get styles(): ReviewFeedbackSummaryStyles {
-    const light = this.props.styles ? this.props.styles.light : lightStyles;
-    const dark = this.props.styles ? this.props.styles.dark : darkStyles;
-    return this.props.theme === Theme.LIGHT ? light : dark;
+    return reviewFeedbackSummaryResponsiveStyles.compile(
+      this.props.screenLayout,
+      this.props.theme,
+    );
   }
 
   public render(): React.ReactElement<any> {
