@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface TranslationListStyles {
   source_container: ViewStyle;
@@ -18,8 +19,8 @@ export interface TranslationListStyles {
 
 export const baseStyles: TranslationListStyles = {
   source_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(8),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -33,7 +34,7 @@ export const baseStyles: TranslationListStyles = {
   },
 
   source_text: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 };
 

@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DataSharingScreenStyles {
   screen: ViewStyle;
@@ -13,21 +14,21 @@ export interface DataSharingScreenStyles {
 export const baseStyles: DataSharingScreenStyles = {
   screen: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
   title: {
-    marginVertical: 16,
-    fontSize: 16,
+    marginVertical: ss(16),
+    fontSize: ss(16),
     fontWeight: 'bold',
   },
 
   paragraph: {
-    paddingTop: 8,
-    fontSize: 15,
+    paddingTop: ss(8),
+    fontSize: ss(15),
   },
 
   button_container: {
-    marginTop: 24,
+    marginTop: ss(24),
   },
 };
 

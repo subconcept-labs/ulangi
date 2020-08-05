@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ExtraFieldsPickerScreenStyles {
   light_box_container: ViewStyle;
@@ -42,20 +43,20 @@ export const baseStyles: ExtraFieldsPickerScreenStyles = {
     justifyContent: 'center',
     borderBottomWidth: 2,
     marginBottom: -1,
-    height: 44,
+    height: ss(44),
   },
 
   header_text_left: {
     fontWeight: 'bold',
-    paddingHorizontal: 16,
-    fontSize: 16,
+    paddingHorizontal: ss(16),
+    fontSize: ss(16),
   },
 
   header_item_right: {},
 
   header_text_right: {
-    paddingHorizontal: 16,
-    fontSize: 16,
+    paddingHorizontal: ss(16),
+    fontSize: ss(16),
     color: config.styles.primaryColor,
   },
 

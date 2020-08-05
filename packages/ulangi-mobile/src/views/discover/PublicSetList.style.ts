@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface PublicSetListStyles {
   list_container: ViewStyle;
@@ -19,25 +20,25 @@ export interface PublicSetListStyles {
 
 export const baseStyles: PublicSetListStyles = {
   list_container: {
-    paddingBottom: 74,
-    paddingTop: 8,
+    paddingBottom: ss(74),
+    paddingTop: ss(8),
   },
 
   center_container: {
     flex: 1,
-    paddingHorizontal: 16,
-    marginTop: 8,
+    paddingHorizontal: ss(16),
+    marginTop: ss(8),
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   message: {
-    fontSize: 15,
+    fontSize: ss(15),
     textAlign: 'center',
   },
 
   button_container: {
-    marginTop: 8,
+    marginTop: ss(8),
   },
 };
 

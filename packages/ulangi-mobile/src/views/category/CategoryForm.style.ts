@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface CategoryFormStyles {
   container: ViewStyle;
@@ -19,21 +20,21 @@ export interface CategoryFormStyles {
 export const baseStyles: CategoryFormStyles = {
   container: {
     flex: 1,
-    paddingBottom: 24,
+    paddingBottom: ss(24),
   },
 
   category_input_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   category_input: {
     flex: 1,
-    height: 44,
-    fontSize: 16,
+    height: ss(44),
+    fontSize: ss(16),
   },
 };
 

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ChangePasswordFormStyles {
   form: ViewStyle;
@@ -24,13 +25,13 @@ export const baseStyles: ChangePasswordFormStyles = {
   },
 
   text_input_container: {
-    paddingHorizontal: 8,
+    paddingHorizontal: ss(8),
   },
 
   text_input: {
-    paddingHorizontal: 8,
-    paddingVertical: 13,
-    fontSize: 16,
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(13),
+    fontSize: ss(16),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 

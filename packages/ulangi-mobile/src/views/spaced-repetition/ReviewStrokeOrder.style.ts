@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ReviewStrokeOrderStyles {
   container: ViewStyle;
@@ -19,21 +20,21 @@ export interface ReviewStrokeOrderStyles {
 
 export const baseStyles: ReviewStrokeOrderStyles = {
   container: {
-    paddingHorizontal: 16,
-    marginTop: 10,
+    paddingHorizontal: ss(16),
+    marginTop: ss(10),
   },
 
   title: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: 'bold',
   },
 
   subtitle: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   button_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.styles.primaryColor,
   },
 };

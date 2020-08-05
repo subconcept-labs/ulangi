@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface PickerLoadingStyles {
   spinner_container: ViewStyle;
@@ -22,15 +23,15 @@ export const baseStyles: PickerLoadingStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    padding: 16,
+    padding: ss(16),
   },
 
   spinner: {
-    marginRight: 5,
+    marginRight: ss(5),
   },
 
   spinner_text: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 };
 

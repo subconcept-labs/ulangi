@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxTitleStyles {
   title_container: ViewStyle;
@@ -18,15 +19,15 @@ export interface LightBoxTitleStyles {
 export const baseStyles = {
   title_container: {
     alignSelf: 'stretch',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: ss(12),
+    paddingHorizontal: ss(16),
     borderBottomWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   title_text: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: 'bold',
     letterSpacing: -0.25,
   },

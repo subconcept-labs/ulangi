@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxSelectionItemStyles {
   last_item: ViewStyle;
@@ -25,28 +26,28 @@ export const baseStyles: LightBoxSelectionItemStyles = {
   },
 
   item_container: {
-    marginHorizontal: 8,
+    marginHorizontal: ss(8),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   item_touchable: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 13,
-    paddingHorizontal: 8,
+    paddingVertical: ss(13),
+    paddingHorizontal: ss(8),
   },
 
   select_icon: {
-    marginRight: 10,
+    marginRight: ss(10),
   },
 
   item_icon: {
-    marginRight: 6,
+    marginRight: ss(6),
   },
 
   text: {
     flexShrink: 1,
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

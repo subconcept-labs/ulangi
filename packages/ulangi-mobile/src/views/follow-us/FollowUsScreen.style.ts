@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface FollowUsScreenStyles {
   screen: ViewStyle;
@@ -23,15 +24,15 @@ export const baseStyles: FollowUsScreenStyles = {
   },
 
   intro_container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   intro_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   section_container: {
-    marginTop: 16,
+    marginTop: ss(16),
   },
 };
 

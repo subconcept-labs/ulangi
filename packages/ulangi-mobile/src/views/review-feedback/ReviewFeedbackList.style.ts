@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ReviewFeedbackListStyles {
   header: ViewStyle;
@@ -19,17 +20,17 @@ export interface ReviewFeedbackListStyles {
 
 export const baseStyles: ReviewFeedbackListStyles = {
   header: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: ss(16),
+    paddingTop: ss(16),
   },
 
   header_text: {
-    fontSize: 14,
+    fontSize: ss(14),
     textAlign: 'center',
   },
 
   list_content_container: {
-    paddingBottom: 16,
+    paddingBottom: ss(16),
   },
 
   bold: {

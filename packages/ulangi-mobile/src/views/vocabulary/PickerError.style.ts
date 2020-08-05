@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface PickerErrorStyles {
   error_container: ViewStyle;
@@ -17,14 +18,14 @@ export interface PickerErrorStyles {
 
 export const baseStyles: PickerErrorStyles = {
   error_container: {
-    padding: 16,
+    padding: ss(16),
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
   },
 
   error_text: {
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: ss(14),
+    lineHeight: ss(19),
   },
 };
 

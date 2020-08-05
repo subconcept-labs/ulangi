@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface EventLogsScreenStyles {
   screen: ViewStyle;
@@ -23,17 +24,17 @@ export const baseStyles: EventLogsScreenStyles = {
   },
 
   button_container: {
-    marginTop: 10,
-    paddingHorizontal: 16,
+    marginTop: ss(10),
+    paddingHorizontal: ss(16),
   },
 
   paragraph: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
   },
 
   text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 };
 

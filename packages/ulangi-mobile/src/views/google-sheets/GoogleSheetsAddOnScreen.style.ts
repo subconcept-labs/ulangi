@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface GoogleSheetsAddOnScreenStyles {
   screen: ViewStyle;
@@ -32,24 +33,24 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
   },
 
   intro_container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   api_key: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   intro_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   tutorial_text: {
-    paddingTop: 5,
-    fontSize: 15,
+    paddingTop: ss(5),
+    fontSize: ss(15),
   },
 
   section_container: {
-    marginTop: 16,
+    marginTop: ss(16),
   },
 
   password_input: {
@@ -59,7 +60,7 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
   expired_text: {},
 
   action_container: {
-    marginTop: 4,
+    marginTop: ss(4),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -73,8 +74,8 @@ export const baseStyles: GoogleSheetsAddOnScreenStyles = StyleSheet.create({
   },
 
   dot: {
-    paddingHorizontal: 8,
-    fontSize: 17,
+    paddingHorizontal: ss(8),
+    fontSize: ss(17),
   },
 
   highlighted: {

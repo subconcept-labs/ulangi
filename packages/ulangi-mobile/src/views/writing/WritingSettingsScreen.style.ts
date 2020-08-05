@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSectionRowDarkStyles,
   lightStyles as defaultSectionRowLightStyles,
@@ -27,13 +28,13 @@ export const baseStyles: WritingSettingsScreenStyles = {
   },
 
   content_container: {
-    paddingTop: 16,
+    paddingTop: ss(16),
   },
 
   description: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: '#888',
-    lineHeight: 19,
+    lineHeight: ss(19),
   },
 
   touchable_text: {},
@@ -66,7 +67,7 @@ export const darkStyles = StyleSheet.create(
 export const sectionRowLightStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowLightStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
     inner_container: {
@@ -78,7 +79,7 @@ export const sectionRowLightStyles = StyleSheet.create(
 export const sectionRowDarkStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowDarkStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
   }),

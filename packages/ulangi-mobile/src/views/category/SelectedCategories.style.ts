@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SelectedCategoriesStyles {
   container: ViewStyle;
@@ -26,20 +27,20 @@ export const baseStyles: SelectedCategoriesStyles = {
   title_container: {},
 
   title: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: '700',
     //opacity: 0.4,
   },
 
   category_name_list_container: {
     flexDirection: 'row',
-    marginHorizontal: 50,
+    marginHorizontal: ss(50),
   },
 
   category_name: {
-    paddingVertical: 5,
+    paddingVertical: ss(5),
     //opacity: 0.3,
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: '700',
   },
 };

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface IntervalsScreenStyles {
   row: ViewStyle;
@@ -21,8 +22,8 @@ export interface IntervalsScreenStyles {
 export const baseStyles: IntervalsScreenStyles = {
   row: {
     alignSelf: 'stretch',
-    paddingHorizontal: 16,
-    paddingVertical: 11,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(11),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -31,18 +32,18 @@ export const baseStyles: IntervalsScreenStyles = {
 
   row_left: {
     flexShrink: 1,
-    paddingRight: 16,
+    paddingRight: ss(16),
   },
 
   row_right: {},
 
   level: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 
   interval: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 };

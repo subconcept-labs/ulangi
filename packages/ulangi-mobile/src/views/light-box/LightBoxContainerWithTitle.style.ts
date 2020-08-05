@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxContainerWithTitleStyles {
   light_box_container: ViewStyle;
@@ -25,14 +26,14 @@ export const baseStyles: LightBoxContainerWithTitleStyles = {
 
   inner_container: {
     flexShrink: 1,
-    borderRadius: 4,
-    marginHorizontal: 16,
+    borderRadius: ss(4),
+    marginHorizontal: ss(16),
     overflow: 'hidden',
   },
 
   title_container: {
     alignSelf: 'stretch',
-    paddingVertical: 12,
+    paddingVertical: ss(12),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -40,7 +41,7 @@ export const baseStyles: LightBoxContainerWithTitleStyles = {
 
   title: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: ss(16),
   },
 };
 

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface NextButtonStyles {
   container: ViewStyle;
@@ -22,22 +23,22 @@ export const baseStyles: NextButtonStyles = {
   container: {},
 
   next_button_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
   },
 
   title_container: {
-    paddingVertical: 10,
+    paddingVertical: ss(10),
   },
 
   title: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   subtitle: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 };
 

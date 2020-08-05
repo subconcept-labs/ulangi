@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ContactSupportFormStyles {
   form: ViewStyle;
@@ -25,13 +26,13 @@ export const baseStyles: ContactSupportFormStyles = {
   },
 
   text_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(10),
   },
 
   text: {
-    lineHeight: 19,
-    paddingVertical: 2,
+    lineHeight: ss(19),
+    paddingVertical: ss(2),
   },
 
   bold: {
@@ -45,9 +46,9 @@ export const baseStyles: ContactSupportFormStyles = {
   text_input: {
     flex: 1,
     textAlignVertical: 'top',
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingHorizontal: ss(16),
+    paddingTop: ss(10),
+    paddingBottom: ss(10),
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SetListStyles {
   empty_list_container: ViewStyle;
@@ -25,7 +26,7 @@ export const baseStyles: SetListStyles = {
   },
 
   empty_text: {
-    fontSize: 16,
+    fontSize: ss(16),
   },
 
   list_container: {

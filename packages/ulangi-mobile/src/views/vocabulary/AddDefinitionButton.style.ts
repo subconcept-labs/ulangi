@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface AddDefinitionButtonStyles {
   add_button: ViewStyle;
@@ -16,11 +17,11 @@ export interface AddDefinitionButtonStyles {
 
 export const baseStyles = {
   add_button: {
-    height: 30,
-    width: 32,
-    borderRadius: 3,
+    height: ss(30),
+    width: ss(32),
+    borderRadius: ss(3),
     borderWidth: 1,
-    marginLeft: 7,
+    marginLeft: ss(7),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
     shadowRadius: 0.75,

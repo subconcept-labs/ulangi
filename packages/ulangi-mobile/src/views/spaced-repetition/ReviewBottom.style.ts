@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ReviewBottomStyles {
   container: ViewStyle;
@@ -12,7 +13,7 @@ export const baseStyles: ReviewBottomStyles = {
   container: {},
 
   horizontal_line: {
-    marginHorizontal: 8,
+    marginHorizontal: ss(8),
     height: StyleSheet.hairlineWidth,
   },
 };

@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface DictionaryDefinitionStyles {
   definition_container: ViewStyle;
@@ -20,9 +21,9 @@ export interface DictionaryDefinitionStyles {
 
 export const baseStyles: DictionaryDefinitionStyles = {
   definition_container: {
-    marginHorizontal: 8,
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    marginHorizontal: ss(8),
+    paddingVertical: ss(16),
+    paddingHorizontal: ss(8),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -40,11 +41,11 @@ export const baseStyles: DictionaryDefinitionStyles = {
   },
 
   meaning_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   add_button_container: {
-    marginLeft: 8,
+    marginLeft: ss(8),
   },
 };
 

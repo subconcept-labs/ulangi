@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSectionRowDarkStyles,
   lightStyles as defaultSectionRowLightStyles,
@@ -32,13 +33,13 @@ export const baseStyles: MoreScreenStyles = {
   },
 
   section_list: {
-    marginTop: 22,
+    marginTop: ss(22),
   },
 
   description_text: {},
 
   left_icon: {
-    marginRight: 4,
+    marginRight: ss(4),
   },
 };
 

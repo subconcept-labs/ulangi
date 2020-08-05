@@ -8,13 +8,15 @@
 import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
+import { ss } from '../../utils/responsive';
+
 export interface StrokeOrdersStyles {
   webview: ViewStyle;
 }
 
 export const baseStyles: StrokeOrdersStyles = {
   webview: {
-    marginVertical: 16,
+    marginVertical: ss(16),
   },
 };
 

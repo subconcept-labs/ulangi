@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface PublicVocabularyListHeaderStyles {
   header_container: ViewStyle;
@@ -21,9 +22,9 @@ export interface PublicVocabularyListHeaderStyles {
 
 export const baseStyles: PublicVocabularyListHeaderStyles = {
   header_container: {
-    marginHorizontal: 16,
-    marginBottom: 2,
-    paddingBottom: 10,
+    marginHorizontal: ss(16),
+    marginBottom: ss(2),
+    paddingBottom: ss(10),
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -33,15 +34,15 @@ export const baseStyles: PublicVocabularyListHeaderStyles = {
   term_count_container: {},
 
   term_count: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   add_all_btn: {
     borderRadius: 3,
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    marginLeft: 7,
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(6),
+    marginLeft: ss(7),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
     shadowRadius: 0.75,
@@ -53,11 +54,11 @@ export const baseStyles: PublicVocabularyListHeaderStyles = {
   },
 
   add_all_plus: {
-    marginRight: 3,
+    marginRight: ss(3),
   },
 
   add_all_text: {
-    fontSize: 13,
+    fontSize: ss(13),
     fontWeight: 'bold',
   },
 };

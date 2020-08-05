@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
 
+import { ss } from '../../utils/responsive';
+
 export interface VocabularyDetailPronunciationStyles {
   container: ViewStyle;
   speak_touchable: ViewStyle;
@@ -18,7 +20,7 @@ export interface VocabularyDetailPronunciationStyles {
 export const baseStyles: VocabularyDetailPronunciationStyles = StyleSheet.create(
   {
     container: {
-      marginTop: 22,
+      marginTop: ss(22),
     },
 
     speak_touchable: {

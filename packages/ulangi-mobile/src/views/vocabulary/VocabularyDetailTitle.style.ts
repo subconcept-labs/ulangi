@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface VocabularyDetailTitleStyles {
   container: ViewStyle;
@@ -17,13 +18,13 @@ export interface VocabularyDetailTitleStyles {
 
 export const baseStyles: VocabularyDetailTitleStyles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingTop: 26,
-    paddingBottom: 8,
+    paddingHorizontal: ss(16),
+    paddingTop: ss(26),
+    paddingBottom: ss(8),
   },
 
   vocabulary_text: {
-    fontSize: 25,
+    fontSize: ss(25),
     textAlign: 'center',
     fontWeight: 'bold',
   },

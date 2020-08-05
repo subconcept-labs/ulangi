@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface VocabularyFormTopBarStyles {
   top_bar_container: ViewStyle;
@@ -30,13 +31,13 @@ export const baseStyles: VocabularyFormTopBarStyles = {
 
   text_container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(8),
     alignItems: 'center',
   },
 
   text: {
-    fontSize: 14,
+    fontSize: ss(14),
     fontWeight: 'bold',
   },
 

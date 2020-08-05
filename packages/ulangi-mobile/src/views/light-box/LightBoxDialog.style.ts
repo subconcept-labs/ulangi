@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxDialogStyles {
   dialog_container: ViewStyle;
@@ -20,8 +21,8 @@ export const baseStyles: LightBoxDialogStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    borderRadius: 3,
-    margin: 16,
+    borderRadius: ss(3),
+    margin: ss(16),
   },
 };
 

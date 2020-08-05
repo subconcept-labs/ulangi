@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LanguagePickerItemStyles {
   item_container: ViewStyle;
@@ -25,23 +26,23 @@ export const baseStyles: LanguagePickerItemStyles = {
     borderTopWidth: 1,
     borderBottomWidth: 1,
     marginTop: -1,
-    marginHorizontal: 8,
+    marginHorizontal: ss(8),
   },
 
   touchable: {
-    paddingVertical: 15,
-    paddingHorizontal: 8,
+    paddingVertical: ss(15),
+    paddingHorizontal: ss(8),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   select_icon: {
-    marginRight: 10,
+    marginRight: ss(10),
   },
 
   flag_icon: {
-    marginRight: 6,
+    marginRight: ss(6),
   },
 
   text_container: {
@@ -49,11 +50,11 @@ export const baseStyles: LanguagePickerItemStyles = {
   },
 
   item_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   item_note: {
-    fontSize: 13,
+    fontSize: ss(13),
     color: 'orange',
   },
 };

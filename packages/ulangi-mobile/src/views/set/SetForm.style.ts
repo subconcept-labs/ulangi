@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SetFormStyles {
   form_body_container: ViewStyle;
@@ -29,27 +30,27 @@ export const baseStyles: SetFormStyles = StyleSheet.create({
   },
 
   set_name_container: {
-    paddingHorizontal: 8,
+    paddingHorizontal: ss(8),
   },
 
   set_name_input: {
-    paddingVertical: 12,
-    fontSize: 16,
+    paddingVertical: ss(12),
+    fontSize: ss(16),
     textAlign: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
   button_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 6,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(6),
   },
 
   button_touchable: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 3,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    marginVertical: 5,
+    borderRadius: ss(3),
+    paddingVertical: ss(10),
+    paddingHorizontal: ss(12),
+    marginVertical: ss(5),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -57,11 +58,11 @@ export const baseStyles: SetFormStyles = StyleSheet.create({
 
   button_disabled: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 3,
+    borderRadius: ss(3),
   },
 
   button_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   button_text_disabled: {},

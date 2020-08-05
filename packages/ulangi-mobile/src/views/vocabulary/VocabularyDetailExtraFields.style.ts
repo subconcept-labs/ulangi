@@ -8,6 +8,8 @@
 import * as _ from 'lodash';
 import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
 
+import { ss } from '../../utils/responsive';
+
 export interface VocabularyDetailExtraFieldsStyles {
   speak_touchable: ViewStyle;
   speaker_icon: ImageStyle;
@@ -22,16 +24,16 @@ export const baseStyles: VocabularyDetailExtraFieldsStyles = StyleSheet.create({
   },
 
   speaker_icon: {
-    marginLeft: 6,
+    marginLeft: ss(6),
   },
 
   activity_indicator: {
-    marginLeft: 6,
+    marginLeft: ss(6),
   },
 
   image: {
-    width: 100,
-    height: 100,
+    width: ss(100),
+    height: ss(100),
   },
 });
 

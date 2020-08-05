@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface ExtraFieldsPickerContentStyles {
   picker_content: ViewStyle;
@@ -30,8 +31,8 @@ export const baseStyles: ExtraFieldsPickerContentStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 
@@ -44,7 +45,7 @@ export const baseStyles: ExtraFieldsPickerContentStyles = {
   description: {},
 
   name: {
-    fontSize: 15,
+    fontSize: ss(15),
     fontWeight: '700',
   },
 
@@ -55,12 +56,12 @@ export const baseStyles: ExtraFieldsPickerContentStyles = {
   },
 
   btn: {
-    borderRadius: 3,
+    borderRadius: ss(3),
     borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    marginHorizontal: 4,
-    marginVertical: 4,
+    paddingHorizontal: ss(8),
+    paddingVertical: ss(5),
+    marginHorizontal: ss(4),
+    marginVertical: ss(4),
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0.5 },
     shadowRadius: 0.75,
@@ -69,11 +70,11 @@ export const baseStyles: ExtraFieldsPickerContentStyles = {
   },
 
   btn_text: {
-    fontSize: 15,
+    fontSize: ss(15),
   },
 
   note: {
-    fontSize: 12,
+    fontSize: ss(12),
   },
 };
 

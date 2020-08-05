@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSectionRowDarkStyles,
   lightStyles as defaultSectionRowLightStyles,
@@ -19,15 +20,15 @@ const baseStyles: FeatureManagementScreenStyles = {
   },
 
   message_container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(12),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   message: {
-    fontSize: 14,
+    fontSize: ss(14),
   },
 };
 
@@ -50,7 +51,7 @@ export const darkStyles = StyleSheet.create(
 export const sectionRowLightStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowLightStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
     inner_container: {
@@ -62,7 +63,7 @@ export const sectionRowLightStyles = StyleSheet.create(
 export const sectionRowDarkStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowDarkStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
   }),

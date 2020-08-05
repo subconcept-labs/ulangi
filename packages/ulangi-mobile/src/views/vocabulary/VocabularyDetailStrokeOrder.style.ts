@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface VocabularyDetailStrokeOrderStyles {
   container: ViewStyle;
@@ -19,7 +20,7 @@ export const baseStyles: VocabularyDetailStrokeOrderStyles = {
   container: {},
 
   button_text: {
-    fontSize: 15,
+    fontSize: ss(15),
     color: config.styles.primaryColor,
   },
 };

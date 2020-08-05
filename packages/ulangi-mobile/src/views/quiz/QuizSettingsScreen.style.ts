@@ -8,6 +8,7 @@
 import * as _ from 'lodash';
 import { StyleSheet, ViewStyle } from 'react-native';
 
+import { ss } from '../../utils/responsive';
 import {
   darkStyles as defaultSectionRowDarkStyles,
   lightStyles as defaultSectionRowLightStyles,
@@ -24,7 +25,7 @@ export const baseStyles: QuizSettingsScreenStyles = {
   },
 
   content_container: {
-    paddingTop: 16,
+    paddingTop: ss(16),
   },
 };
 
@@ -35,7 +36,7 @@ export const darkStyles = StyleSheet.create(_.merge({}, baseStyles, {}));
 export const sectionRowLightStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowLightStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
     inner_container: {
@@ -47,7 +48,7 @@ export const sectionRowLightStyles = StyleSheet.create(
 export const sectionRowDarkStyles = StyleSheet.create(
   _.merge({}, defaultSectionRowDarkStyles, {
     left_text: {
-      fontSize: 16,
+      fontSize: ss(16),
       fontWeight: 'bold',
     },
   }),

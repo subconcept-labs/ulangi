@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface SuggestionsPickerContentStyles {
   picker_content: ViewStyle;
@@ -21,9 +22,9 @@ export const baseStyles: SuggestionsPickerContentStyles = {
   picker_content: {},
 
   no_suggestions_text: {
-    paddingVertical: 10,
+    paddingVertical: ss(10),
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   highlighted_text: {

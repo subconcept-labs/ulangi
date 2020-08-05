@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxMessageStyles {
   message_container: ViewStyle;
@@ -18,13 +19,13 @@ export interface LightBoxMessageStyles {
 export const baseStyles: LightBoxMessageStyles = {
   message_container: {
     alignSelf: 'stretch',
-    paddingHorizontal: 16,
-    paddingVertical: 11,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(11),
   },
 
   message: {
-    lineHeight: 19,
-    fontSize: 15,
+    lineHeight: ss(19),
+    fontSize: ss(15),
   },
 };
 

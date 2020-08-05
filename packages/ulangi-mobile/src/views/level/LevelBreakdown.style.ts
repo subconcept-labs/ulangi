@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
+import { ss } from '../../utils/responsive';
 
 export interface LevelBreakdownStyles {
   container: ViewStyle;
@@ -25,23 +26,23 @@ export const baseStyles: LevelBreakdownStyles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: ss(16),
+    paddingVertical: ss(14),
   },
 
   level: {
-    paddingRight: 4,
-    width: 40,
+    paddingRight: ss(4),
+    width: ss(40),
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 
   count: {
-    paddingLeft: 4,
+    paddingLeft: ss(4),
     textAlign: 'right',
-    width: 30,
+    width: ss(30),
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: ss(14),
   },
 };
 
