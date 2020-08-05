@@ -38,8 +38,7 @@ export function setDefaultNavigationOptions(): void {
       animate: false,
     },
     layout: {
-      orientation:
-        shortDimension > 480 ? ['portrait', 'landscape'] : ['portrait'],
+      orientation: shortDimension > 480 ? undefined : ['portrait'],
     },
   };
 
