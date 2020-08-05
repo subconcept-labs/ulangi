@@ -112,6 +112,7 @@ export class LightBoxTouchableBackground extends React.Component<
           }),
         });
       },
+
       onPanResponderMove: (evt): void => {
         this.setState({
           isTouchingBackground: this.isTouchingBackground({

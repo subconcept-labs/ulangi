@@ -16,6 +16,7 @@ import { StyleSheet, View } from 'react-native';
 import { config } from '../../constants/config';
 import { ReflexGameOverScreenIds } from '../../constants/ids/ReflexGameOverScreenIds';
 import { ReflexStyle } from '../../styles/ReflexStyle';
+import { ss } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
@@ -83,18 +84,18 @@ const styles = StyleSheet.create({
   inner_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: -30,
+    paddingHorizontal: ss(16),
+    marginTop: ss(-30),
   },
 
   title_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: ss(8),
   },
 
   title: {
-    fontSize: 34,
+    fontSize: ss(34),
     fontFamily: 'Raleway-Black',
     textAlign: 'center',
     color: '#fff',
@@ -102,11 +103,11 @@ const styles = StyleSheet.create({
 
   score_container: {
     borderColor: config.reflex.backgroundColor,
-    borderWidth: 3,
-    height: 100,
-    width: 100,
-    borderRadius: 50,
-    marginVertical: 10,
+    borderWidth: ss(3),
+    height: ss(100),
+    width: ss(100),
+    borderRadius: ss(50),
+    marginVertical: ss(10),
     justifyContent: 'center',
     alignItems: 'center',
   },

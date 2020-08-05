@@ -15,6 +15,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { AtomPausedScreenIds } from '../../constants/ids/AtomPausedScreenIds';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultText } from '../common/DefaultText';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
 import { LightBoxTouchableBackground } from '../light-box/LightBoxTouchableBackground';
@@ -84,8 +85,9 @@ const styles = StyleSheet.create({
 
   inner_container: {
     alignSelf: 'stretch',
-    margin: 16,
-    borderRadius: 16,
+    marginHorizontal: ls(16),
+    marginVertical: ss(16),
+    borderRadius: ss(16),
     backgroundColor: '#f8f3d4',
     overflow: 'hidden',
   },
@@ -93,21 +95,21 @@ const styles = StyleSheet.create({
   title_container: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
+    padding: ss(16),
     borderBottomColor: '#a6a28d',
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: '#e3dec1',
   },
 
   title_text: {
-    fontSize: 20,
+    fontSize: ss(20),
     fontFamily: 'JosefinSans-Bold',
     textAlign: 'center',
     color: '#444',
   },
 
   content_container: {
-    paddingVertical: 20,
+    paddingVertical: ss(20),
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   button_text: {
     fontFamily: 'JosefinSans',
     color: '#444',
-    fontSize: 18,
-    paddingTop: 5,
+    fontSize: ss(18),
+    paddingTop: ss(5),
   },
 });

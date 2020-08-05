@@ -15,6 +15,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { AtomGameOverScreenIds } from '../../constants/ids/AtomGameOverScreenIds';
 import { AtomStyle } from '../../styles/AtomStyle';
+import { ls, ss } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
@@ -94,8 +95,9 @@ const styles = StyleSheet.create({
 
   inner_container: {
     alignSelf: 'stretch',
-    margin: 16,
-    borderRadius: 16,
+    marginHorizontal: ls(16),
+    marginVertical: ss(16),
+    borderRadius: ss(16),
     backgroundColor: '#f8f3d4',
     overflow: 'hidden',
   },
@@ -103,21 +105,21 @@ const styles = StyleSheet.create({
   title_container: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
+    padding: ss(16),
     borderBottomColor: '#a6a28d',
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: '#e3dec1',
   },
 
   title_text: {
-    fontSize: 20,
+    fontSize: ss(20),
     fontFamily: 'JosefinSans-Bold',
     textAlign: 'center',
     color: '#444',
   },
 
   content_container: {
-    paddingVertical: 20,
+    paddingVertical: ss(20),
   },
 
   result_container: {
@@ -128,24 +130,24 @@ const styles = StyleSheet.create({
   },
 
   score_container: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: ss(100),
+    width: ss(100),
+    borderRadius: ss(100) / 2,
     borderColor: '#ccc99b',
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 6,
+    marginHorizontal: ss(6),
   },
 
   score_text: {
-    fontSize: 12,
+    fontSize: ss(12),
     fontWeight: 'bold',
     color: '#444',
   },
 
   score_number: {
-    fontSize: 18,
+    fontSize: ss(18),
     fontFamily: 'JosefinSans-Bold',
     color: '#444',
   },
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 16,
-    paddingHorizontal: 8,
+    paddingTop: ss(16),
+    paddingHorizontal: ss(8),
   },
 });

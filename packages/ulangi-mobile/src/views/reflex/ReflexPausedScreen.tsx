@@ -15,6 +15,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { ReflexPausedScreenIds } from '../../constants/ids/ReflexPausedScreenIds';
 import { ReflexStyle } from '../../styles/ReflexStyle';
+import { ss } from '../../utils/responsive';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LightBoxAnimatableView } from '../light-box/LightBoxAnimatableView';
@@ -77,7 +78,7 @@ export class ReflexPausedScreen extends React.Component<
 const styles = StyleSheet.create({
   light_box_container: {
     justifyContent: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: ss(16),
   },
 
   inner_container: {
@@ -88,16 +89,16 @@ const styles = StyleSheet.create({
   title_container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: ss(8),
   },
 
   title: {
-    fontSize: 34,
+    fontSize: ss(34),
     fontFamily: 'Raleway-Black',
     color: '#fff',
   },
 
   spacer: {
-    height: 30,
+    height: ss(30),
   },
 });

@@ -15,6 +15,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
+import { ss } from '../../utils/responsive';
 import { LightBoxAnimatableView } from './LightBoxAnimatableView';
 import { LightBoxDialog } from './LightBoxDialog';
 import { LightBoxTouchableBackground } from './LightBoxTouchableBackground';
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
   light_box_container: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: ss(16),
   },
 
   inner_container: {

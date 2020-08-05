@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ls, ss } from '../../utils/responsive';
+import { ss } from '../../utils/responsive';
 
 export interface LightBoxSelectionMenuStyles {
   selection_menu_container: ViewStyle;
@@ -24,7 +24,6 @@ export interface LightBoxSelectionMenuStyles {
 export const baseStyles: LightBoxSelectionMenuStyles = {
   selection_menu_container: {
     flexShrink: 1,
-    marginHorizontal: ls(16),
     marginVertical: ss(16),
     borderRadius: ss(4),
   },

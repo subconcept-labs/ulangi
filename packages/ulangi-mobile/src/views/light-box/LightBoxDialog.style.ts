@@ -22,7 +22,7 @@ export const baseStyles: LightBoxDialogStyles = {
     alignItems: 'center',
     flexWrap: 'wrap',
     borderRadius: ss(3),
-    margin: ss(16),
+    marginVertical: ss(16),
   },
 };
 
