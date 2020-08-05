@@ -14,7 +14,7 @@ import {
 import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, Platform, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Image, Platform, SafeAreaView, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { config } from '../../constants/config';
@@ -22,6 +22,12 @@ import { QuickTutorialScreenIds } from '../../constants/ids/QuickTutorialScreenI
 import { QuickTutorialScreenDelegate } from '../../delegates/tip/QuickTutorialScreenDelegate';
 import { FullRoundedButtonStyle } from '../../styles/FullRoundedButtonStyle';
 import { DefaultButton } from '../common/DefaultButton';
+import { DefaultText } from '../common/DefaultText';
+import {
+  QuickTutorialScreenStyles,
+  darkStyles,
+  lightStyles,
+} from './QuickTutorialScreen.style';
 
 export interface QuickTutorialScreenProps {
   themeStore: ObservableThemeStore;
@@ -34,12 +40,18 @@ export interface QuickTutorialScreenProps {
 export class QuickTutorialScreen extends React.Component<
   QuickTutorialScreenProps
 > {
+  private get styles(): QuickTutorialScreenStyles {
+    return this.props.themeStore.theme === Theme.LIGHT
+      ? lightStyles
+      : darkStyles;
+  }
+
   public render(): React.ReactElement<any> {
     const windowWidth = this.props.observableDimensions.windowWidth;
 
     return (
       <SafeAreaView
-        style={styles.screen}
+        style={this.styles.screen}
         testID={QuickTutorialScreenIds.SCREEN}>
         <React.Fragment>
           <Carousel
@@ -53,8 +65,12 @@ export class QuickTutorialScreen extends React.Component<
             sliderWidth={windowWidth}
             itemWidth={windowWidth}
           />
+          <DefaultText style={this.styles.note}>
+            Note: The tutorial above is for the mobile version. The layout of
+            the tablet version is similar.
+          </DefaultText>
           <Pagination
-            containerStyle={styles.pagination}
+            containerStyle={this.styles.pagination}
             activeDotIndex={this.props.observableScreen.currentIndex}
             dotsLength={this.props.observableScreen.images.length}
             dotColor={
@@ -68,7 +84,7 @@ export class QuickTutorialScreen extends React.Component<
                 : config.styles.dark.secondaryTextColor
             }
           />
-          <View style={styles.button_container}>
+          <View style={this.styles.button_container}>
             <DefaultButton
               text="Close"
               styles={FullRoundedButtonStyle.getFullGreyBackgroundStyles(
@@ -85,42 +101,9 @@ export class QuickTutorialScreen extends React.Component<
   @boundMethod
   private renderItem({ item }: { item: any }): React.ReactElement<any> {
     return (
-      <View style={styles.image_container}>
-        <Image style={styles.image} source={item} resizeMode="contain" />
+      <View style={this.styles.image_container}>
+        <Image style={this.styles.image} source={item} resizeMode="contain" />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    alignItems: 'center',
-  },
-
-  carousel: {
-    alignItems: 'center',
-  },
-
-  pagination: {
-    height: 50,
-    paddingVertical: 0,
-  },
-
-  image_container: {
-    flexShrink: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-
-  image: {
-    flexShrink: 1,
-  },
-
-  button_container: {
-    paddingVertical: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
