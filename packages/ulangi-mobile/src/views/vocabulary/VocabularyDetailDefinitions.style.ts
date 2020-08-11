@@ -60,4 +60,4 @@ export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemRespon
 
 export const vocabularyDetailDefinitionsResponsiveStyles = new VocabularyDetailDefinitionsResponsiveStyles();
 
-export const definitionItemResponsiveStyles = new DefinitionItemResponsiveStyles();
+export const definitionItemResponsiveStyles = new ExtendedDefinitionItemResponsiveStyles();

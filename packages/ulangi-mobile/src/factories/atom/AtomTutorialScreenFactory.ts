@@ -31,10 +31,14 @@ export class AtomTutorialScreenFactory extends ScreenFactory {
       observableScreen,
     );
     const shellDelegate = new AtomShellDelegate(observableScreen);
-    const arcDelegate = new AtomArcDelegate(observableScreen);
     const answerDelegate = new AtomAnswerDelegate(
       observableScreen,
       particleDelegate,
+    );
+    const arcDelegate = new AtomArcDelegate(
+      this.observer,
+      observableScreen,
+      answerDelegate,
     );
 
     return new AtomTutorialScreenDelegate(

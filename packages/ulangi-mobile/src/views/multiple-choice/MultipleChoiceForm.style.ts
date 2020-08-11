@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface MultipleChoiceFormStyles {
@@ -35,7 +36,9 @@ export class MultipleChoiceFormResponsiveStyles extends ResponsiveStyleSheet<
   ): MultipleChoiceFormStyles {
     return {
       multiple_choice_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         borderRadius: scaleByFactor(10),
       },
 

@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface CategoryItemStyles {
@@ -42,7 +43,9 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
   ): CategoryItemStyles {
     return {
       item_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginBottom: scaleByFactor(16),
         borderRadius: scaleByFactor(5),
         shadowColor: '#000000',

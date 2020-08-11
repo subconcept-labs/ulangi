@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { assertExists } from '@ulangi/assert';
 import {
   AtomShellType,
   LightBoxState,
@@ -94,7 +93,15 @@ export class AtomPlayScreenDelegate {
   }
 
   public autoMoveParticlesOnOriginPositionChange(): void {
-    this.particleDelegate.autoMoveParticlesOnOriginPositionChange();
+    this.particleDelegate.autoMoveParticlesOnOriginPositionChange(
+      (): void => {
+        this.arcDelegate.resetHighlightArcs();
+      },
+    );
+  }
+
+  public autoUnhighlightArcsOnOriginPositionChange(): void {
+    this.arcDelegate.autoUnhighlightArcsOnOriginPositionChange();
   }
 
   public clearGame(): void {
@@ -104,9 +111,7 @@ export class AtomPlayScreenDelegate {
   public checkAnswer(isUserMove: boolean): void {
     this.answerDelegate.checkAnswer(
       (): void => this.onAnswerCorrect(isUserMove),
-      (subsetsOfEachShell): void => {
-        this.onAnswerIncorrect(isUserMove, subsetsOfEachShell);
-      },
+      (): void => this.onAnswerIncorrect(isUserMove),
     );
   }
 
@@ -312,27 +317,8 @@ export class AtomPlayScreenDelegate {
     this.arcDelegate.unhighlightArcs();
   }
 
-  private onAnswerIncorrect(
-    isUserMove: boolean,
-    correctSubsetsOfEachShell: {
-      shellType: AtomShellType;
-      correctSubsets: ObservableParticle[][];
-    }[],
-  ): void {
-    this.arcDelegate.unhighlightArcs();
-
-    correctSubsetsOfEachShell.forEach(
-      ({ shellType, correctSubsets }): void => {
-        const shell = assertExists(
-          this.observableScreen.shells.find(
-            (currentShell): boolean => currentShell.shellType === shellType,
-          ),
-          'shell should not be null or undefined',
-        );
-
-        this.arcDelegate.highlightArcs(correctSubsets, shell.diameter / 2);
-      },
-    );
+  private onAnswerIncorrect(isUserMove: boolean): void {
+    this.arcDelegate.resetHighlightArcs();
 
     // Only decrement move when user moves
     if (

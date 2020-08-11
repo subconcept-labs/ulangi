@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface PremiumMembershipStyles {
@@ -65,12 +66,16 @@ export class PremiumMembershipResponsiveStyles extends ResponsiveStyleSheet<
 
       note_container: {
         paddingTop: scaleByFactor(16),
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       thank_you_container: {
         paddingTop: scaleByFactor(40),
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       note: {
@@ -81,7 +86,9 @@ export class PremiumMembershipResponsiveStyles extends ResponsiveStyleSheet<
 
       feature_request_btn: {
         paddingTop: scaleByFactor(2),
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

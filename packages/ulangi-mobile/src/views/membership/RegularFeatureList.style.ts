@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface RegularFeatureListStyles {
@@ -33,7 +34,9 @@ export class RegularFeatureListResponsiveStyles extends ResponsiveStyleSheet<
   ): RegularFeatureListStyles {
     return {
       box: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         paddingHorizontal: scaleByFactor(18),
         backgroundColor: '#f9f9f9',
         borderRadius: scaleByFactor(5),

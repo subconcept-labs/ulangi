@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface ReviewFeedbackSummaryStyles {
@@ -44,7 +45,9 @@ export class ReviewFeedbackSummaryResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       result_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       result_row: {
@@ -54,7 +57,9 @@ export class ReviewFeedbackSummaryResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       row: {
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         paddingVertical: scaleByFactor(4),
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -86,7 +91,9 @@ export class ReviewFeedbackSummaryResponsiveStyles extends ResponsiveStyleSheet<
       horizontal_line: {
         height: 1,
         marginVertical: scaleByFactor(12),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       percentage: {

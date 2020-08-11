@@ -43,10 +43,15 @@ export class AtomPlayScreenFactory extends ScreenFactory {
       this.observer,
       observableScreen,
     );
-    const arcDelegate = new AtomArcDelegate(observableScreen);
     const answerDelegate = new AtomAnswerDelegate(
       observableScreen,
       particleDelegate,
+    );
+
+    const arcDelegate = new AtomArcDelegate(
+      this.observer,
+      observableScreen,
+      answerDelegate,
     );
 
     return new AtomPlayScreenDelegate(

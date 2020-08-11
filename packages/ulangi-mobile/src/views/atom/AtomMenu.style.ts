@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface AtomMenuStyles {
@@ -26,7 +27,9 @@ export class AtomMenuResponsiveStyles extends ResponsiveStyleSheet<
   ): AtomMenuStyles {
     return {
       container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
     };
   }

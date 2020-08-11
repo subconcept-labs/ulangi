@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface SimpleLanguagePickerStyles {
@@ -29,7 +30,9 @@ export class SimpleLanguagePickerResponsiveStyles extends ResponsiveStyleSheet<
   ): SimpleLanguagePickerStyles {
     return {
       content_container: {
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         paddingBottom: scaleByFactor(20),
       },
 

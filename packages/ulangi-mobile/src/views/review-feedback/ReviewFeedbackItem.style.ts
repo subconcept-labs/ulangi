@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface ReviewFeedbackItemStyles {
@@ -36,7 +37,9 @@ export class ReviewFeedbackItemResponsiveStyles extends ResponsiveStyleSheet<
   ): ReviewFeedbackItemStyles {
     return {
       vocabulary_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         borderRadius: scaleByFactor(3),
         marginTop: scaleByFactor(20),
       },

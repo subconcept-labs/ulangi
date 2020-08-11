@@ -13,6 +13,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 import {
   DefinitionItemResponsiveStyles,
@@ -40,7 +41,9 @@ export class ReviewItemResponsiveStyles extends ResponsiveStyleSheet<
   ): ReviewItemStyles {
     return {
       vocabulary_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         backgroundColor: '#ececec',
         borderRadius: scaleByFactor(10),
         marginTop: scaleByFactor(20),

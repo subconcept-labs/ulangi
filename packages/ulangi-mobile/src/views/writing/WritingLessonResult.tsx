@@ -110,33 +110,37 @@ export class WritingLessonResult extends React.Component<
     // Only show buttons when save completed
     if (this.props.saveState.get() === ActivityState.INACTIVE) {
       return (
-        <View style={this.styles.button_container}>
-          <DefaultButton
-            testID={WritingLessonScreenIds.TAKE_ANOTHER_LESSON_BTN}
-            text="Continue"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              config.styles.primaryColor,
-              'white',
-              this.props.theme,
-              this.props.screenLayout,
-            )}
-            onPress={this.props.takeAnotherLesson}
-          />
-          <DefaultButton
-            testID={WritingLessonScreenIds.QUIT_BTN}
-            text="Quit"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              '#ddd',
-              '#333',
-              this.props.theme,
-              this.props.screenLayout,
-            )}
-            onPress={this.props.quit}
-          />
+        <View style={this.styles.button_containers}>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={WritingLessonScreenIds.TAKE_ANOTHER_LESSON_BTN}
+              text="Continue"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                config.styles.primaryColor,
+                'white',
+                this.props.theme,
+                this.props.screenLayout,
+              )}
+              onPress={this.props.takeAnotherLesson}
+            />
+          </View>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={WritingLessonScreenIds.QUIT_BTN}
+              text="Quit"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                '#ddd',
+                '#333',
+                this.props.theme,
+                this.props.screenLayout,
+              )}
+              onPress={this.props.quit}
+            />
+          </View>
         </View>
       );
     } else {

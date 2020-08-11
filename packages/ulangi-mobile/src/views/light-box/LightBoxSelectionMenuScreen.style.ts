@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface LightBoxSelectionMenuScreenStyles {
@@ -34,7 +35,9 @@ export class LightBoxSelectionMenuScreenResponsiveStyles extends ResponsiveStyle
       light_box_container: {
         justifyContent: 'center',
         paddingVertical: 150,
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       inner_container: {

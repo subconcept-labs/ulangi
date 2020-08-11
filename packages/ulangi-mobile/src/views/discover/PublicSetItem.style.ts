@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface PublicSetItemStyles {
@@ -43,7 +44,9 @@ export class PublicSetItemResponsiveStyles extends ResponsiveStyleSheet<
   ): PublicSetItemStyles {
     return {
       item_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         // Use padding instead of margin to make hit area larger
         marginVertical: scaleByFactor(8),
         borderRadius: scaleByFactor(5),

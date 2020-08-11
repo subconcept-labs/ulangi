@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface VocabularyItemStyles {
@@ -41,7 +42,9 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
     return {
       item_container: {
         marginBottom: scaleByFactor(16),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         borderRadius: scaleByFactor(5),
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 0.3 },

@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface SubmitButtonStyles {
@@ -32,7 +33,9 @@ export class SubmitButtonResponsiveStyles extends ResponsiveStyleSheet<
         paddingVertical: scaleByFactor(12),
         borderRadius: scaleByFactor(4),
         marginTop: scaleByFactor(8),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         backgroundColor: '#00c7fe',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface SignInFormStyles {
@@ -36,7 +37,9 @@ export class SignInFormResponsiveStyles extends ResponsiveStyleSheet<
       other_containers: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(16),
       },
 

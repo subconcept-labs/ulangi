@@ -51,33 +51,37 @@ export class QuizWritingResult extends React.Component<QuizWritingResultProps> {
           screenLayout={this.props.screenLayout}
           writingResult={this.props.writingResult}
         />
-        <View style={this.styles.button_container}>
-          <DefaultButton
-            testID={QuizWritingScreenIds.TAKE_ANOTHER_QUIZ_BTN}
-            text="Take another quiz"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              config.styles.primaryColor,
-              'white',
-              this.props.theme,
-              this.props.screenLayout,
-            )}
-            onPress={this.props.takeAnotherQuiz}
-          />
-          <DefaultButton
-            testID={QuizWritingScreenIds.QUIT_BTN}
-            text="Quit"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              '#ddd',
-              '#333',
-              this.props.theme,
-              this.props.screenLayout,
-            )}
-            onPress={this.props.quit}
-          />
+        <View style={this.styles.button_containers}>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={QuizWritingScreenIds.TAKE_ANOTHER_QUIZ_BTN}
+              text="Take another quiz"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                config.styles.primaryColor,
+                'white',
+                this.props.theme,
+                this.props.screenLayout,
+              )}
+              onPress={this.props.takeAnotherQuiz}
+            />
+          </View>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={QuizWritingScreenIds.QUIT_BTN}
+              text="Quit"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                '#ddd',
+                '#333',
+                this.props.theme,
+                this.props.screenLayout,
+              )}
+              onPress={this.props.quit}
+            />
+          </View>
         </View>
       </View>
     );

@@ -8,7 +8,12 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface QuizWritingResultStyles {
   container: ViewStyle;
@@ -18,13 +23,17 @@ export interface QuizWritingResultStyles {
   row: ViewStyle;
   horizontal_line: ViewStyle;
   bold: TextStyle;
+  button_containers: ViewStyle;
   button_container: ViewStyle;
 }
 
 export class QuizWritingResultResponsiveStyles extends ResponsiveStyleSheet<
   QuizWritingResultStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): QuizWritingResultStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): QuizWritingResultStyles {
     return {
       container: {
         flex: 1,
@@ -61,8 +70,15 @@ export class QuizWritingResultResponsiveStyles extends ResponsiveStyleSheet<
         fontWeight: 'bold',
       },
 
-      button_container: {
+      button_containers: {
         marginTop: scaleByFactor(8),
+      },
+
+      button_container: {
+        marginVertical: scaleByFactor(6),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
     };
   }

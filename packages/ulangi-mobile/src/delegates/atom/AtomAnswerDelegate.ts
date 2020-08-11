@@ -31,39 +31,8 @@ export class AtomAnswerDelegate {
 
   public checkAnswer(
     onAnswerCorrect: () => void,
-    onAnswerIncorrect: (
-      correctSubsetsOfEachShell: {
-        shellType: AtomShellType;
-        correctSubsets: ObservableParticle[][];
-      }[],
-    ) => void,
+    onAnswerIncorrect: () => void,
   ): void {
-    const correctSubsetsOfEachShell = this.observableScreen.shells.map(
-      (
-        shell,
-      ): {
-        shellType: AtomShellType;
-        correctSubsets: ObservableParticle[][];
-      } => {
-        return {
-          shellType: shell.shellType,
-          correctSubsets: this.getCorrectParticleSubsetsInOneShell(
-            this.particleDelegate.getParticlesInShell(
-              shell.shellType,
-              this.observableScreen.particles,
-            ),
-            this.observableScreen.question.answer,
-          ),
-        };
-      },
-    );
-
-    const correctParticlesOfEachShell = correctSubsetsOfEachShell.map(
-      ({ correctSubsets }): ObservableParticle[] => {
-        return _.flatten(correctSubsets);
-      },
-    );
-
     runInAction(
       (): void => {
         this.particleDelegate.changeParticleColors(
@@ -71,10 +40,14 @@ export class AtomAnswerDelegate {
           'normal',
         );
 
-        correctParticlesOfEachShell.forEach(
-          (particles): void => {
+        this.observableScreen.shells.forEach(
+          (shell): void => {
+            const correctParticles = this.getCorrectParticlesInOneShell(
+              shell.shellType,
+            );
+
             this.particleDelegate.changeParticleColors(
-              particles,
+              correctParticles,
               'highlighted',
             );
           },
@@ -85,7 +58,7 @@ export class AtomAnswerDelegate {
     if (this.hasCorrectAnswer()) {
       onAnswerCorrect();
     } else {
-      onAnswerIncorrect(correctSubsetsOfEachShell);
+      onAnswerIncorrect();
     }
   }
 
@@ -115,48 +88,6 @@ export class AtomAnswerDelegate {
     }
 
     return hasCorrectAnswer;
-  }
-
-  public hasCorrectAnswerDespiteRedundantParticles(
-    _particles?: ObservableParticle[],
-    _answer?: string,
-  ): boolean {
-    const particles = _particles || this.observableScreen.particles;
-    const answer = _answer || this.observableScreen.question.answer;
-
-    const particlesInEachShell = this.observableScreen.shells.map(
-      (shell): ObservableParticle[] => {
-        return this.particleDelegate.getParticlesInShell(
-          shell.shellType,
-          particles,
-        );
-      },
-    );
-
-    const correctSubsetsOfEachShell = particlesInEachShell.map(
-      (currentParticles): ObservableParticle[][] => {
-        return this.getCorrectParticleSubsetsInOneShell(
-          currentParticles,
-          answer,
-        );
-      },
-    );
-
-    const hasCorrectAnswerInEachShell = correctSubsetsOfEachShell.map(
-      (correctSubsets): boolean => {
-        // Find subset that has correct answer
-        return (
-          correctSubsets.findIndex(
-            (subset): boolean => {
-              return this.particlesInOneShellHasCorrectAnswer(subset, answer);
-            },
-          ) !== -1
-        );
-      },
-    );
-
-    // Return if at least one shell has correct answer
-    return _.includes(hasCorrectAnswerInEachShell, true);
   }
 
   private particlesInOneShellHasCorrectAnswer(
@@ -192,15 +123,22 @@ export class AtomAnswerDelegate {
     return found;
   }
 
-  private getCorrectParticleSubsetsInOneShell(
-    particles: ObservableParticle[],
-    answer: string,
+  public getCorrectParticlesInOneShell(
+    shellType: AtomShellType,
+  ): ObservableParticle[] {
+    const correctSubsets = this.getCorrectParticleSubsetsInOneShell(shellType);
+
+    return _.flatten(correctSubsets);
+  }
+
+  public getCorrectParticleSubsetsInOneShell(
+    shellType: AtomShellType,
   ): ObservableParticle[][] {
-    if (this.particleDelegate.areParticlesInOneShellOnly(particles) === false) {
-      throw new Error(
-        'All particles in getCorrectParticleSubsetsInOneShell must be in one shell only',
-      );
-    }
+    const particles = this.particleDelegate.getParticlesInShell(
+      shellType,
+      this.observableScreen.particles,
+    );
+    const answer = this.observableScreen.question.answer;
 
     this.particleDelegate.reverseSortByIndex(particles);
 

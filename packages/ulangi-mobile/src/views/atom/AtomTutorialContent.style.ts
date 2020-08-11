@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface AtomTutorialContentStyles {
@@ -32,7 +33,9 @@ export class AtomTutorialContentResponsiveStyles extends ResponsiveStyleSheet<
   ): AtomTutorialContentStyles {
     return {
       container: {
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       content_container: {},

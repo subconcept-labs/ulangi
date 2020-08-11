@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface DiscoverScreenStyles {
@@ -47,7 +48,9 @@ export class DiscoverScreenResponsiveStyles extends ResponsiveStyleSheet<
 
       message_container: {
         flex: 1,
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         justifyContent: 'center',
         alignItems: 'center',
       },

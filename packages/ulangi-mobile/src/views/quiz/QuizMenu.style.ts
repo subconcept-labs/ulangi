@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface QuizMenuStyles {
@@ -29,7 +30,9 @@ export class QuizMenuResponsiveStyles extends ResponsiveStyleSheet<
     return {
       container: {
         marginTop: scaleByFactor(42),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
       primary_button_container: {
         marginHorizontal: scaleByFactor(5),

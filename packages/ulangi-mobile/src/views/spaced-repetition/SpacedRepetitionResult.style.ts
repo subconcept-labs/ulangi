@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface SpacedRepetitionResultStyles {
@@ -21,6 +22,7 @@ export interface SpacedRepetitionResultStyles {
   view_all_feedback_button_container: ViewStyle;
   save_text: TextStyle;
   ad_notice_container: ViewStyle;
+  button_containers: ViewStyle;
   button_container: ViewStyle;
 }
 
@@ -62,11 +64,20 @@ export class SpacedRepetitionResultResponsiveStyles extends ResponsiveStyleSheet
 
       ad_notice_container: {
         marginTop: scaleByFactor(16),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
+      },
+
+      button_containers: {
+        marginTop: scaleByFactor(16),
       },
 
       button_container: {
-        marginTop: scaleByFactor(16),
+        marginVertical: scaleByFactor(6),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
     };
   }

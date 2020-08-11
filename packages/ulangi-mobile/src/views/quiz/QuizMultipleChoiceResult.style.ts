@@ -8,7 +8,12 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface QuizMultipleChoiceResultStyles {
   container: ViewStyle;
@@ -18,6 +23,7 @@ export interface QuizMultipleChoiceResultStyles {
   row: ViewStyle;
   horizontal_line: TextStyle;
   bold: TextStyle;
+  button_containers: ViewStyle;
   button_container: ViewStyle;
 }
 
@@ -26,6 +32,7 @@ export class QuizMultipleChoiceResultResponsiveStyles extends ResponsiveStyleShe
 > {
   public baseStyles(
     scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
   ): QuizMultipleChoiceResultStyles {
     return {
       container: {
@@ -63,8 +70,15 @@ export class QuizMultipleChoiceResultResponsiveStyles extends ResponsiveStyleShe
         fontWeight: 'bold',
       },
 
-      button_container: {
+      button_containers: {
         marginTop: scaleByFactor(8),
+      },
+
+      button_container: {
+        marginVertical: scaleByFactor(6),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
     };
   }

@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface InputFieldStyles {
@@ -31,7 +32,9 @@ export class InputFieldResponsiveStyles extends ResponsiveStyleSheet<
       input_field: {
         height: scaleByFactor(46),
         borderRadius: scaleByFactor(4),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginVertical: scaleByFactor(2),
         paddingHorizontal: scaleByFactor(16),
         paddingVertical: scaleByFactor(14),

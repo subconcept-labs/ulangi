@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface LearnListStyles {
@@ -34,7 +35,9 @@ export class LearnListResponsiveStyles extends ResponsiveStyleSheet<
     return {
       scroll_view_container: {
         paddingBottom: scaleByFactor(16),
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
 
       learn_item: {

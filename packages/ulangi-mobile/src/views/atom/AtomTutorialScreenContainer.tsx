@@ -73,6 +73,7 @@ export class AtomTutorialScreenContainer extends Container {
 
   public componentDidMount(): void {
     this.screenDelegate.initializeShellsAndParticles();
+    this.screenDelegate.autoUnhighlightArcsOnOriginPositionChange();
     this.screenDelegate.autoMoveParticlesOnOriginPositionChange();
   }
 

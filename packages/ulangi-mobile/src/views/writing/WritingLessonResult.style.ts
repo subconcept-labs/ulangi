@@ -8,7 +8,12 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface WritingLessonResultStyles {
   container: ViewStyle;
@@ -17,13 +22,17 @@ export interface WritingLessonResultStyles {
   save_text: TextStyle;
   view_all_feedback_button_container: ViewStyle;
   ad_notice_container: ViewStyle;
+  button_containers: ViewStyle;
   button_container: ViewStyle;
 }
 
 export class WritingLessonResultResponsiveStyles extends ResponsiveStyleSheet<
   WritingLessonResultStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): WritingLessonResultStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): WritingLessonResultStyles {
     return {
       container: {
         flex: 1,
@@ -54,11 +63,20 @@ export class WritingLessonResultResponsiveStyles extends ResponsiveStyleSheet<
 
       ad_notice_container: {
         marginTop: scaleByFactor(16),
-        marginHorizontal: scaleByFactor(16),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
+      },
+
+      button_containers: {
+        marginTop: scaleByFactor(16),
       },
 
       button_container: {
-        marginTop: scaleByFactor(16),
+        marginVertical: scaleByFactor(6),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
     };
   }

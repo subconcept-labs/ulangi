@@ -50,7 +50,7 @@ export class ManageScreenResponsiveStyles extends ResponsiveStyleSheet<
         bottom: scaleByFactor(16),
         flexDirection: 'row',
         justifyContent: 'center',
-        left: layout.width - scaleByFactor(120) / 2,
+        left: (layout.width - scaleByFactor(120)) / 2,
         width: scaleByFactor(120),
       },
     };

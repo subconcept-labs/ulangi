@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface MessageCarouselStyles {
@@ -31,7 +32,9 @@ export class MessageCarouselResponsiveStyles extends ResponsiveStyleSheet<
   ): MessageCarouselStyles {
     return {
       item_container: {
-        paddingHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         paddingTop: scaleByFactor(16),
       },
 

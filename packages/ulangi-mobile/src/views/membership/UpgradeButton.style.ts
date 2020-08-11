@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface UpgradeButtonStyles {
@@ -35,7 +36,9 @@ export class UpgradeButtonResponsiveStyles extends ResponsiveStyleSheet<
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#5C6BC0',
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         paddingVertical: scaleByFactor(12),
         paddingHorizontal: scaleByFactor(16),
         borderRadius: scaleByFactor(5),

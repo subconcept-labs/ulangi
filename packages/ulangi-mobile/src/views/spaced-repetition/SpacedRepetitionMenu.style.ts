@@ -11,6 +11,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface SpacedRepetitionMenuStyles {
@@ -29,7 +30,9 @@ export class SpacedRepetitionMenuResponsiveStyles extends ResponsiveStyleSheet<
     return {
       container: {
         marginTop: scaleByFactor(40),
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
       },
       primary_button_container: {
         marginHorizontal: scaleByFactor(5),

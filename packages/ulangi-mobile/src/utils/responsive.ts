@@ -16,7 +16,7 @@ export interface Layout {
 
 export type ScaleByFactor = (value: number, factor?: number) => number;
 export type ScaleByBreakpoints = (
-  values: [number, number, number, number],
+  values: readonly [number, number, number, number],
 ) => number;
 
 export abstract class ResponsiveStyleSheet<T, O = {}> {
@@ -61,7 +61,7 @@ export abstract class ResponsiveStyleSheet<T, O = {}> {
     };
 
     const scaleByBreakpoints = (
-      values: [number, number, number, number],
+      values: readonly [number, number, number, number],
     ): number => {
       return this.scaleByBreakpoints(values, width);
     };
@@ -104,7 +104,7 @@ export abstract class ResponsiveStyleSheet<T, O = {}> {
 
   // scale by breakpoints
   protected scaleByBreakpoints(
-    values: [number, number, number, number],
+    values: readonly [number, number, number, number],
     width: number,
   ): number {
     // Portrait phones
@@ -122,3 +122,10 @@ export abstract class ResponsiveStyleSheet<T, O = {}> {
     }
   }
 }
+
+export const defaultHorizontalMarginByBreakpoints: readonly [
+  number,
+  number,
+  number,
+  number
+] = [16, 56, 106, 196];

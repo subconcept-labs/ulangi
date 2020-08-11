@@ -12,6 +12,7 @@ import {
   ResponsiveStyleSheet,
   ScaleByBreakpoints,
   ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
 } from '../../utils/responsive';
 
 export interface TranslationItemStyles {
@@ -45,7 +46,9 @@ export class TranslationItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       inner_container: {
-        marginHorizontal: scaleByBreakpoints([16, 116, 216, 316]),
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(16),
         borderRadius: scaleByFactor(5),
         overflow: 'hidden',

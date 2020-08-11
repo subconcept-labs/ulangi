@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { assertExists } from '@ulangi/assert';
 import { AtomShellType } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAtomTutorialScreen,
@@ -13,6 +12,7 @@ import {
   ObservableShell,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
+import * as _ from 'lodash';
 import { observable } from 'mobx';
 import * as uuid from 'uuid';
 
@@ -66,14 +66,22 @@ export class AtomTutorialScreenDelegate {
   }
 
   public autoMoveParticlesOnOriginPositionChange(): void {
-    this.particleDelegate.autoMoveParticlesOnOriginPositionChange();
+    this.particleDelegate.autoMoveParticlesOnOriginPositionChange(
+      (): void => {
+        this.arcDelegate.resetHighlightArcs();
+      },
+    );
+  }
+
+  public autoUnhighlightArcsOnOriginPositionChange(): void {
+    this.arcDelegate.autoUnhighlightArcsOnOriginPositionChange();
   }
 
   public checkAnswer(isUserMove: boolean): void {
     this.answerDelegate.checkAnswer(
       (): void => this.onAnswerCorrect(isUserMove),
-      (subsetsOfEachShell): void => {
-        this.onAnswerIncorrect(isUserMove, subsetsOfEachShell);
+      (): void => {
+        this.onAnswerIncorrect(isUserMove);
       },
     );
   }
@@ -127,7 +135,7 @@ export class AtomTutorialScreenDelegate {
     return [
       new ObservableParticle(
         uuid.v4(),
-        false,
+        true,
         'A',
         initialPosition,
         AtomShellType.OUTER,
@@ -136,7 +144,7 @@ export class AtomTutorialScreenDelegate {
       ),
       new ObservableParticle(
         uuid.v4(),
-        false,
+        true,
         'O',
         initialPosition,
         AtomShellType.OUTER,
@@ -145,7 +153,7 @@ export class AtomTutorialScreenDelegate {
       ),
       new ObservableParticle(
         uuid.v4(),
-        false,
+        true,
         'M',
         initialPosition,
         AtomShellType.OUTER,
@@ -154,7 +162,7 @@ export class AtomTutorialScreenDelegate {
       ),
       new ObservableParticle(
         uuid.v4(),
-        false,
+        true,
         'K',
         initialPosition,
         AtomShellType.OUTER,
@@ -196,13 +204,7 @@ export class AtomTutorialScreenDelegate {
     this.originDelegate.bounceOrigin();
   }
 
-  private onAnswerIncorrect(
-    isUserMove: boolean,
-    correctSubsetsOfEachShell: {
-      shellType: AtomShellType;
-      correctSubsets: ObservableParticle[][];
-    }[],
-  ): void {
+  private onAnswerIncorrect(isUserMove: boolean): void {
     if (
       isUserMove === true &&
       this.observableScreen.gameStats.remainingMoves > 0
@@ -211,31 +213,35 @@ export class AtomTutorialScreenDelegate {
         this.observableScreen.gameStats.remainingMoves - 1;
     }
 
-    this.arcDelegate.unhighlightArcs();
+    this.arcDelegate.resetHighlightArcs();
 
-    correctSubsetsOfEachShell.forEach(
-      ({ shellType, correctSubsets }): void => {
-        const shell = assertExists(
-          this.observableScreen.shells.find(
-            (currentShell): boolean => currentShell.shellType === shellType,
-          ),
-          'shell should not be null or undefined',
+    this.observableScreen.shells.forEach(
+      (shell): void => {
+        const correctSubsets = this.answerDelegate.getCorrectParticleSubsetsInOneShell(
+          shell.shellType,
         );
 
-        this.arcDelegate.highlightArcs(correctSubsets, shell.diameter / 2);
+        const currentAnswers = correctSubsets.map(
+          (particles): string => {
+            return particles
+              .map(
+                (particle): string => {
+                  return particle.character;
+                },
+              )
+              .join('');
+          },
+        );
+
+        if (_.includes(currentAnswers, this.observableScreen.question.answer)) {
+          this.step2();
+        }
       },
     );
-
-    // If user has the correct answer eventhough there are redundant particles, then go to step 2
-    if (this.answerDelegate.hasCorrectAnswerDespiteRedundantParticles()) {
-      this.step2();
-    }
   }
 
   private step2(): void {
     this.observableScreen.currentStep = 1;
-    this.particleDelegate.getParticleByCharacter('K').enabled = true;
-    this.particleDelegate.getParticleByCharacter('T').enabled = false;
   }
 
   private step3(): void {

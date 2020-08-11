@@ -150,9 +150,9 @@ export class ReflexQuestionBox extends React.Component<
         <View style={this.styles.question_container}>
           {this.props.gameState.started === false ? (
             <DefaultText style={this.styles.question}>
-              Rule: If the answer is correct, press{' '}
-              <DefaultText style={this.styles.yes}>YES</DefaultText>. Otherwise,
-              press <DefaultText style={this.styles.no}>NO</DefaultText>.
+              Try your best to answer{' '}
+              <DefaultText style={this.styles.yes}>YES</DefaultText> or{' '}
+              <DefaultText style={this.styles.no}>NO</DefaultText> quickly.
             </DefaultText>
           ) : (
             this.renderQuestion()

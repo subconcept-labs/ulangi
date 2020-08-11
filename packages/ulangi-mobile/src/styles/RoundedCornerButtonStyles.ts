@@ -78,9 +78,14 @@ export class RoundedCornerButtonStyles extends ResponsiveStyleSheet<
       color: textColor,
     };
 
-    const disabledButtonStyle = {
-      backgroundColor: '#999',
-    };
+    const disabledButtonStyle =
+      options.kind === 'solid'
+        ? {
+            backgroundColor: '#999',
+          }
+        : {
+            borderColor: '#999',
+          };
 
     return _.merge(
       {},

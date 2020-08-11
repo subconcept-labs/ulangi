@@ -31,11 +31,11 @@ export class AtomParticleDelegate {
     this.observableScreen = observableScreen;
   }
 
-  public autoMoveParticlesOnOriginPositionChange(): void {
+  public autoMoveParticlesOnOriginPositionChange(callback?: () => void): void {
     this.observer.reaction(
       (): { x: number; y: number } => this.observableScreen.origin.position,
       (): void => {
-        this.spreadParticlesByIndices();
+        this.spreadParticlesByIndices(callback);
       },
     );
   }

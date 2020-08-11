@@ -52,8 +52,8 @@ export class AtomTutorialContent extends React.Component<
     {
       content: (
         <DefaultText style={this.styles.content}>
-          In this game, you must find the answer based on the vocabulary you
-          learned. Assuming that the answer is{' '}
+          In this game, you find answer by connecting characters in clockwise
+          fashion. Assuming that the answer is{' '}
           <DefaultText key="answer" style={this.styles.highlighted}>
             ATOM
           </DefaultText>
@@ -76,8 +76,8 @@ export class AtomTutorialContent extends React.Component<
     {
       content: (
         <DefaultText style={this.styles.content}>
-          Not done yet. You must also move redundant characters to the other
-          shell. Move{' '}
+          Not done yet. You must also move all redundant characters to a
+          different shell. Move{' '}
           <DefaultText key="K" style={this.styles.chracter}>
             K
           </DefaultText>{' '}

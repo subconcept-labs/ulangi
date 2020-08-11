@@ -57,33 +57,37 @@ export class QuizMultipleChoiceResult extends React.Component<
             this.props.observableScreen.multipleChoiceResult
           }
         />
-        <View style={this.styles.button_container}>
-          <DefaultButton
-            testID={QuizMultipleChoiceScreenIds.TAKE_ANOTHER_QUIZ_BTN}
-            text="Take another quiz"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              config.styles.primaryColor,
-              'white',
-              this.props.theme,
-              this.props.observableScreen.screenLayout,
-            )}
-            onPress={this.props.takeAnotherQuiz}
-          />
-          <DefaultButton
-            testID={QuizMultipleChoiceScreenIds.QUIT_BTN}
-            text="Quit"
-            styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
-              ButtonSize.LARGE,
-              3,
-              '#ddd',
-              '#333',
-              this.props.theme,
-              this.props.observableScreen.screenLayout,
-            )}
-            onPress={this.props.quit}
-          />
+        <View style={this.styles.button_containers}>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={QuizMultipleChoiceScreenIds.TAKE_ANOTHER_QUIZ_BTN}
+              text="Take another quiz"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                config.styles.primaryColor,
+                'white',
+                this.props.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={this.props.takeAnotherQuiz}
+            />
+          </View>
+          <View style={this.styles.button_container}>
+            <DefaultButton
+              testID={QuizMultipleChoiceScreenIds.QUIT_BTN}
+              text="Quit"
+              styles={roundedCornerButtonStyles.getSolidBackgroundStyles(
+                ButtonSize.LARGE,
+                3,
+                '#ddd',
+                '#333',
+                this.props.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={this.props.quit}
+            />
+          </View>
         </View>
       </View>
     );
