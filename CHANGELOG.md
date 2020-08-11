@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.15.1](https://github.com/ulangi/ulangi/compare/v3.15.0...v3.15.1) (2020-08-11)
+
+
+### Bug Fixes
+
+* add note for tutorial ([0661aea](https://github.com/ulangi/ulangi/commit/0661aea))
+* allow reversed portrait ([af73d64](https://github.com/ulangi/ulangi/commit/af73d64))
+* light box touchable background ([86d5d50](https://github.com/ulangi/ulangi/commit/86d5d50))
+* responsive design ([46e3420](https://github.com/ulangi/ulangi/commit/46e3420))
+* responsive design ([52592d3](https://github.com/ulangi/ulangi/commit/52592d3))
+* responsive design ([b0c2c6a](https://github.com/ulangi/ulangi/commit/b0c2c6a))
+* responsive design to allow multi-tasking ([eade8eb](https://github.com/ulangi/ulangi/commit/eade8eb))
+
+
+
+
+
 # [3.15.0](https://github.com/ulangi/ulangi/compare/v3.14.3...v3.15.0) (2020-08-04)
 
 
