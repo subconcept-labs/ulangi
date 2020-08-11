@@ -3,6 +3,8 @@ import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import {
+  GestureResponderEvent,
+  Keyboard,
   LayoutChangeEvent,
   SafeAreaView,
   View,
@@ -11,7 +13,8 @@ import {
 
 export interface ScreenProps extends ViewProperties {
   observableScreen: ObservableScreen;
-  useSafeAreaView: boolean;
+  useSafeAreaView?: boolean;
+  useDismissKeyboardView?: boolean;
 }
 
 @observer
@@ -22,16 +25,47 @@ export class Screen extends React.Component<ScreenProps> {
     this.props.observableScreen.screenLayout.update(width, height);
   }
 
+  // Dismiss keyboard on touch
+  @boundMethod
+  private onStartShouldSetResponder(): boolean {
+    return true;
+  }
+
+  // Do not dismiss keyboard on move (when scrolling)
+  @boundMethod
+  private onMoveShouldSetResponder(): boolean {
+    return false;
+  }
+
+  @boundMethod
+  private onResponderRelease(event: GestureResponderEvent): void {
+    Keyboard.dismiss();
+    console.log(event.nativeEvent.touches);
+    if (typeof this.props.onResponderRelease !== 'undefined') {
+      this.props.onResponderRelease(event);
+    }
+  }
+
   public render(): null | React.ReactElement<any> {
-    if (this.props.useSafeAreaView) {
+    const props =
+      this.props.useDismissKeyboardView === true
+        ? {
+            ...this.props,
+            onStartShouldSetResponder: this.onStartShouldSetResponder,
+            onMoveShouldSetResponder: this.onMoveShouldSetResponder,
+            onResponderRelease: this.onResponderRelease,
+          }
+        : this.props;
+
+    if (this.props.useSafeAreaView === true) {
       return (
-        <SafeAreaView onLayout={this.onLayout} {...this.props}>
+        <SafeAreaView onLayout={this.onLayout} {...props}>
           {this.renderChildren()}
         </SafeAreaView>
       );
     } else {
       return (
-        <View onLayout={this.onLayout} {...this.props}>
+        <View onLayout={this.onLayout} {...props}>
           {this.renderChildren()}
         </View>
       );

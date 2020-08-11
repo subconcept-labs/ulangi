@@ -18,7 +18,6 @@ import { View } from 'react-native';
 import { DiscoverScreenIds } from '../../constants/ids/DiscoverScreenIds';
 import { DiscoverScreenDelegate } from '../../delegates/discover/DiscoverScreenDelegate';
 import { DefaultText } from '../common/DefaultText';
-import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { Screen } from '../common/Screen';
 import { DiscoverCenterTitle } from './DiscoverCenterTitle';
 import { DiscoverNavBar } from './DiscoverNavBar';
@@ -61,20 +60,19 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
         style={this.styles.screen}
         testID={DiscoverScreenIds.SCREEN}
         observableScreen={this.props.observableScreen}
+        useDismissKeyboardView={true}
         useSafeAreaView={true}>
-        <DismissKeyboardView style={this.styles.dismiss_view}>
-          {this.isSupported() ? (
-            <React.Fragment>
-              {this.renderTopBar()}
-              {this.props.observableScreen.listType.get() === null
-                ? this.renderCenterTitle()
-                : this.renderList()}
-              {this.renderFloatingButton()}
-            </React.Fragment>
-          ) : (
-            this.renderNotSupported()
-          )}
-        </DismissKeyboardView>
+        {this.isSupported() ? (
+          <React.Fragment>
+            {this.renderTopBar()}
+            {this.props.observableScreen.listType.get() === null
+              ? this.renderCenterTitle()
+              : this.renderList()}
+            {this.renderFloatingButton()}
+          </React.Fragment>
+        ) : (
+          this.renderNotSupported()
+        )}
       </Screen>
     );
   }

@@ -17,7 +17,6 @@ import {
 
 export interface DiscoverScreenStyles {
   screen: ViewStyle;
-  dismiss_view: ViewStyle;
   top_container: ViewStyle;
   message_container: ViewStyle;
   message: TextStyle;
@@ -35,10 +34,6 @@ export class DiscoverScreenResponsiveStyles extends ResponsiveStyleSheet<
   ): DiscoverScreenStyles {
     return {
       screen: {
-        flex: 1,
-      },
-
-      dismiss_view: {
         flex: 1,
       },
 

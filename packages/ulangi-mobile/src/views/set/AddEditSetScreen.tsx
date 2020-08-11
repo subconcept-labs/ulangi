@@ -13,7 +13,6 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import { AddEditSetScreenDelegate } from '../../delegates/set/AddEditSetScreenDelegate';
-import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { Screen } from '../common/Screen';
 import {
   AddEditSetScreenStyles,
@@ -44,22 +43,21 @@ export class AddEditSetScreen extends React.Component<AddEditSetScreenProps> {
         testID={this.props.testID}
         style={this.styles.screen}
         observableScreen={this.props.observableScreen}
-        useSafeAreaView={true}>
-        <DismissKeyboardView>
-          <SetForm
-            theme={this.props.themeStore.theme}
-            screenLayout={this.props.observableScreen.screenLayout}
-            setFormState={this.props.observableScreen.setFormState}
-            showSelectLearningLanguageFirstDialog={
-              this.props.screenDelegate.showSelectLearningLanguageFirstDialog
-            }
-            showPicker={this.props.screenDelegate.showPicker}
-          />
-          {this.props.observableScreen.setFormState.pickerState
-            .currentPicker !== null
-            ? this.renderLanguagePicker()
-            : null}
-        </DismissKeyboardView>
+        useSafeAreaView={true}
+        useDismissKeyboardView={true}>
+        <SetForm
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          setFormState={this.props.observableScreen.setFormState}
+          showSelectLearningLanguageFirstDialog={
+            this.props.screenDelegate.showSelectLearningLanguageFirstDialog
+          }
+          showPicker={this.props.screenDelegate.showPicker}
+        />
+        {this.props.observableScreen.setFormState.pickerState.currentPicker !==
+        null
+          ? this.renderLanguagePicker()
+          : null}
       </Screen>
     );
   }

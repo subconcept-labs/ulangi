@@ -24,6 +24,7 @@ export class SignUpScreenResponsiveStyles extends ResponsiveStyleSheet<
       screen: {
         flex: 1,
       },
+
       container: {
         flex: 1,
       },
