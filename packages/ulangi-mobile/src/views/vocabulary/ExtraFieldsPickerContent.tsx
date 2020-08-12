@@ -113,7 +113,7 @@ export class ExtraFieldsPickerContent extends React.Component<
       <View style={this.styles.btn_container}>
         {detail.templateName === 'image'
           ? this.renderButton(
-              'Select images',
+              'Search images',
               (): void => {
                 this.props.selectImages();
               },

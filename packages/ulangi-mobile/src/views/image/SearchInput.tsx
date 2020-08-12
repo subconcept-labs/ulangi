@@ -66,7 +66,7 @@ export class SearchInput extends React.Component<SearchInputProps> {
     return (
       <View style={this.styles.input_container}>
         <DefaultTextInput
-          placeholder="Type topics to search..."
+          placeholder="Type to search images..."
           ref={(ref): void => {
             this.textInputRef = ref;
           }}

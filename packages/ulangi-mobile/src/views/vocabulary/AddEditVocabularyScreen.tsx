@@ -12,9 +12,10 @@ import {
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { AddEditVocabularyScreenDelegate } from '../../delegates/vocabulary/AddEditVocabularyScreenDelegate';
+import { DefaultText } from '../common/DefaultText';
 import { DismissKeyboardView } from '../common/DismissKeyboardView';
 import { Screen } from '../common/Screen';
 import { SmartScrollView } from '../common/SmartScrollView';
@@ -93,6 +94,7 @@ export class AddEditVocabularyScreen extends React.Component<
               addDefinitionSlot={this.props.screenDelegate.addDefinitionSlot}
               deleteDefinition={this.props.screenDelegate.deleteDefinition}
             />
+            {this.renderTip()}
           </DismissKeyboardView>
         </SmartScrollView>
       </React.Fragment>
@@ -109,6 +111,20 @@ export class AddEditVocabularyScreen extends React.Component<
           shouldShowTags={false}
         />
       </ScrollView>
+    );
+  }
+
+  private renderTip(): React.ReactElement<any> {
+    return (
+      <View style={this.styles.tip_container}>
+        <DefaultText style={this.styles.tip}>
+          <DefaultText style={this.styles.bold}>Tip: </DefaultText>
+          <DefaultText>To add images, tap on </DefaultText>
+          <DefaultText style={this.styles.bold}>Extra fields</DefaultText>
+          <DefaultText> button for definitions then press </DefaultText>
+          <DefaultText style={this.styles.bold}>Search images</DefaultText>.
+        </DefaultText>
+      </View>
     );
   }
 }

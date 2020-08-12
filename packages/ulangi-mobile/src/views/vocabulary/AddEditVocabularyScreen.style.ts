@@ -5,14 +5,18 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ViewStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 
+import { config } from '../../constants/config';
 import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
 
 export interface AddEditVocabularyScreenStyles {
   screen: ViewStyle;
   scrollview: ViewStyle;
   preview_container: ViewStyle;
+  tip_container: ViewStyle;
+  tip: TextStyle;
+  bold: TextStyle;
 }
 
 export class AddEditVocabularyScreenResponsiveStyles extends ResponsiveStyleSheet<
@@ -36,15 +40,37 @@ export class AddEditVocabularyScreenResponsiveStyles extends ResponsiveStyleShee
         alignSelf: 'stretch',
         justifyContent: 'center',
       },
+
+      tip_container: {
+        paddingHorizontal: scaleByFactor(16),
+        paddingVertical: scaleByFactor(14),
+      },
+
+      tip: {
+        textAlign: 'center',
+        fontSize: scaleByFactor(13),
+      },
+
+      bold: {
+        fontWeight: 'bold',
+      },
     };
   }
 
   public lightStyles(): Partial<AddEditVocabularyScreenStyles> {
-    return {};
+    return {
+      tip: {
+        color: config.styles.light.secondaryTextColor,
+      },
+    };
   }
 
   public darkStyles(): Partial<AddEditVocabularyScreenStyles> {
-    return {};
+    return {
+      tip: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+    };
   }
 }
 
