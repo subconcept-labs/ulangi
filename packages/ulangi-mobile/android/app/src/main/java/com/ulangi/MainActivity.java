@@ -16,7 +16,6 @@ public class MainActivity extends NavigationActivity {
           SplashScreen.show(this, R.style.SplashScreenTheme);
         }
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
