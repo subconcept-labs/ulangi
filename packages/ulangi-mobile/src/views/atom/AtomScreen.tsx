@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAtomScreen,
   ObservableThemeStore,
@@ -13,16 +14,17 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { config } from '../../constants/config';
 import { AtomScreenIds } from '../../constants/ids/AtomScreenIds';
 import { AtomScreenDelegate } from '../../delegates/atom/AtomScreenDelegate';
-import { SelectedCategories } from '../../views/category/SelectedCategories';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
+import { SelectCategoryButton } from '../../views/category/SelectCategoryButton';
 import { DefaultText } from '../common/DefaultText';
 import { Screen } from '../common/Screen';
 import { AtomMenu } from './AtomMenu';
 import {
   AtomScreenStyles,
   atomScreenResponsiveStyles,
-  selectedCategoriesResponsiveStyles,
 } from './AtomScreen.style';
 import { AtomTitle } from './AtomTitle';
 import { AtomTopBar } from './AtomTopBar';
@@ -71,24 +73,24 @@ export class AtomScreen extends React.Component<AtomScreenProps> {
             />
           </View>
           <View style={this.styles.selected_categories_container}>
-            <SelectedCategories
+            <SelectCategoryButton
               selectedCategoryNames={
                 this.props.observableScreen.selectedCategoryNames
               }
-              showSelectSpecificCategoryMessage={
-                this.props.screenDelegate.showSelectSpecificCategoryMessage
-              }
+              selectCategory={this.props.screenDelegate.selectCategory}
               theme={this.props.themeStore.theme}
               screenLayout={this.props.observableScreen.screenLayout}
-              styles={selectedCategoriesResponsiveStyles}
+              buttonStyles={fullRoundedButtonStyles.getOutlineStyles(
+                ButtonSize.NORMAL,
+                config.atom.primaryColor,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
+              )}
             />
           </View>
         </View>
         <View style={this.styles.bottom_container}>
-          <DefaultText style={this.styles.note}>
-            Note: This game is more fun when you have a lot of vocabulary terms
-            to practice.
-          </DefaultText>
+          <DefaultText style={this.styles.note} />
         </View>
       </Screen>
     );

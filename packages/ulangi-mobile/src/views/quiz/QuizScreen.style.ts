@@ -7,7 +7,12 @@
 
 import { ViewStyle } from 'react-native';
 
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface QuizScreenStyles {
   screen: ViewStyle;
@@ -21,7 +26,10 @@ export interface QuizScreenStyles {
 export class QuizScreenResponsiveStyles extends ResponsiveStyleSheet<
   QuizScreenStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): QuizScreenStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): QuizScreenStyles {
     return {
       screen: {
         flex: 1,
@@ -47,6 +55,9 @@ export class QuizScreenResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       selected_categories_container: {
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(50),
       },
     };

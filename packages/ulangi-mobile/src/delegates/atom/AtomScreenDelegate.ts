@@ -7,10 +7,11 @@
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ObservableAtomScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
+import { observable } from 'mobx';
 
 import { RemoteLogger } from '../../RemoteLogger';
-import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { FetchVocabularyDelegate } from './FetchVocabularyDelegate';
@@ -18,22 +19,22 @@ import { PrepareFetchVocabularyDelegate } from './PrepareFetchVocabularyDelegate
 
 @boundClass
 export class AtomScreenDelegate {
+  private observableScreen: ObservableAtomScreen;
   private prepareFetchVocabularyDelegate: PrepareFetchVocabularyDelegate;
   private fetchVocabularyDelegate: FetchVocabularyDelegate;
-  private categoryMessageDelegate: CategoryMessageDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
+    observableScreen: ObservableAtomScreen,
     prepareFetchVocabularyDelegate: PrepareFetchVocabularyDelegate,
     fetchVocabularyDelegate: FetchVocabularyDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
+    this.observableScreen = observableScreen;
     this.prepareFetchVocabularyDelegate = prepareFetchVocabularyDelegate;
     this.fetchVocabularyDelegate = fetchVocabularyDelegate;
-    this.categoryMessageDelegate = categoryMessageDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -86,7 +87,14 @@ export class AtomScreenDelegate {
     this.navigatorDelegate.dismissScreen();
   }
 
-  public showSelectSpecificCategoryMessage(): void {
-    this.categoryMessageDelegate.showSelectSpecificCategoryMessage();
+  public selectCategory(): void {
+    this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+      initialCategoryName: undefined,
+      onSelect: (categoryName): void => {
+        this.observableScreen.selectedCategoryNames = observable.array([
+          categoryName,
+        ]);
+      },
+    });
   }
 }

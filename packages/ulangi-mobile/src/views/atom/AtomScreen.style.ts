@@ -1,12 +1,6 @@
-import * as _ from 'lodash';
 import { TextStyle, ViewStyle } from 'react-native';
 
-import { config } from '../../constants/config';
 import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
-import {
-  SelectedCategoriesResponsiveStyles,
-  SelectedCategoriesStyles,
-} from '../category/SelectedCategories.style';
 
 export interface AtomScreenStyles {
   screen: ViewStyle;
@@ -77,18 +71,4 @@ export class AtomScreenResponsiveStyles extends ResponsiveStyleSheet<
   }
 }
 
-export class ExtendedSelectedCategoriesResponsiveStyles extends SelectedCategoriesResponsiveStyles {
-  public baseStyles(scaleByFactor: ScaleByFactor): SelectedCategoriesStyles {
-    return _.merge({}, super.baseStyles(scaleByFactor), {
-      title: {
-        color: config.atom.textColor,
-      },
-      category_name: {
-        color: config.atom.textColor,
-      },
-    });
-  }
-}
-
 export const atomScreenResponsiveStyles = new AtomScreenResponsiveStyles();
-export const selectedCategoriesResponsiveStyles = new SelectedCategoriesResponsiveStyles();

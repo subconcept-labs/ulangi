@@ -23,7 +23,6 @@ import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
@@ -35,7 +34,6 @@ export class SpacedRepetitionScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableSpacedRepetitionScreen;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
-  private categoryMessageDelegate: CategoryMessageDelegate;
   private linkingDelegate: LinkingDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -46,7 +44,6 @@ export class SpacedRepetitionScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableSpacedRepetitionScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate,
     linkingDelegate: LinkingDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
@@ -56,7 +53,6 @@ export class SpacedRepetitionScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
-    this.categoryMessageDelegate = categoryMessageDelegate;
     this.linkingDelegate = linkingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
@@ -144,14 +140,21 @@ export class SpacedRepetitionScreenDelegate {
     this.navigatorDelegate.push(ScreenName.SPACED_REPETITION_FAQ_SCREEN, {});
   }
 
-  public showSelectSpecificCategoryMessage(): void {
-    this.categoryMessageDelegate.showSelectSpecificCategoryMessage();
-  }
-
   public showSpacedRepetitionExplanationVideo(): void {
     this.linkingDelegate.openLink(
       'https://www.youtube.com/watch?v=cVf38y07cfk',
     );
+  }
+
+  public selectCategory(): void {
+    this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+      initialCategoryName: undefined,
+      onSelect: (categoryName): void => {
+        this.observableScreen.selectedCategoryNames = observable.array([
+          categoryName,
+        ]);
+      },
+    });
   }
 
   private showPreparingDialog(): void {

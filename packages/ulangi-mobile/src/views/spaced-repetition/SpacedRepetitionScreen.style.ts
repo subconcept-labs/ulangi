@@ -8,7 +8,12 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface SpacedRepetitionScreenStyles {
   screen: ViewStyle;
@@ -27,6 +32,7 @@ export class SpacedRepetitionScreenResponsiveStyles extends ResponsiveStyleSheet
 > {
   public baseStyles(
     scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
   ): SpacedRepetitionScreenStyles {
     return {
       screen: {
@@ -70,6 +76,9 @@ export class SpacedRepetitionScreenResponsiveStyles extends ResponsiveStyleSheet
       },
 
       selected_categories_container: {
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(50),
       },
     };

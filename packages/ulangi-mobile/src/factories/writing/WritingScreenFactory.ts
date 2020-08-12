@@ -7,7 +7,6 @@
 
 import { ObservableWritingScreen } from '@ulangi/ulangi-observable';
 
-import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { WritingScreenDelegate } from '../../delegates/writing/WritingScreenDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
@@ -35,15 +34,12 @@ export class WritingScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
     );
 
-    const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
-
     return new WritingScreenDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen,
       writingSettingsDelegate,
-      categoryMessageDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

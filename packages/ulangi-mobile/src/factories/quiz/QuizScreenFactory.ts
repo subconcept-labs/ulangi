@@ -7,7 +7,6 @@
 
 import { ObservableQuizScreen } from '@ulangi/ulangi-observable';
 
-import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { QuizScreenDelegate } from '../../delegates/quiz/QuizScreenDelegate';
 import { QuizSettingsDelegate } from '../../delegates/quiz/QuizSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
@@ -35,15 +34,12 @@ export class QuizScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
     );
 
-    const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
-
     return new QuizScreenDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen,
       quizSettingsDelegate,
-      categoryMessageDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

@@ -7,7 +7,6 @@
 
 import { ObservableSpacedRepetitionScreen } from '@ulangi/ulangi-observable';
 
-import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
@@ -36,8 +35,6 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
     );
 
-    const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
-
     const linkingDelegate = new LinkingDelegate(dialogDelegate);
 
     return new SpacedRepetitionScreenDelegate(
@@ -46,7 +43,6 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
       this.props.observableConverter,
       observableScreen,
       spacedRepetitionSettingsDelegate,
-      categoryMessageDelegate,
       linkingDelegate,
       dialogDelegate,
       navigatorDelegate,

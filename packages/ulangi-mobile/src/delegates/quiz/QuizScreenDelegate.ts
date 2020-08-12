@@ -21,7 +21,6 @@ import { observable, toJS } from 'mobx';
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { QuizSettingsDelegate } from './QuizSettingsDelegate';
@@ -33,7 +32,6 @@ export class QuizScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableQuizScreen;
   private quizSettingsDelegate: QuizSettingsDelegate;
-  private categoryMessageDelegate: CategoryMessageDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -43,7 +41,6 @@ export class QuizScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableQuizScreen,
     quizSettingsDelegate: QuizSettingsDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -52,7 +49,6 @@ export class QuizScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.quizSettingsDelegate = quizSettingsDelegate;
-    this.categoryMessageDelegate = categoryMessageDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -151,8 +147,15 @@ export class QuizScreenDelegate {
     this.navigatorDelegate.push(ScreenName.QUIZ_SETTINGS_SCREEN, {});
   }
 
-  public showSelectSpecificCategoryMessage(): void {
-    this.categoryMessageDelegate.showSelectSpecificCategoryMessage();
+  public selectCategory(): void {
+    this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+      initialCategoryName: undefined,
+      onSelect: (categoryName): void => {
+        this.observableScreen.selectedCategoryNames = observable.array([
+          categoryName,
+        ]);
+      },
+    });
   }
 
   private showPreparingDialog(): void {

@@ -7,7 +7,6 @@
 
 import { ObservableReflexScreen } from '@ulangi/ulangi-observable';
 
-import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { FetchVocabularyDelegate } from '../../delegates/reflex/FetchVocabularyDelegate';
 import { ReflexScreenDelegate } from '../../delegates/reflex/ReflexScreenDelegate';
 import { TimerDelegate } from '../../delegates/reflex/TimerDelegate';
@@ -35,8 +34,6 @@ export class ReflexScreenFactory extends ScreenFactory {
 
     const timerDelegate = new TimerDelegate(this.observer, observableScreen);
 
-    const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
-
     return new ReflexScreenDelegate(
       this.observer,
       this.props.observableLightBox,
@@ -44,7 +41,6 @@ export class ReflexScreenFactory extends ScreenFactory {
       questionIterator,
       fetchVocabularyDelegate,
       timerDelegate,
-      categoryMessageDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

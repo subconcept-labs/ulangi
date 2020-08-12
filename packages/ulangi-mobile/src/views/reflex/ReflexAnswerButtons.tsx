@@ -63,12 +63,6 @@ export class ReflexAnswerButtons extends React.Component<
             onPress={this.props.startGame}>
             <DefaultText style={this.styles.start_text}>START</DefaultText>
           </TouchableOpacity>
-          <View style={this.styles.note_container}>
-            <DefaultText style={this.styles.note}>
-              Note: This game is more fun when you have a lot of vocabulary
-              terms to practice.
-            </DefaultText>
-          </View>
         </View>
       );
     } else {

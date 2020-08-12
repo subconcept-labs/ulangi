@@ -1,11 +1,6 @@
-import * as _ from 'lodash';
 import { ViewStyle } from 'react-native';
 
 import { ResponsiveStyleSheet } from '../../utils/responsive';
-import {
-  SelectedCategoriesResponsiveStyles,
-  SelectedCategoriesStyles,
-} from '../category/SelectedCategories.style';
 
 export interface ReflexScreenStyles {
   screen: ViewStyle;
@@ -43,31 +38,5 @@ export class ReflexScreenResponsiveStyles extends ResponsiveStyleSheet<
     return {};
   }
 }
-
-export class ExtendedSelectedCategoriesResponsiveStyles extends SelectedCategoriesResponsiveStyles {
-  public lightStyles(): Partial<SelectedCategoriesStyles> {
-    return _.merge({}, super.lightStyles(), {
-      title: {
-        color: '#fff',
-      },
-      category_name: {
-        color: '#fff',
-      },
-    });
-  }
-
-  public darkStyles(): Partial<SelectedCategoriesStyles> {
-    return _.merge({}, super.darkStyles(), {
-      title: {
-        color: '#fff',
-      },
-      category_name: {
-        color: '#fff',
-      },
-    });
-  }
-}
-
-export const selectedCategoriesResponsiveStyles = new ExtendedSelectedCategoriesResponsiveStyles();
 
 export const reflexScreenResponsiveStyles = new ReflexScreenResponsiveStyles();

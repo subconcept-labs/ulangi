@@ -7,7 +7,12 @@
 
 import { ViewStyle } from 'react-native';
 
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface WritingScreenStyles {
   screen: ViewStyle;
@@ -21,7 +26,10 @@ export interface WritingScreenStyles {
 export class WritingScreenResponsiveStyles extends ResponsiveStyleSheet<
   WritingScreenStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): WritingScreenStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): WritingScreenStyles {
     return {
       screen: {
         flex: 1,
@@ -47,6 +55,9 @@ export class WritingScreenResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       selected_categories_container: {
+        marginHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(50),
       },
     };

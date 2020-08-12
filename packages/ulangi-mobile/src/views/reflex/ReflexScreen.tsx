@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableReflexScreen,
   ObservableThemeStore,
@@ -15,7 +16,8 @@ import { View } from 'react-native';
 
 import { ReflexScreenIds } from '../../constants/ids/ReflexScreenIds';
 import { ReflexScreenDelegate } from '../../delegates/reflex/ReflexScreenDelegate';
-import { SelectedCategories } from '../../views/category/SelectedCategories';
+import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
+import { SelectCategoryButton } from '../../views/category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
 import { ReflexAnswerButtons } from './ReflexAnswerButtons';
 import { ReflexGameStats } from './ReflexGameStats';
@@ -23,7 +25,6 @@ import { ReflexQuestionBox } from './ReflexQuestionBox';
 import {
   ReflexScreenStyles,
   reflexScreenResponsiveStyles,
-  selectedCategoriesResponsiveStyles,
 } from './ReflexScreen.style';
 import { ReflexTopBar } from './ReflexTopBar';
 
@@ -63,16 +64,19 @@ export class ReflexScreen extends React.Component<ReflexScreenProps> {
           />
           {!this.props.observableScreen.gameState.started ? (
             <View style={this.styles.selected_categories_container}>
-              <SelectedCategories
+              <SelectCategoryButton
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
-                showSelectSpecificCategoryMessage={
-                  this.props.screenDelegate.showSelectSpecificCategoryMessage
-                }
-                styles={selectedCategoriesResponsiveStyles}
+                selectCategory={this.props.screenDelegate.selectCategory}
+                buttonStyles={fullRoundedButtonStyles.getOutlineStyles(
+                  ButtonSize.NORMAL,
+                  '#fff',
+                  this.props.themeStore.theme,
+                  this.props.observableScreen.screenLayout,
+                )}
               />
             </View>
           ) : (

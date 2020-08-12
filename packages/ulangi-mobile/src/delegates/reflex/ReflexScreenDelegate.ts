@@ -14,12 +14,12 @@ import {
   Observer,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
+import { observable } from 'mobx';
 
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { ReflexQuestionIterator } from '../../iterators/ReflexQuestionIterator';
 import { reflexStyles } from '../../styles/ReflexStyles';
-import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { FetchVocabularyDelegate } from './FetchVocabularyDelegate';
@@ -33,7 +33,6 @@ export class ReflexScreenDelegate {
   private questionIterator: ReflexQuestionIterator;
   private fetchVocabularyDelegate: FetchVocabularyDelegate;
   private timerDelegate: TimerDelegate;
-  private categoryMessageDelegate: CategoryMessageDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -44,7 +43,6 @@ export class ReflexScreenDelegate {
     questionIterator: ReflexQuestionIterator,
     fetchVocabularyDelegate: FetchVocabularyDelegate,
     timerDelegate: TimerDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -54,7 +52,6 @@ export class ReflexScreenDelegate {
     this.questionIterator = questionIterator;
     this.fetchVocabularyDelegate = fetchVocabularyDelegate;
     this.timerDelegate = timerDelegate;
-    this.categoryMessageDelegate = categoryMessageDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -169,8 +166,15 @@ export class ReflexScreenDelegate {
     }
   }
 
-  public showSelectSpecificCategoryMessage(): void {
-    this.categoryMessageDelegate.showSelectSpecificCategoryMessage();
+  public selectCategory(): void {
+    this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+      initialCategoryName: undefined,
+      onSelect: (categoryName): void => {
+        this.observableScreen.selectedCategoryNames = observable.array([
+          categoryName,
+        ]);
+      },
+    });
   }
 
   private disablePopGesture(): void {

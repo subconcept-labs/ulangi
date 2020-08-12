@@ -15,7 +15,7 @@ import { View } from 'react-native';
 
 import { WritingScreenIds } from '../../constants/ids/WritingScreenIds';
 import { WritingScreenDelegate } from '../../delegates/writing/WritingScreenDelegate';
-import { SelectedCategories } from '../category/SelectedCategories';
+import { SelectCategoryButton } from '../category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
 import { WritingMenu } from './WritingMenu';
 import {
@@ -66,15 +66,13 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
               />
             </View>
             <View style={this.styles.selected_categories_container}>
-              <SelectedCategories
+              <SelectCategoryButton
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
-                showSelectSpecificCategoryMessage={
-                  this.props.screenDelegate.showSelectSpecificCategoryMessage
-                }
+                selectCategory={this.props.screenDelegate.selectCategory}
               />
             </View>
           </View>

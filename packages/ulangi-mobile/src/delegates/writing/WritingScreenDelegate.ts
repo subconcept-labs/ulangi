@@ -22,7 +22,6 @@ import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { CategoryMessageDelegate } from '../category/CategoryMessageDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { WritingSettingsDelegate } from './WritingSettingsDelegate';
@@ -34,7 +33,6 @@ export class WritingScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableWritingScreen;
   private writingSettingsDelegate: WritingSettingsDelegate;
-  private categoryMessageDelegate: CategoryMessageDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -44,7 +42,6 @@ export class WritingScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableWritingScreen,
     writingSettingsDelegate: WritingSettingsDelegate,
-    categoryMessageDelegate: CategoryMessageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -53,7 +50,6 @@ export class WritingScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.writingSettingsDelegate = writingSettingsDelegate;
-    this.categoryMessageDelegate = categoryMessageDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -130,8 +126,15 @@ export class WritingScreenDelegate {
     this.navigatorDelegate.push(ScreenName.WRITING_FAQ_SCREEN, {});
   }
 
-  public showSelectSpecificCategoryMessage(): void {
-    this.categoryMessageDelegate.showSelectSpecificCategoryMessage();
+  public selectCategory(): void {
+    this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
+      initialCategoryName: undefined,
+      onSelect: (categoryName): void => {
+        this.observableScreen.selectedCategoryNames = observable.array([
+          categoryName,
+        ]);
+      },
+    });
   }
 
   private showPreparingDialog(): void {

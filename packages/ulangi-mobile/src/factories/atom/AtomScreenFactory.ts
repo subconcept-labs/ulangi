@@ -10,7 +10,6 @@ import { ObservableAtomScreen } from '@ulangi/ulangi-observable';
 import { AtomScreenDelegate } from '../../delegates/atom/AtomScreenDelegate';
 import { FetchVocabularyDelegate } from '../../delegates/atom/FetchVocabularyDelegate';
 import { PrepareFetchVocabularyDelegate } from '../../delegates/atom/PrepareFetchVocabularyDelegate';
-import { CategoryMessageDelegate } from '../../delegates/category/CategoryMessageDelegate';
 import { atomStyles } from '../../styles/AtomStyles';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -32,12 +31,10 @@ export class AtomScreenFactory extends ScreenFactory {
 
     const fetchVocabularyDelegate = new FetchVocabularyDelegate(this.eventBus);
 
-    const categoryMessageDelegate = new CategoryMessageDelegate(dialogDelegate);
-
     return new AtomScreenDelegate(
+      observableScreen,
       prepareFetchVocabularyDelegate,
       fetchVocabularyDelegate,
-      categoryMessageDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

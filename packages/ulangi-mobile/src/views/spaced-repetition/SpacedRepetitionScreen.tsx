@@ -15,7 +15,7 @@ import { View } from 'react-native';
 
 import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionScreenIds';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
-import { SelectedCategories } from '../category/SelectedCategories';
+import { SelectCategoryButton } from '../category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
 import { SpacedRepetitionMenu } from './SpacedRepetitionMenu';
 import {
@@ -68,15 +68,13 @@ export class SpacedRepetitionScreen extends React.Component<
               />
             </View>
             <View style={this.styles.selected_categories_container}>
-              <SelectedCategories
+              <SelectCategoryButton
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
-                showSelectSpecificCategoryMessage={
-                  this.props.screenDelegate.showSelectSpecificCategoryMessage
-                }
+                selectCategory={this.props.screenDelegate.selectCategory}
               />
             </View>
           </View>

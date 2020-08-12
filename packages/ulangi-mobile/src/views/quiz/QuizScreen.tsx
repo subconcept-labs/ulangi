@@ -15,7 +15,7 @@ import { View } from 'react-native';
 
 import { QuizScreenIds } from '../../constants/ids/QuizScreenIds';
 import { QuizScreenDelegate } from '../../delegates/quiz/QuizScreenDelegate';
-import { SelectedCategories } from '../category/SelectedCategories';
+import { SelectCategoryButton } from '../category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
 import { QuizMenu } from './QuizMenu';
 import {
@@ -66,15 +66,13 @@ export class QuizScreen extends React.Component<QuizScreenProps> {
               />
             </View>
             <View style={this.styles.selected_categories_container}>
-              <SelectedCategories
+              <SelectCategoryButton
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 selectedCategoryNames={
                   this.props.observableScreen.selectedCategoryNames
                 }
-                showSelectSpecificCategoryMessage={
-                  this.props.screenDelegate.showSelectSpecificCategoryMessage
-                }
+                selectCategory={this.props.screenDelegate.selectCategory}
               />
             </View>
           </View>

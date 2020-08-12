@@ -93,8 +93,8 @@
       "spacedRepetitionEnabled": true,
       "writingEnabled": true,
       "quizEnabled": true,
-      "reflexEnabled": false,
-      "atomEnabled" : false
+      "reflexEnabled": true,
+      "atomEnabled" : true
     }
   },
 
