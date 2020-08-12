@@ -30,7 +30,7 @@ export class SuggestionItemResponsiveStyles extends ResponsiveStyleSheet<
       importance: {
         fontSize: scaleByFactor(12),
         fontWeight: 'bold',
-        letterSpacing: -scaleByFactor(0.5),
+        letterSpacing: -1,
         textAlignVertical: 'center',
       },
 

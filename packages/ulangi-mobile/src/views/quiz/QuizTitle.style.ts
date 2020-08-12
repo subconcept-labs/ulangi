@@ -30,13 +30,13 @@ export class QuizTitleResponsiveStyles extends ResponsiveStyleSheet<
       title: {
         fontSize: scaleByFactor(26),
         fontFamily: 'JosefinSans-Bold',
-        letterSpacing: -scaleByFactor(0.5),
+        letterSpacing: -1,
       },
 
       subtitle: {
         fontSize: scaleByFactor(9),
         fontFamily: 'JosefinSans-Bold',
-        letterSpacing: scaleByFactor(0.5),
+        letterSpacing: 0.5,
       },
 
       icon: {

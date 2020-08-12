@@ -39,7 +39,7 @@ export class SpacedRepetitionTitle extends React.Component<
       <View style={this.styles.container}>
         <DefaultText style={this.styles.title}>Spaced Repetition</DefaultText>
         <DefaultText style={this.styles.subtitle}>
-          A WELL-KNOWN LEARNING TECHNIQUE
+          SCHEDULING SYSTEM
         </DefaultText>
         <Image
           source={Images.SPACED_REPETITION_30X30}

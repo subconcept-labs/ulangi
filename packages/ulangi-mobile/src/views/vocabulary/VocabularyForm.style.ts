@@ -138,7 +138,7 @@ export class VocabularyFormResponsiveStyles extends ResponsiveStyleSheet<
         fontSize: scaleByFactor(11),
         fontWeight: '700',
         color: '#424242',
-        letterSpacing: scaleByFactor(-0.5),
+        letterSpacing: -1,
       },
 
       button_red_text: {

@@ -52,11 +52,11 @@ export class ReviewActionBarResponsiveStyles extends ResponsiveStyleSheet<
       action_title: {
         fontWeight: 'bold',
         fontSize: scaleByFactor(11),
-        letterSpacing: scaleByFactor(-0.5),
+        letterSpacing: -1,
       },
 
       action_subtitle: {
-        letterSpacing: scaleByFactor(-0.5),
+        letterSpacing: -1,
         fontSize: scaleByFactor(11),
       },
     };

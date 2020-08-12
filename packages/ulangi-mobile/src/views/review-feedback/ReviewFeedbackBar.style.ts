@@ -63,7 +63,7 @@ export class ReviewFeedbackBarResponsiveStyles extends ResponsiveStyleSheet<
         fontWeight: '700',
         textAlign: 'center',
         fontSize: scaleByFactor(11),
-        letterSpacing: scaleByFactor(-0.5),
+        letterSpacing: -1,
         color: '#f7f7f7',
       },
 
