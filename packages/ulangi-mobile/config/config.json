@@ -140,6 +140,22 @@
       "SORT_BY_NAME_DESC": {
         "name": "Sort by name (Z-A)",
         "longName": "Sort by name (Z to A)"
+      },
+      "SORT_BY_CREATION_TIME_ASC": {
+        "name": "Sort by creation time (ASC)",
+        "longName": "Sort by creation time (ASC)"
+      },
+      "SORT_BY_CREATION_TIME_DESC": {
+        "name": "Sort by creation time (DESC)",
+        "longName": "Sort by creation time (DESC)"
+      },
+      "SORT_BY_UPDATE_TIME_ASC": {
+        "name": "Sort by update time (ASC)",
+        "longName": "Sort by update time (ASC)"
+      },
+      "SORT_BY_UPDATE_TIME_DESC": {
+        "name": "Sort by update time (DESC)",
+        "longName": "Sort by update time (DESC)"
       }
     },
     "statusMap": {

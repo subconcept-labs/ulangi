@@ -26,6 +26,7 @@ import { DatabaseEventBus } from '../event-buses/DatabaseEventBus';
 import { VocabularyRow } from '../interfaces/VocabularyRow';
 import { VocabularyRowPreparer } from '../preparers/VocabularyRowPreparer';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
+import { addVocabularySorting } from '../utils/addVocabularySorting';
 import { DefinitionModel } from './DefinitionModel';
 import { DirtyVocabularyModel } from './DirtyVocabularyModel';
 import { VocabularyCategoryModel } from './VocabularyCategoryModel';
@@ -144,11 +145,7 @@ export class VocabularyModel {
             .where('v.setId = ?', setId)
             .where('v.vocabularyStatus = ?', vocabularyStatus);
 
-          if (sortType === VocabularySortType.SORT_BY_NAME_ASC) {
-            query = query.order('v.vocabularyText', true);
-          } else if (sortType === VocabularySortType.SORT_BY_NAME_DESC) {
-            query = query.order('v.vocabularyText', false);
-          }
+          query = addVocabularySorting(query, sortType);
 
           query = query.limit(limit).offset(offset);
 

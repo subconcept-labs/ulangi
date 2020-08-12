@@ -23,6 +23,7 @@ import { VocabularyRow } from '../interfaces/VocabularyRow';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
 import { addCategoryConditions } from '../utils/addCategoryConditions';
 import { addLevelCountAggregation } from '../utils/addLevelCountAggregation';
+import { addVocabularySorting } from '../utils/addVocabularySorting';
 import { VocabularyModel } from './VocabularyModel';
 
 export class SpacedRepetitionModel {
@@ -159,11 +160,7 @@ export class SpacedRepetitionModel {
 
           query = this.addDueCondition(query, initialInterval, maxLevel);
 
-          if (sortType === VocabularySortType.SORT_BY_NAME_ASC) {
-            query = query.order('v.vocabularyText', true);
-          } else if (sortType === VocabularySortType.SORT_BY_NAME_DESC) {
-            query = query.order('v.vocabularyText', false);
-          }
+          query = addVocabularySorting(query, sortType);
 
           query = query.limit(limit).offset(offset);
 

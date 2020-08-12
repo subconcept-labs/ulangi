@@ -65,7 +65,7 @@ export class CategoryDetailHeader extends React.Component<
             numberOfLines={1}
             style={this.styles.button_text}>
             {_.upperFirst(
-              config.category.sortMap[this.props.selectedSortType.get()].name,
+              config.vocabulary.sortMap[this.props.selectedSortType.get()].name,
             )}
           </DefaultText>
         </TouchableOpacity>
