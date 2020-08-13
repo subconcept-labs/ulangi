@@ -6,49 +6,54 @@
  */
 
 import {
-  ObservableScreen,
+  ObservableBrowserScreen,
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
+import { boundMethod } from 'autobind-decorator';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-import { env } from '../../constants/env';
-import { WhatsNewScreenIds } from '../../constants/ids/WhatsNewScreenIds';
+import { BrowserScreenIds } from '../../constants/ids/BrowserScreenIds';
 import { Screen } from '../common/Screen';
 import {
-  WhatsNewScreenStyles,
-  whatsNewScreenResponsiveStyles,
-} from './WhatsNewScreen.style';
+  BrowserScreenStyles,
+  browserScreenResponsiveStyles,
+} from './BrowserScreen.style';
 
-export interface WhatsNewScreenProps {
+export interface BrowserScreenProps {
   themeStore: ObservableThemeStore;
-  observableScreen: ObservableScreen;
+  observableScreen: ObservableBrowserScreen;
 }
 
 @observer
-export class WhatsNewScreen extends React.Component<WhatsNewScreenProps> {
-  private get styles(): WhatsNewScreenStyles {
-    return whatsNewScreenResponsiveStyles.compile(
+export class BrowserScreen extends React.Component<BrowserScreenProps> {
+  private get styles(): BrowserScreenStyles {
+    return browserScreenResponsiveStyles.compile(
       this.props.observableScreen.screenLayout,
       this.props.themeStore.theme,
     );
   }
 
+  @boundMethod
   private renderLoading(): React.ReactElement<any> {
-    return <ActivityIndicator style={this.styles.spinner} size="small" />;
+    return (
+      <View style={this.styles.loading_view}>
+        <ActivityIndicator style={this.styles.spinner} size="small" />
+      </View>
+    );
   }
 
   public render(): React.ReactElement<any> {
     return (
       <Screen
         style={this.styles.screen}
-        testID={WhatsNewScreenIds.SCREEN}
+        testID={BrowserScreenIds.SCREEN}
         observableScreen={this.props.observableScreen}
         useSafeAreaView={true}>
         <WebView
-          source={{ uri: env.SERVER_URL + '/whats-new' }}
+          source={{ uri: this.props.observableScreen.link }}
           renderLoading={this.renderLoading}
           startInLoadingState={true}
         />

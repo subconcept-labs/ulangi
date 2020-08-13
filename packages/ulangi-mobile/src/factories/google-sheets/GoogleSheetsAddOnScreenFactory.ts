@@ -8,7 +8,6 @@
 import { ObservableGoogleSheetsAddOnScreen } from '@ulangi/ulangi-observable';
 
 import { GoogleSheetsAddOnScreenDelegate } from '../../delegates/google-sheets/GoogleSheetsAddOnScreenDelegate';
-import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -20,13 +19,13 @@ export class GoogleSheetsAddOnScreenFactory extends ScreenFactory {
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const linkingDelegate = new LinkingDelegate(dialogDelegate);
+    const navigatorDelegate = this.createNavigatorDelegate();
 
     return new GoogleSheetsAddOnScreenDelegate(
       this.eventBus,
       observableScreen,
       dialogDelegate,
-      linkingDelegate,
+      navigatorDelegate,
     );
   }
 }

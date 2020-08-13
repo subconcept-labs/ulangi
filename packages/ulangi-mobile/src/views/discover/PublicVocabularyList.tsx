@@ -29,7 +29,7 @@ export interface PublicVocabularyListProps {
   addVocabulary: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyDetail: (vocabulary: PublicVocabulary) => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
 }
 
 @observer
@@ -68,7 +68,7 @@ export class PublicVocabularyList extends React.Component<
               showPublicVocabularyActionMenu={
                 this.props.showPublicVocabularyActionMenu
               }
-              openLink={this.props.openLink}
+              showLink={this.props.showLink}
             />
           );
         }}

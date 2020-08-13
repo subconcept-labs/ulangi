@@ -26,7 +26,6 @@ import {
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import { runInAction } from 'mobx';
-import { Linking } from 'react-native';
 
 import { RemoteLogger } from '../../RemoteLogger';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
@@ -285,10 +284,11 @@ export class DiscoverScreenDelegate {
     );
   }
 
-  public openLink(link: string): void {
-    Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err),
-    );
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 
   public showTipScreen(): void {

@@ -34,7 +34,7 @@ export interface DictionaryPickerContentProps {
   translationListState: ObservableTranslationListState;
   getDictionaryEntry: () => void;
   translate: () => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   onPickDictionaryDefinition: (
     definition: ObservableDictionaryDefinition,
   ) => void;
@@ -69,7 +69,7 @@ export class DictionaryPickerContent extends React.Component<
           translatedToLanguageName={this.props.translatedToLanguageName}
           dictionaryEntryState={this.props.dictionaryEntryState}
           getDictionaryEntry={this.props.getDictionaryEntry}
-          openLink={this.props.openLink}
+          showLink={this.props.showLink}
           onPick={this.props.onPickDictionaryDefinition}
         />
         <TranslationSection

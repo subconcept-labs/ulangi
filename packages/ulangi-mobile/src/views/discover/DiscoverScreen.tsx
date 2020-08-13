@@ -173,7 +173,7 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
           }
           onEndReached={this.props.screenDelegate.searchPublicVocabulary}
           refresh={this.props.screenDelegate.refreshCurrentList}
-          openLink={this.props.screenDelegate.openLink}
+          showLink={this.props.screenDelegate.showLink}
         />
       );
     } else {

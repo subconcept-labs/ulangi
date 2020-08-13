@@ -30,7 +30,7 @@ export interface DictionaryDefinitionListProps {
   attributions: undefined | Attribution[];
   definitions: readonly ObservableDictionaryDefinition[];
   onPick: (definition: ObservableDictionaryDefinition) => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
 }
 
 @observer
@@ -93,7 +93,10 @@ export class DictionaryDefinitionList extends React.Component<
                 <DefaultText
                   onPress={(): void => {
                     if (typeof attribution.sourceLink !== 'undefined') {
-                      this.props.openLink(attribution.sourceLink);
+                      this.props.showLink(
+                        attribution.sourceLink,
+                        attribution.sourceName,
+                      );
                     }
                   }}
                   style={
@@ -108,7 +111,10 @@ export class DictionaryDefinitionList extends React.Component<
                       style={this.styles.hightlighted}
                       onPress={(): void => {
                         if (typeof attribution.licenseLink !== 'undefined') {
-                          this.props.openLink(attribution.licenseLink);
+                          this.props.showLink(
+                            attribution.licenseLink,
+                            'License',
+                          );
                         }
                       }}>
                       {attribution.license}

@@ -39,7 +39,7 @@ export interface PublicVocabularyItemProps {
   addVocabulary: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyActionMenu: (vocabulary: PublicVocabulary) => void;
   showPublicVocabularyDetail: (vocbulary: PublicVocabulary) => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   styles?: {
     light: PublicVocabularyItemStyles;
     dark: PublicVocabularyItemStyles;
@@ -127,7 +127,10 @@ export class PublicVocabularyItem extends React.Component<
                       }
                       onPress={(): void => {
                         if (typeof attribution.sourceLink !== 'undefined') {
-                          this.props.openLink(attribution.sourceLink);
+                          this.props.showLink(
+                            attribution.sourceLink,
+                            attribution.sourceName,
+                          );
                         }
                       }}>
                       {attribution.sourceName}
@@ -145,7 +148,10 @@ export class PublicVocabularyItem extends React.Component<
                             if (
                               typeof attribution.licenseLink !== 'undefined'
                             ) {
-                              this.props.openLink(attribution.licenseLink);
+                              this.props.showLink(
+                                attribution.licenseLink,
+                                'License',
+                              );
                             }
                           }}>
                           {attribution.license}

@@ -5,8 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { boundClass } from 'autobind-decorator';
-import { Linking } from 'react-native';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SuggestionListDelegate } from '../vocabulary/SuggestionListDelegate';
@@ -36,10 +36,11 @@ export class SuggestionsPickerScreenDelegate {
     this.suggestionListDelegate.onSelectSuggestion(fieldName, value);
   }
 
-  public openLink(link: string): void {
-    Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err),
-    );
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 
   public close(): void {

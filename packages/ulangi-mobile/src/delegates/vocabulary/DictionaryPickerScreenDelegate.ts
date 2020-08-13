@@ -6,6 +6,7 @@
  */
 
 import { DeepPartial } from '@ulangi/extended-types';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { Definition } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableDictionaryDefinition,
@@ -13,7 +14,6 @@ import {
   ObservableTranslation,
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
-import { Linking } from 'react-native';
 
 import { DictionaryEntryDelegate } from '../dictionary/DictionaryEntryDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -62,10 +62,11 @@ export class DictionaryPickerScreenDelegate {
     this.translationListDelegate.clearTranslations();
   }
 
-  public openLink(link: string): void {
-    Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err),
-    );
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 
   public close(): void {

@@ -73,8 +73,9 @@ export class GoogleSheetsAddOnScreen extends React.Component<
                 leftText="How to install the add-on"
                 showArrow={true}
                 onPress={(): void =>
-                  this.props.screenDelegate.goToLink(
+                  this.props.screenDelegate.showLink(
                     config.links.ulangiSheetsAddOn.installTutorial,
+                    'How to install',
                   )
                 }
               />
@@ -84,8 +85,9 @@ export class GoogleSheetsAddOnScreen extends React.Component<
                 leftText="How to use the add-on"
                 showArrow={true}
                 onPress={(): void =>
-                  this.props.screenDelegate.goToLink(
+                  this.props.screenDelegate.showLink(
                     config.links.ulangiSheetsAddOn.useTutorial,
+                    'How to use',
                   )
                 }
               />

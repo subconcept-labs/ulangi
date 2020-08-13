@@ -14,7 +14,6 @@ import {
 import { ObservablePublicSet } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import * as _ from 'lodash';
-import { Linking } from 'react-native';
 
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { PublicSetDetailScreenIds } from '../../constants/ids/PublicSetDetailScreenIds';
@@ -123,10 +122,11 @@ export class PublicSetDetailScreenDelegate {
     });
   }
 
-  public openLink(link: string): void {
-    Linking.openURL(link).catch(
-      (err): void => console.error('An error occurred', err),
-    );
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 
   public showPublicVocabularyDetail(vocabulary: PublicVocabulary): void {

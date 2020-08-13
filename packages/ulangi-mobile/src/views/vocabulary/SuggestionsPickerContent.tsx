@@ -33,7 +33,7 @@ export interface SuggestionsPickerContentProps {
   translatedToLanguageName: string;
   suggestionListState: ObservableSuggestionListState;
   getSuggestions: () => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   styles?: {
     light: SuggestionsPickerContentStyles;
     dark: SuggestionsPickerContentStyles;
@@ -156,7 +156,7 @@ export class SuggestionsPickerContent extends React.Component<
 
     const allSuggestionLists: (null | Omit<
       SuggestionListProps,
-      'theme' | 'screenLayout' | 'openLink'
+      'theme' | 'screenLayout' | 'showLink'
     >)[] = [
       suggestionListState.dictionaryEntryState.dictionaryEntry !== null
         ? {
@@ -226,7 +226,7 @@ export class SuggestionsPickerContent extends React.Component<
                     label={list.label}
                     attributions={list.attributions}
                     suggestions={list.suggestions}
-                    openLink={this.props.openLink}
+                    showLink={this.props.showLink}
                   />
                 );
               },

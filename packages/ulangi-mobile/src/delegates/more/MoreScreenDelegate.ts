@@ -289,7 +289,10 @@ export class MoreScreenDelegate {
   }
 
   public navigateToWhatsNewScreen(): void {
-    this.navigatorDelegate.push(ScreenName.WHATS_NEW_SCREEN, {});
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: env.SERVER_URL + '/whats-new',
+      screenTitle: "What's New",
+    });
   }
 
   public navigateToFollowUsScreen(): void {
@@ -319,11 +322,17 @@ export class MoreScreenDelegate {
   }
 
   public navigateToTermsOfServiceScreen(): void {
-    this.navigatorDelegate.push(ScreenName.TERMS_OF_SERVICE_SCREEN, {});
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: env.SERVER_URL + '/terms-of-service',
+      screenTitle: 'Terms of Service',
+    });
   }
 
   public navigateToPrivacyPolicyScreen(): void {
-    this.navigatorDelegate.push(ScreenName.PRIVACY_POLICY_SCREEN, {});
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: env.SERVER_URL + '/privacy-policy',
+      screenTitle: 'Privacy Policy',
+    });
   }
 
   public navigateToDataSharingScreen(): void {
@@ -338,7 +347,10 @@ export class MoreScreenDelegate {
     this.adDelegate.showGoogleConsentForm();
   }
 
-  public goToDictionaryFunctionsWebsite(): void {
-    this.linkingDelegate.openLink('https://dictionaryfx.com');
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 }

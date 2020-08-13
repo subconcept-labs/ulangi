@@ -52,7 +52,7 @@ export class ImageSelectorScreen extends React.Component<
           onEndReached={this.props.screenDelegate.search}
           toggleSelect={this.props.screenDelegate.toggleSelect}
           refresh={this.props.screenDelegate.resetSearch}
-          goToPixabay={this.props.screenDelegate.goToPixabay}
+          goToPixabay={this.props.screenDelegate.showPixabayWebsite}
         />
       </Screen>
     );

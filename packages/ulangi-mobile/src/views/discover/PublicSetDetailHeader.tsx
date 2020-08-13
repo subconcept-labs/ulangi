@@ -27,7 +27,7 @@ export interface PublicSetDetailHeaderProps {
   subtitle?: string;
   numberOfTerms: number;
   attributions: Attribution[];
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   addAllVocabulary: () => void;
   styles?: {
     light: PublicSetDetailHeaderStyles;
@@ -78,7 +78,10 @@ export class PublicSetDetailHeader extends React.Component<
           style={attribution.sourceLink ? this.styles.highlighted : null}
           onPress={(): void => {
             if (typeof attribution.sourceLink !== 'undefined') {
-              this.props.openLink(attribution.sourceLink);
+              this.props.showLink(
+                attribution.sourceLink,
+                attribution.sourceName,
+              );
             }
           }}>
           {attribution.sourceName}

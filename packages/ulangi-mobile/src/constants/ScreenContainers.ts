@@ -5,8 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { PrivacyPolicyScreenContainer } from '../views/about/PrivacyPolicyScreenContainer';
-import { TermsOfServiceScreenContainer } from '../views/about/TermsOfServiceScreenContainer';
 import { ChangeEmailScreenContainer } from '../views/account/ChangeEmailScreenContainer';
 import { ChangePasswordScreenContainer } from '../views/account/ChangePasswordScreenContainer';
 import { SecurityScreenContainer } from '../views/account/SecurityScreenContainer';
@@ -22,6 +20,7 @@ import { SignInScreenContainer } from '../views/auth/SignInScreenContainer';
 import { SignOutScreenContainer } from '../views/auth/SignOutScreenContainer';
 import { SignUpScreenContainer } from '../views/auth/SignUpScreenContainer';
 import { AutoArchiveScreenContainer } from '../views/auto-archive/AutoArchiveScreenContainer';
+import { BrowserScreenContainer } from '../views/browser/BrowserScreenContainer';
 import { CategorizeScreenContainer } from '../views/category/CategorizeScreenContainer';
 import { CategoryDetailScreenContainer } from '../views/category/CategoryDetailScreenContainer';
 import { CategorySelectorScreenContainer } from '../views/category/CategorySelectorScreenContainer';
@@ -74,7 +73,6 @@ import { ExtraFieldsPickerScreenContainer } from '../views/vocabulary/ExtraField
 import { SuggestionsPickerScreenContainer } from '../views/vocabulary/SuggestionsPickerScreenContainer';
 import { VocabularyDetailScreenContainer } from '../views/vocabulary/VocabularyDetailScreenContainer';
 import { WelcomeScreenContainer } from '../views/welcome/WelcomeScreenContainer';
-import { WhatsNewScreenContainer } from '../views/whats-new/WhatsNewScreenContainer';
 import { WritingFAQScreenContainer } from '../views/writing/WritingFAQScreenContainer';
 import { WritingLessonScreenContainer } from '../views/writing/WritingLessonScreenContainer';
 import { WritingScreenContainer } from '../views/writing/WritingScreenContainer';
@@ -120,7 +118,6 @@ export const ScreenContainers = {
   MEMBERSHIP_SCREEN: MembershipScreenContainer,
   MORE_SCREEN: MoreScreenContainer,
   PRELOAD_SCREEN: PreloadScreenContainer,
-  PRIVACY_POLICY_SCREEN: PrivacyPolicyScreenContainer,
   PUBLIC_SET_DETAIL_SCREEN: PublicSetDetailScreenContainer,
   QUICK_TUTORIAL_SCREEN: QuickTutorialScreenContainer,
   QUIZ_MULTIPLE_CHOICE_SCREEN: QuizMultipleChoiceScreenContainer,
@@ -144,11 +141,10 @@ export const ScreenContainers = {
   SPACED_REPETITION_SCREEN: SpacedRepetitionScreenContainer,
   SPACED_REPETITION_SETTINGS_SCREEN: SpacedRepetitionSettingsScreenContainer,
   SYNCHRONIZER_SCREEN: SynchronizerScreenContainer,
-  TERMS_OF_SERVICE_SCREEN: TermsOfServiceScreenContainer,
   THEME_SCREEN: ThemeScreenContainer,
   VOCABULARY_DETAIL_SCREEN: VocabularyDetailScreenContainer,
   WELCOME_SCREEN: WelcomeScreenContainer,
-  WHATS_NEW_SCREEN: WhatsNewScreenContainer,
+  BROWSER_SCREEN: BrowserScreenContainer,
   WRITING_FAQ_SCREEN: WritingFAQScreenContainer,
   WRITING_LESSON_SCREEN: WritingLessonScreenContainer,
   WRITING_SCREEN: WritingScreenContainer,

@@ -53,7 +53,7 @@ export interface TranslationAndPublicVocabularyListProps {
   showPublicVocabularyDetail: (vocabulary: PublicVocabulary) => void;
   onEndReached: () => void;
   refresh: () => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
 }
 
 @observer
@@ -196,7 +196,7 @@ export class TranslationAndPublicVocabularyList extends React.Component<
         showPublicVocabularyActionMenu={
           this.props.showPublicVocabularyActionMenu
         }
-        openLink={this.props.openLink}
+        showLink={this.props.showLink}
       />
     );
   }

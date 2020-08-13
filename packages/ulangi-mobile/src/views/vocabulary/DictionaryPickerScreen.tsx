@@ -117,7 +117,7 @@ export class DictionaryPickerScreen extends React.Component<
         translationListState={this.props.observableScreen.translationListState}
         getDictionaryEntry={this.props.screenDelegate.getDictionaryEntry}
         translate={this.props.screenDelegate.translate}
-        openLink={this.props.screenDelegate.openLink}
+        showLink={this.props.screenDelegate.showLink}
         onPickDictionaryDefinition={
           this.props.screenDelegate.onPickDictionaryDefinition
         }

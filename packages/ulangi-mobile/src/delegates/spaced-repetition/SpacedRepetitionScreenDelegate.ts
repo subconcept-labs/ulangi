@@ -21,7 +21,6 @@ import { observable, toJS } from 'mobx';
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
@@ -34,7 +33,6 @@ export class SpacedRepetitionScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableSpacedRepetitionScreen;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
-  private linkingDelegate: LinkingDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -44,7 +42,6 @@ export class SpacedRepetitionScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableSpacedRepetitionScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    linkingDelegate: LinkingDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -53,7 +50,6 @@ export class SpacedRepetitionScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
-    this.linkingDelegate = linkingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -141,9 +137,10 @@ export class SpacedRepetitionScreenDelegate {
   }
 
   public showSpacedRepetitionExplanationVideo(): void {
-    this.linkingDelegate.openLink(
-      'https://www.youtube.com/watch?v=cVf38y07cfk',
-    );
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: 'https://www.youtube.com/watch?v=cVf38y07cfk',
+      screenTitle: 'Spaced Repetition',
+    });
   }
 
   public selectCategory(): void {

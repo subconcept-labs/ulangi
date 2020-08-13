@@ -5,6 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag, PixabayImage } from '@ulangi/ulangi-common/interfaces';
 import {
   ObservableImageSelectorScreen,
@@ -15,7 +16,6 @@ import { boundClass } from 'autobind-decorator';
 import { when } from 'mobx';
 
 import { DialogDelegate } from '../dialog/DialogDelegate';
-import { LinkingDelegate } from '../linking/LinkingDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SearchImageDelegate } from './SearchImageDelegate';
 import { UploadImageDelegate } from './UploadImageDelegate';
@@ -28,7 +28,6 @@ export class ImageSelectorScreenDelegate {
   private uploadImageDelegate: UploadImageDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
-  private linkingDelegate: LinkingDelegate;
 
   public constructor(
     observableLightBox: ObservableLightBox,
@@ -37,7 +36,6 @@ export class ImageSelectorScreenDelegate {
     uploadImageDelegate: UploadImageDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
-    linkingDelegate: LinkingDelegate,
   ) {
     this.observableLightBox = observableLightBox;
     this.observableScreen = observableScreen;
@@ -45,7 +43,6 @@ export class ImageSelectorScreenDelegate {
     this.uploadImageDelegate = uploadImageDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
-    this.linkingDelegate = linkingDelegate;
   }
 
   public prepareAndSearch(): void {
@@ -102,8 +99,11 @@ export class ImageSelectorScreenDelegate {
     }
   }
 
-  public goToPixabay(): void {
-    this.linkingDelegate.openLink('https://pixabay.com');
+  public showPixabayWebsite(): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: 'https://pixabay.com',
+      screenTitle: 'Pixabay',
+    });
   }
 
   private showUploading(): void {

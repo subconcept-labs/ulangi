@@ -7,7 +7,7 @@
 
 import { assertExists } from '@ulangi/assert';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ApiScope, ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ApiScope, ButtonSize, ScreenName } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import { ObservableGoogleSheetsAddOnScreen } from '@ulangi/ulangi-observable';
@@ -17,29 +17,32 @@ import { Clipboard } from 'react-native';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
-import { LinkingDelegate } from '../linking/LinkingDelegate';
+import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 
 @boundClass
 export class GoogleSheetsAddOnScreenDelegate {
   private eventBus: EventBus;
   private observableScreen: ObservableGoogleSheetsAddOnScreen;
   private dialogDelegate: DialogDelegate;
-  private linkingDelegate: LinkingDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     eventBus: EventBus,
     observableScreen: ObservableGoogleSheetsAddOnScreen,
     dialogDelegate: DialogDelegate,
-    linkingDelegate: LinkingDelegate,
+    navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
     this.observableScreen = observableScreen;
     this.dialogDelegate = dialogDelegate;
-    this.linkingDelegate = linkingDelegate;
+    this.navigatorDelegate = navigatorDelegate;
   }
 
-  public goToLink(link: string): void {
-    this.linkingDelegate.openLink(link);
+  public showLink(link: string, screenTitle: string): void {
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link,
+      screenTitle,
+    });
   }
 
   public getApiKey(): void {

@@ -8,18 +8,18 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
-import { PrivacyPolicyScreenIds } from '../../constants/ids/PrivacyPolicyScreenIds';
+import { BrowserScreenIds } from '../../constants/ids/BrowserScreenIds';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { useCustomTopBar } from '../../utils/useCustomTopBar';
 
-export class PrivacyPolicyScreenStyle {
+export class BrowserScreenStyle {
   public static SCREEN_BASE_STYLES_ONLY = _.merge(
     {},
     SecondaryScreenStyle.SCREEN_BASE_STYLES_ONLY,
     {
       topBar: useCustomTopBar({
-        testID: PrivacyPolicyScreenIds.TOP_BAR,
-        screenName: ScreenName.PRIVACY_POLICY_SCREEN,
+        testID: BrowserScreenIds.TOP_BAR,
+        screenName: ScreenName.BROWSER_SCREEN,
         styles: {
           light: SecondaryScreenStyle.TOP_BAR_LIGHT_STYLES,
           dark: SecondaryScreenStyle.TOP_BAR_DARK_STYLES,
@@ -42,13 +42,13 @@ export class PrivacyPolicyScreenStyle {
 
   public static SCREEN_FULL_LIGHT_STYLES = _.merge(
     {},
-    PrivacyPolicyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    PrivacyPolicyScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
+    BrowserScreenStyle.SCREEN_BASE_STYLES_ONLY,
+    BrowserScreenStyle.SCREEN_LIGHT_STYLES_ONLY,
   );
 
   public static SCREEN_FULL_DARK_STYLES = _.merge(
     {},
-    PrivacyPolicyScreenStyle.SCREEN_BASE_STYLES_ONLY,
-    PrivacyPolicyScreenStyle.SCREEN_DARK_STYLES_ONLY,
+    BrowserScreenStyle.SCREEN_BASE_STYLES_ONLY,
+    BrowserScreenStyle.SCREEN_DARK_STYLES_ONLY,
   );
 }

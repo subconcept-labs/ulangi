@@ -670,16 +670,6 @@ export interface ActionPayload {
   readonly WRITING__SAVE_RESULT_FAILED: ErrorBag;
   readonly WRITING__CLEAR_LESSON: null;
 
-  readonly FLASHCARD_PLAYER__UPLOAD: {
-    playerUrl: string;
-    setId: string;
-    languagePair: string;
-    selectedCategoryNames: undefined | string[];
-  };
-  readonly FLASHCARD_PLAYER__UPLOADING: null;
-  readonly FLASHCARD_PLAYER__UPLOAD_SUCCEEDED: { playlistId: string };
-  readonly FLASHCARD_PLAYER__UPLOAD_FAILED: ErrorBag;
-
   readonly IMAGE__PREPARE_SEARCH_IMAGES: {
     q: string;
     image_type: string;

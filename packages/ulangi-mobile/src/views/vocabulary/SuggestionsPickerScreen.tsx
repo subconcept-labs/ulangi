@@ -40,7 +40,7 @@ export interface SuggestionsPickerScreenProps {
 export class SuggestionsPickerScreen extends React.Component<
   SuggestionsPickerScreenProps
 > {
-  public get styles(): SuggestionsPickerScreenStyles {
+  private get styles(): SuggestionsPickerScreenStyles {
     return suggestionsPickerScreenResponsiveStyles.compile(
       this.props.observableScreen.screenLayout,
       this.props.themeStore.theme,
@@ -115,7 +115,7 @@ export class SuggestionsPickerScreen extends React.Component<
         }
         suggestionListState={this.props.observableScreen.suggestionListState}
         getSuggestions={this.props.screenDelegate.getSuggestions}
-        openLink={this.props.screenDelegate.openLink}
+        showLink={this.props.screenDelegate.showLink}
       />
     );
   }

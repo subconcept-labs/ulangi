@@ -376,9 +376,6 @@ export {
 export {
   ObservableQuickTutorialScreen,
 } from './observables/tip/ObservableQuickTutorialScreen';
-export {
-  ObservableFlashcardPlayerScreen,
-} from './observables/flashcard-player/ObservableFlashcardPlayerScreen';
 
 export {
   ObservableReminderSettings,
@@ -412,3 +409,6 @@ export {
 export {
   ObservableFeatureManagementScreen,
 } from './observables/learn/ObservableFeatureManagementScreen';
+export {
+  ObservableBrowserScreen,
+} from './observables/browser/ObservableBrowserScreen';

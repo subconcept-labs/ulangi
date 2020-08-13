@@ -5,30 +5,33 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { boundClass } from 'autobind-decorator';
 
 import { RemoteLogger } from '../../RemoteLogger';
-import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
+import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
 
 @boundClass
 export class SpacedRepetitionFAQScreenDelegate {
-  private linkingDelegate: LinkingDelegate;
+  private navigatorDelegate: NavigatorDelegate;
 
-  public constructor(linkingDelegate: LinkingDelegate) {
-    this.linkingDelegate = linkingDelegate;
+  public constructor(navigatorDelegate: NavigatorDelegate) {
+    this.navigatorDelegate = navigatorDelegate;
   }
 
   public showSpacedRepetitionWiki(): void {
     RemoteLogger.logEvent('open_srs_wiki_link');
-    this.linkingDelegate.openLink(
-      'https://en.wikipedia.org/wiki/Spaced_repetition',
-    );
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: 'https://en.wikipedia.org/wiki/Spaced_repetition',
+      screenTitle: 'Spaced Repetition',
+    });
   }
 
   public showLeitnerSystemWiki(): void {
     RemoteLogger.logEvent('open_leitner_wiki_link');
-    this.linkingDelegate.openLink(
-      'https://en.wikipedia.org/wiki/Leitner_system',
-    );
+    this.navigatorDelegate.showModal(ScreenName.BROWSER_SCREEN, {
+      link: 'https://en.wikipedia.org/wiki/Leitner_system',
+      screenTitle: 'Leither System',
+    });
   }
 }

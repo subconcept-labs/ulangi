@@ -56,7 +56,7 @@ export class PublicSetDetailScreen extends React.Component<
           numberOfTerms={
             this.props.observableScreen.publicSet.vocabularyList.length
           }
-          openLink={this.props.screenDelegate.openLink}
+          showLink={this.props.screenDelegate.showLink}
         />
         <PublicVocabularyList
           testID={PublicSetDetailScreenIds.PUBLIC_VOCABULARY_LIST}
@@ -70,7 +70,7 @@ export class PublicSetDetailScreen extends React.Component<
           showPublicVocabularyActionMenu={
             this.props.screenDelegate.showPublicVocabularyActionMenu
           }
-          openLink={this.props.screenDelegate.openLink}
+          showLink={this.props.screenDelegate.showLink}
         />
       </Screen>
     );

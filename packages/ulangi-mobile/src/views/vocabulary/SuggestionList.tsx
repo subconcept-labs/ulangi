@@ -22,7 +22,7 @@ export interface SuggestionListProps {
   label: undefined | string;
   attributions: undefined | Attribution[];
   suggestions: ObservableSuggestion[];
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   styles?: {
     light: SuggestionListStyles;
     dark: SuggestionListStyles;
@@ -86,7 +86,10 @@ export class SuggestionList extends React.Component<SuggestionListProps> {
                 <DefaultText
                   onPress={(): void => {
                     if (typeof attribution.sourceLink !== 'undefined') {
-                      this.props.openLink(attribution.sourceLink);
+                      this.props.showLink(
+                        attribution.sourceLink,
+                        attribution.sourceName,
+                      );
                     }
                   }}
                   style={
@@ -101,7 +104,10 @@ export class SuggestionList extends React.Component<SuggestionListProps> {
                       style={this.styles.highlighted_text}
                       onPress={(): void => {
                         if (typeof attribution.licenseLink !== 'undefined') {
-                          this.props.openLink(attribution.licenseLink);
+                          this.props.showLink(
+                            attribution.licenseLink,
+                            'License',
+                          );
                         }
                       }}>
                       {attribution.license}

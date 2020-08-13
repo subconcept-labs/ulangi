@@ -32,7 +32,7 @@ export interface DictionarySectionProps {
   dictionaryEntryState: ObservableDictionaryEntryState;
   getDictionaryEntry: () => void;
   onPick: (definition: ObservableDictionaryDefinition) => void;
-  openLink: (link: string) => void;
+  showLink: (link: string, screenTitle: string) => void;
   styles?: {
     light: DictionarySectionStyles;
     dark: DictionarySectionStyles;
@@ -79,7 +79,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
               attributions={dictionaryEntry.attributions}
               definitions={dictionaryEntry.definitions}
               onPick={this.props.onPick}
-              openLink={this.props.openLink}
+              showLink={this.props.showLink}
             />
           ) : null}
           {traditionalEntry !== null ? (
@@ -91,7 +91,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
               attributions={traditionalEntry.attributions}
               definitions={traditionalEntry.definitions}
               onPick={this.props.onPick}
-              openLink={this.props.openLink}
+              showLink={this.props.showLink}
             />
           ) : null}
           {masculineEntry !== null ? (
@@ -103,7 +103,7 @@ export class DictionarySection extends React.Component<DictionarySectionProps> {
               attributions={masculineEntry.attributions}
               definitions={masculineEntry.definitions}
               onPick={this.props.onPick}
-              openLink={this.props.openLink}
+              showLink={this.props.showLink}
             />
           ) : null}
         </React.Fragment>

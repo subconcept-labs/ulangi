@@ -260,7 +260,12 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           leftText="Dictionary Functions"
           rightText=""
           showArrow={true}
-          onPress={this.props.screenDelegate.goToDictionaryFunctionsWebsite}
+          onPress={(): void =>
+            this.props.screenDelegate.showLink(
+              'https://dictionaryfx.com',
+              'dictionaryfx.com',
+            )
+          }
           description="Extract dictionary data easily using Google Sheets formulas and import them to your favorite learning apps."
         />
       </SectionGroup>
