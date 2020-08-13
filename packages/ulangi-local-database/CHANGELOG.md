@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.16.0](https://github.com/ulangi/ulangi/compare/v3.15.1...v3.16.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* atom and reflex games require learned terms ([341eb28](https://github.com/ulangi/ulangi/commit/341eb28))
+
+
+### Features
+
+* add more vocabulary sort types ([03f202f](https://github.com/ulangi/ulangi/commit/03f202f))
+
+
+
+
+
 ## [3.15.1](https://github.com/ulangi/ulangi/compare/v3.15.0...v3.15.1) (2020-08-11)
 
 **Note:** Version bump only for package @ulangi/ulangi-local-database

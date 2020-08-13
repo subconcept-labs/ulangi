@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.16.0](https://github.com/ulangi/ulangi/compare/v3.15.1...v3.16.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* add tip on how to add images ([3ca4283](https://github.com/ulangi/ulangi/commit/3ca4283))
+* atom and reflex games require learned terms ([341eb28](https://github.com/ulangi/ulangi/commit/341eb28))
+* dismiss keyboard view ([aa5fd86](https://github.com/ulangi/ulangi/commit/aa5fd86))
+* update icons for tablet screens ([695703f](https://github.com/ulangi/ulangi/commit/695703f))
+* use constant letter spacing ([40c9378](https://github.com/ulangi/ulangi/commit/40c9378))
+
+
+### Features
+
+* add more vocabulary sort types ([03f202f](https://github.com/ulangi/ulangi/commit/03f202f))
+* allow to select category before review, playing ([2cf7e76](https://github.com/ulangi/ulangi/commit/2cf7e76))
+
+
+
+
+
 ## [3.15.1](https://github.com/ulangi/ulangi/compare/v3.15.0...v3.15.1) (2020-08-11)
 
 
