@@ -238,9 +238,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               undefined
@@ -269,9 +269,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               ['category1'],
               undefined
@@ -302,9 +302,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               ['Uncategorized'],
               undefined
@@ -335,9 +335,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               ['category1']
@@ -368,9 +368,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               ['Uncategorized']
@@ -401,9 +401,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               undefined
@@ -432,9 +432,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               ['category1'],
               undefined
@@ -465,9 +465,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               ['Uncategorized'],
               undefined
@@ -498,9 +498,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               undefined,
               ['category1']
@@ -531,9 +531,9 @@ describe('QuizMultipleChoiceModel', (): void => {
             const result = await quizMultipleChoiceModel.getVocabularyForMultipleChoiceQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               undefined,
               ['Uncategorized']

@@ -248,6 +248,7 @@ export class ReflexScreenDelegate {
         ),
       ),
     );
+
     this.questionIterator.shuffleQueue();
   }
 

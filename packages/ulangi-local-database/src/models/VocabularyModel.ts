@@ -26,6 +26,7 @@ import { DatabaseEventBus } from '../event-buses/DatabaseEventBus';
 import { VocabularyRow } from '../interfaces/VocabularyRow';
 import { VocabularyRowPreparer } from '../preparers/VocabularyRowPreparer';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
+import { addLearnedCondition } from '../utils/addLearnedCondition';
 import { addVocabularySorting } from '../utils/addVocabularySorting';
 import { DefinitionModel } from './DefinitionModel';
 import { DirtyVocabularyModel } from './DirtyVocabularyModel';
@@ -182,6 +183,7 @@ export class VocabularyModel {
     categoryNames: undefined | string[],
     startRange: number,
     endRange: number,
+    learnedOnly: boolean,
     stripUnknown: boolean
   ): Promise<null | {
     vocabularyLocalIdPair: [Vocabulary, number];
@@ -193,6 +195,14 @@ export class VocabularyModel {
             .select()
             .field('v.*')
             .from(TableName.VOCABULARY, 'v');
+
+          if (learnedOnly === true) {
+            query = query.left_join(
+              TableName.VOCABULARY_WRITING,
+              'w',
+              'v.vocabularyId = w.vocabularyId'
+            );
+          }
 
           if (typeof categoryNames !== 'undefined') {
             query = query.left_join(
@@ -209,6 +219,10 @@ export class VocabularyModel {
             } else {
               query = query.where('c.categoryName IN ?', categoryNames);
             }
+          }
+
+          if (learnedOnly === true) {
+            query = addLearnedCondition(query);
           }
 
           query = query

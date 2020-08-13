@@ -419,17 +419,15 @@
   },
 
   "reflex": {
-    "minToPlay": 2,
-    "fetchLimit": 8,
-    "fetchTriggerThreshold": 4,
+    "fetchLimit": 10,
+    "fetchTriggerThreshold": 5,
     "backgroundColor": "#00b8a9",
     "timePerQuestion": 5000
   },
 
   "atom": {
-    "minToPlay": 1,
-    "fetchLimit": 8,
-    "fetchTriggerThreshold": 4,
+    "fetchLimit": 10,
+    "fetchTriggerThreshold": 5,
     "minCharacters": 5,
     "maxCharacters": 10,
     "initialMoveCount": 10,

@@ -205,8 +205,8 @@ export class QuizScreenDelegate {
 
     const message =
       vocabularyPool === 'learned'
-        ? `A minimum of ${minRequired} learned terms are required. Based on the settings, the quiz test only terms that you learned.`
-        : `A minimum of ${minRequired} terms are required. Please add more terms.`;
+        ? `The quiz only tests what you learned. It requires at least ${minRequired} term(s) you learned from Spaced repetition or Writing.`
+        : `The quiz requires a minimum of ${minRequired} vocabulary term(s).`;
 
     this.dialogDelegate.show({
       testID: LightBoxDialogIds.FAILED_DIALOG,

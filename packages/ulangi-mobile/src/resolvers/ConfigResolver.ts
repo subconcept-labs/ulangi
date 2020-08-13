@@ -234,7 +234,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     reflex: {
-      minToPlay: Joi.number(),
       fetchLimit: Joi.number(),
       fetchTriggerThreshold: Joi.number(),
       backgroundColor: Joi.string(),
@@ -242,7 +241,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
     },
 
     atom: {
-      minToPlay: Joi.number(),
       fetchLimit: Joi.number(),
       fetchTriggerThreshold: Joi.number(),
       minCharacters: Joi.number(),
@@ -257,15 +255,6 @@ export class ConfigResolver extends AbstractResolver<Config> {
       outerShellDiameter: Joi.number(),
       originSize: Joi.number(),
       bottomOffset: Joi.number(),
-    },
-
-    flashcardPlayer: {
-      minToPlay: Joi.number(),
-      uploadLimit: Joi.number(),
-      backgroundColor: Joi.string(),
-      primaryColor: Joi.string(),
-      secondaryColor: Joi.string(),
-      textColor: Joi.string(),
     },
 
     audio: {

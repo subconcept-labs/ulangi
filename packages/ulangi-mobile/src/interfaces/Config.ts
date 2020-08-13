@@ -228,7 +228,6 @@ export interface Config {
   };
 
   readonly atom: {
-    readonly minToPlay: number;
     readonly fetchLimit: number;
     readonly fetchTriggerThreshold: number;
     readonly minCharacters: number;
@@ -246,20 +245,10 @@ export interface Config {
   };
 
   readonly reflex: {
-    readonly minToPlay: number;
     readonly fetchLimit: number;
     readonly fetchTriggerThreshold: number;
     readonly backgroundColor: string;
     readonly timePerQuestion: number;
-  };
-
-  readonly flashcardPlayer: {
-    readonly minToPlay: number;
-    readonly uploadLimit: number;
-    readonly backgroundColor: string;
-    readonly primaryColor: string;
-    readonly secondaryColor: string;
-    readonly textColor: string;
   };
 
   readonly audio: {

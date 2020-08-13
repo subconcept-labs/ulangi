@@ -50,18 +50,11 @@ export interface SagaConfig {
   };
 
   readonly atom: {
-    readonly minToPlay: number;
     readonly fetchLimit: number;
   };
 
   readonly reflex: {
-    readonly minToPlay: number;
     readonly fetchLimit: number;
-  };
-
-  readonly flashcardPlayer: {
-    readonly minToPlay: number;
-    readonly uploadLimit: number;
   };
 
   readonly quiz: {

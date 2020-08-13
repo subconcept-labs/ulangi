@@ -154,7 +154,7 @@ export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemRespon
   }
 
   public darkStyles(): Partial<DefinitionItemStyles> {
-    return _.merge({}, super.lightStyles(), {
+    return _.merge({}, super.darkStyles(), {
       item_container: {
         borderTopWidth: 1,
         borderTopColor: config.styles.dark.secondaryBackgroundColor,

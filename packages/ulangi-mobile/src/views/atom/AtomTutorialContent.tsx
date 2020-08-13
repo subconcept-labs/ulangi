@@ -52,8 +52,8 @@ export class AtomTutorialContent extends React.Component<
     {
       content: (
         <DefaultText style={this.styles.content}>
-          In this game, you find answer by connecting characters in clockwise
-          fashion. Assuming that the answer is{' '}
+          In this game, you find the answer by connecting characters in
+          clockwise fashion. Assuming that the answer is{' '}
           <DefaultText key="answer" style={this.styles.highlighted}>
             ATOM
           </DefaultText>

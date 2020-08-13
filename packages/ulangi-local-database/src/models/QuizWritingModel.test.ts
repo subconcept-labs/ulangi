@@ -236,9 +236,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               undefined
@@ -269,9 +269,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               ['category1'],
               undefined
@@ -304,9 +304,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               ['Uncategorized'],
               undefined
@@ -339,9 +339,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               ['category1']
@@ -374,9 +374,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'learned',
               startRange,
               endRange,
+              true,
               true,
               undefined,
               ['Uncategorized']
@@ -409,9 +409,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               undefined,
               undefined
@@ -441,9 +441,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               ['category1'],
               undefined
@@ -475,9 +475,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               ['Uncategorized'],
               undefined
@@ -509,9 +509,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               undefined,
               ['category1']
@@ -543,9 +543,9 @@ describe('QuizWritingModel', (): void => {
             const result = await quizWritingModel.getVocabularyForWritingQuiz(
               userDb,
               setList[0].setId,
-              'active',
               startRange,
               endRange,
+              false,
               true,
               undefined,
               ['Uncategorized']

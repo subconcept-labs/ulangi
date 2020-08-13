@@ -13,6 +13,7 @@ import * as squel from 'squel';
 import { TableName } from '../enums/TableName';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
 import { addCategoryConditions } from '../utils/addCategoryConditions';
+import { addLearnedCondition } from '../utils/addLearnedCondition';
 import { VocabularyModel } from './VocabularyModel';
 
 export class QuizWritingModel {
@@ -27,9 +28,9 @@ export class QuizWritingModel {
   public getVocabularyForWritingQuiz(
     db: SQLiteDatabase,
     setId: string,
-    vocabularyPool: 'learned' | 'active',
     startRange: number,
     endRange: number,
+    learnedOnly: boolean,
     stripUnknown: boolean,
     selectedCategoryNames: undefined | string[],
     excludedCategoryNames: undefined | string[]
@@ -39,49 +40,47 @@ export class QuizWritingModel {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
-          let buildingQuery = squel
+          let query = squel
             .select()
             .field('v.*')
-            .from(TableName.VOCABULARY, 'v')
-            .left_join(
+            .from(TableName.VOCABULARY, 'v');
+
+          if (learnedOnly === true) {
+            query = query.left_join(
               TableName.VOCABULARY_WRITING,
               'w',
               'v.vocabularyId = w.vocabularyId'
             );
+          }
 
           if (
             typeof selectedCategoryNames !== 'undefined' ||
             typeof excludedCategoryNames !== 'undefined'
           ) {
-            buildingQuery = addCategoryConditions(
-              buildingQuery,
+            query = addCategoryConditions(
+              query,
               selectedCategoryNames,
               excludedCategoryNames
             );
           }
 
-          if (vocabularyPool === 'active') {
-            buildingQuery = buildingQuery.where(
-              'w.vocabularyId IS NULL OR w.disabled = ?',
-              0
-            );
-          } else {
-            buildingQuery = buildingQuery.where(
-              'w.level >= ? AND w.disabled = ?',
-              1,
-              0
-            );
+          if (learnedOnly === true) {
+            query = addLearnedCondition(query);
           }
 
-          const query = buildingQuery
+          query = query
             .where('v.setId = ?', setId)
             .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
             .where('v.vocabularyLocalId BETWEEN ? AND ?', startRange, endRange)
             .order('v.vocabularyLocalId')
-            .limit(1)
-            .toParam();
+            .limit(1);
 
-          const result = await db.executeSql(query.text, query.values);
+          const queryParam = query.toParam();
+
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
+          );
           if (result.rows.length >= 1) {
             const item = result.rows[0];
 

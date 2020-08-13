@@ -103,9 +103,9 @@ export class QuizSaga extends ProtectedSaga {
                     [this.quizWritingModel, 'getVocabularyForWritingQuiz'],
                     this.userDb,
                     setId,
-                    vocabularyPool,
                     startRange,
                     endRange,
+                    vocabularyPool === 'learned',
                     true,
                     selectedCategoryNames,
                     undefined
@@ -257,9 +257,9 @@ export class QuizSaga extends ProtectedSaga {
                     ],
                     this.userDb,
                     setId,
-                    vocabularyPool,
                     startRange,
                     endRange,
+                    vocabularyPool === 'learned',
                     true,
                     selectedCategoryNames,
                     undefined

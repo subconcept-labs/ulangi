@@ -5,7 +5,6 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { assertExists } from '@ulangi/assert';
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ErrorCode, VocabularyStatus } from '@ulangi/ulangi-common/enums';
@@ -45,25 +44,21 @@ export class ReflexSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearFetchVocabulary],
-      config.reflex.minToPlay,
       config.reflex.fetchLimit
     );
   }
 
   public *allowPrepareAndClearFetchVocabulary(
-    minToPlay: number,
     fetchLimit: number
   ): IterableIterator<any> {
     this.fetchTask = yield fork(
       [this, this.allowPrepareFetchVocabulary],
-      minToPlay,
       fetchLimit
     );
-    yield fork([this, this.allowClearFetchVocabulary], minToPlay, fetchLimit);
+    yield fork([this, this.allowClearFetchVocabulary], fetchLimit);
   }
 
   private *allowClearFetchVocabulary(
-    minToPlay: number,
     fetchLimit: number
   ): IterableIterator<any> {
     while (true) {
@@ -74,14 +69,12 @@ export class ReflexSaga extends ProtectedSaga {
 
       this.fetchTask = yield fork(
         [this, this.allowPrepareFetchVocabulary],
-        minToPlay,
         fetchLimit
       );
     }
   }
 
   private *allowPrepareFetchVocabulary(
-    minToPlay: number,
     fetchLimit: number
   ): IterableIterator<any> {
     try {
@@ -105,8 +98,7 @@ export class ReflexSaga extends ProtectedSaga {
         randomRangeIterator.setInitialRange(initialRange);
 
         yield fork(
-          [this, this.fetchVocabulary],
-          minToPlay,
+          [this, this.allowFetchVocabulary],
           fetchLimit,
           setId,
           selectedCategoryNames,
@@ -132,14 +124,15 @@ export class ReflexSaga extends ProtectedSaga {
     }
   }
 
-  private *fetchVocabulary(
-    minToPlay: number,
+  private *allowFetchVocabulary(
     fetchLimit: number,
     setId: string,
     selectedCategoryNames: undefined | string[],
     randomRangeIterator: RandomRangeIterator
   ): IterableIterator<any> {
     let done = false;
+    let counter = 0;
+
     while (done === false) {
       yield take(ActionType.REFLEX__FETCH_VOCABULARY);
 
@@ -147,95 +140,26 @@ export class ReflexSaga extends ProtectedSaga {
         yield put(createAction(ActionType.REFLEX__FETCHING_VOCABULARY, null));
 
         let vocabularyList: Vocabulary[] = [];
-        let counter = 0;
         while (vocabularyList.length < fetchLimit && done === false) {
           const remaining = fetchLimit - vocabularyList.length;
-          const result = randomRangeIterator.next(remaining);
-          const ranges = result.value;
 
-          const results: PromiseType<
-            ReturnType<VocabularyModel['getVocabularyBetweenRange']>
-          >[] = yield all(
-            ranges.map(
-              ([startRange, endRange]): CallEffect => {
-                return call(
-                  [
-                    this.vocabularyModel,
-                    this.vocabularyModel.getVocabularyBetweenRange,
-                  ],
-                  this.userDb,
-                  setId,
-                  VocabularyStatus.ACTIVE,
-                  selectedCategoryNames,
-                  startRange,
-                  endRange,
-                  true
-                );
-              }
-            )
+          const newList = yield call(
+            [this, this.fetchVocabulary],
+            remaining,
+            setId,
+            selectedCategoryNames,
+            randomRangeIterator
           );
 
-          // Filter null result
-          const filtered = results.filter(
-            (
-              result
-            ): result is {
-              vocabularyLocalIdPair: [Vocabulary, number];
-            } => result !== null
-          );
-
-          // Extract local ids
-          const fetchedLocalIds = filtered.map(
-            (result): number => {
-              return assertExists(result.vocabularyLocalIdPair[1]);
-            }
-          );
-
-          fetchedLocalIds.forEach(
-            (id): void => {
-              randomRangeIterator.removeOrShortenRangeFromLeft(id);
-            }
-          );
-
-          // Filter out ranges that do not return any vocabulary
-          const emptyRanges = ranges.filter(
-            (range): boolean => {
-              return (
-                fetchedLocalIds.filter(
-                  (id): boolean => id >= range[0] && id <= range[1]
-                ).length === 0
-              );
-            }
-          );
-
-          emptyRanges.forEach(
-            (range): void => {
-              randomRangeIterator.removeExactRange(range);
-            }
-          );
-
-          // Filter out vocabulary that does not have any definitions
-          vocabularyList = vocabularyList.concat(
-            filtered
-              .map(
-                (result): Vocabulary => {
-                  return result.vocabularyLocalIdPair[0];
-                }
-              )
-              .filter(
-                (vocabulary): boolean => {
-                  return vocabulary.definitions.length !== 0;
-                }
-              )
-          );
+          vocabularyList = vocabularyList.concat(newList);
 
           vocabularyList = _.shuffle(vocabularyList);
 
           done = randomRangeIterator.isDone();
-          counter += vocabularyList.length;
+          counter += newList.length;
         }
 
-        if (counter < minToPlay) {
+        if (counter < fetchLimit) {
           throw new Error(ErrorCode.REFLEX__INSUFFICIENT_VOCABULARY);
         } else {
           yield put(
@@ -254,5 +178,87 @@ export class ReflexSaga extends ProtectedSaga {
         );
       }
     }
+  }
+
+  private *fetchVocabulary(
+    limit: number,
+    setId: string,
+    selectedCategoryNames: undefined | string[],
+    randomRangeIterator: RandomRangeIterator
+  ): IterableIterator<any> {
+    const result = randomRangeIterator.next(limit);
+    const ranges = result.value;
+
+    const results: PromiseType<
+      ReturnType<VocabularyModel['getVocabularyBetweenRange']>
+    >[] = yield all(
+      ranges.map(
+        ([startRange, endRange]): CallEffect => {
+          return call(
+            [this.vocabularyModel, 'getVocabularyBetweenRange'],
+            this.userDb,
+            setId,
+            VocabularyStatus.ACTIVE,
+            selectedCategoryNames,
+            startRange,
+            endRange,
+            true,
+            true
+          );
+        }
+      )
+    );
+
+    // Filter null result
+    const filtered = results.filter(
+      (
+        result
+      ): result is {
+        vocabularyLocalIdPair: [Vocabulary, number];
+      } => result !== null
+    );
+
+    // Extract local ids
+    const fetchedLocalIds = filtered.map(
+      (result): number => {
+        return result.vocabularyLocalIdPair[1];
+      }
+    );
+
+    fetchedLocalIds.forEach(
+      (id): void => {
+        randomRangeIterator.removeOrShortenRangeFromLeft(id);
+      }
+    );
+
+    // Filter out ranges that do not return any vocabulary
+    const emptyRanges = ranges.filter(
+      (range): boolean => {
+        return (
+          fetchedLocalIds.filter(
+            (id): boolean => id >= range[0] && id <= range[1]
+          ).length === 0
+        );
+      }
+    );
+
+    emptyRanges.forEach(
+      (range): void => {
+        randomRangeIterator.removeExactRange(range);
+      }
+    );
+
+    // Filter out vocabulary that does not have any definitions
+    return filtered
+      .map(
+        (result): Vocabulary => {
+          return result.vocabularyLocalIdPair[0];
+        }
+      )
+      .filter(
+        (vocabulary): boolean => {
+          return vocabulary.definitions.length !== 0;
+        }
+      );
   }
 }

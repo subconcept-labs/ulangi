@@ -65,15 +65,15 @@ export class ErrorConverter {
         break;
 
       case ErrorCode.ATOM__INSUFFICIENT_VOCABULARY:
-        message = `A minimum of ${
-          config.atom.minToPlay
-        } terms are needed to start the game. Please add more terms.`;
+        message = `This game requires at least ${
+          config.atom.fetchLimit
+        } vocabulary terms that you learned (from Spaced repetition) or Writing to play.`;
         break;
 
       case ErrorCode.REFLEX__INSUFFICIENT_VOCABULARY:
-        message = `A minimum of ${
-          config.reflex.minToPlay
-        } terms are needed to start the game. Please add more terms.`;
+        message = `This game requires at least ${
+          config.reflex.fetchLimit
+        } vocabulary terms that you learned (from Spaced repetition or Writing) to play.`;
         break;
 
       case ErrorCode.IAP__INVALID_RECEIPT:

@@ -44,27 +44,21 @@ export class AtomSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearFetchVocabulary],
-      config.atom.minToPlay,
       config.atom.fetchLimit
     );
   }
 
   public *allowPrepareAndClearFetchVocabulary(
-    minToPlay: number,
     limit: number
   ): IterableIterator<any> {
     this.fetchTask = yield fork(
       [this, this.allowPrepareFetchVocabulary],
-      minToPlay,
       limit
     );
-    yield fork([this, this.allowClearFetchVocabulary], minToPlay, limit);
+    yield fork([this, this.allowClearFetchVocabulary], limit);
   }
 
-  private *allowClearFetchVocabulary(
-    minToPlay: number,
-    limit: number
-  ): IterableIterator<any> {
+  private *allowClearFetchVocabulary(limit: number): IterableIterator<any> {
     while (true) {
       yield take(ActionType.ATOM__CLEAR_FETCH_VOCABULARY);
       if (typeof this.fetchTask !== 'undefined') {
@@ -73,16 +67,12 @@ export class AtomSaga extends ProtectedSaga {
 
       this.fetchTask = yield fork(
         [this, this.allowPrepareFetchVocabulary],
-        minToPlay,
         limit
       );
     }
   }
 
-  private *allowPrepareFetchVocabulary(
-    minToPlay: number,
-    limit: number
-  ): IterableIterator<any> {
+  private *allowPrepareFetchVocabulary(limit: number): IterableIterator<any> {
     try {
       const action: Action<
         ActionType.ATOM__PREPARE_FETCH_VOCABULARY
@@ -108,7 +98,6 @@ export class AtomSaga extends ProtectedSaga {
 
         yield fork(
           [this, this.allowFetchVocabulary],
-          minToPlay,
           limit,
           setId,
           selectedCategoryNames,
@@ -135,106 +124,42 @@ export class AtomSaga extends ProtectedSaga {
   }
 
   private *allowFetchVocabulary(
-    minToPlay: number,
     limit: number,
     setId: string,
     selectedCategoryNames: undefined | string[],
     randomRangeIterator: RandomRangeIterator
   ): IterableIterator<any> {
     let done = false;
-    while (done === false) {
-      yield take(ActionType.ATOM__FETCH_VOCABULARY);
+    let counter = 0;
 
+    while (done === false) {
       try {
+        yield take(ActionType.ATOM__FETCH_VOCABULARY);
+
         yield put(createAction(ActionType.ATOM__FETCHING_VOCABULARY, null));
 
         let vocabularyList: Vocabulary[] = [];
-        let counter = 0;
+
         while (vocabularyList.length < limit && done === false) {
           const remaining = limit - vocabularyList.length;
-          const result = randomRangeIterator.next(remaining);
-          const ranges = result.value;
 
-          const results: PromiseType<
-            ReturnType<VocabularyModel['getVocabularyBetweenRange']>
-          >[] = yield all(
-            ranges.map(
-              ([startRange, endRange]): CallEffect => {
-                return call(
-                  [this.vocabularyModel, 'getVocabularyBetweenRange'],
-                  this.userDb,
-                  setId,
-                  VocabularyStatus.ACTIVE,
-                  selectedCategoryNames,
-                  startRange,
-                  endRange,
-                  true
-                );
-              }
-            )
+          const newList = yield call(
+            [this, this.fetchVocabulary],
+            remaining,
+            setId,
+            selectedCategoryNames,
+            randomRangeIterator
           );
 
-          // Filter null result
-          const filtered = results.filter(
-            (
-              result
-            ): result is {
-              vocabularyLocalIdPair: [Vocabulary, number];
-            } => result !== null
-          );
-
-          // Extract local ids
-          const fetchedLocalIds = filtered.map(
-            (result): number => {
-              return result.vocabularyLocalIdPair[1];
-            }
-          );
-
-          fetchedLocalIds.forEach(
-            (id): void => {
-              randomRangeIterator.removeOrShortenRangeFromLeft(id);
-            }
-          );
-
-          // Filter out ranges that do not return any vocabulary
-          const emptyRanges = ranges.filter(
-            (range): boolean => {
-              return (
-                fetchedLocalIds.filter(
-                  (id): boolean => id >= range[0] && id <= range[1]
-                ).length === 0
-              );
-            }
-          );
-
-          emptyRanges.forEach(
-            (range): void => {
-              randomRangeIterator.removeExactRange(range);
-            }
-          );
-
-          // Filter out vocabulary that does not have any definitions
-          vocabularyList = vocabularyList.concat(
-            filtered
-              .map(
-                (result): Vocabulary => {
-                  return result.vocabularyLocalIdPair[0];
-                }
-              )
-              .filter(
-                (vocabulary): boolean => {
-                  return vocabulary.definitions.length !== 0;
-                }
-              )
-          );
-
+          vocabularyList = vocabularyList.concat(newList);
           vocabularyList = _.shuffle(vocabularyList);
 
           done = randomRangeIterator.isDone();
-          counter += vocabularyList.length;
+
+          counter += newList.length;
         }
 
-        if (counter < minToPlay) {
+        if (counter < limit) {
           throw new Error(ErrorCode.ATOM__INSUFFICIENT_VOCABULARY);
         } else {
           yield put(
@@ -253,5 +178,87 @@ export class AtomSaga extends ProtectedSaga {
         );
       }
     }
+  }
+
+  private *fetchVocabulary(
+    limit: number,
+    setId: string,
+    selectedCategoryNames: undefined | string[],
+    randomRangeIterator: RandomRangeIterator
+  ): IterableIterator<any> {
+    const result = randomRangeIterator.next(limit);
+    const ranges = result.value;
+
+    const results: PromiseType<
+      ReturnType<VocabularyModel['getVocabularyBetweenRange']>
+    >[] = yield all(
+      ranges.map(
+        ([startRange, endRange]): CallEffect => {
+          return call(
+            [this.vocabularyModel, 'getVocabularyBetweenRange'],
+            this.userDb,
+            setId,
+            VocabularyStatus.ACTIVE,
+            selectedCategoryNames,
+            startRange,
+            endRange,
+            true,
+            true
+          );
+        }
+      )
+    );
+
+    // Filter null result
+    const filtered = results.filter(
+      (
+        result
+      ): result is {
+        vocabularyLocalIdPair: [Vocabulary, number];
+      } => result !== null
+    );
+
+    // Extract local ids
+    const fetchedLocalIds = filtered.map(
+      (result): number => {
+        return result.vocabularyLocalIdPair[1];
+      }
+    );
+
+    fetchedLocalIds.forEach(
+      (id): void => {
+        randomRangeIterator.removeOrShortenRangeFromLeft(id);
+      }
+    );
+
+    // Filter out ranges that do not return any vocabulary
+    const emptyRanges = ranges.filter(
+      (range): boolean => {
+        return (
+          fetchedLocalIds.filter(
+            (id): boolean => id >= range[0] && id <= range[1]
+          ).length === 0
+        );
+      }
+    );
+
+    emptyRanges.forEach(
+      (range): void => {
+        randomRangeIterator.removeExactRange(range);
+      }
+    );
+
+    // Filter out vocabulary that does not have any definitions
+    return filtered
+      .map(
+        (result): Vocabulary => {
+          return result.vocabularyLocalIdPair[0];
+        }
+      )
+      .filter(
+        (vocabulary): boolean => {
+          return vocabulary.definitions.length !== 0;
+        }
+      );
   }
 }
