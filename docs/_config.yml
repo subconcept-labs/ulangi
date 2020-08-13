@@ -32,6 +32,7 @@ footer_content: "Copyright &copy; 2019 Minh Loi. All rights reserved."
 aux_links:
   "GitHub":
     - "https://github.com/ulangi/ulangi"
+color_scheme: ulangi
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
