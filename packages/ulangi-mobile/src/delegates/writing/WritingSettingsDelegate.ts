@@ -7,7 +7,7 @@
 
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { SetExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ReviewPriority, SetExtraDataName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
@@ -30,6 +30,7 @@ export class WritingSettingsDelegate {
     feedbackButtons: 3 | 4 | 5;
     autoplayAudio: boolean;
     autoShowKeyboard: boolean;
+    reviewPriority: ReviewPriority;
   } {
     const initialInterval =
       typeof this.setStore.existingCurrentSet.writingInitialInterval !==
@@ -60,12 +61,19 @@ export class WritingSettingsDelegate {
         ? this.setStore.existingCurrentSet.writingAutoShowKeyboard
         : config.writing.defaultAutoShowKeyboard;
 
+    const reviewPriority =
+      typeof this.setStore.existingCurrentSet.writingReviewPriority !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingReviewPriority
+        : config.writing.defaultReviewPriority;
+
     return {
       initialInterval,
       limit,
       feedbackButtons,
       autoplayAudio,
       autoShowKeyboard,
+      reviewPriority,
     };
   }
 
@@ -76,6 +84,7 @@ export class WritingSettingsDelegate {
       feedbackButtons: 3 | 4 | 5;
       autoplayAudio: boolean;
       autoShowKeyboard: boolean;
+      reviewPriority: ReviewPriority;
     },
     callback: {
       onSaving: () => void;
@@ -122,6 +131,13 @@ export class WritingSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.WRITING_AUTO_SHOW_KEYBOARD,
         dataValue: newSettings.autoShowKeyboard,
+      });
+    }
+
+    if (originalSettings.reviewPriority !== newSettings.reviewPriority) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_REVIEW_PRIORITY,
+        dataValue: newSettings.reviewPriority,
       });
     }
 

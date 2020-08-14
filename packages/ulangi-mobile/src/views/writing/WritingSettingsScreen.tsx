@@ -5,11 +5,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize } from '@ulangi/ulangi-common/enums';
+import { ButtonSize, ReviewPriority } from '@ulangi/ulangi-common/enums';
 import {
   ObservableThemeStore,
   ObservableWritingSettingsScreen,
 } from '@ulangi/ulangi-observable';
+import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { ScrollView } from 'react-native';
@@ -192,6 +193,33 @@ export class WritingSettingsScreen extends React.Component<
           description={this.renderAutoShowKeyboardDescription()}
           styles={sectionRowResponsiveStyles}
         />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Review Priority"
+          customRight={
+            <DefaultButton
+              testID={WritingSettingsScreenIds.REVIEW_PRIORITY_BTN}
+              text={this.props.observableScreen.selectedReviewPriority}
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showReviewPriorityMenu(
+                  this.getReviewPriorityPairs(),
+                  this.props.observableScreen.selectedReviewPriority,
+                  (reviewPriority): void => {
+                    this.props.observableScreen.selectedReviewPriority = reviewPriority;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderReviewPriorityDescription()}
+          styles={sectionRowResponsiveStyles}
+        />
       </SectionGroup>
     );
   }
@@ -302,6 +330,48 @@ export class WritingSettingsScreen extends React.Component<
     );
   }
 
+  private renderReviewPriorityDescription(): React.ReactElement<any> {
+    let description: string | Element = '';
+    switch (this.props.observableScreen.selectedReviewPriority) {
+      case ReviewPriority.DUE_TERMS_FIRST:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>
+              Due terms first:{' '}
+            </DefaultText>
+            <DefaultText>Prioritize due terms over new ones.</DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewPriority.NEW_TERMS_FIRST:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>
+              New terms first:{' '}
+            </DefaultText>
+            <DefaultText>Prioritize new terms over due ones.</DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewPriority.NO_PRIORITY:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>No priority: </DefaultText>
+            <DefaultText>
+              Due and new terms will be reviewed equally.
+            </DefaultText>
+          </DefaultText>
+        );
+        break;
+    }
+
+    return (
+      <DefaultText style={this.styles.description}>{description}</DefaultText>
+    );
+  }
+
   private getLimitValuePairs(): readonly [number, string][] {
     return config.writing.selectableLimits.map(function(
       limit,
@@ -332,5 +402,19 @@ export class WritingSettingsScreen extends React.Component<
 
   private getAutoShowKeyboardValuePairs(): readonly [boolean, string][] {
     return [[true, 'Yes'], [false, 'No']];
+  }
+
+  private getReviewPriorityPairs(): readonly [
+    ReviewPriority,
+    ReviewPriority
+  ][] {
+    return _.values(ReviewPriority).map(function(
+      reviewPriority,
+    ): [ReviewPriority, ReviewPriority] {
+      return [
+        reviewPriority as ReviewPriority,
+        reviewPriority as ReviewPriority,
+      ];
+    });
   }
 }

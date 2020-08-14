@@ -4,12 +4,13 @@
  * This file is part of Ulangi which is released under GPL v3.0.
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
-import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
+import { ReviewPriority, ReviewStrategy } from '@ulangi/ulangi-common/enums';
 
 export const SpacedRepetitionSettingsScreenIds = {
   SCREEN: 'SPACED_REPETITION_SETTINGS_SCREEN',
   TOP_BAR: 'SPACED_REPETITION_SETTINGS_TOP_BAR',
   REVIEW_STRATEGY_BTN: 'REVIEW_STRATEGY_BTN',
+  REVIEW_PRIORITY_BTN: 'REVIEW_PRIORITY_BTN',
   LIMIT_BTN: 'LIMIT_BTN',
   FEEDBACK_BUTTONS_BTN: 'FEEDBACK_BUTTONS_BTN',
   INITIAL_INTERVAL_BTN: 'INITIAL_INTERVAL_BTN',
@@ -18,6 +19,10 @@ export const SpacedRepetitionSettingsScreenIds = {
     reviewStrategy: ReviewStrategy,
   ): string =>
     'SELECT_REVIEW_STRATEGY_BTN_BY_REVIEW_STRATEGY_' + reviewStrategy,
+  SELECT_REVIEW_PRIORITY_BTN_BY_REVIEW_PRIORITY: (
+    reviewPriority: ReviewPriority,
+  ): string =>
+    'SELECT_REVIEW_PRIORITY_BTN_BY_REVIEW_PRIORITY_' + reviewPriority,
   SELECT_LIMIT_BTN_BY_LIMIT: (limit: number): string =>
     'SELECT_LIMIT_BTN_BY_LIMIT_' + limit,
   SELECT_FEEDBACK_BUTTONS_BTN_BY_FEEDBACK_BUTTONS: (

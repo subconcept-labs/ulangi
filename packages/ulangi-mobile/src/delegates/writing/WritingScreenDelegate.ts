@@ -59,12 +59,14 @@ export class WritingScreenDelegate {
     const {
       initialInterval,
       limit,
+      reviewPriority,
     } = this.writingSettingsDelegate.getCurrentSettings();
 
     this.eventBus.pubsub(
       createAction(ActionType.WRITING__FETCH_VOCABULARY, {
         setId: this.setStore.existingCurrentSetId,
         initialInterval,
+        reviewPriority,
         limit,
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,

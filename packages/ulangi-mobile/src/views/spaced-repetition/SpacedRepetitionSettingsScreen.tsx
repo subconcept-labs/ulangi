@@ -5,7 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ButtonSize, ReviewStrategy } from '@ulangi/ulangi-common/enums';
+import {
+  ButtonSize,
+  ReviewPriority,
+  ReviewStrategy,
+} from '@ulangi/ulangi-common/enums';
 import {
   ObservableSpacedRepetitionSettingsScreen,
   ObservableThemeStore,
@@ -77,33 +81,6 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
         screenLayout={this.props.observableScreen.screenLayout}
         header="LESSON SETTINGS"
         key="lesson-settings">
-        <SectionRow
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Review Strategy"
-          customRight={
-            <DefaultButton
-              testID={SpacedRepetitionSettingsScreenIds.REVIEW_STRATEGY_BTN}
-              text={this.props.observableScreen.selectedReviewStrategy}
-              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
-                ButtonSize.SMALL,
-                this.props.themeStore.theme,
-                this.props.observableScreen.screenLayout,
-              )}
-              onPress={(): void => {
-                this.props.screenDelegate.showReviewStrategyMenu(
-                  this.getReviewStrategyPairs(),
-                  this.props.observableScreen.selectedReviewStrategy,
-                  (reviewStrategy): void => {
-                    this.props.observableScreen.selectedReviewStrategy = reviewStrategy;
-                  },
-                );
-              }}
-            />
-          }
-          description={this.renderReviewStrategyDescription()}
-          styles={sectionRowResponsiveStyles}
-        />
         <SectionRow
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
@@ -187,6 +164,60 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             />
           }
           description={this.renderAutoplayAudioDescription()}
+          styles={sectionRowResponsiveStyles}
+        />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Review Strategy"
+          customRight={
+            <DefaultButton
+              testID={SpacedRepetitionSettingsScreenIds.REVIEW_STRATEGY_BTN}
+              text={this.props.observableScreen.selectedReviewStrategy}
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showReviewStrategyMenu(
+                  this.getReviewStrategyPairs(),
+                  this.props.observableScreen.selectedReviewStrategy,
+                  (reviewStrategy): void => {
+                    this.props.observableScreen.selectedReviewStrategy = reviewStrategy;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderReviewStrategyDescription()}
+          styles={sectionRowResponsiveStyles}
+        />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Review Priority"
+          customRight={
+            <DefaultButton
+              testID={SpacedRepetitionSettingsScreenIds.REVIEW_PRIORITY_BTN}
+              text={this.props.observableScreen.selectedReviewPriority}
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={(): void => {
+                this.props.screenDelegate.showReviewPriorityMenu(
+                  this.getReviewPriorityPairs(),
+                  this.props.observableScreen.selectedReviewPriority,
+                  (reviewPriority): void => {
+                    this.props.observableScreen.selectedReviewPriority = reviewPriority;
+                  },
+                );
+              }}
+            />
+          }
+          description={this.renderReviewPriorityDescription()}
           styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>
@@ -301,6 +332,48 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     );
   }
 
+  private renderReviewPriorityDescription(): React.ReactElement<any> {
+    let description: string | Element = '';
+    switch (this.props.observableScreen.selectedReviewPriority) {
+      case ReviewPriority.DUE_TERMS_FIRST:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>
+              Due terms first:{' '}
+            </DefaultText>
+            <DefaultText>Prioritize due terms over new ones.</DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewPriority.NEW_TERMS_FIRST:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>
+              New terms first:{' '}
+            </DefaultText>
+            <DefaultText>Prioritize new terms over due ones.</DefaultText>
+          </DefaultText>
+        );
+        break;
+
+      case ReviewPriority.NO_PRIORITY:
+        description = (
+          <DefaultText>
+            <DefaultText style={this.styles.bold}>No priority: </DefaultText>
+            <DefaultText>
+              Due and new terms will be reviewed equally.
+            </DefaultText>
+          </DefaultText>
+        );
+        break;
+    }
+
+    return (
+      <DefaultText style={this.styles.description}>{description}</DefaultText>
+    );
+  }
+
   private renderLimitDescription(): React.ReactElement<any> {
     return (
       <DefaultText style={this.styles.description}>
@@ -368,6 +441,20 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
       return [
         reviewStrategy as ReviewStrategy,
         reviewStrategy as ReviewStrategy,
+      ];
+    });
+  }
+
+  private getReviewPriorityPairs(): readonly [
+    ReviewPriority,
+    ReviewPriority
+  ][] {
+    return _.values(ReviewPriority).map(function(
+      reviewPriority,
+    ): [ReviewPriority, ReviewPriority] {
+      return [
+        reviewPriority as ReviewPriority,
+        reviewPriority as ReviewPriority,
       ];
     });
   }

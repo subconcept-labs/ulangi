@@ -5,7 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Feedback, ScreenName } from '@ulangi/ulangi-common/enums';
+import {
+  Feedback,
+  ReviewPriority,
+  ScreenName,
+} from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
@@ -48,6 +52,7 @@ export class WritingSettingsScreenDelegate {
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
         autoplayAudio: this.observableScreen.selectedAutoplayAudio,
         autoShowKeyboard: this.observableScreen.selectedAutoShowKeyboard,
+        reviewPriority: this.observableScreen.selectedReviewPriority,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),
@@ -235,6 +240,42 @@ export class WritingSettingsScreenDelegate {
           ),
         ),
         selectedIds: [selectedAutoShowKeyboard],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showReviewPriorityMenu(
+    valuePairs: readonly [ReviewPriority, ReviewPriority][],
+    selectedReviewPriority: ReviewPriority,
+    onSelect: (reviewPriority: ReviewPriority) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([reviewPriority, reviewPriorityText]): [
+              ReviewPriority,
+              SelectionItem
+            ] => {
+              return [
+                reviewPriority,
+                {
+                  testID: WritingSettingsScreenIds.SELECT_REVIEW_PRIORITY_BTN_BY_REVIEW_PRIORITY(
+                    reviewPriority,
+                  ),
+                  text: reviewPriorityText,
+                  onPress: (): void => {
+                    onSelect(reviewPriority);
+                    this.navigatorDelegate.dismissLightBox();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedReviewPriority],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,

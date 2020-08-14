@@ -14,12 +14,14 @@ import { SpacedRepetitionAutoplayAudio } from '../interfaces/general/SpacedRepet
 import { SpacedRepetitionFeedbackButtons } from '../interfaces/general/SpacedRepetitionFeedbackButtons';
 import { SpacedRepetitionInitialInterval } from '../interfaces/general/SpacedRepetitionInitialInterval';
 import { SpacedRepetitionMaxLimit } from '../interfaces/general/SpacedRepetitionMaxLimit';
+import { SpacedRepetitionReviewPriority } from '../interfaces/general/SpacedRepetitionReviewPriority';
 import { SpacedRepetitionReviewStrategy } from '../interfaces/general/SpacedRepetitionReviewStrategy';
 import { WritingAutoShowKeyboard } from '../interfaces/general/WritingAutoShowKeyboard';
 import { WritingAutoplayAudio } from '../interfaces/general/WritingAutoplayAudio';
 import { WritingFeedbackButtons } from '../interfaces/general/WritingFeedbackButtons';
 import { WritingInitialInterval } from '../interfaces/general/WritingInitialInterval';
 import { WritingMaxLimit } from '../interfaces/general/WritingMaxLimit';
+import { WritingReviewPriority } from '../interfaces/general/WritingReviewPriority';
 
 export type SetExtraDataItem =
   | SetFeatureSettings
@@ -27,12 +29,14 @@ export type SetExtraDataItem =
   | SpacedRepetitionInitialInterval
   | SpacedRepetitionMaxLimit
   | SpacedRepetitionReviewStrategy
+  | SpacedRepetitionReviewPriority
   | SpacedRepetitionFeedbackButtons
   | WritingAutoplayAudio
   | WritingInitialInterval
   | WritingMaxLimit
   | WritingFeedbackButtons
   | WritingAutoShowKeyboard
+  | WritingReviewPriority
   | QuizVocabularyPool
   | QuizMultipleChoiceMaxLimit
   | QuizWritingMaxLimit

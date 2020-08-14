@@ -20,6 +20,7 @@ export interface WritingSettingsScreenStyles {
   content_container: ViewStyle;
   description: TextStyle;
   touchable_text: TextStyle;
+  bold: TextStyle;
 }
 
 export class WritingSettingsResponsiveScreenStyles extends ResponsiveStyleSheet<
@@ -42,6 +43,10 @@ export class WritingSettingsResponsiveScreenStyles extends ResponsiveStyleSheet<
       },
 
       touchable_text: {},
+
+      bold: {
+        fontWeight: 'bold',
+      },
     };
   }
 

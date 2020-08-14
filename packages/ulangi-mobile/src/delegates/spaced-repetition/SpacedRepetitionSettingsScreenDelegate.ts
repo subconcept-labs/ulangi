@@ -7,6 +7,7 @@
 
 import {
   Feedback,
+  ReviewPriority,
   ReviewStrategy,
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
@@ -50,6 +51,7 @@ export class SpacedRepetitionSettingsScreenDelegate {
         initialInterval: this.observableScreen.selectedInitialInterval,
         limit: this.observableScreen.selectedLimit,
         reviewStrategy: this.observableScreen.selectedReviewStrategy,
+        reviewPriority: this.observableScreen.selectedReviewPriority,
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
         autoplayAudio: this.observableScreen.selectedAutoplayAudio,
       },
@@ -126,6 +128,42 @@ export class SpacedRepetitionSettingsScreenDelegate {
           ),
         ),
         selectedIds: [selectedReviewStrategy],
+        title: 'Select',
+      },
+      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+  }
+
+  public showReviewPriorityMenu(
+    valuePairs: readonly [ReviewPriority, ReviewPriority][],
+    selectedReviewPriority: ReviewPriority,
+    onSelect: (reviewPriority: ReviewPriority) => void,
+  ): void {
+    this.navigatorDelegate.showSelectionMenu(
+      {
+        items: new Map(
+          valuePairs.map(
+            ([reviewPriority, reviewPriorityText]): [
+              ReviewPriority,
+              SelectionItem
+            ] => {
+              return [
+                reviewPriority,
+                {
+                  testID: SpacedRepetitionSettingsScreenIds.SELECT_REVIEW_PRIORITY_BTN_BY_REVIEW_PRIORITY(
+                    reviewPriority,
+                  ),
+                  text: reviewPriorityText,
+                  onPress: (): void => {
+                    onSelect(reviewPriority);
+                    this.navigatorDelegate.dismissLightBox();
+                  },
+                },
+              ];
+            },
+          ),
+        ),
+        selectedIds: [selectedReviewPriority],
         title: 'Select',
       },
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,

@@ -58,6 +58,9 @@ export { SpacedRepetitionMaxLimit } from './general/SpacedRepetitionMaxLimit';
 export {
   SpacedRepetitionReviewStrategy,
 } from './general/SpacedRepetitionReviewStrategy';
+export {
+  SpacedRepetitionReviewPriority,
+} from './general/SpacedRepetitionReviewPriority';
 export { Translation } from './general/Translation';
 export { TranslationWithLanguages } from './general/TranslationWithLanguages';
 export { User } from './general/User';
@@ -71,6 +74,7 @@ export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { WritingAutoShowKeyboard } from './general/WritingAutoShowKeyboard';
+export { WritingReviewPriority } from './general/WritingReviewPriority';
 
 export { ActionItem } from './light-box/ActionItem';
 export { ActionMenu } from './light-box/ActionMenu';

@@ -21,6 +21,7 @@ export { Feedback } from './Feedback';
 export { IapService } from './IapService';
 export { LightBoxState } from './LightBoxState';
 export { ReviewStrategy } from './ReviewStrategy';
+export { ReviewPriority } from './ReviewPriority';
 export { ScreenName } from './ScreenName';
 export { ScreenState } from './ScreenState';
 export { SetExtraDataName } from './SetExtraDataName';

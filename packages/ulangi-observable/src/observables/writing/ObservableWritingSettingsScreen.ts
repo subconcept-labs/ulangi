@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ReviewPriority, ScreenName } from '@ulangi/ulangi-common/enums';
 import { observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
@@ -27,12 +27,16 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
   @observable
   public selectedAutoShowKeyboard: boolean;
 
+  @observable
+  public selectedReviewPriority: ReviewPriority;
+
   public constructor(
     selectedInitialInterval: number,
     selectedLimit: number,
     selectedFeedbackButtons: 3 | 4 | 5,
     selectedAutoplayAudio: boolean,
     selectedAutoShowKeyboard: boolean,
+    selectedReviewPriority: ReviewPriority,
     componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
@@ -43,5 +47,6 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
     this.selectedFeedbackButtons = selectedFeedbackButtons;
     this.selectedAutoplayAudio = selectedAutoplayAudio;
     this.selectedAutoShowKeyboard = selectedAutoShowKeyboard;
+    this.selectedReviewPriority = selectedReviewPriority;
   }
 }

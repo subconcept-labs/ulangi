@@ -6,7 +6,7 @@
  */
 
 import { AbstractResolver } from '@ulangi/resolver';
-import { ReviewStrategy } from '@ulangi/ulangi-common/enums';
+import { ReviewPriority, ReviewStrategy } from '@ulangi/ulangi-common/enums';
 import {
   AutoArchiveSettingsResolver,
   FeatureSettingsResolver,
@@ -161,6 +161,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       selectableLimits: Joi.array().items(Joi.number()),
       defaultInitialInterval: Joi.number(),
       defaultReviewStrategy: Joi.string().valid(_.values(ReviewStrategy)),
+      defaultReviewPriority: Joi.string().valid(_.values(ReviewPriority)),
       defaultFeedbackButtons: Joi.number().valid([3, 4, 5]),
       defaultAutoplayAudio: Joi.boolean(),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
@@ -182,6 +183,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultFeedbackButtons: Joi.number(),
       defaultAutoplayAudio: Joi.boolean(),
       defaultAutoShowKeyboard: Joi.boolean(),
+      defaultReviewPriority: Joi.string().valid(_.values(ReviewPriority)),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       selectableFeedbackButtons: Joi.array().items(Joi.number()),
       gradeScale: Joi.object().pattern(

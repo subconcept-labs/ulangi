@@ -44,6 +44,7 @@ export class SpacedRepetitionSettingsScreenContainer extends Container {
     this.originalSettings.initialInterval,
     this.originalSettings.limit,
     this.originalSettings.reviewStrategy,
+    this.originalSettings.reviewPriority,
     this.originalSettings.feedbackButtons,
     this.originalSettings.autoplayAudio,
     this.props.componentId,

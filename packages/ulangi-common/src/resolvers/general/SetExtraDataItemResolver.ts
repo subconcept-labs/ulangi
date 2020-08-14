@@ -18,12 +18,14 @@ import { SpacedRepetitionAutoplayAudioResolver } from './SpacedRepetitionAutopla
 import { SpacedRepetitionFeedbackButtonsResolver } from './SpacedRepetitionFeedbackButtonsResolver';
 import { SpacedRepetitionInitialIntervalResolver } from './SpacedRepetitionInitialIntervalResolver';
 import { SpacedRepetitionMaxLimitResolver } from './SpacedRepetitionMaxLimitResolver';
+import { SpacedRepetitionReviewPriorityResolver } from './SpacedRepetitionReviewPriorityResolver';
 import { SpacedRepetitionReviewStrategyResolver } from './SpacedRepetitionReviewStrategyResolver';
 import { WritingAutoShowKeyboardResolver } from './WritingAutoShowKeyboardResolver';
 import { WritingAutoplayAudioResolver } from './WritingAutoplayAudioResolver';
 import { WritingFeedbackButtonsResolver } from './WritingFeedbackButtonsResolver';
 import { WritingInitialIntervalResolver } from './WritingInitialIntervalResolver';
 import { WritingMaxLimitResolver } from './WritingMaxLimitResolver';
+import { WritingReviewPriorityResolver } from './WritingReviewPriorityResolver';
 
 export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   SetExtraDataItem
@@ -33,12 +35,14 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
   private spacedRepetitionInitialIntervalResolver = new SpacedRepetitionInitialIntervalResolver();
   private spacedRepetitionMaxLimitResolver = new SpacedRepetitionMaxLimitResolver();
   private spacedRepetitionReviewStrategyResolver = new SpacedRepetitionReviewStrategyResolver();
+  private spacedRepetitionReviewPriorityResolver = new SpacedRepetitionReviewPriorityResolver();
   private spacedRepetitionFeedbackButtonsResolver = new SpacedRepetitionFeedbackButtonsResolver();
   private writingAutoplayAudioResolver = new WritingAutoplayAudioResolver();
   private writingInitialIntervalResolver = new WritingInitialIntervalResolver();
   private writingMaxLimitResolver = new WritingMaxLimitResolver();
   private writingFeedbackButtonsResolver = new WritingFeedbackButtonsResolver();
   private writingAutoShowKeyboardResolver = new WritingAutoShowKeyboardResolver();
+  private writingReviewPriorityResolver = new WritingReviewPriorityResolver();
   private quizVocabularyPoolResolver = new QuizVocabularyPoolResolver();
   private quizWritingMaxLimitResolver = new QuizWritingMaxLimitResolver();
   private quizMultipleChoiceMaxLimitResolver = new QuizMultipleChoiceMaxLimitResolver();
@@ -54,12 +58,14 @@ export class SetExtraDataItemResolver extends AbstractAlternativeResolver<
       this.spacedRepetitionInitialIntervalResolver.getRules(),
       this.spacedRepetitionMaxLimitResolver.getRules(),
       this.spacedRepetitionReviewStrategyResolver.getRules(),
+      this.spacedRepetitionReviewPriorityResolver.getRules(),
       this.spacedRepetitionFeedbackButtonsResolver.getRules(),
       this.writingAutoplayAudioResolver.getRules(),
       this.writingInitialIntervalResolver.getRules(),
       this.writingMaxLimitResolver.getRules(),
       this.writingFeedbackButtonsResolver.getRules(),
       this.writingAutoShowKeyboardResolver.getRules(),
+      this.writingReviewPriorityResolver.getRules(),
       this.quizVocabularyPoolResolver.getRules(),
       this.quizWritingMaxLimitResolver.getRules(),
       this.quizMultipleChoiceMaxLimitResolver.getRules(),

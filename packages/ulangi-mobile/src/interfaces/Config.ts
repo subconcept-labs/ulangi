@@ -8,6 +8,7 @@
 import {
   CategorySortType,
   Feedback,
+  ReviewPriority,
   ReviewStrategy,
   SetStatus,
   VocabularyFilterType,
@@ -189,6 +190,7 @@ export interface Config {
     readonly selectableLimits: readonly number[];
     readonly defaultInitialInterval: number;
     readonly defaultReviewStrategy: ReviewStrategy;
+    readonly defaultReviewPriority: ReviewPriority;
     readonly defaultFeedbackButtons: 3 | 4 | 5;
     readonly defaultAutoplayAudio: boolean;
     readonly selectableInitialIntervals: readonly number[];
@@ -205,6 +207,7 @@ export interface Config {
     readonly defaultFeedbackButtons: 3 | 4 | 5;
     readonly defaultAutoplayAudio: boolean;
     readonly defaultAutoShowKeyboard: boolean;
+    readonly defaultReviewPriority: ReviewPriority;
     readonly selectableInitialIntervals: readonly number[];
     readonly selectableFeedbackButtons: readonly (3 | 4 | 5)[];
     readonly gradeScale: { [P in string]: [number, number] };

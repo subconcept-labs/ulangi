@@ -63,6 +63,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         setId,
         initialInterval,
         limit,
+        reviewPriority,
         selectedCategoryNames,
         includeFromOtherCategories,
       } = action.payload;
@@ -75,7 +76,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         );
 
         const levelSequence = this.sequenceStrategy.getLevelSequence(
-          'PRIORITIZE_LEARNED_TERMS'
+          reviewPriority
         );
 
         const vocabularyList: Vocabulary[] = yield call(

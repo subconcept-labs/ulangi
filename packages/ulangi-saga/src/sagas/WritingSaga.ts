@@ -56,6 +56,7 @@ export class WritingSaga extends ProtectedSaga {
       const {
         setId,
         initialInterval,
+        reviewPriority,
         limit,
         selectedCategoryNames,
         includeFromOtherCategories,
@@ -67,7 +68,7 @@ export class WritingSaga extends ProtectedSaga {
         );
 
         const levelSequence = this.sequenceStrategy.getLevelSequence(
-          'PRIORITIZE_LEARNED_TERMS'
+          reviewPriority
         );
 
         const vocabularyList = yield call(

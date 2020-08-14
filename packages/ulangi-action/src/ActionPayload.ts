@@ -11,6 +11,7 @@ import {
   CategorySortType,
   ConsentStatus,
   Feedback,
+  ReviewPriority,
   SetStatus,
   SyncTask,
   Theme,
@@ -418,6 +419,7 @@ export interface ActionPayload {
     setId: string;
     initialInterval: number;
     limit: number;
+    reviewPriority: ReviewPriority;
     selectedCategoryNames: undefined | string[];
     includeFromOtherCategories: undefined | boolean;
   };
@@ -649,6 +651,7 @@ export interface ActionPayload {
     setId: string;
     initialInterval: number;
     limit: number;
+    reviewPriority: ReviewPriority;
     selectedCategoryNames: undefined | string[];
     includeFromOtherCategories: undefined | boolean;
   };

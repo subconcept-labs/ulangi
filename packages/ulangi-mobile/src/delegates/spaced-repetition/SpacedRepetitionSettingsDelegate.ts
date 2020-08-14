@@ -7,7 +7,11 @@
 
 import { DeepPartial } from '@ulangi/extended-types';
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ReviewStrategy, SetExtraDataName } from '@ulangi/ulangi-common/enums';
+import {
+  ReviewPriority,
+  ReviewStrategy,
+  SetExtraDataName,
+} from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
@@ -28,6 +32,7 @@ export class SpacedRepetitionSettingsDelegate {
     initialInterval: number;
     limit: number;
     reviewStrategy: ReviewStrategy;
+    reviewPriority: ReviewPriority;
     feedbackButtons: 3 | 4 | 5;
     autoplayAudio: boolean;
   } {
@@ -49,6 +54,12 @@ export class SpacedRepetitionSettingsDelegate {
         ? this.setStore.existingCurrentSet.spacedRepetitionReviewStrategy
         : config.spacedRepetition.defaultReviewStrategy;
 
+    const reviewPriority =
+      typeof this.setStore.existingCurrentSet.spacedRepetitionReviewPriority !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.spacedRepetitionReviewPriority
+        : config.spacedRepetition.defaultReviewPriority;
+
     const feedbackButtons =
       typeof this.setStore.existingCurrentSet
         .spacedRepetitionFeedbackButtons !== 'undefined'
@@ -65,6 +76,7 @@ export class SpacedRepetitionSettingsDelegate {
       initialInterval,
       limit,
       reviewStrategy,
+      reviewPriority,
       feedbackButtons,
       autoplayAudio,
     };
@@ -75,6 +87,7 @@ export class SpacedRepetitionSettingsDelegate {
       initialInterval: number;
       limit: number;
       reviewStrategy: ReviewStrategy;
+      reviewPriority: ReviewPriority;
       feedbackButtons: 3 | 4 | 5;
       autoplayAudio: boolean;
     },
@@ -108,6 +121,13 @@ export class SpacedRepetitionSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.SPACED_REPETITION_REVIEW_STRATEGY,
         dataValue: newSettings.reviewStrategy,
+      });
+    }
+
+    if (originalSettings.reviewPriority !== newSettings.reviewPriority) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.SPACED_REPETITION_REVIEW_PRIORITY,
+        dataValue: newSettings.reviewPriority,
       });
     }
 

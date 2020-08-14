@@ -59,12 +59,14 @@ export class SpacedRepetitionScreenDelegate {
     const {
       initialInterval,
       limit,
+      reviewPriority,
     } = this.spacedRepetitionSettingsDelegate.getCurrentSettings();
 
     this.eventBus.pubsub(
       createAction(ActionType.SPACED_REPETITION__FETCH_VOCABULARY, {
         setId: this.setStore.existingCurrentSetId,
         initialInterval,
+        reviewPriority,
         limit,
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,

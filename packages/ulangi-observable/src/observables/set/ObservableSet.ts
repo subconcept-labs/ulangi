@@ -7,6 +7,7 @@
 
 import { assertExists } from '@ulangi/assert';
 import {
+  ReviewPriority,
   ReviewStrategy,
   SetExtraDataName,
   SetStatus,
@@ -23,12 +24,14 @@ import {
   SpacedRepetitionFeedbackButtons,
   SpacedRepetitionInitialInterval,
   SpacedRepetitionMaxLimit,
+  SpacedRepetitionReviewPriority,
   SpacedRepetitionReviewStrategy,
   WritingAutoShowKeyboard,
   WritingAutoplayAudio,
   WritingFeedbackButtons,
   WritingInitialInterval,
   WritingMaxLimit,
+  WritingReviewPriority,
 } from '@ulangi/ulangi-common/interfaces';
 import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
 import { computed, observable } from 'mobx';
@@ -118,6 +121,15 @@ export class ObservableSet {
   }
 
   @computed
+  public get spacedRepetitionReviewPriority(): undefined | ReviewPriority {
+    const data = this.extraData.find(
+      (data): data is SpacedRepetitionReviewPriority =>
+        data.dataName === SetExtraDataName.SPACED_REPETITION_REVIEW_PRIORITY
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
   public get spacedRepetitionFeedbackButtons(): undefined | 3 | 4 | 5 {
     const data = this.extraData.find(
       (data): data is SpacedRepetitionFeedbackButtons =>
@@ -149,6 +161,15 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is WritingMaxLimit =>
         data.dataName === SetExtraDataName.WRITING_MAX_LIMIT
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get writingReviewPriority(): undefined | ReviewPriority {
+    const data = this.extraData.find(
+      (data): data is WritingReviewPriority =>
+        data.dataName === SetExtraDataName.WRITING_REVIEW_PRIORITY
     );
     return data ? data.dataValue : undefined;
   }
