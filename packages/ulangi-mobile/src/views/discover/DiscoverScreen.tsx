@@ -60,7 +60,6 @@ export class DiscoverScreen extends React.Component<DiscoverScreenProps> {
         style={this.styles.screen}
         testID={DiscoverScreenIds.SCREEN}
         observableScreen={this.props.observableScreen}
-        useDismissKeyboardView={true}
         useSafeAreaView={true}>
         {this.isSupported() ? (
           <React.Fragment>

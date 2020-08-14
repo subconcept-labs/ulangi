@@ -40,7 +40,6 @@ export class Screen extends React.Component<ScreenProps> {
   @boundMethod
   private onResponderRelease(event: GestureResponderEvent): void {
     Keyboard.dismiss();
-    console.log(event.nativeEvent.touches);
     if (typeof this.props.onResponderRelease !== 'undefined') {
       this.props.onResponderRelease(event);
     }
