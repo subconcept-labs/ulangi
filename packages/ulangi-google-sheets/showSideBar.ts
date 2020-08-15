@@ -7,7 +7,7 @@
 
 export function showSidebar() {
   const html = HtmlService.createHtmlOutputFromFile('sidebar')
-    .setTitle('Ulangi Sheets')
+    .setTitle('Ulangi')
     .setWidth(300);
 
   SpreadsheetApp.getUi().showSidebar(html);

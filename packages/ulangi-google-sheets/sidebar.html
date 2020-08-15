@@ -17,20 +17,126 @@
     .text_bold {
       font-weight: bold
     }
+    .option {
+      overflow: hidden;
+      white-space: pre;
+      text-overflow: ellipsis;
+    }
+    #currentEmail {
+      font-weight: bold
+    }
     </style>
     <script>
+      // Prevent forms from submitting.
+      function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+          });
+        }
+      }
+
+      window.addEventListener('load', preventFormSubmit);
+      window.addEventListener('load', checkLoggedIn);
+
+      function checkLoggedIn() {
+        google.script.run
+          .withSuccessHandler(updateEmail)
+          .getUlangiEmail();
+      }
+
+      function logIn(){
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        document.getElementById("logInBtn").disabled = true;
+
+        google.script.run
+          .withSuccessHandler(updateEmail)
+          .withFailureHandler(onLogInFailed)
+          .logIn(email, password)
+      }
+
+      function onLogInFailed(error){
+        showAlert("Login failed. Please see the error below.\n" + error)
+        document.getElementById("logInBtn").disabled = false;
+      }
+
+      function logOut() {
+        google.script.run.logOut();
+        updateEmail(null);
+      }
+
+      function updateEmail(email) {
+        document.getElementById('loading').style.display = "none";
+
+        if (email !== null) {
+          document.getElementById('logged_in').style.display = "block";
+          document.getElementById('not_logged_in').style.display = "none";
+          document.getElementById('currentEmail').innerHTML = email;
+
+          checkSetUpForSyncing()
+        } else {
+          document.getElementById('not_logged_in').style.display = "block";
+          document.getElementById('logged_in').style.display = "none";
+          document.getElementById('currentEmail').innerHTML = '';
+          document.getElementById("logInBtn").disabled = false;
+        }
+      }
+
+      function checkSetUpForSyncing() {
+        google.script.run
+          .withSuccessHandler(updateSetUpForSyncing)
+          .hasSetUpForSyncing();
+      }
+
+      function updateSetUpForSyncing(hasSetUp) {
+        if (hasSetUp === true) {
+          document.getElementById('action_buttons').style.display = "block";
+          document.getElementById('set_up_for_syncing').style.display = "none";
+        } else {
+          document.getElementById('set_up_for_syncing').style.display = "block";
+          document.getElementById('action_buttons').style.display = "none";
+          downloadAllSets();
+        }
+      }
+
+      function downloadAllSets(){
+        google.script.run
+          .withSuccessHandler(updateSelections)
+          .withFailureHandler(downloadSetsFailed)
+          .downloadSets();
+      }
+
+      function selectSet(formObject) {
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').value = "Setting up...";
+
+        google.script.run
+          .withSuccessHandler(checkSetUpForSyncing)
+          .createNewSheetForSyncing(formObject);
+      }
+
+      function updateSelections(sets) {
+        document.getElementById('downloading').style.display = "none";
+        document.getElementById('setForm').style.display = "block";
+        document.getElementById('setSelection').innerHTML = sets
+          .filter((set) => {
+            return set.setStatus === "ACTIVE"
+          })
+          .map((set) => {
+            var setNameWithId = set.setName + " [" + set.setId + "]";
+            return '<option class="option" value="' + setNameWithId + '">' + set.setName + '</option>';
+          }).join()
+      }
+
+      function downloadSetsFailed() {
+        document.getElementById("downloading").innerHTML = "Oops! Failed to download your sets. Please try to log back in."
+      }
+
       function showAlert(text){
         google.script.run.showAlert(text);
-      }
-
-      function showApiKeyPrompt(){
-        google.script.run
-          .showApiKeyPrompt();
-      }
-
-      function showSetUpForSyncingDialog(){
-        google.script.run
-          .showSetUpForSyncingDialog();
       }
 
       function togglePull(){
@@ -62,7 +168,7 @@
         document.getElementById("pushBtn").disabled = true;
         document.getElementById("pullBtn").disabled = false;
         document.getElementById("pullBtn").value = "Stop";
-        document.getElementById("pullMessage").innerHTML = "Pulling updates...";
+        document.getElementById("pullMessage").innerHTML = "Pulling data...";
       }
 
       function onPullSucceeded(){
@@ -80,7 +186,7 @@
         document.getElementById("pullBtn").disabled = false;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pullBtn").value = "Pull";
-        document.getElementById("pullMessage").innerHTML = "Download terms/updates.";
+        document.getElementById("pullMessage").innerHTML = "Download data.";
       }
 
       function togglePush(){
@@ -112,7 +218,7 @@
         document.getElementById("pullBtn").disabled = true;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pushBtn").value = "Stop";
-        document.getElementById("pushMessage").innerHTML = "Pushing updates...";
+        document.getElementById("pushMessage").innerHTML = "Pushing changes...";
       }
 
       function onPushSucceeded(){
@@ -129,57 +235,102 @@
         document.getElementById("pullBtn").disabled = false;
         document.getElementById("pushBtn").disabled = false;
         document.getElementById("pushBtn").value = "Push";
-        document.getElementById("pushMessage").innerHTML = "Upload terms/updates.";
+        document.getElementById("pushMessage").innerHTML = "Upload data.";
       }
     </script>
   </head>
   <body>
-    <div class="section">
-      <div class="block">
-        <div class="inline">
-          <input type="button" onclick="showApiKeyPrompt()" value="Set API key" />
-        </div>
-      </div>
-      <div class="block">
-        <span>The API key is used to connect with your Ulangi account. It can be retrieved from Ulangi mobile app.</span>
+    <div id="loading" style="margin-top: 10px">
+      <div class="section">
+        <span>Loading. Please wait...</span>
       </div>
     </div>
 
-    <div class="section">
-      <div class="block">
-        <div class="inline">
-          <input type="button" onclick="showSetUpForSyncingDialog()" value="Set up for syncing" />
-        </div>
-      </div>
-      <div class="block">
-        <span>Create and set up a sheet for syncing.</span>
+    <div id="not_logged_in" style="display:none">
+      <div class="section">
+        <form>
+          <div class="block">
+            <div class="inline">
+              <span style="word-wrap:break-word">Log in using your Ulangi account.</span>
+            </div>
+          </div>
+          <div class="block form-group">
+            <label for="email">Email: </label>
+            <input type="text" id="email" value=""/>
+          </div>
+          <div class="block form-group">
+            <label for="password">Password: </label>
+            <input type="password" id="password" value=""/>
+          </div>
+          <div class="block form-group">
+            <div class="inline">
+              <input type="button" id="logInBtn" onclick="logIn()" value="Log in" />
+            </div>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="section">
-      <div class="block">
-        <div class="inline">
-          <input type="button" id="pullBtn" class="action" onclick="togglePull()" value="Pull" />
+    <div id="logged_in" style="display:none">
+      <div class="section">
+        <div class="block">
+          <div class="inline">
+            <span style="word-wrap:break-word">Logged in as <span id="currentEmail"></span>.</span>
+          </div>
         </div>
-        <div id="pullMessage" class="inline">
-          <span>Download terms/updates.</span>
+        <div class="block">
+          <div class="inline">
+            <input type="button" onclick="logOut()" value="Log out" />
+          </div>
         </div>
       </div>
 
-      <div class="block">
-        <div class="inline">
-          <input type="button" id="pushBtn" class="action" onclick="togglePush()" value="Push" />
+      <div id="set_up_for_syncing" class="section" style="display:none">
+        <div id="downloading" style="margin-top: 10px">
+          Downloading your sets. Please wait...
         </div>
-        <div id="pushMessage" class="inline">
-          <span>Upload terms/updates.</span>
-        </div>
+
+        <form style="display:none;margin-top: 10px" id="setForm" onsubmit="selectSet(this)">
+          <div class="block form-group">
+            <label for="setSelection">Select a set you want to sync:</label>
+            <select id="setSelection" name="setNameWithId" style="width: 300px">
+            </select>
+          </div>
+          <div style="margin-top: 10px">
+            <input id="submitBtn" class="action" type="submit" value="Set up" />
+          </div>
+        </form>
       </div>
-    </div>
-    <div class="section">
-      <div class="block">
-        <div class="inline">
-          <span class="text_bold">Note: Do not edit columns in gray.</span>
-          <a class="text_bold" href="https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on">See tutorial.</a>
+
+      <div id="action_buttons" class="section" style="display:none">
+        <div class="block">
+          <span>Press the button below to start syncing.</span>
+        </div>
+        <div class="block">
+          <div class="inline">
+            <input type="button" id="pullBtn" class="action" onclick="togglePull()" value="Pull" />
+          </div>
+          <div id="pullMessage" class="inline">
+            <span>Download data.</span>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="inline">
+            <input type="button" id="pushBtn" class="action" onclick="togglePush()" value="Push" />
+          </div>
+          <div id="pushMessage" class="inline">
+            <span>Upload data.</span>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="inline">
+            <span>
+              <span class="text_bold">Note: </span><span>Do not edit columns in gray.</span>
+            </span>
+            <a class="text_bold" href="https://ulangi.github.io/ulangi/google-sheets-add-on/use-ulangi-sheets-add-on">For tutorial, please visit this link.</a>
+          </div>
         </div>
       </div>
     </div>
