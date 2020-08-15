@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Use the add-on
+title: Usage guide
 parent: Google Sheets Add-On
-nav_order: 0
+nav_order: 1
 permalink: /google-sheets-add-on/use-ulangi-sheets-add-on
 ---
-# How to use Ulangi Sheets Add-on
+# Using Ulangi add-on for Google Sheets
 
 ## Inserting terms
 To insert a new term, just fill in the last empty row. The add-on will also automatically fill in default values for that row. Press **PUSH** to upload the term.

@@ -1,23 +1,23 @@
 ---
 layout: page
-title: Install the add-on
+title: Installation guide
 parent: Google Sheets Add-On
 nav_order: 0
 permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 ---
 
-# How to install Ulangi Sheets Add-on
+# Installing Ulangi for Google Sheets
 
 #### Difficulty: Easy
+Note: this add-on only works on Google Sheets web version (not the mobile version.)
 
 ## I. Installation
-0. Note that this add-on only works on Google Sheets web version.
 
 1. Create a Google Sheets document by visiting [https://sheets.google.com](https://sheets.google.com)
 
 2. On the menu, select **Add-on > Get add-ons**.
 
-3. Search **Ulangi Sheets** and install it.
+3. Search **Ulangi** and install it.
 
 4. On Permission dialog, click **Allow** button.
   ![Permission dialog](./assets/images/permission-dialog.png)
@@ -25,13 +25,13 @@ permalink: /google-sheets-add-on/install-ulangi-sheets-add-on
 ---
 ## II. Setup
 
-1. Go to **Add-on > Ulangi Sheets > Show sidebar.**
+1. Go to **Add-on > Ulangi > Show sidebar.**
 
-2. Click on **Set API key**. Copy and paste your API key from Ulangi app.
+2. Log in with your Ulangi account
 
-3. Click on **Set up for syncing** and select a set to sync.
+3. Select a set you want to sync.
 
-4. You're done! To download your words, click on **Pull**. To upload, click on **Push**.
+4. You're done! To download your data, click on the **Pull** button. To upload new changes, click on the **Push** button.
 
 
 #### TIP:
@@ -40,6 +40,6 @@ If you want to set up another set for syncing, create a new document and repeat 
 ---
 ## Important 
 {: .text-red-200}
-- The API key is stored with the document. If you share the document with someone else, they will have the ability to edit your flashcards.
+- Your login credential is stored within the document. If you share the document with someone else, they will have the ability to edit your data.
 
-- This add-on is optimized to sync with one Ulangi account only. Please do not set API key from multiple accounts within the same document. **Sharing and collaborating between multiple users are not yet supported by this add-on.**{: .text-red-200}
+- This add-on is optimized to sync with one Ulangi account only. **Sharing and collaborating between multiple users are not yet supported by this add-on.**{: .text-red-200}
