@@ -24,11 +24,6 @@ export interface QuizWritingSettingsProps {
     selectedQuizSize: number,
     onSelect: (size: number) => void,
   ) => void;
-  showWritingAutoShowKeyboardMenu: (
-    pairs: readonly [boolean, string][],
-    selectedAutoShowKeyboard: boolean,
-    onSelect: (autoShowKeyboard: boolean) => void,
-  ) => void;
 }
 
 @observer
@@ -81,8 +76,8 @@ export class QuizWritingSettings extends React.Component<
               testID={QuizSettingsScreenIds.WRITING_AUTO_SHOW_KEYBOARD_BTN}
               text={
                 this.props.writingSettings.selectedAutoShowKeyboard
-                  ? 'Yes'
-                  : 'No'
+                  ? 'On'
+                  : 'Off'
               }
               styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
@@ -90,13 +85,8 @@ export class QuizWritingSettings extends React.Component<
                 this.props.screenLayout,
               )}
               onPress={(): void => {
-                this.props.showWritingAutoShowKeyboardMenu(
-                  this.getAutoShowKeyboardValuePairs(),
-                  this.props.writingSettings.selectedAutoShowKeyboard,
-                  (autoShowKeyboard): void => {
-                    this.props.writingSettings.selectedAutoShowKeyboard = autoShowKeyboard;
-                  },
-                );
+                this.props.writingSettings.selectedAutoShowKeyboard = !this
+                  .props.writingSettings.selectedAutoShowKeyboard;
               }}
             />
           }
@@ -138,9 +128,5 @@ export class QuizWritingSettings extends React.Component<
     ): [number, string] {
       return [size, size.toString()];
     });
-  }
-
-  private getAutoShowKeyboardValuePairs(): readonly [boolean, string][] {
-    return [[true, 'Yes'], [false, 'No']];
   }
 }

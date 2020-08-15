@@ -145,7 +145,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             <DefaultButton
               testID={SpacedRepetitionSettingsScreenIds.AUTOPLAY_AUDIO_BTN}
               text={
-                this.props.observableScreen.selectedAutoplayAudio ? 'Yes' : 'No'
+                this.props.observableScreen.selectedAutoplayAudio ? 'On' : 'Off'
               }
               styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
@@ -153,13 +153,8 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
                 this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
-                this.props.screenDelegate.showAutoplayAudioMenu(
-                  this.getAutoplayAudioValuePairs(),
-                  this.props.observableScreen.selectedAutoplayAudio,
-                  (autoplayAudio): void => {
-                    this.props.observableScreen.selectedAutoplayAudio = autoplayAudio;
-                  },
-                );
+                this.props.observableScreen.selectedAutoplayAudio = !this.props
+                  .observableScreen.selectedAutoplayAudio;
               }}
             />
           }
@@ -273,7 +268,9 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
           <DefaultText>
             <DefaultText style={this.styles.bold}>Forward: </DefaultText>
             <DefaultText>
-              {'Given terms, answer what their definitions are.'}
+              {
+                'Review only one side; that is, given terms, answer what their definitions are.'
+              }
             </DefaultText>
           </DefaultText>
         );
@@ -284,7 +281,9 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
           <DefaultText>
             <DefaultText style={this.styles.bold}>Reversed: </DefaultText>
             <DefaultText>
-              {'Given definitions, answer what their terms are.'}
+              {
+                'Review only one side; that is, given definitions, answer what their terms are.'
+              }
             </DefaultText>
           </DefaultText>
         );
@@ -299,7 +298,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
               </DefaultText>
               <DefaultText>
                 {
-                  'Switch review direction after reaching half of the level range.\n\n'
+                  'Allow you to review both sides. It will switch side after reaching half of the level range.\n\n'
                 }
               </DefaultText>
             </DefaultText>
@@ -315,7 +314,9 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             <DefaultText>
               <DefaultText style={this.styles.bold}>Alternating: </DefaultText>
               <DefaultText>
-                {'Rotate review direction repeatedly (every 3 levels.)\n\n'}
+                {
+                  'Allow you to review both sides. It will switch side for you based on level of your cards.\n\n'
+                }
               </DefaultText>
             </DefaultText>
             <DefaultText>{'- Level 0: Forward\n'}</DefaultText>
@@ -481,9 +482,5 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
     ): [number, string] {
       return [initialInterval, initialInterval + ' hours'];
     });
-  }
-
-  private getAutoplayAudioValuePairs(): readonly [boolean, string][] {
-    return [[true, 'Yes'], [false, 'No']];
   }
 }

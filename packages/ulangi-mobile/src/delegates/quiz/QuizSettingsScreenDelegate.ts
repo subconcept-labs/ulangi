@@ -122,42 +122,6 @@ export class QuizSettingsScreenDelegate {
     );
   }
 
-  public showWritingAutoShowKeyboardMenu(
-    valuePairs: readonly [boolean, string][],
-    selectedAutoShowKeyboard: boolean,
-    onSelect: (autoShowKeyboard: boolean) => void,
-  ): void {
-    this.navigatorDelegate.showSelectionMenu(
-      {
-        items: new Map(
-          valuePairs.map(
-            ([autoShowKeyboard, autoShowKeyboardText]): [
-              boolean,
-              SelectionItem
-            ] => {
-              return [
-                autoShowKeyboard,
-                {
-                  testID: QuizSettingsScreenIds.SELECT_WRITING_AUTO_SHOW_KEYBOARD_BTN(
-                    autoShowKeyboard,
-                  ),
-                  text: autoShowKeyboardText,
-                  onPress: (): void => {
-                    onSelect(autoShowKeyboard);
-                    this.navigatorDelegate.dismissLightBox();
-                  },
-                },
-              ];
-            },
-          ),
-        ),
-        selectedIds: [selectedAutoShowKeyboard],
-        title: 'Select',
-      },
-      LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
-  }
-
   public showVocabularyPoolMenu(
     valuePairs: readonly ['learned' | 'active', string][],
     selectedVocabularyPool: 'learned' | 'active',

@@ -26,11 +26,6 @@ export const WritingSettingsScreenIds = {
     initialInterval: number,
   ): string =>
     'SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL_' + initialInterval,
-  SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO: (
-    autoplayAudio: boolean,
-  ): string => 'SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO_' + autoplayAudio,
-  SELECT_AUTO_SHOW_KEYBOARD_BTN: (autoShowKeyboard: boolean): string =>
-    'SELECT_AUTO_SHOW_KEYBOARD_BTN_' + autoShowKeyboard,
   SELECT_REVIEW_PRIORITY_BTN_BY_REVIEW_PRIORITY: (
     reviewPriority: ReviewPriority,
   ): string =>

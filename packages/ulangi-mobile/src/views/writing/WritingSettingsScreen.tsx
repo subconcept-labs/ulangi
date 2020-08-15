@@ -141,7 +141,7 @@ export class WritingSettingsScreen extends React.Component<
             <DefaultButton
               testID={WritingSettingsScreenIds.AUTOPLAY_AUDIO_BTN}
               text={
-                this.props.observableScreen.selectedAutoplayAudio ? 'Yes' : 'No'
+                this.props.observableScreen.selectedAutoplayAudio ? 'On' : 'Off'
               }
               styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
@@ -149,13 +149,8 @@ export class WritingSettingsScreen extends React.Component<
                 this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
-                this.props.screenDelegate.showAutoplayAudioMenu(
-                  this.getAutoplayAudioValuePairs(),
-                  this.props.observableScreen.selectedAutoplayAudio,
-                  (autoplayAudio): void => {
-                    this.props.observableScreen.selectedAutoplayAudio = autoplayAudio;
-                  },
-                );
+                this.props.observableScreen.selectedAutoplayAudio = !this.props
+                  .observableScreen.selectedAutoplayAudio;
               }}
             />
           }
@@ -171,8 +166,8 @@ export class WritingSettingsScreen extends React.Component<
               testID={WritingSettingsScreenIds.AUTO_SHOW_KEYBOARD_BTN}
               text={
                 this.props.observableScreen.selectedAutoShowKeyboard
-                  ? 'Yes'
-                  : 'No'
+                  ? 'On'
+                  : 'Off'
               }
               styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
                 ButtonSize.SMALL,
@@ -180,13 +175,8 @@ export class WritingSettingsScreen extends React.Component<
                 this.props.observableScreen.screenLayout,
               )}
               onPress={(): void => {
-                this.props.screenDelegate.showAutoShowKeyboardMenu(
-                  this.getAutoShowKeyboardValuePairs(),
-                  this.props.observableScreen.selectedAutoShowKeyboard,
-                  (autoShowKeyboard): void => {
-                    this.props.observableScreen.selectedAutoShowKeyboard = autoShowKeyboard;
-                  },
-                );
+                this.props.observableScreen.selectedAutoShowKeyboard = !this
+                  .props.observableScreen.selectedAutoShowKeyboard;
               }}
             />
           }
@@ -428,14 +418,6 @@ export class WritingSettingsScreen extends React.Component<
     ): [number, string] {
       return [initialInterval, initialInterval + ' hours'];
     });
-  }
-
-  private getAutoplayAudioValuePairs(): readonly [boolean, string][] {
-    return [[true, 'Yes'], [false, 'No']];
-  }
-
-  private getAutoShowKeyboardValuePairs(): readonly [boolean, string][] {
-    return [[true, 'Yes'], [false, 'No']];
   }
 
   private getReviewPriorityPairs(): readonly [

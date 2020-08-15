@@ -33,9 +33,6 @@ export const SpacedRepetitionSettingsScreenIds = {
     initialInterval: number,
   ): string =>
     'SELECT_INITIAL_INTERVAL_BTN_BY_INITIAL_INTERVAL_' + initialInterval,
-  SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO: (
-    autoplayAudio: boolean,
-  ): string => 'SELECT_AUTOPLAY_AUDIO_BTN_BY_AUTOPLAY_AUDIO_' + autoplayAudio,
   BACK_BTN: 'BACK_BTN',
   SAVE_BTN: 'SAVE_BTN',
 };

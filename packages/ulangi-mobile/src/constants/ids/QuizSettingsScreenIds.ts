@@ -19,8 +19,6 @@ export const QuizSettingsScreenIds = {
     'SELECT_MULTIPLE_CHOICE_QUIZ_SIZE_BTN_' + size,
   SELECT_WRITING_QUIZ_SIZE_BTN: (size: number): string =>
     'SELECT_WRITING_QUIZ_SIZE_BTN_' + size,
-  SELECT_WRITING_AUTO_SHOW_KEYBOARD_BTN: (autoShowKeyboard: boolean): string =>
-    'SELECT_WRITING_AUTO_SHOW_KEYBOARD_BTN_' + autoShowKeyboard,
   SELECT_VOCABULARY_POOL_BTN: (vocabularyPoolName: string): string =>
     'SELECT_VOCABULARY_POOL_BTN_' + vocabularyPoolName,
 };

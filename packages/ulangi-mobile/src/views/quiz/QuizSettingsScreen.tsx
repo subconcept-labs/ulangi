@@ -83,9 +83,6 @@ export class QuizSettingsScreen extends React.Component<
           showWritingQuizSizeMenu={
             this.props.screenDelegate.showWritingQuizSizeMenu
           }
-          showWritingAutoShowKeyboardMenu={
-            this.props.screenDelegate.showWritingAutoShowKeyboardMenu
-          }
         />
       </React.Fragment>
     );
