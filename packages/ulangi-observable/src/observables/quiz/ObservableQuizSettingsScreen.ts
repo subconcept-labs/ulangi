@@ -24,6 +24,7 @@ export class ObservableQuizSettingsScreen extends ObservableScreen {
   public writingSettings: {
     selectedQuizSize: number;
     selectedAutoShowKeyboard: boolean;
+    selectedHighlightOnError: boolean;
   };
 
   public constructor(
@@ -34,6 +35,7 @@ export class ObservableQuizSettingsScreen extends ObservableScreen {
     writingSettings: {
       selectedQuizSize: number;
       selectedAutoShowKeyboard: boolean;
+      selectedHighlightOnError: boolean;
     },
     componentId: string,
     screenName: ScreenName,

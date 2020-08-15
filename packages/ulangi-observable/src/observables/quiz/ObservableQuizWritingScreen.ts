@@ -21,12 +21,15 @@ export class ObservableQuizWritingScreen extends ObservableScreen {
 
   public readonly writingResult: ObservableWritingResult;
 
+  public readonly shouldHighlightOnError: IObservableValue<boolean>;
+
   public readonly shouldShowResult: IObservableValue<boolean>;
 
   public constructor(
     screenAppearedTimes: number,
     writingFormState: ObservableWritingFormState,
     writingResult: ObservableWritingResult,
+    shouldHighlightOnError: IObservableValue<boolean>,
     shouldShowResult: IObservableValue<boolean>,
     componentId: string,
     screenName: ScreenName,
@@ -36,6 +39,7 @@ export class ObservableQuizWritingScreen extends ObservableScreen {
     this.screenAppearedTimes = screenAppearedTimes;
     this.writingFormState = writingFormState;
     this.writingResult = writingResult;
+    this.shouldHighlightOnError = shouldHighlightOnError;
     this.shouldShowResult = shouldShowResult;
   }
 }

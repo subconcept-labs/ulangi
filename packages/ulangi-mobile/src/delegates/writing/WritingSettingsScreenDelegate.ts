@@ -52,6 +52,7 @@ export class WritingSettingsScreenDelegate {
         feedbackButtons: this.observableScreen.selectedFeedbackButtons,
         autoplayAudio: this.observableScreen.selectedAutoplayAudio,
         autoShowKeyboard: this.observableScreen.selectedAutoShowKeyboard,
+        highlightOnError: this.observableScreen.selectedHighlightOnError,
         reviewPriority: this.observableScreen.selectedReviewPriority,
       },
       {

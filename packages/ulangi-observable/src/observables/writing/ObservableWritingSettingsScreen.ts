@@ -28,6 +28,9 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
   public selectedAutoShowKeyboard: boolean;
 
   @observable
+  public selectedHighlightOnError: boolean;
+
+  @observable
   public selectedReviewPriority: ReviewPriority;
 
   public constructor(
@@ -36,6 +39,7 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
     selectedFeedbackButtons: 3 | 4 | 5,
     selectedAutoplayAudio: boolean,
     selectedAutoShowKeyboard: boolean,
+    selectedHighlightOnError: boolean,
     selectedReviewPriority: ReviewPriority,
     componentId: string,
     screenName: ScreenName,
@@ -47,6 +51,7 @@ export class ObservableWritingSettingsScreen extends ObservableScreen {
     this.selectedFeedbackButtons = selectedFeedbackButtons;
     this.selectedAutoplayAudio = selectedAutoplayAudio;
     this.selectedAutoShowKeyboard = selectedAutoShowKeyboard;
+    this.selectedHighlightOnError = selectedHighlightOnError;
     this.selectedReviewPriority = selectedReviewPriority;
   }
 }

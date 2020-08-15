@@ -8,6 +8,7 @@
 import { QuizMultipleChoiceMaxLimit } from '../interfaces/general/QuizMultipleChoiceMaxLimit';
 import { QuizVocabularyPool } from '../interfaces/general/QuizVocabularyPool';
 import { QuizWritingAutoShowKeyboard } from '../interfaces/general/QuizWritingAutoShowKeyboard';
+import { QuizWritingHighlightOnError } from '../interfaces/general/QuizWritingHighlightOnError';
 import { QuizWritingMaxLimit } from '../interfaces/general/QuizWritingMaxLimit';
 import { SetFeatureSettings } from '../interfaces/general/SetFeatureSettings';
 import { SpacedRepetitionAutoplayAudio } from '../interfaces/general/SpacedRepetitionAutoplayAudio';
@@ -19,6 +20,7 @@ import { SpacedRepetitionReviewStrategy } from '../interfaces/general/SpacedRepe
 import { WritingAutoShowKeyboard } from '../interfaces/general/WritingAutoShowKeyboard';
 import { WritingAutoplayAudio } from '../interfaces/general/WritingAutoplayAudio';
 import { WritingFeedbackButtons } from '../interfaces/general/WritingFeedbackButtons';
+import { WritingHighlightOnError } from '../interfaces/general/WritingHighlightOnError';
 import { WritingInitialInterval } from '../interfaces/general/WritingInitialInterval';
 import { WritingMaxLimit } from '../interfaces/general/WritingMaxLimit';
 import { WritingReviewPriority } from '../interfaces/general/WritingReviewPriority';
@@ -36,8 +38,10 @@ export type SetExtraDataItem =
   | WritingMaxLimit
   | WritingFeedbackButtons
   | WritingAutoShowKeyboard
+  | WritingHighlightOnError
   | WritingReviewPriority
   | QuizVocabularyPool
   | QuizMultipleChoiceMaxLimit
   | QuizWritingMaxLimit
-  | QuizWritingAutoShowKeyboard;
+  | QuizWritingAutoShowKeyboard
+  | QuizWritingHighlightOnError;

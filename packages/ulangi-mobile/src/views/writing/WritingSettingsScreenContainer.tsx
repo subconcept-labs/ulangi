@@ -46,6 +46,7 @@ export class WritingSettingsScreenContainer extends Container {
     this.originalSettings.feedbackButtons,
     this.originalSettings.autoplayAudio,
     this.originalSettings.autoShowKeyboard,
+    this.originalSettings.highlightOnError,
     this.originalSettings.reviewPriority,
     this.props.componentId,
     ScreenName.WRITING_SETTINGS_SCREEN,

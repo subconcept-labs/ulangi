@@ -41,6 +41,9 @@ export { QuizWritingMaxLimit } from './general/QuizWritingMaxLimit';
 export {
   QuizWritingAutoShowKeyboard,
 } from './general/QuizWritingAutoShowKeyboard';
+export {
+  QuizWritingHighlightOnError,
+} from './general/QuizWritingHighlightOnError';
 export { RemoteConfig } from './general/RemoteConfig';
 export { Set } from './general/Set';
 export { SetFeatureSettings } from './general/SetFeatureSettings';
@@ -74,6 +77,7 @@ export { WritingFeedbackButtons } from './general/WritingFeedbackButtons';
 export { WritingInitialInterval } from './general/WritingInitialInterval';
 export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { WritingAutoShowKeyboard } from './general/WritingAutoShowKeyboard';
+export { WritingHighlightOnError } from './general/WritingHighlightOnError';
 export { WritingReviewPriority } from './general/WritingReviewPriority';
 
 export { ActionItem } from './light-box/ActionItem';

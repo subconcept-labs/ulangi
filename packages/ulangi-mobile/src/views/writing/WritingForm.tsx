@@ -33,6 +33,7 @@ export interface WritingFormProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   writingFormState: ObservableWritingFormState;
+  shouldHighlightOnError: boolean;
   setAnswer: (text: string) => void;
   showHint: () => void;
   next: () => void;
@@ -209,7 +210,8 @@ export class WritingForm extends React.Component<WritingFormProps> {
         backgroundColor: '#4EBA6F',
       };
     } else if (
-      this.props.writingFormState.isCurrentAnswerPartiallyCorrect === false
+      this.props.writingFormState.isCurrentAnswerPartiallyCorrect === false &&
+      this.props.shouldHighlightOnError === true
     ) {
       return {
         backgroundColor: '#F15A5A',

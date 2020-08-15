@@ -29,6 +29,7 @@ export class QuizSettingsDelegate {
     multipleChoiceQuizSize: number;
     writingQuizSize: number;
     writingAutoShowKeyboard: boolean;
+    writingHighlightOnError: boolean;
   } {
     const vocabularyPool =
       typeof this.setStore.existingCurrentSet.quizVocabularyPool !== 'undefined'
@@ -53,11 +54,18 @@ export class QuizSettingsDelegate {
         ? this.setStore.existingCurrentSet.quizWritingAutoShowKeyboard
         : config.quiz.writing.defaultAutoShowKeyboard;
 
+    const writingHighlightOnError =
+      typeof this.setStore.existingCurrentSet.quizWritingHighlightOnError !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.quizWritingHighlightOnError
+        : config.quiz.writing.defaultHighlightOnError;
+
     return {
       vocabularyPool,
       multipleChoiceQuizSize,
       writingQuizSize,
       writingAutoShowKeyboard,
+      writingHighlightOnError,
     };
   }
 
@@ -67,6 +75,7 @@ export class QuizSettingsDelegate {
       multipleChoiceQuizSize: number;
       writingQuizSize: number;
       writingAutoShowKeyboard: boolean;
+      writingHighlightOnError: boolean;
     },
     callback: {
       onSaving: () => void;
@@ -112,6 +121,16 @@ export class QuizSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.QUIZ_WRITING_AUTO_SHOW_KEYBOARD,
         dataValue: newSettings.writingAutoShowKeyboard,
+      });
+    }
+
+    if (
+      originalSettings.writingHighlightOnError !==
+      newSettings.writingHighlightOnError
+    ) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.QUIZ_WRITING_HIGHLIGHT_ON_ERROR,
+        dataValue: newSettings.writingHighlightOnError,
       });
     }
 

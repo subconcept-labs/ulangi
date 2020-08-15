@@ -17,6 +17,7 @@ import {
   QuizMultipleChoiceMaxLimit,
   QuizVocabularyPool,
   QuizWritingAutoShowKeyboard,
+  QuizWritingHighlightOnError,
   QuizWritingMaxLimit,
   Set,
   SetFeatureSettings,
@@ -29,6 +30,7 @@ import {
   WritingAutoShowKeyboard,
   WritingAutoplayAudio,
   WritingFeedbackButtons,
+  WritingHighlightOnError,
   WritingInitialInterval,
   WritingMaxLimit,
   WritingReviewPriority,
@@ -193,6 +195,15 @@ export class ObservableSet {
   }
 
   @computed
+  public get writingHighlightOnError(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is WritingHighlightOnError =>
+        data.dataName === SetExtraDataName.WRITING_HIGHLIGHT_ON_ERROR
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
   public get quizVocabularyPool(): undefined | 'learned' | 'active' {
     const data = this.extraData.find(
       (data): data is QuizVocabularyPool =>
@@ -206,6 +217,15 @@ export class ObservableSet {
     const data = this.extraData.find(
       (data): data is QuizWritingMaxLimit =>
         data.dataName === SetExtraDataName.QUIZ_WRITING_MAX_LIMIT
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get quizWritingHighlightOnError(): undefined | boolean {
+    const data = this.extraData.find(
+      (data): data is QuizWritingHighlightOnError =>
+        data.dataName === SetExtraDataName.QUIZ_WRITING_HIGHLIGHT_ON_ERROR
     );
     return data ? data.dataValue : undefined;
   }

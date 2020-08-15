@@ -196,6 +196,32 @@ export class WritingSettingsScreen extends React.Component<
         <SectionRow
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Highlight On Error"
+          customRight={
+            <DefaultButton
+              testID={WritingSettingsScreenIds.HIGHLIGHT_ON_ERROR_BTN}
+              text={
+                this.props.observableScreen.selectedHighlightOnError
+                  ? 'On'
+                  : 'Off'
+              }
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+                this.props.themeStore.theme,
+                this.props.observableScreen.screenLayout,
+              )}
+              onPress={(): void => {
+                this.props.observableScreen.selectedHighlightOnError = !this
+                  .props.observableScreen.selectedHighlightOnError;
+              }}
+            />
+          }
+          description={this.renderHighlightOnErrorDescription()}
+          styles={sectionRowResponsiveStyles}
+        />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
           leftText="Review Priority"
           customRight={
             <DefaultButton
@@ -326,6 +352,14 @@ export class WritingSettingsScreen extends React.Component<
     return (
       <DefaultText style={this.styles.description}>
         Automatically show keyboard for each term.
+      </DefaultText>
+    );
+  }
+
+  private renderHighlightOnErrorDescription(): React.ReactElement<any> {
+    return (
+      <DefaultText style={this.styles.description}>
+        Highlight on red when you type answer incorrectly.
       </DefaultText>
     );
   }

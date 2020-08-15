@@ -207,6 +207,7 @@ export interface Config {
     readonly defaultFeedbackButtons: 3 | 4 | 5;
     readonly defaultAutoplayAudio: boolean;
     readonly defaultAutoShowKeyboard: boolean;
+    readonly defaultHighlightOnError: boolean;
     readonly defaultReviewPriority: ReviewPriority;
     readonly selectableInitialIntervals: readonly number[];
     readonly selectableFeedbackButtons: readonly (3 | 4 | 5)[];
@@ -226,6 +227,7 @@ export interface Config {
       readonly defaultQuizSize: number;
       readonly selectableQuizSizes: readonly number[];
       readonly defaultAutoShowKeyboard: boolean;
+      readonly defaultHighlightOnError: boolean;
     };
     readonly gradeScale: { [P in string]: [number, number] };
   };

@@ -30,6 +30,7 @@ export class WritingSettingsDelegate {
     feedbackButtons: 3 | 4 | 5;
     autoplayAudio: boolean;
     autoShowKeyboard: boolean;
+    highlightOnError: boolean;
     reviewPriority: ReviewPriority;
   } {
     const initialInterval =
@@ -61,6 +62,12 @@ export class WritingSettingsDelegate {
         ? this.setStore.existingCurrentSet.writingAutoShowKeyboard
         : config.writing.defaultAutoShowKeyboard;
 
+    const highlightOnError =
+      typeof this.setStore.existingCurrentSet.writingHighlightOnError !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingHighlightOnError
+        : config.writing.defaultHighlightOnError;
+
     const reviewPriority =
       typeof this.setStore.existingCurrentSet.writingReviewPriority !==
       'undefined'
@@ -73,6 +80,7 @@ export class WritingSettingsDelegate {
       feedbackButtons,
       autoplayAudio,
       autoShowKeyboard,
+      highlightOnError,
       reviewPriority,
     };
   }
@@ -84,6 +92,7 @@ export class WritingSettingsDelegate {
       feedbackButtons: 3 | 4 | 5;
       autoplayAudio: boolean;
       autoShowKeyboard: boolean;
+      highlightOnError: boolean;
       reviewPriority: ReviewPriority;
     },
     callback: {
@@ -131,6 +140,13 @@ export class WritingSettingsDelegate {
       editedExtraData.push({
         dataName: SetExtraDataName.WRITING_AUTO_SHOW_KEYBOARD,
         dataValue: newSettings.autoShowKeyboard,
+      });
+    }
+
+    if (originalSettings.highlightOnError !== newSettings.highlightOnError) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_HIGHLIGHT_ON_ERROR,
+        dataValue: newSettings.highlightOnError,
       });
     }
 

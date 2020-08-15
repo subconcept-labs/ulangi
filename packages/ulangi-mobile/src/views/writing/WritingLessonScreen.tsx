@@ -97,6 +97,7 @@ export class WritingLessonScreen extends React.Component<
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 writingFormState={this.props.observableScreen.writingFormState}
+                shouldHighlightOnError={this.props.observableScreen.shouldHighlightOnError.get()}
                 setAnswer={this.props.screenDelegate.setAnswer}
                 showHint={this.props.screenDelegate.showHint}
                 next={_.noop}

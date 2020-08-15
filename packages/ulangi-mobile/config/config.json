@@ -381,6 +381,7 @@
     "defaultFeedbackButtons": 4,
     "defaultAutoplayAudio": true,
     "defaultAutoShowKeyboard": false,
+    "defaultHighlightOnError": true,
     "defaultReviewPriority": "Due terms first",
     "selectableLimits": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     "selectableInitialIntervals": [ 6, 12, 18, 24, 36, 48 ],
@@ -409,7 +410,8 @@
       "minPerQuiz": 1,
       "defaultQuizSize": 5,
       "selectableQuizSizes": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      "defaultAutoShowKeyboard": true
+      "defaultAutoShowKeyboard": true,
+      "defaultHighlightOnError": true
     },
     "gradeScale": { 
       "A": [ 90, 100 ],
@@ -442,15 +444,6 @@
     "outerShellDiameter": 250,
     "originSize": 50,
     "bottomOffset": 50
-  },
-
-  "flashcardPlayer": {
-    "minToPlay": 1,
-    "uploadLimit": 500,
-    "backgroundColor": "#282c34",
-    "primaryColor": "#009dd6",
-    "secondaryColor": "#009dd6",
-    "textColor": "#fff"
   },
 
   "audio": {

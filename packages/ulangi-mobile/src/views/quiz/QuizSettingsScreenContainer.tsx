@@ -48,6 +48,7 @@ export class QuizSettingsScreenContainer extends Container {
     {
       selectedQuizSize: this.originalSettings.writingQuizSize,
       selectedAutoShowKeyboard: this.originalSettings.writingAutoShowKeyboard,
+      selectedHighlightOnError: this.originalSettings.writingHighlightOnError,
     },
     this.props.componentId,
     ScreenName.QUIZ_SETTINGS_SCREEN,

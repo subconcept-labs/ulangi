@@ -43,6 +43,8 @@ export class QuizSettingsScreenDelegate {
         writingQuizSize: this.observableScreen.writingSettings.selectedQuizSize,
         writingAutoShowKeyboard: this.observableScreen.writingSettings
           .selectedAutoShowKeyboard,
+        writingHighlightOnError: this.observableScreen.writingSettings
+          .selectedHighlightOnError,
       },
       {
         onSaving: (): void => this.dialogDelegate.showSavingDialog(),

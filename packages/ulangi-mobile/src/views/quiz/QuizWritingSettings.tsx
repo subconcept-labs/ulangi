@@ -17,6 +17,7 @@ export interface QuizWritingSettingsProps {
   writingSettings: {
     selectedQuizSize: number;
     selectedAutoShowKeyboard: boolean;
+    selectedHighlightOnError: boolean;
   };
   showWritingQuizSizeMenu: (
     pairs: readonly [number, string][],
@@ -99,6 +100,32 @@ export class QuizWritingSettings extends React.Component<
               }}
             />
           }
+          styles={sectionRowResponsiveStyles}
+        />
+        <SectionRow
+          theme={this.props.theme}
+          screenLayout={this.props.screenLayout}
+          leftText="Highlight On Error"
+          customRight={
+            <DefaultButton
+              testID={QuizSettingsScreenIds.WRITING_HIGHLIGHT_ON_ERROR_BTN}
+              text={
+                this.props.writingSettings.selectedHighlightOnError
+                  ? 'On'
+                  : 'Off'
+              }
+              styles={fullRoundedButtonStyles.getPrimaryOutlineStyles(
+                ButtonSize.SMALL,
+                this.props.theme,
+                this.props.screenLayout,
+              )}
+              onPress={(): void => {
+                this.props.writingSettings.selectedHighlightOnError = !this
+                  .props.writingSettings.selectedHighlightOnError;
+              }}
+            />
+          }
+          description="Highlight on red when you type answer incorrectly."
           styles={sectionRowResponsiveStyles}
         />
       </SectionGroup>

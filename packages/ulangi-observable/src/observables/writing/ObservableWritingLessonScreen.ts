@@ -37,6 +37,8 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly autoplayAudio: IObservableValue<boolean>;
 
+  public readonly shouldHighlightOnError: IObservableValue<boolean>;
+
   public readonly shouldShowResult: IObservableValue<boolean>;
 
   public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
@@ -55,6 +57,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     reviewFeedbackBarState: ObservableReviewFeedbackBarState,
     numberOfFeedbackButtons: IObservableValue<3 | 4 | 5>,
     autoplayAudio: IObservableValue<boolean>,
+    shouldHighlightOnError: IObservableValue<boolean>,
     shouldShowResult: IObservableValue<boolean>,
     shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     speakState: IObservableValue<ActivityState>,
@@ -73,6 +76,7 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     this.reviewActionBarState = reviewActionBarState;
     this.reviewFeedbackBarState = reviewFeedbackBarState;
     this.numberOfFeedbackButtons = numberOfFeedbackButtons;
+    this.shouldHighlightOnError = shouldHighlightOnError;
     this.shouldShowResult = shouldShowResult;
     this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
     this.speakState = speakState;

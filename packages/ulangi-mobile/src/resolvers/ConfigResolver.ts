@@ -183,6 +183,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
       defaultFeedbackButtons: Joi.number(),
       defaultAutoplayAudio: Joi.boolean(),
       defaultAutoShowKeyboard: Joi.boolean(),
+      defaultHighlightOnError: Joi.boolean(),
       defaultReviewPriority: Joi.string().valid(_.values(ReviewPriority)),
       selectableInitialIntervals: Joi.array().items(Joi.number()),
       selectableFeedbackButtons: Joi.array().items(Joi.number()),
@@ -205,6 +206,7 @@ export class ConfigResolver extends AbstractResolver<Config> {
         defaultQuizSize: Joi.number(),
         selectableQuizSizes: Joi.array().items(Joi.number()),
         defaultAutoShowKeyboard: Joi.boolean(),
+        defaultHighlightOnError: Joi.boolean(),
       },
       gradeScale: Joi.object().pattern(
         /^/,

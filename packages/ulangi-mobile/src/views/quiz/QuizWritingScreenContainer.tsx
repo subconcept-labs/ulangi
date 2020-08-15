@@ -77,6 +77,7 @@ export class QuizWritingScreenContainer extends Container<
       observable.array([]),
       observable.array([]),
     ),
+    observable.box(this.currentSettings.writingHighlightOnError),
     observable.box(false),
     this.props.componentId,
     ScreenName.QUIZ_WRITING_SCREEN,
