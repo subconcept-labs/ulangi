@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.17.0](https://github.com/ulangi/ulangi/compare/v3.16.0...v3.17.0) (2020-08-15)
+
+
+### Features
+
+* add review priority ([4b3395b](https://github.com/ulangi/ulangi/commit/4b3395b))
+
+
+
+
+
 # [3.16.0](https://github.com/ulangi/ulangi/compare/v3.15.1...v3.16.0) (2020-08-13)
 
 

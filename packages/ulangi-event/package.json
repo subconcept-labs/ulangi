@@ -1,6 +1,6 @@
 {
   "name": "@ulangi/ulangi-event",
-  "version": "3.16.0",
+  "version": "3.17.0",
   "description": "Ulangi Event",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "prettify": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
-    "@ulangi/ulangi-action": "^3.16.0",
+    "@ulangi/ulangi-action": "^3.17.0",
     "lodash": "^4.17.4",
     "uuid": "^3.3.2"
   },

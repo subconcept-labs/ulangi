@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.17.0](https://github.com/ulangi/ulangi/compare/v3.16.0...v3.17.0) (2020-08-15)
+
+
+### Bug Fixes
+
+* avoid redirecting out of the app ([00b7607](https://github.com/ulangi/ulangi/commit/00b7607))
+* fix discover screen not scrollable on large screen ([d4616ce](https://github.com/ulangi/ulangi/commit/d4616ce))
+* minor fixes ([4567fb0](https://github.com/ulangi/ulangi/commit/4567fb0))
+* remove API key for Google Sheets ([e56278e](https://github.com/ulangi/ulangi/commit/e56278e))
+
+
+### Features
+
+* add review priority ([4b3395b](https://github.com/ulangi/ulangi/commit/4b3395b))
+* allow to disable highlight on error ([31f0365](https://github.com/ulangi/ulangi/commit/31f0365))
+* use direct login for Google Sheets ([102c197](https://github.com/ulangi/ulangi/commit/102c197))
+
+
+
+
+
 # [3.16.0](https://github.com/ulangi/ulangi/compare/v3.15.1...v3.16.0) (2020-08-13)
 
 
