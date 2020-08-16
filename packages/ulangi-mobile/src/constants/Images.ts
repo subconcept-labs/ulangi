@@ -81,31 +81,33 @@ export class Images {
   public static readonly CROSS_GREY_40X40 = require('../../assets/img/mobile-icons/cross_grey_40x40.png');
   public static readonly REFRESH_GREY_40X40 = require('../../assets/img/mobile-icons/refresh_grey_40x40.png');
 
-  // 25x25
-  public static readonly MANAGE_GREY_25X25 = require('../../assets/img/mobile-icons/manage_grey_25x25.png');
-  public static readonly MANAGE_BLUE_25X25 = require('../../assets/img/mobile-icons/manage_blue_25x25.png');
-  public static readonly DISCOVER_GREY_25X25 = require('../../assets/img/mobile-icons/discover_grey_25x25.png');
-  public static readonly DISCOVER_BLUE_25X25 = require('../../assets/img/mobile-icons/discover_blue_25x25.png');
-  public static readonly LEARN_GREY_25X25 = require('../../assets/img/mobile-icons/learn_grey_25x25.png');
-  public static readonly LEARN_BLUE_25X25 = require('../../assets/img/mobile-icons/learn_blue_25x25.png');
-  public static readonly PLAY_GREY_25X25 = require('../../assets/img/mobile-icons/play_grey_25x25.png');
-  public static readonly PLAY_BLUE_25X25 = require('../../assets/img/mobile-icons/play_blue_25x25.png');
-  public static readonly MORE_GREY_25X25 = require('../../assets/img/mobile-icons/more_grey_25x25.png');
-  public static readonly MORE_BLUE_25X25 = require('../../assets/img/mobile-icons/more_blue_25x25.png');
-  public static readonly MORE_BLACK_25X25 = require('../../assets/img/mobile-icons/more_black_25x25.png');
-  public static readonly MORE_MILK_25X25 = require('../../assets/img/mobile-icons/more_milk_25x25.png');
-  public static readonly EYE_BLACK_25X25 = require('../../assets/img/mobile-icons/eye_black_25x25.png');
-  public static readonly EYE_MILK_25X25 = require('../../assets/img/mobile-icons/eye_milk_25x25.png');
-  public static readonly SPEAKER_BLACK_25X25 = require('../../assets/img/mobile-icons/speaker_black_25x25.png');
-  public static readonly SPEAKER_MILK_25X25 = require('../../assets/img/mobile-icons/speaker_milk_25x25.png');
-  public static readonly ARROW_LEFT_BLACK_25X25 = require('../../assets/img/mobile-icons/arrow_left_black_25x25.png');
-  public static readonly ARROW_LEFT_MILK_25X25 = require('../../assets/img/mobile-icons/arrow_left_milk_25x25.png');
-  public static readonly ARROW_RIGHT_BLACK_25X25 = require('../../assets/img/mobile-icons/arrow_right_black_25x25.png');
-  public static readonly ARROW_RIGHT_MILK_25X25 = require('../../assets/img/mobile-icons/arrow_right_milk_25x25.png');
-  public static readonly EDIT_BLACK_25X25 = require('../../assets/img/mobile-icons/edit_black_25x25.png');
-  public static readonly EDIT_MILK_25X25 = require('../../assets/img/mobile-icons/edit_milk_25x25.png');
-  public static readonly CROSS_BLACK_25X25 = require('../../assets/img/mobile-icons/cross_black_25x25.png');
-  public static readonly CROSS_MILK_25X25 = require('../../assets/img/mobile-icons/cross_milk_25x25.png');
+  // 24x24
+  public static readonly MANAGE_GREY_24X24 = require('../../assets/img/mobile-icons/manage_grey_24x24.png');
+  public static readonly MANAGE_BLUE_24X24 = require('../../assets/img/mobile-icons/manage_blue_24x24.png');
+  public static readonly DISCOVER_GREY_24X24 = require('../../assets/img/mobile-icons/discover_grey_24x24.png');
+  public static readonly DISCOVER_BLUE_24X24 = require('../../assets/img/mobile-icons/discover_blue_24x24.png');
+  public static readonly LEARN_GREY_24X24 = require('../../assets/img/mobile-icons/learn_grey_24x24.png');
+  public static readonly LEARN_BLUE_24X24 = require('../../assets/img/mobile-icons/learn_blue_24x24.png');
+  public static readonly PLAY_GREY_24X24 = require('../../assets/img/mobile-icons/play_grey_24x24.png');
+  public static readonly PLAY_BLUE_24X24 = require('../../assets/img/mobile-icons/play_blue_24x24.png');
+  public static readonly PROGRESS_GREY_24X24 = require('../../assets/img/mobile-icons/progress_grey_24x24.png');
+  public static readonly PROGRESS_BLUE_24X24 = require('../../assets/img/mobile-icons/progress_blue_24x24.png');
+  public static readonly MORE_GREY_24X24 = require('../../assets/img/mobile-icons/more_grey_24x24.png');
+  public static readonly MORE_BLUE_24X24 = require('../../assets/img/mobile-icons/more_blue_24x24.png');
+  public static readonly MORE_BLACK_24X24 = require('../../assets/img/mobile-icons/more_black_24x24.png');
+  public static readonly MORE_MILK_24X24 = require('../../assets/img/mobile-icons/more_milk_24x24.png');
+  public static readonly EYE_BLACK_24X24 = require('../../assets/img/mobile-icons/eye_black_24x24.png');
+  public static readonly EYE_MILK_24X24 = require('../../assets/img/mobile-icons/eye_milk_24x24.png');
+  public static readonly SPEAKER_BLACK_24X24 = require('../../assets/img/mobile-icons/speaker_black_24x24.png');
+  public static readonly SPEAKER_MILK_24X24 = require('../../assets/img/mobile-icons/speaker_milk_24x24.png');
+  public static readonly ARROW_LEFT_BLACK_24X24 = require('../../assets/img/mobile-icons/arrow_left_black_24x24.png');
+  public static readonly ARROW_LEFT_MILK_24X24 = require('../../assets/img/mobile-icons/arrow_left_milk_24x24.png');
+  public static readonly ARROW_RIGHT_BLACK_24X24 = require('../../assets/img/mobile-icons/arrow_right_black_24x24.png');
+  public static readonly ARROW_RIGHT_MILK_24X24 = require('../../assets/img/mobile-icons/arrow_right_milk_24x24.png');
+  public static readonly EDIT_BLACK_24X24 = require('../../assets/img/mobile-icons/edit_black_24x24.png');
+  public static readonly EDIT_MILK_24X24 = require('../../assets/img/mobile-icons/edit_milk_24x24.png');
+  public static readonly CROSS_BLACK_24X24 = require('../../assets/img/mobile-icons/cross_black_24x24.png');
+  public static readonly CROSS_MILK_24X24 = require('../../assets/img/mobile-icons/cross_milk_24x24.png');
 
   // 22x22
   public static readonly ADD_WHITE_22X22 = require('../../assets/img/mobile-icons/add_white_22x22.png');
