@@ -7,6 +7,7 @@
 
 import { ApiKeyModel } from '../models/ApiKeyModel';
 import { DefinitionModel } from '../models/DefinitionModel';
+import { LessonResultModel } from '../models/LessonResultModel';
 import { LockModel } from '../models/LockModel';
 import { PurchaseModel } from '../models/PurchaseModel';
 import { ResetPasswordModel } from '../models/ResetPasswordModel';
@@ -31,4 +32,5 @@ export interface ModelList {
   vocabularyWritingModel: VocabularyWritingModel;
   lockModel: LockModel;
   purchaseModel: PurchaseModel;
+  lessonResultModel: LessonResultModel;
 }

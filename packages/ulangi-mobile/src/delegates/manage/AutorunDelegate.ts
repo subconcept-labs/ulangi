@@ -64,6 +64,7 @@ export class AutorunDelegate {
     }
 
     this.autoCheckUserSession();
+    this.uploadLessonResults();
     this.autoShowDialogWhenSessionExpired();
     this.autoUpdateRemoteConfig();
     this.autoFetchUserOnDownloadSucceeded();
@@ -85,6 +86,12 @@ export class AutorunDelegate {
 
   private autoCheckUserSession(): void {
     this.eventBus.publish(createAction(ActionType.USER__CHECK_SESSION, null));
+  }
+
+  private uploadLessonResults(): void {
+    this.eventBus.publish(
+      createAction(ActionType.LESSON_RESULTS__UPLOAD, null),
+    );
   }
 
   private autoFetchUserOnDownloadSucceeded(): void {

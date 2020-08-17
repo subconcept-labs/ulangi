@@ -11,5 +11,6 @@ export const BottomTabIds = {
   DISCOVER_BTN: 'DISCOVER_BTN',
   LEARN_BTN: 'LEARN_BTN',
   PLAY_BTN: 'PLAY_BTN',
+  PROGRESS_BTN: 'PROGRESS_BTN',
   MORE_BTN: 'MORE_BTN',
 };

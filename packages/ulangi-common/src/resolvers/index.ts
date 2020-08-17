@@ -87,6 +87,8 @@ export { WritingMaxLimitResolver } from './general/WritingMaxLimitResolver';
 export {
   WritingAutoShowKeyboardResolver,
 } from './general/WritingAutoShowKeyboardResolver';
+export { LessonResultResolver } from './general/LessonResultResolver';
+export { StatisticsResolver } from './general/StatisticsResolver';
 
 export {
   ChangeEmailAndPasswordResponseResolver,
@@ -184,6 +186,15 @@ export {
 export {
   UploadVocabularyResponseResolver,
 } from './response/UploadVocabularyResponseResolver';
+export {
+  GetStatisticsResponseResolver,
+} from './response/GetStatisticsResponseResolver';
+export {
+  GetHeatMapDataResponseResolver,
+} from './response/GetHeatMapDataResponseResolver';
+export {
+  UploadLessonResultsResponseResolver,
+} from './response/UploadLessonResultsResponseResolver';
 
 export {
   ChangeEmailAndPasswordRequestResolver,
@@ -265,3 +276,12 @@ export { UploadUserRequestResolver } from './request/UploadUserRequestResolver';
 export {
   UploadVocabularyRequestResolver,
 } from './request/UploadVocabularyRequestResolver';
+export {
+  UploadLessonResultsRequestResolver,
+} from './request/UploadLessonResultsRequestResolver';
+export {
+  GetStatisticsRequestResolver,
+} from './request/GetStatisticsRequestResolver';
+export {
+  GetHeatMapDataRequestResolver,
+} from './request/GetHeatMapDataRequestResolver';

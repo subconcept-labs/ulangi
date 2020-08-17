@@ -40,7 +40,6 @@ export class CategoryDetailHeaderResponsiveStyles extends ResponsiveStyleSheet<
 
       button_text: {
         fontWeight: 'bold',
-        color: '#888',
         fontSize: scaleByFactor(15),
       },
     };

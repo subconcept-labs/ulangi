@@ -412,3 +412,16 @@ export {
 export {
   ObservableBrowserScreen,
 } from './observables/browser/ObservableBrowserScreen';
+
+export {
+  ObservableStatisticsState,
+} from './observables/progress/ObservableStatisticsState';
+export {
+  ObservableHeatMapState,
+} from './observables/progress/ObservableHeatMapState';
+export {
+  ObservableProgressScreen,
+} from './observables/progress/ObservableProgressScreen';
+export {
+  ObservableHeatMapScreen,
+} from './observables/progress/ObservableHeatMapScreen';

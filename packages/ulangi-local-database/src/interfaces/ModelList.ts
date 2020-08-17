@@ -17,6 +17,7 @@ import { DirtyVocabularyModel } from '../models/DirtyVocabularyModel';
 import { DirtyVocabularyWritingModel } from '../models/DirtyVocabularyWritingModel';
 import { IncompatibleSetModel } from '../models/IncompatibleSetModel';
 import { IncompatibleVocabularyModel } from '../models/IncompatibleVocabularyModel';
+import { LessonResultModel } from '../models/LessonResultModel';
 import { QuizMultipleChoiceModel } from '../models/QuizMultipleChoiceModel';
 import { QuizWritingModel } from '../models/QuizWritingModel';
 import { RemoteConfigModel } from '../models/RemoteConfigModel';
@@ -59,4 +60,5 @@ export interface ModelList {
   readonly dirtySetModel: DirtySetModel;
   readonly incompatibleSetModel: IncompatibleSetModel;
   readonly incompatibleVocabularyModel: IncompatibleVocabularyModel;
+  readonly lessonResultModel: LessonResultModel;
 }

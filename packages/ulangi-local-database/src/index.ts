@@ -23,6 +23,7 @@ export { IncompatibleSetModel } from './models/IncompatibleSetModel';
 export {
   IncompatibleVocabularyModel,
 } from './models/IncompatibleVocabularyModel';
+export { LessonResultModel } from './models/LessonResultModel';
 
 export { DatabaseFacade } from './facades/DatabaseFacade';
 export { DatabaseEventBus } from './event-buses/DatabaseEventBus';

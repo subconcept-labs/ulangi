@@ -125,6 +125,27 @@ export class ConfigResolver extends AbstractResolver<Config> {
       colorMap: Joi.array().items(Joi.string()),
     },
 
+    heatMap: {
+      mapping: Joi.array().items({
+        range: Joi.array().ordered(Joi.number(), Joi.number()),
+        styles: {
+          backgroundColor: Joi.string(),
+        },
+      }),
+      onFire: {
+        min: Joi.number(),
+        styles: {
+          backgroundColor: Joi.string(),
+        },
+      },
+      unavailable: {
+        styles: {
+          borderColor: Joi.string(),
+          borderWidth: Joi.number(),
+        },
+      },
+    },
+
     category: {
       fetchSuggestionsLimit: Joi.number(),
       sortMap: Joi.object().pattern(/^/, {

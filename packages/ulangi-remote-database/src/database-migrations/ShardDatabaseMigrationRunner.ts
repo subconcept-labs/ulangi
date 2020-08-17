@@ -12,10 +12,12 @@ import * as _ from 'lodash';
 import { TableName } from '../enums/TableName';
 import { pre_migration } from './pre_migration';
 import { migration_01 } from './shard-db-migrations/migration_01';
+import { migration_02 } from './shard-db-migrations/migration_02';
 
 export class ShardDatabaseMigrationRunner {
   private migrations: readonly [number, (tx: knex.Transaction) => void][] = [
     [1, migration_01],
+    [2, migration_02],
   ];
 
   private shardDb: knex;

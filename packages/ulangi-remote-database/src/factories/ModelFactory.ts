@@ -8,6 +8,7 @@
 import { ModelList } from '../interfaces/ModelList';
 import { ApiKeyModel } from '../models/ApiKeyModel';
 import { DefinitionModel } from '../models/DefinitionModel';
+import { LessonResultModel } from '../models/LessonResultModel';
 import { LockModel } from '../models/LockModel';
 import { PurchaseModel } from '../models/PurchaseModel';
 import { ResetPasswordModel } from '../models/ResetPasswordModel';
@@ -34,6 +35,7 @@ export class ModelFactory {
       lockModel: this.createModel('lockModel'),
       apiKeyModel: this.createModel('apiKeyModel'),
       purchaseModel: this.createModel('purchaseModel'),
+      lessonResultModel: this.createModel('lessonResultModel'),
     };
   }
 
@@ -67,6 +69,8 @@ export class ModelFactory {
       model = new ApiKeyModel(this.createModel('userModel'));
     } else if (modelName === 'purchaseModel') {
       model = new PurchaseModel();
+    } else if (modelName === 'lessonResultModel') {
+      model = new LessonResultModel();
     } else {
       throw new Error('Invalid modelName');
     }

@@ -34,8 +34,10 @@ import { DownloadVocabularyController } from './controllers/DownloadVocabularyCo
 import { GetApiKeyController } from './controllers/GetApiKeyController';
 import { GetDictionaryEntryController } from './controllers/GetDictionaryEntryController';
 import { GetFirebaseTokenController } from './controllers/GetFirebaseTokenController';
+import { GetHeatMapDataController } from './controllers/GetHeatMapDataController';
 import { GetPublicSetCountController } from './controllers/GetPublicSetCountController';
 import { GetRemoteConfigController } from './controllers/GetRemoteConfigController';
+import { GetStatisticsController } from './controllers/GetStatisticsController';
 import { ProcessPurchaseController } from './controllers/ProcessPurchaseController';
 import { RequestPasswordResetController } from './controllers/RequestPasswordResetController';
 import { ResetPasswordController } from './controllers/ResetPasswordController';
@@ -50,6 +52,7 @@ import { SignUpController } from './controllers/SignUpController';
 import { SynthesizeSpeechController } from './controllers/SynthesizeSpeechController';
 import { TranslateBidirectionController } from './controllers/TranslateBidirectionController';
 import { TranslateController } from './controllers/TranslateController';
+import { UploadLessonResultsController } from './controllers/UploadLessonResultsController';
 import { UploadPixabayImagesController } from './controllers/UploadPixabayImagesController';
 import { UploadSetsController } from './controllers/UploadSetsController';
 import { UploadUserController } from './controllers/UploadUserController';
@@ -167,6 +170,21 @@ export class ApiControllerFactory {
       ),
 
       new GetRemoteConfigController(this.remoteConfig),
+
+      new GetStatisticsController(
+        this.database,
+        this.modelList.lessonResultModel
+      ),
+
+      new GetHeatMapDataController(
+        this.database,
+        this.modelList.lessonResultModel
+      ),
+
+      new UploadLessonResultsController(
+        this.database,
+        this.modelList.lessonResultModel
+      ),
 
       new DownloadUserController(this.database, this.modelList.userModel),
 

@@ -226,7 +226,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   }
 
   public saveResult(): void {
-    this.saveResultDelegate.save({
+    this.saveResultDelegate.save(true, {
       onSaving: (): void => {
         this.observableScreen.saveState.set(ActivityState.ACTIVE);
       },

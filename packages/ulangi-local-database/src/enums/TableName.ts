@@ -9,6 +9,7 @@ export enum TableName {
   SESSION = 'ulangi_session',
   USER = 'ulangi_user',
   USER_EXTRA_DATA = 'ulangi_user_extra_data',
+  LESSON_RESULT = 'ulangi_lesson_result',
   SET = 'ulangi_set',
   SET_EXTRA_DATA = 'ulangi_set_extra_data',
   VOCABULARY = 'ulangi_vocabulary',

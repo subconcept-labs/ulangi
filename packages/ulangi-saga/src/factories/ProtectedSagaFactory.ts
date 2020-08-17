@@ -25,6 +25,7 @@ import { DownloadUserSaga } from '../sagas/DownloadUserSaga';
 import { DownloadVocabularySaga } from '../sagas/DownloadVocabularySaga';
 import { IapSaga } from '../sagas/IapSaga';
 import { ImageSaga } from '../sagas/ImageSaga';
+import { LessonResultSaga } from '../sagas/LessonResultSaga';
 import { LibrarySaga } from '../sagas/LibrarySaga';
 import { ManageSaga } from '../sagas/ManageSaga';
 import { ObserveLocalUpdateSaga } from '../sagas/ObserveLocalUpdateSaga';
@@ -36,6 +37,7 @@ import { ReminderSaga } from '../sagas/ReminderSaga';
 import { SearchSaga } from '../sagas/SearchSaga';
 import { SetSaga } from '../sagas/SetSaga';
 import { SpacedRepetitionSaga } from '../sagas/SpacedRepetitionSaga';
+import { StatisticsSaga } from '../sagas/StatisticsSaga';
 import { SyncSaga } from '../sagas/SyncSaga';
 import { TranslationSaga } from '../sagas/TranslationSaga';
 import { UploadSetSaga } from '../sagas/UploadSetSaga';
@@ -112,12 +114,14 @@ export class ProtectedSagaFactory {
       new SpacedRepetitionSaga(
         this.userDb,
         this.modelList.vocabularyModel,
-        this.modelList.spacedRepetitionModel
+        this.modelList.spacedRepetitionModel,
+        this.modelList.lessonResultModel
       ),
       new WritingSaga(
         this.userDb,
         this.modelList.vocabularyModel,
-        this.modelList.writingModel
+        this.modelList.writingModel,
+        this.modelList.lessonResultModel
       ),
       new QuizSaga(
         this.userDb,
@@ -186,6 +190,14 @@ export class ProtectedSagaFactory {
       new ObserveLocalUpdateSaga(this.databaseEventBus),
       new ApiKeySaga(this.sharedDb, this.modelList.sessionModel),
       new ImageSaga(this.sharedDb, this.modelList.sessionModel),
+      new StatisticsSaga(this.sharedDb, this.modelList.sessionModel),
+      new LessonResultSaga(
+        this.userDb,
+        this.sharedDb,
+        this.modelList.sessionModel,
+        this.modelList.lessonResultModel,
+        this.databaseEventBus
+      ),
     ];
 
     if (this.iap !== null) {

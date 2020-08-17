@@ -10,9 +10,15 @@ import { DeepMutable, DeepPartial } from '@ulangi/extended-types';
 import { SQLiteDatabase, Transaction } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
-import { ErrorCode, VocabularyStatus } from '@ulangi/ulangi-common/enums';
+import {
+  ErrorCode,
+  Feedback,
+  LessonType,
+  VocabularyStatus,
+} from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
+  LessonResultModel,
   SpacedRepetitionModel,
   VocabularyModel,
 } from '@ulangi/ulangi-local-database';
@@ -20,6 +26,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
+import * as uuid from 'uuid';
 
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
@@ -34,16 +41,19 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
   private userDb: SQLiteDatabase;
   private vocabularyModel: VocabularyModel;
   private spacedRepetitionModel: SpacedRepetitionModel;
+  private lessonResultModel: LessonResultModel;
 
   public constructor(
     userDb: SQLiteDatabase,
     vocabularyModel: VocabularyModel,
-    spacedRepetitionModel: SpacedRepetitionModel
+    spacedRepetitionModel: SpacedRepetitionModel,
+    lessonResultModel: LessonResultModel
   ) {
     super();
     this.userDb = userDb;
     this.vocabularyModel = vocabularyModel;
     this.spacedRepetitionModel = spacedRepetitionModel;
+    this.lessonResultModel = lessonResultModel;
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
@@ -138,9 +148,11 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         ActionType.SPACED_REPETITION__SAVE_RESULT
       > = yield take(ActionType.SPACED_REPETITION__SAVE_RESULT);
       const {
+        setId,
         vocabularyList,
         feedbackList,
         autoArchiveSettings,
+        recordLessonResult,
       } = action.payload;
 
       try {
@@ -192,6 +204,36 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
             );
           }
         );
+
+        if (recordLessonResult === true) {
+          yield call(
+            [this.userDb, 'transaction'],
+            (tx: Transaction): void => {
+              this.lessonResultModel.insertLessonResult(tx, {
+                lessonResultId: uuid.v4(),
+                lessonType: LessonType.SPACED_REPETITION,
+                setId,
+                poorCount: Array.from(feedbackList.values()).filter(
+                  (feedback): boolean => feedback === Feedback.POOR
+                ).length,
+                fairCount: Array.from(feedbackList.values()).filter(
+                  (feedback): boolean => feedback === Feedback.FAIR
+                ).length,
+                goodCount: Array.from(feedbackList.values()).filter(
+                  (feedback): boolean => feedback === Feedback.GOOD
+                ).length,
+                greatCount: Array.from(feedbackList.values()).filter(
+                  (feedback): boolean => feedback === Feedback.GREAT
+                ).length,
+                superbCount: Array.from(feedbackList.values()).filter(
+                  (feedback): boolean => feedback === Feedback.SUPERB
+                ).length,
+                totalCount: feedbackList.size,
+                createdAt: moment().toDate(),
+              });
+            }
+          );
+        }
 
         yield put(
           createAction(
