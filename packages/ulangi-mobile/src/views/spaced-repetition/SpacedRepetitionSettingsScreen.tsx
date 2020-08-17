@@ -44,7 +44,7 @@ export interface SpacedRepetitionSettingsScreenProps {
 export class SpacedRepetitionSettingsScreen extends React.Component<
   SpacedRepetitionSettingsScreenProps
 > {
-  public get styles(): SpacedRepetitionSettingsScreenStyles {
+  private get styles(): SpacedRepetitionSettingsScreenStyles {
     return spacedRepetitionSettingsScreenResponsiveStyles.compile(
       this.props.observableScreen.screenLayout,
       this.props.themeStore.theme,
@@ -378,7 +378,7 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
   private renderLimitDescription(): React.ReactElement<any> {
     return (
       <DefaultText style={this.styles.description}>
-        Number of terms you want to review per lesson.
+        Number of cards you want to review per lesson.
       </DefaultText>
     );
   }
