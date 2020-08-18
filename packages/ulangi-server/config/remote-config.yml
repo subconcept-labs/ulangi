@@ -1,8 +1,8 @@
 app:
-  showInAppRatingAfterDays: 10
+  showInAppRatingAfterDays: 7
 
 ad: 
-  numOfTermsToReviewBeforeShowingAds: 0
+  numOfTermsToReviewBeforeShowingAds: 15
 
 sync:
   uploadLimit: 20

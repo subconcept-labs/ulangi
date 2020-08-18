@@ -13,7 +13,7 @@ export const DefaultRemoteConfig: RemoteConfig = {
   },
 
   ad: {
-    numOfTermsToReviewBeforeShowingAds: 10,
+    numOfTermsToReviewBeforeShowingAds: 15,
   },
 
   sync: {
