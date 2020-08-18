@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.17.1](https://github.com/ulangi/ulangi/compare/v3.17.0...v3.17.1) (2020-08-18)
+
+
+### Bug Fixes
+
+* chnage default settings ([d97889d](https://github.com/ulangi/ulangi/commit/d97889d))
+
+
+
+
+
 ## [3.14.1](https://github.com/ulangi/ulangi/compare/v3.14.0...v3.14.1) (2020-07-29)
 
 

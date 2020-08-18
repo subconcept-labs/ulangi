@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ulangi/ulangi-remote-database",
-  "version": "3.17.0",
+  "version": "3.17.1",
   "description": "Ulangi Remote Database",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@ulangi/assert": "^1.0.0",
     "@ulangi/resolver": "^2.0.3",
-    "@ulangi/ulangi-common": "^3.17.0",
+    "@ulangi/ulangi-common": "^3.17.1",
     "joi": "^14.3.1",
     "knex": "^0.16.3",
     "lodash": "^4.17.11",
