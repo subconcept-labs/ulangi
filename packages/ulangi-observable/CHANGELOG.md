@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.18.0](https://github.com/ulangi/ulangi/compare/v3.17.1...v3.18.0) (2020-08-21)
+
+
+### Features
+
+* add heat map ([0985e1c](https://github.com/ulangi/ulangi/commit/0985e1c))
+
+
+
+
+
 ## [3.17.1](https://github.com/ulangi/ulangi/compare/v3.17.0...v3.17.1) (2020-08-18)
 
 **Note:** Version bump only for package @ulangi/ulangi-observable

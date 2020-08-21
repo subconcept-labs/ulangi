@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.18.0](https://github.com/ulangi/ulangi/compare/v3.17.1...v3.18.0) (2020-08-21)
+
+
+### Bug Fixes
+
+* minor fixes ([be7142b](https://github.com/ulangi/ulangi/commit/be7142b))
+* use 24x24 icons instead of 25x25 ([9726f8c](https://github.com/ulangi/ulangi/commit/9726f8c))
+
+
+### Features
+
+* add heat map ([0985e1c](https://github.com/ulangi/ulangi/commit/0985e1c))
+
+
+
+
+
 ## [3.17.1](https://github.com/ulangi/ulangi/compare/v3.17.0...v3.17.1) (2020-08-18)
 
 
