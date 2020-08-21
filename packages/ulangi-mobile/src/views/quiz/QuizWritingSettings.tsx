@@ -40,7 +40,7 @@ export class QuizWritingSettings extends React.Component<
         <SectionRow
           theme={this.props.theme}
           screenLayout={this.props.screenLayout}
-          leftText="Quiz Size"
+          leftText="Writing Quiz Size"
           description="Number of questions per writing quiz"
           shrink="left"
           customRight={

@@ -106,7 +106,7 @@ export class ProgressScreen extends React.Component<ProgressScreenProps> {
             <View style={this.styles.statistics_row}>
               <View style={this.styles.statistics_item}>
                 <DefaultText style={this.styles.subtitle} numberOfLines={2}>
-                  Longest streak
+                  {'Longest streak\n(in days)'}
                 </DefaultText>
                 <DefaultText style={this.styles.count}>
                   {
@@ -117,7 +117,7 @@ export class ProgressScreen extends React.Component<ProgressScreenProps> {
               </View>
               <View style={this.styles.statistics_item}>
                 <DefaultText style={this.styles.subtitle} numberOfLines={2}>
-                  Most recent streak
+                  {'Most recent streak\n(in days)'}
                 </DefaultText>
                 <DefaultText style={this.styles.count}>
                   {

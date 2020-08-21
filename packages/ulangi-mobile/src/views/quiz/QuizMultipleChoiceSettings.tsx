@@ -38,7 +38,7 @@ export class QuizMultipleChoiceSettings extends React.Component<
         <SectionRow
           theme={this.props.theme}
           screenLayout={this.props.screenLayout}
-          leftText="Quiz Size"
+          leftText="Multiple Choice Quiz Size"
           shrink="left"
           description="Number of questions per multiple choice quiz"
           customRight={

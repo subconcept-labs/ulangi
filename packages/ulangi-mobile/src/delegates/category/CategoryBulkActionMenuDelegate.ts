@@ -164,7 +164,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.SELECT_ALL_FETCHED_CATEGORIES_BTN,
-      text: 'Select all fetched categories',
+      text: 'Select fetched categories',
       onPress: (): void => {
         runInAction(
           (): void => {
@@ -188,9 +188,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.RECATEGORIZE_TERMS_BTN,
-      text: `Recategorize all ${this.getAdjectiveByFilterType(
-        filterType,
-      )} terms`,
+      text: 'Recategorize selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
@@ -231,7 +229,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.MOVE_TERMS_BTN,
-      text: `Move all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Move selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
 
@@ -282,7 +280,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.RESTORE_TERMS_BTN,
-      text: `Restore all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Restore selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
@@ -317,7 +315,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.ARCHIVE_TERMS_BTN,
-      text: `Archive all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Archive selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
@@ -352,7 +350,7 @@ export class CategoryBulkActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryBulkActionMenuIds.ARCHIVE_TERMS_BTN,
-      text: `Delete all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Delete selected',
       textColor: 'red',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
@@ -486,6 +484,7 @@ export class CategoryBulkActionMenuDelegate {
   }
   */
 
+  /*
   private getAdjectiveByFilterType(filterType: VocabularyFilterType): string {
     switch (filterType) {
       case VocabularyFilterType.ACTIVE:
@@ -502,6 +501,7 @@ export class CategoryBulkActionMenuDelegate {
         return 'due';
     }
   }
+  */
 
   private generateFilterCondition(
     filterType: VocabularyFilterType,

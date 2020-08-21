@@ -224,9 +224,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.RECATEGORIZE_TERMS_BTN,
-      text: `Recategorize all ${this.getAdjectiveByFilterType(
-        filterType,
-      )} terms`,
+      text: 'Recategorize',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
@@ -267,7 +265,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.MOVE_TERMS_BTN,
-      text: `Move all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Move',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
 
@@ -318,7 +316,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.RESTORE_TERMS_BTN,
-      text: `Restore all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Restore',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
@@ -353,7 +351,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.ARCHIVE_TERMS_BTN,
-      text: `Archive all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Archive',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
@@ -388,7 +386,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.ARCHIVE_TERMS_BTN,
-      text: `Delete all ${this.getAdjectiveByFilterType(filterType)} terms`,
+      text: 'Delete',
       textColor: 'red',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
@@ -496,6 +494,7 @@ export class CategoryActionMenuDelegate {
     };
   }
 
+  /*
   private getAdjectiveByFilterType(filterType: VocabularyFilterType): string {
     switch (filterType) {
       case VocabularyFilterType.ACTIVE:
@@ -512,6 +511,7 @@ export class CategoryActionMenuDelegate {
         return 'due';
     }
   }
+  */
 
   private generateCondition(
     filterType: VocabularyFilterType,
