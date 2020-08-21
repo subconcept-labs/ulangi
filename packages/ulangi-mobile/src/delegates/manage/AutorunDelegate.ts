@@ -6,7 +6,7 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { ScreenName, SyncTask } from '@ulangi/ulangi-common/enums';
 import { EventBus, on } from '@ulangi/ulangi-event';
 import { ObservableUserStore, Observer } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -64,6 +64,7 @@ export class AutorunDelegate {
     }
 
     this.autoCheckUserSession();
+    this.uploadLocalChanges();
     this.uploadLessonResults();
     this.autoShowDialogWhenSessionExpired();
     this.autoUpdateRemoteConfig();
@@ -86,6 +87,24 @@ export class AutorunDelegate {
 
   private autoCheckUserSession(): void {
     this.eventBus.publish(createAction(ActionType.USER__CHECK_SESSION, null));
+  }
+
+  private uploadLocalChanges(): void {
+    this.eventBus.publish(
+      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
+        syncTask: SyncTask.UPLOAD_USER,
+      }),
+    );
+    this.eventBus.publish(
+      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
+        syncTask: SyncTask.UPLOAD_SETS,
+      }),
+    );
+    this.eventBus.publish(
+      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
+        syncTask: SyncTask.UPLOAD_VOCABULARY,
+      }),
+    );
   }
 
   private uploadLessonResults(): void {
@@ -125,9 +144,10 @@ export class AutorunDelegate {
       (isSessionValid): void => {
         if (isSessionValid === true) {
           this.eventBus.publish(
-            createAction(ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING, {
-              addUploadTasks: true,
-            }),
+            createAction(
+              ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING,
+              null,
+            ),
           );
         }
       },

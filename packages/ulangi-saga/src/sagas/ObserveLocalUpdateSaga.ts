@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
+import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { SyncTask } from '@ulangi/ulangi-common/enums';
 import { DatabaseEvent, DatabaseEventBus } from '@ulangi/ulangi-local-database';
 import { EventChannel } from 'redux-saga';
@@ -30,30 +30,10 @@ export class ObserveLocalUpdateSaga extends ProtectedSaga {
   public *allowObserveLocalUpdatesForSyncing(): IterableIterator<any> {
     let channel!: EventChannel<DatabaseEvent>;
     try {
-      const action: Action<
-        ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING
-      > = yield take(ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING);
-      const { addUploadTasks } = action.payload;
+      yield take(ActionType.SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING);
 
       channel = new DatabaseEventChannel(this.databaseEventBus).createChannel();
 
-      if (addUploadTasks === true) {
-        yield put(
-          createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-            syncTask: SyncTask.UPLOAD_USER,
-          })
-        );
-        yield put(
-          createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-            syncTask: SyncTask.UPLOAD_SETS,
-          })
-        );
-        yield put(
-          createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-            syncTask: SyncTask.UPLOAD_VOCABULARY,
-          })
-        );
-      }
       yield put(
         createAction(ActionType.SYNC__OBSERVING_LOCAL_UPDATES_FOR_SYNCING, null)
       );

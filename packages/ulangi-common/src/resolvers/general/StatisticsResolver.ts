@@ -7,7 +7,6 @@
 
 import { AbstractResolver } from '@ulangi/resolver';
 import * as Joi from 'joi';
-import * as _ from 'lodash';
 
 import { Statistics } from '../../interfaces/general/Statistics';
 

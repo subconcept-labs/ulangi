@@ -445,7 +445,7 @@ export interface ActionPayload {
   readonly SPACED_REPETITION__SAVE_RESULT_FAILED: ErrorBag;
   readonly SPACED_REPETITION__CLEAR_LESSON: null;
 
-  readonly SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING: { addUploadTasks: boolean };
+  readonly SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING: null;
   readonly SYNC__OBSERVING_LOCAL_UPDATES_FOR_SYNCING: null;
   readonly SYNC__OBSERVE_LOCAL_UPDATES_FOR_SYNCING_FAILED: ErrorBag;
   readonly SYNC__OBSERVE_REMOTE_UPDATES_FOR_SYNCING: null;

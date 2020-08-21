@@ -6,7 +6,7 @@
  */
 
 import { ScreenName } from '@ulangi/ulangi-common/enums';
-import { IObservableValue,observable } from 'mobx';
+import { IObservableValue, observable } from 'mobx';
 
 import { ObservableScreen } from '../screen/ObservableScreen';
 import { ObservableTitleTopBar } from '../top-bar/ObservableTitleTopBar';
