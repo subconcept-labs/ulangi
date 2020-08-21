@@ -19,6 +19,7 @@ export { ApiKeyModel } from './models/ApiKeyModel';
 export { SetModel } from './models/SetModel';
 export { VocabularyModel } from './models/VocabularyModel';
 export { PurchaseModel } from './models/PurchaseModel';
+export { LessonResultModel } from './models/LessonResultModel';
 
 export { AuthDbConfig } from './interfaces/AuthDbConfig';
 export { ShardDbConfig } from './interfaces/ShardDbConfig';

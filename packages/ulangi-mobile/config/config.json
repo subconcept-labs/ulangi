@@ -177,8 +177,55 @@
       "#A5D6A7",
       "#66BB6A",
       "#43A047",
-      "#37474F"
+      "#1B5E20"
     ]
+  },
+
+  "heatMap": {
+    "mapping": [
+      {
+        "range": [0, 0],
+        "styles": {
+          "backgroundColor": "#88888850"
+        }
+      },
+      {
+        "range": [1, 24],
+        "styles": {
+          "backgroundColor": "#A5D6A7"
+        }
+      },
+      {
+        "range": [25, 49],
+        "styles": {
+          "backgroundColor": "#66BB6A"
+        }
+      },
+      {
+        "range": [50, 79],
+        "styles": {
+          "backgroundColor": "#43A047"
+        }
+      },
+      {
+        "range": [80, 99],
+        "styles": {
+          "backgroundColor": "#1B5E20"
+        }
+      }
+    ],
+    "onFire": {
+      "min": 100,
+      "styles": {
+        "backgroundColor": "#BF360C"
+      }
+    },
+    "unavailable": {
+      "styles": {
+        "borderColor": "#88888850",
+        "borderWidth": 1
+      }
+    }
   },
 
   "category": {

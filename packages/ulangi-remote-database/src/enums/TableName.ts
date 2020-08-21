@@ -13,6 +13,7 @@ export enum TableName {
   API_KEY = 'ulangi_api_key',
   PURCHASE = 'ulangi_purchase',
   RESET_PASSWORD_REQUEST = 'ulangi_reset_password_request',
+  DAILY_STREAK = 'ulangi_daily_streak',
 
   // For shard database
   SHARD_DB_INFO = 'ulangi_shard_db_info',
@@ -23,4 +24,5 @@ export enum TableName {
   VOCABULARY_WRITING = 'ulangi_vocabulary_writing',
   DEFINITION = 'ulangi_definition',
   LOCK = 'ulangi_lock',
+  LESSON_RESULT = 'ulangi_lesson_result',
 }

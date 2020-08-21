@@ -19,6 +19,7 @@ import { DirtyVocabularyModel } from '../models/DirtyVocabularyModel';
 import { DirtyVocabularyWritingModel } from '../models/DirtyVocabularyWritingModel';
 import { IncompatibleSetModel } from '../models/IncompatibleSetModel';
 import { IncompatibleVocabularyModel } from '../models/IncompatibleVocabularyModel';
+import { LessonResultModel } from '../models/LessonResultModel';
 import { QuizMultipleChoiceModel } from '../models/QuizMultipleChoiceModel';
 import { QuizWritingModel } from '../models/QuizWritingModel';
 import { RemoteConfigModel } from '../models/RemoteConfigModel';
@@ -75,6 +76,7 @@ export class ModelFactory {
       incompatibleVocabularyModel: this.createModel(
         'incompatibleVocabularyModel'
       ),
+      lessonResultModel: this.createModel('lessonResultModel'),
     };
   }
 
@@ -153,6 +155,8 @@ export class ModelFactory {
       model = new IncompatibleSetModel();
     } else if (modelName === 'incompatibleVocabularyModel') {
       model = new IncompatibleVocabularyModel();
+    } else if (modelName === 'lessonResultModel') {
+      model = new LessonResultModel(this.databaseEventBus);
     } else {
       throw new Error(`modelName ${modelName} is invalid`);
     }

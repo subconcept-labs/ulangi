@@ -284,7 +284,7 @@ export class WritingSettingsScreen extends React.Component<
   private renderLimitDescription(): React.ReactElement<any> {
     return (
       <DefaultText style={this.styles.description}>
-        Number of terms you want to write per lesson.
+        Number of cards you want to write per lesson.
       </DefaultText>
     );
   }

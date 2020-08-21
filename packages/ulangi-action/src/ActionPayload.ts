@@ -22,6 +22,7 @@ import {
   Category,
   CategorySuggestion,
   ErrorBag,
+  LessonResult,
   PixabayImage,
   Product,
   PublicSet,
@@ -29,6 +30,7 @@ import {
   Purchase,
   RemoteConfig,
   Set,
+  Statistics,
   Translation,
   TranslationWithLanguages,
   User,
@@ -432,9 +434,11 @@ export interface ActionPayload {
     setId: string;
   };
   readonly SPACED_REPETITION__SAVE_RESULT: {
+    setId: string;
     vocabularyList: ReadonlyMap<string, Vocabulary>;
     feedbackList: ReadonlyMap<string, Feedback>;
     autoArchiveSettings: AutoArchiveSettings;
+    recordLessonResult: boolean;
   };
   readonly SPACED_REPETITION__SAVING_RESULT: null;
   readonly SPACED_REPETITION__SAVE_RESULT_SUCCEEDED: null;
@@ -664,9 +668,11 @@ export interface ActionPayload {
     setId: string;
   };
   readonly WRITING__SAVE_RESULT: {
+    setId: string;
     vocabularyList: ReadonlyMap<string, Vocabulary>;
     feedbackList: ReadonlyMap<string, Feedback>;
     autoArchiveSettings: AutoArchiveSettings;
+    recordLessonResult: boolean;
   };
   readonly WRITING__SAVING_RESULT: null;
   readonly WRITING__SAVE_RESULT_SUCCEEDED: null;
@@ -714,4 +720,19 @@ export interface ActionPayload {
   readonly REMINDER__DELETE_REMINDER_FAILED: ErrorBag;
 
   readonly THEME__SYSTEM_MODE_CHANGED: { systemMode: Theme };
+
+  readonly LESSON_RESULTS__UPLOAD: null;
+  readonly LESSON_RESULTS__UPLOADING: { lessonResults: LessonResult[] };
+  readonly LESSON_RESULTS__UPLOAD_SUCCEEDED: null;
+  readonly LESSON_RESULTS__UPLOAD_FAILED: ErrorBag;
+
+  readonly STATISTICS__GET_STATISTICS: null;
+  readonly STATISTICS__GETTING_STATISTICS: null;
+  readonly STATISTICS__GET_STATISTICS_SUCCEEDED: { statistics: Statistics };
+  readonly STATISTICS__GET_STATISTICS_FAILED: ErrorBag;
+
+  readonly STATISTICS__GET_HEAT_MAP_DATA: { startDate: Date; endDate: Date };
+  readonly STATISTICS__GETTING_HEAT_MAP_DATA: null;
+  readonly STATISTICS__GET_HEAT_MAP_DATA_SUCCEEDED: { data: (number | null)[] };
+  readonly STATISTICS__GET_HEAT_MAP_DATA_FAILED: ErrorBag;
 }

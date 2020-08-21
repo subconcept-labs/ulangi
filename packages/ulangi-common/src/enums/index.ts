@@ -38,3 +38,4 @@ export { VocabularyStatus } from './VocabularyStatus';
 export { WordClass } from './WordClass';
 export { VocabularySortType } from './VocabularySortType';
 export { CategorySortType } from './CategorySortType';
+export { LessonType } from './LessonType';

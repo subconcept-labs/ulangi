@@ -45,6 +45,7 @@ export {
   QuizWritingHighlightOnError,
 } from './general/QuizWritingHighlightOnError';
 export { RemoteConfig } from './general/RemoteConfig';
+export { Statistics } from './general/Statistics';
 export { Set } from './general/Set';
 export { SetFeatureSettings } from './general/SetFeatureSettings';
 export { SetSelectionMenuOptions } from './general/SetSelectionMenuOptions';
@@ -79,6 +80,7 @@ export { WritingMaxLimit } from './general/WritingMaxLimit';
 export { WritingAutoShowKeyboard } from './general/WritingAutoShowKeyboard';
 export { WritingHighlightOnError } from './general/WritingHighlightOnError';
 export { WritingReviewPriority } from './general/WritingReviewPriority';
+export { LessonResult } from './general/LessonResult';
 
 export { ActionItem } from './light-box/ActionItem';
 export { ActionMenu } from './light-box/ActionMenu';
@@ -144,6 +146,11 @@ export {
 export { UploadSetsResponse } from './response/UploadSetsResponse';
 export { UploadUserResponse } from './response/UploadUserResponse';
 export { UploadVocabularyResponse } from './response/UploadVocabularyResponse';
+export {
+  UploadLessonResultsResponse,
+} from './response/UploadLessonResultsResponse';
+export { GetStatisticsResponse } from './response/GetStatisticsResponse';
+export { GetHeatMapDataResponse } from './response/GetHeatMapDataResponse';
 
 export { AdConfig } from './general/AdConfig';
 export { AppConfig } from './general/AppConfig';
@@ -203,3 +210,8 @@ export {
 export { UploadSetsRequest } from './request/UploadSetsRequest';
 export { UploadUserRequest } from './request/UploadUserRequest';
 export { UploadVocabularyRequest } from './request/UploadVocabularyRequest';
+export {
+  UploadLessonResultsRequest,
+} from './request/UploadLessonResultsRequest';
+export { GetStatisticsRequest } from './request/GetStatisticsRequest';
+export { GetHeatMapDataRequest } from './request/GetHeatMapDataRequest';

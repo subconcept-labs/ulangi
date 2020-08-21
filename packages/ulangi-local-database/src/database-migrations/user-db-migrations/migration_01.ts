@@ -57,8 +57,9 @@ function createSetTableIfNotExists(tx: Transaction): void {
   `);
   tx.executeSql(`
     CREATE INDEX IF NOT EXISTS idx_set_setStatus ON ${TableName.SET}(setStatus)
-  `),
-    tx.executeSql(`
+  `);
+
+  tx.executeSql(`
     CREATE INDEX IF NOT EXISTS idx_set_lastSyncedAt ON ${
       TableName.SET
     }(lastSyncedAt)

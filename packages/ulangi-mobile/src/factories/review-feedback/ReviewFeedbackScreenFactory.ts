@@ -83,12 +83,14 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
       lessonType === 'spaced-repetition'
         ? new SpacedRepetitionSaveResultDelegate(
             this.eventBus,
+            this.props.rootStore.setStore,
             observableScreen.vocabularyList,
             observableScreen.feedbackListState.feedbackList,
             autoArchiveSettingsDelegate,
           )
         : new WritingSaveResultDelegate(
             this.eventBus,
+            this.props.rootStore.setStore,
             observableScreen.vocabularyList,
             observableScreen.feedbackListState.feedbackList,
             autoArchiveSettingsDelegate,

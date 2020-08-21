@@ -49,7 +49,7 @@ export interface MoreScreenProps {
 
 @observer
 export class MoreScreen extends React.Component<MoreScreenProps> {
-  public get styles(): MoreScreenStyles {
+  private get styles(): MoreScreenStyles {
     return moreScreenResponsiveStyles.compile(
       this.props.observableScreen.screenLayout,
       this.props.themeStore.theme,

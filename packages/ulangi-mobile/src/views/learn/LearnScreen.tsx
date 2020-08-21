@@ -55,7 +55,7 @@ export class LearnScreen extends React.Component<LearnScreenProps> {
             hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
             style={this.styles.button}>
             <DefaultText style={this.styles.button_text}>
-              Feature Management
+              Feature management
             </DefaultText>
           </TouchableOpacity>
         </View>

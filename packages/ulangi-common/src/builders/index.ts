@@ -14,3 +14,4 @@ export { SetExtraDataItemBuilder } from './SetExtraDataItemBuilder';
 export { UserBuilder } from './UserBuilder';
 export { UserExtraDataItemBuilder } from './UserExtraDataItemBuilder';
 export { PurchaseBuilder } from './PurchaseBuilder';
+export { LessonResultBuilder } from './LessonResultBuilder';

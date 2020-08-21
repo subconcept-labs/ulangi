@@ -124,6 +124,27 @@ export interface Config {
     readonly colorMap: string[];
   };
 
+  readonly heatMap: {
+    readonly mapping: {
+      range: [number, number];
+      styles: {
+        backgroundColor: string;
+      };
+    }[];
+    readonly onFire: {
+      min: number;
+      styles: {
+        backgroundColor: string;
+      };
+    };
+    readonly unavailable: {
+      styles: {
+        borderColor: string;
+        borderWidth: number;
+      };
+    };
+  };
+
   readonly category: {
     readonly fetchSuggestionsLimit: number;
     readonly sortMap: {

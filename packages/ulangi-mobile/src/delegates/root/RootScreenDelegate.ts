@@ -59,8 +59,8 @@ export class RootScreenDelegate {
                   bottomTab: {
                     testID: BottomTabIds.MANAGE_BTN,
                     text: 'Manage',
-                    icon: Images.MANAGE_GREY_25X25,
-                    selectedIcon: Images.MANAGE_BLUE_25X25,
+                    icon: Images.MANAGE_GREY_24X24,
+                    selectedIcon: Images.MANAGE_BLUE_24X24,
                   },
                 },
               },
@@ -79,8 +79,8 @@ export class RootScreenDelegate {
                   bottomTab: {
                     testID: BottomTabIds.DISCOVER_BTN,
                     text: 'Discover',
-                    icon: Images.DISCOVER_GREY_25X25,
-                    selectedIcon: Images.DISCOVER_BLUE_25X25,
+                    icon: Images.DISCOVER_GREY_24X24,
+                    selectedIcon: Images.DISCOVER_BLUE_24X24,
                   },
                 },
               },
@@ -99,8 +99,28 @@ export class RootScreenDelegate {
                   bottomTab: {
                     testID: BottomTabIds.LEARN_BTN,
                     text: 'Learn',
-                    icon: Images.LEARN_GREY_25X25,
-                    selectedIcon: Images.LEARN_BLUE_25X25,
+                    icon: Images.LEARN_GREY_24X24,
+                    selectedIcon: Images.LEARN_BLUE_24X24,
+                  },
+                },
+              },
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: ScreenName.PROGRESS_SCREEN,
+                      passProps: { theme },
+                    },
+                  },
+                ],
+                options: {
+                  bottomTab: {
+                    testID: BottomTabIds.PROGRESS_BTN,
+                    text: 'Progress',
+                    icon: Images.PROGRESS_GREY_24X24,
+                    selectedIcon: Images.PROGRESS_BLUE_24X24,
                   },
                 },
               },
@@ -119,8 +139,8 @@ export class RootScreenDelegate {
                   bottomTab: {
                     testID: BottomTabIds.MORE_BTN,
                     text: 'More',
-                    icon: Images.MORE_GREY_25X25,
-                    selectedIcon: Images.MORE_BLUE_25X25,
+                    icon: Images.MORE_GREY_24X24,
+                    selectedIcon: Images.MORE_BLUE_24X24,
                   },
                 },
               },
