@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.18.1](https://github.com/ulangi/ulangi/compare/v3.18.0...v3.18.1) (2020-08-22)
+
+
+### Bug Fixes
+
+* minor fixes ([e81a9cd](https://github.com/ulangi/ulangi/commit/e81a9cd))
+* update tutorial images ([48ca30e](https://github.com/ulangi/ulangi/commit/48ca30e))
+
+
+
+
+
 # [3.18.0](https://github.com/ulangi/ulangi/compare/v3.17.1...v3.18.0) (2020-08-21)
 
 
