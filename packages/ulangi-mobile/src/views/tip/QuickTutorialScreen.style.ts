@@ -8,7 +8,12 @@
 import { ImageStyle, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface QuickTutorialScreenStyles {
   screen: ViewStyle;
@@ -23,7 +28,10 @@ export interface QuickTutorialScreenStyles {
 export class QuickTutorialScreenResponsiveStyles extends ResponsiveStyleSheet<
   QuickTutorialScreenStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): QuickTutorialScreenStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): QuickTutorialScreenStyles {
     return {
       screen: {
         flex: 1,
@@ -57,7 +65,11 @@ export class QuickTutorialScreenResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       note: {
-        fontSize: scaleByFactor(14),
+        paddingVertical: scaleByFactor(8),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
+        fontSize: scaleByFactor(13),
         textAlign: 'center',
       },
     };

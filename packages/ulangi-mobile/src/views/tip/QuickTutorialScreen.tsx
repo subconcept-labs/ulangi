@@ -67,10 +67,6 @@ export class QuickTutorialScreen extends React.Component<
               sliderWidth={windowWidth}
               itemWidth={windowWidth}
             />
-            <DefaultText style={this.styles.note}>
-              Note: The tutorial above is for the mobile version. The layout of
-              the tablet version is similar.
-            </DefaultText>
             <Pagination
               containerStyle={this.styles.pagination}
               activeDotIndex={this.props.observableScreen.currentIndex}
@@ -86,6 +82,10 @@ export class QuickTutorialScreen extends React.Component<
                   : config.styles.dark.secondaryTextColor
               }
             />
+            <DefaultText style={this.styles.note}>
+              Note: The tutorial above is for the mobile version. The layout of
+              the tablet version is similar.
+            </DefaultText>
             <View style={this.styles.button_container}>
               <DefaultButton
                 text="Close"
