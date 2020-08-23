@@ -40,7 +40,12 @@
       function checkLoggedIn() {
         google.script.run
           .withSuccessHandler(updateEmail)
+          .withFailureHandler(showCheckAccountError)
           .getUlangiEmail();
+      }
+
+      function showCheckAccountError() {
+        document.getElementById('loading_message').innerHTML = "Oops! The add-on is lacking authorizations needed to run.\nAre you connected with multiple Google accounts in your web browser? If so, please sign out other Google accounts and try again."
       }
 
       function showLoginForm() {
@@ -249,7 +254,7 @@
   <body>
     <div id="loading" style="margin-top: 10px">
       <div class="section">
-        <span>Loading. Please wait...</span>
+        <span id="loading_message">Loading. Please wait...</span>
       </div>
     </div>
 
