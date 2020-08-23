@@ -14,6 +14,7 @@ export class StatisticsResolver extends AbstractResolver<Statistics> {
   protected rules = {
     totalReviews: Joi.number(),
     averageReviewsPerDay: Joi.number(),
+    highestReviews: Joi.number(),
     latestStreak: Joi.number(),
     longestStreak: Joi.number(),
   };

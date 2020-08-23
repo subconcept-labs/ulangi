@@ -64,10 +64,19 @@ export class GetStatisticsController extends ApiController<
       currentLocalTime
     );
 
-    const totalReviews = _.sumBy(dateCountsPairs, ([, count]): number => count);
+    const totalReviews =
+      dateCountsPairs.length > 0
+        ? _.sumBy(dateCountsPairs, ([, count]): number => count)
+        : 0;
 
-    const averageReviewsPerDay =
-      dateCountsPairs.length > 0 ? totalReviews / dateCountsPairs.length : 0;
+    const averageReviewsPerDay = Math.round(
+      dateCountsPairs.length > 0 ? totalReviews / dateCountsPairs.length : 0
+    );
+
+    const highestReviews =
+      dateCountsPairs.length > 0
+        ? _.max(dateCountsPairs.map(([, count]): number => count)) || 0
+        : 0;
 
     const streaks: number[] = [];
     let i = 0;
@@ -96,6 +105,7 @@ export class GetStatisticsController extends ApiController<
       statistics: {
         totalReviews,
         averageReviewsPerDay,
+        highestReviews,
         latestStreak,
         longestStreak,
       },

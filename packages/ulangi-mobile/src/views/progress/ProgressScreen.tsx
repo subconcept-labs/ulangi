@@ -96,17 +96,17 @@ export class ProgressScreen extends React.Component<ProgressScreenProps> {
                   {'Average reviews\n(per day)'}
                 </DefaultText>
                 <DefaultText style={this.styles.count}>
-                  {
+                  {Math.round(
                     this.props.observableScreen.statisticsState.statistics
-                      .averageReviewsPerDay
-                  }
+                      .averageReviewsPerDay,
+                  )}
                 </DefaultText>
               </View>
             </View>
             <View style={this.styles.statistics_row}>
               <View style={this.styles.statistics_item}>
                 <DefaultText style={this.styles.subtitle} numberOfLines={2}>
-                  {'Longest streak\n(in days)'}
+                  {'Longest streak\n(by days)'}
                 </DefaultText>
                 <DefaultText style={this.styles.count}>
                   {
@@ -117,12 +117,25 @@ export class ProgressScreen extends React.Component<ProgressScreenProps> {
               </View>
               <View style={this.styles.statistics_item}>
                 <DefaultText style={this.styles.subtitle} numberOfLines={2}>
-                  {'Most recent streak\n(in days)'}
+                  {'Most recent streak\n(by days)'}
                 </DefaultText>
                 <DefaultText style={this.styles.count}>
                   {
                     this.props.observableScreen.statisticsState.statistics
                       .latestStreak
+                  }
+                </DefaultText>
+              </View>
+            </View>
+            <View style={this.styles.statistics_row}>
+              <View style={this.styles.statistics_item}>
+                <DefaultText style={this.styles.subtitle} numberOfLines={2}>
+                  {'Highest reviews\n(on a day)'}
+                </DefaultText>
+                <DefaultText style={this.styles.count}>
+                  {
+                    this.props.observableScreen.statisticsState.statistics
+                      .highestReviews
                   }
                 </DefaultText>
               </View>
