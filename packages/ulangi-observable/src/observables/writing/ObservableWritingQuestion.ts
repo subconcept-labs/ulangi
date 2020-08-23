@@ -18,15 +18,15 @@ export class ObservableWritingQuestion {
   public testingVocabulary: ObservableVocabulary;
 
   @observable
-  public givenDefinition: ObservableDefinition;
+  public givenDefinitions: ObservableDefinition[];
 
   public constructor(
     questionId: string,
     testingVocabulary: ObservableVocabulary,
-    givenDefinition: ObservableDefinition
+    givenDefinitions: ObservableDefinition[]
   ) {
     this.questionId = questionId;
     this.testingVocabulary = testingVocabulary;
-    this.givenDefinition = givenDefinition;
+    this.givenDefinitions = givenDefinitions;
   }
 }

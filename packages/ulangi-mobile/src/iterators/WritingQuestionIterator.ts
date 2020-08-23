@@ -5,13 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { assertExists } from '@ulangi/assert';
 import {
   ObservableVocabulary,
   ObservableWritingQuestion,
 } from '@ulangi/ulangi-observable';
 import { OrderedMap } from 'immutable';
-import * as _ from 'lodash';
 import * as uuid from 'uuid';
 
 import { VocabularyIterator } from './VocabularyIterator';
@@ -62,15 +60,10 @@ export class WritingQuestionIterator {
   private makeQuestion(
     vocabulary: ObservableVocabulary,
   ): ObservableWritingQuestion {
-    const definition = assertExists(
-      _.sample(vocabulary.definitions.slice()),
-      'definition should not be null or undefined',
-    );
-
     return {
       questionId: uuid.v4(),
       testingVocabulary: vocabulary,
-      givenDefinition: definition,
+      givenDefinitions: vocabulary.definitions,
     };
   }
 }

@@ -94,8 +94,6 @@ export class WritingForm extends React.Component<WritingFormProps> {
   }
 
   public render(): React.ReactElement<any> {
-    const definition = this.props.writingFormState.currentQuestion
-      .givenDefinition;
     return (
       <Animatable.View
         style={this.styles.container}
@@ -106,16 +104,25 @@ export class WritingForm extends React.Component<WritingFormProps> {
         duration={config.general.animationDuration}
         useNativeDriver={true}>
         <View style={this.styles.row}>
-          <DefaultText style={this.styles.label}>GIVEN DEFINITION:</DefaultText>
+          <DefaultText style={this.styles.label}>
+            GIVEN DEFINITIONS:
+          </DefaultText>
           <View style={this.styles.definition_container}>
-            <DefinitionItem
-              index={0}
-              theme={this.props.theme}
-              screenLayout={this.props.screenLayout}
-              definition={definition}
-              hideFields={['example']}
-              styles={definitionItemResponsiveStyles}
-            />
+            {this.props.writingFormState.currentQuestion.givenDefinitions.map(
+              (definition, index): React.ReactElement<any> => {
+                return (
+                  <DefinitionItem
+                    key={index}
+                    index={index}
+                    theme={this.props.theme}
+                    screenLayout={this.props.screenLayout}
+                    definition={definition}
+                    hideFields={['example']}
+                    styles={definitionItemResponsiveStyles}
+                  />
+                );
+              },
+            )}
           </View>
         </View>
         <View style={this.styles.row}>
