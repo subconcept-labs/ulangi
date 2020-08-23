@@ -37,13 +37,35 @@
         }
       }
 
-      window.addEventListener('load', preventFormSubmit);
-      window.addEventListener('load', checkLoggedIn);
-
       function checkLoggedIn() {
         google.script.run
           .withSuccessHandler(updateEmail)
           .getUlangiEmail();
+      }
+
+      function showLoginForm() {
+        document.getElementById('loading').style.display = "none";
+        document.getElementById('not_logged_in').style.display = "block";
+        document.getElementById('logged_in').style.display = "none";
+        document.getElementById('currentEmail').innerHTML = '';
+        document.getElementById("logInBtn").disabled = false;
+      }
+
+      function showLoggedIn(email) {
+        document.getElementById('loading').style.display = "none";
+        document.getElementById('logged_in').style.display = "block";
+        document.getElementById('not_logged_in').style.display = "none";
+        document.getElementById('currentEmail').innerHTML = email;
+      }
+
+      function updateEmail(email) {
+        if (email !== null) {
+          showLoggedIn(email)
+          checkSetUpForSyncing()
+
+        } else {
+          showLoginForm()
+        }
       }
 
       function logIn(){
@@ -66,23 +88,6 @@
       function logOut() {
         google.script.run.logOut();
         updateEmail(null);
-      }
-
-      function updateEmail(email) {
-        document.getElementById('loading').style.display = "none";
-
-        if (email !== null) {
-          document.getElementById('logged_in').style.display = "block";
-          document.getElementById('not_logged_in').style.display = "none";
-          document.getElementById('currentEmail').innerHTML = email;
-
-          checkSetUpForSyncing()
-        } else {
-          document.getElementById('not_logged_in').style.display = "block";
-          document.getElementById('logged_in').style.display = "none";
-          document.getElementById('currentEmail').innerHTML = '';
-          document.getElementById("logInBtn").disabled = false;
-        }
       }
 
       function checkSetUpForSyncing() {
@@ -180,7 +185,6 @@
         onPullEnded();
         showAlert("Failed to pull. Please check error below.\n" + error)
       }
-  
 
       function onPullEnded(){
         document.getElementById("pullBtn").disabled = false;
@@ -237,6 +241,9 @@
         document.getElementById("pushBtn").value = "Push";
         document.getElementById("pushMessage").innerHTML = "Upload data.";
       }
+
+      window.addEventListener('load', preventFormSubmit);
+      window.addEventListener('load', checkLoggedIn);
     </script>
   </head>
   <body>
