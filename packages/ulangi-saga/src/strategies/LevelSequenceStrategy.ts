@@ -10,36 +10,38 @@ import { ReviewPriority } from '@ulangi/ulangi-common/enums';
 import * as _ from 'lodash';
 
 export class LevelSequenceStrategy {
-  private readonly DUE_TERMS_FIRST: number[][] = [
-    [9, 1, 2, 3, 4, 5, 6, 7, 8, 0],
-    [8, 9, 1, 2, 3, 4, 5, 6, 7, 0],
-    [7, 8, 9, 1, 2, 3, 4, 5, 6, 0],
-    [6, 7, 8, 9, 1, 2, 3, 4, 5, 0],
-    [5, 6, 7, 8, 9, 1, 2, 3, 4, 0],
-    [4, 5, 6, 7, 8, 9, 1, 2, 3, 0],
-    [3, 4, 5, 6, 7, 8, 9, 1, 2, 0],
-    [2, 3, 4, 5, 6, 7, 8, 9, 1, 0],
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+  private readonly DUE_TERMS_FIRST: (number | undefined)[][] = [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, undefined],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, undefined],
+    [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, undefined],
+    [3, 4, 5, 6, 7, 8, 9, 0, 1, 2, undefined],
+    [4, 5, 6, 7, 8, 9, 0, 1, 2, 3, undefined],
+    [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, undefined],
+    [6, 7, 8, 9, 0, 1, 2, 3, 4, 5, undefined],
+    [7, 8, 9, 0, 1, 2, 3, 4, 5, 6, undefined],
+    [8, 9, 0, 1, 2, 3, 4, 5, 6, 7, undefined],
+    [9, 0, 1, 2, 3, 4, 5, 6, 7, 8, undefined],
   ];
 
-  private readonly NEW_TERMS_FIRST: number[][] = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [0, 2, 3, 4, 5, 6, 7, 8, 9, 1],
-    [0, 3, 4, 5, 6, 7, 8, 9, 1, 2],
-    [0, 4, 5, 6, 7, 8, 9, 1, 2, 3],
-    [0, 5, 6, 7, 8, 9, 1, 2, 3, 4],
-    [0, 6, 7, 8, 9, 1, 2, 3, 4, 5],
-    [0, 7, 8, 9, 1, 2, 3, 4, 5, 6],
-    [0, 8, 9, 1, 2, 3, 4, 6, 7, 8],
-    [0, 9, 1, 2, 3, 4, 5, 6, 7, 8],
+  private readonly NEW_TERMS_FIRST: (undefined | number)[][] = [
+    [undefined, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [undefined, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    [undefined, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
+    [undefined, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
+    [undefined, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
+    [undefined, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
+    [undefined, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
+    [undefined, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+    [undefined, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
+    [undefined, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8],
   ];
 
-  private readonly NO_PRIORITY: number[][] = _.concat(
+  private readonly NO_PRIORITY: (undefined | number)[][] = _.concat(
     this.DUE_TERMS_FIRST,
     this.NEW_TERMS_FIRST
   );
 
-  public getLevelSequence(priority: ReviewPriority): number[] {
+  public getLevelSequence(priority: ReviewPriority): (undefined | number)[] {
     let sequence;
     switch (priority) {
       case ReviewPriority.DUE_TERMS_FIRST:

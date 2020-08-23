@@ -8,6 +8,7 @@
 import { ObservableSpacedRepetitionScreen } from '@ulangi/ulangi-observable';
 
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
+import { SpacedRepetitionCountsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
@@ -34,12 +35,19 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
     );
 
+    const spacedRepetitionCountsDelegate = new SpacedRepetitionCountsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+      spacedRepetitionSettingsDelegate,
+    );
+
     return new SpacedRepetitionScreenDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen,
       spacedRepetitionSettingsDelegate,
+      spacedRepetitionCountsDelegate,
       dialogDelegate,
       navigatorDelegate,
     );

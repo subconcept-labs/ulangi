@@ -7,10 +7,7 @@
 
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
-import {
-  CategorySortType,
-  VocabularyDueType,
-} from '@ulangi/ulangi-common/enums';
+import { CategorySortType } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import { CategoryFilterCondition } from '@ulangi/ulangi-common/types';
 import {
@@ -18,6 +15,7 @@ import {
   SpacedRepetitionModel,
   WritingModel,
 } from '@ulangi/ulangi-local-database';
+import * as _ from 'lodash';
 import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
@@ -51,36 +49,30 @@ export class ManageSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowPrepareAndClearFetchCategory],
-      config.manage.fetchCategoryLimit,
-      config.spacedRepetition.maxLevel,
-      config.writing.maxLevel
+      config.manage.fetchCategoryLimit
+    );
+
+    yield fork(
+      [this, this.allowFetchSpacedRepetitionDueAndNewCounts],
+      config.spacedRepetition.maxLevel
+    );
+    yield fork(
+      [this, this.allowFetchWritingDueAndNewCounts],
+      config.spacedRepetition.maxLevel
     );
   }
 
   public *allowPrepareAndClearFetchCategory(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
+    limit: number
   ): IterableIterator<any> {
     this.fetchCategoryTask = yield fork(
       [this, this.allowPrepareFetchCategory],
-      limit,
-      spacedRepetitionMaxLevel,
-      writingMaxLevel
+      limit
     );
-    yield fork(
-      [this, this.allowClearFetchCategory],
-      limit,
-      spacedRepetitionMaxLevel,
-      writingMaxLevel
-    );
+    yield fork([this, this.allowClearFetchCategory], limit);
   }
 
-  private *allowClearFetchCategory(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
+  private *allowClearFetchCategory(limit: number): IterableIterator<any> {
     while (true) {
       yield take(ActionType.MANAGE__CLEAR_FETCH_CATEGORY);
       if (typeof this.fetchCategoryTask !== 'undefined') {
@@ -89,18 +81,12 @@ export class ManageSaga extends ProtectedSaga {
 
       this.fetchCategoryTask = yield fork(
         [this, this.allowPrepareFetchCategory],
-        limit,
-        spacedRepetitionMaxLevel,
-        writingMaxLevel
+        limit
       );
     }
   }
 
-  private *allowPrepareFetchCategory(
-    limit: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
-  ): IterableIterator<any> {
+  private *allowPrepareFetchCategory(limit: number): IterableIterator<any> {
     try {
       const action: Action<
         ActionType.MANAGE__PREPARE_FETCH_CATEGORY
@@ -114,9 +100,7 @@ export class ManageSaga extends ProtectedSaga {
         [this, this.allowFetchCategory],
         action.payload.filterCondition,
         action.payload.sortType,
-        limit,
-        spacedRepetitionMaxLevel,
-        writingMaxLevel
+        limit
       );
 
       yield put(
@@ -135,9 +119,7 @@ export class ManageSaga extends ProtectedSaga {
   private *allowFetchCategory(
     filterCondition: CategoryFilterCondition,
     sortType: CategorySortType,
-    limitOfCategorized: number,
-    spacedRepetitionMaxLevel: number,
-    writingMaxLevel: number
+    limitOfCategorized: number
   ): IterableIterator<any> {
     let offsetOfCategorized = 0;
     let shouldIncludeUncategorized = true;
@@ -148,61 +130,23 @@ export class ManageSaga extends ProtectedSaga {
         yield put(createAction(ActionType.MANAGE__FETCHING_CATEGORY, null));
 
         let categoryList;
-        if (filterCondition.filterBy === 'VocabularyStatus') {
-          const { setId, vocabularyStatus } = filterCondition;
 
-          const result: PromiseType<
-            ReturnType<CategoryModel['getCategoryListByVocabularyStatus']>
-          > = yield call(
-            [this.categoryModel, 'getCategoryListByVocabularyStatus'],
-            this.userDb,
-            setId,
-            vocabularyStatus,
-            sortType,
-            limitOfCategorized,
-            offsetOfCategorized,
-            shouldIncludeUncategorized
-          );
+        const { setId, vocabularyStatus } = filterCondition;
 
-          categoryList = result.categoryList;
-        } else {
-          const { setId, initialInterval, dueType } = filterCondition;
-          if (dueType === VocabularyDueType.DUE_BY_SPACED_REPETITION) {
-            const result: PromiseType<
-              ReturnType<SpacedRepetitionModel['getDueCategoryList']>
-            > = yield call(
-              [this.spacedRepetitionModel, 'getDueCategoryList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              spacedRepetitionMaxLevel,
-              sortType,
-              limitOfCategorized,
-              offsetOfCategorized,
-              shouldIncludeUncategorized
-            );
+        const result: PromiseType<
+          ReturnType<CategoryModel['getCategoryListByVocabularyStatus']>
+        > = yield call(
+          [this.categoryModel, 'getCategoryListByVocabularyStatus'],
+          this.userDb,
+          setId,
+          vocabularyStatus,
+          sortType,
+          limitOfCategorized,
+          offsetOfCategorized,
+          shouldIncludeUncategorized
+        );
 
-            categoryList = result.categoryList;
-          } else if (dueType === VocabularyDueType.DUE_BY_WRITING) {
-            const result: PromiseType<
-              ReturnType<WritingModel['getDueCategoryList']>
-            > = yield call(
-              [this.writingModel, 'getDueCategoryList'],
-              this.userDb,
-              setId,
-              initialInterval,
-              writingMaxLevel,
-              sortType,
-              limitOfCategorized,
-              offsetOfCategorized,
-              shouldIncludeUncategorized
-            );
-
-            categoryList = result.categoryList;
-          } else {
-            throw new Error('Unknown due type');
-          }
-        }
+        categoryList = result.categoryList;
 
         const categoryListWithoutUncategorized = categoryList.filter(
           (category: Category): boolean => {
@@ -229,6 +173,174 @@ export class ManageSaga extends ProtectedSaga {
           })
         );
       }
+    }
+  }
+
+  public *allowFetchSpacedRepetitionDueAndNewCounts(
+    maxLevel: number
+  ): IterableIterator<any> {
+    while (true) {
+      const action = yield take(
+        ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS
+      );
+      const { setId, initialInterval, categoryNames } = action.payload;
+
+      yield fork(
+        [this, this.fetchSpacedRepetitionDueAndNewCounts],
+        setId,
+        maxLevel,
+        initialInterval,
+        categoryNames
+      );
+    }
+  }
+
+  public *fetchSpacedRepetitionDueAndNewCounts(
+    setId: string,
+    maxLevel: number,
+    initialInterval: number,
+    categoryNames: string[]
+  ): IterableIterator<any> {
+    try {
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCHING_SPACED_REPETITION_DUE_AND_NEW_COUNTS,
+          null
+        )
+      );
+
+      const newCount: PromiseType<
+        ReturnType<SpacedRepetitionModel['getNewCountByCategoryNames']>
+      > = yield call(
+        [this.spacedRepetitionModel, 'getNewCountByCategoryNames'],
+        this.userDb,
+        setId,
+        categoryNames
+      );
+
+      const dueCount: PromiseType<
+        ReturnType<SpacedRepetitionModel['getDueCountByCategoryNames']>
+      > = yield call(
+        [this.spacedRepetitionModel, 'getDueCountByCategoryNames'],
+        this.userDb,
+        setId,
+        initialInterval,
+        maxLevel,
+        categoryNames
+      );
+
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_SUCCEEDED,
+          _.fromPairs(
+            categoryNames.map(
+              (categoryName): [string, { due: number; new: number }] => {
+                return [
+                  categoryName,
+                  {
+                    due: dueCount[categoryName] || 0,
+                    new: newCount[categoryName] || 0,
+                  },
+                ];
+              }
+            )
+          )
+        )
+      );
+    } catch (error) {
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_FAILED,
+          {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          }
+        )
+      );
+    }
+  }
+
+  public *allowFetchWritingDueAndNewCounts(
+    maxLevel: number
+  ): IterableIterator<any> {
+    while (true) {
+      const action = yield take(
+        ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS
+      );
+      const { setId, initialInterval, categoryNames } = action.payload;
+
+      yield fork(
+        [this, this.fetchWritingDueAndNewCounts],
+        setId,
+        maxLevel,
+        initialInterval,
+        categoryNames
+      );
+    }
+  }
+
+  public *fetchWritingDueAndNewCounts(
+    setId: string,
+    maxLevel: number,
+    initialInterval: number,
+    categoryNames: string[]
+  ): IterableIterator<any> {
+    try {
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCHING_WRITING_DUE_AND_NEW_COUNTS,
+          null
+        )
+      );
+
+      const newCount: PromiseType<
+        ReturnType<WritingModel['getNewCountByCategoryNames']>
+      > = yield call(
+        [this.writingModel, 'getNewCountByCategoryNames'],
+        this.userDb,
+        setId,
+        categoryNames
+      );
+
+      const dueCount: PromiseType<
+        ReturnType<WritingModel['getDueCountByCategoryNames']>
+      > = yield call(
+        [this.writingModel, 'getDueCountByCategoryNames'],
+        this.userDb,
+        setId,
+        initialInterval,
+        maxLevel,
+        categoryNames
+      );
+
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_SUCCEEDED,
+          _.fromPairs(
+            categoryNames.map(
+              (categoryName): [string, { due: number; new: number }] => {
+                return [
+                  categoryName,
+                  {
+                    due: dueCount[categoryName] || 0,
+                    new: newCount[categoryName] || 0,
+                  },
+                ];
+              }
+            )
+          )
+        )
+      );
+    } catch (error) {
+      yield put(
+        createAction(
+          ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_FAILED,
+          {
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          }
+        )
+      );
     }
   }
 }

@@ -5,10 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
 
 export const VocabularyFilterMenuIds = {
   FILTER_MENU: 'VOCABULARY_FILTER_MENU',
-  FILTER_BTN_BY_FILTER_TYPE: (filterType: VocabularyFilterType): string =>
-    'FILTER_BTN_BY_FILTER_TYPE_' + filterType,
+  FILTER_BTN_BY_VOCABULARY_STATUS: (
+    vocabularyStatus: VocabularyStatus,
+  ): string => 'FILTER_BTN_BY_VOCABULARY_STATUS_' + vocabularyStatus,
 };

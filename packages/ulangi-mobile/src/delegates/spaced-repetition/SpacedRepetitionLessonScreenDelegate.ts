@@ -36,6 +36,7 @@ import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
+import { SpacedRepetitionCountsDelegate } from './SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionSaveResultDelegate } from './SpacedRepetitionSaveResultDelegate';
 
 @boundClass
@@ -49,6 +50,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private reviewIterator: ReviewIterator;
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
   private saveResultDelegate: SpacedRepetitionSaveResultDelegate;
+  private countsDelegate: SpacedRepetitionCountsDelegate;
   private speakDelegate: SpeakDelegate;
   private adDelegate: AdDelegate;
   private adAfterLessonDelegate: AdAfterLessonDelegate;
@@ -56,6 +58,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
+  private currentCategoryNames: undefined | readonly string[];
   private startLesson: () => void;
 
   public constructor(
@@ -66,6 +69,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     reviewIterator: ReviewIterator,
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
     saveResultDelegate: SpacedRepetitionSaveResultDelegate,
+    countsDelegate: SpacedRepetitionCountsDelegate,
     speakDelegate: SpeakDelegate,
     adDelegate: AdDelegate,
     adAfterLessonDelegate: AdAfterLessonDelegate,
@@ -73,6 +77,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
+    currentCategoryNames: undefined | readonly string[],
     startLesson: () => void,
   ) {
     this.observer = observer;
@@ -82,6 +87,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.reviewIterator = reviewIterator;
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
     this.saveResultDelegate = saveResultDelegate;
+    this.countsDelegate = countsDelegate;
     this.speakDelegate = speakDelegate;
     this.adDelegate = adDelegate;
     this.adAfterLessonDelegate = adAfterLessonDelegate;
@@ -89,6 +95,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
+    this.currentCategoryNames = currentCategoryNames;
     this.startLesson = startLesson;
   }
 
@@ -221,7 +228,10 @@ export class SpacedRepetitionLessonScreenDelegate {
       vocabularyList: this.observableScreen.vocabularyList,
       originalFeedbackList: this.observableScreen.feedbackListState
         .feedbackList,
-      onSaveSucceeded: this.updateFeedbackList,
+      onSaveSucceeded: (feedbackList: ReadonlyMap<string, Feedback>): void => {
+        this.updateFeedbackList(feedbackList);
+        this.refreshDueAndNewCounts();
+      },
     });
   }
 
@@ -232,11 +242,31 @@ export class SpacedRepetitionLessonScreenDelegate {
       },
       onSaveSucceeded: (): void => {
         this.observableScreen.saveState.set(ActivityState.INACTIVE);
+        this.refreshDueAndNewCounts();
       },
       onSaveFailed: (): void => {
         this.observableScreen.saveState.set(ActivityState.ERROR);
       },
     });
+  }
+
+  private refreshDueAndNewCounts(): void {
+    this.countsDelegate.refreshDueAndNewCounts(
+      typeof this.currentCategoryNames !== 'undefined'
+        ? this.currentCategoryNames.slice()
+        : undefined,
+      (dueCount, newCount): void => {
+        this.observableScreen.counts = {
+          due: dueCount,
+          new: newCount,
+        };
+      },
+    );
+  }
+
+  public clearDueAndNewCounts(): void {
+    this.observableScreen.counts = undefined;
+    this.countsDelegate.clearDueAndNewCounts();
   }
 
   public goToAccountTypeScreen(): void {

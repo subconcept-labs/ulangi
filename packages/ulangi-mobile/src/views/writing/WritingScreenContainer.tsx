@@ -82,6 +82,14 @@ export class WritingScreenContainer extends Container<
     );
   }
 
+  public componentDidAppear(): void {
+    this.screenDelegate.refreshDueAndNewCounts();
+  }
+
+  public componentWillUnmount(): void {
+    this.screenDelegate.clearDueAndNewCounts();
+  }
+
   protected onThemeChanged(theme: Theme): void {
     this.navigatorDelegate.mergeOptions(
       theme === Theme.LIGHT

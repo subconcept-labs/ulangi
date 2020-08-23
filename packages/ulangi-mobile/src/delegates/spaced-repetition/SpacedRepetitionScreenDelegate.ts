@@ -24,6 +24,7 @@ import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { SpacedRepetitionCountsDelegate } from './SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
 
 @boundClass
@@ -33,6 +34,7 @@ export class SpacedRepetitionScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableSpacedRepetitionScreen;
   private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
+  private spacedRepetitionCountsDelegate: SpacedRepetitionCountsDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -42,6 +44,7 @@ export class SpacedRepetitionScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableSpacedRepetitionScreen,
     spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
+    spacedRepetitionCountsDelegate: SpacedRepetitionCountsDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -50,6 +53,7 @@ export class SpacedRepetitionScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
+    this.spacedRepetitionCountsDelegate = spacedRepetitionCountsDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -96,6 +100,9 @@ export class SpacedRepetitionScreenDelegate {
                       ];
                     },
                   ),
+                ),
+                currentCategoryNames: toJS(
+                  this.observableScreen.selectedCategoryNames,
                 ),
                 startLesson: (): void => this.startLesson(false),
               },
@@ -152,8 +159,29 @@ export class SpacedRepetitionScreenDelegate {
         this.observableScreen.selectedCategoryNames = observable.array([
           categoryName,
         ]);
+
+        this.refreshDueAndNewCounts();
       },
     });
+  }
+
+  public refreshDueAndNewCounts(): void {
+    this.spacedRepetitionCountsDelegate.refreshDueAndNewCounts(
+      typeof this.observableScreen.selectedCategoryNames !== 'undefined'
+        ? this.observableScreen.selectedCategoryNames.slice()
+        : undefined,
+      (dueCount, newCount): void => {
+        this.observableScreen.counts = {
+          due: dueCount,
+          new: newCount,
+        };
+      },
+    );
+  }
+
+  public clearDueAndNewCounts(): void {
+    this.observableScreen.counts = undefined;
+    this.spacedRepetitionCountsDelegate.clearDueAndNewCounts();
   }
 
   private showPreparingDialog(): void {

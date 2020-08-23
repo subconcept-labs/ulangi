@@ -9,8 +9,6 @@ import { Options } from '@ulangi/react-native-navigation';
 import {
   LightBoxState,
   ScreenName,
-  VocabularyDueType,
-  VocabularyFilterType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
@@ -27,9 +25,7 @@ import { CategoryBulkActionMenuIds } from '../../constants/ids/CategoryBulkActio
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SetSelectionMenuDelegate } from '../set/SetSelectionMenuDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyBulkEditDelegate } from '../vocabulary/VocabularyBulkEditDelegate';
-import { WritingSettingsDelegate } from '../writing/WritingSettingsDelegate';
 
 export class CategoryBulkActionMenuDelegate {
   private observer: Observer;
@@ -37,8 +33,6 @@ export class CategoryBulkActionMenuDelegate {
   private observableLightBox: ObservableLightBox;
   private vocabularyBulkEditDelegate: VocabularyBulkEditDelegate;
   private setSelectionMenuDelegate: SetSelectionMenuDelegate;
-  private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
-  private writingSettingsDelegate: WritingSettingsDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private styles: {
@@ -52,8 +46,6 @@ export class CategoryBulkActionMenuDelegate {
     observableLightBox: ObservableLightBox,
     vocabularyBulkEditDelegate: VocabularyBulkEditDelegate,
     setSelectionMenuDelegate: SetSelectionMenuDelegate,
-    spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    writingSettingsDelegate: WritingSettingsDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     styles: {
@@ -66,15 +58,13 @@ export class CategoryBulkActionMenuDelegate {
     this.observableLightBox = observableLightBox;
     this.vocabularyBulkEditDelegate = vocabularyBulkEditDelegate;
     this.setSelectionMenuDelegate = setSelectionMenuDelegate;
-    this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
-    this.writingSettingsDelegate = writingSettingsDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
     this.styles = styles;
   }
 
   public show(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryList: null | ObservableMap<string, ObservableCategory>,
     selectedCategoryNames: string[],
     options: {
@@ -90,38 +80,53 @@ export class CategoryBulkActionMenuDelegate {
     items.push(this.getSelectAllFetchedCategoriesBtn(categoryList));
 
     items.push(
-      this.getRecategorizeAllTermsButton(filterType, selectedCategoryNames),
+      this.getRecategorizeAllTermsButton(
+        vocabularyStatus,
+        selectedCategoryNames,
+      ),
     );
 
-    items.push(this.getMoveAllTermsButton(filterType, selectedCategoryNames));
+    items.push(
+      this.getMoveAllTermsButton(vocabularyStatus, selectedCategoryNames),
+    );
 
-    switch (filterType) {
-      case VocabularyFilterType.ACTIVE:
-      case VocabularyFilterType.DUE_BY_SPACED_REPETITION:
-      case VocabularyFilterType.DUE_BY_WRITING:
+    switch (vocabularyStatus) {
+      case VocabularyStatus.ACTIVE:
         items.push(
-          this.getArchiveAllTermsButton(filterType, selectedCategoryNames),
+          this.getArchiveAllTermsButton(
+            vocabularyStatus,
+            selectedCategoryNames,
+          ),
         );
         items.push(
-          this.getDeleteAllTermsButton(filterType, selectedCategoryNames),
+          this.getDeleteAllTermsButton(vocabularyStatus, selectedCategoryNames),
         );
         break;
 
-      case VocabularyFilterType.ARCHIVED:
+      case VocabularyStatus.ARCHIVED:
         items.push(
-          this.getRestoreAllTermsButton(filterType, selectedCategoryNames),
+          this.getRestoreAllTermsButton(
+            vocabularyStatus,
+            selectedCategoryNames,
+          ),
         );
         items.push(
-          this.getDeleteAllTermsButton(filterType, selectedCategoryNames),
+          this.getDeleteAllTermsButton(vocabularyStatus, selectedCategoryNames),
         );
         break;
 
-      case VocabularyFilterType.DELETED:
+      case VocabularyStatus.DELETED:
         items.push(
-          this.getRestoreAllTermsButton(filterType, selectedCategoryNames),
+          this.getRestoreAllTermsButton(
+            vocabularyStatus,
+            selectedCategoryNames,
+          ),
         );
         items.push(
-          this.getArchiveAllTermsButton(filterType, selectedCategoryNames),
+          this.getArchiveAllTermsButton(
+            vocabularyStatus,
+            selectedCategoryNames,
+          ),
         );
         break;
     }
@@ -183,7 +188,7 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   private getRecategorizeAllTermsButton(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): SelectionItem {
     return {
@@ -196,7 +201,7 @@ export class CategoryBulkActionMenuDelegate {
           initialCategoryName: undefined,
           onSelect: (newCategoryName): void => {
             this.vocabularyBulkEditDelegate.bulkEdit(
-              this.generateFilterCondition(filterType, categoryNames),
+              this.generateFilterCondition(vocabularyStatus, categoryNames),
               {
                 type: 'recategorize',
                 newCategoryName,
@@ -224,7 +229,7 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   private getMoveAllTermsButton(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): SelectionItem {
     return {
@@ -240,7 +245,7 @@ export class CategoryBulkActionMenuDelegate {
             this.setSelectionMenuDelegate.showActiveSets(
               (selectedSetId): void => {
                 this.vocabularyBulkEditDelegate.bulkEdit(
-                  this.generateFilterCondition(filterType, categoryNames),
+                  this.generateFilterCondition(vocabularyStatus, categoryNames),
                   {
                     type: 'moveToSet',
                     newSetId: selectedSetId,
@@ -275,7 +280,7 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   private getRestoreAllTermsButton(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): SelectionItem {
     return {
@@ -284,7 +289,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateFilterCondition(filterType, categoryNames),
+          this.generateFilterCondition(vocabularyStatus, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.ACTIVE,
@@ -310,7 +315,7 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   private getArchiveAllTermsButton(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): SelectionItem {
     return {
@@ -319,7 +324,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateFilterCondition(filterType, categoryNames),
+          this.generateFilterCondition(vocabularyStatus, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.ARCHIVED,
@@ -345,7 +350,7 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   private getDeleteAllTermsButton(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): SelectionItem {
     return {
@@ -355,7 +360,7 @@ export class CategoryBulkActionMenuDelegate {
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.vocabularyBulkEditDelegate.bulkEdit(
-          this.generateFilterCondition(filterType, categoryNames),
+          this.generateFilterCondition(vocabularyStatus, categoryNames),
           {
             type: 'changeStatus',
             newVocabularyStatus: VocabularyStatus.DELETED,
@@ -462,73 +467,26 @@ export class CategoryBulkActionMenuDelegate {
   }
 
   /*
-  private getAutoplayBtn(
-    selectedCategoryNames: string[]
-  ): SelectionItem {
-    return {
-      testID: CategoryBulkActionMenuIds.AUTOPLAY_BTN,
-      text: 'Autoplay',
-      onPress: (): void => {
-        this.navigatorDelegate.dismissLightBox();
-        // Wait for light box to closed first, otherwise app will crash
-        when(
-          (): boolean => this.observableLightBox.state === "unmounted",
-          (): void => {
-            this.navigatorDelegate.push(ScreenName.FLASHCARD_PLAYER_SCREEN, {
-              selectedCategoryNames: selectedCategoryNames.slice(),
-            });
-          }
-        )
-      },
-    };
-  }
-  */
-
-  /*
-  private getAdjectiveByFilterType(filterType: VocabularyFilterType): string {
-    switch (filterType) {
-      case VocabularyFilterType.ACTIVE:
+  private getAdjectiveByFilterType(vocabularyStatus: VocabularyStatus): string {
+    switch (vocabularyStatus) {
+      case VocabularyStatus.ACTIVE:
         return 'active';
 
-      case VocabularyFilterType.ARCHIVED:
+      case VocabularyStatus.ARCHIVED:
         return 'archived';
 
-      case VocabularyFilterType.DELETED:
+      case VocabularyStatus.DELETED:
         return 'archived';
-
-      case VocabularyFilterType.DUE_BY_SPACED_REPETITION:
-      case VocabularyFilterType.DUE_BY_WRITING:
-        return 'due';
     }
   }
   */
 
   private generateFilterCondition(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames: string[],
   ): VocabularyFilterCondition {
-    switch (filterType) {
-      case VocabularyFilterType.DUE_BY_SPACED_REPETITION:
-        return {
-          filterBy: 'VocabularyDueType',
-          setId: this.setStore.existingCurrentSetId,
-          dueType: VocabularyDueType.DUE_BY_SPACED_REPETITION,
-          initialInterval: this.spacedRepetitionSettingsDelegate.getCurrentSettings()
-            .initialInterval,
-          categoryNames,
-        };
-
-      case VocabularyFilterType.DUE_BY_WRITING:
-        return {
-          filterBy: 'VocabularyDueType',
-          setId: this.setStore.existingCurrentSetId,
-          dueType: VocabularyDueType.DUE_BY_WRITING,
-          initialInterval: this.writingSettingsDelegate.getCurrentSettings()
-            .initialInterval,
-          categoryNames,
-        };
-
-      case VocabularyFilterType.ACTIVE:
+    switch (vocabularyStatus) {
+      case VocabularyStatus.ACTIVE:
         return {
           filterBy: 'VocabularyStatus',
           setId: this.setStore.existingCurrentSetId,
@@ -536,7 +494,7 @@ export class CategoryBulkActionMenuDelegate {
           categoryNames,
         };
 
-      case VocabularyFilterType.ARCHIVED:
+      case VocabularyStatus.ARCHIVED:
         return {
           filterBy: 'VocabularyStatus',
           setId: this.setStore.existingCurrentSetId,
@@ -544,7 +502,7 @@ export class CategoryBulkActionMenuDelegate {
           categoryNames,
         };
 
-      case VocabularyFilterType.DELETED:
+      case VocabularyStatus.DELETED:
         return {
           filterBy: 'VocabularyStatus',
           setId: this.setStore.existingCurrentSetId,

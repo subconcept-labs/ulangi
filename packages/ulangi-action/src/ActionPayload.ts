@@ -284,7 +284,32 @@ export interface ActionPayload {
   };
   readonly MANAGE__FETCH_CATEGORY_FAILED: ErrorBag;
   readonly MANAGE__CLEAR_FETCH_CATEGORY: null;
-  readonly MANAGE__RESET: null;
+  readonly MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS: {
+    setId: string;
+    initialInterval: number;
+    categoryNames: string[];
+  };
+  readonly MANAGE__FETCHING_SPACED_REPETITION_DUE_AND_NEW_COUNTS: null;
+  readonly MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_SUCCEEDED: {
+    [P: string]: {
+      due: number;
+      new: number;
+    };
+  };
+  readonly MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_FAILED: ErrorBag;
+  readonly MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS: {
+    setId: string;
+    initialInterval: number;
+    categoryNames: string[];
+  };
+  readonly MANAGE__FETCHING_WRITING_DUE_AND_NEW_COUNTS: null;
+  readonly MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_SUCCEEDED: {
+    [P: string]: {
+      due: number;
+      new: number;
+    };
+  };
+  readonly MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_FAILED: ErrorBag;
 
   readonly NETWORK__CHECK_CONNECTION: null;
   readonly NETWORK__CHECKING_CONNECTION: null;
@@ -417,6 +442,18 @@ export interface ActionPayload {
   readonly SET__HAS_REMOTE_UPDATE: null;
   readonly SET__RECEIVE_REMOTE_UPDATE: { set: Set };
 
+  readonly SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS: {
+    setId: string;
+    initialInterval: number;
+    categoryNames: undefined | string[];
+  };
+  readonly SPACED_REPETITION__FETCHING_DUE_AND_NEW_COUNTS: null;
+  readonly SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS_SUCCEEDED: {
+    dueCount: number;
+    newCount: number;
+  };
+  readonly SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS_FAILED: ErrorBag;
+  readonly SPACED_REPETITION__CLEAR_DUE_AND_NEW_COUNTS: null;
   readonly SPACED_REPETITION__FETCH_VOCABULARY: {
     setId: string;
     initialInterval: number;
@@ -651,6 +688,18 @@ export interface ActionPayload {
   readonly VOCABULARY__FETCH_FAILED: ErrorBag;
   readonly VOCABULARY__CLEAR_FETCH: null;
 
+  readonly WRITING__FETCH_DUE_AND_NEW_COUNTS: {
+    setId: string;
+    initialInterval: number;
+    categoryNames: undefined | string[];
+  };
+  readonly WRITING__FETCHING_DUE_AND_NEW_COUNTS: null;
+  readonly WRITING__FETCH_DUE_AND_NEW_COUNTS_SUCCEEDED: {
+    dueCount: number;
+    newCount: number;
+  };
+  readonly WRITING__FETCH_DUE_AND_NEW_COUNTS_FAILED: ErrorBag;
+  readonly WRITING__CLEAR_DUE_AND_NEW_COUNTS: null;
   readonly WRITING__FETCH_VOCABULARY: {
     setId: string;
     initialInterval: number;

@@ -65,6 +65,7 @@ export class SpacedRepetitionLessonScreen extends React.Component<
             screenLayout={this.props.observableScreen.screenLayout}
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
+            counts={this.props.observableScreen.counts}
             shouldShowAdOrGoogleConsentForm={
               this.props.observableScreen.shouldShowAdOrGoogleConsentForm
             }

@@ -18,6 +18,7 @@ import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/Revie
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
 import { SpeakDelegate } from '../../delegates/vocabulary/SpeakDelegate';
+import { WritingCountsDelegate } from '../../delegates/writing/WritingCountsDelegate';
 import { WritingFormDelegate } from '../../delegates/writing/WritingFormDelegate';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
 import { WritingSaveResultDelegate } from '../../delegates/writing/WritingSaveResultDelegate';
@@ -37,6 +38,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableWritingLessonScreen,
     questionIterator: WritingQuestionIterator,
+    currentCategoryNames: undefined | readonly string[],
     startLesson: () => void,
   ): WritingLessonScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
@@ -88,6 +90,12 @@ export class WritingLessonScreenFactory extends ScreenFactory {
 
     const writingSettingsDelegate = this.createWritingSettingsDelegate();
 
+    const countsDelegate = new WritingCountsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+      writingSettingsDelegate,
+    );
+
     const reviewActionMenuDelegate = new ReviewActionMenuDelegate(
       this.eventBus,
       this.props.observableLightBox,
@@ -119,6 +127,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       observableScreen,
       questionIterator,
       saveResultDelegate,
+      countsDelegate,
       writingFormDelegate,
       reviewFeedbackBarDelegate,
       speakDelegate,
@@ -128,6 +137,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,
+      currentCategoryNames,
       startLesson,
     );
   }

@@ -10,8 +10,8 @@ import {
   ActivityState,
   ScreenName,
   Theme,
-  VocabularyFilterType,
   VocabularySortType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import {
@@ -32,7 +32,7 @@ import { CategoryDetailScreen } from './CategoryDetailScreen';
 import { CategoryDetailScreenStyle } from './CategoryDetailScreenContainer.style';
 
 export interface CategoryDetailScreenPassedProps {
-  readonly selectedFilterType: VocabularyFilterType;
+  readonly selectedVocabularyStatus: VocabularyStatus;
   readonly category: Category;
 }
 
@@ -56,7 +56,7 @@ export class CategoryDetailScreenContainer extends Container<
     this.props.observableConverter.convertToObservableCategory(
       this.props.passedProps.category,
     ),
-    observable.box(this.props.passedProps.selectedFilterType),
+    observable.box(this.props.passedProps.selectedVocabularyStatus),
     observable.box(VocabularySortType.SORT_BY_NAME_ASC),
     new ObservableVocabularyListState(
       null,

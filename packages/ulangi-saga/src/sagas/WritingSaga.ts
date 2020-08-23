@@ -24,7 +24,8 @@ import {
 } from '@ulangi/ulangi-local-database';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { call, fork, put, take } from 'redux-saga/effects';
+import { Task } from 'redux-saga';
+import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 import * as uuid from 'uuid';
 
@@ -35,6 +36,8 @@ import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class WritingSaga extends ProtectedSaga {
+  private fetchDueAndNewCountsTask?: Task;
+
   private sequenceStrategy = new LevelSequenceStrategy();
   private writingScheduler = new WritingScheduler();
 
@@ -58,6 +61,10 @@ export class WritingSaga extends ProtectedSaga {
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork([this, this.allowFetchVocabulary], config.writing.minPerLesson);
+    yield fork(
+      [this, this.allowFetchAndClearDueAndNewCounts],
+      config.writing.maxLevel
+    );
     yield fork([this, this.allowSaveResult], config.writing.maxLevel);
   }
 
@@ -125,6 +132,80 @@ export class WritingSaga extends ProtectedSaga {
         yield put(
           createAction(ActionType.WRITING__FETCH_VOCABULARY_FAILED, {
             setId,
+            errorCode: errorConverter.getErrorCode(error),
+            error,
+          })
+        );
+      }
+    }
+  }
+
+  public *allowFetchAndClearDueAndNewCounts(
+    maxLevel: number
+  ): IterableIterator<any> {
+    this.fetchDueAndNewCountsTask = yield fork(
+      [this, this.allowFetchDueAndNewCounts],
+      maxLevel
+    );
+    yield fork([this, this.allowClearDueAndNewCounts], maxLevel);
+  }
+
+  private *allowClearDueAndNewCounts(maxLevel: number): IterableIterator<any> {
+    while (true) {
+      yield take(ActionType.WRITING__CLEAR_DUE_AND_NEW_COUNTS);
+      if (typeof this.fetchDueAndNewCountsTask !== 'undefined') {
+        yield cancel(this.fetchDueAndNewCountsTask);
+      }
+
+      this.fetchDueAndNewCountsTask = yield fork(
+        [this, this.allowFetchDueAndNewCounts],
+        maxLevel
+      );
+    }
+  }
+
+  public *allowFetchDueAndNewCounts(maxLevel: number): IterableIterator<any> {
+    while (true) {
+      const action: Action<
+        ActionType.WRITING__FETCH_DUE_AND_NEW_COUNTS
+      > = yield take(ActionType.WRITING__FETCH_DUE_AND_NEW_COUNTS);
+
+      const { setId, initialInterval, categoryNames } = action.payload;
+
+      try {
+        yield put(
+          createAction(ActionType.WRITING__FETCHING_DUE_AND_NEW_COUNTS, null)
+        );
+
+        const newCount: PromiseType<
+          ReturnType<WritingModel['getNewCount']>
+        > = yield call(
+          [this.writingModel, 'getNewCount'],
+          this.userDb,
+          setId,
+          categoryNames
+        );
+
+        const dueCount: PromiseType<
+          ReturnType<WritingModel['getDueCount']>
+        > = yield call(
+          [this.writingModel, 'getDueCount'],
+          this.userDb,
+          setId,
+          initialInterval,
+          maxLevel,
+          categoryNames
+        );
+
+        yield put(
+          createAction(ActionType.WRITING__FETCH_DUE_AND_NEW_COUNTS_SUCCEEDED, {
+            dueCount,
+            newCount,
+          })
+        );
+      } catch (error) {
+        yield put(
+          createAction(ActionType.WRITING__FETCH_DUE_AND_NEW_COUNTS_FAILED, {
             errorCode: errorConverter.getErrorCode(error),
             error,
           })
@@ -244,7 +325,7 @@ export class WritingSaga extends ProtectedSaga {
     initialInterval: number,
     selectedCategoryNames: undefined | string[],
     excludedCategoryNames: undefined | string[],
-    levelSequence: readonly number[],
+    levelSequence: readonly (undefined | number)[],
     limit: number
   ): IterableIterator<any> {
     let vocabularyList: Vocabulary[] = [];
@@ -253,13 +334,13 @@ export class WritingSaga extends ProtectedSaga {
     // Fetch vocabulary by each level until the limit is reached
 
     while (levels.length > 0 && vocabularyList.length < limit) {
-      const currentLevel = assertExists(levels.shift());
+      const currentLevel = levels.shift();
       const remain = limit - vocabularyList.length;
 
       const result: PromiseType<
-        ReturnType<WritingModel['getDueVocabularyList']>
+        ReturnType<WritingModel['getVocabularyListByLevel']>
       > = yield call(
-        [this.writingModel, 'getDueVocabularyListByLevel'],
+        [this.writingModel, 'getVocabularyListByLevel'],
         this.userDb,
         setId,
         currentLevel,

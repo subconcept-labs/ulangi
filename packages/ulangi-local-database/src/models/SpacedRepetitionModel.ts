@@ -8,28 +8,23 @@
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
 import {
-  CategorySortType,
   VocabularySortType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
-import { Category, Vocabulary } from '@ulangi/ulangi-common/interfaces';
-import { CategoryResolver } from '@ulangi/ulangi-common/resolvers';
+import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as squel from 'squel';
 
 import { TableName } from '../enums/TableName';
-import { VocabularyRow } from '../interfaces/VocabularyRow';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
 import { addCategoryConditions } from '../utils/addCategoryConditions';
-import { addLevelCountAggregation } from '../utils/addLevelCountAggregation';
 import { addVocabularySorting } from '../utils/addVocabularySorting';
 import { VocabularyModel } from './VocabularyModel';
 
 export class SpacedRepetitionModel {
   private spacedRepetitionScheduler = new SpacedRepetitionScheduler();
   private vocabularyRowResolver = new VocabularyRowResolver();
-  private categoryResolver = new CategoryResolver();
 
   private vocabularyModel: VocabularyModel;
 
@@ -37,14 +32,10 @@ export class SpacedRepetitionModel {
     this.vocabularyModel = vocabularyModel;
   }
 
-  /**
-   * When level is 0, simply fetch by level
-   * When level > 0, we have to compare lastLearnedAt with the waiting time of that level
-   */
-  public getDueVocabularyListByLevel(
+  public getVocabularyListByLevel(
     db: SQLiteDatabase,
     setId: string,
-    level: number,
+    level: undefined | number,
     initialInterval: number,
     limit: number,
     stripUnknown: boolean,
@@ -52,12 +43,11 @@ export class SpacedRepetitionModel {
     excludedCategoryNames: undefined | string[]
   ): Promise<{
     vocabularyList: readonly Vocabulary[];
-    vocabularyRows: readonly VocabularyRow[];
   }> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
-          let buildingQuery = squel
+          let query = squel
             .select()
             .field('v.*')
             .from(TableName.VOCABULARY, 'v');
@@ -66,36 +56,43 @@ export class SpacedRepetitionModel {
             typeof selectedCategoryNames !== 'undefined' ||
             typeof excludedCategoryNames !== 'undefined'
           ) {
-            buildingQuery = addCategoryConditions(
-              buildingQuery,
+            query = addCategoryConditions(
+              query,
               selectedCategoryNames,
               excludedCategoryNames
             );
           }
 
-          if (level > 0) {
+          if (typeof level !== 'undefined') {
+            query = query.where('v.level = ?', level);
+
             // The number of hours that user has to wait for this level. Note that the number is doubled on each level
             const hours = this.spacedRepetitionScheduler.calculateWaitingHours(
               initialInterval,
               level
             );
-            buildingQuery = buildingQuery.where(
-              'v.lastLearnedAt IS NULL OR v.lastLearnedAt < ?',
-              moment
-                .utc()
+
+            query = query.where(
+              'v.lastLearnedAt IS NOT NULL AND v.lastLearnedAt < ?',
+              moment()
                 .subtract(hours, 'hours')
                 .unix()
             );
+          } else {
+            query = query.where('v.lastLearnedAt IS NULL');
           }
 
-          const query = buildingQuery
+          query = query
             .where('v.setId = ?', setId)
-            .where('v.level = ?', level)
             .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
-            .limit(limit)
-            .toParam();
+            .limit(limit);
 
-          const result = await db.executeSql(query.text, query.values);
+          const queryParam = query.toParam();
+
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
+          );
 
           const vocabularyRows = this.vocabularyRowResolver.resolveArray(
             result.rows.slice(),
@@ -108,7 +105,191 @@ export class SpacedRepetitionModel {
             stripUnknown
           );
 
-          resolve({ vocabularyList, vocabularyRows });
+          resolve({ vocabularyList });
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
+  public getNewVocabularyList(
+    db: SQLiteDatabase,
+    setId: string,
+    categoryNames: undefined | string[],
+    sortType: VocabularySortType,
+    limit: number,
+    offset: number,
+    stripUnknown: boolean
+  ): Promise<{
+    vocabularyList: readonly Vocabulary[];
+  }> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          let query = squel
+            .select()
+            .field('v.*')
+            .from(TableName.VOCABULARY, 'v');
+
+          if (typeof categoryNames !== 'undefined') {
+            query = query.left_join(
+              TableName.VOCABULARY_CATEGORY,
+              'c',
+              'v.vocabularyId = c.vocabularyId'
+            );
+            query = _.includes(categoryNames, 'Uncategorized')
+              ? query.where(
+                  'c.categoryName IN ? OR c.categoryName IS NULL',
+                  categoryNames
+                )
+              : query.where('c.categoryName IN ?', categoryNames);
+          }
+
+          query = query
+            .where('v.setId = ?', setId)
+            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE);
+
+          query = query.where('v.lastLearnedAt IS NULL');
+          query = addVocabularySorting(query, sortType);
+          query = query.limit(limit).offset(offset);
+
+          const queryParam = query.toParam();
+
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
+          );
+
+          const vocabularyRows = this.vocabularyRowResolver.resolveArray(
+            result.rows.slice(),
+            stripUnknown
+          );
+
+          const vocabularyList = await this.vocabularyModel.getCompleteVocabularyListByRows(
+            db,
+            vocabularyRows,
+            stripUnknown
+          );
+
+          resolve({ vocabularyList });
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
+  public getNewCount(
+    db: SQLiteDatabase,
+    setId: string,
+    categoryNames: undefined | string[]
+  ): Promise<number> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          let query = squel
+            .select()
+            .field('COUNT(v.vocabularyId)', 'newCount')
+            .from(TableName.VOCABULARY, 'v');
+
+          if (typeof categoryNames !== 'undefined') {
+            query = query.left_join(
+              TableName.VOCABULARY_CATEGORY,
+              'c',
+              'v.vocabularyId = c.vocabularyId'
+            );
+            query = _.includes(categoryNames, 'Uncategorized')
+              ? query.where(
+                  'c.categoryName IN ? OR c.categoryName IS NULL',
+                  categoryNames
+                )
+              : query.where('c.categoryName IN ?', categoryNames);
+          }
+
+          query = query
+            .where('v.setId = ?', setId)
+            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
+            .where('v.lastLearnedAt IS NULL');
+
+          const queryParam = query.toParam();
+
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
+          );
+
+          resolve(parseInt(result.rows[0].newCount));
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
+
+  public getNewCountByCategoryNames(
+    db: SQLiteDatabase,
+    setId: string,
+    categoryNames: string[]
+  ): Promise<{ [P in string]: number }> {
+    return new Promise(
+      async (resolve, reject): Promise<void> => {
+        try {
+          let query = squel
+            .select()
+            .field("IFNULL(c.categoryName, 'Uncategorized')", 'categoryName')
+            .field('COUNT(v.vocabularyId)', 'newCount')
+            .from(TableName.VOCABULARY, 'v');
+
+          query = query.left_join(
+            TableName.VOCABULARY_CATEGORY,
+            'c',
+            'v.vocabularyId = c.vocabularyId'
+          );
+
+          query = _.includes(categoryNames, 'Uncategorized')
+            ? query.where(
+                'c.categoryName IN ? OR c.categoryName IS NULL',
+                categoryNames
+              )
+            : query.where('c.categoryName IN ?', categoryNames);
+
+          query = query
+            .where('v.setId = ?', setId)
+            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
+            .where('v.lastLearnedAt IS NULL');
+
+          query = query.group("IFNULL(c.categoryName, 'Uncategorized')");
+
+          const queryParam = query.toParam();
+
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
+          );
+
+          const categoryNameNewCountPairs = result.rows.map(
+            (row): [string, number] => {
+              return [row.categoryName, row.newCount];
+            }
+          );
+
+          const newCountPerCategoryName = _.fromPairs(
+            categoryNameNewCountPairs
+          );
+
+          resolve(
+            _.fromPairs(
+              categoryNames.map(
+                (categoryName): [string, number] => {
+                  return [
+                    categoryName,
+                    newCountPerCategoryName[categoryName] || 0,
+                  ];
+                }
+              )
+            )
+          );
         } catch (error) {
           reject(error);
         }
@@ -128,7 +309,6 @@ export class SpacedRepetitionModel {
     stripUnknown: boolean
   ): Promise<{
     vocabularyList: readonly Vocabulary[];
-    vocabularyRows: readonly VocabularyRow[];
   }> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
@@ -144,14 +324,12 @@ export class SpacedRepetitionModel {
               'c',
               'v.vocabularyId = c.vocabularyId'
             );
-            if (_.includes(categoryNames, 'Uncategorized')) {
-              query = query.where(
-                'c.categoryName IN ? OR c.categoryName IS NULL',
-                categoryNames
-              );
-            } else {
-              query = query.where('c.categoryName IN ?', categoryNames);
-            }
+            query = _.includes(categoryNames, 'Uncategorized')
+              ? query.where(
+                  'c.categoryName IN ? OR c.categoryName IS NULL',
+                  categoryNames
+                )
+              : query.where('c.categoryName IN ?', categoryNames);
           }
 
           query = query
@@ -182,7 +360,7 @@ export class SpacedRepetitionModel {
             stripUnknown
           );
 
-          resolve({ vocabularyList, vocabularyRows });
+          resolve({ vocabularyList });
         } catch (error) {
           reject(error);
         }
@@ -190,70 +368,41 @@ export class SpacedRepetitionModel {
     );
   }
 
-  public getDueCategoryList(
+  public getDueCount(
     db: SQLiteDatabase,
     setId: string,
     initialInterval: number,
     maxLevel: number,
-    sortType: CategorySortType,
-    limitOfCategorized: number,
-    offsetOfCategorized: number,
-    includeUncategorized: boolean
-  ): Promise<{
-    categoryList: readonly Category[];
-  }> {
+    categoryNames: undefined | string[]
+  ): Promise<number> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
-          let uncategorized;
-          if (includeUncategorized) {
-            uncategorized = await this.getUncategorizedDueCounts(
-              db,
-              setId,
-              initialInterval,
-              maxLevel
-            );
-          }
-
           let query = squel
             .select()
-            .field('categoryName')
-            .field('COUNT(c.vocabularyId)', 'totalCount');
+            .field('COUNT(v.vocabularyId)', 'dueCount')
+            .from(TableName.VOCABULARY, 'v');
 
-          query = addLevelCountAggregation(query);
+          if (typeof categoryNames !== 'undefined') {
+            query = query.left_join(
+              TableName.VOCABULARY_CATEGORY,
+              'c',
+              'v.vocabularyId = c.vocabularyId'
+            );
+
+            query = _.includes(categoryNames, 'Uncategorized')
+              ? query.where(
+                  'c.categoryName IN ? OR c.categoryName IS NULL',
+                  categoryNames
+                )
+              : query.where('c.categoryName IN ?', categoryNames);
+          }
 
           query = query
-            .from(TableName.VOCABULARY_CATEGORY, 'c')
-            .left_join(
-              TableName.VOCABULARY,
-              'v',
-              'v.vocabularyId = c.vocabularyId'
-            )
-            .left_join(
-              TableName.VOCABULARY_WRITING,
-              'w',
-              'v.vocabularyId = w.vocabularyId'
-            )
             .where('v.setId = ?', setId)
             .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE);
 
           query = this.addDueCondition(query, initialInterval, maxLevel);
-
-          query = query
-            .group('categoryName')
-            .having('totalCount > 0 and categoryName != ?', 'Uncategorized');
-
-          if (sortType === CategorySortType.SORT_BY_NAME_ASC) {
-            query = query.order('categoryName', true);
-          } else if (sortType === CategorySortType.SORT_BY_NAME_DESC) {
-            query = query.order('categoryName', false);
-          } else if (sortType === CategorySortType.SORT_BY_COUNT_ASC) {
-            query = query.order('totalCount', true);
-          } else if (sortType === CategorySortType.SORT_BY_COUNT_DESC) {
-            query = query.order('totalCount', false);
-          }
-
-          query = query.limit(limitOfCategorized).offset(offsetOfCategorized);
 
           const queryParam = query.toParam();
 
@@ -262,19 +411,7 @@ export class SpacedRepetitionModel {
             queryParam.values
           );
 
-          let categoryList = this.categoryResolver.resolveArray(
-            result.rows.slice(),
-            true
-          );
-
-          if (
-            typeof uncategorized !== 'undefined' &&
-            uncategorized.totalCount > 0
-          ) {
-            categoryList = [uncategorized, ...categoryList];
-          }
-
-          resolve({ categoryList });
+          resolve(parseInt(result.rows[0].dueCount));
         } catch (error) {
           reject(error);
         }
@@ -282,54 +419,72 @@ export class SpacedRepetitionModel {
     );
   }
 
-  public getUncategorizedDueCounts(
+  public getDueCountByCategoryNames(
     db: SQLiteDatabase,
     setId: string,
     initialInterval: number,
-    maxLevel: number
-  ): Promise<Category> {
+    maxLevel: number,
+    categoryNames: string[]
+  ): Promise<{ [P in string]: number }> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
           let query = squel
             .select()
-            .field('COUNT(v.vocabularyId)', 'totalCount');
+            .field("IFNULL(c.categoryName, 'Uncategorized')", 'categoryName')
+            .field('COUNT(v.vocabularyId)', 'dueCount')
+            .from(TableName.VOCABULARY, 'v');
 
-          query = addLevelCountAggregation(query);
+          query = query.left_join(
+            TableName.VOCABULARY_CATEGORY,
+            'c',
+            'v.vocabularyId = c.vocabularyId'
+          );
+
+          query = _.includes(categoryNames, 'Uncategorized')
+            ? query.where(
+                'c.categoryName IN ? OR c.categoryName IS NULL',
+                categoryNames
+              )
+            : query.where('c.categoryName IN ?', categoryNames);
 
           query = query
-            .from(TableName.VOCABULARY, 'v')
-            .left_join(
-              TableName.VOCABULARY_CATEGORY,
-              'c',
-              'v.vocabularyId = c.vocabularyId'
-            )
-            .left_join(
-              TableName.VOCABULARY_WRITING,
-              'w',
-              'v.vocabularyId = w.vocabularyId'
-            )
             .where('v.setId = ?', setId)
-            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
-            .where(
-              "c.categoryName IS NULL OR c.categoryName = 'Uncategorized'"
-            );
+            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE);
 
           query = this.addDueCondition(query, initialInterval, maxLevel);
 
-          const sql = query.toParam();
+          query = query.group("IFNULL(c.categoryName, 'Uncategorized')");
 
-          const result = await db.executeSql(sql.text, sql.values);
+          const queryParam = query.toParam();
 
-          const category = this.categoryResolver.resolve(
-            {
-              ...result.rows[0],
-              categoryName: 'Uncategorized',
-            },
-            true
+          const result = await db.executeSql(
+            queryParam.text,
+            queryParam.values
           );
 
-          resolve(category);
+          const categoryNameDueCountPairs = result.rows.map(
+            (row): [string, number] => {
+              return [row.categoryName, row.dueCount];
+            }
+          );
+
+          const dueCountPerCategoryName = _.fromPairs(
+            categoryNameDueCountPairs
+          );
+
+          resolve(
+            _.fromPairs(
+              categoryNames.map(
+                (categoryName): [string, number] => {
+                  return [
+                    categoryName,
+                    dueCountPerCategoryName[categoryName] || 0,
+                  ];
+                }
+              )
+            )
+          );
         } catch (error) {
           reject(error);
         }
@@ -343,7 +498,7 @@ export class SpacedRepetitionModel {
     maxLevel: number
   ): squel.Select {
     return query.where(
-      'v.lastLearnedAt IS NULL OR v.lastLearnedAt < ?',
+      'v.lastLearnedAt IS NOT NULL AND v.lastLearnedAt < ?',
       _.range(maxLevel).reduce((reviewTimeByLevel, level): squel.Case => {
         return reviewTimeByLevel.when(level.toString()).then(
           moment()

@@ -33,6 +33,7 @@ import { WritingLessonScreenStyle } from './WritingLessonScreenContainer.style';
 
 export interface WritingLessonScreenPassedProps {
   readonly vocabularyList: ObservableMap<string, ObservableVocabulary>;
+  readonly currentCategoryNames: undefined | readonly string[];
   readonly startLesson: () => void;
 }
 
@@ -122,6 +123,7 @@ export class WritingLessonScreenContainer extends Container<
   protected screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
     this.questionIterator,
+    this.props.passedProps.currentCategoryNames,
     this.props.passedProps.startLesson,
   );
 

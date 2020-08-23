@@ -20,8 +20,6 @@ export interface CategoryItemStyles {
   top_container: ViewStyle;
   bottom_container: ViewStyle;
   stats_container: ViewStyle;
-  stats_label_container: ViewStyle;
-  stats_label: TextStyle;
   category_name: TextStyle;
   category_meta: TextStyle;
   left: ViewStyle;
@@ -31,7 +29,11 @@ export interface CategoryItemStyles {
   action_btn: ViewStyle;
   count: TextStyle;
   terms: TextStyle;
-  review_btn_container: ViewStyle;
+  progress_container: ViewStyle;
+  progress_text: TextStyle;
+  review_btn: ViewStyle;
+  due_new_count: TextStyle;
+  highlighted_count: TextStyle;
 }
 
 export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
@@ -68,19 +70,20 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
         paddingHorizontal: scaleByFactor(14),
         paddingVertical: scaleByFactor(14),
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         borderTopWidth: StyleSheet.hairlineWidth,
       },
 
-      stats_label_container: {
-        width: scaleByFactor(30),
+      progress_container: {
+        flex: 1,
+        justifyContent: 'center',
       },
 
-      stats_label: {
-        paddingRight: scaleByFactor(4),
+      progress_text: {
+        fontSize: scaleByFactor(14),
         fontWeight: 'bold',
-        fontSize: scaleByFactor(13),
+        paddingBottom: scaleByFactor(4),
       },
 
       category_name: {
@@ -125,10 +128,20 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
         fontSize: scaleByFactor(12),
       },
 
-      review_btn_container: {
+      review_btn: {
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         marginLeft: scaleByFactor(12),
+        width: scaleByFactor(70),
+      },
+
+      due_new_count: {
+        fontSize: scaleByFactor(14),
+      },
+
+      highlighted_count: {
+        fontWeight: 'bold',
+        color: '#66BB6A',
       },
     };
   }
@@ -146,10 +159,6 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
         borderTopColor: config.styles.light.secondaryBorderColor,
       },
 
-      stats_label: {
-        color: config.styles.light.secondaryTextColor,
-      },
-
       category_name: {
         color: config.styles.light.primaryTextColor,
       },
@@ -163,6 +172,14 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       terms: {
+        color: config.styles.light.secondaryTextColor,
+      },
+
+      progress_text: {
+        color: config.styles.light.secondaryTextColor,
+      },
+
+      due_new_count: {
         color: config.styles.light.secondaryTextColor,
       },
     };
@@ -181,10 +198,6 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
         borderTopColor: config.styles.dark.secondaryBorderColor,
       },
 
-      stats_label: {
-        color: config.styles.dark.secondaryTextColor,
-      },
-
       category_name: {
         color: config.styles.dark.primaryTextColor,
       },
@@ -198,6 +211,14 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       terms: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+
+      progress_text: {
+        color: config.styles.dark.secondaryTextColor,
+      },
+
+      due_new_count: {
         color: config.styles.dark.secondaryTextColor,
       },
     };

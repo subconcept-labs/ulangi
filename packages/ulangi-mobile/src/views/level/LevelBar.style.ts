@@ -20,7 +20,6 @@ export class LevelBarResponsiveStyles extends ResponsiveStyleSheet<
   public baseStyles(scaleByFactor: ScaleByFactor): LevelBarStyles {
     return {
       container: {
-        flex: 1,
         flexDirection: 'row',
         height: scaleByFactor(10),
         borderRadius: scaleByFactor(5),

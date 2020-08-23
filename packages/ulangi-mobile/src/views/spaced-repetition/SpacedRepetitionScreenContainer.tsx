@@ -90,6 +90,14 @@ export class SpacedRepetitionScreenContainer extends Container<
     );
   }
 
+  public componentDidAppear(): void {
+    this.screenDelegate.refreshDueAndNewCounts();
+  }
+
+  public componentWillUnmount(): void {
+    this.screenDelegate.clearDueAndNewCounts();
+  }
+
   public render(): React.ReactElement<any> {
     return (
       <SpacedRepetitionScreen

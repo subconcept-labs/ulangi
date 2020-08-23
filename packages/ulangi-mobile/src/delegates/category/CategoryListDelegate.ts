@@ -9,14 +9,9 @@ import { ActionType, createAction } from '@ulangi/ulangi-action';
 import {
   ActivityState,
   CategorySortType,
-  VocabularyDueType,
-  VocabularyFilterType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { CategoryFilterCondition } from '@ulangi/ulangi-common/types';
-import {
-  isVocabularyDueType,
-  isVocabularyStatus,
-} from '@ulangi/ulangi-common/utils';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableCategory,
@@ -25,6 +20,7 @@ import {
   ObservableSetStore,
   mergeList,
 } from '@ulangi/ulangi-observable';
+import * as _ from 'lodash';
 
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
@@ -54,13 +50,13 @@ export class CategoryListDelegate {
   }
 
   public prepareAndFetch(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: CategorySortType,
   ): void {
     this.eventBus.pubsub(
       createAction(
         ActionType.MANAGE__PREPARE_FETCH_CATEGORY,
-        this.createPrepareFetchPayload(filterType, sortType),
+        this.createPrepareFetchPayload(vocabularyStatus, sortType),
       ),
       group(
         on(
@@ -73,7 +69,7 @@ export class CategoryListDelegate {
           ActionType.MANAGE__PREPARE_FETCH_CATEGORY_SUCCEEDED,
           (): void => {
             this.categoryListState.fetchState.set(ActivityState.INACTIVE);
-            this.fetch();
+            this.fetch(vocabularyStatus === VocabularyStatus.ACTIVE);
           },
         ),
         once(
@@ -87,16 +83,16 @@ export class CategoryListDelegate {
   }
 
   public refresh(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: CategorySortType,
   ): void {
     this.categoryListState.isRefreshing.set(true);
     this.categoryListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
-    this.prepareAndFetch(filterType, sortType);
+    this.prepareAndFetch(vocabularyStatus, sortType);
   }
 
-  public fetch(): void {
+  public fetch(shouldFetchDueAndNewCount: boolean): void {
     if (
       this.categoryListState.noMore === false &&
       this.categoryListState.fetchState.get() === ActivityState.INACTIVE
@@ -111,6 +107,7 @@ export class CategoryListDelegate {
               this.categoryListState.fetchState.set(ActivityState.INACTIVE);
               this.categoryListState.isRefreshing.set(false);
               this.categoryListState.noMore = noMore;
+
               this.categoryListState.categoryList = mergeList(
                 this.categoryListState.categoryList,
                 categoryList.map(
@@ -124,6 +121,17 @@ export class CategoryListDelegate {
                   },
                 ),
               );
+
+              if (shouldFetchDueAndNewCount) {
+                const categoryNames = categoryList.map(
+                  (category): string => {
+                    return category.categoryName;
+                  },
+                );
+
+                this.fetchSpacedRepetitionDueAndNewCounts(categoryNames);
+                this.fetchWritingDueAndNewCounts(categoryNames);
+              }
             },
           ),
           once(
@@ -148,47 +156,102 @@ export class CategoryListDelegate {
   }
 
   public refreshIfEmpty(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: CategorySortType,
   ): void {
     if (
       this.categoryListState.categoryList !== null &&
       this.categoryListState.categoryList.size === 0
     ) {
-      this.refresh(filterType, sortType);
+      this.refresh(vocabularyStatus, sortType);
     }
   }
 
   private createPrepareFetchPayload(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: CategorySortType,
-  ): { filterCondition: CategoryFilterCondition; sortType: CategorySortType } {
-    if (isVocabularyStatus(filterType)) {
-      return {
-        filterCondition: {
-          filterBy: 'VocabularyStatus',
-          setId: this.setStore.existingCurrentSetId,
-          vocabularyStatus: filterType,
+  ): {
+    filterCondition: CategoryFilterCondition;
+    sortType: CategorySortType;
+  } {
+    return {
+      filterCondition: {
+        filterBy: 'VocabularyStatus',
+        setId: this.setStore.existingCurrentSetId,
+        vocabularyStatus,
+      },
+      sortType,
+    };
+  }
+
+  private fetchSpacedRepetitionDueAndNewCounts(categoryNames: string[]): void {
+    const {
+      initialInterval,
+    } = this.spacedRepetitionSettingsDelegate.getCurrentSettings();
+
+    this.eventBus.pubsub(
+      createAction(
+        ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS,
+        {
+          setId: this.setStore.existingCurrentSet.setId,
+          initialInterval,
+          categoryNames,
         },
-        sortType,
-      };
-    } else if (isVocabularyDueType(filterType)) {
-      return {
-        filterCondition: {
-          filterBy: 'VocabularyDueType',
-          setId: this.setStore.existingCurrentSetId,
-          initialInterval:
-            filterType === VocabularyDueType.DUE_BY_SPACED_REPETITION
-              ? this.spacedRepetitionSettingsDelegate.getCurrentSettings()
-                  .initialInterval
-              : this.writingSettingsDelegate.getCurrentSettings()
-                  .initialInterval,
-          dueType: filterType,
-        },
-        sortType,
-      };
-    } else {
-      throw new Error('Invalid filter type');
-    }
+      ),
+      group(
+        once(
+          ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_SUCCEEDED,
+          (countsPerCategoryName): void => {
+            _.toPairs(countsPerCategoryName).forEach(
+              ([categoryName, counts]): void => {
+                if (this.categoryListState.categoryList !== null) {
+                  const category = this.categoryListState.categoryList.get(
+                    categoryName,
+                  );
+
+                  if (typeof category !== 'undefined') {
+                    category.spacedRepetitionCounts = counts;
+                  }
+                }
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  private fetchWritingDueAndNewCounts(categoryNames: string[]): void {
+    const {
+      initialInterval,
+    } = this.writingSettingsDelegate.getCurrentSettings();
+
+    this.eventBus.pubsub(
+      createAction(ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS, {
+        setId: this.setStore.existingCurrentSet.setId,
+        initialInterval,
+        categoryNames,
+      }),
+      group(
+        once(
+          ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_SUCCEEDED,
+          (countsPerCategoryName): void => {
+            _.toPairs(countsPerCategoryName).forEach(
+              ([categoryName, counts]): void => {
+                if (this.categoryListState.categoryList !== null) {
+                  const category = this.categoryListState.categoryList.get(
+                    categoryName,
+                  );
+
+                  if (typeof category !== 'undefined') {
+                    category.writingCounts = counts;
+                  }
+                }
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

@@ -23,6 +23,7 @@ import { AdNotice } from '../ad/AdNotice';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { ReviewFeedbackSummary } from '../review-feedback/ReviewFeedbackSummary';
+import { DueAndNewCounts } from '../spaced-repetition/DueAndNewCounts';
 import {
   SpacedRepetitionResultStyles,
   spacedRepetitionResultResponsiveStyles,
@@ -33,6 +34,7 @@ export interface SpacedRepetitionResultProps {
   screenLayout: ObservableScreenLayout;
   feedbackListState: ObservableFeedbackListState;
   saveState: IObservableValue<ActivityState>;
+  counts: undefined | { due: number; new: number };
   shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
   showReviewFeedback: () => void;
   takeAnotherLesson: () => void;
@@ -95,7 +97,7 @@ export class SpacedRepetitionResult extends React.Component<
         <View style={this.styles.view_all_feedback_button_container}>
           <DefaultButton
             testID={SpacedRepetitionLessonScreenIds.VIEW_ALL_FEEDBACK_BTN}
-            text="View all feedback"
+            text="View detailed result"
             styles={fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.NORMAL,
               this.props.theme,
@@ -115,6 +117,14 @@ export class SpacedRepetitionResult extends React.Component<
     if (this.props.saveState.get() === ActivityState.INACTIVE) {
       return (
         <View style={this.styles.button_containers}>
+          <View style={this.styles.counts_container}>
+            <DueAndNewCounts
+              theme={this.props.theme}
+              screenLayout={this.props.screenLayout}
+              counts={this.props.counts}
+              showLeft={true}
+            />
+          </View>
           <View style={this.styles.button_container}>
             <DefaultButton
               testID={SpacedRepetitionLessonScreenIds.TAKE_ANOTHER_LESSON_BTN}

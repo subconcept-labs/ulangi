@@ -5,11 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import {
-  ButtonSize,
-  Theme,
-  VocabularyFilterType,
-} from '@ulangi/ulangi-common/enums';
+import { Theme, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategory,
   ObservableScreenLayout,
@@ -17,13 +13,11 @@ import {
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
 
 import { Images } from '../../constants/Images';
 import { config } from '../../constants/config';
 import { CategoryItemIds } from '../../constants/ids/CategoryItemIds';
-import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { LevelBar } from '../level/LevelBar';
 import {
@@ -35,16 +29,16 @@ export interface CategoryItemProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   category: ObservableCategory;
-  selectedFilterType: IObservableValue<VocabularyFilterType>;
+  selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
   isSelectionModeOn?: IObservableValue<boolean>;
   toggleSelection: (categoryName: string) => void;
   showCategoryDetail: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
   ) => void;
   showCategoryActionMenu: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
   ) => void;
   reviewBySpacedRepetition: () => void;
   reviewByWriting: () => void;
@@ -78,7 +72,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           onPress={(): void =>
             this.props.showCategoryDetail(
               this.props.category,
-              this.props.selectedFilterType.get(),
+              this.props.selectedVocabularyStatus.get(),
             )
           }>
           <View style={this.styles.left}>
@@ -96,9 +90,9 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 {this.props.category.totalCount}
               </DefaultText>
               <DefaultText style={this.styles.terms}>
-                {this.props.selectedFilterType
-                  ? config.vocabulary.filterMap[
-                      this.props.selectedFilterType.get()
+                {this.props.selectedVocabularyStatus
+                  ? config.vocabulary.statusMap[
+                      this.props.selectedVocabularyStatus.get()
                     ].shortName
                   : 'Terms'}
               </DefaultText>
@@ -111,7 +105,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
         <View style={this.styles.bottom_container}>
           {this.props.shouldShowLevelProgressForSR === true
             ? this.renderLevelProgress(
-                'SR',
+                'Spaced Repetition',
                 this.props.category.totalCount,
                 this.props.category.srLevel0Count,
                 this.props.category.srLevel1To3Count,
@@ -120,11 +114,12 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 this.props.category.srLevel9To10Count,
                 this.props.showLevelBreakdownForSR,
                 this.props.reviewBySpacedRepetition,
+                this.props.category.spacedRepetitionCounts,
               )
             : null}
           {this.props.shouldShowLevelProgressForWR === true
             ? this.renderLevelProgress(
-                'WR',
+                'Writing',
                 this.props.category.totalCount,
                 this.props.category.wrLevel0Count,
                 this.props.category.wrLevel1To3Count,
@@ -133,6 +128,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 this.props.category.wrLevel9To10Count,
                 this.props.showLevelBreakdownForWR,
                 this.props.reviewByWriting,
+                this.props.category.writingCounts,
               )
             : null}
         </View>
@@ -149,45 +145,75 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
     level7To8Count: number,
     level9To10Count: number,
     showLevelBreakdown: (category: ObservableCategory) => void,
-    review: () => void,
+    startReview: () => void,
+    counts: undefined | { due: number; new: number },
+  ): React.ReactElement<any> {
+    return (
+      <View style={this.styles.stats_container}>
+        <TouchableOpacity
+          style={this.styles.progress_container}
+          onPress={(): void => showLevelBreakdown(this.props.category)}>
+          <DefaultText style={this.styles.progress_text}>{label}</DefaultText>
+          <LevelBar
+            theme={this.props.theme}
+            screenLayout={this.props.screenLayout}
+            percentages={[
+              level0Count / totalCount,
+              level1To3Count / totalCount,
+              level4To6Count / totalCount,
+              level7To8Count / totalCount,
+              level9To10Count / totalCount,
+            ]}
+          />
+        </TouchableOpacity>
+        {this.renderDueAndNewCount(startReview, counts)}
+      </View>
+    );
+  }
+
+  private renderDueAndNewCount(
+    startReview: () => void,
+    counts:
+      | undefined
+      | {
+          due: number;
+          new: number;
+        },
   ): React.ReactElement<any> {
     return (
       <TouchableOpacity
-        style={this.styles.stats_container}
-        onPress={(): void => showLevelBreakdown(this.props.category)}>
-        <View style={this.styles.stats_label_container}>
-          <DefaultText style={this.styles.stats_label}>{label}</DefaultText>
-        </View>
-        <LevelBar
-          theme={this.props.theme}
-          screenLayout={this.props.screenLayout}
-          percentages={[
-            level0Count / totalCount,
-            level1To3Count / totalCount,
-            level4To6Count / totalCount,
-            level7To8Count / totalCount,
-            level9To10Count / totalCount,
-          ]}
-        />
-        <View style={this.styles.review_btn_container}>
-          <DefaultButton
-            styles={
-              this.props.theme === Theme.LIGHT
-                ? fullRoundedButtonStyles.getGreyOutlineStyles(
-                    ButtonSize.X_SMALL,
-                    this.props.theme,
-                    this.props.screenLayout,
-                  )
-                : fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
-                    ButtonSize.X_SMALL,
-                    this.props.theme,
-                    this.props.screenLayout,
-                  )
-            }
-            text="Review"
-            onPress={review}
-          />
-        </View>
+        style={this.styles.review_btn}
+        disabled={
+          this.props.selectedVocabularyStatus.get() !== VocabularyStatus.ACTIVE
+        }
+        onPress={startReview}>
+        {this.props.selectedVocabularyStatus.get() !==
+        VocabularyStatus.ACTIVE ? (
+          <DefaultText>N/A</DefaultText>
+        ) : typeof counts !== 'undefined' ? (
+          <React.Fragment>
+            <DefaultText
+              style={[
+                this.styles.due_new_count,
+                counts.due > 0 ? this.styles.highlighted_count : {},
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="clip">
+              {counts.due} due
+            </DefaultText>
+            <DefaultText
+              style={[
+                this.styles.due_new_count,
+                counts.new > 0 ? this.styles.highlighted_count : {},
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="clip">
+              {counts.new} new
+            </DefaultText>
+          </React.Fragment>
+        ) : (
+          <ActivityIndicator size="small" />
+        )}
       </TouchableOpacity>
     );
   }
@@ -231,7 +257,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
           onPress={(): void =>
             this.props.showCategoryActionMenu(
               this.props.category,
-              this.props.selectedFilterType.get(),
+              this.props.selectedVocabularyStatus.get(),
             )
           }>
           <Image source={Images.HORIZONTAL_DOTS_GREY_22X22} />

@@ -6,7 +6,7 @@
  */
 
 import { ReadonlyTuple } from '@ulangi/extended-types';
-import { Theme, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import { Theme, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategory,
   ObservableCategoryListState,
@@ -29,12 +29,12 @@ export interface CategoryListProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   categoryListState: ObservableCategoryListState;
-  selectedFilterType: IObservableValue<VocabularyFilterType>;
+  selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
   toggleSelection: (categoryName: string) => void;
   showCategoryDetail: (category: ObservableCategory) => void;
   showCategoryActionMenu: (
     category: ObservableCategory,
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
   ) => void;
   goToSpacedRepetition: (selectedCategoryNames: string[]) => void;
   goToWriting: (selectedCategoryNames: string[]) => void;
@@ -79,7 +79,7 @@ export class CategoryList extends React.Component<CategoryListProps> {
                 theme={this.props.theme}
                 screenLayout={this.props.screenLayout}
                 category={category}
-                selectedFilterType={this.props.selectedFilterType}
+                selectedVocabularyStatus={this.props.selectedVocabularyStatus}
                 isSelectionModeOn={
                   this.props.categoryListState.isSelectionModeOn
                 }

@@ -7,8 +7,8 @@
 
 import {
   ScreenName,
-  VocabularyFilterType,
   VocabularySortType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { IObservableValue } from 'mobx';
 
@@ -20,7 +20,7 @@ import { ObservableCategory } from './ObservableCategory';
 export class ObservableCategoryDetailScreen extends ObservableScreen {
   public readonly category: ObservableCategory;
 
-  public readonly selectedFilterType: IObservableValue<VocabularyFilterType>;
+  public readonly selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
 
   public readonly selectedSortType: IObservableValue<VocabularySortType>;
 
@@ -28,7 +28,7 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
 
   public constructor(
     category: ObservableCategory,
-    selectedFilterType: IObservableValue<VocabularyFilterType>,
+    selectedVocabularyStatus: IObservableValue<VocabularyStatus>,
     selectedSortType: IObservableValue<VocabularySortType>,
     vocabularyListState: ObservableVocabularyListState,
     componentId: string,
@@ -37,7 +37,7 @@ export class ObservableCategoryDetailScreen extends ObservableScreen {
   ) {
     super(componentId, screenName, topBar);
     this.category = category;
-    this.selectedFilterType = selectedFilterType;
+    this.selectedVocabularyStatus = selectedVocabularyStatus;
     this.selectedSortType = selectedSortType;
     this.vocabularyListState = vocabularyListState;
   }

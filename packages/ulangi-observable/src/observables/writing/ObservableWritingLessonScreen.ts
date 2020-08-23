@@ -47,6 +47,14 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly saveState: IObservableValue<ActivityState>;
 
+  @observable
+  public counts:
+    | undefined
+    | {
+        due: number;
+        new: number;
+      };
+
   public constructor(
     screenAppearedTimes: number,
     vocabularyList: ObservableMap<string, ObservableVocabulary>,

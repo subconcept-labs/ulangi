@@ -8,8 +8,8 @@
 import {
   ButtonSize,
   Theme,
-  VocabularyFilterType,
   VocabularySortType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategory,
@@ -35,7 +35,7 @@ export interface CategoryDetailHeaderProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   category: ObservableCategory;
-  selectedFilterType: IObservableValue<VocabularyFilterType>;
+  selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
   selectedSortType: IObservableValue<VocabularySortType>;
   showVocabularySortMenu: () => void;
   showVocabularyFilterMenu: () => void;
@@ -72,13 +72,14 @@ export class CategoryDetailHeader extends React.Component<
         <DefaultButton
           testID={CategoryDetailScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
           text={_.upperFirst(
-            config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-              .shortName,
+            config.vocabulary.statusMap[
+              this.props.selectedVocabularyStatus.get()
+            ].shortName,
           )}
           onPress={this.props.showVocabularyFilterMenu}
           styles={fullRoundedButtonStyles.getOutlineStyles(
             ButtonSize.SMALL,
-            this.getColorByStatus(this.props.selectedFilterType.get()),
+            this.getColorByStatus(this.props.selectedVocabularyStatus.get()),
             this.props.theme,
             this.props.screenLayout,
           )}
@@ -87,7 +88,7 @@ export class CategoryDetailHeader extends React.Component<
     );
   }
 
-  private getColorByStatus(selectedFilterType: VocabularyFilterType): string {
-    return config.vocabulary.filterMap[selectedFilterType].textColor;
+  private getColorByStatus(selectedVocabularyStatus: VocabularyStatus): string {
+    return config.vocabulary.statusMap[selectedVocabularyStatus].textColor;
   }
 }

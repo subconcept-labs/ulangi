@@ -56,16 +56,6 @@ export class ManageScreenFactory extends ScreenFactory {
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
-    const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-    );
-
-    const writingSettingsDelegate = new WritingSettingsDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-    );
-
     const categorySelectionDelegate = new CategorySelectionDelegate(
       observableScreen.categoryListState,
     );
@@ -81,8 +71,6 @@ export class ManageScreenFactory extends ScreenFactory {
       categorySelectionDelegate,
       setSelectionMenuDelegate,
       vocabularyBulkEditDelegate,
-      spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate,
       dialogDelegate,
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
@@ -94,11 +82,19 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.observableLightBox,
       vocabularyBulkEditDelegate,
       setSelectionMenuDelegate,
-      spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate,
       dialogDelegate,
       navigatorDelegate,
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
+    const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+    );
+
+    const writingSettingsDelegate = new WritingSettingsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
     );
 
     const categoryListDelegate = new CategoryListDelegate(

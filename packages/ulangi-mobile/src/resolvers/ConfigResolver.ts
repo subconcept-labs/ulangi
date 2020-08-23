@@ -105,19 +105,15 @@ export class ConfigResolver extends AbstractResolver<Config> {
 
     vocabulary: {
       fetchLimit: Joi.number(),
-      filterMap: Joi.object().pattern(/^/, {
-        // TODO: Use better validation for key
-        name: Joi.string(),
-        shortName: Joi.string(),
-        textColor: Joi.string(),
-        borderColor: Joi.string(),
-      }),
       sortMap: Joi.object().pattern(/^/, {
         name: Joi.string(),
         longName: Joi.string(),
       }),
       statusMap: Joi.object().pattern(/^/, {
         name: Joi.string(),
+        shortName: Joi.string(),
+        textColor: Joi.string(),
+        borderColor: Joi.string(),
       }),
     },
 

@@ -24,7 +24,8 @@ import {
 } from '@ulangi/ulangi-local-database';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { call, fork, put, take } from 'redux-saga/effects';
+import { Task } from 'redux-saga';
+import { call, cancel, fork, put, take } from 'redux-saga/effects';
 import { PromiseType } from 'utility-types';
 import * as uuid from 'uuid';
 
@@ -35,6 +36,8 @@ import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class SpacedRepetitionSaga extends ProtectedSaga {
+  private fetchDueAndNewCountsTask?: Task;
+
   private sequenceStrategy = new LevelSequenceStrategy();
   private spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
@@ -60,6 +63,10 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     yield fork(
       [this, this.allowFetchVocabulary],
       config.spacedRepetition.minPerLesson
+    );
+    yield fork(
+      [this, this.allowFetchAndClearDueAndNewCounts],
+      config.spacedRepetition.maxLevel
     );
     yield fork([this, this.allowSaveResult], config.spacedRepetition.maxLevel);
   }
@@ -137,6 +144,89 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
             errorCode: errorConverter.getErrorCode(error),
             error,
           })
+        );
+      }
+    }
+  }
+
+  public *allowFetchAndClearDueAndNewCounts(
+    maxLevel: number
+  ): IterableIterator<any> {
+    this.fetchDueAndNewCountsTask = yield fork(
+      [this, this.allowFetchDueAndNewCounts],
+      maxLevel
+    );
+    yield fork([this, this.allowClearDueAndNewCounts], maxLevel);
+  }
+
+  private *allowClearDueAndNewCounts(maxLevel: number): IterableIterator<any> {
+    while (true) {
+      yield take(ActionType.SPACED_REPETITION__CLEAR_DUE_AND_NEW_COUNTS);
+      if (typeof this.fetchDueAndNewCountsTask !== 'undefined') {
+        yield cancel(this.fetchDueAndNewCountsTask);
+      }
+
+      this.fetchDueAndNewCountsTask = yield fork(
+        [this, this.allowFetchDueAndNewCounts],
+        maxLevel
+      );
+    }
+  }
+
+  public *allowFetchDueAndNewCounts(maxLevel: number): IterableIterator<any> {
+    while (true) {
+      const action: Action<
+        ActionType.SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS
+      > = yield take(ActionType.SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS);
+
+      const { setId, initialInterval, categoryNames } = action.payload;
+
+      try {
+        yield put(
+          createAction(
+            ActionType.SPACED_REPETITION__FETCHING_DUE_AND_NEW_COUNTS,
+            null
+          )
+        );
+
+        const newCount: PromiseType<
+          ReturnType<SpacedRepetitionModel['getNewCount']>
+        > = yield call(
+          [this.spacedRepetitionModel, 'getNewCount'],
+          this.userDb,
+          setId,
+          categoryNames
+        );
+
+        const dueCount: PromiseType<
+          ReturnType<SpacedRepetitionModel['getDueCount']>
+        > = yield call(
+          [this.spacedRepetitionModel, 'getDueCount'],
+          this.userDb,
+          setId,
+          initialInterval,
+          maxLevel,
+          categoryNames
+        );
+
+        yield put(
+          createAction(
+            ActionType.SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS_SUCCEEDED,
+            {
+              dueCount,
+              newCount,
+            }
+          )
+        );
+      } catch (error) {
+        yield put(
+          createAction(
+            ActionType.SPACED_REPETITION__FETCH_DUE_AND_NEW_COUNTS_FAILED,
+            {
+              errorCode: errorConverter.getErrorCode(error),
+              error,
+            }
+          )
         );
       }
     }
@@ -257,7 +347,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     initialInterval: number,
     selectedCategoryNames: undefined | string[],
     excludedCategoryNames: undefined | string[],
-    levelSequence: readonly number[],
+    levelSequence: readonly (undefined | number)[],
     limit: number
   ): IterableIterator<any> {
     let vocabularyList: Vocabulary[] = [];
@@ -265,13 +355,13 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     const levels = levelSequence.slice();
     // Fetch vocabulary by each level in order until the limit is reached
     while (levels.length > 0 && vocabularyList.length < limit) {
-      const currentLevel = assertExists(levels.shift());
+      const currentLevel = levels.shift();
       const remain = limit - vocabularyList.length;
 
       const result: PromiseType<
-        ReturnType<SpacedRepetitionModel['getDueVocabularyListByLevel']>
+        ReturnType<SpacedRepetitionModel['getVocabularyListByLevel']>
       > = yield call(
-        [this.spacedRepetitionModel, 'getDueVocabularyListByLevel'],
+        [this.spacedRepetitionModel, 'getVocabularyListByLevel'],
         this.userDb,
         setId,
         currentLevel,
