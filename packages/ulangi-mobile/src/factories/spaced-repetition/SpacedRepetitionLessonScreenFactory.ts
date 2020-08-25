@@ -17,6 +17,7 @@ import { ReviewActionMenuDelegate } from '../../delegates/review-action/ReviewAc
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
+import { SpacedRepetitionCountsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionLessonScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionLessonScreenDelegate';
 import { SpacedRepetitionSaveResultDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSaveResultDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
@@ -36,6 +37,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
   public createScreenDelegate(
     observableScreen: ObservableSpacedRepetitionLessonScreen,
     reviewIterator: ReviewIterator,
+    currentCategoryNames: undefined | readonly string[],
     startLesson: () => void,
   ): SpacedRepetitionLessonScreenDelegate {
     const spacedRepetitionScheduler = new SpacedRepetitionScheduler();
@@ -58,6 +60,12 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       observableScreen.vocabularyList,
       observableScreen.feedbackListState.feedbackList,
       autoArchiveSettingsDelegate,
+    );
+
+    const countsDelegate = new SpacedRepetitionCountsDelegate(
+      this.eventBus,
+      this.props.rootStore.setStore,
+      spacedRepetitionSettingsDelegate,
     );
 
     const speakDelegate = new SpeakDelegate(this.eventBus);
@@ -113,6 +121,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       reviewIterator,
       reviewFeedbackBarDelegate,
       saveResultDelegate,
+      countsDelegate,
       speakDelegate,
       adDelegate,
       adAfterLessonDelegate,
@@ -120,6 +129,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,
+      currentCategoryNames,
       startLesson,
     );
   }

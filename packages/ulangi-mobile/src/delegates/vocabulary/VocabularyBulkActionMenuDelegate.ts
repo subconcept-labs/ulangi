@@ -112,7 +112,7 @@ export class VocabularyBulkActionMenuDelegate {
   private getCategorizeSelectedButton(): SelectionItem {
     return {
       testID: VocabularyBulkActionMenuIds.CATEGORIZE_SELECTED_BTN,
-      text: 'Categorize selected',
+      text: 'Recategorize selected',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.showModal(ScreenName.CATEGORIZE_SCREEN, {

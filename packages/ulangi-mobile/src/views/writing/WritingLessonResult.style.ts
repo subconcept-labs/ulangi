@@ -23,6 +23,7 @@ export interface WritingLessonResultStyles {
   view_all_feedback_button_container: ViewStyle;
   ad_notice_container: ViewStyle;
   button_containers: ViewStyle;
+  counts_container: ViewStyle;
   button_container: ViewStyle;
 }
 
@@ -70,6 +71,10 @@ export class WritingLessonResultResponsiveStyles extends ResponsiveStyleSheet<
 
       button_containers: {
         marginTop: scaleByFactor(16),
+      },
+
+      counts_container: {
+        marginBottom: scaleByFactor(10),
       },
 
       button_container: {

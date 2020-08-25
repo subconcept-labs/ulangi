@@ -54,7 +54,9 @@ export class CategoryDetailScreen extends React.Component<
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
           category={this.props.observableScreen.category}
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
+          selectedVocabularyStatus={
+            this.props.observableScreen.selectedVocabularyStatus
+          }
           selectedSortType={this.props.observableScreen.selectedSortType}
           showVocabularyFilterMenu={
             this.props.screenDelegate.showVocabularyFilterMenu
@@ -86,7 +88,7 @@ export class CategoryDetailScreen extends React.Component<
     } else {
       return (
         <VocabularyList
-          key={this.props.observableScreen.selectedFilterType.get()}
+          key={this.props.observableScreen.selectedVocabularyStatus.get()}
           testID={CategoryDetailScreenIds.VOCABULARY_LIST}
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}

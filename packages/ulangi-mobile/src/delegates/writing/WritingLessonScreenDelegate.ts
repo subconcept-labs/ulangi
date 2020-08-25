@@ -36,6 +36,7 @@ import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../review-feedback/ReviewFeedbackBarDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
+import { WritingCountsDelegate } from './WritingCountsDelegate';
 import { WritingFormDelegate } from './WritingFormDelegate';
 import { WritingSaveResultDelegate } from './WritingSaveResultDelegate';
 
@@ -49,6 +50,7 @@ export class WritingLessonScreenDelegate {
   private observableScreen: ObservableWritingLessonScreen;
   private questionIterator: WritingQuestionIterator;
   private saveResultDelegate: WritingSaveResultDelegate;
+  private countsDelegate: WritingCountsDelegate;
   private writingFormDelegate: WritingFormDelegate;
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
   private speakDelegate: SpeakDelegate;
@@ -58,6 +60,7 @@ export class WritingLessonScreenDelegate {
   private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
+  private currentCategoryNames: undefined | readonly string[];
   private startLesson: () => void;
 
   public constructor(
@@ -67,6 +70,7 @@ export class WritingLessonScreenDelegate {
     observableScreen: ObservableWritingLessonScreen,
     questionIterator: WritingQuestionIterator,
     saveResultDelegate: WritingSaveResultDelegate,
+    countsDelegate: WritingCountsDelegate,
     writingFormDelegate: WritingFormDelegate,
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
     speakDelegate: SpeakDelegate,
@@ -76,6 +80,7 @@ export class WritingLessonScreenDelegate {
     reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
+    currentCategoryNames: undefined | readonly string[],
     startLesson: () => void,
   ) {
     this.observer = observer;
@@ -84,6 +89,7 @@ export class WritingLessonScreenDelegate {
     this.observableScreen = observableScreen;
     this.questionIterator = questionIterator;
     this.saveResultDelegate = saveResultDelegate;
+    this.countsDelegate = countsDelegate;
     this.writingFormDelegate = writingFormDelegate;
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
     this.speakDelegate = speakDelegate;
@@ -93,6 +99,7 @@ export class WritingLessonScreenDelegate {
     this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
+    this.currentCategoryNames = currentCategoryNames;
     this.startLesson = startLesson;
   }
 
@@ -210,7 +217,10 @@ export class WritingLessonScreenDelegate {
       vocabularyList: this.observableScreen.vocabularyList.toJS(),
       originalFeedbackList: this.observableScreen.feedbackListState
         .feedbackList,
-      onSaveSucceeded: this.updateFeedbackList,
+      onSaveSucceeded: (feedbackList: ReadonlyMap<string, Feedback>): void => {
+        this.updateFeedbackList(feedbackList);
+        this.refreshDueAndNewCounts();
+      },
     });
   }
 
@@ -421,11 +431,26 @@ export class WritingLessonScreenDelegate {
       },
       onSaveSucceeded: (): void => {
         this.observableScreen.saveState.set(ActivityState.INACTIVE);
+        this.refreshDueAndNewCounts();
       },
       onSaveFailed: (): void => {
         this.observableScreen.saveState.set(ActivityState.ERROR);
       },
     });
+  }
+
+  private refreshDueAndNewCounts(): void {
+    this.countsDelegate.refreshDueAndNewCounts(
+      typeof this.currentCategoryNames !== 'undefined'
+        ? this.currentCategoryNames.slice()
+        : undefined,
+      (dueCount, newCount): void => {
+        this.observableScreen.counts = {
+          due: dueCount,
+          new: newCount,
+        };
+      },
+    );
   }
 
   private updateFeedbackList(

@@ -121,42 +121,7 @@ describe('VocabularyCategoryModel', (): void => {
           }
         );
 
-        test('return uncategorized count correctly', async (): Promise<
-          void
-        > => {
-          const uncategorized = await categoryModel.getUncategorizedCounts(
-            userDb,
-            set.setId,
-            VocabularyStatus.ACTIVE
-          );
-          expect(uncategorized).toEqual({
-            totalCount: 2,
-            categoryName: 'Uncategorized',
-            srLevel0Count: 1,
-            srLevel1To3Count: 1,
-            srLevel4To6Count: 0,
-            srLevel7To8Count: 0,
-            srLevel9To10Count: 0,
-            wrLevel0Count: 1,
-            wrLevel1To3Count: 1,
-            wrLevel4To6Count: 0,
-            wrLevel7To8Count: 0,
-            wrLevel9To10Count: 0,
-          });
-        });
-
-        test('return true if has uncategorized vocabulary', async (): Promise<
-          void
-        > => {
-          const hasUncategorizedVocabulary = await categoryModel.hasUncategorizedVocabulary(
-            userDb,
-            set.setId,
-            VocabularyStatus.ACTIVE
-          );
-          expect(hasUncategorizedVocabulary).toEqual(true);
-        });
-
-        test('return category list excluding Uncategorized category', async (): Promise<
+        test('return category list (including Uncategorized category)', async (): Promise<
           void
         > => {
           const {
@@ -165,43 +130,9 @@ describe('VocabularyCategoryModel', (): void => {
             userDb,
             set.setId,
             VocabularyStatus.ACTIVE,
-            CategorySortType.SORT_BY_NAME_ASC,
+            CategorySortType.SORT_BY_NAME_DESC,
             10,
-            0,
-            false
-          );
-
-          expect(categoryList).toEqual([
-            {
-              categoryName: 'A Category',
-              totalCount: 2,
-              srLevel0Count: 0,
-              srLevel1To3Count: 2,
-              srLevel4To6Count: 0,
-              srLevel7To8Count: 0,
-              srLevel9To10Count: 0,
-              wrLevel0Count: 0,
-              wrLevel1To3Count: 2,
-              wrLevel4To6Count: 0,
-              wrLevel7To8Count: 0,
-              wrLevel9To10Count: 0,
-            },
-          ]);
-        });
-
-        test('return category list including Uncategorized category', async (): Promise<
-          void
-        > => {
-          const {
-            categoryList,
-          } = await categoryModel.getCategoryListByVocabularyStatus(
-            userDb,
-            set.setId,
-            VocabularyStatus.ACTIVE,
-            CategorySortType.SORT_BY_NAME_ASC,
-            10,
-            0,
-            true
+            0
           );
 
           expect(categoryList).toEqual([
@@ -262,56 +193,6 @@ describe('VocabularyCategoryModel', (): void => {
             0
           );
           expect(categoryNames).toEqual([]);
-        });
-      });
-
-      describe('Test starts after adding categorized vocabulary from local', (): void => {
-        let vocabularyList: readonly Vocabulary[];
-
-        beforeEach(
-          async (): Promise<void> => {
-            vocabularyList = Array(4)
-              .fill(null)
-              .map(
-                (_, index): Vocabulary => {
-                  return new VocabularyBuilder().build({
-                    vocabularyId: 'vocabularyId' + index,
-                    vocabularyStatus: VocabularyStatus.ACTIVE,
-                    vocabularyText: 'vocabularyText' + index,
-                    level: 1,
-                    category: {
-                      categoryName: 'A category',
-                    },
-                  });
-                }
-              );
-
-            await userDb.transaction(
-              (tx): void => {
-                vocabularyModel.insertMultipleVocabulary(
-                  tx,
-                  vocabularyList.map(
-                    (vocabulary): [Vocabulary, string] => [
-                      vocabulary,
-                      set.setId,
-                    ]
-                  ),
-                  'local'
-                );
-              }
-            );
-          }
-        );
-
-        test('return false if does not have uncategorized vocabulary', async (): Promise<
-          void
-        > => {
-          const hasUncategorizedVocabulary = await categoryModel.hasUncategorizedVocabulary(
-            userDb,
-            set.setId,
-            VocabularyStatus.ACTIVE
-          );
-          expect(hasUncategorizedVocabulary).toEqual(false);
         });
       });
     });

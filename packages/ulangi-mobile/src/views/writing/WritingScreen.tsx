@@ -17,6 +17,7 @@ import { WritingScreenIds } from '../../constants/ids/WritingScreenIds';
 import { WritingScreenDelegate } from '../../delegates/writing/WritingScreenDelegate';
 import { SelectCategoryButton } from '../category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
+import { DueAndNewCounts } from '../spaced-repetition/DueAndNewCounts';
 import { WritingMenu } from './WritingMenu';
 import {
   WritingScreenStyles,
@@ -75,6 +76,12 @@ export class WritingScreen extends React.Component<WritingScreenProps> {
                 selectCategory={this.props.screenDelegate.selectCategory}
               />
             </View>
+            <DueAndNewCounts
+              theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
+              counts={this.props.observableScreen.counts}
+              showLeft={false}
+            />
           </View>
         </View>
       </Screen>

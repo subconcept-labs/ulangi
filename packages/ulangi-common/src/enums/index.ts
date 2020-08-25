@@ -33,7 +33,6 @@ export { UserExtraDataName } from './UserExtraDataName';
 export { UserMembership } from './UserMembership';
 export { UserStatus } from './UserStatus';
 export { VocabularyDueType } from './VocabularyDueType';
-export { VocabularyFilterType } from './VocabularyFilterType';
 export { VocabularyStatus } from './VocabularyStatus';
 export { WordClass } from './WordClass';
 export { VocabularySortType } from './VocabularySortType';

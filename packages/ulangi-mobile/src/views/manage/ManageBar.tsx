@@ -9,7 +9,7 @@ import {
   ButtonSize,
   CategorySortType,
   Theme,
-  VocabularyFilterType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -29,7 +29,7 @@ export interface ManageBarProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   selectedSortType: IObservableValue<CategorySortType>;
-  selectedFilterType: IObservableValue<VocabularyFilterType>;
+  selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
   showCategorySortMenu: () => void;
   showVocabularyFilterMenu: () => void;
   styles?: {
@@ -67,13 +67,14 @@ export class ManageBar extends React.Component<ManageBarProps> {
         <DefaultButton
           testID={ManageScreenIds.SHOW_VOCABULARY_FILTER_MENU_BTN}
           text={_.upperFirst(
-            config.vocabulary.filterMap[this.props.selectedFilterType.get()]
-              .shortName,
+            config.vocabulary.statusMap[
+              this.props.selectedVocabularyStatus.get()
+            ].shortName,
           )}
           onPress={this.props.showVocabularyFilterMenu}
           styles={fullRoundedButtonStyles.getOutlineStyles(
             ButtonSize.SMALL,
-            this.getColorByStatus(this.props.selectedFilterType.get()),
+            this.getColorByStatus(this.props.selectedVocabularyStatus.get()),
             this.props.theme,
             this.props.screenLayout,
           )}
@@ -82,7 +83,7 @@ export class ManageBar extends React.Component<ManageBarProps> {
     );
   }
 
-  private getColorByStatus(selectedFilterType: VocabularyFilterType): string {
-    return config.vocabulary.filterMap[selectedFilterType].textColor;
+  private getColorByStatus(selectedVocabularyStatus: VocabularyStatus): string {
+    return config.vocabulary.statusMap[selectedVocabularyStatus].textColor;
   }
 }

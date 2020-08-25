@@ -17,6 +17,7 @@ import { SpacedRepetitionScreenIds } from '../../constants/ids/SpacedRepetitionS
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
 import { SelectCategoryButton } from '../category/SelectCategoryButton';
 import { Screen } from '../common/Screen';
+import { DueAndNewCounts } from './DueAndNewCounts';
 import { SpacedRepetitionMenu } from './SpacedRepetitionMenu';
 import {
   SpacedRepetitionScreenStyles,
@@ -77,6 +78,12 @@ export class SpacedRepetitionScreen extends React.Component<
                 selectCategory={this.props.screenDelegate.selectCategory}
               />
             </View>
+            <DueAndNewCounts
+              theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
+              counts={this.props.observableScreen.counts}
+              showLeft={false}
+            />
           </View>
         </View>
       </Screen>

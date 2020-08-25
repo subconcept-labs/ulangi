@@ -39,18 +39,20 @@ export class Images {
     light: [
       require('../../assets/img/quick-tutorial-screens/AddVocabulary_light.png'),
       require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_light.png'),
-      require('../../assets/img/quick-tutorial-screens/ViewCategory_light.png'),
       require('../../assets/img/quick-tutorial-screens/ViewLevelBreakdown_light.png'),
+      require('../../assets/img/quick-tutorial-screens/ViewCategory_light.png'),
       require('../../assets/img/quick-tutorial-screens/ChangeSet_light.png'),
       require('../../assets/img/quick-tutorial-screens/FilterVocabulary_light.png'),
+      require('../../assets/img/quick-tutorial-screens/Syncing_light.png'),
     ],
     dark: [
       require('../../assets/img/quick-tutorial-screens/AddVocabulary_dark.png'),
       require('../../assets/img/quick-tutorial-screens/DiscoverVocabulary_dark.png'),
-      require('../../assets/img/quick-tutorial-screens/ViewCategory_dark.png'),
       require('../../assets/img/quick-tutorial-screens/ViewLevelBreakdown_dark.png'),
+      require('../../assets/img/quick-tutorial-screens/ViewCategory_dark.png'),
       require('../../assets/img/quick-tutorial-screens/ChangeSet_dark.png'),
       require('../../assets/img/quick-tutorial-screens/FilterVocabulary_dark.png'),
+      require('../../assets/img/quick-tutorial-screens/Syncing_dark.png'),
     ],
   };
 
@@ -159,6 +161,7 @@ export class Images {
   public static readonly REMOVE_GREY_16X16 = require('../../assets/img/mobile-icons/remove_grey_16x16.png');
 
   // 14x14
+  public static readonly CARET_RIGHT_GREY_14X14 = require('../../assets/img/mobile-icons/caret_right_grey_14x14.png');
   public static readonly SEARCH_GREY_14X14 = require('../../assets/img/mobile-icons/search_grey_14x14.png');
   public static readonly CHECK_GREEN_14X14 = require('../../assets/img/mobile-icons/check_green_14x14.png');
   public static readonly LINK_GREY_14X14 = require('../../assets/img/mobile-icons/link_grey_14x14.png');

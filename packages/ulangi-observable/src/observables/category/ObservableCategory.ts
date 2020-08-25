@@ -44,6 +44,22 @@ export class ObservableCategory {
   @observable
   public wrLevel9To10Count: number;
 
+  @observable
+  public spacedRepetitionCounts:
+    | undefined
+    | {
+        due: number;
+        new: number;
+      };
+
+  @observable
+  public writingCounts:
+    | undefined
+    | {
+        due: number;
+        new: number;
+      };
+
   public readonly isSelected: IObservableValue<boolean>;
 
   public constructor(
@@ -63,9 +79,9 @@ export class ObservableCategory {
   ) {
     this.categoryName = categoryName;
     this.totalCount = totalCount;
-    (this.srLevel0Count = srLevel0Count),
-      (this.srLevel1To3Count = srLevel1To3Count),
-      (this.srLevel4To6Count = srLevel4To6Count);
+    this.srLevel0Count = srLevel0Count;
+    this.srLevel1To3Count = srLevel1To3Count;
+    this.srLevel4To6Count = srLevel4To6Count;
     this.srLevel7To8Count = srLevel7To8Count;
     this.srLevel9To10Count = srLevel9To10Count;
     this.wrLevel0Count = wrLevel0Count;

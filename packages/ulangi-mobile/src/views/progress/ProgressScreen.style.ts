@@ -84,7 +84,7 @@ export class ProgressScreenResponsiveStyles extends ResponsiveStyleSheet<
           defaultHorizontalMarginByBreakpoints,
         ),
         marginTop: scaleByFactor(20),
-        paddingTop: scaleByFactor(20),
+        paddingVertical: scaleByFactor(20),
         borderTopWidth: StyleSheet.hairlineWidth,
       },
 

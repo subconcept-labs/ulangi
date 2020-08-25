@@ -11,7 +11,6 @@ import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryAct
 import { CategoryDetailScreenDelegate } from '../../delegates/category/CategoryDetailScreenDelegate';
 import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
 import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
@@ -20,7 +19,6 @@ import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyLis
 import { VocabularyLiveUpdateDelegate } from '../../delegates/vocabulary/VocabularyLiveUpdateDelegate';
 import { VocabularySelectionDelegate } from '../../delegates/vocabulary/VocabularySelectionDelegate';
 import { VocabularySortMenuDelegate } from '../../delegates/vocabulary/VocabularySortMenuDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -45,16 +43,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       this.eventBus,
     );
 
-    const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-    );
-
-    const writingSettingsDelegate = new WritingSettingsDelegate(
-      this.eventBus,
-      this.props.rootStore.setStore,
-    );
-
     const categoryActionMenuDelegate = new CategoryActionMenuDelegate(
       this.props.rootStore.setStore,
       this.observer,
@@ -62,8 +50,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       undefined,
       setSelectionMenuDelegate,
       vocabularyBulkEditDelegate,
-      spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate,
       dialogDelegate,
       navigatorDelegate,
       SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
@@ -78,8 +64,6 @@ export class CategoryDetailScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
       this.props.observableConverter,
       observableScreen.vocabularyListState,
-      spacedRepetitionSettingsDelegate,
-      writingSettingsDelegate,
     );
 
     const vocabularyFilterMenuDelegate = new VocabularyFilterMenuDelegate(

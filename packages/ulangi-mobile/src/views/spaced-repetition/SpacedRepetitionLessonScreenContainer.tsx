@@ -31,6 +31,7 @@ import { SpacedRepetitionLessonScreenStyle } from './SpacedRepetitionLessonScree
 
 export interface SpacedReptitionLessonScreenPassedProps {
   readonly vocabularyList: ObservableMap<string, ObservableVocabulary>;
+  readonly currentCategoryNames: undefined | readonly string[];
   readonly startLesson: () => void;
 }
 
@@ -109,6 +110,7 @@ export class SpacedRepetitionLessonScreenContainer extends Container<
   private screenDelegate = this.screenFactory.createScreenDelegate(
     this.observableScreen,
     this.reviewIterator,
+    this.props.passedProps.currentCategoryNames,
     this.props.passedProps.startLesson,
   );
 

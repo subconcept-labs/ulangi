@@ -70,7 +70,7 @@ export class CategoryDetailScreenDelegate {
 
   public prepareAndFetch(): void {
     this.vocabularyListDelegate.prepareAndFetch(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.selectedSortType.get(),
       [this.observableScreen.category.categoryName],
     );
@@ -86,7 +86,7 @@ export class CategoryDetailScreenDelegate {
 
   public refresh(): void {
     this.vocabularyListDelegate.refresh(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.selectedSortType.get(),
       [this.observableScreen.category.categoryName],
     );
@@ -171,8 +171,13 @@ export class CategoryDetailScreenDelegate {
 
     this.categoryActionMenuDelegate.show(
       this.observableScreen.category,
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       {
+        hideCategorizeButton: true,
+        hideMoveButton: true,
+        hideRestoreButton: true,
+        hideArchiveButton: true,
+        hideDeleteButton: true,
         hideViewDetailButton: true,
         hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
         hideReviewByWritingButton: !featureSettings.writingEnabled,
@@ -184,17 +189,11 @@ export class CategoryDetailScreenDelegate {
   }
 
   public showVocabularyFilterMenu(): void {
-    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
-
     this.vocabularyFilterMenuDelegate.show(
-      this.observableScreen.selectedFilterType.get(),
-      (filterType): void => {
-        this.observableScreen.selectedFilterType.set(filterType);
+      this.observableScreen.selectedVocabularyStatus.get(),
+      (vocabularyStatus): void => {
+        this.observableScreen.selectedVocabularyStatus.set(vocabularyStatus);
         this.refresh();
-      },
-      {
-        hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
-        hideDueByWriting: !featureSettings.writingEnabled,
       },
     );
   }

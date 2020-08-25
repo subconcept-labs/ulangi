@@ -5,18 +5,15 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { assertExists } from '@ulangi/assert';
 import { SQLiteDatabase, SQLiteDatabaseAdapter } from '@ulangi/sqlite-adapter';
 import { SetBuilder, VocabularyBuilder } from '@ulangi/ulangi-common/builders';
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
 import {
-  CategorySortType,
   VocabularySortType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
-import { Category, Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import { Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { mockCurrentTime } from '@ulangi/ulangi-common/testing-utils';
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as sqlite3 from 'sqlite3';
 import * as tmp from 'tmp-promise';
@@ -102,7 +99,7 @@ describe('WritingModel', (): void => {
 
         beforeEach(
           async (): Promise<void> => {
-            const level_0_terms = [
+            const new_terms = [
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
@@ -111,14 +108,14 @@ describe('WritingModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 writing: {
-                  level: 0,
+                  lastWrittenAt: null,
                 },
               }),
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 writing: {
-                  level: 0,
+                  lastWrittenAt: null,
                   disabled: true,
                 },
               }),
@@ -128,7 +125,7 @@ describe('WritingModel', (): void => {
               }),
             ];
 
-            const level_0_terms_with_category = [
+            const new_terms_with_category = [
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
@@ -147,7 +144,7 @@ describe('WritingModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 writing: {
-                  level: 0,
+                  lastWrittenAt: null,
                 },
                 category: {
                   categoryName: 'category2',
@@ -155,15 +152,7 @@ describe('WritingModel', (): void => {
               }),
             ];
 
-            const level_gt_0_terms = [
-              new VocabularyBuilder().build({
-                vocabularyStatus: VocabularyStatus.ACTIVE,
-                vocabularyText: 'vocabulary',
-                writing: {
-                  level: 1,
-                  lastWrittenAt: null,
-                },
-              }),
+            const learned_terms = [
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
@@ -189,7 +178,6 @@ describe('WritingModel', (): void => {
                 vocabularyText: 'vocabulary',
                 writing: {
                   level: 1,
-                  lastWrittenAt: null,
                   disabled: true,
                 },
               }),
@@ -198,7 +186,9 @@ describe('WritingModel', (): void => {
                 vocabularyText: 'vocabulary',
                 writing: {
                   level: 1,
-                  lastWrittenAt: null,
+                  lastWrittenAt: moment()
+                    .subtract(initialInterval + 1, 'hours')
+                    .toDate(),
                 },
               }),
               new VocabularyBuilder().build({
@@ -206,7 +196,9 @@ describe('WritingModel', (): void => {
                 vocabularyText: 'vocabulary',
                 writing: {
                   level: 1,
-                  lastWrittenAt: null,
+                  lastWrittenAt: moment()
+                    .subtract(initialInterval + 1, 'hours')
+                    .toDate(),
                 },
               }),
               new VocabularyBuilder().build({
@@ -231,18 +223,7 @@ describe('WritingModel', (): void => {
               }),
             ];
 
-            const level_gt_0_terms_with_category = [
-              new VocabularyBuilder().build({
-                vocabularyStatus: VocabularyStatus.ACTIVE,
-                vocabularyText: 'vocabulary',
-                writing: {
-                  level: 1,
-                  lastWrittenAt: null,
-                },
-                category: {
-                  categoryName: 'category',
-                },
-              }),
+            const learned_terms_with_category = [
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
@@ -253,7 +234,7 @@ describe('WritingModel', (): void => {
                     .toDate(),
                 },
                 category: {
-                  categoryName: 'category',
+                  categoryName: 'category1',
                 },
               }),
               new VocabularyBuilder().build({
@@ -266,7 +247,7 @@ describe('WritingModel', (): void => {
                     .toDate(),
                 },
                 category: {
-                  categoryName: 'category',
+                  categoryName: 'category1',
                 },
               }),
               new VocabularyBuilder().build({
@@ -279,7 +260,7 @@ describe('WritingModel', (): void => {
                     .toDate(),
                 },
                 category: {
-                  categoryName: 'category',
+                  categoryName: 'category2',
                 },
               }),
               new VocabularyBuilder().build({
@@ -292,16 +273,16 @@ describe('WritingModel', (): void => {
                     .toDate(),
                 },
                 category: {
-                  categoryName: 'category',
+                  categoryName: 'category2',
                 },
               }),
             ];
 
             vocabularyList = [
-              ...level_0_terms,
-              ...level_0_terms_with_category,
-              ...level_gt_0_terms,
-              ...level_gt_0_terms_with_category,
+              ...new_terms,
+              ...new_terms_with_category,
+              ...learned_terms,
+              ...learned_terms_with_category,
             ];
 
             await userDb.transaction(
@@ -321,13 +302,13 @@ describe('WritingModel', (): void => {
           }
         );
 
-        test('get due level 0 vocabulary', async (): Promise<void> => {
+        test('get new vocabulary (any categories)', async (): Promise<void> => {
           const {
             vocabularyList: fetchedVocabularyList,
-          } = await writingModel.getDueVocabularyListByLevel(
+          } = await writingModel.getVocabularyListByLevel(
             userDb,
             setList[0].setId,
-            0,
+            undefined,
             initialInterval,
             limit,
             true,
@@ -341,7 +322,7 @@ describe('WritingModel', (): void => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.level === 0 &&
+                    (vocabulary.writing.lastWrittenAt === null &&
                       vocabulary.writing.disabled === false))
                 );
               }
@@ -349,15 +330,15 @@ describe('WritingModel', (): void => {
           );
         });
 
-        test('get due level 0 vocabulary with selected categories', async (): Promise<
+        test('get new vocabulary with selected categories', async (): Promise<
           void
         > => {
           const {
             vocabularyList: fetchedVocabularyList,
-          } = await writingModel.getDueVocabularyListByLevel(
+          } = await writingModel.getVocabularyListByLevel(
             userDb,
             setList[0].setId,
-            0,
+            undefined,
             initialInterval,
             limit,
             true,
@@ -371,7 +352,7 @@ describe('WritingModel', (): void => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.level === 0 &&
+                    (vocabulary.writing.lastWrittenAt === null &&
                       vocabulary.writing.disabled === false)) &&
                   typeof vocabulary.category !== 'undefined' &&
                   vocabulary.category.categoryName === 'category1'
@@ -381,15 +362,15 @@ describe('WritingModel', (): void => {
           );
         });
 
-        test('get due level 0 vocabulary with Uncategorized', async (): Promise<
+        test('get new vocabulary in Uncategorized category', async (): Promise<
           void
         > => {
           const {
             vocabularyList: fetchedVocabularyList,
-          } = await writingModel.getDueVocabularyListByLevel(
+          } = await writingModel.getVocabularyListByLevel(
             userDb,
             setList[0].setId,
-            0,
+            undefined,
             initialInterval,
             limit,
             true,
@@ -403,7 +384,7 @@ describe('WritingModel', (): void => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.level === 0 &&
+                    (vocabulary.writing.lastWrittenAt === null &&
                       vocabulary.writing.disabled === false)) &&
                   (typeof vocabulary.category === 'undefined' ||
                     vocabulary.category.categoryName === 'Uncategorized')
@@ -413,15 +394,15 @@ describe('WritingModel', (): void => {
           );
         });
 
-        test('get level 0 due vocabulary with excluded categories', async (): Promise<
+        test('get new vocabulary with excluded categories', async (): Promise<
           void
         > => {
           const {
             vocabularyList: fetchedVocabularyList,
-          } = await writingModel.getDueVocabularyListByLevel(
+          } = await writingModel.getVocabularyListByLevel(
             userDb,
             setList[0].setId,
-            0,
+            undefined,
             initialInterval,
             limit,
             true,
@@ -435,7 +416,7 @@ describe('WritingModel', (): void => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.level === 0 &&
+                    (vocabulary.writing.lastWrittenAt === null &&
                       vocabulary.writing.disabled === false)) &&
                   (typeof vocabulary.category === 'undefined' ||
                     vocabulary.category.categoryName !== 'category2')
@@ -445,15 +426,15 @@ describe('WritingModel', (): void => {
           );
         });
 
-        test('get level 0 due vocabulary excluding Uncategorized', async (): Promise<
+        test('get new vocabulary excluding Uncategorized', async (): Promise<
           void
         > => {
           const {
             vocabularyList: fetchedVocabularyList,
-          } = await writingModel.getDueVocabularyListByLevel(
+          } = await writingModel.getVocabularyListByLevel(
             userDb,
             setList[0].setId,
-            0,
+            undefined,
             initialInterval,
             limit,
             true,
@@ -467,7 +448,7 @@ describe('WritingModel', (): void => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.level === 0 &&
+                    (vocabulary.writing.lastWrittenAt === null &&
                       vocabulary.writing.disabled === false)) &&
                   typeof vocabulary.category !== 'undefined' &&
                   vocabulary.category.categoryName !== 'Uncategorized'
@@ -477,8 +458,8 @@ describe('WritingModel', (): void => {
           );
         });
 
-        describe('Test get level 1 & 2 due vocabulary', (): void => {
-          const levels = [1, 2];
+        describe('Test get level 0, 1 & 2 due vocabulary', (): void => {
+          const levels = [0, 1, 2];
 
           for (const level of levels) {
             test(`get level ${level} due vocabulary`, async (): Promise<
@@ -486,7 +467,7 @@ describe('WritingModel', (): void => {
             > => {
               const {
                 vocabularyList: fetchedVocabularyList,
-              } = await writingModel.getDueVocabularyListByLevel(
+              } = await writingModel.getVocabularyListByLevel(
                 userDb,
                 setList[0].setId,
                 level,
@@ -505,14 +486,16 @@ describe('WritingModel', (): void => {
                       typeof vocabulary.writing !== 'undefined' &&
                       vocabulary.writing.disabled === false &&
                       vocabulary.writing.level === level &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        vocabulary.writing.lastWrittenAt <
-                          moment()
-                            .subtract(
-                              initialInterval * Math.pow(2, level - 1),
-                              'hours'
-                            )
-                            .toDate())
+                      vocabulary.writing.lastWrittenAt !== null &&
+                      vocabulary.writing.lastWrittenAt <
+                        moment()
+                          .subtract(
+                            level === 0
+                              ? 0
+                              : initialInterval * Math.pow(2, level - 1),
+                            'hours'
+                          )
+                          .toDate()
                     );
                   }
                 )
@@ -524,7 +507,7 @@ describe('WritingModel', (): void => {
             > => {
               const {
                 vocabularyList: fetchedVocabularyList,
-              } = await writingModel.getDueVocabularyListByLevel(
+              } = await writingModel.getVocabularyListByLevel(
                 userDb,
                 setList[0].setId,
                 level,
@@ -543,14 +526,16 @@ describe('WritingModel', (): void => {
                       typeof vocabulary.writing !== 'undefined' &&
                       vocabulary.writing.disabled === false &&
                       vocabulary.writing.level === level &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        vocabulary.writing.lastWrittenAt <
-                          moment()
-                            .subtract(
-                              initialInterval * Math.pow(2, level - 1),
-                              'hours'
-                            )
-                            .toDate()) &&
+                      vocabulary.writing.lastWrittenAt !== null &&
+                      vocabulary.writing.lastWrittenAt <
+                        moment()
+                          .subtract(
+                            level === 0
+                              ? 0
+                              : initialInterval * Math.pow(2, level - 1),
+                            'hours'
+                          )
+                          .toDate() &&
                       typeof vocabulary.category !== 'undefined' &&
                       vocabulary.category.categoryName === 'category1'
                     );
@@ -564,7 +549,7 @@ describe('WritingModel', (): void => {
             > => {
               const {
                 vocabularyList: fetchedVocabularyList,
-              } = await writingModel.getDueVocabularyListByLevel(
+              } = await writingModel.getVocabularyListByLevel(
                 userDb,
                 setList[0].setId,
                 level,
@@ -583,14 +568,16 @@ describe('WritingModel', (): void => {
                       typeof vocabulary.writing !== 'undefined' &&
                       vocabulary.writing.disabled === false &&
                       vocabulary.writing.level === level &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        vocabulary.writing.lastWrittenAt <
-                          moment()
-                            .subtract(
-                              initialInterval * Math.pow(2, level - 1),
-                              'hours'
-                            )
-                            .toDate()) &&
+                      vocabulary.writing.lastWrittenAt !== null &&
+                      vocabulary.writing.lastWrittenAt <
+                        moment()
+                          .subtract(
+                            level === 0
+                              ? 0
+                              : initialInterval * Math.pow(2, level - 1),
+                            'hours'
+                          )
+                          .toDate() &&
                       (typeof vocabulary.category === 'undefined' ||
                         vocabulary.category.categoryName === 'Uncategorized')
                     );
@@ -604,7 +591,7 @@ describe('WritingModel', (): void => {
             > => {
               const {
                 vocabularyList: fetchedVocabularyList,
-              } = await writingModel.getDueVocabularyListByLevel(
+              } = await writingModel.getVocabularyListByLevel(
                 userDb,
                 setList[0].setId,
                 level,
@@ -623,14 +610,16 @@ describe('WritingModel', (): void => {
                       typeof vocabulary.writing !== 'undefined' &&
                       vocabulary.writing.disabled === false &&
                       vocabulary.writing.level === level &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        vocabulary.writing.lastWrittenAt <
-                          moment()
-                            .subtract(
-                              initialInterval * Math.pow(2, level - 1),
-                              'hours'
-                            )
-                            .toDate()) &&
+                      vocabulary.writing.lastWrittenAt !== null &&
+                      vocabulary.writing.lastWrittenAt <
+                        moment()
+                          .subtract(
+                            level === 0
+                              ? 0
+                              : initialInterval * Math.pow(2, level - 1),
+                            'hours'
+                          )
+                          .toDate() &&
                       (typeof vocabulary.category === 'undefined' ||
                         vocabulary.category.categoryName !== 'category2')
                     );
@@ -644,7 +633,7 @@ describe('WritingModel', (): void => {
             > => {
               const {
                 vocabularyList: fetchedVocabularyList,
-              } = await writingModel.getDueVocabularyListByLevel(
+              } = await writingModel.getVocabularyListByLevel(
                 userDb,
                 setList[0].setId,
                 level,
@@ -663,14 +652,16 @@ describe('WritingModel', (): void => {
                       typeof vocabulary.writing !== 'undefined' &&
                       vocabulary.writing.disabled === false &&
                       vocabulary.writing.level === level &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        vocabulary.writing.lastWrittenAt <
-                          moment()
-                            .subtract(
-                              initialInterval * Math.pow(2, level - 1),
-                              'hours'
-                            )
-                            .toDate()) &&
+                      vocabulary.writing.lastWrittenAt !== null &&
+                      vocabulary.writing.lastWrittenAt <
+                        moment()
+                          .subtract(
+                            level === 0
+                              ? 0
+                              : initialInterval * Math.pow(2, level - 1),
+                            'hours'
+                          )
+                          .toDate() &&
                       typeof vocabulary.category !== 'undefined' &&
                       vocabulary.category.categoryName !== 'Uncategorized'
                     );
@@ -679,6 +670,133 @@ describe('WritingModel', (): void => {
               );
             });
           }
+        });
+
+        test('get new vocabulary list (any categories)', async (): Promise<
+          void
+        > => {
+          const {
+            vocabularyList: fetchedVocabularyList,
+          } = await writingModel.getNewVocabularyList(
+            userDb,
+            setList[0].setId,
+            undefined,
+            VocabularySortType.UNSORTED,
+            limit,
+            0,
+            true
+          );
+
+          expect(fetchedVocabularyList).toIncludeSameMembers(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  (typeof vocabulary.writing === 'undefined' ||
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false))
+                );
+              }
+            )
+          );
+        });
+
+        test('get new vocabulary list with selected categories', async (): Promise<
+          void
+        > => {
+          const {
+            vocabularyList: fetchedVocabularyList,
+          } = await writingModel.getNewVocabularyList(
+            userDb,
+            setList[0].setId,
+            ['category1'],
+            VocabularySortType.UNSORTED,
+            limit,
+            0,
+            true
+          );
+
+          expect(fetchedVocabularyList).toIncludeSameMembers(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  (typeof vocabulary.writing === 'undefined' ||
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false)) &&
+                  typeof vocabulary.category !== 'undefined' &&
+                  vocabulary.category.categoryName === 'category1'
+                );
+              }
+            )
+          );
+        });
+
+        test('get new vocabulary list in Uncategorized category', async (): Promise<
+          void
+        > => {
+          const {
+            vocabularyList: fetchedVocabularyList,
+          } = await writingModel.getNewVocabularyList(
+            userDb,
+            setList[0].setId,
+            ['Uncategorized'],
+            VocabularySortType.UNSORTED,
+            limit,
+            0,
+            true
+          );
+
+          expect(fetchedVocabularyList).toIncludeSameMembers(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  (typeof vocabulary.writing === 'undefined' ||
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false)) &&
+                  (typeof vocabulary.category === 'undefined' ||
+                    vocabulary.category.categoryName === 'Uncategorized')
+                );
+              }
+            )
+          );
+        });
+
+        test('get due vocabulary list (any categories)', async (): Promise<
+          void
+        > => {
+          const {
+            vocabularyList: fetchedDueVocabularyList,
+          } = await writingModel.getDueVocabularyList(
+            userDb,
+            setList[0].setId,
+            initialInterval,
+            maxLevel,
+            undefined,
+            VocabularySortType.SORT_BY_NAME_ASC,
+            limit,
+            0,
+            true
+          );
+
+          expect(fetchedDueVocabularyList).toIncludeSameMembers(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  typeof vocabulary.writing !== 'undefined' &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  new WritingScheduler().calculateReviewTime(
+                    initialInterval,
+                    vocabulary.writing.level,
+                    vocabulary.writing.lastWrittenAt
+                  ) < moment().toDate()
+                );
+              }
+            )
+          );
         });
 
         test('get due vocabulary list with category1', async (): Promise<
@@ -705,14 +823,14 @@ describe('WritingModel', (): void => {
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   typeof vocabulary.category !== 'undefined' &&
                   vocabulary.category.categoryName === 'category1' &&
-                  (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.disabled === false &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        new WritingScheduler().calculateReviewTime(
-                          initialInterval,
-                          vocabulary.writing.level,
-                          vocabulary.writing.lastWrittenAt
-                        ) < moment().toDate())))
+                  typeof vocabulary.writing !== 'undefined' &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  new WritingScheduler().calculateReviewTime(
+                    initialInterval,
+                    vocabulary.writing.level,
+                    vocabulary.writing.lastWrittenAt
+                  ) < moment().toDate()
                 );
               }
             )
@@ -742,14 +860,14 @@ describe('WritingModel', (): void => {
                 vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                 (typeof vocabulary.category === 'undefined' ||
                   vocabulary.category.categoryName === 'Uncategorized') &&
-                (typeof vocabulary.writing === 'undefined' ||
-                  (vocabulary.writing.disabled === false &&
-                    (vocabulary.writing.lastWrittenAt === null ||
-                      new WritingScheduler().calculateReviewTime(
-                        initialInterval,
-                        vocabulary.writing.level,
-                        vocabulary.writing.lastWrittenAt
-                      ) < moment().toDate())))
+                typeof vocabulary.writing !== 'undefined' &&
+                vocabulary.writing.disabled === false &&
+                vocabulary.writing.lastWrittenAt !== null &&
+                new WritingScheduler().calculateReviewTime(
+                  initialInterval,
+                  vocabulary.writing.level,
+                  vocabulary.writing.lastWrittenAt
+                ) < moment().toDate()
               );
             }
           );
@@ -759,297 +877,193 @@ describe('WritingModel', (): void => {
           ).toIncludeSameMembers(expectedResult);
         });
 
-        test('get due vocabulary list without categoryName', async (): Promise<
-          void
-        > => {
-          const {
-            vocabularyList: fetchedDueVocabularyList,
-          } = await writingModel.getDueVocabularyList(
+        test('get new count (any categories)', async (): Promise<void> => {
+          const newCount = await writingModel.getNewCount(
             userDb,
             setList[0].setId,
-            initialInterval,
-            maxLevel,
-            undefined,
-            VocabularySortType.SORT_BY_NAME_ASC,
-            limit,
-            0,
-            true
+            undefined
           );
 
-          expect(fetchedDueVocabularyList).toIncludeSameMembers(
+          expect(newCount).toEqual(
             vocabularyList.filter(
               (vocabulary): boolean => {
                 return (
                   vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
                   (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.disabled === false &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        new WritingScheduler().calculateReviewTime(
-                          initialInterval,
-                          vocabulary.writing.level,
-                          vocabulary.writing.lastWrittenAt
-                        ) < moment().toDate())))
-                );
-              }
-            )
-          );
-        });
-
-        test('get due category list excluding Uncategorized', async (): Promise<
-          void
-        > => {
-          const {
-            categoryList: fetchedDueCategoryList,
-          } = await writingModel.getDueCategoryList(
-            userDb,
-            setList[0].setId,
-            initialInterval,
-            maxLevel,
-            CategorySortType.SORT_BY_NAME_ASC,
-            limit,
-            0,
-            false
-          );
-
-          expect(fetchedDueCategoryList).toIncludeSameMembers(
-            _.toPairs(
-              _.groupBy(
-                vocabularyList.filter(
-                  (vocabulary): boolean => {
-                    return (
-                      vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-                      typeof vocabulary.category !== 'undefined' &&
-                      vocabulary.category.categoryName !== 'Uncategorized' &&
-                      (typeof vocabulary.writing === 'undefined' ||
-                        (vocabulary.writing.disabled === false &&
-                          (vocabulary.writing.lastWrittenAt === null ||
-                            new WritingScheduler().calculateReviewTime(
-                              initialInterval,
-                              vocabulary.writing.level,
-                              vocabulary.writing.lastWrittenAt
-                            ) < moment().toDate())))
-                    );
-                  }
-                ),
-                (vocabulary: Vocabulary): string => {
-                  return assertExists(vocabulary.category).categoryName;
-                }
-              )
-            ).map(
-              (groupByCategoryName: [string, Vocabulary[]]): Category => {
-                return {
-                  categoryName: groupByCategoryName[0],
-                  totalCount: groupByCategoryName[1].length,
-                  srLevel0Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => vocabulary.level === 0
-                  ).length,
-                  srLevel1To3Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 1 && vocabulary.level <= 3
-                  ).length,
-                  srLevel4To6Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 4 && vocabulary.level <= 6
-                  ).length,
-                  srLevel7To8Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 7 && vocabulary.level <= 8
-                  ).length,
-                  srLevel9To10Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 9 && vocabulary.level <= 10
-                  ).length,
-                  wrLevel0Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing === 'undefined' ||
-                        vocabulary.writing.level === 0
-                      );
-                    }
-                  ).length,
-                  wrLevel1To3Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 1 &&
-                        vocabulary.writing.level <= 3
-                      );
-                    }
-                  ).length,
-                  wrLevel4To6Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 4 &&
-                        vocabulary.writing.level <= 6
-                      );
-                    }
-                  ).length,
-                  wrLevel7To8Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 7 &&
-                        vocabulary.writing.level <= 8
-                      );
-                    }
-                  ).length,
-                  wrLevel9To10Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 9 &&
-                        vocabulary.writing.level <= 10
-                      );
-                    }
-                  ).length,
-                };
-              }
-            )
-          );
-        });
-
-        test('get due category list including Uncategorized', async (): Promise<
-          void
-        > => {
-          const {
-            categoryList: fetchedDueCategoryList,
-          } = await writingModel.getDueCategoryList(
-            userDb,
-            setList[0].setId,
-            initialInterval,
-            maxLevel,
-            CategorySortType.SORT_BY_NAME_ASC,
-            limit,
-            0,
-            true
-          );
-
-          expect(fetchedDueCategoryList).toIncludeSameMembers(
-            _.toPairs(
-              _.groupBy(
-                vocabularyList.filter(
-                  (vocabulary): boolean => {
-                    return (
-                      vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-                      (typeof vocabulary.writing === 'undefined' ||
-                        (vocabulary.writing.disabled === false &&
-                          (vocabulary.writing.lastWrittenAt === null ||
-                            new WritingScheduler().calculateReviewTime(
-                              initialInterval,
-                              vocabulary.writing.level,
-                              vocabulary.writing.lastWrittenAt
-                            ) < moment().toDate())))
-                    );
-                  }
-                ),
-                (vocabulary: Vocabulary): string => {
-                  return typeof vocabulary.category === 'undefined'
-                    ? 'Uncategorized'
-                    : vocabulary.category.categoryName;
-                }
-              )
-            ).map(
-              (groupByCategoryName: [string, Vocabulary[]]): Category => {
-                return {
-                  categoryName: groupByCategoryName[0],
-                  totalCount: groupByCategoryName[1].length,
-                  srLevel0Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => vocabulary.level === 0
-                  ).length,
-                  srLevel1To3Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 1 && vocabulary.level <= 3
-                  ).length,
-                  srLevel4To6Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 4 && vocabulary.level <= 6
-                  ).length,
-                  srLevel7To8Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 7 && vocabulary.level <= 8
-                  ).length,
-                  srLevel9To10Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean =>
-                      vocabulary.level >= 9 && vocabulary.level <= 10
-                  ).length,
-                  wrLevel0Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing === 'undefined' ||
-                        vocabulary.writing.level === 0
-                      );
-                    }
-                  ).length,
-                  wrLevel1To3Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 1 &&
-                        vocabulary.writing.level <= 3
-                      );
-                    }
-                  ).length,
-                  wrLevel4To6Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 4 &&
-                        vocabulary.writing.level <= 6
-                      );
-                    }
-                  ).length,
-                  wrLevel7To8Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 7 &&
-                        vocabulary.writing.level <= 8
-                      );
-                    }
-                  ).length,
-                  wrLevel9To10Count: groupByCategoryName[1].filter(
-                    (vocabulary): boolean => {
-                      return (
-                        typeof vocabulary.writing !== 'undefined' &&
-                        vocabulary.writing.level >= 9 &&
-                        vocabulary.writing.level <= 10
-                      );
-                    }
-                  ).length,
-                };
-              }
-            )
-          );
-        });
-
-        test('get Uncategorized due count', async (): Promise<void> => {
-          const uncategorize = await writingModel.getUncategorizedDueCounts(
-            userDb,
-            setList[0].setId,
-            initialInterval,
-            maxLevel
-          );
-
-          expect(uncategorize.totalCount).toEqual(
-            vocabularyList.filter(
-              (vocabulary): boolean => {
-                return (
-                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-                  (typeof vocabulary.category === 'undefined' ||
-                    vocabulary.category.categoryName === 'Uncategorized') &&
-                  (typeof vocabulary.writing === 'undefined' ||
-                    (vocabulary.writing.disabled === false &&
-                      (vocabulary.writing.lastWrittenAt === null ||
-                        new WritingScheduler().calculateReviewTime(
-                          initialInterval,
-                          vocabulary.writing.level,
-                          vocabulary.writing.lastWrittenAt
-                        ) < moment().toDate())))
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false))
                 );
               }
             ).length
           );
+        });
+
+        test('get new count with selected categories', async (): Promise<
+          void
+        > => {
+          const newCount = await writingModel.getNewCount(
+            userDb,
+            setList[0].setId,
+            ['category1']
+          );
+
+          expect(newCount).toEqual(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  (typeof vocabulary.writing === 'undefined' ||
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false)) &&
+                  typeof vocabulary.category !== 'undefined' &&
+                  vocabulary.category.categoryName === 'category1'
+                );
+              }
+            ).length
+          );
+        });
+
+        test('get new count in Uncategorized category', async (): Promise<
+          void
+        > => {
+          const newCount = await writingModel.getNewCount(
+            userDb,
+            setList[0].setId,
+            ['Uncategorized']
+          );
+
+          expect(newCount).toEqual(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  (typeof vocabulary.writing === 'undefined' ||
+                    (vocabulary.writing.lastWrittenAt === null &&
+                      vocabulary.writing.disabled === false)) &&
+                  (typeof vocabulary.category === 'undefined' ||
+                    vocabulary.category.categoryName === 'Uncategorized')
+                );
+              }
+            ).length
+          );
+        });
+
+        test('get due count (any categories)', async (): Promise<void> => {
+          const dueCount = await writingModel.getDueCount(
+            userDb,
+            setList[0].setId,
+            initialInterval,
+            maxLevel,
+            undefined
+          );
+
+          expect(dueCount).toEqual(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  typeof vocabulary.writing !== 'undefined' &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  new WritingScheduler().calculateReviewTime(
+                    initialInterval,
+                    vocabulary.writing.level,
+                    vocabulary.writing.lastWrittenAt
+                  ) < moment().toDate()
+                );
+              }
+            ).length
+          );
+        });
+
+        test('get due count with category1', async (): Promise<void> => {
+          const dueCount = await writingModel.getDueCount(
+            userDb,
+            setList[0].setId,
+            initialInterval,
+            maxLevel,
+            ['category1']
+          );
+
+          expect(dueCount).toEqual(
+            vocabularyList.filter(
+              (vocabulary): boolean => {
+                return (
+                  vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                  typeof vocabulary.category !== 'undefined' &&
+                  vocabulary.category.categoryName === 'category1' &&
+                  typeof vocabulary.writing !== 'undefined' &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  new WritingScheduler().calculateReviewTime(
+                    initialInterval,
+                    vocabulary.writing.level,
+                    vocabulary.writing.lastWrittenAt
+                  ) < moment().toDate()
+                );
+              }
+            ).length
+          );
+        });
+
+        test('get due count with Uncategorized', async (): Promise<void> => {
+          const dueCount = await writingModel.getDueCount(
+            userDb,
+            setList[0].setId,
+            initialInterval,
+            maxLevel,
+            ['Uncategorized']
+          );
+
+          const expectedResult = vocabularyList.filter(
+            (vocabulary): boolean => {
+              return (
+                vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
+                (typeof vocabulary.category === 'undefined' ||
+                  vocabulary.category.categoryName === 'Uncategorized') &&
+                typeof vocabulary.writing !== 'undefined' &&
+                vocabulary.writing.disabled === false &&
+                vocabulary.writing.lastWrittenAt !== null &&
+                new WritingScheduler().calculateReviewTime(
+                  initialInterval,
+                  vocabulary.writing.level,
+                  vocabulary.writing.lastWrittenAt
+                ) < moment().toDate()
+              );
+            }
+          ).length;
+
+          expect(dueCount).toEqual(expectedResult);
+        });
+
+        test('get new count by category names', async (): Promise<void> => {
+          const newCountPerCategoryNames = await writingModel.getNewCountByCategoryNames(
+            userDb,
+            setList[0].setId,
+            ['Uncategorized', 'category1', 'animals']
+          );
+
+          expect(newCountPerCategoryNames).toEqual({
+            Uncategorized: 3,
+            category1: 1,
+            animals: 0,
+          });
+        });
+
+        test('get due count by category names', async (): Promise<void> => {
+          const dueCountPerCategoryNames = await writingModel.getDueCountByCategoryNames(
+            userDb,
+            setList[0].setId,
+            initialInterval,
+            maxLevel,
+            ['Uncategorized', 'category1', 'animals']
+          );
+
+          expect(dueCountPerCategoryNames).toEqual({
+            Uncategorized: 2,
+            category1: 1,
+            animals: 0,
+          });
         });
       });
     });

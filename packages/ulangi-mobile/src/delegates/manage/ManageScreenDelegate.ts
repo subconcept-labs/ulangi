@@ -6,7 +6,7 @@
  */
 
 import { ActionType } from '@ulangi/ulangi-action';
-import { ScreenName, VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import { ScreenName, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
@@ -71,13 +71,16 @@ export class ManageScreenDelegate {
 
   public prepareAndFetch(): void {
     this.categoryListDelegate.prepareAndFetch(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.selectedSortType.get(),
     );
   }
 
   public fetch(): void {
-    this.categoryListDelegate.fetch();
+    this.categoryListDelegate.fetch(
+      this.observableScreen.selectedVocabularyStatus.get() ===
+        VocabularyStatus.ACTIVE,
+    );
   }
 
   public clearFetch(): void {
@@ -86,33 +89,38 @@ export class ManageScreenDelegate {
 
   public refresh(): void {
     this.categoryListDelegate.refresh(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.selectedSortType.get(),
     );
   }
 
   public refreshIfEmpty(): void {
     this.categoryListDelegate.refreshIfEmpty(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.selectedSortType.get(),
     );
   }
 
   public showCategoryDetail(category: ObservableCategory): void {
     this.navigatorDelegate.push(ScreenName.CATEGORY_DETAIL_SCREEN, {
-      selectedFilterType: this.observableScreen.selectedFilterType.get(),
+      selectedVocabularyStatus: this.observableScreen.selectedVocabularyStatus.get(),
       category,
     });
   }
 
   public showCategoryActionMenu(
     category: ObservableCategory,
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
   ): void {
     const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
 
-    this.categoryActionMenuDelegate.show(category, filterType, {
+    this.categoryActionMenuDelegate.show(category, vocabularyStatus, {
       hideViewDetailButton: false,
+      hideCategorizeButton: false,
+      hideMoveButton: false,
+      hideRestoreButton: false,
+      hideArchiveButton: false,
+      hideDeleteButton: false,
       hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
       hideReviewByWritingButton: !featureSettings.writingEnabled,
       hideQuizButton: !featureSettings.quizEnabled,
@@ -125,7 +133,7 @@ export class ManageScreenDelegate {
     const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
 
     this.categoryBulkActionMenuDelegate.show(
-      this.observableScreen.selectedFilterType.get(),
+      this.observableScreen.selectedVocabularyStatus.get(),
       this.observableScreen.categoryListState.categoryList,
       this.observableScreen.categoryListState.selectedCategoryNames,
       {
@@ -149,17 +157,11 @@ export class ManageScreenDelegate {
   }
 
   public showVocabularyFilterMenu(): void {
-    const featureSettings = this.featureSettingsDelegate.getCurrentSettings();
-
     this.vocabularyFilterMenuDelegate.show(
-      this.observableScreen.selectedFilterType.get(),
-      (filterType): void => {
-        this.observableScreen.selectedFilterType.set(filterType);
+      this.observableScreen.selectedVocabularyStatus.get(),
+      (vocabularyStatus): void => {
+        this.observableScreen.selectedVocabularyStatus.set(vocabularyStatus);
         this.refresh();
-      },
-      {
-        hideDueBySpacedRepetition: !featureSettings.spacedRepetitionEnabled,
-        hideDueByWriting: !featureSettings.writingEnabled,
       },
     );
   }

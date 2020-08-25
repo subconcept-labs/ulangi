@@ -15,6 +15,14 @@ export class ObservableSpacedRepetitionScreen extends ObservableScreen {
   @observable
   public selectedCategoryNames: undefined | IObservableArray<string>;
 
+  @observable
+  public counts:
+    | undefined
+    | {
+        due: number;
+        new: number;
+      };
+
   public constructor(
     selectedCategoryNames: undefined | readonly string[],
     componentId: string,

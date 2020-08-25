@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { VocabularyFilterType } from '@ulangi/ulangi-common/enums';
+import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import {
   ObservableManageScreen,
   ObservableSetStore,
@@ -57,7 +57,9 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
           selectedSortType={this.props.observableScreen.selectedSortType}
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
+          selectedVocabularyStatus={
+            this.props.observableScreen.selectedVocabularyStatus
+          }
           showCategorySortMenu={this.props.screenDelegate.showCategorySortMenu}
           showVocabularyFilterMenu={
             this.props.screenDelegate.showVocabularyFilterMenu
@@ -85,7 +87,9 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
           categoryListState={this.props.observableScreen.categoryListState}
-          selectedFilterType={this.props.observableScreen.selectedFilterType}
+          selectedVocabularyStatus={
+            this.props.observableScreen.selectedVocabularyStatus
+          }
           toggleSelection={this.props.screenDelegate.toggleSelection}
           showCategoryActionMenu={
             this.props.screenDelegate.showCategoryActionMenu
@@ -110,8 +114,8 @@ export class ManageScreen extends React.Component<ManageScreenProps> {
 
   private renderEmptyComponent(): React.ReactElement<any> {
     if (
-      this.props.observableScreen.selectedFilterType.get() ===
-      VocabularyFilterType.ACTIVE
+      this.props.observableScreen.selectedVocabularyStatus.get() ===
+      VocabularyStatus.ACTIVE
     ) {
       return (
         <QuickTutorialButton

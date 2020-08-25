@@ -25,27 +25,17 @@ export class CategoryModel {
     setId: string,
     vocabularyStatus: VocabularyStatus,
     sortType: CategorySortType,
-    limitOfCategorized: number,
-    offsetOfCategorized: number,
-    includeUncategorized: boolean
+    limit: number,
+    offset: number
   ): Promise<{
     categoryList: readonly Category[];
   }> {
     return new Promise(
       async (resolve, reject): Promise<void> => {
         try {
-          let uncategorized;
-          if (includeUncategorized) {
-            uncategorized = await this.getUncategorizedCounts(
-              db,
-              setId,
-              vocabularyStatus
-            );
-          }
-
           let query = squel
             .select()
-            .field('categoryName')
+            .field("IFNULL(c.categoryName, 'Uncategorized')", 'categoryName')
             .field('COUNT(v.vocabularyId)', 'totalCount');
 
           query = addLevelCountAggregation(query);
@@ -64,8 +54,7 @@ export class CategoryModel {
             )
             .where('v.setId = ?', setId)
             .where('v.vocabularyStatus = ?', vocabularyStatus)
-            .group('categoryName')
-            .having('categoryName != ?', 'Uncategorized');
+            .group("IFNULL(c.categoryName, 'Uncategorized')");
 
           if (sortType === CategorySortType.SORT_BY_NAME_ASC) {
             query = query.order('categoryName', true);
@@ -77,111 +66,18 @@ export class CategoryModel {
             query = query.order('totalCount', false);
           }
 
-          query = query.limit(limitOfCategorized).offset(offsetOfCategorized);
+          query = query.limit(limit).offset(offset);
 
           const sql = query.toParam();
 
           const result = await db.executeSql(sql.text, sql.values);
 
-          let categoryList = this.categoryResolver.resolveArray(
+          const categoryList = this.categoryResolver.resolveArray(
             result.rows.slice(),
             true
           );
 
-          if (
-            typeof uncategorized !== 'undefined' &&
-            uncategorized.totalCount > 0
-          ) {
-            categoryList = [uncategorized, ...categoryList];
-          }
-
           resolve({ categoryList });
-        } catch (error) {
-          reject(error);
-        }
-      }
-    );
-  }
-
-  public getUncategorizedCounts(
-    db: SQLiteDatabase,
-    setId: string,
-    vocabularyStatus: VocabularyStatus
-  ): Promise<Category> {
-    return new Promise(
-      async (resolve, reject): Promise<void> => {
-        try {
-          let query = squel
-            .select()
-            .field('COUNT(v.vocabularyId)', 'totalCount');
-
-          query = addLevelCountAggregation(query);
-
-          query = query
-            .from(TableName.VOCABULARY, 'v')
-            .left_join(
-              TableName.VOCABULARY_CATEGORY,
-              'c',
-              'v.vocabularyId = c.vocabularyId'
-            )
-            .left_join(
-              TableName.VOCABULARY_WRITING,
-              'w',
-              'v.vocabularyId = w.vocabularyId'
-            )
-            .where('v.setId = ?', setId)
-            .where('v.vocabularyStatus = ?', vocabularyStatus)
-            .where(
-              "c.categoryName IS NULL OR c.categoryName = 'Uncategorized'"
-            );
-
-          const sql = query.toParam();
-          const result = await db.executeSql(sql.text, sql.values);
-
-          const category = this.categoryResolver.resolve(
-            {
-              ...result.rows[0],
-              categoryName: 'Uncategorized',
-            },
-            true
-          );
-
-          resolve(category);
-        } catch (error) {
-          reject(error);
-        }
-      }
-    );
-  }
-
-  public hasUncategorizedVocabulary(
-    db: SQLiteDatabase,
-    setId: string,
-    vocabularyStatus: VocabularyStatus
-  ): Promise<boolean> {
-    return new Promise(
-      async (resolve, reject): Promise<void> => {
-        try {
-          const query = squel
-            .select()
-            .from(TableName.VOCABULARY, 'v')
-            .left_join(
-              TableName.VOCABULARY_CATEGORY,
-              'c',
-              'v.vocabularyId = c.vocabularyId'
-            )
-            .where('v.setId = ?', setId)
-            .where('v.vocabularyStatus = ?', vocabularyStatus)
-            .where("c.categoryName IS NULL OR c.categoryName = 'Uncategorized'")
-            .limit(1)
-            .toParam();
-          const result = await db.executeSql(query.text, query.values);
-
-          if (result.rows.length > 0) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
         } catch (error) {
           reject(error);
         }

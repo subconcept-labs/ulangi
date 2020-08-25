@@ -145,7 +145,7 @@ export class VocabularyActionMenuDelegate {
   private getCategorizeButton(vocabulary: ObservableVocabulary): SelectionItem {
     return {
       testID: VocabularyActionMenuIds.CATEGORIZE_BTN,
-      text: 'Categorize',
+      text: 'Recategorize',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.showModal(ScreenName.CATEGORIZE_SCREEN, {

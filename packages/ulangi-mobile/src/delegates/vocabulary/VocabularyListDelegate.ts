@@ -8,15 +8,10 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import {
   ActivityState,
-  VocabularyDueType,
-  VocabularyFilterType,
   VocabularySortType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
-import {
-  isVocabularyDueType,
-  isVocabularyStatus,
-} from '@ulangi/ulangi-common/utils';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -26,41 +21,35 @@ import {
   mergeList,
 } from '@ulangi/ulangi-observable';
 
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
-
 export class VocabularyListDelegate {
   private eventBus: EventBus;
   private setStore: ObservableSetStore;
   private observableConverter: ObservableConverter;
   private vocabularyListState: ObservableVocabularyListState;
-  private spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate;
-  private writingSettingsDelegate: WritingSettingsDelegate;
 
   public constructor(
     eventBus: EventBus,
     setStore: ObservableSetStore,
     observableConverter: ObservableConverter,
     vocabularyListState: ObservableVocabularyListState,
-    spacedRepetitionSettingsDelegate: SpacedRepetitionSettingsDelegate,
-    writingSettingsDelegate: WritingSettingsDelegate,
   ) {
     this.eventBus = eventBus;
     this.setStore = setStore;
     this.observableConverter = observableConverter;
     this.vocabularyListState = vocabularyListState;
-    this.spacedRepetitionSettingsDelegate = spacedRepetitionSettingsDelegate;
-    this.writingSettingsDelegate = writingSettingsDelegate;
   }
 
   public prepareAndFetch(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
     this.eventBus.pubsub(
       createAction(ActionType.VOCABULARY__PREPARE_FETCH, {
-        filterCondition: this.createFilterCondition(filterType, categoryNames),
+        filterCondition: this.createFilterCondition(
+          vocabularyStatus,
+          categoryNames,
+        ),
         sortType,
       }),
       group(
@@ -88,14 +77,14 @@ export class VocabularyListDelegate {
   }
 
   public refresh(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
     this.vocabularyListState.isRefreshing.set(true);
     this.vocabularyListState.shouldShowRefreshNotice.set(false);
     this.clearFetch();
-    this.prepareAndFetch(filterType, sortType, categoryNames);
+    this.prepareAndFetch(vocabularyStatus, sortType, categoryNames);
   }
 
   public fetch(): void {
@@ -148,7 +137,7 @@ export class VocabularyListDelegate {
   }
 
   public refreshIfEmpty(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     sortType: VocabularySortType,
     categoryNames?: undefined | string[],
   ): void {
@@ -156,35 +145,19 @@ export class VocabularyListDelegate {
       this.vocabularyListState.vocabularyList !== null &&
       this.vocabularyListState.vocabularyList.size === 0
     ) {
-      this.refresh(filterType, sortType, categoryNames);
+      this.refresh(vocabularyStatus, sortType, categoryNames);
     }
   }
 
   private createFilterCondition(
-    filterType: VocabularyFilterType,
+    vocabularyStatus: VocabularyStatus,
     categoryNames?: undefined | string[],
   ): VocabularyFilterCondition {
-    if (isVocabularyStatus(filterType)) {
-      return {
-        filterBy: 'VocabularyStatus',
-        setId: this.setStore.existingCurrentSetId,
-        vocabularyStatus: filterType,
-        categoryNames,
-      };
-    } else if (isVocabularyDueType(filterType)) {
-      return {
-        filterBy: 'VocabularyDueType',
-        setId: this.setStore.existingCurrentSetId,
-        initialInterval:
-          filterType === VocabularyDueType.DUE_BY_SPACED_REPETITION
-            ? this.spacedRepetitionSettingsDelegate.getCurrentSettings()
-                .initialInterval
-            : this.writingSettingsDelegate.getCurrentSettings().initialInterval,
-        dueType: filterType,
-        categoryNames,
-      };
-    } else {
-      throw new Error('Invalid filter type');
-    }
+    return {
+      filterBy: 'VocabularyStatus',
+      setId: this.setStore.existingCurrentSetId,
+      vocabularyStatus: vocabularyStatus,
+      categoryNames,
+    };
   }
 }

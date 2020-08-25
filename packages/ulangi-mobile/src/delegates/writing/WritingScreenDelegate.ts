@@ -24,6 +24,7 @@ import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { WritingCountsDelegate } from './WritingCountsDelegate';
 import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 @boundClass
@@ -33,6 +34,7 @@ export class WritingScreenDelegate {
   private observableConverter: ObservableConverter;
   private observableScreen: ObservableWritingScreen;
   private writingSettingsDelegate: WritingSettingsDelegate;
+  private writingCountsDelegate: WritingCountsDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
@@ -42,6 +44,7 @@ export class WritingScreenDelegate {
     observableConverter: ObservableConverter,
     observableScreen: ObservableWritingScreen,
     writingSettingsDelegate: WritingSettingsDelegate,
+    writingCountsDelegate: WritingCountsDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
@@ -50,6 +53,7 @@ export class WritingScreenDelegate {
     this.observableConverter = observableConverter;
     this.observableScreen = observableScreen;
     this.writingSettingsDelegate = writingSettingsDelegate;
+    this.writingCountsDelegate = writingCountsDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
@@ -91,6 +95,9 @@ export class WritingScreenDelegate {
                     ];
                   },
                 ),
+              ),
+              currentCategoryNames: toJS(
+                this.observableScreen.selectedCategoryNames,
               ),
               startLesson: (): void => this.startLesson(false),
             });
@@ -135,8 +142,29 @@ export class WritingScreenDelegate {
         this.observableScreen.selectedCategoryNames = observable.array([
           categoryName,
         ]);
+
+        this.refreshDueAndNewCounts();
       },
     });
+  }
+
+  public refreshDueAndNewCounts(): void {
+    this.writingCountsDelegate.refreshDueAndNewCounts(
+      typeof this.observableScreen.selectedCategoryNames !== 'undefined'
+        ? this.observableScreen.selectedCategoryNames.slice()
+        : undefined,
+      (dueCount, newCount): void => {
+        this.observableScreen.counts = {
+          due: dueCount,
+          new: newCount,
+        };
+      },
+    );
+  }
+
+  public clearDueAndNewCounts(): void {
+    this.observableScreen.counts = undefined;
+    this.writingCountsDelegate.clearDueAndNewCounts();
   }
 
   private showPreparingDialog(): void {

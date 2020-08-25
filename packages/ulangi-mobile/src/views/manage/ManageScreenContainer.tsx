@@ -11,7 +11,7 @@ import {
   CategorySortType,
   ScreenName,
   Theme,
-  VocabularyFilterType,
+  VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import {
   ObservableCategoryListState,
@@ -51,7 +51,7 @@ export class ManageScreenContainer extends Container {
   protected observableScreen = new ObservableManageScreen(
     0,
     observable.box(CategorySortType.SORT_BY_NAME_ASC),
-    observable.box(VocabularyFilterType.ACTIVE),
+    observable.box(VocabularyStatus.ACTIVE),
     new ObservableCategoryListState(
       null,
       false,

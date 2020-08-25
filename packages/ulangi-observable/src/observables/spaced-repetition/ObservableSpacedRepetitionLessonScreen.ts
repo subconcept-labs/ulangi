@@ -6,7 +6,7 @@
  */
 
 import { ActivityState, ScreenName } from '@ulangi/ulangi-common/enums';
-import { IObservableValue, ObservableMap } from 'mobx';
+import { IObservableValue, ObservableMap, observable } from 'mobx';
 
 import { ObservableReviewActionBarState } from '../review-action/ObservableReviewActionBarState';
 import { ObservableFeedbackListState } from '../review-feedback/ObservableFeedbackListState';
@@ -38,6 +38,14 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
   public readonly shouldShowResult: IObservableValue<boolean>;
 
   public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
+
+  @observable
+  public counts:
+    | undefined
+    | {
+        due: number;
+        new: number;
+      };
 
   public constructor(
     vocabularyList: ObservableMap<string, ObservableVocabulary>,

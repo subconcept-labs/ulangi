@@ -11,7 +11,6 @@ import {
   ReviewPriority,
   ReviewStrategy,
   SetStatus,
-  VocabularyFilterType,
   VocabularySortType,
   VocabularyStatus,
   WordClass,
@@ -99,14 +98,6 @@ export interface Config {
 
   readonly vocabulary: {
     readonly fetchLimit: number;
-    readonly filterMap: {
-      [P in VocabularyFilterType]: {
-        readonly name: string;
-        readonly shortName: string;
-        readonly textColor: string;
-        readonly borderColor: string;
-      }
-    };
     readonly sortMap: {
       [P in VocabularySortType]: {
         readonly name: string;
@@ -116,6 +107,9 @@ export interface Config {
     readonly statusMap: {
       [P in VocabularyStatus]: {
         readonly name: string;
+        readonly shortName: string;
+        readonly textColor: string;
+        readonly borderColor: string;
       }
     };
   };

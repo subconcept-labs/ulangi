@@ -50,6 +50,7 @@ export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
       <View style={this.styles.container}>
         {this.countPerLevelPairs.map(
           ([level, count], index): React.ReactElement<any> => {
+            const percentage = count / this.props.levelCounts.totalCount;
             return (
               <View key={level} style={this.styles.row_container}>
                 <DefaultText style={this.styles.level}>{level}</DefaultText>
@@ -57,9 +58,14 @@ export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
                   theme={this.props.theme}
                   screenLayout={this.props.screenLayout}
                   color={config.level.colorMap[index]}
-                  percentage={count / this.props.levelCounts.totalCount}
+                  percentage={percentage}
                 />
-                <DefaultText style={this.styles.count}>{count}</DefaultText>
+                <View style={this.styles.count_container}>
+                  <DefaultText style={this.styles.count}>{count}</DefaultText>
+                  <DefaultText style={this.styles.percentage}>
+                    {Math.round(percentage * 100)}%
+                  </DefaultText>
+                </View>
               </View>
             );
           },
@@ -70,11 +76,11 @@ export class LevelBreakdown extends React.Component<LevelBreakdownProps> {
 
   protected get countPerLevelPairs(): [string, number][] {
     return [
-      ['Lv\n0', this.props.levelCounts.level0Count],
-      ['Lv\n1-3', this.props.levelCounts.level1To3Count],
-      ['Lv\n4-6', this.props.levelCounts.level4To6Count],
-      ['Lv\n7-8', this.props.levelCounts.level7To8Count],
-      ['Lv\n9-10', this.props.levelCounts.level9To10Count],
+      ['Level\n0', this.props.levelCounts.level0Count],
+      ['Level\n1-3', this.props.levelCounts.level1To3Count],
+      ['Level\n4-6', this.props.levelCounts.level4To6Count],
+      ['Level\n7-8', this.props.levelCounts.level7To8Count],
+      ['Level\n9-10', this.props.levelCounts.level9To10Count],
     ];
   }
 }

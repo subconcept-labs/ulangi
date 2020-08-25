@@ -100,38 +100,6 @@
 
   "vocabulary": {
     "fetchLimit": 6,
-    "filterMap": {
-      "ACTIVE": {
-        "name": "Active",
-        "shortName": "Active",
-        "textColor": "#009dd6",
-        "borderColor": "#009dd6"
-      },
-      "DUE_BY_SPACED_REPETITION": {
-        "name": "Due (Spaced Repetition)",
-        "shortName": "Due (SR)",
-        "textColor": "#F56173",
-        "borderColor": "#F56173"
-      },
-      "DUE_BY_WRITING": {
-        "name": "Due (Writing)",
-        "shortName": "Due (WR)",
-        "textColor": "#FA8258",
-        "borderColor": "#FA8258"
-      },
-      "ARCHIVED": {
-        "name": "Archived",
-        "shortName": "Archived",
-        "textColor": "mediumseagreen",
-        "borderColor": "mediumseagreen"
-      },
-      "DELETED": {
-        "name": "Deleted",
-        "shortName": "Deleted",
-        "textColor": "orangered",
-        "borderColor": "orangered"
-      }
-    },
     "sortMap": {
       "SORT_BY_NAME_ASC": {
         "name": "Sort by name (A-Z)",
@@ -160,13 +128,22 @@
     },
     "statusMap": {
       "ACTIVE": {
-        "name": "active"
+        "name": "Active",
+        "shortName": "Active",
+        "textColor": "#009dd6",
+        "borderColor": "#009dd6"
       },
       "ARCHIVED": {
-        "name": "archived"
+        "name": "Archived",
+        "shortName": "Archived",
+        "textColor": "mediumseagreen",
+        "borderColor": "mediumseagreen"
       },
       "DELETED": {
-        "name": "deleted"
+        "name": "Deleted",
+        "shortName": "Deleted",
+        "textColor": "orangered",
+        "borderColor": "orangered"
       }
     }
   },
