@@ -11,6 +11,7 @@ import { SetBuilder, VocabularyBuilder } from '@ulangi/ulangi-common/builders';
 import { VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Set, Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import { mockCurrentTime } from '@ulangi/ulangi-common/testing-utils';
+import * as moment from 'moment';
 import * as sqlite3 from 'sqlite3';
 import * as tmp from 'tmp-promise';
 
@@ -97,7 +98,12 @@ describe('QuizMultipleChoiceModel', (): void => {
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
+              }),
+              new VocabularyBuilder().build({
+                vocabularyStatus: VocabularyStatus.ACTIVE,
+                vocabularyText: 'vocabulary',
                 level: 1,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: false,
                   level: 1,
@@ -109,6 +115,7 @@ describe('QuizMultipleChoiceModel', (): void => {
                 level: 2,
                 writing: {
                   disabled: false,
+                  lastWrittenAt: moment().toDate(),
                   level: 2,
                 },
               }),
@@ -116,6 +123,7 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 level: 0,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: false,
                   level: 0,
@@ -125,6 +133,7 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 level: 1,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: true,
                   level: 1,
@@ -134,14 +143,12 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.DELETED,
                 vocabularyText: 'vocabulary',
                 level: 1,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: false,
+                  lastWrittenAt: moment().toDate(),
                   level: 1,
                 },
-              }),
-              new VocabularyBuilder().build({
-                vocabularyStatus: VocabularyStatus.ACTIVE,
-                vocabularyText: 'vocabulary',
               }),
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
@@ -149,6 +156,7 @@ describe('QuizMultipleChoiceModel', (): void => {
                 level: 1,
                 writing: {
                   disabled: false,
+                  lastWrittenAt: moment().toDate(),
                   level: 1,
                 },
                 category: {
@@ -158,6 +166,7 @@ describe('QuizMultipleChoiceModel', (): void => {
               new VocabularyBuilder().build({
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
+                lastLearnedAt: moment().toDate(),
                 level: 2,
                 writing: {
                   disabled: false,
@@ -171,8 +180,10 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary',
                 level: 0,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: false,
+                  lastWrittenAt: moment().toDate(),
                   level: 0,
                 },
                 category: {
@@ -183,6 +194,7 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.ACTIVE,
                 vocabularyText: 'vocabulary10',
                 level: 1,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: true,
                   level: 1,
@@ -195,8 +207,10 @@ describe('QuizMultipleChoiceModel', (): void => {
                 vocabularyStatus: VocabularyStatus.DELETED,
                 vocabularyText: 'vocabulary11',
                 level: 1,
+                lastLearnedAt: moment().toDate(),
                 writing: {
                   disabled: false,
+                  lastWrittenAt: moment().toDate(),
                   level: 1,
                 },
                 category: {
@@ -248,7 +262,10 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 1
+              (vocabulary.lastLearnedAt !== null ||
+                (vocabulary.writing &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  vocabulary.writing.disabled === false))
             ) {
               expect(assertExists(result).vocabularyLocalIdPair[0]).toEqual(
                 vocabulary
@@ -279,7 +296,10 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 1 &&
+              (vocabulary.lastLearnedAt !== null ||
+                (vocabulary.writing &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  vocabulary.writing.disabled === false)) &&
               vocabulary.category &&
               vocabulary.category.categoryName === 'category1'
             ) {
@@ -312,7 +332,10 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 1 &&
+              (vocabulary.lastLearnedAt !== null ||
+                (vocabulary.writing &&
+                  vocabulary.writing.lastWrittenAt !== null &&
+                  vocabulary.writing.disabled === false)) &&
               (typeof vocabulary.category === 'undefined' ||
                 vocabulary.category.categoryName === 'Uncategorized')
             ) {
@@ -345,7 +368,10 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 1 &&
+              (vocabulary.lastLearnedAt !== null ||
+                (vocabulary.writing &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null)) &&
               (typeof vocabulary.category === 'undefined' ||
                 vocabulary.category.categoryName !== 'category1')
             ) {
@@ -378,7 +404,10 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 1 &&
+              (vocabulary.lastLearnedAt !== null ||
+                (vocabulary.writing &&
+                  vocabulary.writing.disabled === false &&
+                  vocabulary.writing.lastWrittenAt !== null)) &&
               typeof vocabulary.category !== 'undefined' &&
               vocabulary.category.categoryName !== 'Uncategorized'
             ) {
@@ -403,16 +432,13 @@ describe('QuizMultipleChoiceModel', (): void => {
               setList[0].setId,
               startRange,
               endRange,
-              true,
+              false,
               true,
               undefined,
               undefined
             );
 
-            if (
-              vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 0
-            ) {
+            if (vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE) {
               expect(assertExists(result).vocabularyLocalIdPair[0]).toEqual(
                 vocabulary
               );
@@ -442,7 +468,6 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 0 &&
               vocabulary.category &&
               vocabulary.category.categoryName === 'category1'
             ) {
@@ -475,7 +500,6 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 0 &&
               (typeof vocabulary.category === 'undefined' ||
                 vocabulary.category.categoryName === 'Uncategorized')
             ) {
@@ -508,7 +532,6 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 0 &&
               (typeof vocabulary.category === 'undefined' ||
                 vocabulary.category.categoryName !== 'category1')
             ) {
@@ -541,7 +564,6 @@ describe('QuizMultipleChoiceModel', (): void => {
 
             if (
               vocabulary.vocabularyStatus === VocabularyStatus.ACTIVE &&
-              vocabulary.level >= 0 &&
               typeof vocabulary.category !== 'undefined' &&
               vocabulary.category.categoryName !== 'Uncategorized'
             ) {

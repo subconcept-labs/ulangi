@@ -8,5 +8,7 @@
 import * as squel from 'squel';
 
 export function addLearnedCondition(query: squel.Select): squel.Select {
-  return query.where('v.level >= 1 OR w.level >= 1');
+  return query.where(
+    'v.lastLearnedAt IS NOT NULL OR (w.lastWrittenAt IS NOT NULL AND w.disabled == 0)'
+  );
 }
