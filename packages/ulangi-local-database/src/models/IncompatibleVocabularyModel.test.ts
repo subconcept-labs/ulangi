@@ -274,7 +274,7 @@ describe('IncompatibileVocabularyModel', (): void => {
             expect(vocabularyIds).toIncludeSameMembers([]);
           });
 
-          test('should return incompatible vocabulary ids if current version is lower', async (): Promise<
+          test('should not return incompatible vocabulary ids if current version is lower', async (): Promise<
             void
           > => {
             const {
