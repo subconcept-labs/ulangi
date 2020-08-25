@@ -12,6 +12,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
+import * as numeral from 'numeral';
 import * as React from 'react';
 import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
 
@@ -189,27 +190,33 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
         onPress={startReview}>
         {this.props.selectedVocabularyStatus.get() !==
         VocabularyStatus.ACTIVE ? (
-          <DefaultText>N/A</DefaultText>
+          <DefaultText style={this.styles.not_applicable}>N/A</DefaultText>
         ) : typeof counts !== 'undefined' ? (
           <React.Fragment>
-            <DefaultText
-              style={[
-                this.styles.due_new_count,
-                counts.due > 0 ? this.styles.highlighted_count : {},
-              ]}
-              numberOfLines={1}
-              ellipsizeMode="clip">
-              {counts.due} due
-            </DefaultText>
-            <DefaultText
-              style={[
-                this.styles.due_new_count,
-                counts.new > 0 ? this.styles.highlighted_count : {},
-              ]}
-              numberOfLines={1}
-              ellipsizeMode="clip">
-              {counts.new} new
-            </DefaultText>
+            <View style={this.styles.count_container}>
+              <DefaultText
+                style={[
+                  this.styles.due_new_count,
+                  counts.due > 0 ? this.styles.highlighted_count : {},
+                ]}
+                numberOfLines={1}
+                ellipsizeMode="clip">
+                {numeral(counts.due).format('0a')} due
+              </DefaultText>
+              <DefaultText
+                style={[
+                  this.styles.due_new_count,
+                  counts.new > 0 ? this.styles.highlighted_count : {},
+                ]}
+                numberOfLines={1}
+                ellipsizeMode="clip">
+                {numeral(counts.new).format('0a')} new
+              </DefaultText>
+            </View>
+            <Image
+              style={this.styles.caret}
+              source={Images.CARET_RIGHT_GREY_18X18}
+            />
           </React.Fragment>
         ) : (
           <ActivityIndicator size="small" />

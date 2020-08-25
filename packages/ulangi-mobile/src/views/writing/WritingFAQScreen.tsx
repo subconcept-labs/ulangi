@@ -30,14 +30,9 @@ export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
   private data = {
     sections: [
       {
-        title: 'How does this work?',
+        title: 'Can I turn off error hinting?',
         content:
-          'In each writing session, you will be asked to write your terms given their definitions then provide feedback of how well you memorize them. The system will adjust level and schedule review time based on your feedback.',
-      },
-      {
-        title: 'What algorithm are we using for scheduling?',
-        content:
-          'We are using the Leitner system algorithm. Each of your vocabulary term has a WR level. The higher the level is, the more time you have to wait to write it again.',
+          "By default, if you type answer incorrectly, the app will let you know immediately by showing red underline. You can disable this by turning off 'Highlight on Error' in Settings.",
       },
       {
         title: 'Can I review without Internet connection?',

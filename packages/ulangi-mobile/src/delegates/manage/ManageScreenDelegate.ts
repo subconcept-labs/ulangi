@@ -116,6 +116,11 @@ export class ManageScreenDelegate {
 
     this.categoryActionMenuDelegate.show(category, vocabularyStatus, {
       hideViewDetailButton: false,
+      hideCategorizeButton: false,
+      hideMoveButton: false,
+      hideRestoreButton: false,
+      hideArchiveButton: false,
+      hideDeleteButton: false,
       hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
       hideReviewByWritingButton: !featureSettings.writingEnabled,
       hideQuizButton: !featureSettings.quizEnabled,

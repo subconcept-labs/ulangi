@@ -14,7 +14,9 @@ export interface LevelBreakdownStyles {
   container: ViewStyle;
   row_container: ViewStyle;
   level: TextStyle;
+  count_container: ViewStyle;
   count: TextStyle;
+  percentage: TextStyle;
 }
 
 export class LevelBreakdownResponsiveStyles extends ResponsiveStyleSheet<
@@ -35,15 +37,23 @@ export class LevelBreakdownResponsiveStyles extends ResponsiveStyleSheet<
 
       level: {
         paddingRight: scaleByFactor(4),
-        width: scaleByFactor(40),
+        width: scaleByFactor(50),
+        fontSize: scaleByFactor(14),
+      },
+
+      count_container: {
+        width: scaleByFactor(50),
+        paddingLeft: scaleByFactor(4),
+      },
+
+      count: {
+        textAlign: 'right',
         fontWeight: 'bold',
         fontSize: scaleByFactor(14),
       },
 
-      count: {
-        paddingLeft: scaleByFactor(4),
+      percentage: {
         textAlign: 'right',
-        width: scaleByFactor(30),
         fontWeight: 'bold',
         fontSize: scaleByFactor(14),
       },
@@ -57,10 +67,14 @@ export class LevelBreakdownResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       level: {
-        color: config.styles.light.secondaryTextColor,
+        color: config.styles.light.primaryTextColor,
       },
 
       count: {
+        color: config.styles.light.primaryTextColor,
+      },
+
+      percentage: {
         color: config.styles.light.secondaryTextColor,
       },
     };
@@ -73,10 +87,14 @@ export class LevelBreakdownResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       level: {
-        color: config.styles.dark.secondaryTextColor,
+        color: config.styles.dark.primaryTextColor,
       },
 
       count: {
+        color: config.styles.dark.primaryTextColor,
+      },
+
+      percentage: {
         color: config.styles.dark.secondaryTextColor,
       },
     };

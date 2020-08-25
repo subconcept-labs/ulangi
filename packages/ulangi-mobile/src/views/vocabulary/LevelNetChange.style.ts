@@ -32,7 +32,7 @@ export class LevelNetChangeResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       text_green: {
-        color: 'green',
+        color: '#3CB371',
       },
 
       text_red: {

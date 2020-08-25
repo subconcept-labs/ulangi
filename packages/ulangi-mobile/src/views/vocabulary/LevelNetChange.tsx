@@ -8,9 +8,8 @@
 import { Theme } from '@ulangi/ulangi-common/enums';
 import { ObservableScreenLayout } from '@ulangi/ulangi-observable';
 import * as React from 'react';
-import { Image, View, ViewProperties } from 'react-native';
+import { View, ViewProperties } from 'react-native';
 
-import { Images } from '../../constants/Images';
 import { DefaultText } from '../common/DefaultText';
 import {
   LevelNetChangeStyles,
@@ -44,7 +43,7 @@ export class LevelNetChange extends React.Component<LevelNetChangeProps> {
       return (
         <React.Fragment>
           <DefaultText style={this.styles.text_green}>(</DefaultText>
-          <Image source={Images.ARROW_UP_GREEN_10X10} />
+          <DefaultText style={this.styles.text_green}>{'\u25B2'}</DefaultText>
           <DefaultText style={this.styles.text_green}>
             {this.props.netChange}
           </DefaultText>
@@ -61,7 +60,7 @@ export class LevelNetChange extends React.Component<LevelNetChangeProps> {
       return (
         <React.Fragment>
           <DefaultText style={this.styles.text_red}>(</DefaultText>
-          <Image source={Images.ARROW_DOWN_RED_10X10} />
+          <DefaultText style={this.styles.text_red}>{'\u25BC'}</DefaultText>
           <DefaultText style={this.styles.text_red}>
             {Math.abs(this.props.netChange)}
           </DefaultText>

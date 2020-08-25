@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 import {
@@ -32,8 +32,11 @@ export interface CategoryItemStyles {
   progress_container: ViewStyle;
   progress_text: TextStyle;
   review_btn: ViewStyle;
+  count_container: ViewStyle;
   due_new_count: TextStyle;
   highlighted_count: TextStyle;
+  not_applicable: TextStyle;
+  caret: ImageStyle;
 }
 
 export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
@@ -67,7 +70,6 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       bottom_container: {},
 
       stats_container: {
-        paddingHorizontal: scaleByFactor(14),
         paddingVertical: scaleByFactor(14),
         flexDirection: 'row',
         justifyContent: 'center',
@@ -78,6 +80,7 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       progress_container: {
         flex: 1,
         justifyContent: 'center',
+        paddingLeft: scaleByFactor(14),
       },
 
       progress_text: {
@@ -129,19 +132,37 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       review_btn: {
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
         marginLeft: scaleByFactor(12),
-        width: scaleByFactor(70),
+        width: scaleByFactor(100),
+        paddingRight: scaleByFactor(10),
+      },
+
+      count_container: {
+        flexShrink: 1,
       },
 
       due_new_count: {
+        textAlign: 'right',
         fontSize: scaleByFactor(14),
+      },
+
+      not_applicable: {
+        fontWeight: 'bold',
+        fontSize: scaleByFactor(14),
+        paddingRight: scaleByFactor(2),
       },
 
       highlighted_count: {
         fontWeight: 'bold',
         color: '#66BB6A',
+      },
+
+      caret: {
+        marginLeft: scaleByFactor(5),
+        opacity: 0.7,
       },
     };
   }
@@ -182,6 +203,10 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
       due_new_count: {
         color: config.styles.light.secondaryTextColor,
       },
+
+      not_applicable: {
+        color: config.styles.light.secondaryTextColor,
+      },
     };
   }
 
@@ -220,6 +245,10 @@ export class CategoryItemResponsiveStyles extends ResponsiveStyleSheet<
 
       due_new_count: {
         color: config.styles.dark.secondaryTextColor,
+      },
+
+      not_applicable: {
+        color: config.styles.light.secondaryTextColor,
       },
     };
   }

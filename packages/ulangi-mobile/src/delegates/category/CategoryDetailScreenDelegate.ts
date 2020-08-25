@@ -173,6 +173,11 @@ export class CategoryDetailScreenDelegate {
       this.observableScreen.category,
       this.observableScreen.selectedVocabularyStatus.get(),
       {
+        hideCategorizeButton: true,
+        hideMoveButton: true,
+        hideRestoreButton: true,
+        hideArchiveButton: true,
+        hideDeleteButton: true,
         hideViewDetailButton: true,
         hideReviewBySpacedRepetitionButton: !featureSettings.spacedRepetitionEnabled,
         hideReviewByWritingButton: !featureSettings.writingEnabled,

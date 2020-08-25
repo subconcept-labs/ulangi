@@ -72,6 +72,11 @@ export class CategoryActionMenuDelegate {
     category: ObservableCategory,
     vocabularyStatus: VocabularyStatus,
     options: {
+      hideCategorizeButton: boolean;
+      hideMoveButton: boolean;
+      hideRestoreButton: boolean;
+      hideArchiveButton: boolean;
+      hideDeleteButton: boolean;
       hideReviewBySpacedRepetitionButton: boolean;
       hideReviewByWritingButton: boolean;
       hideQuizButton: boolean;
@@ -92,55 +97,80 @@ export class CategoryActionMenuDelegate {
 
     items.push(this.getAddTermsButton(category.categoryName));
 
-    items.push(
-      this.getRecategorizeAllTermsButton(
-        category.categoryName,
-        vocabularyStatus,
-      ),
-    );
+    if (options.hideCategorizeButton === false) {
+      items.push(
+        this.getRecategorizeAllTermsButton(
+          category.categoryName,
+          vocabularyStatus,
+        ),
+      );
+    }
 
-    items.push(
-      this.getMoveAllTermsButton(category.categoryName, vocabularyStatus),
-    );
+    if (options.hideMoveButton === false) {
+      items.push(
+        this.getMoveAllTermsButton(category.categoryName, vocabularyStatus),
+      );
+    }
 
     switch (vocabularyStatus) {
       case VocabularyStatus.ACTIVE:
-        items.push(
-          this.getArchiveAllTermsButton(
-            category.categoryName,
-            vocabularyStatus,
-          ),
-        );
-        items.push(
-          this.getDeleteAllTermsButton(category.categoryName, vocabularyStatus),
-        );
+        if (options.hideArchiveButton === false) {
+          items.push(
+            this.getArchiveAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
+
+        if (options.hideDeleteButton === false) {
+          items.push(
+            this.getDeleteAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
         break;
 
       case VocabularyStatus.ARCHIVED:
-        items.push(
-          this.getRestoreAllTermsButton(
-            category.categoryName,
-            vocabularyStatus,
-          ),
-        );
-        items.push(
-          this.getDeleteAllTermsButton(category.categoryName, vocabularyStatus),
-        );
+        if (options.hideRestoreButton === false) {
+          items.push(
+            this.getRestoreAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
+
+        if (options.hideDeleteButton === false) {
+          items.push(
+            this.getDeleteAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
         break;
 
       case VocabularyStatus.DELETED:
-        items.push(
-          this.getRestoreAllTermsButton(
-            category.categoryName,
-            vocabularyStatus,
-          ),
-        );
-        items.push(
-          this.getArchiveAllTermsButton(
-            category.categoryName,
-            vocabularyStatus,
-          ),
-        );
+        if (options.hideRestoreButton === false) {
+          items.push(
+            this.getRestoreAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
+
+        if (options.hideArchiveButton === false) {
+          items.push(
+            this.getArchiveAllTermsButton(
+              category.categoryName,
+              vocabularyStatus,
+            ),
+          );
+        }
         break;
     }
 
@@ -229,7 +259,7 @@ export class CategoryActionMenuDelegate {
   ): SelectionItem {
     return {
       testID: CategoryActionMenuIds.RECATEGORIZE_TERMS_BTN,
-      text: 'Recategorize',
+      text: 'Recategorize/Rename',
       onPress: (): void => {
         this.navigatorDelegate.dismissLightBox();
         this.navigatorDelegate.showModal(ScreenName.CATEGORY_SELECTOR_SCREEN, {
