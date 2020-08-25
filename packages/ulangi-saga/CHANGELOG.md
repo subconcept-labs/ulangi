@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.19.0](https://github.com/ulangi/ulangi/compare/v3.18.1...v3.19.0) (2020-08-25)
+
+
+### Bug Fixes
+
+* avoid fetching uncategorized seperately ([88b8992](https://github.com/ulangi/ulangi/commit/88b8992))
+
+
+### Features
+
+* show due and new count ([11801ae](https://github.com/ulangi/ulangi/commit/11801ae))
+
+
+
+
+
 ## [3.18.1](https://github.com/ulangi/ulangi/compare/v3.18.0...v3.18.1) (2020-08-22)
 
 **Note:** Version bump only for package @ulangi/ulangi-saga

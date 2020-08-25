@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.19.0](https://github.com/ulangi/ulangi/compare/v3.18.1...v3.19.0) (2020-08-25)
+
+
+### Bug Fixes
+
+* avoid fetching uncategorized seperately ([88b8992](https://github.com/ulangi/ulangi/commit/88b8992))
+* fetch incompatible set & vocabulary if version is lower ([1f3a80e](https://github.com/ulangi/ulangi/commit/1f3a80e))
+* fetch learned terms only for quiz ([6faf98a](https://github.com/ulangi/ulangi/commit/6faf98a))
+* minor fixes, redesign, update tutorial images ([0154424](https://github.com/ulangi/ulangi/commit/0154424))
+* round average reviews, add highest reviews on a day ([04e4994](https://github.com/ulangi/ulangi/commit/04e4994))
+* show all definitions in writing form ([c7d1deb](https://github.com/ulangi/ulangi/commit/c7d1deb))
+* show error messages when loading add-on failed ([d4bc7a3](https://github.com/ulangi/ulangi/commit/d4bc7a3))
+
+
+### Features
+
+* show due and new count ([11801ae](https://github.com/ulangi/ulangi/commit/11801ae))
+
+
+
+
+
 ## [3.18.1](https://github.com/ulangi/ulangi/compare/v3.18.0...v3.18.1) (2020-08-22)
 
 
