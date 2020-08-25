@@ -112,6 +112,7 @@ export class ManageScreenContainer extends Container {
       this.screenDelegate.autoShowRefreshNotice();
       this.screenDelegate.autoRefreshOnSetChange();
       this.screenDelegate.autoRefreshOnMultipleEdit();
+      this.screenDelegate.autoUpdateDueAndNewCounts();
       this.screenDelegate.prepareAndFetch();
 
       this.screenDelegate.autorun();

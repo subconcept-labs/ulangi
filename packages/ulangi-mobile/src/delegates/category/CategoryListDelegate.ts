@@ -184,12 +184,58 @@ export class CategoryListDelegate {
     };
   }
 
+  public autoUpdateSpacedRepetitionDueAndNewCounts(): void {
+    this.eventBus.subscribe(
+      on(
+        ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_SUCCEEDED,
+        (countsPerCategoryName): void => {
+          _.toPairs(countsPerCategoryName).forEach(
+            ([categoryName, counts]): void => {
+              if (this.categoryListState.categoryList !== null) {
+                const category = this.categoryListState.categoryList.get(
+                  categoryName,
+                );
+
+                if (typeof category !== 'undefined') {
+                  category.spacedRepetitionCounts = counts;
+                }
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  public autoUpdateWritingDueAndNewCounts(): void {
+    this.eventBus.subscribe(
+      on(
+        ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_SUCCEEDED,
+        (countsPerCategoryName): void => {
+          _.toPairs(countsPerCategoryName).forEach(
+            ([categoryName, counts]): void => {
+              if (this.categoryListState.categoryList !== null) {
+                const category = this.categoryListState.categoryList.get(
+                  categoryName,
+                );
+
+                if (typeof category !== 'undefined') {
+                  category.writingCounts = counts;
+                }
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
   private fetchSpacedRepetitionDueAndNewCounts(categoryNames: string[]): void {
     const {
       initialInterval,
     } = this.spacedRepetitionSettingsDelegate.getCurrentSettings();
 
-    this.eventBus.pubsub(
+    this.eventBus.publish(
       createAction(
         ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS,
         {
@@ -197,26 +243,6 @@ export class CategoryListDelegate {
           initialInterval,
           categoryNames,
         },
-      ),
-      group(
-        once(
-          ActionType.MANAGE__FETCH_SPACED_REPETITION_DUE_AND_NEW_COUNTS_SUCCEEDED,
-          (countsPerCategoryName): void => {
-            _.toPairs(countsPerCategoryName).forEach(
-              ([categoryName, counts]): void => {
-                if (this.categoryListState.categoryList !== null) {
-                  const category = this.categoryListState.categoryList.get(
-                    categoryName,
-                  );
-
-                  if (typeof category !== 'undefined') {
-                    category.spacedRepetitionCounts = counts;
-                  }
-                }
-              },
-            );
-          },
-        ),
       ),
     );
   }
@@ -226,32 +252,12 @@ export class CategoryListDelegate {
       initialInterval,
     } = this.writingSettingsDelegate.getCurrentSettings();
 
-    this.eventBus.pubsub(
+    this.eventBus.publish(
       createAction(ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS, {
         setId: this.setStore.existingCurrentSet.setId,
         initialInterval,
         categoryNames,
       }),
-      group(
-        once(
-          ActionType.MANAGE__FETCH_WRITING_DUE_AND_NEW_COUNTS_SUCCEEDED,
-          (countsPerCategoryName): void => {
-            _.toPairs(countsPerCategoryName).forEach(
-              ([categoryName, counts]): void => {
-                if (this.categoryListState.categoryList !== null) {
-                  const category = this.categoryListState.categoryList.get(
-                    categoryName,
-                  );
-
-                  if (typeof category !== 'undefined') {
-                    category.writingCounts = counts;
-                  }
-                }
-              },
-            );
-          },
-        ),
-      ),
     );
   }
 }

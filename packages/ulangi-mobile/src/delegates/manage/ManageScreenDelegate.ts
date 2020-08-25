@@ -240,6 +240,11 @@ export class ManageScreenDelegate {
     );
   }
 
+  public autoUpdateDueAndNewCounts(): void {
+    this.categoryListDelegate.autoUpdateSpacedRepetitionDueAndNewCounts();
+    this.categoryListDelegate.autoUpdateWritingDueAndNewCounts();
+  }
+
   public toggleSelection(id: string): void {
     this.categorySelectionDelegate.toggleSelection(id);
   }
