@@ -8,7 +8,6 @@
 import { SQLiteDatabase } from '@ulangi/sqlite-adapter';
 import { Action, ActionType, createAction } from '@ulangi/ulangi-action';
 import { CategorySortType } from '@ulangi/ulangi-common/enums';
-import { Category } from '@ulangi/ulangi-common/interfaces';
 import { CategoryFilterCondition } from '@ulangi/ulangi-common/types';
 import {
   CategoryModel,
@@ -119,21 +118,21 @@ export class ManageSaga extends ProtectedSaga {
   private *allowFetchCategory(
     filterCondition: CategoryFilterCondition,
     sortType: CategorySortType,
-    limitOfCategorized: number
+    limit: number
   ): IterableIterator<any> {
-    let offsetOfCategorized = 0;
-    let shouldIncludeUncategorized = true;
+    let offset = 0;
+
     while (true) {
       yield take(ActionType.MANAGE__FETCH_CATEGORY);
 
       try {
         yield put(createAction(ActionType.MANAGE__FETCHING_CATEGORY, null));
 
-        let categoryList;
-
         const { setId, vocabularyStatus } = filterCondition;
 
-        const result: PromiseType<
+        const {
+          categoryList,
+        }: PromiseType<
           ReturnType<CategoryModel['getCategoryListByVocabularyStatus']>
         > = yield call(
           [this.categoryModel, 'getCategoryListByVocabularyStatus'],
@@ -141,23 +140,13 @@ export class ManageSaga extends ProtectedSaga {
           setId,
           vocabularyStatus,
           sortType,
-          limitOfCategorized,
-          offsetOfCategorized,
-          shouldIncludeUncategorized
+          limit,
+          offset
         );
 
-        categoryList = result.categoryList;
+        const noMore = categoryList.length === 0 ? true : false;
 
-        const categoryListWithoutUncategorized = categoryList.filter(
-          (category: Category): boolean => {
-            return category.categoryName !== 'Uncategorized';
-          }
-        );
-        const noMore =
-          categoryListWithoutUncategorized.length === 0 ? true : false;
-        // Should not include Uncategorized in the next fetch
-        shouldIncludeUncategorized = false;
-        offsetOfCategorized += limitOfCategorized;
+        offset += limit;
 
         yield put(
           createAction(ActionType.MANAGE__FETCH_CATEGORY_SUCCEEDED, {
