@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 export const shortDimension =
   windowWidth < windowHeight ? windowWidth : windowHeight;
-export const longtDimension =
+export const longDimension =
   windowWidth < windowHeight ? windowHeight : windowWidth;
 
 export interface Layout {
