@@ -43,12 +43,12 @@ export class SpacedRepetitionFAQScreen extends React.Component<
       {
         title: 'How does Spaced Repetition work?',
         content:
-          'In each review session, you will review your cards and provide feedback of how well you memorize them. Our system will schedule review (and adjust level) based on your feedback. This will help you achieve spacing effects and reduce unnecessary repetitions.',
+          'In each review session, you will review the cards and provide feedback of how well you memorize them. The system will schedule review based on your feedback. With this scheduling system, it helps you to achieve spacing effects and reduce unnecessary reviews (repetitions).',
       },
       {
         title: 'Can I review my cards in both directions?',
         content:
-          'Yes. By default, the app can automatically switch review direction for you. You can also adjust this by selecting a Review Strategy option in Settings.',
+          'By default, the app automatically switches review direction for you. You can also adjust this by selecting a Review Strategy option in Settings.',
       },
       {
         title: 'Can I learn new cards even if I have due ones to review?',
@@ -56,14 +56,9 @@ export class SpacedRepetitionFAQScreen extends React.Component<
           'By default, the system prioritizes due cards over new ones. You can change this priority by selecting a Review Priority option in Settings.',
       },
       {
-        title: 'I have too many due cards. What should I do?',
-        content:
-          "Don't worry too much. If you miss the due time for too long, you can always reschedule and review them again. In other words, focus on what you think is more important first.",
-      },
-      {
         title: 'Can I review without Internet connection?',
         content:
-          'Once assets (audios or images) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
+          'Once the assets (audios, images, etc) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
       },
     ],
   };

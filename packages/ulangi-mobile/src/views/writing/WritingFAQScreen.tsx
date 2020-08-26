@@ -32,12 +32,12 @@ export class WritingFAQScreen extends React.Component<WritingFAQScreenProps> {
       {
         title: 'Can I turn off error hinting?',
         content:
-          "By default, if you type answer incorrectly, the app will let you know immediately by showing red underline. You can disable this by turning off 'Highlight on Error' in Settings.",
+          "By default, if your answer is incorrect, it will show red underline. You can disable this by turning off 'Highlight on Error' in Settings.",
       },
       {
         title: 'Can I review without Internet connection?',
         content:
-          'Once assets (audios or images) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
+          'Once the assets (audios, images, etc) are downloaded, they will be stored locally for offline access. This means that to play an audio offline, you must play it at least once with Internet connection.',
       },
     ],
   };
