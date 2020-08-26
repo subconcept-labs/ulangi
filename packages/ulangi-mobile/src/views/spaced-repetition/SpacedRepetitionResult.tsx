@@ -5,7 +5,12 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState, ButtonSize, Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ActivityState,
+  ButtonSize,
+  ReviewPriority,
+  Theme,
+} from '@ulangi/ulangi-common/enums';
 import {
   ObservableFeedbackListState,
   ObservableScreenLayout,
@@ -37,7 +42,7 @@ export interface SpacedRepetitionResultProps {
   counts: undefined | { due: number; new: number };
   shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
   showReviewFeedback: () => void;
-  takeAnotherLesson: () => void;
+  takeAnotherLesson: (override: undefined | ReviewPriority) => void;
   quit: () => void;
   upgradeToPremium: () => void;
   styles?: {
@@ -122,6 +127,12 @@ export class SpacedRepetitionResult extends React.Component<
               theme={this.props.theme}
               screenLayout={this.props.screenLayout}
               counts={this.props.counts}
+              reviewDueFirst={(): void =>
+                this.props.takeAnotherLesson(ReviewPriority.DUE_TERMS_FIRST)
+              }
+              reviewNewFirst={(): void =>
+                this.props.takeAnotherLesson(ReviewPriority.NEW_TERMS_FIRST)
+              }
               showLeft={true}
             />
           </View>
@@ -137,7 +148,7 @@ export class SpacedRepetitionResult extends React.Component<
                 this.props.theme,
                 this.props.screenLayout,
               )}
-              onPress={this.props.takeAnotherLesson}
+              onPress={(): void => this.props.takeAnotherLesson(undefined)}
             />
           </View>
           <View style={this.styles.button_container}>

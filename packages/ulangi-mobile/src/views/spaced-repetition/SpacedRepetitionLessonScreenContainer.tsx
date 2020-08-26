@@ -6,7 +6,12 @@
  */
 
 import { Options } from '@ulangi/react-native-navigation';
-import { ActivityState, ScreenName, Theme } from '@ulangi/ulangi-common/enums';
+import {
+  ActivityState,
+  ReviewPriority,
+  ScreenName,
+  Theme,
+} from '@ulangi/ulangi-common/enums';
 import {
   ObservableFeedbackListState,
   ObservableReviewActionBarState,
@@ -32,7 +37,9 @@ import { SpacedRepetitionLessonScreenStyle } from './SpacedRepetitionLessonScree
 export interface SpacedReptitionLessonScreenPassedProps {
   readonly vocabularyList: ObservableMap<string, ObservableVocabulary>;
   readonly currentCategoryNames: undefined | readonly string[];
-  readonly startLesson: () => void;
+  readonly startLesson: (
+    overrideReviewPriority: undefined | ReviewPriority,
+  ) => void;
 }
 
 @observer

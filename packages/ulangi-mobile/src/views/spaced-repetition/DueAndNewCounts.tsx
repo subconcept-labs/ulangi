@@ -19,6 +19,8 @@ export interface DueAndNewCountsProps {
         due: number;
         new: number;
       };
+  reviewNewFirst: () => void;
+  reviewDueFirst: () => void;
   showLeft: boolean;
 }
 
@@ -39,14 +41,16 @@ export class DueAndNewCounts extends React.Component<DueAndNewCountsProps> {
             <DefaultText
               style={
                 this.props.counts.due > 0 ? this.styles.highlighted_count : {}
-              }>
+              }
+              onPress={this.props.reviewDueFirst}>
               {this.props.counts.due} due
             </DefaultText>
             <DefaultText> and </DefaultText>
             <DefaultText
               style={
                 this.props.counts.new > 0 ? this.styles.highlighted_count : {}
-              }>
+              }
+              onPress={this.props.reviewNewFirst}>
               {this.props.counts.new} new
             </DefaultText>
             {this.props.showLeft ? <DefaultText> left</DefaultText> : null}

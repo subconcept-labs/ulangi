@@ -6,6 +6,7 @@
  */
 
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
+import { ReviewPriority } from '@ulangi/ulangi-common/enums';
 import { ObservableWritingLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
@@ -39,7 +40,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     observableScreen: ObservableWritingLessonScreen,
     questionIterator: WritingQuestionIterator,
     currentCategoryNames: undefined | readonly string[],
-    startLesson: () => void,
+    startLesson: (overrideReviewPriority: undefined | ReviewPriority) => void,
   ): WritingLessonScreenDelegate {
     const navigatorDelegate = this.createNavigatorDelegate();
 

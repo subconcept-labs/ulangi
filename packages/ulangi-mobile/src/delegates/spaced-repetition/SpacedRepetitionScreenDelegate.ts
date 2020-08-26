@@ -6,7 +6,12 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ButtonSize, ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
+import {
+  ButtonSize,
+  ErrorCode,
+  ReviewPriority,
+  ScreenName,
+} from '@ulangi/ulangi-common/enums';
 import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
@@ -58,19 +63,25 @@ export class SpacedRepetitionScreenDelegate {
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public startLesson(includeFromOtherCategories: boolean): void {
+  public startLesson(
+    includeFromOtherCategories: boolean,
+    reviewPriority: undefined | ReviewPriority,
+  ): void {
     RemoteLogger.logEvent('start_spaced_repetition');
     const {
       initialInterval,
       limit,
-      reviewPriority,
+      reviewPriority: defaultReviewPriority,
     } = this.spacedRepetitionSettingsDelegate.getCurrentSettings();
 
     this.eventBus.pubsub(
       createAction(ActionType.SPACED_REPETITION__FETCH_VOCABULARY, {
         setId: this.setStore.existingCurrentSetId,
         initialInterval,
-        reviewPriority,
+        reviewPriority:
+          typeof reviewPriority !== 'undefined'
+            ? reviewPriority
+            : defaultReviewPriority,
         limit,
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,
@@ -104,7 +115,16 @@ export class SpacedRepetitionScreenDelegate {
                 currentCategoryNames: toJS(
                   this.observableScreen.selectedCategoryNames,
                 ),
-                startLesson: (): void => this.startLesson(false),
+                startLesson: (
+                  overrideReviewPriority: undefined | ReviewPriority,
+                ): void => {
+                  this.startLesson(
+                    false,
+                    typeof overrideReviewPriority !== 'undefined'
+                      ? overrideReviewPriority
+                      : reviewPriority,
+                  );
+                },
               },
             );
           },
@@ -121,7 +141,9 @@ export class SpacedRepetitionScreenDelegate {
                   'undefined' &&
                 includeFromOtherCategories === false
               ) {
-                this.showNotEnoughTermsForSelectedCategoriesDialog();
+                this.showNotEnoughTermsForSelectedCategoriesDialog(
+                  reviewPriority,
+                );
               } else {
                 this.showNotEnoughTermsDialog();
               }
@@ -190,7 +212,9 @@ export class SpacedRepetitionScreenDelegate {
     });
   }
 
-  private showNotEnoughTermsForSelectedCategoriesDialog(): void {
+  private showNotEnoughTermsForSelectedCategoriesDialog(
+    reviewPriority: undefined | ReviewPriority,
+  ): void {
     this.dialogDelegate.show({
       testID: LightBoxDialogIds.FAILED_DIALOG,
       message: `Not enough terms for selected categories (minimum is ${
@@ -215,7 +239,7 @@ export class SpacedRepetitionScreenDelegate {
           testID: LightBoxDialogIds.OKAY_BTN,
           text: 'OKAY',
           onPress: (): void => {
-            this.startLesson(true);
+            this.startLesson(true, reviewPriority);
           },
           styles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(

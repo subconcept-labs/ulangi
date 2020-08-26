@@ -9,6 +9,7 @@ import {
   ActivityState,
   ButtonSize,
   Feedback,
+  ReviewPriority,
   ScreenName,
   ScreenState,
 } from '@ulangi/ulangi-common/enums';
@@ -61,7 +62,9 @@ export class WritingLessonScreenDelegate {
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
   private currentCategoryNames: undefined | readonly string[];
-  private startLesson: () => void;
+  private startLesson: (
+    overrideReviewPriority: undefined | ReviewPriority,
+  ) => void;
 
   public constructor(
     observer: Observer,
@@ -81,7 +84,7 @@ export class WritingLessonScreenDelegate {
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
     currentCategoryNames: undefined | readonly string[],
-    startLesson: () => void,
+    startLesson: (overrideReviewPriority: undefined | ReviewPriority) => void,
   ) {
     this.observer = observer;
     this.observableConverter = observableConverter;
@@ -192,12 +195,14 @@ export class WritingLessonScreenDelegate {
     }
   }
 
-  public takeAnotherLesson(): void {
+  public takeAnotherLesson(
+    overrideReviewPriority: undefined | ReviewPriority,
+  ): void {
     this.showAdIfRequiredThenQuit();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
-      (): void => this.startLesson(),
+      (): void => this.startLesson(overrideReviewPriority),
     );
   }
 

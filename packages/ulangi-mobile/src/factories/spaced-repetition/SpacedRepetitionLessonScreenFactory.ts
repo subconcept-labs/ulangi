@@ -6,6 +6,7 @@
  */
 
 import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
+import { ReviewPriority } from '@ulangi/ulangi-common/enums';
 import { ObservableSpacedRepetitionLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
@@ -38,7 +39,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     observableScreen: ObservableSpacedRepetitionLessonScreen,
     reviewIterator: ReviewIterator,
     currentCategoryNames: undefined | readonly string[],
-    startLesson: () => void,
+    startLesson: (overrideReviewPriority: undefined | ReviewPriority) => void,
   ): SpacedRepetitionLessonScreenDelegate {
     const spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
