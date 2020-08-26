@@ -20,8 +20,9 @@ export class EnvResolver extends AbstractResolver<Env> {
     ENABLE_REDUX_LOGGING: Joi.boolean(),
     ENABLE_SPLASH_SCREEN: Joi.boolean(),
 
-    APPLE_APP_ID: Joi.string(),
-    GOOGLE_PACKAGE_NAME: Joi.string(),
+    IOS_APP_ID: Joi.string(),
+    ANDROID_PACKAGE_NAME: Joi.string(),
+    ANDROID_STORE: Joi.string(),
 
     IOS_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
     ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),

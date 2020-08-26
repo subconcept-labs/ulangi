@@ -14,8 +14,9 @@ export interface Env {
   readonly ENABLE_REDUX_LOGGING: boolean;
   readonly ENABLE_SPLASH_SCREEN: boolean;
 
-  readonly APPLE_APP_ID: string;
-  readonly GOOGLE_PACKAGE_NAME: string;
+  readonly IOS_APP_ID: string;
+  readonly ANDROID_PACKAGE_NAME: string;
+  readonly ANDROID_STORE: string;
 
   readonly IOS_PREMIUM_LIFETIME_PRODUCT_ID: undefined | string;
   readonly ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: undefined | string;

@@ -16,7 +16,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import * as moment from 'moment';
 import { Platform } from 'react-native';
-import Rate from 'react-native-rate';
+import Rate, { AndroidMarket } from 'react-native-rate';
 
 import { RemoteLogger } from '../../RemoteLogger';
 import { env } from '../../constants/env';
@@ -93,12 +93,20 @@ export class InAppRatingDelegate {
   }
 
   public showInAppRating(preferInApp: boolean): void {
-    if (env.APPLE_APP_ID !== null && env.GOOGLE_PACKAGE_NAME !== null) {
+    if (env.IOS_APP_ID !== null && env.ANDROID_PACKAGE_NAME !== null) {
       RemoteLogger.logEvent('show_in_app_rating');
       Rate.rate(
         {
-          AppleAppID: env.APPLE_APP_ID,
-          GooglePackageName: env.GOOGLE_PACKAGE_NAME,
+          AppleAppID: env.IOS_APP_ID,
+          GooglePackageName: env.ANDROID_PACKAGE_NAME,
+          AmazonPackageName: env.ANDROID_PACKAGE_NAME,
+          OtherAndroidURL: env.ANDROID_STORE,
+          preferredAndroidMarket:
+            env.ANDROID_STORE === 'Google'
+              ? AndroidMarket.Google
+              : env.ANDROID_STORE === 'Amazon'
+              ? AndroidMarket.Amazon
+              : AndroidMarket.Other,
           preferInApp,
           openAppStoreIfInAppFails: !preferInApp,
         },

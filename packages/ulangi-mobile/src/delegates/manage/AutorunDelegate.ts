@@ -74,14 +74,14 @@ export class AutorunDelegate {
   }
 
   private autoInitIap(): void {
-    if (env.GOOGLE_PACKAGE_NAME !== null) {
+    if (env.ANDROID_PACKAGE_NAME !== null) {
       this.eventBus.publish(
         createAction(ActionType.IAP__INIT, {
-          googlePackageName: env.GOOGLE_PACKAGE_NAME,
+          googlePackageName: env.ANDROID_PACKAGE_NAME,
         }),
       );
     } else {
-      console.warn('Cannot init in-app purchase. Missing GOOGLE_PACKAGE_NAME');
+      console.warn('Cannot init in-app purchase. Missing ANDROID_PACKAGE_NAME');
     }
   }
 
