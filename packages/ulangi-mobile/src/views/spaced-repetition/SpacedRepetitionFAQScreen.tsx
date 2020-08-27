@@ -53,7 +53,7 @@ export class SpacedRepetitionFAQScreen extends React.Component<
       {
         title: 'Can I learn new cards even if I have due ones to review?',
         content:
-          'By default, the system prioritizes due cards over new ones. You can change this priority by selecting a Review Priority option in Settings.',
+          'By default, the system prioritizes due cards over new ones. You can tap on the new count on menu screen to review new cards first. You can also change this priority by selecting a Review Priority option in Settings.',
       },
       {
         title: 'Can I review without Internet connection?',

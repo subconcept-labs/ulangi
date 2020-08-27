@@ -335,6 +335,9 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
 
   private renderReviewPriorityDescription(): React.ReactElement<any> {
     let description: string | Element = '';
+    const tip =
+      '* Tip: You can start review with new cards first by tapping on the new count on menu screen. Similarly, tap on the due count to review due cards first.';
+
     switch (this.props.observableScreen.selectedReviewPriority) {
       case ReviewPriority.DUE_TERMS_FIRST:
         description = (
@@ -342,7 +345,10 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             <DefaultText style={this.styles.bold}>
               Due terms first:{' '}
             </DefaultText>
-            <DefaultText>Prioritize due terms over new ones.</DefaultText>
+            <DefaultText>
+              {'Prioritize due terms over new ones.\n\n'}
+            </DefaultText>
+            <DefaultText>{tip}</DefaultText>
           </DefaultText>
         );
         break;
@@ -353,7 +359,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
             <DefaultText style={this.styles.bold}>
               New terms first:{' '}
             </DefaultText>
-            <DefaultText>Prioritize new terms over due ones.</DefaultText>
+            <DefaultText>
+              {'Prioritize new terms over due ones.\n\n'}
+            </DefaultText>
+            <DefaultText />
+            <DefaultText>{tip}</DefaultText>
           </DefaultText>
         );
         break;
@@ -363,7 +373,11 @@ export class SpacedRepetitionSettingsScreen extends React.Component<
           <DefaultText>
             <DefaultText style={this.styles.bold}>No priority: </DefaultText>
             <DefaultText>
-              Due and new terms will be reviewed equally.
+              {'Due and new terms will be reviewed equally.\n\n'}
+            </DefaultText>
+            <DefaultText>
+              * Tip: Tap on the due count on menu screen to review due cards
+              first. Similarly, tap on the new count to review new cards first.
             </DefaultText>
           </DefaultText>
         );
