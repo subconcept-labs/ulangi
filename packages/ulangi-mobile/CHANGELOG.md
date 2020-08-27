@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.20.0](https://github.com/ulangi/ulangi/compare/v3.19.0...v3.20.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* allow to use different android stores ([d00db87](https://github.com/ulangi/ulangi/commit/d00db87))
+* due and new counts sometimes not appear ([70dd02f](https://github.com/ulangi/ulangi/commit/70dd02f))
+* minor fixes ([95a64da](https://github.com/ulangi/ulangi/commit/95a64da))
+
+
+### Features
+
+* tap counts to start review ([3b779a8](https://github.com/ulangi/ulangi/commit/3b779a8))
+
+
+
+
+
 # [3.19.0](https://github.com/ulangi/ulangi/compare/v3.18.1...v3.19.0) (2020-08-25)
 
 
