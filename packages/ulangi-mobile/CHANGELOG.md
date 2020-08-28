@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.1](https://github.com/ulangi/ulangi/compare/v3.20.0...v3.20.1) (2020-08-28)
+
+
+### Bug Fixes
+
+* fix heat map light box screen styles ([455b7d7](https://github.com/ulangi/ulangi/commit/455b7d7))
+* minor changes ([ec3f024](https://github.com/ulangi/ulangi/commit/ec3f024))
+* show review priority tip ([5f6faf6](https://github.com/ulangi/ulangi/commit/5f6faf6))
+* update in app rating ([20c9fd5](https://github.com/ulangi/ulangi/commit/20c9fd5))
+
+
+
+
+
 # [3.20.0](https://github.com/ulangi/ulangi/compare/v3.19.0...v3.20.0) (2020-08-27)
 
 
