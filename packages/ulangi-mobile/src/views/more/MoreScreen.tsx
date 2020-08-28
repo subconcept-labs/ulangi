@@ -5,11 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { assertExists } from '@ulangi/assert';
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
   ObservableAdStore,
   ObservableMoreScreen,
   ObservableNetworkStore,
+  ObservableSetStore,
   ObservableSyncStore,
   ObservableThemeStore,
   ObservableUserStore,
@@ -40,6 +42,7 @@ import {
 export interface MoreScreenProps {
   themeStore: ObservableThemeStore;
   userStore: ObservableUserStore;
+  setStore: ObservableSetStore;
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
   adStore: ObservableAdStore;
@@ -85,8 +88,8 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
       this.renderAccountSection(),
       this.renderToolsAndSettingsSection(),
       this.renderGeneralSection(),
-      this.renderProjectsSection(),
       this.renderContactUsSection(),
+      this.renderProjectsSection(),
       this.renderInfoSection(),
       this.renderLogOutSection(),
     ];
@@ -165,7 +168,13 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
           leftText="Set Management"
-          rightText=""
+          rightText={`${
+            assertExists(this.props.setStore.activeSetList).size
+          } set${
+            assertExists(this.props.setStore.activeSetList).size !== 1
+              ? 's'
+              : ''
+          }`}
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToSetManagementScreen}
         />
@@ -402,7 +411,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           testID={MoreScreenIds.WHATS_NEW_BTN}
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
-          leftText="What's New"
+          leftText={`What's New in v${VersionInfo.appVersion}`}
           showArrow={true}
           onPress={(): void => {
             this.props.screenDelegate.navigateToWhatsNewScreen();

@@ -74,6 +74,7 @@ export class MoreScreenContainer extends Container {
       <MoreScreen
         themeStore={this.props.rootStore.themeStore}
         userStore={this.props.rootStore.userStore}
+        setStore={this.props.rootStore.setStore}
         networkStore={this.props.rootStore.networkStore}
         syncStore={this.props.rootStore.syncStore}
         adStore={this.props.rootStore.adStore}
