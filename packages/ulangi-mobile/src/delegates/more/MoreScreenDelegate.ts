@@ -23,6 +23,7 @@ import {
 } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 import { runInAction } from 'mobx';
+import { Platform } from 'react-native';
 
 import { config } from '../../constants/config';
 import { env } from '../../constants/env';
@@ -303,20 +304,26 @@ export class MoreScreenDelegate {
     this.navigatorDelegate.push(ScreenName.QUICK_TUTORIAL_SCREEN, {});
   }
 
+  public navigateToFeedbackScreen(): void {
+    this.navigatorDelegate.showModal(ScreenName.CONTACT_US_SCREEN, {
+      initialFormType: ContactUsFormType.FEEDBACK,
+    });
+  }
+
   public navigateToFeatureRequestScreen(): void {
-    this.navigatorDelegate.push(ScreenName.CONTACT_US_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.CONTACT_US_SCREEN, {
       initialFormType: ContactUsFormType.FEATURE_REQUEST,
     });
   }
 
   public navigateToReportABugScreen(): void {
-    this.navigatorDelegate.push(ScreenName.CONTACT_US_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.CONTACT_US_SCREEN, {
       initialFormType: ContactUsFormType.REPORT_A_BUG,
     });
   }
 
   public navigateToContactSupportScreen(): void {
-    this.navigatorDelegate.push(ScreenName.CONTACT_US_SCREEN, {
+    this.navigatorDelegate.showModal(ScreenName.CONTACT_US_SCREEN, {
       initialFormType: ContactUsFormType.CONTACT_SUPPORT,
     });
   }
@@ -352,5 +359,17 @@ export class MoreScreenDelegate {
       link,
       screenTitle,
     });
+  }
+
+  public setRating(rating: number): void {
+    if (this.inAppRatingDelegate.isRatingValid(rating)) {
+      this.inAppRatingDelegate.updateUserRating(rating);
+
+      if (rating >= 1 && rating <= 4) {
+        this.navigateToFeedbackScreen();
+      } else if (rating === 5) {
+        this.inAppRatingDelegate.showInAppRating(Platform.OS === 'android');
+      }
+    }
   }
 }

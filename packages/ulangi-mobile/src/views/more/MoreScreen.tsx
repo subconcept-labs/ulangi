@@ -30,6 +30,7 @@ import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { SectionGroup } from '../../views/section/SectionGroup';
 import { SectionRow } from '../../views/section/SectionRow';
 import { DefaultButton } from '../common/DefaultButton';
+import { Rating } from '../common/Rating';
 import { Screen } from '../common/Screen';
 import { MessageCarousel } from './MessageCarousel';
 import {
@@ -400,12 +401,18 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           testID={MoreScreenIds.RATE_THIS_APP_BTN}
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Rate This App"
-          showArrow={true}
-          description="Please give us feedback or suggestions to make this app better."
-          onPress={(): void => {
-            this.props.screenDelegate.rateThisApp();
-          }}
+          leftText="Rate Ulangi"
+          customRight={
+            <Rating
+              theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
+              currentRating={
+                this.props.userStore.existingCurrentUser.userRating
+              }
+              setRating={this.props.screenDelegate.setRating}
+            />
+          }
+          showArrow={false}
         />
         <SectionRow
           testID={MoreScreenIds.WHATS_NEW_BTN}

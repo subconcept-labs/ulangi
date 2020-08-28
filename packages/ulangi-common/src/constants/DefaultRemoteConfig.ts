@@ -9,7 +9,7 @@ import { RemoteConfig } from '../interfaces/general/RemoteConfig';
 
 export const DefaultRemoteConfig: RemoteConfig = {
   app: {
-    showInAppRatingAfterDays: 15,
+    showInAppRatingAfterDays: 20,
   },
 
   ad: {

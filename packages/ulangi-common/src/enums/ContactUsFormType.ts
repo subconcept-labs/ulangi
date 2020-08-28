@@ -6,6 +6,7 @@
  */
 
 export enum ContactUsFormType {
+  FEEDBACK = 'Feedback',
   FEATURE_REQUEST = 'Feature Request',
   REPORT_A_BUG = 'Report a Bug',
   REPORT_AN_ERROR = 'Report an Error',

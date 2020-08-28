@@ -14,6 +14,7 @@ import { GlobalAutoArchiveResolver } from './GlobalAutoArchiveResolver';
 import { GlobalDataSharingResolver } from './GlobalDataSharingResolver';
 import { GlobalReminderResolver } from './GlobalReminderResolver';
 import { GlobalThemeResolver } from './GlobalThemeResolver';
+import { UserRatingResolver } from './UserRatingResolver';
 
 export class UserExtraDataItemResolver extends AbstractAlternativeResolver<
   UserExtraDataItem
@@ -23,6 +24,7 @@ export class UserExtraDataItemResolver extends AbstractAlternativeResolver<
   private globalThemeResolver = new GlobalThemeResolver();
   private globalDataSharingResolver = new GlobalDataSharingResolver();
   private autoShowInAppRatingResolver = new AutoShowInAppRatingResolver();
+  private userRatingResolver = new UserRatingResolver();
 
   protected rules: Joi.AlternativesSchema;
 
@@ -33,7 +35,8 @@ export class UserExtraDataItemResolver extends AbstractAlternativeResolver<
       this.globalReminderResolver.getRules(),
       this.globalThemeResolver.getRules(),
       this.globalDataSharingResolver.getRules(),
-      this.autoShowInAppRatingResolver.getRules()
+      this.autoShowInAppRatingResolver.getRules(),
+      this.userRatingResolver.getRules()
     );
   }
 }

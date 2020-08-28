@@ -24,6 +24,7 @@ import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../manage/AutorunDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { VocabularyFilterMenuDelegate } from '../vocabulary/VocabularyFilterMenuDelegate';
 
 @boundClass
@@ -39,6 +40,7 @@ export class ManageScreenDelegate {
   private vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate;
   private featureSettingsDelegate: FeatureSettingsDelegate;
   private autorunDelegate: AutorunDelegate;
+  private inAppRatingDelegate: InAppRatingDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
@@ -53,6 +55,7 @@ export class ManageScreenDelegate {
     vocabularyFilterMenuDelegate: VocabularyFilterMenuDelegate,
     featureSettingsDelegate: FeatureSettingsDelegate,
     autorunDelegate: AutorunDelegate,
+    inAppRatingDelegate: InAppRatingDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.eventBus = eventBus;
@@ -66,6 +69,7 @@ export class ManageScreenDelegate {
     this.vocabularyFilterMenuDelegate = vocabularyFilterMenuDelegate;
     this.featureSettingsDelegate = featureSettingsDelegate;
     this.autorunDelegate = autorunDelegate;
+    this.inAppRatingDelegate = inAppRatingDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -274,6 +278,9 @@ export class ManageScreenDelegate {
   public goToSpacedRepetition(selectedCategoryNames: string[]): void {
     this.navigatorDelegate.push(ScreenName.SPACED_REPETITION_SCREEN, {
       selectedCategoryNames,
+      onClose: (): void => {
+        this.inAppRatingDelegate.autoShowInAppRating();
+      },
     });
   }
 

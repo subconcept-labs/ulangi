@@ -18,6 +18,7 @@ import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDe
 import { LevelBreakdownDelegate } from '../../delegates/level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../../delegates/manage/AutorunDelegate';
 import { ManageScreenDelegate } from '../../delegates/manage/ManageScreenDelegate';
+import { InAppRatingDelegate } from '../../delegates/rating/InAppRatingDelegate';
 import { ReminderDelegate } from '../../delegates/reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../../delegates/reminder/ReminderSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
@@ -150,6 +151,14 @@ export class ManageScreenFactory extends ScreenFactory {
       PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
 
+    const inAppRatingDelegate = new InAppRatingDelegate(
+      this.eventBus,
+      this.props.rootStore.userStore,
+      this.props.rootStore.networkStore,
+      this.props.rootStore.remoteConfigStore,
+      dialogDelegate,
+    );
+
     return new ManageScreenDelegate(
       this.eventBus,
       observableScreen,
@@ -162,6 +171,7 @@ export class ManageScreenFactory extends ScreenFactory {
       vocabularyFilterMenuDelegate,
       featureSettingsDelegate,
       autorunDelegate,
+      inAppRatingDelegate,
       navigatorDelegate,
     );
   }

@@ -15,7 +15,6 @@ import {
   ObservableUserStore,
 } from '@ulangi/ulangi-observable';
 import * as moment from 'moment';
-import { Platform } from 'react-native';
 import Rate, { AndroidMarket } from 'react-native-rate';
 
 import { RemoteLogger } from '../../RemoteLogger';
@@ -46,11 +45,8 @@ export class InAppRatingDelegate {
 
   public autoShowInAppRating(): void {
     if (this.shouldAutoShowInAppRating()) {
-      if (Platform.OS === 'ios') {
-        this.showInAppRating(true);
-      } else {
-        this.showRatingRequestDialog();
-      }
+      this.showRatingRequestDialog();
+
       // Disable so it won't show again
       this.disableAutoShowInAppRating();
     }
@@ -58,13 +54,13 @@ export class InAppRatingDelegate {
 
   public showRatingRequestDialog(): void {
     this.dialogDelegate.show({
-      title: 'RATE THIS APP',
+      title: 'RATE ULANGI',
       message:
-        'Do you enjoy using Ulangi? Would you like to take a moment to rate our app?',
-      closeOnTouchOutside: true,
+        'If you like Ulangi, we would greatly appreciate if you could rate this app. Thank you very much!',
+      closeOnTouchOutside: false,
       buttonList: [
         {
-          text: 'NO, THANKS',
+          text: 'NOT NOW',
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
@@ -76,10 +72,10 @@ export class InAppRatingDelegate {
             ),
         },
         {
-          text: 'RATE THIS APP',
+          text: 'RATE ULANGI',
           onPress: (): void => {
-            this.showInAppRating(false);
             this.dialogDelegate.dismiss();
+            this.showInAppRating(true);
           },
           styles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
@@ -134,11 +130,31 @@ export class InAppRatingDelegate {
     );
   }
 
+  public updateUserRating(rating: 1 | 2 | 3 | 4 | 5): void {
+    this.eventBus.publish(
+      createAction(ActionType.USER__EDIT, {
+        user: {
+          extraData: [
+            {
+              dataName: UserExtraDataName.USER_RATING,
+              dataValue: rating,
+            },
+          ],
+        },
+      }),
+    );
+  }
+
+  public isRatingValid(rating: number): rating is 1 | 2 | 3 | 4 | 5 {
+    return rating >= 1 && rating <= 5;
+  }
+
   private shouldAutoShowInAppRating(): boolean {
     return (
       this.networkStore.isConnected === true &&
       this.isAutoShowInAppRatingEnabled() &&
-      this.isAutoShowInAppRatingDue()
+      this.isAutoShowInAppRatingDue() &&
+      typeof this.userStore.existingCurrentUser.userRating === 'undefined'
     );
   }
 

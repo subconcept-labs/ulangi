@@ -11,4 +11,5 @@ export enum UserExtraDataName {
   GLOBAL_THEME = 'globalTheme',
   GLOBAL_DATA_SHARING = 'globalDataSharing',
   AUTO_SHOW_IN_APP_RATING = 'autoShowInAppRating',
+  USER_RATING = 'userRating',
 }

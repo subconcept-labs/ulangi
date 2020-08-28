@@ -10,10 +10,12 @@ import { GlobalAutoArchive } from '../interfaces/general/GlobalAutoArchive';
 import { GlobalDataSharing } from '../interfaces/general/GlobalDataSharing';
 import { GlobalReminder } from '../interfaces/general/GlobalReminder';
 import { GlobalTheme } from '../interfaces/general/GlobalTheme';
+import { UserRating } from '../interfaces/general/UserRating';
 
 export type UserExtraDataItem =
   | GlobalAutoArchive
   | GlobalReminder
   | GlobalTheme
   | GlobalDataSharing
-  | AutoShowInAppRating;
+  | AutoShowInAppRating
+  | UserRating;

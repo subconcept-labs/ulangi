@@ -20,6 +20,7 @@ import { ContactUsScreenIds } from '../../constants/ids/ContactUsScreenIds';
 import { Screen } from '../common/Screen';
 import { ContactSupportForm } from './ContactSupportForm';
 import { FeatureRequestForm } from './FeatureRequestForm';
+import { FeedbackForm } from './FeedbackForm';
 import { ReportABugForm } from './ReportABugForm';
 import { ReportAnErrorForm } from './ReportAnErrorForm';
 
@@ -45,7 +46,14 @@ export class ContactUsScreen extends React.Component<ContactUsScreenProps> {
   }
 
   private renderForm(): React.ReactElement<any> {
-    if (
+    if (this.props.observableScreen.formType === ContactUsFormType.FEEDBACK) {
+      return (
+        <FeedbackForm
+          theme={this.props.themeStore.theme}
+          observableScreen={this.props.observableScreen}
+        />
+      );
+    } else if (
       this.props.observableScreen.formType === ContactUsFormType.FEATURE_REQUEST
     ) {
       return (

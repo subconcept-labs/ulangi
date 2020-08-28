@@ -10,18 +10,22 @@ import { FeatureSettings } from '@ulangi/ulangi-common/interfaces';
 import { boundClass } from 'autobind-decorator';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
+import { InAppRatingDelegate } from '../rating/InAppRatingDelegate';
 import { FeatureSettingsDelegate } from './FeatureSettingsDelegate';
 
 @boundClass
 export class LearnScreenDelegate {
   private featureSettingsDelegate: FeatureSettingsDelegate;
+  private inAppRatingDelegate: InAppRatingDelegate;
   private navigatorDelegate: NavigatorDelegate;
 
   public constructor(
     featureSettingsDelegate: FeatureSettingsDelegate,
+    inAppRatingDelegate: InAppRatingDelegate,
     navigatorDelegate: NavigatorDelegate,
   ) {
     this.featureSettingsDelegate = featureSettingsDelegate;
+    this.inAppRatingDelegate = inAppRatingDelegate;
     this.navigatorDelegate = navigatorDelegate;
   }
 
@@ -36,6 +40,9 @@ export class LearnScreenDelegate {
   public navigateToSpacedRepetitionScreen(): void {
     this.navigatorDelegate.push(ScreenName.SPACED_REPETITION_SCREEN, {
       selectedCategoryNames: undefined,
+      onClose: (): void => {
+        this.inAppRatingDelegate.autoShowInAppRating();
+      },
     });
   }
 

@@ -15,6 +15,7 @@ import {
   GlobalTheme,
   ReminderSettings,
   ThemeSettings,
+  UserRating,
 } from '@ulangi/ulangi-common/interfaces';
 import { UserExtraDataItem } from '@ulangi/ulangi-common/types';
 import { computed, observable } from 'mobx';
@@ -93,6 +94,15 @@ export class ObservableUser {
     const data = this.extraData.find(
       (data): data is AutoShowInAppRating =>
         data.dataName === UserExtraDataName.AUTO_SHOW_IN_APP_RATING
+    );
+    return data ? data.dataValue : undefined;
+  }
+
+  @computed
+  public get userRating(): undefined | 1 | 2 | 3 | 4 | 5 {
+    const data = this.extraData.find(
+      (data): data is UserRating =>
+        data.dataName === UserExtraDataName.USER_RATING
     );
     return data ? data.dataValue : undefined;
   }

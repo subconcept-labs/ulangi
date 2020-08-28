@@ -399,7 +399,7 @@ PODS:
     - React
   - RNIap (4.4.0):
     - React
-  - RNRate (1.1.10):
+  - RNRate (1.2.4):
     - React
   - RNSound (0.11.0):
     - React
@@ -665,7 +665,7 @@ SPEC CHECKSUMS:
   RNFirebase: 909a993573ab3e79d9b0dc9690265d5ba379f15b
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
   RNIap: 9b6e92869de716305ecc6cac8c413321210e33c7
-  RNRate: d44a8bca6ee08f5d890ecccddaec2810955ffbb3
+  RNRate: 2b31dad120cd1b78e33c6034808561c386a3dddf
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0

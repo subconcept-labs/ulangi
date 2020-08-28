@@ -40,6 +40,12 @@ export class ContactUsScreenDelegate {
 
   public send(): void {
     switch (this.observableScreen.formType) {
+      case ContactUsFormType.FEEDBACK:
+        this.sendFeedback(
+          this.userStore.existingCurrentUser.email,
+          this.observableScreen.text,
+        );
+        break;
       case ContactUsFormType.FEATURE_REQUEST:
         this.sendFeatureRequest(
           this.userStore.existingCurrentUser.email,
@@ -64,6 +70,26 @@ export class ContactUsScreenDelegate {
           this.observableScreen.text,
         );
     }
+  }
+
+  private sendFeedback(userEmail: string, message: string): void {
+    this.sendMessage(
+      'feature@ulangi.com',
+      userEmail,
+      `Feedback from ${userEmail}`,
+      `From ${userEmail}:\n${message}`,
+      {
+        onContactingAdmin: (): void => {
+          this.showContactingAdminDialog();
+        },
+        onContactAdminSucceeded: (): void => {
+          this.showContactAdminSucceededDialog();
+        },
+        onContactAdminFailed: (errorBag): void => {
+          this.dialogDelegate.showFailedDialog(errorBag);
+        },
+      },
+    );
   }
 
   private sendFeatureRequest(userEmail: string, message: string): void {

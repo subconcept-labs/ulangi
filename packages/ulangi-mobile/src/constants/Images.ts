@@ -139,6 +139,8 @@ export class Images {
   public static readonly HORIZONTAL_DOTS_WHITE_22X22 = require('../../assets/img/mobile-icons/horizontal_dots_white_22x22.png');
   public static readonly HORIZONTAL_DOTS_MILK_22X22 = require('../../assets/img/mobile-icons/horizontal_dots_milk_22x22.png');
   public static readonly UNCHECK_GREY_22X22 = require('../../assets/img/mobile-icons/uncheck_grey_22x22.png');
+  public static readonly STAR_LINE_GREY_22X22 = require('../../assets/img/mobile-icons/star_line_grey_22x22.png');
+  public static readonly STAR_GREY_22X22 = require('../../assets/img/mobile-icons/star_grey_22x22.png');
 
   // 20x20
   public static readonly SEARCH_WHITE_20X20 = require('../../assets/img/mobile-icons/search_white_20x20.png');

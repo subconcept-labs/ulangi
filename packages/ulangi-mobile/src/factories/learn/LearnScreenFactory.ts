@@ -7,6 +7,7 @@
 
 import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { LearnScreenDelegate } from '../../delegates/learn/LearnScreenDelegate';
+import { InAppRatingDelegate } from '../../delegates/rating/InAppRatingDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
@@ -19,12 +20,25 @@ export class LearnScreenFactory extends ScreenFactory {
   }
 
   public createScreenDelegate(): LearnScreenDelegate {
+    const dialogDelegate = this.createDialogDelegate(
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+    );
+
     const featureSettingsDelegate = new FeatureSettingsDelegate(
       this.props.rootStore.setStore,
     );
 
+    const inAppRatingDelegate = new InAppRatingDelegate(
+      this.eventBus,
+      this.props.rootStore.userStore,
+      this.props.rootStore.networkStore,
+      this.props.rootStore.remoteConfigStore,
+      dialogDelegate,
+    );
+
     return new LearnScreenDelegate(
       featureSettingsDelegate,
+      inAppRatingDelegate,
       this.createNavigatorDelegate(),
     );
   }

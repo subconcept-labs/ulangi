@@ -24,6 +24,7 @@ import { SpacedRepetitionScreenStyle } from '../../views/spaced-repetition/Space
 
 export interface SpacedRepetitionScreenPassedProps {
   selectedCategoryNames: undefined | string[];
+  onClose?: () => void;
 }
 
 @observer
@@ -96,6 +97,10 @@ export class SpacedRepetitionScreenContainer extends Container<
 
   public componentWillUnmount(): void {
     this.screenDelegate.clearDueAndNewCounts();
+
+    if (typeof this.props.passedProps.onClose !== 'undefined') {
+      this.props.passedProps.onClose();
+    }
   }
 
   public render(): React.ReactElement<any> {

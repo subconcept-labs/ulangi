@@ -13,7 +13,6 @@ import { config } from '../../constants/config';
 import { AdAfterLessonDelegate } from '../../delegates/ad/AdAfterLessonDelegate';
 import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
-import { InAppRatingDelegate } from '../../delegates/rating/InAppRatingDelegate';
 import { ReviewActionMenuDelegate } from '../../delegates/review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
@@ -106,14 +105,6 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       navigatorDelegate,
     );
 
-    const inAppRatingDelegate = new InAppRatingDelegate(
-      this.eventBus,
-      this.props.rootStore.userStore,
-      this.props.rootStore.networkStore,
-      this.props.rootStore.remoteConfigStore,
-      dialogDelegate,
-    );
-
     return new SpacedRepetitionLessonScreenDelegate(
       this.observer,
       this.props.rootStore.setStore,
@@ -126,7 +117,6 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       speakDelegate,
       adDelegate,
       adAfterLessonDelegate,
-      inAppRatingDelegate,
       reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,

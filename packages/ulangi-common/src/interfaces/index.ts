@@ -81,6 +81,7 @@ export { WritingAutoShowKeyboard } from './general/WritingAutoShowKeyboard';
 export { WritingHighlightOnError } from './general/WritingHighlightOnError';
 export { WritingReviewPriority } from './general/WritingReviewPriority';
 export { LessonResult } from './general/LessonResult';
+export { UserRating } from './general/UserRating';
 
 export { ActionItem } from './light-box/ActionItem';
 export { ActionMenu } from './light-box/ActionMenu';
