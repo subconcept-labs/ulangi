@@ -106,6 +106,7 @@ export class HeatMap extends React.Component<HeatMapProps> {
         onPress={(): void => {
           this.props.showDataPoint(date, count === null ? 'N/A' : count);
         }}
+        hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
       />
     );
   }

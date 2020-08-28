@@ -4,7 +4,7 @@ import { EventBus, on } from '@ulangi/ulangi-event';
 import { ObservableProgressScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
-import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
+import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { HeatMapDelegate } from './HeatMapDelegate';
 import { StatisticsDelegate } from './StatisticsDelegate';
@@ -58,7 +58,7 @@ export class ProgressScreenDelegate {
         date,
         value,
       },
-      SecondaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
+      PrimaryScreenStyle.LIGHT_BOX_SCREEN_STYLES,
     );
   }
 

@@ -1,4 +1,5 @@
-import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { Options } from '@ulangi/react-native-navigation';
+import { ScreenName, Theme } from '@ulangi/ulangi-common/enums';
 import {
   ObservableScreen,
   ObservableTitleTopBar,
@@ -6,7 +7,7 @@ import {
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
-import { Container } from '../../Container';
+import { Container, ContainerPassedProps } from '../../Container';
 import { HeatMapDataPointScreenFactory } from '../../factories/progress/HeatMapDataPointScreenFactory';
 import { HeatMapDataPointScreen } from './HeatMapDataPointScreen';
 
@@ -19,6 +20,13 @@ export interface HeatMapDataPointScreenPassedProps {
 export class HeatMapDataPointScreenContainer extends Container<
   HeatMapDataPointScreenPassedProps
 > {
+  public static options(props: ContainerPassedProps): Options {
+    if (props.theme === Theme.LIGHT) {
+      return props.styles ? props.styles.light : {};
+    } else {
+      return props.styles ? props.styles.dark : {};
+    }
+  }
   private screenFactory = new HeatMapDataPointScreenFactory(
     this.props,
     this.eventBus,
@@ -27,6 +35,8 @@ export class HeatMapDataPointScreenContainer extends Container<
 
   private screenDelegate = this.screenFactory.createScreenDelegate();
 
+  private navigatorDelegate = this.screenFactory.createNavigatorDelegate();
+
   protected observableLightBox = this.props.observableLightBox;
 
   protected observableScreen = new ObservableScreen(
@@ -34,6 +44,16 @@ export class HeatMapDataPointScreenContainer extends Container<
     ScreenName.HEAT_MAP_DATA_POINT_SCREEN,
     new ObservableTitleTopBar('Heat Map', null, null),
   );
+
+  protected onThemeChanged(theme: Theme): void {
+    if (typeof this.props.styles !== 'undefined') {
+      this.navigatorDelegate.mergeOptions(
+        theme === Theme.LIGHT
+          ? this.props.styles.light
+          : this.props.styles.dark,
+      );
+    }
+  }
 
   public render(): React.ReactElement<any> {
     return (
