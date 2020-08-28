@@ -31,13 +31,19 @@
 
 ## Main apps
 
-### Ulangi
+### Ulangi (Full version)
 | Platform | Store |
 | --- | --- |
 | iOS | [Download on App Store](https://itunes.apple.com/us/app/id1435524341?mt=8) |
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
 | Mac | *Coming soon* |
 | Windows | *Coming soon* |
+
+### Ulangi (Lite version)
+The **Lite** version has some features removed so that it can work on Android devices that do not have Google Play services.
+| Platform | Store |
+| --- | --- |
+| Android (Amazon devices, such as **Kindle Fire**) | [Download on Amazon App Store](http://www.amazon.com/gp/mas/dl/android?p=com.ulangi.lite) |
 
 ---
 
