@@ -18,14 +18,14 @@ Note: this add-on only works on Google Sheets web version (not the mobile versio
 2. On the menu, select **Add-on > Get add-ons**.
 
 3. Search **Ulangi** and install it.
+  ![Install Ulangi for Google Sheets](./assets/images/install-dialog.png)
 
 4. On Permission dialog, click **Allow** button.
-  ![Permission dialog](./assets/images/permission-dialog.png)
 
 ---
 ## II. Setup
 
-1. Go to **Add-on > Ulangi > Show sidebar.**
+1. After the installation, go to **Add-on > Ulangi > Show sidebar.**
 
 2. Log in with your Ulangi account
 
