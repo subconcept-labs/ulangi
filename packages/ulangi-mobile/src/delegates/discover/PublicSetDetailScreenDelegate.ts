@@ -84,7 +84,7 @@ export class PublicSetDetailScreenDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -111,7 +111,7 @@ export class PublicSetDetailScreenDelegate {
               );
             }, 500);
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -179,7 +179,7 @@ export class PublicSetDetailScreenDelegate {
             onPress: (): void => {
               this.dialogDelegate.dismiss();
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,
@@ -192,7 +192,7 @@ export class PublicSetDetailScreenDelegate {
             onPress: (): void => {
               retry(false);
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,

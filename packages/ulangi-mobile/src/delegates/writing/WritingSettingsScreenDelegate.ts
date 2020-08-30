@@ -11,6 +11,7 @@ import {
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { WritingSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableWritingSettingsScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
@@ -20,7 +21,6 @@ import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewFeedbackButtonDelegate } from '../review-feedback/ReviewFeedbackButtonDelegate';
-import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 @boundClass
 export class WritingSettingsScreenDelegate {

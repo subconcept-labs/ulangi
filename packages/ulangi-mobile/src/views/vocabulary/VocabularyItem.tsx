@@ -33,7 +33,7 @@ export interface VocabularyItemProps {
   vocabulary: ObservableVocabulary;
   shouldShowTags?: boolean;
   isSelectionModeOn?: IObservableValue<boolean>;
-  toggleSelection?: (vocabularyId: string) => void;
+  toggleSelection?: (vocabulary: ObservableVocabulary) => void;
   showVocabularyDetail?: (vocabulary: ObservableVocabulary) => void;
   showVocabularyActionMenu?: (vocabulary: ObservableVocabulary) => void;
 }
@@ -164,7 +164,7 @@ export class VocabularyItem extends React.Component<VocabularyItemProps> {
           hitSlop={{ top: 18, bottom: 18, right: 18, left: 18 }}
           onPress={(): void => {
             if (typeof this.props.toggleSelection !== 'undefined') {
-              this.props.toggleSelection(this.props.vocabulary.vocabularyId);
+              this.props.toggleSelection(this.props.vocabulary);
             }
           }}
           style={this.styles.option_btn}>

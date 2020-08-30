@@ -1,7 +1,7 @@
+import { HeatMapDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableHeatMapScreen } from '@ulangi/ulangi-observable';
 
 import { DateRangeDelegate } from '../../delegates/progress/DateRangeDelegate';
-import { HeatMapDelegate } from '../../delegates/progress/HeatMapDelegate';
 import { HeatMapScreenDelegate } from '../../delegates/progress/HeatMapScreenDelegate';
 import { ScreenFactory } from '../ScreenFactory';
 

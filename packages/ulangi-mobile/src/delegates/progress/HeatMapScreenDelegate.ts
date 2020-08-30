@@ -1,9 +1,9 @@
 import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { HeatMapDelegate } from '@ulangi/ulangi-delegate';
 import { boundClass } from 'autobind-decorator';
 
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
-import { HeatMapDelegate } from './HeatMapDelegate';
 
 @boundClass
 export class HeatMapScreenDelegate {

@@ -47,6 +47,25 @@ export class ObservableCategoryListState {
     return this.selectedCategoryNames.length;
   }
 
+  @computed
+  public get areAllSelected(): boolean {
+    if (this.categoryList === null) {
+      return false
+    } else {
+      return this.categoryList.size === this.numOfCategoriesSelected
+    }
+  }
+
+  @computed
+  public get isPartiallySelected(): boolean {
+    if (this.categoryList === null) {
+      return false
+    } else {
+      return this.numOfCategoriesSelected !== 0
+        && this.numOfCategoriesSelected < this.categoryList.size
+    }
+  }
+
   public constructor(
     categoryList: null | ObservableMap<string, ObservableCategory>,
     noMore: boolean,

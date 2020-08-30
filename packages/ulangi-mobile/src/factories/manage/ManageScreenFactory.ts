@@ -5,13 +5,20 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import {
+  CategoryListDelegate,
+  CategorySelectionDelegate,
+  SpacedRepetitionSettingsDelegate,
+  SyncDelegate,
+  VocabularyBulkEditDelegate,
+  WritingSettingsDelegate,
+} from '@ulangi/ulangi-delegate';
 import { ObservableManageScreen } from '@ulangi/ulangi-observable';
 
+import { config } from '../../constants/config';
 import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryActionMenuDelegate';
 import { CategoryBulkActionMenuDelegate } from '../../delegates/category/CategoryBulkActionMenuDelegate';
-import { CategoryListDelegate } from '../../delegates/category/CategoryListDelegate';
-import { CategorySelectionDelegate } from '../../delegates/category/CategorySelectionDelegate';
 import { CategorySortMenuDelegate } from '../../delegates/category/CategorySortMenuDelegate';
 import { DataSharingDelegate } from '../../delegates/data-sharing/DataSharingDelegate';
 import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
@@ -22,10 +29,7 @@ import { InAppRatingDelegate } from '../../delegates/rating/InAppRatingDelegate'
 import { ReminderDelegate } from '../../delegates/reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../../delegates/reminder/ReminderSettingsDelegate';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
-import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -91,11 +95,13 @@ export class ManageScreenFactory extends ScreenFactory {
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.spacedRepetition,
     );
 
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.writing,
     );
 
     const categoryListDelegate = new CategoryListDelegate(
@@ -134,6 +140,8 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.rootStore.adStore,
     );
 
+    const syncDelegate = new SyncDelegate(this.eventBus);
+
     const autorunDelegate = new AutorunDelegate(
       this.eventBus,
       this.observer,
@@ -142,6 +150,7 @@ export class ManageScreenFactory extends ScreenFactory {
       reminderDelegate,
       reminderSettingsDelegate,
       dataSharingDelegate,
+      syncDelegate,
       dialogDelegate,
       rootScreenDelegate,
     );

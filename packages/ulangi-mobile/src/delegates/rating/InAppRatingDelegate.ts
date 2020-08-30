@@ -64,7 +64,7 @@ export class InAppRatingDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -77,7 +77,7 @@ export class InAppRatingDelegate {
             this.dialogDelegate.dismiss();
             this.showInAppRating(true);
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,

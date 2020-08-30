@@ -37,37 +37,38 @@ export class SagaFacade {
 
   private env: SagaEnv;
   private config: SagaConfig;
+  private modelList: ModelList;
+  private database: DatabaseFacade;
+  private databaseEventBus: DatabaseEventBus;
 
   private adMob: null | AdMobAdapter;
   private analytics: null | AnalyticsAdapter;
-  private audioPlayer: AudioPlayerAdapter;
+  private audioPlayer: null | AudioPlayerAdapter;
   private crashlytics: null | CrashlyticsAdapter;
-  private database: DatabaseFacade;
-  private databaseEventBus: DatabaseEventBus;
   private facebook: null | FacebookAdapter;
-  private fileSystem: FileSystemAdapter;
+  private fileSystem: null | FileSystemAdapter;
   private firebase: null | FirebaseAdapter;
   private iap: null | IapAdapter;
-  private modelList: ModelList;
-  private netInfo: NetInfoAdapter;
+  private netInfo: null | NetInfoAdapter;
   private notifications: null | NotificationsAdapter;
-  private systemTheme: SystemThemeAdapter;
+  private systemTheme: null | SystemThemeAdapter;
 
   public constructor(
     env: SagaEnv,
     config: SagaConfig,
     adMob: null | AdMobAdapter,
     analytics: null | AnalyticsAdapter,
-    audioPlayer: AudioPlayerAdapter,
+    audioPlayer: null | AudioPlayerAdapter,
     crashlytics: null | CrashlyticsAdapter,
     facebook: null | FacebookAdapter,
-    fileSystem: FileSystemAdapter,
+    fileSystem: null | FileSystemAdapter,
     firebase: null | FirebaseAdapter,
     iap: null | IapAdapter,
-    netInfo: NetInfoAdapter,
+    netInfo: null | NetInfoAdapter,
     notifications: null | NotificationsAdapter,
+    systemTheme: null | SystemThemeAdapter,
     sqliteDatabase: SQLiteDatabaseAdapter,
-    systemTheme: SystemThemeAdapter,
+    databaseLocation: undefined | string,
     sagaMiddlewareOptions: SagaMiddlewareOptions
   ) {
     this.env = env;
@@ -85,7 +86,7 @@ export class SagaFacade {
     this.notifications = notifications;
     this.systemTheme = systemTheme;
 
-    this.database = new DatabaseFacade(sqliteDatabase);
+    this.database = new DatabaseFacade(sqliteDatabase, databaseLocation);
     this.databaseEventBus = new DatabaseEventBus();
     this.modelList = new ModelFactory(this.databaseEventBus).createAllModels();
 
@@ -98,17 +99,17 @@ export class SagaFacade {
 
   public run(): void {
     const root = new RootSaga(
+      this.modelList,
+      this.database,
+      this.databaseEventBus,
       this.adMob,
       this.analytics,
       this.audioPlayer,
       this.crashlytics,
-      this.database,
-      this.databaseEventBus,
       this.facebook,
       this.fileSystem,
       this.firebase,
       this.iap,
-      this.modelList,
       this.netInfo,
       this.notifications,
       this.systemTheme

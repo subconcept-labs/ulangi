@@ -59,8 +59,8 @@ export class LightBoxSelectionMenu extends React.Component<
             <DefaultButton
               {...this.props.selectionMenu.leftButton}
               styles={
-                this.props.selectionMenu.leftButton.styles
-                  ? this.props.selectionMenu.leftButton.styles(
+                this.props.selectionMenu.leftButton.responsiveStyles
+                  ? this.props.selectionMenu.leftButton.responsiveStyles(
                       this.props.theme,
                       this.props.screenLayout,
                     )
@@ -77,8 +77,8 @@ export class LightBoxSelectionMenu extends React.Component<
             <DefaultButton
               {...this.props.selectionMenu.rightButton}
               styles={
-                this.props.selectionMenu.rightButton.styles
-                  ? this.props.selectionMenu.rightButton.styles(
+                this.props.selectionMenu.rightButton.responsiveStyles
+                  ? this.props.selectionMenu.rightButton.responsiveStyles(
                       this.props.theme,
                       this.props.screenLayout,
                     )

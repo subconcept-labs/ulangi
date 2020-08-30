@@ -1,8 +1,7 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { SpacedRepetitionSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, group, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
-
-import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
 
 export class SpacedRepetitionCountsDelegate {
   private eventBus: EventBus;

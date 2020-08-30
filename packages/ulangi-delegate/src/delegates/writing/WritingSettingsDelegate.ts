@@ -1,0 +1,193 @@
+/*
+ * Copyright (c) Minh Loi.
+ *
+ * This file is part of Ulangi which is released under GPL v3.0.
+ * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+import { DeepPartial } from '@ulangi/extended-types';
+import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { ReviewPriority, SetExtraDataName } from '@ulangi/ulangi-common/enums';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { SetExtraDataItem } from '@ulangi/ulangi-common/types';
+import { EventBus, group, on, once } from '@ulangi/ulangi-event';
+import { ObservableSetStore } from '@ulangi/ulangi-observable';
+
+interface WritingConfig {
+  readonly maxPerLesson: number;
+  readonly defaultInitialInterval: number;
+  readonly defaultFeedbackButtons: 3 | 4 | 5;
+  readonly defaultAutoplayAudio: boolean;
+  readonly defaultAutoShowKeyboard: boolean;
+  readonly defaultHighlightOnError: boolean;
+  readonly defaultReviewPriority: ReviewPriority;
+}
+
+export class WritingSettingsDelegate {
+  private eventBus: EventBus;
+  private setStore: ObservableSetStore;
+  private config: WritingConfig;
+
+  public constructor(
+    eventBus: EventBus,
+    setStore: ObservableSetStore,
+    config: WritingConfig
+  ) {
+    this.eventBus = eventBus;
+    this.setStore = setStore;
+    this.config = config;
+  }
+
+  public getCurrentSettings(): {
+    initialInterval: number;
+    limit: number;
+    feedbackButtons: 3 | 4 | 5;
+    autoplayAudio: boolean;
+    autoShowKeyboard: boolean;
+    highlightOnError: boolean;
+    reviewPriority: ReviewPriority;
+  } {
+    const initialInterval =
+      typeof this.setStore.existingCurrentSet.writingInitialInterval !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingInitialInterval
+        : this.config.defaultInitialInterval;
+
+    const limit =
+      typeof this.setStore.existingCurrentSet.writingMaxLimit !== 'undefined'
+        ? this.setStore.existingCurrentSet.writingMaxLimit
+        : this.config.maxPerLesson;
+
+    const feedbackButtons =
+      typeof this.setStore.existingCurrentSet.writingFeedbackButtons !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingFeedbackButtons
+        : this.config.defaultFeedbackButtons;
+
+    const autoplayAudio =
+      typeof this.setStore.existingCurrentSet.writingAutoplayAudio !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingAutoplayAudio
+        : this.config.defaultAutoplayAudio;
+
+    const autoShowKeyboard =
+      typeof this.setStore.existingCurrentSet.writingAutoShowKeyboard !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingAutoShowKeyboard
+        : this.config.defaultAutoShowKeyboard;
+
+    const highlightOnError =
+      typeof this.setStore.existingCurrentSet.writingHighlightOnError !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingHighlightOnError
+        : this.config.defaultHighlightOnError;
+
+    const reviewPriority =
+      typeof this.setStore.existingCurrentSet.writingReviewPriority !==
+      'undefined'
+        ? this.setStore.existingCurrentSet.writingReviewPriority
+        : this.config.defaultReviewPriority;
+
+    return {
+      initialInterval,
+      limit,
+      feedbackButtons,
+      autoplayAudio,
+      autoShowKeyboard,
+      highlightOnError,
+      reviewPriority,
+    };
+  }
+
+  public saveSettings(
+    newSettings: {
+      initialInterval: number;
+      limit: number;
+      feedbackButtons: 3 | 4 | 5;
+      autoplayAudio: boolean;
+      autoShowKeyboard: boolean;
+      highlightOnError: boolean;
+      reviewPriority: ReviewPriority;
+    },
+    callback: {
+      onSaving: () => void;
+      onSaveSucceeded: () => void;
+      onSaveFailed: (errorBag: ErrorBag) => void;
+    }
+  ): void {
+    const currentSet = this.setStore.existingCurrentSet;
+
+    const originalSettings = this.getCurrentSettings();
+
+    const editedExtraData: DeepPartial<SetExtraDataItem>[] = [];
+
+    // Only set the cycle interval value if it is changed
+    if (originalSettings.initialInterval !== newSettings.initialInterval) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_INITIAL_INTERVAL,
+        dataValue: newSettings.initialInterval,
+      });
+    }
+
+    if (originalSettings.limit !== newSettings.limit) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_MAX_LIMIT,
+        dataValue: newSettings.limit,
+      });
+    }
+
+    if (originalSettings.feedbackButtons !== newSettings.feedbackButtons) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_FEEDBACK_BUTTONS,
+        dataValue: newSettings.feedbackButtons,
+      });
+    }
+
+    if (originalSettings.autoplayAudio !== newSettings.autoplayAudio) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_AUTOPLAY_AUDIO,
+        dataValue: newSettings.autoplayAudio,
+      });
+    }
+
+    if (originalSettings.autoShowKeyboard !== newSettings.autoShowKeyboard) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_AUTO_SHOW_KEYBOARD,
+        dataValue: newSettings.autoShowKeyboard,
+      });
+    }
+
+    if (originalSettings.highlightOnError !== newSettings.highlightOnError) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_HIGHLIGHT_ON_ERROR,
+        dataValue: newSettings.highlightOnError,
+      });
+    }
+
+    if (originalSettings.reviewPriority !== newSettings.reviewPriority) {
+      editedExtraData.push({
+        dataName: SetExtraDataName.WRITING_REVIEW_PRIORITY,
+        dataValue: newSettings.reviewPriority,
+      });
+    }
+
+    const editedSet = {
+      setId: currentSet.setId,
+      extraData: editedExtraData,
+    };
+
+    this.eventBus.pubsub(
+      createAction(ActionType.SET__EDIT, { set: editedSet }),
+      group(
+        on(ActionType.SET__EDITING, callback.onSaving),
+        once(ActionType.SET__EDIT_SUCCEEDED, callback.onSaveSucceeded),
+        once(
+          ActionType.SET__EDIT_FAILED,
+          (errorBag): void => {
+            callback.onSaveFailed(errorBag);
+          }
+        )
+      )
+    );
+  }
+}

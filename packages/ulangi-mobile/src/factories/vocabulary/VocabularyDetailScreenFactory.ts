@@ -5,14 +5,17 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import {
+  SpacedRepetitionSettingsDelegate,
+  WritingSettingsDelegate,
+} from '@ulangi/ulangi-delegate';
 import { ObservableVocabularyDetailScreen } from '@ulangi/ulangi-observable';
 
+import { config } from '../../constants/config';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpeakDelegate } from '../../delegates/vocabulary/SpeakDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyDetailScreenDelegate } from '../../delegates/vocabulary/VocabularyDetailScreenDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -29,11 +32,13 @@ export class VocabularyDetailScreenFactory extends ScreenFactory {
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.spacedRepetition,
     );
 
     const writingSettingsDelegate = new WritingSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.writing,
     );
 
     const setSelectionMenuDelegate = new SetSelectionMenuDelegate(

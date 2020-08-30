@@ -48,36 +48,37 @@ import { VocabularySaga } from '../sagas/VocabularySaga';
 import { WritingSaga } from '../sagas/WritingSaga';
 
 export class ProtectedSagaFactory {
-  private audioPlayer: AudioPlayerAdapter;
-  private databaseEventBus: DatabaseEventBus;
-  private fileSystem: FileSystemAdapter;
-  private firebase: null | FirebaseAdapter;
-  private iap: null | IapAdapter;
   private modelList: ModelList;
-  private notifications: null | NotificationsAdapter;
+  private databaseEventBus: DatabaseEventBus;
   private sharedDb: SQLiteDatabase;
   private userDb: SQLiteDatabase;
 
+  private audioPlayer: null | AudioPlayerAdapter;
+  private fileSystem: null | FileSystemAdapter;
+  private firebase: null | FirebaseAdapter;
+  private iap: null | IapAdapter;
+  private notifications: null | NotificationsAdapter;
+
   public constructor(
-    audioPlayer: AudioPlayerAdapter,
+    modelList: ModelList,
     databaseEventBus: DatabaseEventBus,
-    fileSystem: FileSystemAdapter,
+    sharedDb: SQLiteDatabase,
+    userDb: SQLiteDatabase,
+    audioPlayer: null | AudioPlayerAdapter,
+    fileSystem: null | FileSystemAdapter,
     firebase: null | FirebaseAdapter,
     iap: null | IapAdapter,
-    modelList: ModelList,
-    notifications: null | NotificationsAdapter,
-    sharedDb: SQLiteDatabase,
-    userDb: SQLiteDatabase
+    notifications: null | NotificationsAdapter
   ) {
-    this.audioPlayer = audioPlayer;
+    this.modelList = modelList;
     this.databaseEventBus = databaseEventBus;
+    this.sharedDb = sharedDb;
+    this.userDb = userDb;
+    this.audioPlayer = audioPlayer;
     this.fileSystem = fileSystem;
     this.firebase = firebase;
     this.iap = iap;
-    this.modelList = modelList;
     this.notifications = notifications;
-    this.sharedDb = sharedDb;
-    this.userDb = userDb;
   }
 
   public createAllProtectedSagas(): readonly ProtectedSaga[] {
@@ -104,12 +105,6 @@ export class ProtectedSagaFactory {
         this.modelList.writingModel
       ),
       new SearchSaga(this.userDb, this.modelList.vocabularyModel),
-      new AudioSaga(
-        this.sharedDb,
-        this.modelList.sessionModel,
-        this.fileSystem,
-        this.audioPlayer
-      ),
       new LibrarySaga(this.sharedDb, this.modelList.sessionModel),
       new SpacedRepetitionSaga(
         this.userDb,
@@ -199,6 +194,15 @@ export class ProtectedSagaFactory {
         this.databaseEventBus
       ),
     ];
+
+    if (this.audioPlayer !== null && this.fileSystem !== null) {
+      new AudioSaga(
+        this.sharedDb,
+        this.modelList.sessionModel,
+        this.fileSystem,
+        this.audioPlayer
+      );
+    }
 
     if (this.iap !== null) {
       sagas.push(

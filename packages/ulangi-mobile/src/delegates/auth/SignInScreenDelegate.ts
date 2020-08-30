@@ -13,6 +13,11 @@ import {
   SyncTask,
 } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import {
+  AuthDelegate,
+  FetchSetDelegate,
+  SetListDelegate,
+} from '@ulangi/ulangi-delegate';
 import { EventBus, once } from '@ulangi/ulangi-event';
 import {
   ObservableKeyboard,
@@ -29,9 +34,6 @@ import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
-import { FetchSetDelegate } from '../set/FetchSetDelegate';
-import { SetListDelegate } from '../set/SetListDelegate';
-import { AuthDelegate } from './AuthDelegate';
 
 @boundClass
 export class SignInScreenDelegate {
@@ -204,7 +206,7 @@ export class SignInScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,

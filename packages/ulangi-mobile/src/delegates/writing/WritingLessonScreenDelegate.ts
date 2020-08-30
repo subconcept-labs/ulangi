@@ -358,7 +358,7 @@ export class WritingLessonScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -372,7 +372,7 @@ export class WritingLessonScreenDelegate {
             this.navigatorDelegate.dismissLightBox();
             this.navigatorDelegate.dismissScreen();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,

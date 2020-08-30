@@ -337,7 +337,7 @@ export class DiscoverScreenDelegate {
             onPress: (): void => {
               this.dialogDelegate.dismiss();
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,
@@ -350,7 +350,7 @@ export class DiscoverScreenDelegate {
             onPress: (): void => {
               retry(false);
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,

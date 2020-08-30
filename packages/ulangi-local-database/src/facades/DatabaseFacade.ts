@@ -18,17 +18,26 @@ export class DatabaseFacade {
   private userDb?: SQLiteDatabase;
 
   private databaseAdapter: SQLiteDatabaseAdapter;
+  private databaseLocation: undefined | string;
 
-  public constructor(databaseAdapter: SQLiteDatabaseAdapter) {
+  public constructor(
+    databaseAdapter: SQLiteDatabaseAdapter,
+    databaseLocation?: string
+  ) {
     this.databaseAdapter = databaseAdapter;
+    this.databaseLocation = databaseLocation
   }
 
-  public connectSharedDb(databaseFilePath: string): Promise<void> {
+  public connectSharedDb(databaseFileName: string): Promise<void> {
     return new Promise<void>(
       async (resolve, reject): Promise<void> => {
         try {
           this.sharedDb = this.databaseAdapter.createDatabase();
-          await this.sharedDb.open(databaseFilePath);
+          await this.sharedDb.open(
+            typeof this.databaseLocation !== 'undefined'
+              ? this.databaseLocation + databaseFileName
+              : databaseFileName
+          );
           await this.sharedDb.executeSql('PRAGMA foreign_keys = ON;');
           await this.sharedDb.executeSql('PRAGMA journal_mode = DELETE;');
 
@@ -40,12 +49,16 @@ export class DatabaseFacade {
     );
   }
 
-  public connectUserDb(databaseFilePath: string): Promise<void> {
+  public connectUserDb(databaseFileName: string): Promise<void> {
     return new Promise<void>(
       async (resolve, reject): Promise<void> => {
         try {
           this.userDb = this.databaseAdapter.createDatabase();
-          await this.userDb.open(databaseFilePath);
+          await this.userDb.open(
+            typeof this.databaseLocation !== 'undefined'
+              ? this.databaseLocation + databaseFileName
+              : databaseFileName
+          );
           await this.userDb.executeSql('PRAGMA foreign_keys = ON;');
           await this.userDb.executeSql('PRAGMA journal_mode = DELETE;');
 

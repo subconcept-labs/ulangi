@@ -53,7 +53,7 @@ export class DefaultButton extends React.Component<DefaultButtonProps> {
     const disabledButtonStyle =
       this.props.disabled === true &&
       typeof this.props.styles !== 'undefined' &&
-      this.props.styles.disabledButtonStyle !== 'undefined'
+      typeof this.props.styles.disabledButtonStyle !== 'undefined'
         ? this.props.styles.disabledButtonStyle
         : {};
 

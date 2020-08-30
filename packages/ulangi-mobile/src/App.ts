@@ -76,8 +76,9 @@ export class App {
       adapters.iap,
       adapters.netInfo,
       adapters.notifications,
-      adapters.sqliteDatabase,
       adapters.systemTheme,
+      adapters.sqliteDatabase,
+      undefined,
       {
         onError: (error): void => {
           // setImmediate is required for the app to terminate

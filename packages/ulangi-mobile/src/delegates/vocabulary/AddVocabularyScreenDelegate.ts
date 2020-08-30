@@ -91,7 +91,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             onPress: (): void => {
               this.dialogDelegate.dismiss();
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,
@@ -104,7 +104,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             onPress: (): void => {
               retry(false);
             },
-            styles: (theme, layout): ButtonStyles =>
+            responsiveStyles: (theme, layout): ButtonStyles =>
               fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
                 ButtonSize.SMALL,
                 theme,
@@ -134,7 +134,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             this.dialogDelegate.dismiss();
             this.navigatorDelegate.dismissScreen();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -148,7 +148,7 @@ export class AddVocabularyScreenDelegate extends AddEditVocabularyScreenDelegate
             this.resetForms();
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,

@@ -30,7 +30,7 @@ export interface SearchListProps {
   vocabularyListState: ObservableVocabularyListState;
   search: () => void;
   refresh: () => void;
-  toggleSelection: (vocabularyId: string) => void;
+  toggleSelection: (vocabulary: ObservableVocabulary) => void;
   showVocabularyDetail: (vocabulary: ObservableVocabulary) => void;
   showVocabularyActionMenu: (vocabulary: ObservableVocabulary) => void;
 }

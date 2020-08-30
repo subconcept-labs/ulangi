@@ -9,6 +9,10 @@ import {
   SpacedRepetitionScheduler,
   WritingScheduler,
 } from '@ulangi/ulangi-common/core';
+import {
+  SpacedRepetitionSettingsDelegate,
+  WritingSettingsDelegate,
+} from '@ulangi/ulangi-delegate';
 import { ObservableReviewFeedbackScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
@@ -17,9 +21,7 @@ import { FeedbackSelectionMenuDelegate } from '../../delegates/review-feedback/F
 import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/ReviewFeedbackDataDelegate';
 import { ReviewFeedbackScreenDelegate } from '../../delegates/review-feedback/ReviewFeedbackScreenDelegate';
 import { SpacedRepetitionSaveResultDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSaveResultDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { WritingSaveResultDelegate } from '../../delegates/writing/WritingSaveResultDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -41,10 +43,12 @@ export class ReviewFeedbackScreenFactory extends ScreenFactory {
         ? new SpacedRepetitionSettingsDelegate(
             this.eventBus,
             this.props.rootStore.setStore,
+            config.spacedRepetition,
           )
         : new WritingSettingsDelegate(
             this.eventBus,
             this.props.rootStore.setStore,
+            config.writing,
           );
 
     const maxLevel =

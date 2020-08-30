@@ -1,0 +1,132 @@
+{
+		"private": true,
+		"name": "@ulangi/ulangi-desktop",
+		"main": "./dist/index.js",
+		"version": "3.20.1",
+		"scripts": {
+				"postbootstrap": "install-app-deps",
+				"version": "./scripts/sync-app-version.sh && git add ios/Info.plist android/app/build.gradle",
+				"pack-local": "./scripts/pack-local.sh",
+				"install-packed-local": "./scripts/install-packed-local.sh",
+				"install-local": "npm run pack-local && npm run install-packed-local",
+				"lint": "eslint --ext .ts,.tsx app/",
+				"lint-fix": "eslint --fix --ext .ts,.tsx app/",
+				"prettify": "prettier --write \"app/**/*.{ts,tsx}\"",
+				"clean": "rm -Rf ./dist tsconfig.tsbuildinfo",
+				"compile": "tsc -noUnusedLocals -noUnusedParameters -p ./",
+				"build": "npm run clean && npm run prettify && npm run lint-fix && npm run compile",
+				"webpack": "webpack --config ./webpack.config.dev.js",
+				"package": "npm run prebuild && npm run webpack-prod && electron-builder build --publish never",
+				"test": "jest --coverage",
+				"dev": "env $(cat ./config/.env.dev | grep -v \"#\" | xargs) electron dist/index.js"
+		},
+		"dependencies": {
+				"@material-ui/core": "^4.11.0",
+				"@ulangi/assert": "^1.0.0",
+				"@ulangi/extended-types": "^1.0.0",
+				"@ulangi/resolver": "^2.0.3",
+				"@ulangi/sqlite-adapter": "^1.3.2",
+				"autobind-decorator": "^2.4.0",
+				"lodash": "^4.17.4",
+				"lodash-decorators": "^6.0.1",
+				"mobx": "^5.15.6",
+				"mobx-react": "^6.3.0",
+				"moment": "^2.22.1",
+				"numeral": "^2.0.6",
+				"react": "^16.13.1",
+				"react-dom": "^16.13.1",
+				"react-infinite-scroll-component": "^5.0.5",
+				"retinajs": "^2.1.3",
+				"sqlite3": "^5.0.0",
+				"styled-components": "^5.1.1",
+				"uuid": "^3.3.2"
+		},
+		"devDependencies": {
+				"@babel/core": "^7.6.2",
+				"@babel/plugin-proposal-decorators": "^7.3.0",
+				"@babel/plugin-transform-modules-commonjs": "^7.0.0",
+				"@babel/preset-typescript": "^7.3.3",
+				"@babel/runtime": "^7.6.2",
+				"@types/jasmine": "^3.3.0",
+				"@types/jest": "^21.1.8",
+				"@types/joi": "^13.0.8",
+				"@types/js-string-escape": "^1.0.0",
+				"@types/lodash": "^4.14.110",
+				"@types/numeral": "^0.0.28",
+				"@types/react": "^16.8.2",
+				"@types/react-dom": "^16.9.8",
+				"@types/react-loader-spinner": "^3.1.0",
+				"@types/retinajs": "^2.1.0",
+				"@types/sqlite3": "^3.1.3",
+				"@types/styled-components": "^5.1.3",
+				"@types/uuid": "^3.4.3",
+				"@typescript-eslint/eslint-plugin": "^1.11.0",
+				"@typescript-eslint/parser": "^1.11.0",
+				"babel-jest": "^24.8.0",
+				"babel-plugin-dynamic-import-node": "^1.2.0",
+				"babel-plugin-rewrite-require": "^1.14.5",
+				"css-loader": "^4.2.2",
+				"electron": "^10.1.0",
+				"electron-builder": "^22.8.0",
+				"eslint": "^6.5.1",
+				"eslint-plugin-import": "^2.19.1",
+				"eslint-plugin-jest": "^22.4.1",
+				"eslint-plugin-react": "^7.20.6",
+				"eslint-plugin-simple-import-sort": "^3.1.0",
+				"file-loader": "^6.1.0",
+				"html-webpack-plugin": "^4.4.1",
+				"jest": "^24.9.0",
+				"prettier": "1.17.1",
+				"react-test-renderer": "^16.9.0",
+				"style-loader": "^1.2.1",
+				"ts-jest": "^24.0.2",
+				"ts-loader": "^8.0.3",
+				"typescript": "^3.5.2",
+				"url-loader": "^4.1.0",
+				"webpack": "^4.44.1",
+				"webpack-cli": "^3.3.12",
+				"webpack-dotenv-plugin": "^2.1.0"
+		},
+		"license": "GPL-3.0",
+		"build": {
+				"productName": "UlangiDesktop",
+				"appId": "com.ulangi.UlangiDesktop",
+				"files": [
+						"dist/",
+						"node_modules/",
+						"package.json"
+				],
+				"dmg": {
+						"contents": [
+								{
+										"x": 130,
+										"y": 220
+								},
+								{
+										"x": 410,
+										"y": 220,
+										"type": "link",
+										"path": "/Applications"
+								}
+						]
+				},
+				"win": {
+						"target": [
+								"nsis",
+								"msi"
+						]
+				},
+				"linux": {
+						"target": [
+								"deb",
+								"rpm",
+								"AppImage"
+						],
+						"category": "Education"
+				},
+				"directories": {
+						"buildResources": "resources",
+						"output": "release/"
+				}
+		}
+}

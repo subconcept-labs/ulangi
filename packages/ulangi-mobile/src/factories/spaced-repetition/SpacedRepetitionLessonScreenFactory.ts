@@ -7,6 +7,7 @@
 
 import { SpacedRepetitionScheduler } from '@ulangi/ulangi-common/core';
 import { ReviewPriority } from '@ulangi/ulangi-common/enums';
+import { SpacedRepetitionSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableSpacedRepetitionLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
@@ -20,7 +21,6 @@ import { ReviewFeedbackDataDelegate } from '../../delegates/review-feedback/Revi
 import { SpacedRepetitionCountsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionLessonScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionLessonScreenDelegate';
 import { SpacedRepetitionSaveResultDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSaveResultDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpeakDelegate } from '../../delegates/vocabulary/SpeakDelegate';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
@@ -31,6 +31,7 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
     return new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.spacedRepetition,
     );
   }
 

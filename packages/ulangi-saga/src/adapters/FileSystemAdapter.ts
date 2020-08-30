@@ -8,11 +8,14 @@ export namespace FileSystem {
 export class FileSystemAdapter {
   private fileSystem: typeof RNFileSystem;
 
-  public readonly CachesDirectoryPath = RNFileSystem.CachesDirectoryPath;
-  public readonly DocumentDirectoryPath = RNFileSystem.DocumentDirectoryPath;
+  public readonly CachesDirectoryPath: string;
+  public readonly DocumentDirectoryPath: string;
 
   public constructor(fileSystem: typeof RNFileSystem) {
     this.fileSystem = fileSystem;
+
+    this.CachesDirectoryPath = this.fileSystem.CachesDirectoryPath;
+    this.DocumentDirectoryPath = this.fileSystem.DocumentDirectoryPath;
   }
 
   public mkdir(dir: string): Promise<void> {

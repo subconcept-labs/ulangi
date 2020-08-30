@@ -5,11 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { TextStyle, ViewStyle } from 'react-native';
-
 export interface ButtonStyles {
-  readonly textStyle?: TextStyle;
-  readonly buttonStyle?: ViewStyle;
-  readonly disabledTextStyle?: TextStyle;
-  readonly disabledButtonStyle?: ViewStyle;
+  readonly textStyle?: object;
+  readonly buttonStyle?: object;
+  readonly disabledTextStyle?: object;
+  readonly disabledButtonStyle?: object;
 }

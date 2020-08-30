@@ -5,10 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { SetListDelegate } from '@ulangi/ulangi-delegate';
 import { ObservablePreloadScreen } from '@ulangi/ulangi-observable';
 
 import { PreloadScreenDelegate } from '../../delegates/preload/PreloadScreenDelegate';
-import { SetListDelegate } from '../../delegates/set/SetListDelegate';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class PreloadScreenFactory extends ScreenFactory {

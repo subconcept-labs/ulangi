@@ -128,7 +128,7 @@ export class GoogleSheetsAddOnScreenDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -141,7 +141,7 @@ export class GoogleSheetsAddOnScreenDelegate {
           onPress: (): void => {
             this.invalidateApiKey();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,

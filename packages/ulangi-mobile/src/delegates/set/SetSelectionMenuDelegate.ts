@@ -150,7 +150,7 @@ export class SetSelectionMenuDelegate {
                     {},
                   );
                 },
-                styles: (theme, layout): ButtonStyles =>
+                responsiveStyles: (theme, layout): ButtonStyles =>
                   textButtonStyles.getNormalStyles(
                     ButtonSize.NORMAL,
                     layout,
@@ -167,7 +167,7 @@ export class SetSelectionMenuDelegate {
                   this.navigatorDelegate.dismissLightBox();
                   this.navigatorDelegate.push(ScreenName.ADD_SET_SCREEN, {});
                 },
-                styles: (theme, layout): ButtonStyles =>
+                responsiveStyles: (theme, layout): ButtonStyles =>
                   textButtonStyles.getNormalStyles(
                     ButtonSize.NORMAL,
                     layout,

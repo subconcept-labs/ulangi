@@ -6,7 +6,8 @@
  */
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
-import { ScreenName, SyncTask } from '@ulangi/ulangi-common/enums';
+import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { SyncDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, on } from '@ulangi/ulangi-event';
 import { ObservableUserStore, Observer } from '@ulangi/ulangi-observable';
 import * as _ from 'lodash';
@@ -28,6 +29,7 @@ export class AutorunDelegate {
   private reminderDelegate: ReminderDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
   private dataSharingDelegate: DataSharingDelegate;
+  private syncDelegate: SyncDelegate;
   private dialogDelegate: DialogDelegate;
   private rootScreenDelegate: RootScreenDelegate;
 
@@ -39,6 +41,7 @@ export class AutorunDelegate {
     reminderDelegate: ReminderDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
     dataSharingDelegate: DataSharingDelegate,
+    syncDelegate: SyncDelegate,
     dialogDelegate: DialogDelegate,
     rootScreenDelegate: RootScreenDelegate,
   ) {
@@ -49,6 +52,7 @@ export class AutorunDelegate {
     this.reminderDelegate = reminderDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
     this.dataSharingDelegate = dataSharingDelegate;
+    this.syncDelegate = syncDelegate;
     this.dialogDelegate = dialogDelegate;
     this.rootScreenDelegate = rootScreenDelegate;
   }
@@ -90,21 +94,7 @@ export class AutorunDelegate {
   }
 
   private uploadLocalChanges(): void {
-    this.eventBus.publish(
-      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-        syncTask: SyncTask.UPLOAD_USER,
-      }),
-    );
-    this.eventBus.publish(
-      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-        syncTask: SyncTask.UPLOAD_SETS,
-      }),
-    );
-    this.eventBus.publish(
-      createAction(ActionType.SYNC__ADD_SYNC_TASK, {
-        syncTask: SyncTask.UPLOAD_VOCABULARY,
-      }),
-    );
+    this.syncDelegate.uploadLocalChanges();
   }
 
   private uploadLessonResults(): void {

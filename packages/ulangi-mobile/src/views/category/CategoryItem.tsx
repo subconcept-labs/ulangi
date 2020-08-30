@@ -32,7 +32,7 @@ export interface CategoryItemProps {
   category: ObservableCategory;
   selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
   isSelectionModeOn?: IObservableValue<boolean>;
-  toggleSelection: (categoryName: string) => void;
+  toggleSelection: (category: ObservableCategory) => void;
   showCategoryDetail: (
     category: ObservableCategory,
     vocabularyStatus: VocabularyStatus,
@@ -242,9 +242,7 @@ export class CategoryItem extends React.Component<CategoryItemProps> {
                 )
           }
           hitSlop={{ top: 22, bottom: 22, right: 16, left: 16 }}
-          onPress={(): void =>
-            this.props.toggleSelection(this.props.category.categoryName)
-          }
+          onPress={(): void => this.props.toggleSelection(this.props.category)}
           style={this.styles.action_btn}>
           {this.props.category.isSelected.get() === true ? (
             <Image source={Images.CHECK_BLUE_22X22} />

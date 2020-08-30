@@ -13,6 +13,7 @@ import {
 } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
+import { VocabularyBulkEditDelegate } from '@ulangi/ulangi-delegate';
 import {
   ObservableCategory,
   ObservableLightBox,
@@ -25,7 +26,6 @@ import { CategoryBulkActionMenuIds } from '../../constants/ids/CategoryBulkActio
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SetSelectionMenuDelegate } from '../set/SetSelectionMenuDelegate';
-import { VocabularyBulkEditDelegate } from '../vocabulary/VocabularyBulkEditDelegate';
 
 export class CategoryBulkActionMenuDelegate {
   private observer: Observer;

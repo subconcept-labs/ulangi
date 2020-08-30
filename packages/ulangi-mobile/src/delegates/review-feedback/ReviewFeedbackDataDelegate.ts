@@ -12,12 +12,14 @@ import {
 } from '@ulangi/ulangi-common/core';
 import { Feedback } from '@ulangi/ulangi-common/enums';
 import { NextReviewData, Vocabulary } from '@ulangi/ulangi-common/interfaces';
+import {
+  SpacedRepetitionSettingsDelegate,
+  WritingSettingsDelegate,
+} from '@ulangi/ulangi-delegate';
 import * as _ from 'lodash';
 import { ObservableMap } from 'mobx';
 
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 
 export class ReviewFeedbackDataDelegate {
   private readonly maxLevel: number;

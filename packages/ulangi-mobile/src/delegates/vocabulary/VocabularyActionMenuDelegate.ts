@@ -14,6 +14,7 @@ import {
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
+import { VocabularySelectionDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus } from '@ulangi/ulangi-event';
 import {
   ObservableLightBox,
@@ -22,7 +23,6 @@ import {
 } from '@ulangi/ulangi-observable';
 
 import { VocabularyActionMenuIds } from '../../constants/ids/VocabularyActionMenuIds';
-import { VocabularySelectionDelegate } from '../../delegates/vocabulary/VocabularySelectionDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SetSelectionMenuDelegate } from '../set/SetSelectionMenuDelegate';
 
@@ -63,7 +63,7 @@ export class VocabularyActionMenuDelegate {
     const items: SelectionItem[] = [];
 
     if (typeof this.vocabularySelectionDelegate !== 'undefined') {
-      items.push(this.getToggleSelectButton(vocabulary.vocabularyId));
+      items.push(this.getToggleSelectButton(vocabulary));
     }
 
     switch (vocabulary.vocabularyStatus) {
@@ -114,16 +114,22 @@ export class VocabularyActionMenuDelegate {
     );
   }
 
-  private getToggleSelectButton(vocabularyId: string): SelectionItem {
+  private getToggleSelectButton(
+    vocabulary: ObservableVocabulary,
+  ): SelectionItem {
     const vocabularySelectionDelegate = assertExists(
       this.vocabularySelectionDelegate,
       'vocabularySelectionDelegate is required to render toggle select button',
     );
     return {
       testID: VocabularyActionMenuIds.TOGGLE_SELECT_BTN,
-      text: 'Select',
+      text: vocabulary.isSelected.get() ? 'Unselect' : 'Select',
       onPress: (): void => {
-        vocabularySelectionDelegate.toggleSelection(vocabularyId);
+        vocabularySelectionDelegate.setSelection(
+          vocabulary.vocabularyId,
+          !vocabulary.isSelected.get(),
+        );
+
         this.navigatorDelegate.dismissLightBox();
       },
     };

@@ -50,8 +50,8 @@ export class LightBoxButtonList extends React.Component<
                   <DefaultButton
                     {...button}
                     styles={
-                      button.styles
-                        ? button.styles(
+                      button.responsiveStyles
+                        ? button.responsiveStyles(
                             this.props.theme,
                             this.props.screenLayout,
                           )

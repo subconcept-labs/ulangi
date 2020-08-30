@@ -30,7 +30,7 @@ export interface CategoryListProps {
   screenLayout: ObservableScreenLayout;
   categoryListState: ObservableCategoryListState;
   selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
-  toggleSelection: (categoryName: string) => void;
+  toggleSelection: (category: ObservableCategory) => void;
   showCategoryDetail: (category: ObservableCategory) => void;
   showCategoryActionMenu: (
     category: ObservableCategory,

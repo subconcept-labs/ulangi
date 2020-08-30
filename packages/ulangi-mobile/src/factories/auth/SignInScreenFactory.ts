@@ -5,12 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import {
+  AuthDelegate,
+  FetchSetDelegate,
+  SetListDelegate,
+} from '@ulangi/ulangi-delegate';
 import { ObservableSignInScreen } from '@ulangi/ulangi-observable';
 
-import { AuthDelegate } from '../../delegates/auth/AuthDelegate';
 import { SignInScreenDelegate } from '../../delegates/auth/SignInScreenDelegate';
-import { FetchSetDelegate } from '../../delegates/set/FetchSetDelegate';
-import { SetListDelegate } from '../../delegates/set/SetListDelegate';
 import { PrimaryScreenStyle } from '../../styles/PrimaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 

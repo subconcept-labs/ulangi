@@ -5,6 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import {
+  VocabularyBulkEditDelegate,
+  VocabularySelectionDelegate,
+} from '@ulangi/ulangi-delegate';
 import { ObservableCategoryDetailScreen } from '@ulangi/ulangi-observable';
 
 import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryActionMenuDelegate';
@@ -13,11 +17,9 @@ import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDe
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { VocabularyActionMenuDelegate } from '../../delegates/vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../../delegates/vocabulary/VocabularyBulkActionMenuDelegate';
-import { VocabularyBulkEditDelegate } from '../../delegates/vocabulary/VocabularyBulkEditDelegate';
 import { VocabularyFilterMenuDelegate } from '../../delegates/vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../../delegates/vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../../delegates/vocabulary/VocabularyLiveUpdateDelegate';
-import { VocabularySelectionDelegate } from '../../delegates/vocabulary/VocabularySelectionDelegate';
 import { VocabularySortMenuDelegate } from '../../delegates/vocabulary/VocabularySortMenuDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';

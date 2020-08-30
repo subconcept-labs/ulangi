@@ -1,0 +1,26 @@
+local-packages
+
+tsconfig.tsbuildinfo
+
+# Env files
+.env
+.env.*
+!.env.example
+
+dist/
+release/
+
+# Swap files
+*.swp
+.swo
+*.swo
+
+# Tags
+tags
+
+# OSX
+#
+.DS_Store
+
+node_modules/
+npm-debug.log

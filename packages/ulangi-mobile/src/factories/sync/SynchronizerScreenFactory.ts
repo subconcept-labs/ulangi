@@ -5,11 +5,14 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { SyncDelegate } from '@ulangi/ulangi-delegate';
+
 import { SynchronizerScreenDelegate } from '../../delegates/sync/SynchronizerScreenDelegate';
 import { ScreenFactory } from '../ScreenFactory';
 
 export class SynchronizerScreenFactory extends ScreenFactory {
   public createScreenDelegate(): SynchronizerScreenDelegate {
-    return new SynchronizerScreenDelegate(this.eventBus);
+    const syncDelegate = new SyncDelegate(this.eventBus);
+    return new SynchronizerScreenDelegate(syncDelegate);
   }
 }

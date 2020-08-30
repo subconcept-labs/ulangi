@@ -5,7 +5,8 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { AuthDelegate } from '../../delegates/auth/AuthDelegate';
+import { AuthDelegate } from '@ulangi/ulangi-delegate';
+
 import { WelcomeScreenDelegate } from '../../delegates/welcome/WelcomeScreenDelegate';
 import { SingleScreenStyle } from '../../styles/SingleScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';

@@ -24,31 +24,31 @@ import { RemoteConfigSaga } from '../sagas/RemoteConfigSaga';
 import { ThemeSaga } from '../sagas/ThemeSaga';
 
 export class PublicSagaFactory {
+  private modelList: ModelList;
   private adMob: null | AdMobAdapter;
   private analytics: null | AnalyticsAdapter;
   private crashlytics: null | CrashlyticsAdapter;
   private database: DatabaseFacade;
   private facebook: null | FacebookAdapter;
-  private modelList: ModelList;
-  private netInfo: NetInfoAdapter;
-  private systemTheme: SystemThemeAdapter;
+  private netInfo: null | NetInfoAdapter;
+  private systemTheme: null | SystemThemeAdapter;
 
   public constructor(
+    modelList: ModelList,
+    database: DatabaseFacade,
     adMob: null | AdMobAdapter,
     analytics: null | AnalyticsAdapter,
     crashlytics: null | CrashlyticsAdapter,
-    database: DatabaseFacade,
     facebook: null | FacebookAdapter,
-    modelList: ModelList,
-    netInfo: NetInfoAdapter,
-    systemTheme: SystemThemeAdapter
+    netInfo: null | NetInfoAdapter,
+    systemTheme: null | SystemThemeAdapter
   ) {
+    this.modelList = modelList;
+    this.database = database;
     this.adMob = adMob;
     this.analytics = analytics;
     this.crashlytics = crashlytics;
-    this.database = database;
     this.facebook = facebook;
-    this.modelList = modelList;
     this.netInfo = netInfo;
     this.systemTheme = systemTheme;
   }
@@ -62,10 +62,12 @@ export class PublicSagaFactory {
         this.modelList.userModel
       ),
       new DatabaseSaga(this.database),
-      new NetworkSaga(this.netInfo),
       new RemoteConfigSaga(this.database, this.modelList.remoteConfigModel),
-      new ThemeSaga(this.systemTheme),
     ];
+
+    if (this.netInfo !== null) {
+      sagas.push(new NetworkSaga(this.netInfo));
+    }
 
     if (
       this.analytics !== null &&
@@ -79,6 +81,10 @@ export class PublicSagaFactory {
 
     if (this.adMob !== null) {
       sagas.push(new AdSaga(this.adMob));
+    }
+
+    if (this.systemTheme !== null) {
+      sagas.push(new ThemeSaga(this.systemTheme));
     }
 
     return sagas;

@@ -7,6 +7,7 @@
 
 import { ActionType } from '@ulangi/ulangi-action';
 import { ActivityState, SetStatus } from '@ulangi/ulangi-common/enums';
+import { FetchSetDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, on } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -16,7 +17,6 @@ import {
 import { boundClass } from 'autobind-decorator';
 import { observable } from 'mobx';
 
-import { FetchSetDelegate } from './FetchSetDelegate';
 import { SetActionMenuDelegate } from './SetActionMenuDelegate';
 
 @boundClass

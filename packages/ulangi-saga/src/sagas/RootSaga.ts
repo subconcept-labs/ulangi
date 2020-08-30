@@ -35,37 +35,37 @@ import { ProtectedSaga } from './ProtectedSaga';
 export class RootSaga {
   private protectedSagas?: readonly ProtectedSaga[];
   private forkedProtectedSagasTask?: Task;
+  private modelList: ModelList;
+  private database: DatabaseFacade;
+  private databaseEventBus: DatabaseEventBus;
 
   private admob: null | AdMobAdapter;
   private analytics: null | AnalyticsAdapter;
-  private audioPlayer: AudioPlayerAdapter;
+  private audioPlayer: null | AudioPlayerAdapter;
   private crashlytics: null | CrashlyticsAdapter;
-  private database: DatabaseFacade;
-  private databaseEventBus: DatabaseEventBus;
   private facebook: null | FacebookAdapter;
-  private fileSystem: FileSystemAdapter;
+  private fileSystem: null | FileSystemAdapter;
   private firebase: null | FirebaseAdapter;
   private iap: null | IapAdapter;
-  private modelList: ModelList;
-  private netInfo: NetInfoAdapter;
+  private netInfo: null | NetInfoAdapter;
   private notifications: null | NotificationsAdapter;
-  private systemTheme: SystemThemeAdapter;
+  private systemTheme: null | SystemThemeAdapter;
 
   public constructor(
-    admob: null | AdMobAdapter,
-    analytics: null | AnalyticsAdapter,
-    audioPlayer: AudioPlayerAdapter,
-    crashlytics: null | CrashlyticsAdapter,
+    modelList: ModelList,
     database: DatabaseFacade,
     databaseEventBus: DatabaseEventBus,
+    admob: null | AdMobAdapter,
+    analytics: null | AnalyticsAdapter,
+    audioPlayer: null | AudioPlayerAdapter,
+    crashlytics: null | CrashlyticsAdapter,
     facebook: null | FacebookAdapter,
-    fileSystem: FileSystemAdapter,
+    fileSystem: null | FileSystemAdapter,
     firebase: null | FirebaseAdapter,
     iap: null | IapAdapter,
-    modelList: ModelList,
-    netInfo: NetInfoAdapter,
+    netInfo: null | NetInfoAdapter,
     notifications: null | NotificationsAdapter,
-    systemTheme: SystemThemeAdapter
+    systemTheme: null | SystemThemeAdapter
   ) {
     this.admob = admob;
     this.analytics = analytics;
@@ -95,12 +95,12 @@ export class RootSaga {
     config: SagaConfig
   ): IterableIterator<any> {
     const publicSagaFactory = new PublicSagaFactory(
+      this.modelList,
+      this.database,
       this.admob,
       this.analytics,
       this.crashlytics,
-      this.database,
       this.facebook,
-      this.modelList,
       this.netInfo,
       this.systemTheme
     );
@@ -163,15 +163,15 @@ export class RootSaga {
     remoteConfig: RemoteConfig
   ): IterableIterator<any> {
     const protectedSagaFactory = new ProtectedSagaFactory(
-      this.audioPlayer,
+      this.modelList,
       this.databaseEventBus,
+      this.database.getDb('shared'),
+      this.database.getDb('user'),
+      this.audioPlayer,
       this.fileSystem,
       this.firebase,
       this.iap,
-      this.modelList,
-      this.notifications,
-      this.database.getDb('shared'),
-      this.database.getDb('user')
+      this.notifications
     );
 
     this.protectedSagas = protectedSagaFactory.createAllProtectedSagas();

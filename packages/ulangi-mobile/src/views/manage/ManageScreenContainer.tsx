@@ -50,6 +50,7 @@ export class ManageScreenContainer extends Container {
 
   protected observableScreen = new ObservableManageScreen(
     0,
+    observable.box('list'),
     observable.box(CategorySortType.SORT_BY_NAME_ASC),
     observable.box(VocabularyStatus.ACTIVE),
     new ObservableCategoryListState(

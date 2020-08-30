@@ -5,9 +5,9 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { FetchSetDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableSetManagementScreen } from '@ulangi/ulangi-observable';
 
-import { FetchSetDelegate } from '../../delegates/set/FetchSetDelegate';
 import { SetActionMenuDelegate } from '../../delegates/set/SetActionMenuDelegate';
 import { SetManagementScreenDelegate } from '../../delegates/set/SetManagementScreenDelegate';
 import { SecondaryScreenStyle } from '../../styles/SecondaryScreenStyle';

@@ -1,0 +1,41 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0 0;
+  display: flex;
+}
+
+a, span {
+  font-family: Helvetica, Arial;
+}
+
+a:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+a:active {
+  opacity: 0.5;
+}
+
+button {
+  border: 0;
+  background: transparent
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+button:focus {
+}
+
+button:active {
+  opacity: 0.5;
+}

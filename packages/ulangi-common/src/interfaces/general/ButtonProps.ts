@@ -11,7 +11,8 @@ import { ButtonStyles } from '../general/ButtonStyles';
 export interface ButtonProps {
   testID?: string;
   text: string;
-  styles?: (
+  styles?: ButtonStyles;
+  responsiveStyles?: (
     theme: Theme,
     layout: { width: number; height: number }
   ) => ButtonStyles;

@@ -1,8 +1,7 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
+import { WritingSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, group, once } from '@ulangi/ulangi-event';
 import { ObservableSetStore } from '@ulangi/ulangi-observable';
-
-import { WritingSettingsDelegate } from './WritingSettingsDelegate';
 
 export class WritingCountsDelegate {
   private eventBus: EventBus;

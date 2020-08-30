@@ -13,6 +13,7 @@ import {
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
 import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { SpacedRepetitionSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -30,7 +31,6 @@ import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SpacedRepetitionCountsDelegate } from './SpacedRepetitionCountsDelegate';
-import { SpacedRepetitionSettingsDelegate } from './SpacedRepetitionSettingsDelegate';
 
 @boundClass
 export class SpacedRepetitionScreenDelegate {
@@ -228,7 +228,7 @@ export class SpacedRepetitionScreenDelegate {
           onPress: (): void => {
             this.navigatorDelegate.dismissLightBox();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -241,7 +241,7 @@ export class SpacedRepetitionScreenDelegate {
           onPress: (): void => {
             this.startLesson(true, reviewPriority);
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,

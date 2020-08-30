@@ -8,6 +8,10 @@
 import { ActionType } from '@ulangi/ulangi-action';
 import { ScreenName, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Category } from '@ulangi/ulangi-common/interfaces';
+import {
+  CategoryListDelegate,
+  CategorySelectionDelegate,
+} from '@ulangi/ulangi-delegate';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
   ObservableCategory,
@@ -17,8 +21,6 @@ import { boundClass } from 'autobind-decorator';
 
 import { CategoryActionMenuDelegate } from '../category/CategoryActionMenuDelegate';
 import { CategoryBulkActionMenuDelegate } from '../category/CategoryBulkActionMenuDelegate';
-import { CategoryListDelegate } from '../category/CategoryListDelegate';
-import { CategorySelectionDelegate } from '../category/CategorySelectionDelegate';
 import { CategorySortMenuDelegate } from '../category/CategorySortMenuDelegate';
 import { FeatureSettingsDelegate } from '../learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../level/LevelBreakdownDelegate';
@@ -249,8 +251,11 @@ export class ManageScreenDelegate {
     this.categoryListDelegate.autoUpdateWritingDueAndNewCounts();
   }
 
-  public toggleSelection(id: string): void {
-    this.categorySelectionDelegate.toggleSelection(id);
+  public toggleSelection(category: ObservableCategory): void {
+    this.categorySelectionDelegate.setSelection(
+      category.categoryName,
+      !category.isSelected.get(),
+    );
   }
 
   public clearSelections(): void {

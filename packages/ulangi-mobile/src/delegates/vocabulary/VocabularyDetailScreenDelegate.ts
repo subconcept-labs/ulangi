@@ -12,6 +12,10 @@ import {
 import { ActivityState, VocabularyStatus } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
 import {
+  SpacedRepetitionSettingsDelegate,
+  WritingSettingsDelegate,
+} from '@ulangi/ulangi-delegate';
+import {
   ObservableVocabulary,
   ObservableVocabularyDetailScreen,
 } from '@ulangi/ulangi-observable';
@@ -19,9 +23,7 @@ import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
 import { DialogDelegate } from '../dialog/dialogDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
-import { WritingSettingsDelegate } from '../writing/WritingSettingsDelegate';
 import { SpeakDelegate } from './SpeakDelegate';
 
 @boundClass

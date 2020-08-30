@@ -7,6 +7,7 @@
 
 import { ActionType } from '@ulangi/ulangi-action';
 import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { VocabularySelectionDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
   ObservableSearchScreen,
@@ -18,7 +19,6 @@ import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
 import { VocabularyBulkActionMenuDelegate } from '../vocabulary/VocabularyBulkActionMenuDelegate';
 import { VocabularyEventDelegate } from '../vocabulary/VocabularyEventDelegate';
-import { VocabularySelectionDelegate } from '../vocabulary/VocabularySelectionDelegate';
 import { SearchVocabularyDelegate } from './SearchVocabularyDelegate';
 
 @boundClass
@@ -140,8 +140,11 @@ export class SearchScreenDelegate {
     this.vocabularyBulkActionMenuDelegate.show();
   }
 
-  public toggleSelection(vocabularyId: string): void {
-    this.vocabularySelectionDelegate.toggleSelection(vocabularyId);
+  public toggleSelection(vocabulary: ObservableVocabulary): void {
+    this.vocabularySelectionDelegate.setSelection(
+      vocabulary.vocabularyId,
+      !vocabulary.isSelected.get(),
+    );
   }
 
   public clearSelections(): void {

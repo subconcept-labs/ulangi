@@ -135,7 +135,7 @@ export class VocabularyFormDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -149,7 +149,7 @@ export class VocabularyFormDelegate {
             this.deleteDefinition(index);
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
               ButtonSize.SMALL,
               theme,

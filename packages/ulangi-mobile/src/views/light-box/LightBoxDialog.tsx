@@ -80,7 +80,7 @@ export class LightBoxDialog extends React.Component<LightBoxDialogProps> {
       buttonList.unshift({
         testID: LightBoxDialogIds.CLOSE_DIALOG_BTN,
         text: 'CLOSE',
-        styles: (theme: Theme, layout: Layout): ButtonStyles => {
+        responsiveStyles: (theme: Theme, layout: Layout): ButtonStyles => {
           return fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
             ButtonSize.SMALL,
             theme,

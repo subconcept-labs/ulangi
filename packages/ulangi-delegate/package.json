@@ -1,0 +1,52 @@
+
+{
+  "name": "@ulangi/ulangi-delegate",
+  "version": "3.20.1",
+  "description": "Ulangi Delegate",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext .ts src/",
+    "lint-fix": "eslint --fix --ext .ts src/",
+    "pretest": "tsc -p ./tests/tsconfig.json",
+    "test": "npx jest",
+    "clean": "rm -rf ./dist",
+    "compile": "tsc -noUnusedLocals -noUnusedParameters -p ./",
+    "build": "npm run prettify && npm run lint-fix && npm run clean && npm run compile",
+    "prettify": "prettier --write \"src/**/*.ts\""
+  },
+
+  "files": [
+    "dist/"
+  ],
+
+  "dependencies": {
+    "@ulangi/assert": "^1.0.0",
+    "@ulangi/extended-types": "^1.0.0",
+    "@ulangi/ulangi-action": "^3.20.1",
+    "@ulangi/ulangi-common": "^3.20.1",
+    "@ulangi/ulangi-event": "^3.20.1",
+    "@ulangi/ulangi-observable": "^3.20.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.22.2"
+  },
+
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.118",
+    "@types/uuid": "^3.4.4",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-simple-import-sort": "^3.1.0",
+    "jest": "^24.6.0",
+    "mobx": "^5.9.4",
+    "prettier": "1.17.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^3.5.2"
+  },
+  "author": "Minh Loi",
+  "license": "GPL-3.0"
+}

@@ -7,6 +7,7 @@
 
 import { WritingScheduler } from '@ulangi/ulangi-common/core';
 import { ReviewPriority } from '@ulangi/ulangi-common/enums';
+import { WritingSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableWritingLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
@@ -22,7 +23,6 @@ import { WritingCountsDelegate } from '../../delegates/writing/WritingCountsDele
 import { WritingFormDelegate } from '../../delegates/writing/WritingFormDelegate';
 import { WritingLessonScreenDelegate } from '../../delegates/writing/WritingLessonScreenDelegate';
 import { WritingSaveResultDelegate } from '../../delegates/writing/WritingSaveResultDelegate';
-import { WritingSettingsDelegate } from '../../delegates/writing/WritingSettingsDelegate';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
@@ -32,6 +32,7 @@ export class WritingLessonScreenFactory extends ScreenFactory {
     return new WritingSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.writing,
     );
   }
 

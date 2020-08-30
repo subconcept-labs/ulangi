@@ -303,7 +303,7 @@ export class SpacedRepetitionLessonScreenDelegate {
           onPress: (): void => {
             this.dialogDelegate.dismiss();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,
@@ -317,7 +317,7 @@ export class SpacedRepetitionLessonScreenDelegate {
             this.dialogDelegate.dismiss();
             this.navigatorDelegate.dismissScreen();
           },
-          styles: (theme, layout): ButtonStyles =>
+          responsiveStyles: (theme, layout): ButtonStyles =>
             fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
               ButtonSize.SMALL,
               theme,

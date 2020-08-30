@@ -7,10 +7,10 @@
 
 import { ErrorCode, ScreenName } from '@ulangi/ulangi-common/enums';
 import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { AuthDelegate } from '@ulangi/ulangi-delegate';
 import { boundClass } from 'autobind-decorator';
 
 import { RemoteLogger } from '../../RemoteLogger';
-import { AuthDelegate } from '../auth/AuthDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 

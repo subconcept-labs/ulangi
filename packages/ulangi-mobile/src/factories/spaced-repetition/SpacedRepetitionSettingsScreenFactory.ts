@@ -5,10 +5,11 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { SpacedRepetitionSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableSpacedRepetitionSettingsScreen } from '@ulangi/ulangi-observable';
 
+import { config } from '../../constants/config';
 import { ReviewFeedbackButtonDelegate } from '../../delegates/review-feedback/ReviewFeedbackButtonDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { SpacedRepetitionSettingsScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsScreenDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
@@ -18,6 +19,7 @@ export class SpacedRepetitionSettingsScreenFactory extends ScreenFactory {
     return new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.spacedRepetition,
     );
   }
 

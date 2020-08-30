@@ -15,6 +15,10 @@ import {
 import { SelectionItem } from '@ulangi/ulangi-common/interfaces';
 import { VocabularyFilterCondition } from '@ulangi/ulangi-common/types';
 import {
+  CategorySelectionDelegate,
+  VocabularyBulkEditDelegate,
+} from '@ulangi/ulangi-delegate';
+import {
   ObservableCategory,
   ObservableLightBox,
   ObservableSetStore,
@@ -26,8 +30,6 @@ import { CategoryActionMenuIds } from '../../constants/ids/CategoryActionMenuIds
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { SetSelectionMenuDelegate } from '../set/SetSelectionMenuDelegate';
-import { VocabularyBulkEditDelegate } from '../vocabulary/VocabularyBulkEditDelegate';
-import { CategorySelectionDelegate } from './CategorySelectionDelegate';
 
 export class CategoryActionMenuDelegate {
   private setStore: ObservableSetStore;
@@ -88,7 +90,7 @@ export class CategoryActionMenuDelegate {
     const items: SelectionItem[] = [];
 
     if (typeof this.categorySelectionDelegate !== 'undefined') {
-      items.push(this.getToggleSelectButton(category.categoryName));
+      items.push(this.getToggleSelectButton(category));
     }
 
     if (options.hideViewDetailButton === false) {
@@ -207,16 +209,21 @@ export class CategoryActionMenuDelegate {
     );
   }
 
-  private getToggleSelectButton(categoryName: string): SelectionItem {
+  private getToggleSelectButton(category: ObservableCategory): SelectionItem {
     const categorySelectionDelegate = assertExists(
       this.categorySelectionDelegate,
       'categorySelectionDelegate is required to render toggle select button',
     );
+
     return {
       testID: CategoryActionMenuIds.TOGGLE_SELECT_BTN,
-      text: 'Select',
+      text: category.isSelected.get() ? 'Unselect' : 'Select',
       onPress: (): void => {
-        categorySelectionDelegate.toggleSelection(categoryName);
+        categorySelectionDelegate.setSelection(
+          category.categoryName,
+          !category.isSelected.get(),
+        );
+
         this.navigatorDelegate.dismissLightBox();
       },
     };

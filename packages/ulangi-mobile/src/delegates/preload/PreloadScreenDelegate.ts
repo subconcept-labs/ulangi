@@ -8,13 +8,13 @@
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import { ScreenName } from '@ulangi/ulangi-common/enums';
 import { Set } from '@ulangi/ulangi-common/interfaces';
+import { SetListDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, EventListener, group, on, once } from '@ulangi/ulangi-event';
 import { ObservablePreloadScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { RootScreenDelegate } from '../root/RootScreenDelegate';
-import { SetListDelegate } from '../set/SetListDelegate';
 
 @boundClass
 export class PreloadScreenDelegate {

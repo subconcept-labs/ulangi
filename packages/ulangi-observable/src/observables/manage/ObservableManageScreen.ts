@@ -20,6 +20,8 @@ export class ObservableManageScreen extends ObservableScreen {
   @observable
   public screenAppearedTimes: number;
 
+  public readonly selectedLayout: IObservableValue<'table' | 'list'>
+    
   public readonly selectedSortType: IObservableValue<CategorySortType>;
 
   public readonly selectedVocabularyStatus: IObservableValue<VocabularyStatus>;
@@ -28,6 +30,7 @@ export class ObservableManageScreen extends ObservableScreen {
 
   public constructor(
     screenAppearedTimes: number,
+    selectedLayout: IObservableValue<'table' | 'list'>,
     selectedSortType: IObservableValue<CategorySortType>,
     selectedVocabularyStatus: IObservableValue<VocabularyStatus>,
     categoryListState: ObservableCategoryListState,
@@ -37,6 +40,7 @@ export class ObservableManageScreen extends ObservableScreen {
   ) {
     super(componentId, screenName, topBar);
     this.screenAppearedTimes = screenAppearedTimes;
+    this.selectedLayout = selectedLayout;
     this.selectedSortType = selectedSortType;
     this.selectedVocabularyStatus = selectedVocabularyStatus;
     this.categoryListState = categoryListState;

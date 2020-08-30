@@ -5,12 +5,13 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+import { SpacedRepetitionSettingsDelegate } from '@ulangi/ulangi-delegate';
 import { ObservableSpacedRepetitionScreen } from '@ulangi/ulangi-observable';
 
+import { config } from '../../constants/config';
 import { SetSelectionMenuDelegate } from '../../delegates/set/SetSelectionMenuDelegate';
 import { SpacedRepetitionCountsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionCountsDelegate';
 import { SpacedRepetitionScreenDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionScreenDelegate';
-import { SpacedRepetitionSettingsDelegate } from '../../delegates/spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { LessonScreenStyle } from '../../styles/LessonScreenStyle';
 import { ScreenFactory } from '../ScreenFactory';
 
@@ -33,6 +34,7 @@ export class SpacedRepetitionScreenFactory extends ScreenFactory {
     const spacedRepetitionSettingsDelegate = new SpacedRepetitionSettingsDelegate(
       this.eventBus,
       this.props.rootStore.setStore,
+      config.spacedRepetition,
     );
 
     const spacedRepetitionCountsDelegate = new SpacedRepetitionCountsDelegate(

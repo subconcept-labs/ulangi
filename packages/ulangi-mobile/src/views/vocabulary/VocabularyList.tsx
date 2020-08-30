@@ -27,7 +27,7 @@ export interface VocabularyListProps {
   theme: Theme;
   screenLayout: ObservableScreenLayout;
   vocabularyListState: ObservableVocabularyListState;
-  toggleSelection: (vocabularyId: string) => void;
+  toggleSelection: (vocabulary: ObservableVocabulary) => void;
   showVocabularyDetail: (vocabulary: ObservableVocabulary) => void;
   showVocabularyActionMenu: (vocabulary: ObservableVocabulary) => void;
   fetchNext: () => void;

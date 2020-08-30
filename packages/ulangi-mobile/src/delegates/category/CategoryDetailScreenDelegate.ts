@@ -7,6 +7,7 @@
 
 import { ActionType } from '@ulangi/ulangi-action';
 import { ScreenName } from '@ulangi/ulangi-common/enums';
+import { VocabularySelectionDelegate } from '@ulangi/ulangi-delegate';
 import { EventBus, group, on } from '@ulangi/ulangi-event';
 import {
   ObservableCategoryDetailScreen,
@@ -22,7 +23,6 @@ import { VocabularyBulkActionMenuDelegate } from '../vocabulary/VocabularyBulkAc
 import { VocabularyFilterMenuDelegate } from '../vocabulary/VocabularyFilterMenuDelegate';
 import { VocabularyListDelegate } from '../vocabulary/VocabularyListDelegate';
 import { VocabularyLiveUpdateDelegate } from '../vocabulary/VocabularyLiveUpdateDelegate';
-import { VocabularySelectionDelegate } from '../vocabulary/VocabularySelectionDelegate';
 import { VocabularySortMenuDelegate } from '../vocabulary/VocabularySortMenuDelegate';
 
 @boundClass
@@ -158,8 +158,11 @@ export class CategoryDetailScreenDelegate {
     });
   }
 
-  public toggleSelection(vocabularyId: string): void {
-    this.vocabularySelectionDelegate.toggleSelection(vocabularyId);
+  public toggleSelection(vocabulary: ObservableVocabulary): void {
+    this.vocabularySelectionDelegate.setSelection(
+      vocabulary.vocabularyId,
+      !vocabulary.isSelected.get(),
+    );
   }
 
   public clearSelections(): void {

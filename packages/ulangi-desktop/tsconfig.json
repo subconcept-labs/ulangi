@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "none",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "noImplicitThis": true,
+    "noEmitOnError": true,
+    "typeRoots": ["./node_modules/@types", "./@types"]
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx"
+
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
