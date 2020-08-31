@@ -66,6 +66,7 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
 
       term_container: {
         flexShrink: 1,
+        paddingRight: scaleByFactor(10),
         //flexDirection: "row",
         //alignItems: "center"
       },
@@ -92,7 +93,7 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       term: {
-        fontSize: scaleByFactor(19),
+        fontSize: scaleByFactor(18),
         fontWeight: 'bold',
       },
 

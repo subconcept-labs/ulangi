@@ -73,7 +73,9 @@ export class PublicVocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
         alignItems: 'center',
       },
 
-      left: {},
+      left: {
+        flexShrink: 1,
+      },
 
       right: {
         marginLeft: scaleByFactor(8),
@@ -83,7 +85,7 @@ export class PublicVocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
 
       vocabulary_text: {
         fontWeight: 'bold',
-        fontSize: scaleByFactor(19),
+        fontSize: scaleByFactor(18),
         color: config.styles.primaryColor,
       },
 
