@@ -8,7 +8,12 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
-import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
+import {
+  ResponsiveStyleSheet,
+  ScaleByBreakpoints,
+  ScaleByFactor,
+  defaultHorizontalMarginByBreakpoints,
+} from '../../utils/responsive';
 
 export interface ReviewStrokeOrderStyles {
   container: ViewStyle;
@@ -20,10 +25,15 @@ export interface ReviewStrokeOrderStyles {
 export class ReviewStrokeOrderResponsiveStyles extends ResponsiveStyleSheet<
   ReviewStrokeOrderStyles
 > {
-  public baseStyles(scaleByFactor: ScaleByFactor): ReviewStrokeOrderStyles {
+  public baseStyles(
+    scaleByFactor: ScaleByFactor,
+    scaleByBreakpoints: ScaleByBreakpoints,
+  ): ReviewStrokeOrderStyles {
     return {
       container: {
-        paddingHorizontal: scaleByFactor(16),
+        paddingHorizontal: scaleByBreakpoints(
+          defaultHorizontalMarginByBreakpoints,
+        ),
         marginTop: scaleByFactor(10),
       },
 
