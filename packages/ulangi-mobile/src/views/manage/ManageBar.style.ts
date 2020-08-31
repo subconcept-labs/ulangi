@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
@@ -24,7 +24,7 @@ export class ManageBarResponsiveStyles extends ResponsiveStyleSheet<
       container: {
         paddingHorizontal: scaleByFactor(16),
         paddingVertical: scaleByFactor(12),
-        borderBottomWidth: scaleByFactor(1),
+        borderBottomWidth: StyleSheet.hairlineWidth,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

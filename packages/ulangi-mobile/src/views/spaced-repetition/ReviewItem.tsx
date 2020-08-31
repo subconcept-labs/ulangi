@@ -167,21 +167,23 @@ export class ReviewItem extends React.Component<ReviewItemProps> {
             What is the term?
           </DefaultText>
         </View>
-        {this.props.reviewState.vocabulary.definitions.map(
-          (definition, index): React.ReactElement<any> => {
-            return (
-              <DefinitionItem
-                key={definition.definitionId}
-                theme={this.props.theme}
-                screenLayout={this.props.screenLayout}
-                index={index}
-                definition={definition}
-                hideFields={['example', 'note']}
-                styles={definitionItemResponsiveStyles}
-              />
-            );
-          },
-        )}
+        <View style={this.styles.definition_list_container}>
+          {this.props.reviewState.vocabulary.definitions.map(
+            (definition, index): React.ReactElement<any> => {
+              return (
+                <DefinitionItem
+                  key={definition.definitionId}
+                  theme={this.props.theme}
+                  screenLayout={this.props.screenLayout}
+                  index={index}
+                  definition={definition}
+                  hideFields={['example', 'note']}
+                  styles={definitionItemResponsiveStyles}
+                />
+              );
+            },
+          )}
+        </View>
       </View>
     );
   }

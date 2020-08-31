@@ -48,8 +48,8 @@ export class DefinitionItemResponsiveStyles extends ResponsiveStyleSheet<
   public lightStyles(): Partial<DefinitionItemStyles> {
     return {
       item_container: {
-        borderTopWidth: 1,
-        borderTopColor: config.styles.light.primaryBackgroundColor,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: config.styles.light.secondaryBorderColor,
       },
       plain_meaning: {
         color: config.styles.light.primaryTextColor,
@@ -60,8 +60,8 @@ export class DefinitionItemResponsiveStyles extends ResponsiveStyleSheet<
   public darkStyles(): Partial<DefinitionItemStyles> {
     return {
       item_container: {
-        borderTopWidth: 1,
-        borderTopColor: config.styles.dark.secondaryBackgroundColor,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: config.styles.dark.secondaryBorderColor,
       },
       plain_meaning: {
         color: config.styles.dark.primaryTextColor,

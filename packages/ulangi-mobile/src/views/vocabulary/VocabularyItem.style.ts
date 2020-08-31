@@ -47,9 +47,9 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
         ),
         borderRadius: scaleByFactor(5),
         shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 0.3 },
-        shadowRadius: 0.75,
-        shadowOpacity: 0.25,
+        shadowOffset: { width: 0, height: 1 },
+        shadowRadius: 1,
+        shadowOpacity: 0.2,
       },
 
       vocabulary_container: {
@@ -66,12 +66,13 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
 
       term_container: {
         flexShrink: 1,
-        paddingRight: scaleByFactor(10),
+        paddingRight: scaleByFactor(16),
         //flexDirection: "row",
         //alignItems: "center"
       },
 
       tag_list: {
+        paddingTop: scaleByFactor(2),
         flexDirection: 'row',
       },
 
@@ -170,7 +171,7 @@ export class VocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       definition_list_container: {
-        borderTopColor: config.styles.dark.secondaryBorderColor,
+        borderTopColor: config.styles.dark.primaryBorderColor,
       },
     };
   }

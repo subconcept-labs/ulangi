@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ResponsiveStyleSheet, ScaleByFactor } from '../../utils/responsive';
@@ -27,7 +27,7 @@ export class CategoryDetailHeaderResponsiveStyles extends ResponsiveStyleSheet<
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottomWidth: 1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
       },
 
       button: {

@@ -5,7 +5,7 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 import { config } from '../../constants/config';
 import { ResponsiveStyleSheet } from '../../utils/responsive';
@@ -21,7 +21,7 @@ export class PublicSetDetailScreenResponsiveStyles extends ResponsiveStyleSheet<
     return {
       screen: {
         flex: 1,
-        borderTopWidth: 1,
+        borderTopWidth: StyleSheet.hairlineWidth,
       },
     };
   }

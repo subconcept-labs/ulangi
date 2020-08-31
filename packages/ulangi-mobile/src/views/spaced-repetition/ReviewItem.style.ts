@@ -113,7 +113,7 @@ export class ReviewItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       definition_list_container: {
-        borderTopColor: config.styles.light.secondaryBorderColor,
+        borderTopColor: config.styles.light.primaryBackgroundColor,
       },
     };
   }
@@ -129,7 +129,7 @@ export class ReviewItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       message_container: {
-        borderTopColor: config.styles.dark.secondaryBackgroundColor,
+        borderTopColor: config.styles.dark.primaryBorderColor,
       },
 
       message_inline: {
@@ -137,7 +137,7 @@ export class ReviewItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       definition_list_container: {
-        borderTopColor: config.styles.dark.secondaryBorderColor,
+        borderTopColor: config.styles.dark.primaryBorderColor,
       },
     };
   }
@@ -147,19 +147,13 @@ export class ExtendedDefinitionItemResponsiveStyles extends DefinitionItemRespon
   public lightStyles(): Partial<DefinitionItemStyles> {
     return _.merge({}, super.lightStyles(), {
       item_container: {
-        borderTopWidth: 1,
         borderTopColor: config.styles.light.primaryBackgroundColor,
       },
     });
   }
 
   public darkStyles(): Partial<DefinitionItemStyles> {
-    return _.merge({}, super.darkStyles(), {
-      item_container: {
-        borderTopWidth: 1,
-        borderTopColor: config.styles.dark.secondaryBackgroundColor,
-      },
-    });
+    return _.merge({}, super.darkStyles(), {});
   }
 }
 

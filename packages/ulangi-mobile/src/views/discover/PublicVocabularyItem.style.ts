@@ -204,7 +204,7 @@ export class PublicVocabularyItemResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       definition_list_container: {
-        borderTopColor: config.styles.dark.secondaryBorderColor,
+        borderTopColor: config.styles.dark.primaryBorderColor,
       },
 
       definition_container: {

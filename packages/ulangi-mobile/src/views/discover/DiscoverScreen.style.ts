@@ -38,7 +38,7 @@ export class DiscoverScreenResponsiveStyles extends ResponsiveStyleSheet<
       },
 
       top_container: {
-        borderBottomWidth: 1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
       },
 
       message_container: {

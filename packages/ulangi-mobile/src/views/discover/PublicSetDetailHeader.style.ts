@@ -34,7 +34,7 @@ export class PublicSetDetailHeaderResponsiveStyles extends ResponsiveStyleSheet<
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderBottomWidth: 1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
       },
 
       left: {},

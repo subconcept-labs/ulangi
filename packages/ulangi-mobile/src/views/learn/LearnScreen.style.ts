@@ -32,7 +32,7 @@ export class LearnScreenResponsiveStyles extends ResponsiveStyleSheet<
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomWidth: 1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
       },
 
       button: {},
