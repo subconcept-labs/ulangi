@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.2](https://github.com/ulangi/ulangi/compare/v3.20.1...v3.20.2) (2020-08-31)
+
+
+### Bug Fixes
+
+* fix Uncategorized count ([ded9554](https://github.com/ulangi/ulangi/commit/ded9554))
+
+
+
+
+
 ## [3.20.1](https://github.com/ulangi/ulangi/compare/v3.20.0...v3.20.1) (2020-08-28)
 
 **Note:** Version bump only for package @ulangi/ulangi-local-database

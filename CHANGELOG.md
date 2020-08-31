@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.2](https://github.com/ulangi/ulangi/compare/v3.20.1...v3.20.2) (2020-08-31)
+
+
+### Bug Fixes
+
+* fix Uncategorized count ([ded9554](https://github.com/ulangi/ulangi/commit/ded9554))
+* small UI changes ([491493b](https://github.com/ulangi/ulangi/commit/491493b))
+* term overflow if too long ([a52b010](https://github.com/ulangi/ulangi/commit/a52b010))
+
+
+
+
+
 ## [3.20.1](https://github.com/ulangi/ulangi/compare/v3.20.0...v3.20.1) (2020-08-28)
 
 
