@@ -41,10 +41,10 @@ export class CategoryModel {
           query = addLevelCountAggregation(query);
 
           query = query
-            .from(TableName.VOCABULARY_CATEGORY, 'c')
+            .from(TableName.VOCABULARY, 'v')
             .left_join(
-              TableName.VOCABULARY,
-              'v',
+              TableName.VOCABULARY_CATEGORY,
+              'c',
               'v.vocabularyId = c.vocabularyId'
             )
             .left_join(
@@ -135,7 +135,7 @@ export class CategoryModel {
         try {
           let buildingQuery = squel
             .select()
-            .field('c.categoryName')
+            .field("IFNULL(c.categoryName, 'Uncategorized')", 'categoryName')
             .from(TableName.VOCABULARY, 'v')
             .left_join(
               TableName.VOCABULARY_CATEGORY,
@@ -143,7 +143,7 @@ export class CategoryModel {
               'v.vocabularyId = c.vocabularyId'
             )
             .where('v.setId = ?', setId)
-            .group('c.categoryName');
+            .group("IFNULL(c.categoryName, 'Uncategorized')");
 
           // If term is empty then fetch all of them
           if (term !== '') {
