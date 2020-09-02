@@ -65,6 +65,7 @@
 		"react-native-svg": "^9.13.6",
 		"react-native-version-info": "^1.0.1",
 		"react-native-webview": "^8.0.1",
+		"styled-components": "^5.1.1",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
@@ -85,6 +86,7 @@
 		"@types/react-native-fbsdk": "^1.0.0",
 		"@types/react-native-snap-carousel": "^3.7.4",
 		"@types/react-native-sqlite-storage": "^3.3.2",
+		"@types/styled-components": "^5.1.3",
 		"@types/uuid": "^3.4.3",
 		"@typescript-eslint/eslint-plugin": "^1.11.0",
 		"@typescript-eslint/parser": "^1.11.0",

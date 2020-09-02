@@ -18,10 +18,10 @@ import { WelcomeScreenDelegate } from '../../delegates/welcome/WelcomeScreenDele
 import { Logo } from '../auth/Logo';
 import { SubmitButton } from '../auth/SubmitButton';
 import { DefaultText } from '../common/DefaultText';
+import { ResponsiveContext } from "../../context/ResponsiveContext";
 import { Screen } from '../common/Screen';
 import {
-  WelcomeScreenStyles,
-  welcomeScreenResponsiveStyles,
+  LogoContainer, TitleContainer, Title
 } from './WelcomeScreen.style';
 
 export interface WelcomeScreenProps {
@@ -30,49 +30,49 @@ export interface WelcomeScreenProps {
   observableScreen: ObservableScreen;
 }
 
-@observer
-export class WelcomeScreen extends React.Component<WelcomeScreenProps> {
-  private get styles(): WelcomeScreenStyles {
-    return welcomeScreenResponsiveStyles.compile(
-      this.props.observableScreen.screenLayout,
-      this.props.themeStore.theme,
-    );
-  }
-
-  public render(): React.ReactElement<any> {
-    return (
-      <Screen
-        style={this.styles.screen}
-        observableScreen={this.props.observableScreen}
-        useSafeAreaView={true}>
-        <View style={this.styles.logo_container}>
-          <Logo />
-        </View>
-        <View style={this.styles.title_container}>
-          <DefaultText style={this.styles.title}>Hi there!</DefaultText>
-          <DefaultText style={this.styles.title}>
-            Are you new to Ulangi?
-          </DefaultText>
-        </View>
-        <SubmitButton
-          testID={WelcomeScreenIds.YES_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          buttonText="Yes. I'm a new user."
-          style={this.styles.yes_btn}
-          textStyle={this.styles.yes_btn_text}
-          onSubmit={this.props.screenDelegate.signInAsGuest}
-        />
-        <SubmitButton
-          testID={WelcomeScreenIds.NO_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          buttonText="No. I have an account."
-          style={this.styles.no_btn}
-          textStyle={this.styles.no_text}
-          onSubmit={this.props.screenDelegate.navigateToSignInScreen}
-        />
-      </Screen>
-    );
-  }
-}
+export const WelcomeScreen = observer(function(props: WelcomeScreenProps): React.ReactElement<any> {
+  return (
+    <Screen
+      themeStore={props.themeStore}
+      observableScreen={props.observableScreen}
+      useSafeAreaView={true}>
+      <ResponsiveContext.Consumer>
+        {
+          (responsive): React.ReactElement<any> => 
+          <>
+            <LogoContainer {...responsive}>
+              <Logo />
+            </LogoContainer>
+            <TitleContainer {...responsive}>
+              <Title>Hi there!</Title>
+              <Title>
+                Are you new to Ulangi?
+              </Title>
+            </TitleContainer>
+            <SubmitButton
+              testID={WelcomeScreenIds.YES_BTN}
+              theme={props.themeStore.theme}
+              screenLayout={props.observableScreen.screenLayout}
+              buttonText="Yes. I'm a new user."
+              style={{ backgroundColor: '#64d392'}}
+              textStyle={{ color: "#fff"}}
+              onSubmit={props.screenDelegate.signInAsGuest}
+            />
+            <SubmitButton
+              testID={WelcomeScreenIds.NO_BTN}
+              theme={props.themeStore.theme}
+              screenLayout={props.observableScreen.screenLayout}
+              buttonText="No. I have an account."
+              style={{ 
+                marginTop: responsive.scaleByFactor(10),
+                marginBottom: responsive.scaleByFactor(20)
+              }}
+              textStyle={{}}
+              onSubmit={props.screenDelegate.navigateToSignInScreen}
+            />
+          </>
+        }
+      </ResponsiveContext.Consumer>
+    </Screen>
+  );
+})
