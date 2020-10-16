@@ -80,6 +80,8 @@ export class WritingScreenContainer extends Container<
     this.setSelectionMenuDelegate.autoUpdateSubtitleOnSetChange(
       this.observableScreen,
     );
+
+    this.screenDelegate.autoRefreshDueAndNewCountsOnSetChange();
   }
 
   public componentDidAppear(): void {

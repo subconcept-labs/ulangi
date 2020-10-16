@@ -153,6 +153,17 @@ export class WritingScreenDelegate {
     });
   }
 
+  public autoRefreshDueAndNewCountsOnSetChange(): void {
+    this.eventBus.subscribe(
+      on(
+        ActionType.SET__SELECT,
+        (): void => {
+          this.refreshDueAndNewCounts();
+        },
+      ),
+    );
+  }
+
   public refreshDueAndNewCounts(): void {
     this.writingCountsDelegate.refreshDueAndNewCounts(
       typeof this.observableScreen.selectedCategoryNames !== 'undefined'

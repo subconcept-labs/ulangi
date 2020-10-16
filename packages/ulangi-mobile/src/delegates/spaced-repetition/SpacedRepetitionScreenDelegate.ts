@@ -170,6 +170,17 @@ export class SpacedRepetitionScreenDelegate {
     });
   }
 
+  public autoRefreshDueAndNewCountsOnSetChange(): void {
+    this.eventBus.subscribe(
+      on(
+        ActionType.SET__SELECT,
+        (): void => {
+          this.refreshDueAndNewCounts();
+        },
+      ),
+    );
+  }
+
   public refreshDueAndNewCounts(): void {
     this.spacedRepetitionCountsDelegate.refreshDueAndNewCounts(
       typeof this.observableScreen.selectedCategoryNames !== 'undefined'
