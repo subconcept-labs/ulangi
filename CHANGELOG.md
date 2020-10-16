@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.3](https://github.com/ulangi/ulangi/compare/v3.20.2...v3.20.3) (2020-10-16)
+
+
+### Bug Fixes
+
+* center stroke order on tablets ([236fe97](https://github.com/ulangi/ulangi/commit/236fe97))
+* randomize review on database level ([aa1b9a1](https://github.com/ulangi/ulangi/commit/aa1b9a1))
+* refresh due and new counts on set change ([7682cc0](https://github.com/ulangi/ulangi/commit/7682cc0))
+
+
+
+
+
 ## [3.20.2](https://github.com/ulangi/ulangi/compare/v3.20.1...v3.20.2) (2020-08-31)
 
 
