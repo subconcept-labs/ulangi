@@ -24,6 +24,8 @@ export function addVocabularySorting(
     query = query.order('v.updatedAt', true);
   } else if (sortType === VocabularySortType.SORT_BY_UPDATE_TIME_DESC) {
     query = query.order('v.updatedAt', false);
+  } else if (sortType === VocabularySortType.RANDOM) {
+    query = query.order('RANDOM()');
   }
 
   return query;

@@ -7,12 +7,11 @@
 
 import { ActionType, createAction } from '@ulangi/ulangi-action';
 import {
-  ButtonSize,
   ErrorCode,
   ReviewPriority,
   ScreenName,
 } from '@ulangi/ulangi-common/enums';
-import { ButtonStyles, ErrorBag } from '@ulangi/ulangi-common/interfaces';
+import { ErrorBag } from '@ulangi/ulangi-common/interfaces';
 import { EventBus, group, on, once } from '@ulangi/ulangi-event';
 import {
   ObservableConverter,
@@ -26,7 +25,6 @@ import { observable, toJS } from 'mobx';
 import { RemoteLogger } from '../../RemoteLogger';
 import { config } from '../../constants/config';
 import { LightBoxDialogIds } from '../../constants/ids/LightBoxDialogIds';
-import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { WritingCountsDelegate } from './WritingCountsDelegate';
@@ -63,10 +61,7 @@ export class WritingScreenDelegate {
     this.navigatorDelegate = navigatorDelegate;
   }
 
-  public startLesson(
-    includeFromOtherCategories: boolean,
-    reviewPriority: undefined | ReviewPriority,
-  ): void {
+  public startLesson(reviewPriority: undefined | ReviewPriority): void {
     RemoteLogger.logEvent('start_writing');
     const {
       initialInterval,
@@ -86,7 +81,6 @@ export class WritingScreenDelegate {
         selectedCategoryNames: toJS(
           this.observableScreen.selectedCategoryNames,
         ),
-        includeFromOtherCategories,
       }),
       group(
         on(ActionType.WRITING__FETCH_VOCABULARY, this.showPreparingDialog),
@@ -114,7 +108,6 @@ export class WritingScreenDelegate {
                 overrideReviewPriority: undefined | ReviewPriority,
               ): void => {
                 this.startLesson(
-                  false,
                   typeof overrideReviewPriority !== 'undefined'
                     ? overrideReviewPriority
                     : reviewPriority,
@@ -129,17 +122,7 @@ export class WritingScreenDelegate {
             if (
               errorBag.errorCode === ErrorCode.WRITING__INSUFFICIENT_VOCABULARY
             ) {
-              if (
-                typeof this.observableScreen.selectedCategoryNames !==
-                  'undefined' &&
-                includeFromOtherCategories === false
-              ) {
-                this.showNotEnoughTermsForSelectedCategoriesDialog(
-                  reviewPriority,
-                );
-              } else {
-                this.showNotEnoughTermsDialog();
-              }
+              this.showNotEnoughTermsDialog();
             } else {
               this.showPrepareFailedDialog(errorBag);
             }
@@ -192,46 +175,6 @@ export class WritingScreenDelegate {
   private showPreparingDialog(): void {
     this.dialogDelegate.show({
       message: 'Preparing. Please wait...',
-    });
-  }
-
-  private showNotEnoughTermsForSelectedCategoriesDialog(
-    reviewPriority: undefined | ReviewPriority,
-  ): void {
-    this.dialogDelegate.show({
-      testID: LightBoxDialogIds.FAILED_DIALOG,
-      message: `Not enough terms for selected categories (minimum is ${
-        config.writing.minPerLesson
-      }). Do you want to include terms from other categories?`,
-      title: 'FAILED TO START',
-      buttonList: [
-        {
-          testID: LightBoxDialogIds.CANCEL_BTN,
-          text: 'CANCEL',
-          onPress: (): void => {
-            this.navigatorDelegate.dismissLightBox();
-          },
-          styles: (theme, layout): ButtonStyles =>
-            fullRoundedButtonStyles.getSolidGreyBackgroundStyles(
-              ButtonSize.SMALL,
-              theme,
-              layout,
-            ),
-        },
-        {
-          testID: LightBoxDialogIds.OKAY_BTN,
-          text: 'OKAY',
-          onPress: (): void => {
-            this.startLesson(true, reviewPriority);
-          },
-          styles: (theme, layout): ButtonStyles =>
-            fullRoundedButtonStyles.getSolidPrimaryBackgroundStyles(
-              ButtonSize.SMALL,
-              theme,
-              layout,
-            ),
-        },
-      ],
     });
   }
 

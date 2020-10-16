@@ -460,7 +460,6 @@ export interface ActionPayload {
     limit: number;
     reviewPriority: ReviewPriority;
     selectedCategoryNames: undefined | string[];
-    includeFromOtherCategories: undefined | boolean;
   };
   readonly SPACED_REPETITION__FETCHING_VOCABULARY: { setId: string };
   readonly SPACED_REPETITION__FETCH_VOCABULARY_SUCCEEDED: {
@@ -706,7 +705,6 @@ export interface ActionPayload {
     limit: number;
     reviewPriority: ReviewPriority;
     selectedCategoryNames: undefined | string[];
-    includeFromOtherCategories: undefined | boolean;
   };
   readonly WRITING__FETCHING_VOCABULARY: { setId: string };
   readonly WRITING__FETCH_VOCABULARY_SUCCEEDED: {

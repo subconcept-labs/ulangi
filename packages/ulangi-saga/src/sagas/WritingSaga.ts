@@ -14,6 +14,8 @@ import {
   ErrorCode,
   Feedback,
   LessonType,
+  ReviewPriority,
+  VocabularySortType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
@@ -32,13 +34,11 @@ import * as uuid from 'uuid';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
-import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class WritingSaga extends ProtectedSaga {
   private fetchDueAndNewCountsTask?: Task;
 
-  private sequenceStrategy = new LevelSequenceStrategy();
   private writingScheduler = new WritingScheduler();
 
   private userDb: SQLiteDatabase;
@@ -60,7 +60,11 @@ export class WritingSaga extends ProtectedSaga {
   }
 
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
-    yield fork([this, this.allowFetchVocabulary], config.writing.minPerLesson);
+    yield fork(
+      [this, this.allowFetchVocabulary],
+      config.writing.minPerLesson,
+      config.writing.maxLevel
+    );
     yield fork(
       [this, this.allowFetchAndClearDueAndNewCounts],
       config.writing.maxLevel
@@ -68,7 +72,10 @@ export class WritingSaga extends ProtectedSaga {
     yield fork([this, this.allowSaveResult], config.writing.maxLevel);
   }
 
-  public *allowFetchVocabulary(minPerLesson: number): IterableIterator<any> {
+  public *allowFetchVocabulary(
+    minPerLesson: number,
+    maxLevel: number
+  ): IterableIterator<any> {
     while (true) {
       const action: Action<ActionType.WRITING__FETCH_VOCABULARY> = yield take(
         ActionType.WRITING__FETCH_VOCABULARY
@@ -79,7 +86,6 @@ export class WritingSaga extends ProtectedSaga {
         reviewPriority,
         limit,
         selectedCategoryNames,
-        includeFromOtherCategories,
       } = action.payload;
 
       try {
@@ -87,36 +93,47 @@ export class WritingSaga extends ProtectedSaga {
           createAction(ActionType.WRITING__FETCHING_VOCABULARY, { setId })
         );
 
-        const levelSequence = this.sequenceStrategy.getLevelSequence(
-          reviewPriority
-        );
-
-        const vocabularyList = yield call(
-          [this, this.fetchVocabulary],
+        const {
+          vocabularyList: dueVocabularyList,
+        }: PromiseType<
+          ReturnType<WritingModel['getDueVocabularyList']>
+        > = yield call(
+          [this.writingModel, 'getDueVocabularyList'],
+          this.userDb,
           setId,
           initialInterval,
+          maxLevel,
           selectedCategoryNames,
-          undefined,
-          levelSequence,
-          limit
+          VocabularySortType.RANDOM,
+          limit,
+          0,
+          true
         );
 
-        if (
-          vocabularyList.length < minPerLesson &&
-          typeof selectedCategoryNames !== 'undefined' &&
-          includeFromOtherCategories === true
-        ) {
-          const newList = yield call(
-            [this, this.fetchVocabulary],
-            setId,
-            initialInterval,
-            undefined,
-            selectedCategoryNames,
-            levelSequence,
-            limit
-          );
-          vocabularyList.push(...newList);
-        }
+        const {
+          vocabularyList: newVocabularyList,
+        }: PromiseType<
+          ReturnType<WritingModel['getNewVocabularyList']>
+        > = yield call(
+          [this.writingModel, 'getNewVocabularyList'],
+          this.userDb,
+          setId,
+          selectedCategoryNames,
+          VocabularySortType.RANDOM,
+          limit,
+          0,
+          true
+        );
+
+        const vocabularyList =
+          reviewPriority === ReviewPriority.DUE_TERMS_FIRST
+            ? [...dueVocabularyList, ...newVocabularyList].slice(0, limit)
+            : reviewPriority === ReviewPriority.NEW_TERMS_FIRST
+            ? [...newVocabularyList, ...dueVocabularyList].slice(0, limit)
+            : _.shuffle([...newVocabularyList, ...dueVocabularyList]).slice(
+                0,
+                limit
+              );
 
         if (vocabularyList.length < minPerLesson) {
           throw new Error(ErrorCode.WRITING__INSUFFICIENT_VOCABULARY);
@@ -318,49 +335,5 @@ export class WritingSaga extends ProtectedSaga {
         );
       }
     }
-  }
-
-  private *fetchVocabulary(
-    setId: string,
-    initialInterval: number,
-    selectedCategoryNames: undefined | string[],
-    excludedCategoryNames: undefined | string[],
-    levelSequence: readonly (undefined | number)[],
-    limit: number
-  ): IterableIterator<any> {
-    let vocabularyList: Vocabulary[] = [];
-
-    const levels = levelSequence.slice();
-    // Fetch vocabulary by each level until the limit is reached
-
-    while (levels.length > 0 && vocabularyList.length < limit) {
-      const currentLevel = levels.shift();
-      const remain = limit - vocabularyList.length;
-
-      const result: PromiseType<
-        ReturnType<WritingModel['getVocabularyListByLevel']>
-      > = yield call(
-        [this.writingModel, 'getVocabularyListByLevel'],
-        this.userDb,
-        setId,
-        currentLevel,
-        initialInterval,
-        remain,
-        true,
-        selectedCategoryNames,
-        excludedCategoryNames
-      );
-
-      let { vocabularyList: newList } = result;
-
-      // Filter out vocabulary that does not have any definitions
-      newList = newList.filter(
-        (vocabulary: Vocabulary): boolean => vocabulary.definitions.length !== 0
-      );
-
-      vocabularyList = vocabularyList.concat(newList);
-    }
-
-    return vocabularyList;
   }
 }

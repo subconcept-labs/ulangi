@@ -63,7 +63,7 @@ export class SpacedRepetitionScreen extends React.Component<
                 theme={this.props.themeStore.theme}
                 screenLayout={this.props.observableScreen.screenLayout}
                 startLesson={(): void =>
-                  this.props.screenDelegate.startLesson(false, undefined)
+                  this.props.screenDelegate.startLesson(undefined)
                 }
                 showSettings={this.props.screenDelegate.showSettings}
                 showFAQ={this.props.screenDelegate.showFAQ}
@@ -85,13 +85,11 @@ export class SpacedRepetitionScreen extends React.Component<
               counts={this.props.observableScreen.counts}
               reviewDueFirst={(): void =>
                 this.props.screenDelegate.startLesson(
-                  false,
                   ReviewPriority.DUE_TERMS_FIRST,
                 )
               }
               reviewNewFirst={(): void =>
                 this.props.screenDelegate.startLesson(
-                  false,
                   ReviewPriority.NEW_TERMS_FIRST,
                 )
               }

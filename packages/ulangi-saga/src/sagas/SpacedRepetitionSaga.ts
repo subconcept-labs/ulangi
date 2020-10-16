@@ -14,6 +14,8 @@ import {
   ErrorCode,
   Feedback,
   LessonType,
+  ReviewPriority,
+  VocabularySortType,
   VocabularyStatus,
 } from '@ulangi/ulangi-common/enums';
 import { Vocabulary } from '@ulangi/ulangi-common/interfaces';
@@ -32,13 +34,11 @@ import * as uuid from 'uuid';
 import { errorConverter } from '../converters/ErrorConverter';
 import { SagaConfig } from '../interfaces/SagaConfig';
 import { SagaEnv } from '../interfaces/SagaEnv';
-import { LevelSequenceStrategy } from '../strategies/LevelSequenceStrategy';
 import { ProtectedSaga } from './ProtectedSaga';
 
 export class SpacedRepetitionSaga extends ProtectedSaga {
   private fetchDueAndNewCountsTask?: Task;
 
-  private sequenceStrategy = new LevelSequenceStrategy();
   private spacedRepetitionScheduler = new SpacedRepetitionScheduler();
 
   private userDb: SQLiteDatabase;
@@ -62,7 +62,8 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
   public *run(_: SagaEnv, config: SagaConfig): IterableIterator<any> {
     yield fork(
       [this, this.allowFetchVocabulary],
-      config.spacedRepetition.minPerLesson
+      config.spacedRepetition.minPerLesson,
+      config.spacedRepetition.maxLevel
     );
     yield fork(
       [this, this.allowFetchAndClearDueAndNewCounts],
@@ -71,7 +72,10 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
     yield fork([this, this.allowSaveResult], config.spacedRepetition.maxLevel);
   }
 
-  public *allowFetchVocabulary(minPerLesson: number): IterableIterator<any> {
+  public *allowFetchVocabulary(
+    minPerLesson: number,
+    maxLevel: number
+  ): IterableIterator<any> {
     while (true) {
       const action: Action<
         ActionType.SPACED_REPETITION__FETCH_VOCABULARY
@@ -82,7 +86,6 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         limit,
         reviewPriority,
         selectedCategoryNames,
-        includeFromOtherCategories,
       } = action.payload;
 
       try {
@@ -92,37 +95,47 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
           })
         );
 
-        const levelSequence = this.sequenceStrategy.getLevelSequence(
-          reviewPriority
-        );
-
-        const vocabularyList: Vocabulary[] = yield call(
-          [this, this.fetchVocabulary],
+        const {
+          vocabularyList: dueVocabularyList,
+        }: PromiseType<
+          ReturnType<SpacedRepetitionModel['getDueVocabularyList']>
+        > = yield call(
+          [this.spacedRepetitionModel, 'getDueVocabularyList'],
+          this.userDb,
           setId,
           initialInterval,
+          maxLevel,
           selectedCategoryNames,
-          undefined,
-          levelSequence,
-          limit
+          VocabularySortType.RANDOM,
+          limit,
+          0,
+          true
         );
 
-        // Not enough terms for selected categories
-        if (
-          vocabularyList.length < minPerLesson &&
-          typeof selectedCategoryNames !== 'undefined' &&
-          includeFromOtherCategories === true
-        ) {
-          const newList = yield call(
-            [this, this.fetchVocabulary],
-            setId,
-            initialInterval,
-            undefined,
-            selectedCategoryNames, // exclude selected categories
-            levelSequence,
-            limit
-          );
-          vocabularyList.push(...newList);
-        }
+        const {
+          vocabularyList: newVocabularyList,
+        }: PromiseType<
+          ReturnType<SpacedRepetitionModel['getNewVocabularyList']>
+        > = yield call(
+          [this.spacedRepetitionModel, 'getNewVocabularyList'],
+          this.userDb,
+          setId,
+          selectedCategoryNames,
+          VocabularySortType.RANDOM,
+          limit,
+          0,
+          true
+        );
+
+        const vocabularyList =
+          reviewPriority === ReviewPriority.DUE_TERMS_FIRST
+            ? [...dueVocabularyList, ...newVocabularyList].slice(0, limit)
+            : reviewPriority === ReviewPriority.NEW_TERMS_FIRST
+            ? [...newVocabularyList, ...dueVocabularyList].slice(0, limit)
+            : _.shuffle([...newVocabularyList, ...dueVocabularyList]).slice(
+                0,
+                limit
+              );
 
         if (vocabularyList.length < minPerLesson) {
           throw new Error(ErrorCode.SPACED_REPETITION__INSUFFICIENT_VOCABULARY);
@@ -132,7 +145,7 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
               ActionType.SPACED_REPETITION__FETCH_VOCABULARY_SUCCEEDED,
               {
                 setId,
-                vocabularyList: _.shuffle(vocabularyList),
+                vocabularyList,
               }
             )
           );
@@ -340,48 +353,5 @@ export class SpacedRepetitionSaga extends ProtectedSaga {
         );
       }
     }
-  }
-
-  private *fetchVocabulary(
-    setId: string,
-    initialInterval: number,
-    selectedCategoryNames: undefined | string[],
-    excludedCategoryNames: undefined | string[],
-    levelSequence: readonly (undefined | number)[],
-    limit: number
-  ): IterableIterator<any> {
-    let vocabularyList: Vocabulary[] = [];
-
-    const levels = levelSequence.slice();
-    // Fetch vocabulary by each level in order until the limit is reached
-    while (levels.length > 0 && vocabularyList.length < limit) {
-      const currentLevel = levels.shift();
-      const remain = limit - vocabularyList.length;
-
-      const result: PromiseType<
-        ReturnType<SpacedRepetitionModel['getVocabularyListByLevel']>
-      > = yield call(
-        [this.spacedRepetitionModel, 'getVocabularyListByLevel'],
-        this.userDb,
-        setId,
-        currentLevel,
-        initialInterval,
-        remain,
-        true,
-        selectedCategoryNames,
-        excludedCategoryNames
-      );
-
-      let { vocabularyList: newList } = result;
-
-      // Filter out vocabulary that does not have any definitions
-      newList = newList.filter(
-        (vocabulary: Vocabulary): boolean => vocabulary.definitions.length !== 0
-      );
-
-      vocabularyList = vocabularyList.concat(newList);
-    }
-
-    return vocabularyList;
   }
 }

@@ -18,7 +18,6 @@ import * as squel from 'squel';
 
 import { TableName } from '../enums/TableName';
 import { VocabularyRowResolver } from '../resolvers/VocabularyRowResolver';
-import { addCategoryConditions } from '../utils/addCategoryConditions';
 import { addVocabularySorting } from '../utils/addVocabularySorting';
 import { VocabularyModel } from './VocabularyModel';
 
@@ -30,87 +29,6 @@ export class SpacedRepetitionModel {
 
   public constructor(vocabularyModel: VocabularyModel) {
     this.vocabularyModel = vocabularyModel;
-  }
-
-  public getVocabularyListByLevel(
-    db: SQLiteDatabase,
-    setId: string,
-    level: undefined | number,
-    initialInterval: number,
-    limit: number,
-    stripUnknown: boolean,
-    selectedCategoryNames: undefined | string[],
-    excludedCategoryNames: undefined | string[]
-  ): Promise<{
-    vocabularyList: readonly Vocabulary[];
-  }> {
-    return new Promise(
-      async (resolve, reject): Promise<void> => {
-        try {
-          let query = squel
-            .select()
-            .field('v.*')
-            .from(TableName.VOCABULARY, 'v');
-
-          if (
-            typeof selectedCategoryNames !== 'undefined' ||
-            typeof excludedCategoryNames !== 'undefined'
-          ) {
-            query = addCategoryConditions(
-              query,
-              selectedCategoryNames,
-              excludedCategoryNames
-            );
-          }
-
-          if (typeof level !== 'undefined') {
-            query = query.where('v.level = ?', level);
-
-            // The number of hours that user has to wait for this level. Note that the number is doubled on each level
-            const hours = this.spacedRepetitionScheduler.calculateWaitingHours(
-              initialInterval,
-              level
-            );
-
-            query = query.where(
-              'v.lastLearnedAt IS NOT NULL AND v.lastLearnedAt < ?',
-              moment()
-                .subtract(hours, 'hours')
-                .unix()
-            );
-          } else {
-            query = query.where('v.lastLearnedAt IS NULL');
-          }
-
-          query = query
-            .where('v.setId = ?', setId)
-            .where('v.vocabularyStatus = ?', VocabularyStatus.ACTIVE)
-            .limit(limit);
-
-          const queryParam = query.toParam();
-
-          const result = await db.executeSql(
-            queryParam.text,
-            queryParam.values
-          );
-
-          const vocabularyRows = this.vocabularyRowResolver.resolveArray(
-            result.rows.slice(),
-            stripUnknown
-          );
-
-          const vocabularyList = await this.vocabularyModel.getCompleteVocabularyListByRows(
-            db,
-            vocabularyRows,
-            stripUnknown
-          );
-
-          resolve({ vocabularyList });
-        } catch (error) {
-          reject(error);
-        }
-      }
-    );
   }
 
   public getNewVocabularyList(
