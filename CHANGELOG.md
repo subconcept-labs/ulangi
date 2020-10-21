@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.4](https://github.com/ulangi/ulangi/compare/v3.20.3...v3.20.4) (2020-10-21)
+
+
+### Bug Fixes
+
+* allow vocabularyTerm to be empty ([a4229a3](https://github.com/ulangi/ulangi/commit/a4229a3))
+
+
+
+
+
 ## [3.20.3](https://github.com/ulangi/ulangi/compare/v3.20.2...v3.20.3) (2020-10-16)
 
 
