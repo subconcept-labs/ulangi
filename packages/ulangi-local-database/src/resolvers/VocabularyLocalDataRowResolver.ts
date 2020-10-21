@@ -16,6 +16,8 @@ export class VocabularyLocalDataRowResolver extends AbstractResolver<
   protected rules = {
     vocabularyLocalDataId: Joi.number(),
     vocabularyId: Joi.string(),
-    vocabularyTerm: Joi.string().allow(null),
+    vocabularyTerm: Joi.string()
+      .allow(null)
+      .allow(''),
   };
 }

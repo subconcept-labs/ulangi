@@ -24,6 +24,7 @@ export class VocabularyLocalDataRowPreparer extends AbstractPreparer<
     vocabularyId: Joi.string(),
     vocabularyTerm: Joi.string()
       .allow(null)
+      .allow('')
       .optional(),
   };
 
