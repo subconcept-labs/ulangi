@@ -20,7 +20,7 @@ import { Images } from '../../constants/Images';
 import { GoogleSheetsAddOnScreenIds } from '../../constants/ids/GoogleSheetsAddOnScreenIds';
 import { GoogleSheetsAddOnScreenFactory } from '../../factories/google-sheets/GoogleSheetsAddOnScreenFactory';
 import { GoogleSheetsAddOnScreenStyle } from './GoogleSheetsAddOnScreenContainer.style';
-import { GoogleSheetsAddOnScreen } from './GoogleSheetsAddonScreen';
+import { GoogleSheetsAddOnScreen } from './GoogleSheetsAddOnScreen';
 
 @observer
 export class GoogleSheetsAddOnScreenContainer extends Container {

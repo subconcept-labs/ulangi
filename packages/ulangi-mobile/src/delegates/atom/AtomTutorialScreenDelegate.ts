@@ -18,7 +18,7 @@ import * as uuid from 'uuid';
 
 import { config } from '../../constants/config';
 import { AtomShellDelegate } from '../../delegates/atom/AtomShellDelegate';
-import { NavigatorDelegate } from '../../delegates/navigator/navigatorDelegate';
+import { NavigatorDelegate } from '../../delegates/navigator/NavigatorDelegate';
 import { ShellFactory } from '../../factories/atom/ShellFactory';
 import { AtomAnswerDelegate } from './AtomAnswerDelegate';
 import { AtomArcDelegate } from './AtomArcDelegate';
