@@ -13,8 +13,6 @@ import * as _ from 'lodash';
 
 import { env } from '../../constants/env';
 import { ManageScreenIds } from '../../constants/ids/ManageScreenIds';
-import { AdDelegate } from '../ad/AdDelegate';
-import { DataSharingDelegate } from '../data-sharing/DataSharingDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { ReminderDelegate } from '../reminder/ReminderDelegate';
 import { ReminderSettingsDelegate } from '../reminder/ReminderSettingsDelegate';
@@ -24,10 +22,8 @@ export class AutorunDelegate {
   private eventBus: EventBus;
   private observer: Observer;
   private userStore: ObservableUserStore;
-  private adDelegate: AdDelegate;
   private reminderDelegate: ReminderDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
-  private dataSharingDelegate: DataSharingDelegate;
   private dialogDelegate: DialogDelegate;
   private rootScreenDelegate: RootScreenDelegate;
 
@@ -35,31 +31,23 @@ export class AutorunDelegate {
     eventBus: EventBus,
     observer: Observer,
     userStore: ObservableUserStore,
-    adDelegate: AdDelegate,
     reminderDelegate: ReminderDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
-    dataSharingDelegate: DataSharingDelegate,
     dialogDelegate: DialogDelegate,
     rootScreenDelegate: RootScreenDelegate,
   ) {
     this.eventBus = eventBus;
     this.observer = observer;
     this.userStore = userStore;
-    this.adDelegate = adDelegate;
     this.reminderDelegate = reminderDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
-    this.dataSharingDelegate = dataSharingDelegate;
     this.dialogDelegate = dialogDelegate;
     this.rootScreenDelegate = rootScreenDelegate;
   }
 
   public autorun(): void {
     if (env.OPEN_SOURCE_ONLY === false) {
-      this.autoInitIap();
-      this.autoSetUpAd();
-      this.autoInitializeAd();
       this.autoObserveRemoteUpdates();
-      this.autoToggleDataSharing();
       this.autoCheckPermissionAndSetUpReminder();
     }
 
@@ -71,18 +59,6 @@ export class AutorunDelegate {
     this.autoFetchUserOnDownloadSucceeded();
     this.autoFetchAllSetsOnDownloadSucceeded();
     this.autoObserveLocalUpdates();
-  }
-
-  private autoInitIap(): void {
-    if (env.ANDROID_PACKAGE_NAME !== null) {
-      this.eventBus.publish(
-        createAction(ActionType.IAP__INIT, {
-          googlePackageName: env.ANDROID_PACKAGE_NAME,
-        }),
-      );
-    } else {
-      console.warn('Cannot init in-app purchase. Missing ANDROID_PACKAGE_NAME');
-    }
   }
 
   private autoCheckUserSession(): void {
@@ -174,30 +150,6 @@ export class AutorunDelegate {
         fireImmediately: true,
       },
     );
-  }
-
-  private autoSetUpAd(): void {
-    this.observer.autorun(
-      (): void => {
-        if (this.adDelegate.shouldSetUp()) {
-          this.adDelegate.setUp();
-        }
-      },
-    );
-  }
-
-  private autoInitializeAd(): void {
-    this.observer.autorun(
-      (): void => {
-        if (this.adDelegate.shouldInitialize()) {
-          this.adDelegate.initialize();
-        }
-      },
-    );
-  }
-
-  private autoToggleDataSharing(): void {
-    this.dataSharingDelegate.autoToggleDataSharing();
   }
 
   private autoUpdateRemoteConfig(): void {

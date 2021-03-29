@@ -4,6 +4,7 @@ import {
   ObservableThemeStore,
 } from '@ulangi/ulangi-observable';
 import { observer } from 'mobx-react';
+import * as moment from 'moment';
 import * as React from 'react';
 import {
   ActivityIndicator,
@@ -60,7 +61,7 @@ export class HeatMapScreen extends React.Component<HeatMapScreenProps> {
             ellipsizeMode="tail"
             numberOfLines={1}
             style={this.styles.top_bar_button_text}>
-            Year 2020
+            Year {moment().year()}
           </DefaultText>
         </TouchableOpacity>
         <TouchableOpacity
@@ -83,7 +84,7 @@ export class HeatMapScreen extends React.Component<HeatMapScreenProps> {
   private renderHeatMap(): React.ReactElement<any> {
     return (
       <ScrollView contentContainerStyle={this.styles.heat_map_container}>
-        <DefaultText style={this.styles.year}>2020</DefaultText>
+        <DefaultText style={this.styles.year}>{moment().year()}</DefaultText>
         {this.props.observableScreen.heatMapState.fetchState ===
         ActivityState.ERROR ? (
           <DefaultText style={this.styles.error_message}>

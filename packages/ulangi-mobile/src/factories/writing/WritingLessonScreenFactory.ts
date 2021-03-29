@@ -10,8 +10,6 @@ import { ReviewPriority } from '@ulangi/ulangi-common/enums';
 import { ObservableWritingLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
-import { AdAfterLessonDelegate } from '../../delegates/ad/AdAfterLessonDelegate';
-import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
 import { ReviewActionMenuDelegate } from '../../delegates/review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
@@ -45,19 +43,6 @@ export class WritingLessonScreenFactory extends ScreenFactory {
 
     const dialogDelegate = this.createDialogDelegate(
       LessonScreenStyle.LIGHT_BOX_SCREEN_STYLES,
-    );
-
-    const adDelegate = new AdDelegate(
-      this.eventBus,
-      this.props.rootStore.adStore,
-      this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore,
-    );
-
-    const adAfterLessonDelegate = new AdAfterLessonDelegate(
-      this.observer,
-      observableScreen.shouldShowAdOrGoogleConsentForm,
-      navigatorDelegate,
     );
 
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
@@ -123,8 +108,6 @@ export class WritingLessonScreenFactory extends ScreenFactory {
       writingFormDelegate,
       reviewFeedbackBarDelegate,
       speakDelegate,
-      adDelegate,
-      adAfterLessonDelegate,
       reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,

@@ -31,7 +31,6 @@ import { MoreScreenIds } from '../../constants/ids/MoreScreenIds';
 import { RootScreenDelegate } from '../../delegates/root/RootScreenDelegate';
 import { bottomTabsStyles } from '../../styles/BottomTabsStyles';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { AdDelegate } from '../ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../auto-archive/AutoArchiveSettingsDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { LinkingDelegate } from '../linking/LinkingDelegate';
@@ -48,7 +47,6 @@ export class MoreScreenDelegate {
   private observableLightBox: ObservableLightBox;
   private observableScreen: ObservableMoreScreen;
   private rootScreenDelegate: RootScreenDelegate;
-  private adDelegate: AdDelegate;
   private inAppRatingDelegate: InAppRatingDelegate;
   private autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate;
   private reminderSettingsDelegate: ReminderSettingsDelegate;
@@ -64,7 +62,6 @@ export class MoreScreenDelegate {
     observableLightBox: ObservableLightBox,
     observableScreen: ObservableMoreScreen,
     rootScreenDelegate: RootScreenDelegate,
-    adDelegate: AdDelegate,
     inAppRatingDelegate: InAppRatingDelegate,
     autoArchiveSettingsDelegate: AutoArchiveSettingsDelegate,
     reminderSettingsDelegate: ReminderSettingsDelegate,
@@ -79,7 +76,6 @@ export class MoreScreenDelegate {
     this.observableScreen = observableScreen;
     this.observableLightBox = observableLightBox;
     this.rootScreenDelegate = rootScreenDelegate;
-    this.adDelegate = adDelegate;
     this.inAppRatingDelegate = inAppRatingDelegate;
     this.autoArchiveSettingsDelegate = autoArchiveSettingsDelegate;
     this.reminderSettingsDelegate = reminderSettingsDelegate;
@@ -115,7 +111,7 @@ export class MoreScreenDelegate {
           isReminderActive: this.isReminderActive(),
         };
       },
-      ({ isGuest, isReminderActive }): void => {
+      ({ isGuest }): void => {
         runInAction(
           (): void => {
             this.observableScreen.messages.clear();
@@ -124,7 +120,7 @@ export class MoreScreenDelegate {
                 new ObservableCarouselMessage(
                   'set-up-account',
                   'IMPORANT',
-                  "You're using a guest account. Set up now to prevent losing access to this account.",
+                  'Set up an account now to back up your data.',
                   '#5E35B1',
                   'Set up account',
                   '#4527A0',
@@ -145,19 +141,17 @@ export class MoreScreenDelegate {
               ),
             );
 
-            if (!isReminderActive && env.OPEN_SOURCE_ONLY === false) {
-              this.observableScreen.messages.push(
-                new ObservableCarouselMessage(
-                  'set-up-reminder',
-                  'TIP',
-                  'Set up daily reminder so you will not forget to review your words.',
-                  '#1E88E5',
-                  'Set up reminder',
-                  '#1565C0',
-                  this.navigateToReminderScreen,
-                ),
-              );
-            }
+            this.observableScreen.messages.push(
+              new ObservableCarouselMessage(
+                'midterm-app',
+                'DID YOU KNOW',
+                'Ulangi is now completely free, open-source and sponsored by Midterm.',
+                '#1E88E5',
+                'Learn more about Midterm',
+                '#1565C0',
+                this.goToMidterm,
+              ),
+            );
           },
         );
       },
@@ -237,6 +231,10 @@ export class MoreScreenDelegate {
     return this.reminderSettingsDelegate.getReadableTime();
   }
 
+  public goToMidterm(): void {
+    this.linkingDelegate.openLink('https://midterm.app');
+  }
+
   public goToTwitter(): void {
     this.linkingDelegate.openLink(config.links.twitter);
   }
@@ -259,10 +257,6 @@ export class MoreScreenDelegate {
 
   public navigateToSecurityScreen(): void {
     this.navigatorDelegate.push(ScreenName.SECURITY_SCREEN, {});
-  }
-
-  public navigateToMembershipScreen(): void {
-    this.navigatorDelegate.push(ScreenName.MEMBERSHIP_SCREEN, {});
   }
 
   public navigateToSetManagementScreen(): void {
@@ -342,16 +336,8 @@ export class MoreScreenDelegate {
     });
   }
 
-  public navigateToDataSharingScreen(): void {
-    this.navigatorDelegate.push(ScreenName.DATA_SHARING_SCREEN, {});
-  }
-
   public navigateToEventLogsScreen(): void {
     this.navigatorDelegate.push(ScreenName.EVENT_LOGS_SCREEN, {});
-  }
-
-  public showGoogleConsentForm(): void {
-    this.adDelegate.showGoogleConsentForm();
   }
 
   public showLink(link: string, screenTitle: string): void {

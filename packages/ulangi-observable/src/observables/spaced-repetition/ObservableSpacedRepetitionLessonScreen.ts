@@ -37,8 +37,6 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
 
   public readonly shouldShowResult: IObservableValue<boolean>;
 
-  public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
-
   @observable
   public counts:
     | undefined
@@ -58,7 +56,6 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     saveState: IObservableValue<ActivityState>,
     speakState: IObservableValue<ActivityState>,
     shouldShowResult: IObservableValue<boolean>,
-    shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     componentId: string,
     screenName: ScreenName,
     topBar: ObservableTitleTopBar
@@ -74,6 +71,5 @@ export class ObservableSpacedRepetitionLessonScreen extends ObservableScreen {
     this.saveState = saveState;
     this.speakState = speakState;
     this.shouldShowResult = shouldShowResult;
-    this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
   }
 }

@@ -29,8 +29,6 @@ import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { WritingQuestionIterator } from '../../iterators/WritingQuestionIterator';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
-import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
@@ -54,8 +52,6 @@ export class WritingLessonScreenDelegate {
   private writingFormDelegate: WritingFormDelegate;
   private reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate;
   private speakDelegate: SpeakDelegate;
-  private adDelegate: AdDelegate;
-  private adAfterLessonDelegate: AdAfterLessonDelegate;
   private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -75,8 +71,6 @@ export class WritingLessonScreenDelegate {
     writingFormDelegate: WritingFormDelegate,
     reviewFeedbackBarDelegate: ReviewFeedbackBarDelegate,
     speakDelegate: SpeakDelegate,
-    adDelegate: AdDelegate,
-    adAfterLessonDelegate: AdAfterLessonDelegate,
     reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
@@ -93,8 +87,6 @@ export class WritingLessonScreenDelegate {
     this.writingFormDelegate = writingFormDelegate;
     this.reviewFeedbackBarDelegate = reviewFeedbackBarDelegate;
     this.speakDelegate = speakDelegate;
-    this.adDelegate = adDelegate;
-    this.adAfterLessonDelegate = adAfterLessonDelegate;
     this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
@@ -103,15 +95,10 @@ export class WritingLessonScreenDelegate {
   }
 
   public setUp(): void {
-    this.autoDisablePopGestureWhenAdRequiredToShow();
     this.addBackButtonHandler(this.handleBackPressed);
     this.setUpActionButtons();
     this.calculateNextReviewData();
     this.autoUpdateButtons();
-
-    if (this.shouldLoadAd()) {
-      this.loadAd();
-    }
   }
 
   public cleanUp(): void {
@@ -126,7 +113,7 @@ export class WritingLessonScreenDelegate {
       this.showConfirmQuitLessonDialog();
       return true;
     } else {
-      this.showAdIfRequiredThenQuit();
+      this.quit();
       return true;
     }
   }
@@ -178,32 +165,18 @@ export class WritingLessonScreenDelegate {
     if (this.observableScreen.shouldShowResult.get() === false) {
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
-
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
     }
   }
 
   public takeAnotherLesson(
     overrideReviewPriority: undefined | ReviewPriority,
   ): void {
-    this.showAdIfRequiredThenQuit();
+    this.quit();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
       (): void => this.startLesson(overrideReviewPriority),
     );
-  }
-
-  public showAdIfRequiredThenQuit(): void {
-    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
-      this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.dismissScreen(),
-      );
-    } else {
-      this.navigatorDelegate.dismissScreen();
-    }
   }
 
   public showReviewFeedback(): void {
@@ -217,10 +190,6 @@ export class WritingLessonScreenDelegate {
         this.refreshDueAndNewCounts();
       },
     });
-  }
-
-  public goToAccountTypeScreen(): void {
-    this.navigatorDelegate.push(ScreenName.MEMBERSHIP_SCREEN, {});
   }
 
   private setUpActionButtons(): void {
@@ -315,18 +284,6 @@ export class WritingLessonScreenDelegate {
     );
   }
 
-  private autoDisablePopGestureWhenAdRequiredToShow(): void {
-    this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-  }
-
-  private shouldLoadAd(): boolean {
-    return this.adDelegate.shouldLoadAd();
-  }
-
-  private loadAd(): void {
-    this.adDelegate.loadAd();
-  }
-
   private addBackButtonHandler(handler: () => void): void {
     BackHandler.addEventListener('hardwareBackPress', handler);
   }
@@ -410,6 +367,10 @@ export class WritingLessonScreenDelegate {
         },
       );
     }
+  }
+
+  public quit(): void {
+    this.navigatorDelegate.dismissScreen();
   }
 
   private calculateNextReviewData(): void {

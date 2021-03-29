@@ -7,7 +7,6 @@
 
 import { ObservableMoreScreen } from '@ulangi/ulangi-observable';
 
-import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
 import { LinkingDelegate } from '../../delegates/linking/LinkingDelegate';
 import { MoreScreenDelegate } from '../../delegates/more/MoreScreenDelegate';
@@ -37,13 +36,6 @@ export class MoreScreenFactory extends ScreenFactory {
       dialogDelegate,
     );
 
-    const adDelegate = new AdDelegate(
-      this.eventBus,
-      this.props.rootStore.adStore,
-      this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore,
-    );
-
     const autoArchiveSettingsDelegate = new AutoArchiveSettingsDelegate(
       this.props.rootStore.userStore,
     );
@@ -66,7 +58,6 @@ export class MoreScreenFactory extends ScreenFactory {
       this.props.observableLightBox,
       observableScreen,
       rootScreenDelegate,
-      adDelegate,
       inAppRatingDelegate,
       autoArchiveSettingsDelegate,
       reminderSettingsDelegate,

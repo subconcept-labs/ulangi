@@ -6,14 +6,11 @@
  */
 
 export { SagaFacade } from './facades/SagaFacade';
-export { AdMobAdapter } from './adapters/AdMobAdapter';
 export { AnalyticsAdapter } from './adapters/AnalyticsAdapter';
 export { AudioPlayerAdapter } from './adapters/AudioPlayerAdapter';
 export { CrashlyticsAdapter } from './adapters/CrashlyticsAdapter';
-export { FacebookAdapter } from './adapters/FacebookAdapter';
 export { FileSystemAdapter } from './adapters/FileSystemAdapter';
 export { FirebaseAdapter } from './adapters/FirebaseAdapter';
-export { IapAdapter } from './adapters/IapAdapter';
 export { NetInfoAdapter } from './adapters/NetInfoAdapter';
 export { NotificationsAdapter } from './adapters/NotificationsAdapter';
 export { SystemThemeAdapter } from './adapters/SystemThemeAdapter';

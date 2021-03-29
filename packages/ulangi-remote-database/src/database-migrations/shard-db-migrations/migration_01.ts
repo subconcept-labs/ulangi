@@ -106,7 +106,7 @@ function createVocabularyCategoryTableIfNotExists(
   db: knex.Transaction
 ): knex.Raw {
   return db.raw(`
-    CREATE TABLE IF NOT EXISTS ${TableName.VOCABULARY} (
+    CREATE TABLE IF NOT EXISTS ${TableName.VOCABULARY_CATEGORY} (
       userId VARCHAR(60) NOT NULL,
       vocabularyId VARCHAR(60) NOT NULL,
       categoryName VARCHAR(255) NOT NULL,

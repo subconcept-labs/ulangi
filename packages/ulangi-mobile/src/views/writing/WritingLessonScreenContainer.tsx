@@ -96,7 +96,6 @@ export class WritingLessonScreenContainer extends Container<
     observable.box(this.currentSettings.autoplayAudio),
     observable.box(this.currentSettings.highlightOnError),
     observable.box(false),
-    observable.box(false),
     observable.box(ActivityState.INACTIVE),
     observable.box(ActivityState.INACTIVE),
     this.props.componentId,

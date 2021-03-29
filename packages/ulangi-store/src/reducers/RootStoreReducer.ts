@@ -11,11 +11,9 @@ import {
   ObservableRootStore,
 } from '@ulangi/ulangi-observable';
 
-import { AdStoreReducer } from './AdStoreReducer';
 import { EventStoreReducer } from './EventStoreReducer';
 import { NetworkStoreReducer } from './NetworkStoreReducer';
 import { NotificationStoreReducer } from './NotificationStoreReducer';
-import { PurchaseStoreReducer } from './PurchaseStoreReducer';
 import { Reducer } from './Reducer';
 import { RemoteConfigStoreReducer } from './RemoteConfigStoreReducer';
 import { SetStoreReducer } from './SetStoreReducer';
@@ -39,8 +37,6 @@ export class RootStoreReducer extends Reducer {
       ),
       new NetworkStoreReducer(rootStore.networkStore),
       new SyncStoreReducer(rootStore.syncStore),
-      new PurchaseStoreReducer(rootStore.purchaseStore),
-      new AdStoreReducer(rootStore.adStore),
       new NotificationStoreReducer(rootStore.notificationStore),
       new ThemeStoreReducer(rootStore.themeStore),
       new EventStoreReducer(rootStore.eventStore),

@@ -17,14 +17,9 @@ import createSagaMiddleware, {
   SagaMiddlewareOptions,
 } from 'redux-saga';
 
-import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
-import { IapAdapter } from '../adapters/IapAdapter';
 import { NetInfoAdapter } from '../adapters/NetInfoAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
@@ -38,16 +33,11 @@ export class SagaFacade {
   private env: SagaEnv;
   private config: SagaConfig;
 
-  private adMob: null | AdMobAdapter;
-  private analytics: null | AnalyticsAdapter;
   private audioPlayer: AudioPlayerAdapter;
-  private crashlytics: null | CrashlyticsAdapter;
   private database: DatabaseFacade;
   private databaseEventBus: DatabaseEventBus;
-  private facebook: null | FacebookAdapter;
   private fileSystem: FileSystemAdapter;
   private firebase: null | FirebaseAdapter;
-  private iap: null | IapAdapter;
   private modelList: ModelList;
   private netInfo: NetInfoAdapter;
   private notifications: null | NotificationsAdapter;
@@ -56,14 +46,9 @@ export class SagaFacade {
   public constructor(
     env: SagaEnv,
     config: SagaConfig,
-    adMob: null | AdMobAdapter,
-    analytics: null | AnalyticsAdapter,
     audioPlayer: AudioPlayerAdapter,
-    crashlytics: null | CrashlyticsAdapter,
-    facebook: null | FacebookAdapter,
     fileSystem: FileSystemAdapter,
     firebase: null | FirebaseAdapter,
-    iap: null | IapAdapter,
     netInfo: NetInfoAdapter,
     notifications: null | NotificationsAdapter,
     sqliteDatabase: SQLiteDatabaseAdapter,
@@ -73,14 +58,9 @@ export class SagaFacade {
     this.env = env;
     this.config = config;
 
-    this.adMob = adMob;
-    this.analytics = analytics;
     this.audioPlayer = audioPlayer;
-    this.crashlytics = crashlytics;
-    this.facebook = facebook;
     this.fileSystem = fileSystem;
     this.firebase = firebase;
-    this.iap = iap;
     this.netInfo = netInfo;
     this.notifications = notifications;
     this.systemTheme = systemTheme;
@@ -98,16 +78,11 @@ export class SagaFacade {
 
   public run(): void {
     const root = new RootSaga(
-      this.adMob,
-      this.analytics,
       this.audioPlayer,
-      this.crashlytics,
       this.database,
       this.databaseEventBus,
-      this.facebook,
       this.fileSystem,
       this.firebase,
-      this.iap,
       this.modelList,
       this.netInfo,
       this.notifications,

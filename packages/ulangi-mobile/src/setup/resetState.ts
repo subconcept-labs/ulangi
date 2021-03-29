@@ -5,13 +5,10 @@
  * See LICENSE or go to https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-import { ActivityState } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableAdStore,
   ObservableEventStore,
   ObservableNetworkStore,
   ObservableNotificationStore,
-  ObservablePurchaseStore,
   ObservableRemoteConfigStore,
   ObservableRootStore,
   ObservableSetStore,
@@ -31,19 +28,6 @@ export function resetState(currentState: ObservableRootStore): void {
   );
   const syncStore = new ObservableSyncStore('NOT_SYNCING');
   const remoteConfigStore = new ObservableRemoteConfigStore(null);
-  const purchaseStore = new ObservablePurchaseStore(
-    currentState.purchaseStore.premiumLifetimeProductId,
-    ActivityState.INACTIVE,
-    null,
-  );
-  const adStore = new ObservableAdStore(
-    currentState.adStore.isSetUp,
-    currentState.adStore.isInitialized,
-    currentState.adStore.consentStatus,
-    currentState.adStore.isRequestLocationInEeaOrUnknown,
-    false,
-    0,
-  );
   const notificationStore = new ObservableNotificationStore(null);
   const themeStore = new ObservableThemeStore(
     userStore,
@@ -59,8 +43,6 @@ export function resetState(currentState: ObservableRootStore): void {
       networkStore,
       syncStore,
       remoteConfigStore,
-      purchaseStore,
-      adStore,
       notificationStore,
       themeStore,
       eventStore,

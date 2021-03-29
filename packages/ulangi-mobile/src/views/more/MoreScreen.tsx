@@ -8,7 +8,6 @@
 import { assertExists } from '@ulangi/assert';
 import { ButtonSize } from '@ulangi/ulangi-common/enums';
 import {
-  ObservableAdStore,
   ObservableMoreScreen,
   ObservableNetworkStore,
   ObservableSetStore,
@@ -36,8 +35,6 @@ import { MessageCarousel } from './MessageCarousel';
 import {
   MoreScreenStyles,
   moreScreenResponsiveStyles,
-  premiumSectionRowResponsiveStyles,
-  regularSectionRowResponsiveStyles,
 } from './MoreScreen.style';
 
 export interface MoreScreenProps {
@@ -46,7 +43,6 @@ export interface MoreScreenProps {
   setStore: ObservableSetStore;
   networkStore: ObservableNetworkStore;
   syncStore: ObservableSyncStore;
-  adStore: ObservableAdStore;
   observableScreen: ObservableMoreScreen;
   screenDelegate: MoreScreenDelegate;
 }
@@ -88,8 +84,6 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
     return [
       this.renderAccountSection(),
       this.renderToolsAndSettingsSection(),
-      this.renderGeneralSection(),
-      this.renderContactUsSection(),
       this.renderProjectsSection(),
       this.renderInfoSection(),
       this.renderLogOutSection(),
@@ -133,26 +127,6 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
             onPress={this.props.screenDelegate.navigateToSecurityScreen}
           />
         )}
-        {env.OPEN_SOURCE_ONLY === false ? (
-          <SectionRow
-            testID={MoreScreenIds.MEMBERSHIP_BTN}
-            theme={this.props.themeStore.theme}
-            screenLayout={this.props.observableScreen.screenLayout}
-            leftText="Account Type"
-            rightText={
-              this.props.userStore.existingCurrentUser.isPremium === true
-                ? 'Premium'
-                : 'Free'
-            }
-            showArrow={true}
-            onPress={this.props.screenDelegate.navigateToMembershipScreen}
-            styles={
-              this.props.userStore.existingCurrentUser.isPremium
-                ? premiumSectionRowResponsiveStyles
-                : regularSectionRowResponsiveStyles
-            }
-          />
-        ) : null}
       </SectionGroup>
     );
   }
@@ -252,16 +226,24 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         key="projects"
         theme={this.props.themeStore.theme}
         screenLayout={this.props.observableScreen.screenLayout}
-        header="PROJECTS">
+        header="OUR PROJECTS">
         <SectionRow
-          testID={MoreScreenIds.SOURCE_CODE_BTN}
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Ulangi Open Source Project"
+          leftText="Ulangi App"
           rightText=""
           showArrow={true}
           onPress={this.props.screenDelegate.goToGitHub}
-          description="View Ulangi source code on GitHub."
+          description="Ulangi is open-source on GitHub."
+        />
+        <SectionRow
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Midterm App"
+          rightText=""
+          showArrow={true}
+          onPress={this.props.screenDelegate.goToMidterm}
+          description="Midterm is a note-taking app designed for studying."
         />
         <SectionRow
           testID={MoreScreenIds.DICTIONARY_FUNCTIONS_BTN}
@@ -276,45 +258,7 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
               'dictionaryfx.com',
             )
           }
-          description="Extract dictionary data easily using Google Sheets formulas and import them to your favorite learning apps."
-        />
-      </SectionGroup>
-    );
-  }
-
-  private renderContactUsSection(): React.ReactElement<any> {
-    return (
-      <SectionGroup
-        key="contact-us"
-        theme={this.props.themeStore.theme}
-        screenLayout={this.props.observableScreen.screenLayout}
-        header="CONTACT US">
-        <SectionRow
-          testID={MoreScreenIds.FEATURE_REQUEST_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Feature Request"
-          rightText=""
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToFeatureRequestScreen}
-        />
-        <SectionRow
-          testID={MoreScreenIds.REPORT_A_BUG_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Report a Bug"
-          rightText=""
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToReportABugScreen}
-        />
-        <SectionRow
-          testID={MoreScreenIds.CONTACT_SUPPORT_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Contact Support"
-          rightText=""
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToContactSupportScreen}
+          description="Extract dictionary data using Google Sheets formulas."
         />
       </SectionGroup>
     );
@@ -328,6 +272,23 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
         screenLayout={this.props.observableScreen.screenLayout}
         header="INFO">
         <SectionRow
+          testID={MoreScreenIds.RATE_THIS_APP_BTN}
+          theme={this.props.themeStore.theme}
+          screenLayout={this.props.observableScreen.screenLayout}
+          leftText="Rate this app"
+          customRight={
+            <Rating
+              theme={this.props.themeStore.theme}
+              screenLayout={this.props.observableScreen.screenLayout}
+              currentRating={
+                this.props.userStore.existingCurrentUser.userRating
+              }
+              setRating={this.props.screenDelegate.setRating}
+            />
+          }
+          showArrow={false}
+        />
+        <SectionRow
           testID={MoreScreenIds.VERSION_BTN}
           theme={this.props.themeStore.theme}
           screenLayout={this.props.observableScreen.screenLayout}
@@ -336,30 +297,6 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToWhatsNewScreen}
         />
-        {env.OPEN_SOURCE_ONLY === false &&
-        this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
-          <SectionRow
-            testID={MoreScreenIds.AD_CONSENT_BTN}
-            theme={this.props.themeStore.theme}
-            screenLayout={this.props.observableScreen.screenLayout}
-            leftText="Ad Consent"
-            rightText=""
-            showArrow={true}
-            onPress={this.props.screenDelegate.showGoogleConsentForm}
-          />
-        ) : null}
-        {env.OPEN_SOURCE_ONLY === false &&
-        this.props.adStore.isRequestLocationInEeaOrUnknown === true ? (
-          <SectionRow
-            testID={MoreScreenIds.DATA_SHARING_BTN}
-            theme={this.props.themeStore.theme}
-            screenLayout={this.props.observableScreen.screenLayout}
-            leftText="Data Sharing"
-            rightText=""
-            showArrow={true}
-            onPress={this.props.screenDelegate.navigateToDataSharingScreen}
-          />
-        ) : null}
         <SectionRow
           testID={MoreScreenIds.TERMS_OF_SERVICE_BTN}
           theme={this.props.themeStore.theme}
@@ -377,97 +314,6 @@ export class MoreScreen extends React.Component<MoreScreenProps> {
           rightText=""
           showArrow={true}
           onPress={this.props.screenDelegate.navigateToPrivacyPolicyScreen}
-        />
-        <SectionRow
-          testID={MoreScreenIds.EVENT_LOGS_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Event Logs"
-          showArrow={true}
-          onPress={this.props.screenDelegate.navigateToEventLogsScreen}
-        />
-      </SectionGroup>
-    );
-  }
-
-  private renderGeneralSection(): React.ReactElement<any> {
-    return (
-      <SectionGroup
-        key="general"
-        theme={this.props.themeStore.theme}
-        screenLayout={this.props.observableScreen.screenLayout}
-        header="GENERAL">
-        <SectionRow
-          testID={MoreScreenIds.RATE_THIS_APP_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Rate Ulangi"
-          customRight={
-            <Rating
-              theme={this.props.themeStore.theme}
-              screenLayout={this.props.observableScreen.screenLayout}
-              currentRating={
-                this.props.userStore.existingCurrentUser.userRating
-              }
-              setRating={this.props.screenDelegate.setRating}
-            />
-          }
-          showArrow={false}
-        />
-        <SectionRow
-          testID={MoreScreenIds.WHATS_NEW_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText={`What's New in v${VersionInfo.appVersion}`}
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.navigateToWhatsNewScreen();
-          }}
-        />
-        <SectionRow
-          testID={MoreScreenIds.FOLLOW_US_ON_TWITTER_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Follow Us on Twitter"
-          leftIcon={
-            <Image
-              style={this.styles.left_icon}
-              source={Images.TWITTER_20x20}
-            />
-          }
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.goToTwitter();
-          }}
-        />
-        <SectionRow
-          testID={MoreScreenIds.FOLLOW_US_ON_INSTAGRAM_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Follow Us on Instagram"
-          leftIcon={
-            <Image
-              style={this.styles.left_icon}
-              source={Images.INSTAGRAM_20x20}
-            />
-          }
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.goToInstagram();
-          }}
-        />
-        <SectionRow
-          testID={MoreScreenIds.JOIN_OUR_COMMUNITY_BTN}
-          theme={this.props.themeStore.theme}
-          screenLayout={this.props.observableScreen.screenLayout}
-          leftText="Join our Reddit community"
-          leftIcon={
-            <Image style={this.styles.left_icon} source={Images.REDDIT_20x20} />
-          }
-          showArrow={true}
-          onPress={(): void => {
-            this.props.screenDelegate.goToReddit();
-          }}
         />
       </SectionGroup>
     );

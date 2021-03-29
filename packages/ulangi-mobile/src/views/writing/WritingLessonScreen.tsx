@@ -68,12 +68,8 @@ export class WritingLessonScreen extends React.Component<
             saveState={this.props.observableScreen.saveState}
             counts={this.props.observableScreen.counts}
             showReviewFeedback={this.props.screenDelegate.showReviewFeedback}
-            shouldShowAdOrGoogleConsentForm={
-              this.props.observableScreen.shouldShowAdOrGoogleConsentForm
-            }
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
-            quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
-            upgradeToPremium={this.props.screenDelegate.goToAccountTypeScreen}
+            quit={this.props.screenDelegate.quit}
           />
         </ScrollView>
       );

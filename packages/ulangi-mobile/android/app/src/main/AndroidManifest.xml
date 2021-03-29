@@ -36,25 +36,6 @@
         android:name="firebase_crashlytics_collection_enabled"
         android:value="false" />
 
-      <!-- FBSDK -->
-      <meta-data 
-        android:name="com.facebook.sdk.ApplicationId" 
-        android:value="@string/facebook_app_id" />
-      <meta-data 
-        android:name='com.facebook.sdk.AutoLogAppEventsEnabled'
-        android:value='false'/>
-
-      <!-- AdMob -->
-      <meta-data
-        android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-1363672124516644~3363203395" />
-      <!-- Delay app measurement until MobileAds.initialize() is called. -->
-      <meta-data
-        android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
-        android:value="true"/>
-      <!-- Add this line to avoid crashes on Android 9 until AdMob SDK update -->
-      <uses-library android:name="org.apache.http.legacy" android:required="false"/> 
-
       <!-- Local notifications -->
       <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>
       <receiver android:enabled="true" android:exported="true"  android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver">

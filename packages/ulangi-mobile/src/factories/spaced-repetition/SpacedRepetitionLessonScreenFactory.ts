@@ -10,8 +10,6 @@ import { ReviewPriority } from '@ulangi/ulangi-common/enums';
 import { ObservableSpacedRepetitionLessonScreen } from '@ulangi/ulangi-observable';
 
 import { config } from '../../constants/config';
-import { AdAfterLessonDelegate } from '../../delegates/ad/AdAfterLessonDelegate';
-import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { AutoArchiveSettingsDelegate } from '../../delegates/auto-archive/AutoArchiveSettingsDelegate';
 import { ReviewActionMenuDelegate } from '../../delegates/review-action/ReviewActionMenuDelegate';
 import { ReviewFeedbackBarDelegate } from '../../delegates/review-feedback/ReviewFeedbackBarDelegate';
@@ -92,19 +90,6 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       reviewFeedbackButtonDelegate,
     );
 
-    const adDelegate = new AdDelegate(
-      this.eventBus,
-      this.props.rootStore.adStore,
-      this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore,
-    );
-
-    const adAfterLessonDelegate = new AdAfterLessonDelegate(
-      this.observer,
-      observableScreen.shouldShowAdOrGoogleConsentForm,
-      navigatorDelegate,
-    );
-
     return new SpacedRepetitionLessonScreenDelegate(
       this.observer,
       this.props.rootStore.setStore,
@@ -115,8 +100,6 @@ export class SpacedRepetitionLessonScreenFactory extends ScreenFactory {
       saveResultDelegate,
       countsDelegate,
       speakDelegate,
-      adDelegate,
-      adAfterLessonDelegate,
       reviewActionMenuDelegate,
       dialogDelegate,
       navigatorDelegate,

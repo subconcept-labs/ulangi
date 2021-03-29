@@ -8,11 +8,9 @@
 import * as _ from 'lodash';
 import { action } from 'mobx';
 
-import { ObservableAdStore } from './ObservableAdStore';
 import { ObservableEventStore } from './ObservableEventStore';
 import { ObservableNetworkStore } from './ObservableNetworkStore';
 import { ObservableNotificationStore } from './ObservableNotificationStore';
-import { ObservablePurchaseStore } from './ObservablePurchaseStore';
 import { ObservableRemoteConfigStore } from './ObservableRemoteConfigStore';
 import { ObservableSetStore } from './ObservableSetStore';
 import { ObservableStore } from './ObservableStore';
@@ -26,8 +24,6 @@ export class ObservableRootStore extends ObservableStore {
   public readonly networkStore: ObservableNetworkStore;
   public readonly syncStore: ObservableSyncStore;
   public readonly remoteConfigStore: ObservableRemoteConfigStore;
-  public readonly purchaseStore: ObservablePurchaseStore;
-  public readonly adStore: ObservableAdStore;
   public readonly notificationStore: ObservableNotificationStore;
   public readonly themeStore: ObservableThemeStore;
   public readonly eventStore: ObservableEventStore;
@@ -54,8 +50,6 @@ export class ObservableRootStore extends ObservableStore {
     networkStore: ObservableNetworkStore,
     syncStore: ObservableSyncStore,
     remoteConfigStore: ObservableRemoteConfigStore,
-    purchaseStore: ObservablePurchaseStore,
-    adStore: ObservableAdStore,
     notificationStore: ObservableNotificationStore,
     themeStore: ObservableThemeStore,
     eventStore: ObservableEventStore
@@ -66,8 +60,6 @@ export class ObservableRootStore extends ObservableStore {
     this.networkStore = networkStore;
     this.syncStore = syncStore;
     this.remoteConfigStore = remoteConfigStore;
-    this.purchaseStore = purchaseStore;
-    this.adStore = adStore;
     this.notificationStore = notificationStore;
     this.themeStore = themeStore;
     this.eventStore = eventStore;

@@ -45,13 +45,9 @@ target 'UlangiMobile' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
-  pod 'Firebase/AdMob'
   pod 'Firebase/Messaging'
-  pod 'PersonalizedAdConsent'
-  pod 'Google-Mobile-Ads-SDK'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'GoogleIDFASupport'
   pod 'ReactNativeNavigation', :podspec => '../node_modules/@ulangi/react-native-navigation/ReactNativeNavigation.podspec'
 
   target 'UlangiMobileTests' do

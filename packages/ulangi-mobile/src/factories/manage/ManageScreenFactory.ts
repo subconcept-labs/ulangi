@@ -7,13 +7,11 @@
 
 import { ObservableManageScreen } from '@ulangi/ulangi-observable';
 
-import { AdDelegate } from '../../delegates/ad/AdDelegate';
 import { CategoryActionMenuDelegate } from '../../delegates/category/CategoryActionMenuDelegate';
 import { CategoryBulkActionMenuDelegate } from '../../delegates/category/CategoryBulkActionMenuDelegate';
 import { CategoryListDelegate } from '../../delegates/category/CategoryListDelegate';
 import { CategorySelectionDelegate } from '../../delegates/category/CategorySelectionDelegate';
 import { CategorySortMenuDelegate } from '../../delegates/category/CategorySortMenuDelegate';
-import { DataSharingDelegate } from '../../delegates/data-sharing/DataSharingDelegate';
 import { FeatureSettingsDelegate } from '../../delegates/learn/FeatureSettingsDelegate';
 import { LevelBreakdownDelegate } from '../../delegates/level/LevelBreakdownDelegate';
 import { AutorunDelegate } from '../../delegates/manage/AutorunDelegate';
@@ -107,13 +105,6 @@ export class ManageScreenFactory extends ScreenFactory {
       writingSettingsDelegate,
     );
 
-    const adDelegate = new AdDelegate(
-      this.eventBus,
-      this.props.rootStore.adStore,
-      this.props.rootStore.userStore,
-      this.props.rootStore.remoteConfigStore,
-    );
-
     const rootScreenDelegate = this.createRootScreenDelegate();
 
     const reminderDelegate = new ReminderDelegate(this.eventBus);
@@ -127,21 +118,12 @@ export class ManageScreenFactory extends ScreenFactory {
       this.props.rootStore.setStore,
     );
 
-    const dataSharingDelegate = new DataSharingDelegate(
-      this.eventBus,
-      this.observer,
-      this.props.rootStore.userStore,
-      this.props.rootStore.adStore,
-    );
-
     const autorunDelegate = new AutorunDelegate(
       this.eventBus,
       this.observer,
       this.props.rootStore.userStore,
-      adDelegate,
       reminderDelegate,
       reminderSettingsDelegate,
-      dataSharingDelegate,
       dialogDelegate,
       rootScreenDelegate,
     );

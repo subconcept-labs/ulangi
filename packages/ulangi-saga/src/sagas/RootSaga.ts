@@ -15,14 +15,9 @@ import {
 import { Task } from 'redux-saga';
 import { call, cancel, fork, put, take } from 'redux-saga/effects';
 
-import { AdMobAdapter } from '../adapters/AdMobAdapter';
-import { AnalyticsAdapter } from '../adapters/AnalyticsAdapter';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
-import { CrashlyticsAdapter } from '../adapters/CrashlyticsAdapter';
-import { FacebookAdapter } from '../adapters/FacebookAdapter';
 import { FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
-import { IapAdapter } from '../adapters/IapAdapter';
 import { NetInfoAdapter } from '../adapters/NetInfoAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { SystemThemeAdapter } from '../adapters/SystemThemeAdapter';
@@ -36,47 +31,32 @@ export class RootSaga {
   private protectedSagas?: readonly ProtectedSaga[];
   private forkedProtectedSagasTask?: Task;
 
-  private admob: null | AdMobAdapter;
-  private analytics: null | AnalyticsAdapter;
   private audioPlayer: AudioPlayerAdapter;
-  private crashlytics: null | CrashlyticsAdapter;
   private database: DatabaseFacade;
   private databaseEventBus: DatabaseEventBus;
-  private facebook: null | FacebookAdapter;
   private fileSystem: FileSystemAdapter;
   private firebase: null | FirebaseAdapter;
-  private iap: null | IapAdapter;
   private modelList: ModelList;
   private netInfo: NetInfoAdapter;
   private notifications: null | NotificationsAdapter;
   private systemTheme: SystemThemeAdapter;
 
   public constructor(
-    admob: null | AdMobAdapter,
-    analytics: null | AnalyticsAdapter,
     audioPlayer: AudioPlayerAdapter,
-    crashlytics: null | CrashlyticsAdapter,
     database: DatabaseFacade,
     databaseEventBus: DatabaseEventBus,
-    facebook: null | FacebookAdapter,
     fileSystem: FileSystemAdapter,
     firebase: null | FirebaseAdapter,
-    iap: null | IapAdapter,
     modelList: ModelList,
     netInfo: NetInfoAdapter,
     notifications: null | NotificationsAdapter,
     systemTheme: SystemThemeAdapter
   ) {
-    this.admob = admob;
-    this.analytics = analytics;
     this.audioPlayer = audioPlayer;
-    this.crashlytics = crashlytics;
     this.database = database;
     this.databaseEventBus = databaseEventBus;
-    this.facebook = facebook;
     this.fileSystem = fileSystem;
     this.firebase = firebase;
-    this.iap = iap;
     this.modelList = modelList;
     this.netInfo = netInfo;
     this.notifications = notifications;
@@ -95,11 +75,7 @@ export class RootSaga {
     config: SagaConfig
   ): IterableIterator<any> {
     const publicSagaFactory = new PublicSagaFactory(
-      this.admob,
-      this.analytics,
-      this.crashlytics,
       this.database,
-      this.facebook,
       this.modelList,
       this.netInfo,
       this.systemTheme
@@ -167,7 +143,6 @@ export class RootSaga {
       this.databaseEventBus,
       this.fileSystem,
       this.firebase,
-      this.iap,
       this.modelList,
       this.notifications,
       this.database.getDb('shared'),

@@ -267,10 +267,6 @@ export {
   ObservableRemoteConfigStore,
 } from './observables/stores/ObservableRemoteConfigStore';
 export {
-  ObservablePurchaseStore,
-} from './observables/stores/ObservablePurchaseStore';
-export { ObservableAdStore } from './observables/stores/ObservableAdStore';
-export {
   ObservableNotificationStore,
 } from './observables/stores/ObservableNotificationStore';
 
@@ -368,7 +364,6 @@ export {
 export {
   ObservableUpgradeButtonState,
 } from './observables/membership/ObservableUpgradeButtonState';
-export { ObservableAdScreen } from './observables/ad/ObservableAdScreen';
 export {
   ObservableRemoteConfig,
 } from './observables/remote-config/ObservableRemoteConfig';
@@ -400,9 +395,6 @@ export {
 export {
   ObservableTopBarButton,
 } from './observables/top-bar/ObservableTopBarButton';
-export {
-  ObservableDataSharingScreen,
-} from './observables/data-sharing/ObservableDataSharingScreen';
 export {
   ObservableFeatureSettings,
 } from './observables/learn/ObservableFeatureSettings';

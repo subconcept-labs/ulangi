@@ -9,7 +9,6 @@ import { ChangeEmailScreenContainer } from '../views/account/ChangeEmailScreenCo
 import { ChangePasswordScreenContainer } from '../views/account/ChangePasswordScreenContainer';
 import { SecurityScreenContainer } from '../views/account/SecurityScreenContainer';
 import { SetUpAccountScreenContainer } from '../views/account/SetUpAccountScreenContainer';
-import { AdScreenContainer } from '../views/ad/AdScreenContainer';
 import { AtomGameOverScreenContainer } from '../views/atom/AtomGameOverScreenContainer';
 import { AtomPausedScreenContainer } from '../views/atom/AtomPausedScreenContainer';
 import { AtomPlayScreenContainer } from '../views/atom/AtomPlayScreenContainer';
@@ -25,7 +24,6 @@ import { CategorizeScreenContainer } from '../views/category/CategorizeScreenCon
 import { CategoryDetailScreenContainer } from '../views/category/CategoryDetailScreenContainer';
 import { CategorySelectorScreenContainer } from '../views/category/CategorySelectorScreenContainer';
 import { ContactUsScreenContainer } from '../views/contact-us/ContactUsScreenContainer';
-import { DataSharingScreenContainer } from '../views/data-sharing/DataSharingScreenContainer';
 import { DiscoverFAQScreenContainer } from '../views/discover/DiscoverFAQScreenContainer';
 import { DiscoverScreenContainer } from '../views/discover/DiscoverScreenContainer';
 import { PublicSetDetailScreenContainer } from '../views/discover/PublicSetDetailScreenContainer';
@@ -42,7 +40,6 @@ import { LightBoxActionMenuScreenContainer } from '../views/light-box/LightBoxAc
 import { LightBoxDialogScreenContainer } from '../views/light-box/LightBoxDialogScreenContainer';
 import { LightBoxSelectionMenuScreenContainer } from '../views/light-box/LightBoxSelectionMenuScreenContainer';
 import { ManageScreenContainer } from '../views/manage/ManageScreenContainer';
-import { MembershipScreenContainer } from '../views/membership/MembershipScreenContainer';
 import { MoreScreenContainer } from '../views/more/MoreScreenContainer';
 import { PreloadScreenContainer } from '../views/preload/PreloadScreenContainer';
 import { HeatMapDataPointScreenContainer } from '../views/progress/HeatMapDataPointScreenContainer';
@@ -84,7 +81,6 @@ import { WritingSettingsScreenContainer } from '../views/writing/WritingSettings
 export const ScreenContainers = {
   ADD_SET_SCREEN: AddSetScreenContainer,
   ADD_VOCABULARY_SCREEN: AddVocabularyScreenContainer,
-  AD_SCREEN: AdScreenContainer,
   ATOM_GAME_OVER_SCREEN: AtomGameOverScreenContainer,
   ATOM_PAUSED_SCREEN: AtomPausedScreenContainer,
   ATOM_PLAY_SCREEN: AtomPlayScreenContainer,
@@ -98,7 +94,6 @@ export const ScreenContainers = {
   CHANGE_PASSWORD_SCREEN: ChangePasswordScreenContainer,
   CONTACT_US_SCREEN: ContactUsScreenContainer,
   CREATE_FIRST_SET_SCREEN: CreateFirstSetScreenContainer,
-  DATA_SHARING_SCREEN: DataSharingScreenContainer,
   DICTIONARY_PICKER_SCREEN: DictionaryPickerScreenContainer,
   SUGGESTIONS_PICKER_SCREEN: SuggestionsPickerScreenContainer,
   DISCOVER_SCREEN: DiscoverScreenContainer,
@@ -118,7 +113,6 @@ export const ScreenContainers = {
   LIGHT_BOX_DIALOG_SCREEN: LightBoxDialogScreenContainer,
   LIGHT_BOX_SELECTION_MENU_SCREEN: LightBoxSelectionMenuScreenContainer,
   MANAGE_SCREEN: ManageScreenContainer,
-  MEMBERSHIP_SCREEN: MembershipScreenContainer,
   MORE_SCREEN: MoreScreenContainer,
   PRELOAD_SCREEN: PreloadScreenContainer,
   PUBLIC_SET_DETAIL_SCREEN: PublicSetDetailScreenContainer,

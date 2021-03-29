@@ -1,6 +1,5 @@
 package com.ulangi;
 
-import io.invertase.firebase.admob.RNFirebaseAdMobPackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
@@ -39,7 +38,6 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
         List<ReactPackage> packages = new PackageList(this).getPackages();
         // Packages that might not support autolinking can still go here
-        packages.add(new RNFirebaseAdMobPackage());
         packages.add(new RNFirebaseAnalyticsPackage());
         packages.add(new RNFirebaseAuthPackage());
         packages.add(new RNFirebaseCrashlyticsPackage());

@@ -29,8 +29,6 @@ import { ReviewActionBarIds } from '../../constants/ids/ReviewActionBarIds';
 import { ReviewActionButtonFactory } from '../../factories/review-action/ReviewActionButtonFactory';
 import { ReviewIterator } from '../../iterators/ReviewIterator';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
-import { AdAfterLessonDelegate } from '../ad/AdAfterLessonDelegate';
-import { AdDelegate } from '../ad/AdDelegate';
 import { DialogDelegate } from '../dialog/DialogDelegate';
 import { NavigatorDelegate } from '../navigator/NavigatorDelegate';
 import { ReviewActionMenuDelegate } from '../review-action/ReviewActionMenuDelegate';
@@ -52,8 +50,6 @@ export class SpacedRepetitionLessonScreenDelegate {
   private saveResultDelegate: SpacedRepetitionSaveResultDelegate;
   private countsDelegate: SpacedRepetitionCountsDelegate;
   private speakDelegate: SpeakDelegate;
-  private adDelegate: AdDelegate;
-  private adAfterLessonDelegate: AdAfterLessonDelegate;
   private reviewActionMenuDelegate: ReviewActionMenuDelegate;
   private dialogDelegate: DialogDelegate;
   private navigatorDelegate: NavigatorDelegate;
@@ -72,8 +68,6 @@ export class SpacedRepetitionLessonScreenDelegate {
     saveResultDelegate: SpacedRepetitionSaveResultDelegate,
     countsDelegate: SpacedRepetitionCountsDelegate,
     speakDelegate: SpeakDelegate,
-    adDelegate: AdDelegate,
-    adAfterLessonDelegate: AdAfterLessonDelegate,
     reviewActionMenuDelegate: ReviewActionMenuDelegate,
     dialogDelegate: DialogDelegate,
     navigatorDelegate: NavigatorDelegate,
@@ -89,8 +83,6 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.saveResultDelegate = saveResultDelegate;
     this.countsDelegate = countsDelegate;
     this.speakDelegate = speakDelegate;
-    this.adDelegate = adDelegate;
-    this.adAfterLessonDelegate = adAfterLessonDelegate;
     this.reviewActionMenuDelegate = reviewActionMenuDelegate;
     this.dialogDelegate = dialogDelegate;
     this.navigatorDelegate = navigatorDelegate;
@@ -103,12 +95,7 @@ export class SpacedRepetitionLessonScreenDelegate {
     this.calculateNextReviewData();
 
     this.autoUpdateButtons();
-    this.autoDisablePopGestureWhenAdRequiredToShow();
     this.addBackButtonHandler(this.handleBackPressed);
-
-    if (this.shouldLoadAd()) {
-      this.loadAd();
-    }
   }
 
   public cleanUp(): void {
@@ -123,7 +110,7 @@ export class SpacedRepetitionLessonScreenDelegate {
       this.showConfirmQuitLessonDialog();
       return true;
     } else {
-      this.showAdIfRequiredThenQuit();
+      this.quit();
       return true;
     }
   }
@@ -161,10 +148,6 @@ export class SpacedRepetitionLessonScreenDelegate {
     if (this.observableScreen.shouldShowResult.get() === false) {
       this.observableScreen.shouldShowResult.set(true);
       this.saveResult();
-
-      this.observableScreen.shouldShowAdOrGoogleConsentForm.set(
-        this.adDelegate.shouldShowAdOrGoogleConsentForm(),
-      );
     }
   }
 
@@ -199,7 +182,7 @@ export class SpacedRepetitionLessonScreenDelegate {
   public takeAnotherLesson(
     overrideReviewPriority: undefined | ReviewPriority,
   ): void {
-    this.showAdIfRequiredThenQuit();
+    this.quit();
     this.observer.when(
       (): boolean =>
         this.observableScreen.screenState === ScreenState.UNMOUNTED,
@@ -207,14 +190,8 @@ export class SpacedRepetitionLessonScreenDelegate {
     );
   }
 
-  public showAdIfRequiredThenQuit(): void {
-    if (this.observableScreen.shouldShowAdOrGoogleConsentForm.get()) {
-      this.adAfterLessonDelegate.showAdOrGoogleConsentForm(
-        (): void => this.navigatorDelegate.dismissScreen(),
-      );
-    } else {
-      this.navigatorDelegate.dismissScreen();
-    }
+  public quit(): void {
+    this.navigatorDelegate.dismissScreen();
   }
 
   public showReviewFeedback(): void {
@@ -262,22 +239,6 @@ export class SpacedRepetitionLessonScreenDelegate {
   public clearDueAndNewCounts(): void {
     this.observableScreen.counts = undefined;
     this.countsDelegate.clearDueAndNewCounts();
-  }
-
-  public goToAccountTypeScreen(): void {
-    this.navigatorDelegate.push(ScreenName.MEMBERSHIP_SCREEN, {});
-  }
-
-  private autoDisablePopGestureWhenAdRequiredToShow(): void {
-    this.adAfterLessonDelegate.autoDisablePopGestureWhenAdRequiredToShow();
-  }
-
-  private shouldLoadAd(): boolean {
-    return this.adDelegate.shouldLoadAd();
-  }
-
-  private loadAd(): void {
-    this.adDelegate.loadAd();
   }
 
   private addBackButtonHandler(handler: () => void): void {

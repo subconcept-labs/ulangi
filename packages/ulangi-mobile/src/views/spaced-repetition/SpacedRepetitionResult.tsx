@@ -24,7 +24,6 @@ import { config } from '../../constants/config';
 import { SpacedRepetitionLessonScreenIds } from '../../constants/ids/SpacedRepetitionLessonScreenIds';
 import { fullRoundedButtonStyles } from '../../styles/FullRoundedButtonStyles';
 import { roundedCornerButtonStyles } from '../../styles/RoundedCornerButtonStyles';
-import { AdNotice } from '../ad/AdNotice';
 import { DefaultButton } from '../common/DefaultButton';
 import { DefaultText } from '../common/DefaultText';
 import { ReviewFeedbackSummary } from '../review-feedback/ReviewFeedbackSummary';
@@ -40,11 +39,9 @@ export interface SpacedRepetitionResultProps {
   feedbackListState: ObservableFeedbackListState;
   saveState: IObservableValue<ActivityState>;
   counts: undefined | { due: number; new: number };
-  shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
   showReviewFeedback: () => void;
   takeAnotherLesson: (override: undefined | ReviewPriority) => void;
   quit: () => void;
-  upgradeToPremium: () => void;
   styles?: {
     light: SpacedRepetitionResultStyles;
     dark: SpacedRepetitionResultStyles;
@@ -74,15 +71,6 @@ export class SpacedRepetitionResult extends React.Component<
           feedbackListState={this.props.feedbackListState}
         />
         {this.renderSaveText()}
-        {this.props.shouldShowAdOrGoogleConsentForm.get() ? (
-          <View style={this.styles.ad_notice_container}>
-            <AdNotice
-              theme={this.props.theme}
-              screenLayout={this.props.screenLayout}
-              upgradeToPremium={this.props.upgradeToPremium}
-            />
-          </View>
-        ) : null}
         {this.renderButtons()}
       </ScrollView>
     );

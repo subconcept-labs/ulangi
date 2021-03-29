@@ -41,8 +41,6 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
 
   public readonly shouldShowResult: IObservableValue<boolean>;
 
-  public readonly shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>;
-
   public readonly speakState: IObservableValue<ActivityState>;
 
   public readonly saveState: IObservableValue<ActivityState>;
@@ -67,7 +65,6 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     autoplayAudio: IObservableValue<boolean>,
     shouldHighlightOnError: IObservableValue<boolean>,
     shouldShowResult: IObservableValue<boolean>,
-    shouldShowAdOrGoogleConsentForm: IObservableValue<boolean>,
     speakState: IObservableValue<ActivityState>,
     saveState: IObservableValue<ActivityState>,
     componentId: string,
@@ -86,7 +83,6 @@ export class ObservableWritingLessonScreen extends ObservableScreen {
     this.numberOfFeedbackButtons = numberOfFeedbackButtons;
     this.shouldHighlightOnError = shouldHighlightOnError;
     this.shouldShowResult = shouldShowResult;
-    this.shouldShowAdOrGoogleConsentForm = shouldShowAdOrGoogleConsentForm;
     this.speakState = speakState;
     this.saveState = saveState;
   }

@@ -66,13 +66,9 @@ export class SpacedRepetitionLessonScreen extends React.Component<
             feedbackListState={this.props.observableScreen.feedbackListState}
             saveState={this.props.observableScreen.saveState}
             counts={this.props.observableScreen.counts}
-            shouldShowAdOrGoogleConsentForm={
-              this.props.observableScreen.shouldShowAdOrGoogleConsentForm
-            }
             showReviewFeedback={this.props.screenDelegate.showReviewFeedback}
             takeAnotherLesson={this.props.screenDelegate.takeAnotherLesson}
-            quit={this.props.screenDelegate.showAdIfRequiredThenQuit}
-            upgradeToPremium={this.props.screenDelegate.goToAccountTypeScreen}
+            quit={this.props.screenDelegate.quit}
           />
         </ScrollView>
       );

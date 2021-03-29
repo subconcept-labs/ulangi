@@ -11,7 +11,6 @@ import { DatabaseEventBus, ModelList } from '@ulangi/ulangi-local-database';
 import { AudioPlayerAdapter } from '../adapters/AudioPlayerAdapter';
 import { FileSystemAdapter } from '../adapters/FileSystemAdapter';
 import { FirebaseAdapter } from '../adapters/FirebaseAdapter';
-import { IapAdapter } from '../adapters/IapAdapter';
 import { NotificationsAdapter } from '../adapters/NotificationsAdapter';
 import { ApiKeySaga } from '../sagas/ApiKeySaga';
 import { AtomSaga } from '../sagas/AtomSaga';
@@ -23,7 +22,6 @@ import { DownloadIncompatibleVocabularySaga } from '../sagas/DownloadIncompatibl
 import { DownloadSetSaga } from '../sagas/DownloadSetSaga';
 import { DownloadUserSaga } from '../sagas/DownloadUserSaga';
 import { DownloadVocabularySaga } from '../sagas/DownloadVocabularySaga';
-import { IapSaga } from '../sagas/IapSaga';
 import { ImageSaga } from '../sagas/ImageSaga';
 import { LessonResultSaga } from '../sagas/LessonResultSaga';
 import { LibrarySaga } from '../sagas/LibrarySaga';
@@ -52,7 +50,6 @@ export class ProtectedSagaFactory {
   private databaseEventBus: DatabaseEventBus;
   private fileSystem: FileSystemAdapter;
   private firebase: null | FirebaseAdapter;
-  private iap: null | IapAdapter;
   private modelList: ModelList;
   private notifications: null | NotificationsAdapter;
   private sharedDb: SQLiteDatabase;
@@ -63,7 +60,6 @@ export class ProtectedSagaFactory {
     databaseEventBus: DatabaseEventBus,
     fileSystem: FileSystemAdapter,
     firebase: null | FirebaseAdapter,
-    iap: null | IapAdapter,
     modelList: ModelList,
     notifications: null | NotificationsAdapter,
     sharedDb: SQLiteDatabase,
@@ -73,7 +69,6 @@ export class ProtectedSagaFactory {
     this.databaseEventBus = databaseEventBus;
     this.fileSystem = fileSystem;
     this.firebase = firebase;
-    this.iap = iap;
     this.modelList = modelList;
     this.notifications = notifications;
     this.sharedDb = sharedDb;
@@ -199,12 +194,6 @@ export class ProtectedSagaFactory {
         this.databaseEventBus
       ),
     ];
-
-    if (this.iap !== null) {
-      sagas.push(
-        new IapSaga(this.sharedDb, this.modelList.sessionModel, this.iap)
-      );
-    }
 
     if (this.notifications !== null) {
       sagas.push(new ReminderSaga(this.notifications));

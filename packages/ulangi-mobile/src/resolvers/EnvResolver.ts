@@ -23,24 +23,5 @@ export class EnvResolver extends AbstractResolver<Env> {
     IOS_APP_ID: Joi.string(),
     ANDROID_PACKAGE_NAME: Joi.string(),
     ANDROID_STORE: Joi.string(),
-
-    IOS_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
-    ANDROID_PREMIUM_LIFETIME_PRODUCT_ID: Joi.string().optional(),
-
-    ADMOB_PUBLISHER_ID: Joi.string().optional(),
-    CONSENT_FORM_SHOULD_OFFER_AD_FREE: Joi.boolean().optional(),
-    CONSENT_FORM_DEBUG_GEOGRAPHY: Joi.string()
-      .valid(['EEA', 'NOT_EEA'])
-      .optional(),
-    IOS_AD_APP_ID: Joi.string().optional(),
-    IOS_AD_UNIT_ID: Joi.string().optional(),
-    IOS_AD_TEST_DEVICE_ID: Joi.string().optional(),
-    IOS_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().optional(),
-    ANDROID_AD_APP_ID: Joi.string().optional(),
-    ANDROID_AD_UNIT_ID: Joi.string().optional(),
-    ANDROID_AD_TEST_DEVICE_ID: Joi.string().optional(),
-    ANDROID_CONSENT_FORM_DEBUG_DEVICE_ID: Joi.string().optional(),
-
-    FLASHCARD_PLAYER_URL: Joi.string().optional(),
   };
 }
