@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.21.0](https://github.com/ulangi/ulangi/compare/v3.20.4...v3.21.0) (2021-04-01)
+
+**Note:** Version bump only for package @ulangi/ulangi-event
+
+
+
+
+
 ## [3.20.3](https://github.com/ulangi/ulangi/compare/v3.20.2...v3.20.3) (2020-10-16)
 
 **Note:** Version bump only for package @ulangi/ulangi-event
