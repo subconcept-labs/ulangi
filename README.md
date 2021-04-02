@@ -15,17 +15,13 @@
   <a href="https://github.com/ulangi/ulangi/blob/master/LICENSE" alt="License">
     <img src="https://img.shields.io/github/license/ulangi/ulangi" /></a>
 </p>
-<p align="center">
-  <a href="https://www.reddit.com/r/Ulangi/" alt="Ulangi's Subreddit">
-    <img src="https://img.shields.io/reddit/subreddit-subscribers/ulangi?style=social" /></a>
-  <a href="https://twitter.com/UlangiApp" alt="Ulangi's Twitter">
-    <img src="https://img.shields.io/twitter/follow/UlangiApp?style=social" /></a>
-</p>
 
 ---
 
 ## Introduction
-**Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memorize them, such as spaced repetition, writing, quiz... **Everything about Ulangi (mobile, server, add-on, etc) is hosted here.** 
+**Ulangi** makes it easy for you to manage and create flash cards to learn languages. It comes with built-in dictionaries, translators, built-in TTS, image search engine and more. You can use different learning methods to memorize them, such as spaced repetition, writing, quiz... **Everything about Ulangi (mobile, server, add-on, etc) is hosted in this repository.** 
+
+**Ulangi** is completely free thanks to **[Midterm App](https://midterm.app)**. We are going to use some technology from it to make the desktop version.
 
 ---
 
@@ -36,14 +32,9 @@
 | --- | --- |
 | iOS | [Download on App Store](https://itunes.apple.com/us/app/id1435524341?mt=8) |
 | Android | [Download on Play Store](https://play.google.com/store/apps/details?id=com.ulangi) |
-| Mac | *Coming soon* |
-| Windows | *Coming soon* |
-
-### Ulangi (Lite version)
-The **Lite** version has some features removed so that it can work on Android devices that do not have Google Play services.
-| Platform | Store |
-| --- | --- |
-| Android (Amazon devices, such as **Kindle Fire**) | [Download on Amazon App Store](http://www.amazon.com/gp/mas/dl/android?p=com.ulangi.lite) |
+| Mac | *Not yet available* |
+| Windows | *Not yet available* |
+| Linux | *Not yet available* |
 
 ---
 
