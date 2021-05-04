@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.21.1](https://github.com/ulangi/ulangi/compare/v3.21.0...v3.21.1) (2021-05-04)
+
+
+### Bug Fixes
+
+* fix images not showing on iOS ([96ce928](https://github.com/ulangi/ulangi/commit/96ce928)), closes [#102](https://github.com/ulangi/ulangi/issues/102)
+* images not showing on ios ([2d36e81](https://github.com/ulangi/ulangi/commit/2d36e81))
+* postinstall script ([877dfd0](https://github.com/ulangi/ulangi/commit/877dfd0))
+* remove iap ([88c4eb9](https://github.com/ulangi/ulangi/commit/88c4eb9))
+
+
+
+
+
 # [3.21.0](https://github.com/ulangi/ulangi/compare/v3.20.4...v3.21.0) (2021-04-01)
 
 

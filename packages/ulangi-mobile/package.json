@@ -1,10 +1,10 @@
 {
 	"private": true,
 	"name": "@ulangi/ulangi-mobile",
-	"version": "3.21.0",
+	"version": "3.21.1",
 	"scripts": {
 		"postbootstrap": "cd ios && pod install",
-    "postinstall": "patch-package",
+		"postinstall": "patch-package",
 		"android": "react-native run-android --variant devDebug --appIdSuffix dev",
 		"ios": "react-native run-ios --scheme UlangiMobile-Dev",
 		"start": "react-native start",
