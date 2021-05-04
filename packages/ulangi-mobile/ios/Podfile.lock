@@ -356,8 +356,6 @@ PODS:
     - React
   - RNFS (2.16.2):
     - React
-  - RNIap (4.4.0):
-    - React
   - RNRate (1.2.4):
     - React
   - RNSound (0.11.0):
@@ -367,9 +365,9 @@ PODS:
     - React
   - RNSVG (9.13.6):
     - React
-  - SDWebImage (5.4.0):
-    - SDWebImage/Core (= 5.4.0)
-  - SDWebImage/Core (5.4.0)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
   - SDWebImageWebPCoder (0.2.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.0)
@@ -420,7 +418,6 @@ DEPENDENCIES:
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFirebase (from `../node_modules/@ulangi/react-native-firebase/ios`)"
   - RNFS (from `../node_modules/react-native-fs`)
-  - RNIap (from `../node_modules/react-native-iap`)
   - RNRate (from `../node_modules/react-native-rate`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -524,8 +521,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@ulangi/react-native-firebase/ios"
   RNFS:
     :path: "../node_modules/react-native-fs"
-  RNIap:
-    :path: "../node_modules/react-native-iap"
   RNRate:
     :path: "../node_modules/react-native-rate"
   RNSound:
@@ -537,9 +532,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Firebase: 919186c8e119dd9372a45fd1dd17a8a942bc1892
@@ -593,11 +588,10 @@ SPEC CHECKSUMS:
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
   RNFirebase: 909a993573ab3e79d9b0dc9690265d5ba379f15b
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
-  RNIap: 9b6e92869de716305ecc6cac8c413321210e33c7
   RNRate: 2b31dad120cd1b78e33c6034808561c386a3dddf
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
-  SDWebImage: 5bf6aec6481ae2a062bdc59f9d6c1d1e552090e0
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
