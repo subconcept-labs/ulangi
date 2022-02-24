@@ -18,7 +18,7 @@ import {
 import { boundClass } from 'autobind-decorator';
 
 import { config } from '../../constants/config';
-import { DialogDelegate } from '../dialog/dialogDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { SpacedRepetitionSettingsDelegate } from '../spaced-repetition/SpacedRepetitionSettingsDelegate';
 import { VocabularyActionMenuDelegate } from '../vocabulary/VocabularyActionMenuDelegate';
 import { WritingSettingsDelegate } from '../writing/WritingSettingsDelegate';

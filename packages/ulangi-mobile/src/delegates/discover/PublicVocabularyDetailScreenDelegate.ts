@@ -2,7 +2,7 @@ import { ActivityState } from '@ulangi/ulangi-common/enums';
 import { ObservablePublicVocabularyDetailScreen } from '@ulangi/ulangi-observable';
 import { boundClass } from 'autobind-decorator';
 
-import { DialogDelegate } from '../dialog/dialogDelegate';
+import { DialogDelegate } from '../dialog/DialogDelegate';
 import { SpeakDelegate } from '../vocabulary/SpeakDelegate';
 
 @boundClass
