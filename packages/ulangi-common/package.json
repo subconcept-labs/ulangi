@@ -24,7 +24,7 @@
     "autobind-decorator": "^2.4.0",
     "immutable": "^4.0.0-rc.9",
     "lodash": "^4.17.5",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "redux": "^3.7.2",
     "uuid": "^3.2.1"
   },
